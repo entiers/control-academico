@@ -23,6 +23,7 @@
         <property name="basenames">
             <list>
                 <value>/idiomas/textosGenerales</value>
+                <value>/idiomas/textosEstudiante</value>
             </list>
         </property>
 	<property name="cacheSeconds" value="0" />

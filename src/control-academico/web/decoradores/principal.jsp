@@ -1,4 +1,4 @@
-<%-- 
+<%--
     Document   : principal
     Created on : 22/03/2010, 12:14:38 AM
     Author     : Daniel Castillo
@@ -17,7 +17,10 @@
 
         <%-- titulo predeterminado de las paginas --%>
         <title><decorator:title default='<fmt:message key="welcome.titulo"/>' /></title>
-        
+
+        <%-- hoja de estilo general --%>
+        <link type="text/css" rel="stylesheet" href="<%= request.getContextPath() %>/css/estilo.css" />
+
         <%-- css y scripts necesarios para utilizar jquery --%>
         <link type="text/css" rel="stylesheet" href="<%= request.getContextPath() %>/css/cupertino/jquery-ui-1.8.custom.css" />
         <link type="text/css" rel="stylesheet" href="<%= request.getContextPath() %>/css/cupertino/style.css" />
@@ -33,7 +36,7 @@
 		.post-options {margin:-55px 0 40px 138px;}
 	</style>
 	<![endif]-->
-        
+
         <%-- se inserta el head propia de cada una de las paginas --%>
         <decorator:head />
     </head>
