@@ -15,9 +15,12 @@
     ········································································ -->
     <http auto-config='true'>
         <!-- indica a que paginas no se aplican los filtros de seguridad-->
+        <intercept-url pattern="/js/**" filters='none'/>
         <intercept-url pattern="/css/**" filters='none'/>
         <intercept-url pattern="/login.htm" filters='none'/>
         <intercept-url pattern="/accesoDenegado.htm" filters='none'/>
+
+        <intercept-url pattern="/*Estudiante.htm" filters='none'/>
 
         <!-- se aplican los roles a las paginas -->
         <intercept-url pattern="/**" access="ROLE_CONSULTAR" />

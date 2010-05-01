@@ -6,6 +6,21 @@
 
 <dwr>
     <allow>
-        
+        <!-- define las clases de datos que utiliza el servicio (POJOS) -->
+        <convert converter="bean" match="gt.edu.usac.trabajosocial.dominio.Estudiante">
+            <!-- se indica que propiedades del POJO seran accesibles -->
+            <param name="include" value="idEstudiante, carne, nombre, apellido, direccion, telefono, celular, email, fechaNacimiento"/>
+        </convert>
+
+        <!-- define la clase de servicios que se va a publicar mediante DWR -->
+        <!-- ademas se le indica a DWR que la clase es creada por Spring -->
+        <create creator="spring" javascript="ServicioEstudianteDWR">
+
+            <!-- se indica cual bean de spring se usara -->
+            <param name="beanName"  value="servicioEstudianteImpl"/>
+
+            <!-- se indican que metodos seran accesibles -->
+            <include method="buscarEstudiantePorCarne"/>
+        </create>
     </allow>
 </dwr>
