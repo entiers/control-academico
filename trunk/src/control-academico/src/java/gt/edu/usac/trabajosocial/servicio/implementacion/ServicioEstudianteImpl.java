@@ -14,6 +14,8 @@ import gt.edu.usac.trabajosocial.dominio.Usuario;
 import gt.edu.usac.trabajosocial.servicio.ServicioEstudiante;
 import java.util.Date;
 import javax.annotation.Resource;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -22,7 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  *
  * @author Daniel Castillo
- * @version 1.0
+ * @version 2.0
  */
 @Service("servicioEstudianteImpl")
 public class ServicioEstudianteImpl implements ServicioEstudiante {
@@ -82,6 +84,23 @@ public class ServicioEstudianteImpl implements ServicioEstudiante {
     }
 //______________________________________________________________________________
     /**
+     * <p>Este metodo permite actualizar los datos de un estudiante.</p>
+     *
+     * @param estudiante Pojo del tipo {@link Estudiante}
+     * @throws DataAccessException Si ocurrio un error de acceso a datos
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public void actualizarEstudiante(Estudiante estudiante)
+            throws DataAccessException {
+
+        // se obtiene el usuario del estudiante
+//        Usuario usuario = this.getUsuarioEstudiante(estudiante);
+//        estudiante.setUsuario(usuario);
+
+        this.daoGeneralImpl.update(estudiante);
+    }
+//______________________________________________________________________________
+    /**
      * <p>Este metodo asigna una {@link Carrera} al {@link Estudiante}. El
      * metodo se encarga de crear el objeto {@link AsignacionEstudianteCarrera}
      * el cual representa la asignacion de carrera y estudiante.</p>
@@ -103,5 +122,39 @@ public class ServicioEstudianteImpl implements ServicioEstudiante {
 
         // se guarda la asignacion en la base de datos
         this.daoGeneralImpl.save(asignacionCarrera);
+    }
+//______________________________________________________________________________
+    /**
+     * <p>Este metodo permite la busqueda de estudiantes por su numero de
+     * carne.</p>
+     * @param carne Numero de carne del estudiante
+     * @return Estudiante
+     * @throws DataAccessException Si ocurrio un error de acceso a datos
+     */
+    public Estudiante buscarEstudiantePorCarne(String carne)
+            throws DataAccessException {
+
+        // se busca el estudiante por el numero de carne
+        DetachedCriteria criteria = DetachedCriteria.forClass(Estudiante.class);
+        criteria.add(Restrictions.eq("carne", carne));
+
+        // se retorna el estudiante o null sino se encontro
+        return this.daoGeneralImpl.uniqueResult(criteria);
+    }
+//______________________________________________________________________________
+    /**
+     * <p>Este metodo obtiene el {@link Usuario} del {@link Estudiante}.</p>
+     * @param estudiante Pojo del tipo {@link Estudiante}
+     * @return Usuario
+     * @throws DataAccessException Si ocurrio un error de acceso a datos
+     */
+    public Usuario getUsuarioEstudiante(Estudiante estudiante)
+            throws DataAccessException {
+
+        DetachedCriteria criteria = DetachedCriteria.forClass(Usuario.class);
+        DetachedCriteria criteria2 = criteria.createCriteria("estudiantes");
+        criteria2.add(Restrictions.eq("idEstudiante", estudiante.getIdEstudiante()));
+
+        return this.daoGeneralImpl.uniqueResult(criteria);
     }
 }
