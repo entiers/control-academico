@@ -16,42 +16,12 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title><fmt:message key="agregarEstudiante.titulo"/></title>
-        <script type="text/javascript">
-	$(function() {
-
-            // agrega un panel popup para seleccionar fecha al input
-            // de fecha de nacimiento
-            $("#fechaNacimiento").datepicker({
-                changeMonth: true,
-                changeYear: true,
-                dateFormat: 'dd-mm-yy'
-            });
-
-            // se crea y configura el panel popup que muestra los
-            // mensajes de resultados de las operaciones
-            $("#mensajePopup").dialog({
-                autoOpen: <%= Boolean.parseBoolean(request.getAttribute("mostrarPopup").toString()) %>,
-                modal: true,
-                buttons: {
-                    <fmt:message key="btnAceptar"/>: function() {
-                        $("#carne").val("");
-                        $("#nombre").val("");
-                        $("#apellido").val("");
-                        $("#direccion").val("");
-                        $("#telefono").val("");
-                        $("#celular").val("");
-                        $("#email").val("");
-                        $("#fechaNacimiento").val("");
-                        $(this).dialog('close');
-                    }
-                }
-            });
-
-	});
-	</script>
+        <%@include file="../../jspf/estudiante/scripts.jspf" %>
     </head>
     <body>
         <h1><fmt:message key="agregarEstudiante.titulo"/></h1>
+
+        <%-- formulario para ingresar los datos del estudiante --%>
         <form:form modelAttribute="estudiante" method="post">
             <fieldset>
                 <%-- campo para ingresar el numero de carne --%>
@@ -75,7 +45,7 @@
                 </div>
 
                 <%-- boton --%>
-                <input type="submit" value='<fmt:message key="agregarEstudiante.btnAgregar"/>' />
+                <input type="submit" value='<fmt:message key="btnAgregar"/>' />
             </fieldset>
         </form:form>
 

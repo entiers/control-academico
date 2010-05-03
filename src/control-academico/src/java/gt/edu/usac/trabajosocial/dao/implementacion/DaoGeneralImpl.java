@@ -4,8 +4,9 @@
  * Universidad de San Carlos de Guatemala
  */
 
-package gt.edu.usac.trabajosocial.dao;
+package gt.edu.usac.trabajosocial.dao.implementacion;
 
+import gt.edu.usac.trabajosocial.dao.DaoGeneral;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
@@ -16,7 +17,6 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**

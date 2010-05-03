@@ -41,3 +41,4 @@
     <form:input path="fechaNacimiento" cssStyle="width: 250px;" />
     <form:errors path="fechaNacimiento" cssClass="claseError" />
 </div>
+<br/><br/>

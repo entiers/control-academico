@@ -2,3 +2,5 @@
 <%@ page pageEncoding="UTF-8" %>
 <h2>Menu superior</h2>
 <a href="agregarEstudiante.htm"><fmt:message key="agregarEstudiante.titulo"/></a>
+&nbsp;&nbsp;
+<a href="editarEstudiante.htm"><fmt:message key="editarEstudiante.titulo"/></a>

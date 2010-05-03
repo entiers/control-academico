@@ -90,6 +90,27 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
+    <!-- ·······································································
+        Filtro encargado de mantener las sesiones de Hibernate, su funcion es
+        que para una peticion se utilice la sesion existente, y si no existe
+        una sesion, se debe de crear una.
+    ········································································ -->
+    <filter>
+        <description>Filtro para crear sesion de hibernate con spring</description>
+        <filter-name>OpenSessionInView</filter-name>
+        <filter-class>org.springframework.orm.hibernate3.support.OpenSessionInViewFilter</filter-class>
+        <init-param>
+            <description>Indica si se usa solo una sesion</description>
+            <param-name>singleSession</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <description>Bean encargado de crear la sesion de hibernate</description>
+            <param-name>sessionFactoryBeanName</param-name>
+            <param-value>sessionFactory</param-value>
+        </init-param>
+    </filter>
+
 
     <!-- ·······································································
     ··· Configuracion de Spring Security 3.0

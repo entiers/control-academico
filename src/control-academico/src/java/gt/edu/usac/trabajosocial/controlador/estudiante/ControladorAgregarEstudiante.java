@@ -10,6 +10,7 @@ import gt.edu.usac.trabajosocial.dominio.Carrera;
 import gt.edu.usac.trabajosocial.dominio.Estudiante;
 import gt.edu.usac.trabajosocial.servicio.ServicioEstudiante;
 import gt.edu.usac.trabajosocial.servicio.ServicioGeneral;
+import gt.edu.usac.trabajosocial.util.Mensajes;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -71,14 +72,12 @@ public class ControladorAgregarEstudiante {
      * de iniciar los objetos que se usaran en la pagina.</p>
      *
      * @param modelo Objeto {@link Model} que contiene todos los objetos que
-     *               seran usados en la pagina
+     *        seran usados en la pagina
+     * @param request Objeto {@link HttpServletRequest}
      * @return String Contiene el nombre de la vista a mostrar
      */
     @RequestMapping(method = RequestMethod.GET)
     public String crearFormulario(Model modelo, HttpServletRequest request) {
-
-        // parametro que indica si se muestra el mensaje popup
-        request.setAttribute("mostrarPopup", "false");
 
         // se agregan los objetos que se usaran en la pagina
         modelo.addAttribute("estudiante", new Estudiante());
@@ -107,60 +106,44 @@ public class ControladorAgregarEstudiante {
      *
      * @param estudiante Pojo del tipo {@link Estudiante}
      * @param resultado Objeto {@link BindingResult}, contiene el resultado de
-     *                  las validaciones
+     *        las validaciones
      * @param modelo Objeto {@link Model} que contiene todos los objetos que
-     *               seran usados en la pagina
+     *        seran usados en la pagina
      * @param request Objeto {@link HttpServletRequest}
      * @return String Con la url de la pagina a mostrar
      */
     @RequestMapping(method = RequestMethod.POST)
-    public String submit(@Valid Estudiante estudiante, BindingResult resultado, Model modelo, HttpServletRequest request) {
+    public String submit(@Valid Estudiante estudiante, BindingResult bindingResult,
+            Model modelo, HttpServletRequest request) {
 
         modelo.addAttribute("carreras", this.listadoCarreras);
         
         // se validan los campos ingresados en el formulario, si existen errores
         // se regresa al formulario para que se muestren los mensajes correspondientes
-        if(resultado.hasErrors()) {
-            request.setAttribute("mostrarPopup", "false");
+        if(bindingResult.hasErrors())
             return "estudiante/agregarEstudiante";
-        }
 
         try {
-            // se obtiene la carrera seleccionada
+            // se obtiene la carrera seleccionada y se trata de agregar el estudiante
             Carrera carrera = this.getCarreraSeleccionada(estudiante.getIdCarrera());
-
-            // se trata de agregar el estudiante
             this.servicioEstudianteImpl.agregarEstudiante(estudiante, carrera);
 
-            request.setAttribute("tituloMensaje", "agregarEstudiante.titulo");
-            request.setAttribute("cuerpoMensaje", "agregarEstudiante.exito");
-            request.setAttribute("cssMensaje", "cssMensajeExito");
+            this.configurarMensajePopup(request, true, "agregarEstudiante.exito");
 
             // se registra el evento
-            log.info("El estudiante (carne: " + estudiante.getCarne() + ") se agrego con exito");
+            log.info("Agregacion estudiante, carne: " + estudiante.getCarne());
 
         } catch (DataIntegrityViolationException e) {
             // el carne ingresado ya existe
-            request.setAttribute("tituloMensaje", "tituloError");
-            request.setAttribute("cuerpoMensaje", "agregarEstudiante.dataIntegrityViolationException");
-            request.setAttribute("cssMensaje", "cssMensajeError");
-
-            // se registra el evento
-            log.warn("El numero de carne: " + estudiante.getCarne() + " ya existe", e);
-            e.printStackTrace();
+            this.configurarMensajePopup(request, false, "agregarEstudiante.dataIntegrityViolationException");
+            log.warn(Mensajes.DATA_INTEGRITY_VIOLATION_EXCEPTION, e);
 
         } catch (DataAccessException e) {
-            // ocurrio un error con el acceso a la base de datos
-            request.setAttribute("tituloMensaje", "tituloError");
-            request.setAttribute("cuerpoMensaje", "dataAccessException");
-            request.setAttribute("cssMensaje", "cssMensajeError");
-
-            // se registra el evento
-            log.error("Error al tratar de almacenar la informacion del estudiante (carne: " + estudiante.getCarne() + ")", e);
-            e.printStackTrace();
+            // error de acceso a datos
+            this.configurarMensajePopup(request, false, "dataAccessException");
+            log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
         }
 
-        request.setAttribute("mostrarPopup", "true");
         return "estudiante/agregarEstudiante";
     }
 //______________________________________________________________________________
@@ -179,5 +162,29 @@ public class ControladorAgregarEstudiante {
                 return carrera;
         }
         return null;
+    }
+//______________________________________________________________________________
+    /**
+     * <p>Este metodo se encarga de agregar los parametros necesarios en el
+     * {@link HttpServletRequest} para que se muestre el mensaje popup de
+     * resultados.</p>
+     *
+     * @param request Objeto {@link HttpServletRequest}
+     * @param exito Si es true el mensaje a mostrar es de exito, si es false
+     *        el mensaje a mostrar es de error
+     * @param mensaje Texto que mostrar el mensaje
+     */
+    private void configurarMensajePopup(HttpServletRequest request, boolean exito, String mensaje) {
+        request.setAttribute("mostrarPopup", "true");
+        request.setAttribute("cuerpoMensaje", mensaje);
+
+        if(exito) {
+            request.setAttribute("tituloMensaje", "agregarEstudiante.titulo");
+            request.setAttribute("cssMensaje", "cssMensajeExito");
+
+        } else {
+            request.setAttribute("tituloMensaje", "tituloError");
+            request.setAttribute("cssMensaje", "cssMensajeError");
+        }
     }
 }
