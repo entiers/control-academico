@@ -22,7 +22,7 @@
         <h1><fmt:message key="agregarEstudiante.titulo"/></h1>
 
         <%-- formulario para ingresar los datos del estudiante --%>
-        <form:form modelAttribute="estudiante" method="post">
+        <form:form modelAttribute="wrapperEstudiante" method="post">
             <fieldset>
                 <%-- campo para ingresar el numero de carne --%>
                 <div id="divCampos">

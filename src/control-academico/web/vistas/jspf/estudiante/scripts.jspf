@@ -13,26 +13,38 @@
         // se crea y configura el panel popup que muestra los
         // mensajes de resultados de las operaciones
         <%
-        boolean ao;
+        boolean mostrar;
         Object mostrarPopup = request.getAttribute("mostrarPopup");
         if(mostrarPopup == null)
-            ao = false;
+            mostrar = false;
         else
-            ao = Boolean.parseBoolean(mostrarPopup.toString());
+            mostrar = Boolean.parseBoolean(mostrarPopup.toString());
+
+        boolean limpiar;
+        Object limpiarCampos = request.getAttribute("limpiarCampos");
+        if(mostrarPopup == null)
+            limpiar = true;
+        else
+            limpiar = Boolean.parseBoolean(limpiarCampos.toString());
         %>
         $("#mensajePopup").dialog({
-            autoOpen: <%= ao %>,
+            autoOpen: <%= mostrar %>,
             modal: true,
             buttons: {
                 '<fmt:message key="btnAceptar"/>': function() {
-                    $("#carne").val("");
-                    $("#nombre").val("");
-                    $("#apellido").val("");
-                    $("#direccion").val("");
-                    $("#telefono").val("");
-                    $("#celular").val("");
-                    $("#email").val("");
-                    $("#fechaNacimiento").val("");
+                    if(<%= limpiar %>) {
+                        $("#idCarrera").val("0");
+                        $("#carneBusqueda").val("");
+                        $("#carne").val("");
+                        $("#nombre").val("");
+                        $("#apellido").val("");
+                        $("#direccion").val("");
+                        $("#telefono").val("");
+                        $("#celular").val("");
+                        $("#email").val("");
+                        $("#fechaNacimiento").val("");
+                    }
+                    
                     $(this).dialog('close');
                 }
             }

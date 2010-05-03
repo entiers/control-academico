@@ -7,6 +7,7 @@
 package gt.edu.usac.trabajosocial.controlador.estudiante;
 
 import gt.edu.usac.trabajosocial.dominio.Estudiante;
+import gt.edu.usac.trabajosocial.dominio.wrapper.WrapperEstudiante;
 import gt.edu.usac.trabajosocial.servicio.ServicioEstudiante;
 import gt.edu.usac.trabajosocial.util.Mensajes;
 import javax.annotation.Resource;
@@ -61,17 +62,13 @@ public class ControladorEditarEstudiante {
      *
      * @param modelo Objeto {@link Model} que contiene todos los objetos que
      *        seran usados en la pagina
-     * @param request Peticion HTTP
      * @return String Contiene el nombre de la vista a mostrar
      */
     @RequestMapping(value = "editarEstudiante.htm", method = RequestMethod.GET)
-    public String crearFormulario(Model modelo, HttpServletRequest request) {
-
-        // parametro que indica si se muestra el mensaje popup
-        request.setAttribute("mostrarPopup", "false");
+    public String crearFormulario(Model modelo) {
 
         // se agregan los objetos que se usaran en la pagina
-        modelo.addAttribute("estudiante", new Estudiante());
+        modelo.addAttribute("wrapperEstudiante", new WrapperEstudiante());
         modelo.addAttribute("datosBusquedaEstudiante", new DatosBusquedaEstudiante());
 
         return "estudiante/editarEstudiante";
@@ -103,28 +100,28 @@ public class ControladorEditarEstudiante {
     public String buscarEstudiante(@Valid DatosBusquedaEstudiante datosBusquedaEstudiante,
             BindingResult resultado, Model modelo, HttpServletRequest request) {
 
+        // se crea el envoltorio para el estudiante
+        WrapperEstudiante wrapperEstudiante = new WrapperEstudiante();
+        modelo.addAttribute("wrapperEstudiante", wrapperEstudiante);
+
         // se obtiene el carne ingresado para realizar la busqueda
         String carne = datosBusquedaEstudiante.getCarneBusqueda();
 
-        if(carne.isEmpty() || resultado.hasErrors()) {
-            modelo.addAttribute("estudiante", new Estudiante());
+        if(carne.isEmpty() || resultado.hasErrors())
             return "estudiante/editarEstudiante";
-        }
 
         try {
             // se realiza la busqueda del estudiante
             this.estudiante = this.servicioEstudianteImpl.buscarEstudiantePorCarne(carne);
-            if(this.estudiante == null) {
-                modelo.addAttribute("estudiante", new Estudiante());
-                this.configurarMensajePopup(request, true, "editarEstudiante.sinResultados");
 
-            } else
-                modelo.addAttribute("estudiante", this.estudiante);
+            if(this.estudiante == null)
+                this.configurarMensajePopup(request, true, true, "editarEstudiante.sinResultados");
+            else
+                wrapperEstudiante.agregarWrapper(this.estudiante);
 
         } catch (DataAccessException e) {
             // error de acceso a datos
-            modelo.addAttribute("estudiante", new Estudiante());
-            this.configurarMensajePopup(request, false, "dataAccessException");
+            this.configurarMensajePopup(request, false, false, "dataAccessException");
             log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
         }
 
@@ -148,12 +145,10 @@ public class ControladorEditarEstudiante {
      * @return String
      */
     @RequestMapping(value = "editarEstudiante.htm", method = RequestMethod.POST)
-    public String submit(@Valid Estudiante estudiante, BindingResult bindingResult,
+    public String submit(@Valid WrapperEstudiante wrapperEstudiante, BindingResult bindingResult,
             Model modelo, HttpServletRequest request) {
 
-        DatosBusquedaEstudiante datosBusquedaEstudiante = new DatosBusquedaEstudiante();
-        datosBusquedaEstudiante.setCarneBusqueda(estudiante.getCarne());
-        modelo.addAttribute("datosBusquedaEstudiante", datosBusquedaEstudiante);
+        modelo.addAttribute("datosBusquedaEstudiante", new DatosBusquedaEstudiante());
 
         // se validan los campos ingresados en el formulario, si existen errores
         // se regresa al formulario para que se muestren los mensajes correspondientes
@@ -165,15 +160,16 @@ public class ControladorEditarEstudiante {
             return "estudiante/editarEstudiante";
 
         try {
-            // se trata de actualizar la informacion del estudiante
-            this.actualizarEstudiante(estudiante);
+            // se quita el envoltorio y se trata de actualizar al estudiante
+            wrapperEstudiante.quitarWrapper(this.estudiante);
+            this.servicioEstudianteImpl.actualizarEstudiante(this.estudiante);
 
-            this.configurarMensajePopup(request, true, "editarEstudiante.exito");
-            log.info("Actualizacion estudiante, carne: " + estudiante.getCarne());
+            this.configurarMensajePopup(request, true, true, "editarEstudiante.exito");
+            log.info("Actualizar estudiante, carne: " + this.estudiante.getCarne());
 
         } catch (DataAccessException e) {
             // error de acceso a datos
-            this.configurarMensajePopup(request, false, "dataAccessException");
+            this.configurarMensajePopup(request, false, false, "dataAccessException");
             log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
         }
 
@@ -190,7 +186,10 @@ public class ControladorEditarEstudiante {
      *        el mensaje a mostrar es de error
      * @param mensaje Texto que mostrar el mensaje
      */
-    private void configurarMensajePopup(HttpServletRequest request, boolean exito, String mensaje) {
+    private void configurarMensajePopup(HttpServletRequest request, Boolean exito,
+            Boolean limpiar, String mensaje) {
+
+        request.setAttribute("limpiarCampos", limpiar);
         request.setAttribute("mostrarPopup", "true");
         request.setAttribute("cuerpoMensaje", mensaje);
 
@@ -202,24 +201,5 @@ public class ControladorEditarEstudiante {
             request.setAttribute("tituloMensaje", "tituloError");
             request.setAttribute("cssMensaje", "cssMensajeError");
         }
-    }
-//______________________________________________________________________________
-    /**
-     * <p>Este metodo obtiene los datos ingresados en la pagina y los agrega
-     * al estudiante para que se actualice la informacion.</p>
-     *
-     * @param estudiante
-     * @throws DataAccessException
-     */
-    private void actualizarEstudiante(Estudiante estudiante) throws DataAccessException {
-        this.estudiante.setNombre(estudiante.getNombre());
-        this.estudiante.setApellido(estudiante.getApellido());
-        this.estudiante.setDireccion(estudiante.getDireccion());
-        this.estudiante.setTelefono(estudiante.getTelefono());
-        this.estudiante.setCelular(estudiante.getCelular());
-        this.estudiante.setEmail(estudiante.getEmail());
-        this.estudiante.setFechaNacimiento(estudiante.getFechaNacimiento());
-
-        this.servicioEstudianteImpl.actualizarEstudiante(this.estudiante);
     }
 }
