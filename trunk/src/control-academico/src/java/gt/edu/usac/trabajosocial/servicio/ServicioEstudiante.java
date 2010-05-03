@@ -6,9 +6,11 @@
 
 package gt.edu.usac.trabajosocial.servicio;
 
+import gt.edu.usac.trabajosocial.controlador.estudiante.DatosBusquedaEstudiante;
 import gt.edu.usac.trabajosocial.dominio.Carrera;
 import gt.edu.usac.trabajosocial.dominio.Estudiante;
 import gt.edu.usac.trabajosocial.dominio.Usuario;
+import java.util.List;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 
@@ -65,9 +67,24 @@ public interface ServicioEstudiante {
 //______________________________________________________________________________
     /**
      * <p>Este metodo obtiene el {@link Usuario} del {@link Estudiante}.</p>
+     *
      * @param estudiante Pojo del tipo {@link Estudiante}
      * @return Usuario
      * @throws DataAccessException Si ocurrio un error de acceso a datos
      */
     Usuario getUsuarioEstudiante(Estudiante estudiante) throws DataAccessException;
+//______________________________________________________________________________
+    /**
+     * <p>Este metodo se encarga de crear un listado de estudiantes, el listado
+     * se filtra en base a los datos de busqueda y se ordena en base al tipo
+     * de orden y columna indicados.</p>
+     *
+     * @param datos Contiene los filtros para el listado
+     * @param ordenAscendente true si se quiere un listado en orden ascendente
+     * @param columna Nombre de la columna por la cual se ordenara
+     * @return List Listado de estudiantes
+     * @throws DataAccessException Si ocurrio un error de acceso a datos
+     */
+    List<Estudiante> getListadoEstudiantes(DatosBusquedaEstudiante datos,
+            boolean ordenAscendente, String columna) throws DataAccessException;
 }

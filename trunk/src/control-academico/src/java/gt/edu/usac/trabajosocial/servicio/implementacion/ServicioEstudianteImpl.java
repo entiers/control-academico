@@ -6,6 +6,7 @@
 
 package gt.edu.usac.trabajosocial.servicio.implementacion;
 
+import gt.edu.usac.trabajosocial.controlador.estudiante.DatosBusquedaEstudiante;
 import gt.edu.usac.trabajosocial.dao.DaoGeneral;
 import gt.edu.usac.trabajosocial.dominio.AsignacionEstudianteCarrera;
 import gt.edu.usac.trabajosocial.dominio.Carrera;
@@ -13,8 +14,13 @@ import gt.edu.usac.trabajosocial.dominio.Estudiante;
 import gt.edu.usac.trabajosocial.dominio.Usuario;
 import gt.edu.usac.trabajosocial.servicio.ServicioEstudiante;
 import java.util.Date;
+import java.util.List;
 import javax.annotation.Resource;
+import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.LogicalExpression;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -93,10 +99,6 @@ public class ServicioEstudianteImpl implements ServicioEstudiante {
     public void actualizarEstudiante(Estudiante estudiante)
             throws DataAccessException {
 
-        // se obtiene el usuario del estudiante
-//        Usuario usuario = this.getUsuarioEstudiante(estudiante);
-//        estudiante.setUsuario(usuario);
-
         this.daoGeneralImpl.update(estudiante);
     }
 //______________________________________________________________________________
@@ -127,6 +129,7 @@ public class ServicioEstudianteImpl implements ServicioEstudiante {
     /**
      * <p>Este metodo permite la busqueda de estudiantes por su numero de
      * carne.</p>
+     * 
      * @param carne Numero de carne del estudiante
      * @return Estudiante
      * @throws DataAccessException Si ocurrio un error de acceso a datos
@@ -144,6 +147,7 @@ public class ServicioEstudianteImpl implements ServicioEstudiante {
 //______________________________________________________________________________
     /**
      * <p>Este metodo obtiene el {@link Usuario} del {@link Estudiante}.</p>
+     *
      * @param estudiante Pojo del tipo {@link Estudiante}
      * @return Usuario
      * @throws DataAccessException Si ocurrio un error de acceso a datos
@@ -156,5 +160,49 @@ public class ServicioEstudianteImpl implements ServicioEstudiante {
         criteria2.add(Restrictions.eq("idEstudiante", estudiante.getIdEstudiante()));
 
         return this.daoGeneralImpl.uniqueResult(criteria);
+    }
+//______________________________________________________________________________
+    /**
+     * <p>Este metodo se encarga de crear un listado de estudiantes, el listado
+     * se filtra en base a los datos de busqueda y se ordena en base al tipo
+     * de orden y columna indicados.</p>
+     *
+     * @param datos Contiene los filtros para el listado
+     * @param ordenAscendente true si se quiere un listado en orden ascendente
+     * @param columna Nombre de la columna por la cual se ordenara
+     * @return List Listado de estudiantes
+     * @throws DataAccessException Si ocurrio un error de acceso a datos
+     */
+    public List<Estudiante> getListadoEstudiantes(DatosBusquedaEstudiante datos,
+            boolean ordenAscendente, String columna) throws DataAccessException {
+
+        // se crean los filtro de la busqueda
+        Criterion eqCarne = Restrictions.eq("carne", datos.getCarneBusqueda());
+        Criterion eqNombre = Restrictions.ilike("nombre", datos.getNombreBusqueda(), MatchMode.ANYWHERE);
+        Criterion eqApellido = Restrictions.ilike("apellido", datos.getApellidoBusqueda(), MatchMode.ANYWHERE);
+        DetachedCriteria criteria = DetachedCriteria.forClass(Estudiante.class);
+
+        // si no se envia el carne se crea un filtro or con nombre y apellido
+        if(datos.getCarneBusqueda().isEmpty()) {
+            if(!datos.getNombreBusqueda().isEmpty() && !datos.getApellidoBusqueda().isEmpty()) {
+                LogicalExpression orExp = Restrictions.or(eqNombre, eqApellido);
+                criteria.add(orExp);
+                
+            } else if(!datos.getNombreBusqueda().isEmpty() && datos.getApellidoBusqueda().isEmpty())
+                criteria.add(eqNombre);
+
+            else if(!datos.getApellidoBusqueda().isEmpty() && datos.getNombreBusqueda().isEmpty())
+                criteria.add(eqApellido);
+
+        } else
+            criteria.add(eqCarne);
+
+        // se ordena el resultado
+        if(ordenAscendente)
+            criteria.addOrder(Order.asc(columna));
+        else
+            criteria.addOrder(Order.desc(columna));
+
+        return this.daoGeneralImpl.find(criteria);
     }
 }

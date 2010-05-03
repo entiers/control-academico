@@ -57,4 +57,11 @@ public class DatosBusquedaEstudiante {
     public void setApellidoBusqueda(String apellidoBusqueda) {
         this.apellidoBusqueda = apellidoBusqueda;
     }
+//______________________________________________________________________________
+    public boolean isEmpty() {
+        if(this.carneBusqueda.isEmpty() && this.nombreBusqueda.isEmpty() && this.apellidoBusqueda.isEmpty())
+            return true;
+        else
+            return false;
+    }
 }

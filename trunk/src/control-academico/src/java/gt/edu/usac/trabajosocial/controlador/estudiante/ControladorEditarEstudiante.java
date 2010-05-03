@@ -90,7 +90,7 @@ public class ControladorEditarEstudiante {
      *
      * @param datosBusquedaEstudiante Contiene los parametros de la busqueda, en
      *        este caso solo el numero de carne
-     * @param resultado Objeto {@link BindingResult} que valida los datos
+     * @param bindingResult Objeto {@link BindingResult} que valida los datos
      * @param modelo Objeto {@link Model} que contiene todos los objetos que
      *        seran usados en la pagina
      * @param request Peticion HTTP
@@ -98,7 +98,7 @@ public class ControladorEditarEstudiante {
      */
     @RequestMapping(value = "buscarEditarEstudiante.htm", method = RequestMethod.POST)
     public String buscarEstudiante(@Valid DatosBusquedaEstudiante datosBusquedaEstudiante,
-            BindingResult resultado, Model modelo, HttpServletRequest request) {
+            BindingResult bindingResult, Model modelo, HttpServletRequest request) {
 
         // se crea el envoltorio para el estudiante
         WrapperEstudiante wrapperEstudiante = new WrapperEstudiante();
@@ -107,7 +107,7 @@ public class ControladorEditarEstudiante {
         // se obtiene el carne ingresado para realizar la busqueda
         String carne = datosBusquedaEstudiante.getCarneBusqueda();
 
-        if(carne.isEmpty() || resultado.hasErrors())
+        if(carne.isEmpty() || bindingResult.hasErrors())
             return "estudiante/editarEstudiante";
 
         try {
@@ -184,6 +184,7 @@ public class ControladorEditarEstudiante {
      * @param request Objeto {@link HttpServletRequest}
      * @param exito Si es true el mensaje a mostrar es de exito, si es false
      *        el mensaje a mostrar es de error
+     * @param limpiar Si es true se limpia el formulario
      * @param mensaje Texto que mostrar el mensaje
      */
     private void configurarMensajePopup(HttpServletRequest request, Boolean exito,

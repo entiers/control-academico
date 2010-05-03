@@ -35,6 +35,8 @@
                     if(<%= limpiar %>) {
                         $("#idCarrera").val("0");
                         $("#carneBusqueda").val("");
+                        $("#nombreBusqueda").val("");
+                        $("#apellidoBusqueda").val("");
                         $("#carne").val("");
                         $("#nombre").val("");
                         $("#apellido").val("");
