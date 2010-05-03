@@ -37,7 +37,7 @@
         <br/><br/><br/>
 
         <%-- formulario para editar los datos del estudiante --%>
-        <form:form modelAttribute="estudiante" method="post" action="editarEstudiante.htm">
+        <form:form modelAttribute="wrapperEstudiante" method="post" action="editarEstudiante.htm">
             <fieldset>
                 <%-- se deshabilita para evitar su edicion --%>
                 <div id="divCampos">

@@ -8,6 +8,7 @@ package gt.edu.usac.trabajosocial.controlador.estudiante;
 
 import gt.edu.usac.trabajosocial.dominio.Carrera;
 import gt.edu.usac.trabajosocial.dominio.Estudiante;
+import gt.edu.usac.trabajosocial.dominio.wrapper.WrapperEstudiante;
 import gt.edu.usac.trabajosocial.servicio.ServicioEstudiante;
 import gt.edu.usac.trabajosocial.servicio.ServicioGeneral;
 import gt.edu.usac.trabajosocial.util.Mensajes;
@@ -73,14 +74,13 @@ public class ControladorAgregarEstudiante {
      *
      * @param modelo Objeto {@link Model} que contiene todos los objetos que
      *        seran usados en la pagina
-     * @param request Objeto {@link HttpServletRequest}
      * @return String Contiene el nombre de la vista a mostrar
      */
     @RequestMapping(method = RequestMethod.GET)
-    public String crearFormulario(Model modelo, HttpServletRequest request) {
+    public String crearFormulario(Model modelo) {
 
         // se agregan los objetos que se usaran en la pagina
-        modelo.addAttribute("estudiante", new Estudiante());
+        modelo.addAttribute("wrapperEstudiante", new WrapperEstudiante());
 
         this.listadoCarreras = this.servicioGeneralImpl.listarEntidad(Carrera.class);
         modelo.addAttribute("carreras", this.listadoCarreras);
@@ -113,7 +113,7 @@ public class ControladorAgregarEstudiante {
      * @return String Con la url de la pagina a mostrar
      */
     @RequestMapping(method = RequestMethod.POST)
-    public String submit(@Valid Estudiante estudiante, BindingResult bindingResult,
+    public String submit(@Valid WrapperEstudiante wrapperEstudiante, BindingResult bindingResult,
             Model modelo, HttpServletRequest request) {
 
         modelo.addAttribute("carreras", this.listadoCarreras);
@@ -124,23 +124,27 @@ public class ControladorAgregarEstudiante {
             return "estudiante/agregarEstudiante";
 
         try {
-            // se obtiene la carrera seleccionada y se trata de agregar el estudiante
-            Carrera carrera = this.getCarreraSeleccionada(estudiante.getIdCarrera());
+            // se obtiene la carrera seleccionada
+            Carrera carrera = this.getCarreraSeleccionada(wrapperEstudiante.getIdCarrera());
+
+            // se quita el envoltorio y se trata de agregar al estudiante
+            Estudiante estudiante = new Estudiante();
+            wrapperEstudiante.quitarWrapper(estudiante);
             this.servicioEstudianteImpl.agregarEstudiante(estudiante, carrera);
 
-            this.configurarMensajePopup(request, true, "agregarEstudiante.exito");
+            this.configurarMensajePopup(request, true, true, "agregarEstudiante.exito");
 
             // se registra el evento
-            log.info("Agregacion estudiante, carne: " + estudiante.getCarne());
+            log.info("Agregar estudiante, carne: " + estudiante.getCarne());
 
         } catch (DataIntegrityViolationException e) {
             // el carne ingresado ya existe
-            this.configurarMensajePopup(request, false, "agregarEstudiante.dataIntegrityViolationException");
+            this.configurarMensajePopup(request, false, false, "agregarEstudiante.dataIntegrityViolationException");
             log.warn(Mensajes.DATA_INTEGRITY_VIOLATION_EXCEPTION, e);
 
         } catch (DataAccessException e) {
             // error de acceso a datos
-            this.configurarMensajePopup(request, false, "dataAccessException");
+            this.configurarMensajePopup(request, false, false, "dataAccessException");
             log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
         }
 
@@ -174,7 +178,10 @@ public class ControladorAgregarEstudiante {
      *        el mensaje a mostrar es de error
      * @param mensaje Texto que mostrar el mensaje
      */
-    private void configurarMensajePopup(HttpServletRequest request, boolean exito, String mensaje) {
+    private void configurarMensajePopup(HttpServletRequest request, Boolean exito,
+            Boolean limpiar, String mensaje) {
+
+        request.setAttribute("limpiarCampos", limpiar);
         request.setAttribute("mostrarPopup", "true");
         request.setAttribute("cuerpoMensaje", mensaje);
 
