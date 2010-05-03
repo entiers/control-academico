@@ -25,10 +25,11 @@
         <form:form modelAttribute="datosBusquedaEstudiante" method="post" action="buscarEditarEstudiante.htm">
             <fieldset>
                 <div id="divCampos">
-                    <form:label for="carneBusqueda" path="carneBusqueda"><fmt:message key="agregarEstudiante.carne"/>: *</form:label>
+                    <form:label for="carneBusqueda" path="carneBusqueda"><fmt:message key="agregarEstudiante.carne"/>:</form:label>
                     <form:input path="carneBusqueda" cssStyle="width: 250px;" />
                     <form:errors path="carneBusqueda" cssClass="claseError" />
                 </div>
+                <br/>
 
                 <%-- boton --%>
                 <input id="btnBuscar" type="submit" value='<fmt:message key="btnBuscar"/>' />

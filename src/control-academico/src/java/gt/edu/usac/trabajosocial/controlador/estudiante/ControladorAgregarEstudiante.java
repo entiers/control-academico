@@ -176,6 +176,7 @@ public class ControladorAgregarEstudiante {
      * @param request Objeto {@link HttpServletRequest}
      * @param exito Si es true el mensaje a mostrar es de exito, si es false
      *        el mensaje a mostrar es de error
+     * @param limpiar Si es true se limpia el formulario
      * @param mensaje Texto que mostrar el mensaje
      */
     private void configurarMensajePopup(HttpServletRequest request, Boolean exito,
