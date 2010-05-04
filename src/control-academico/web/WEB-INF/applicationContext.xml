@@ -24,6 +24,7 @@
             <list>
                 <value>/idiomas/textosGenerales</value>
                 <value>/idiomas/textosEstudiante</value>
+                <value>/idiomas/textosCurso</value>
             </list>
         </property>
 	<property name="cacheSeconds" value="0" />
