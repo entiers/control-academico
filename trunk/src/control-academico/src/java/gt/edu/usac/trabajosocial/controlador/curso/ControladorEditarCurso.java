@@ -8,6 +8,7 @@ package gt.edu.usac.trabajosocial.controlador.curso;
 import gt.edu.usac.trabajosocial.dominio.Curso;
 import gt.edu.usac.trabajosocial.dominio.wrapper.WrapperCurso;
 import gt.edu.usac.trabajosocial.servicio.ServicioCurso;
+import gt.edu.usac.trabajosocial.util.MensajePopup;
 import gt.edu.usac.trabajosocial.util.Mensajes;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -28,6 +29,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller("controladorEditarCurso")
 public class ControladorEditarCurso {
+//______________________________________________________________________________
+    /**
+     * <p>
+     * Lleva el nombre del titulo para el mensaje en la página
+     * <p>
+     */
+    private static String TITULO_MENSAJE = "editarCurso.titulo";
 //______________________________________________________________________________
     /**
      * <p>Matiene una bitacora de lo realizado por esta clase.</p>
@@ -114,13 +122,13 @@ public class ControladorEditarCurso {
             this.curso = this.servicioCursoImpl.buscarCursoPorCodigo(codigo);
 
             if(this.curso == null)
-                this.configurarMensajePopup(request, true, true, "editarCurso.sinResultados");
+                MensajePopup.configurar(request, true, true, TITULO_MENSAJE, "editarCurso.sinResultados");
             else
                 wrapperCurso.agregarWrapper(this.curso);
 
         } catch (DataAccessException e) {
             // error de acceso a datos
-            this.configurarMensajePopup(request, false, false, "dataAccessException");
+            MensajePopup.configurar(request, false, false, TITULO_MENSAJE, "dataAccessException");
             log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
         }
 
@@ -161,44 +169,15 @@ public class ControladorEditarCurso {
             wrapperCurso.quitarWrapper(this.curso);
             this.servicioCursoImpl.actualizarCurso(this.curso);
 
-            this.configurarMensajePopup(request, true, true, "editarCurso.exito");
+            MensajePopup.configurar(request, true, true, TITULO_MENSAJE, "editarCurso.exito");
             log.info("Actualizar curso, codigo: " + this.curso.getCodigo());
 
         } catch (DataAccessException e) {
             // error de acceso a datos
-            this.configurarMensajePopup(request, false, false, "dataAccessException");
+            MensajePopup.configurar(request, false, false, TITULO_MENSAJE, "dataAccessException");
             log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
         }
 
         return "curso/editarCurso";
     }
-
-    //______________________________________________________________________________
-    /**
-     * <p>Este metodo se encarga de agregar los parametros necesarios en el
-     * {@link HttpServletRequest} para que se muestre el mensaje popup de
-     * resultados.</p>
-     *
-     * @param request Objeto {@link HttpServletRequest}
-     * @param exito Si es true el mensaje a mostrar es de exito, si es false
-     *        el mensaje a mostrar es de error
-     * @param mensaje Texto que mostrar el mensaje
-     */
-    private void configurarMensajePopup(HttpServletRequest request, boolean exito,
-            boolean limpiar, String mensaje) {
-
-        request.setAttribute("limpiarCampos", limpiar);
-        request.setAttribute("mostrarPopup", true);
-        request.setAttribute("cuerpoMensaje", mensaje);
-
-        if(exito) {
-            request.setAttribute("tituloMensaje", "editarCurso.titulo");
-            request.setAttribute("cssMensaje", "cssMensajeExito");
-
-        } else {
-            request.setAttribute("tituloMensaje", "tituloError");
-            request.setAttribute("cssMensaje", "cssMensajeError");
-        }
-    }
-
 }

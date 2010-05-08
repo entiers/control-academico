@@ -9,6 +9,7 @@ import gt.edu.usac.trabajosocial.dominio.Curso;
 import gt.edu.usac.trabajosocial.dominio.wrapper.WrapperCurso;
 import gt.edu.usac.trabajosocial.servicio.ServicioCurso;
 import gt.edu.usac.trabajosocial.servicio.ServicioGeneral;
+import gt.edu.usac.trabajosocial.util.MensajePopup;
 import gt.edu.usac.trabajosocial.util.Mensajes;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -31,6 +32,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller("controladorAgregarCurso")
 @RequestMapping(value = "agregarCurso.htm")
 public class ControladorAgregarCurso {
+//______________________________________________________________________________
+    /**
+     * <p>
+     * Lleva el nombre del titulo para el mensaje en la página
+     * <p>
+     */
+    private static String TITULO_MENSAJE = "agregarCurso.titulo";
 //______________________________________________________________________________
     /**
      * <p>Matiene una bitacora de lo realizado por esta clase.</p>
@@ -116,52 +124,22 @@ public class ControladorAgregarCurso {
             wrapperCurso.quitarWrapper(curso);
             this.servicioCursoImpl.agregarCurso(curso);
 
-            this.configurarMensajePopup(request, true, true, "agregarCurso.exito");
+            MensajePopup.configurar(request, true, true, TITULO_MENSAJE, "agregarCurso.exito");
 
             // se registra el evento
             log.info("Agregar codigo, codigo: " + curso.getCodigo());
 
         } catch (DataIntegrityViolationException e) {
             // el carne ingresado ya existe
-            this.configurarMensajePopup(request, false, false, "agregarEstudiante.dataIntegrityViolationException");
+            MensajePopup.configurar(request, false, false, TITULO_MENSAJE, "agregarEstudiante.dataIntegrityViolationException");
             log.warn(Mensajes.DATA_INTEGRITY_VIOLATION_EXCEPTION, e);
 
         } catch (DataAccessException e) {
             // error de acceso a datos
-            this.configurarMensajePopup(request, false, false, "dataAccessException");
+            MensajePopup.configurar(request, false, false, TITULO_MENSAJE, "dataAccessException");
             log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
         }
 
         return "curso/agregarCurso";
     }
-
-
-    //______________________________________________________________________________
-    /**
-     * <p>Este metodo se encarga de agregar los parametros necesarios en el
-     * {@link HttpServletRequest} para que se muestre el mensaje popup de
-     * resultados.</p>
-     *
-     * @param request Objeto {@link HttpServletRequest}
-     * @param exito Si es true el mensaje a mostrar es de exito, si es false
-     *        el mensaje a mostrar es de error
-     * @param mensaje Texto que mostrar el mensaje
-     */
-    private void configurarMensajePopup(HttpServletRequest request, boolean exito,
-            boolean limpiar, String mensaje) {
-
-        request.setAttribute("limpiarCampos", limpiar);
-        request.setAttribute("mostrarPopup", true);
-        request.setAttribute("cuerpoMensaje", mensaje);
-
-        if(exito) {
-            request.setAttribute("tituloMensaje", "agregarCurso.titulo");
-            request.setAttribute("cssMensaje", "cssMensajeExito");
-
-        } else {
-            request.setAttribute("tituloMensaje", "tituloError");
-            request.setAttribute("cssMensaje", "cssMensajeError");
-        }
-    }
-
 }
