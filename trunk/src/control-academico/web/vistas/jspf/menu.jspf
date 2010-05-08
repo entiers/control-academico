@@ -14,3 +14,5 @@
 &nbsp;&nbsp;
 
 <a href="editarCurso.htm"><fmt:message key="editarCurso.titulo"/></a>
+&nbsp;&nbsp;
+<a href="agregarSemestre.htm"><fmt:message key="agregarSemestre.titulo"/></a>
