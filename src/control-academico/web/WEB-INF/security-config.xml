@@ -22,6 +22,7 @@
 
         <intercept-url pattern="/*Estudiante.htm" filters='none'/>
         <intercept-url pattern="/*Curso.htm" filters='none'/>
+        <intercept-url pattern="/*Semestre.htm" filters='none'/>
 
         <!-- se aplican los roles a las paginas -->
         <intercept-url pattern="/**" access="ROLE_CONSULTAR" />

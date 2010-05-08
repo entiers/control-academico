@@ -1,0 +1,40 @@
+
+<%@ page pageEncoding="UTF-8" %>
+
+<script type="text/javascript">
+    $(function(){
+        // se crea y configura el panel popup que muestra los
+        // mensajes de resultados de las operaciones
+        <%
+            boolean mostrar =
+                    request.getAttribute("mostrarPopup") == null
+                    ? false
+                    : Boolean.parseBoolean(request.getAttribute("mostrarPopup").toString());
+
+
+            boolean limpiar =
+                    request.getAttribute("limpiarCampos") == null
+                    ? false
+                    : Boolean.parseBoolean(request.getAttribute("limpiarCampos").toString());
+
+            int anio = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);
+        %>
+
+        $("#mensajePopup").dialog({
+            autoOpen: <%= mostrar %>,
+            modal: true,
+            buttons: {
+                '<fmt:message key="btnAceptar"/>': function() {
+                    if(<%= limpiar %>) {
+                        $("#anio").val("<%= anio %>");
+                        $("#numero").val("1");
+                    }
+                    $(this).dialog('close');
+                }
+            }
+        });
+
+    });
+</script>
+
+
