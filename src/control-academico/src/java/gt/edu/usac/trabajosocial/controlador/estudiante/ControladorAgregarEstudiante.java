@@ -11,6 +11,7 @@ import gt.edu.usac.trabajosocial.dominio.Estudiante;
 import gt.edu.usac.trabajosocial.dominio.wrapper.WrapperEstudiante;
 import gt.edu.usac.trabajosocial.servicio.ServicioEstudiante;
 import gt.edu.usac.trabajosocial.servicio.ServicioGeneral;
+import gt.edu.usac.trabajosocial.util.MensajePopup;
 import gt.edu.usac.trabajosocial.util.Mensajes;
 import java.util.List;
 import javax.annotation.Resource;
@@ -33,6 +34,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller("controladorAgregarEstudiante")
 @RequestMapping(value = "agregarEstudiante.htm")
 public class ControladorAgregarEstudiante {
+
+    //______________________________________________________________________________
+    /**
+     * <p>
+     * Lleva el nombre del titulo para el mensaje en la página
+     * <p>
+     */
+    private static String TITULO_MENSAJE = "agregarEstudiante.titulo";
 
     /**
      * <p>Matiene una bitacora de lo realizado por esta clase.</p>
@@ -132,19 +141,19 @@ public class ControladorAgregarEstudiante {
             wrapperEstudiante.quitarWrapper(estudiante);
             this.servicioEstudianteImpl.agregarEstudiante(estudiante, carrera);
 
-            this.configurarMensajePopup(request, true, true, "agregarEstudiante.exito");
+            MensajePopup.configurar(request, true, true, TITULO_MENSAJE, "agregarEstudiante.exito");
 
             // se registra el evento
             log.info("Agregar estudiante, carne: " + estudiante.getCarne());
 
         } catch (DataIntegrityViolationException e) {
             // el carne ingresado ya existe
-            this.configurarMensajePopup(request, false, false, "agregarEstudiante.dataIntegrityViolationException");
+            MensajePopup.configurar(request, false, false, TITULO_MENSAJE, "agregarEstudiante.dataIntegrityViolationException");
             log.warn(Mensajes.DATA_INTEGRITY_VIOLATION_EXCEPTION, e);
 
         } catch (DataAccessException e) {
             // error de acceso a datos
-            this.configurarMensajePopup(request, false, false, "dataAccessException");
+            MensajePopup.configurar(request, false, false, TITULO_MENSAJE, "dataAccessException");
             log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
         }
 
@@ -167,32 +176,5 @@ public class ControladorAgregarEstudiante {
         }
         return null;
     }
-//______________________________________________________________________________
-    /**
-     * <p>Este metodo se encarga de agregar los parametros necesarios en el
-     * {@link HttpServletRequest} para que se muestre el mensaje popup de
-     * resultados.</p>
-     *
-     * @param request Objeto {@link HttpServletRequest}
-     * @param exito Si es true el mensaje a mostrar es de exito, si es false
-     *        el mensaje a mostrar es de error
-     * @param limpiar Si es true se limpia el formulario
-     * @param mensaje Texto que mostrar el mensaje
-     */
-    private void configurarMensajePopup(HttpServletRequest request, Boolean exito,
-            Boolean limpiar, String mensaje) {
 
-        request.setAttribute("limpiarCampos", limpiar);
-        request.setAttribute("mostrarPopup", "true");
-        request.setAttribute("cuerpoMensaje", mensaje);
-
-        if(exito) {
-            request.setAttribute("tituloMensaje", "agregarEstudiante.titulo");
-            request.setAttribute("cssMensaje", "cssMensajeExito");
-
-        } else {
-            request.setAttribute("tituloMensaje", "tituloError");
-            request.setAttribute("cssMensaje", "cssMensajeError");
-        }
-    }
 }
