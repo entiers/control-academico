@@ -16,6 +16,7 @@ import gt.edu.usac.trabajosocial.servicio.ServicioEstudiante;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.Resource;
+import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.LogicalExpression;
@@ -170,24 +171,28 @@ public class ServicioEstudianteImpl implements ServicioEstudiante {
      * @param datos Contiene los filtros para el listado
      * @param ordenAscendente true si se quiere un listado en orden ascendente
      * @param columna Nombre de la columna por la cual se ordenara
+     * @param firstResult Numero que indica el primer registro que se mostrara
+     * @param maxResult Numero que indica la cantidad de registros que se mostraran
      * @return List Listado de estudiantes
      * @throws DataAccessException Si ocurrio un error de acceso a datos
      */
-    public List<Estudiante> getListadoEstudiantes(DatosBusquedaEstudiante datos,
-            boolean ordenAscendente, String columna) throws DataAccessException {
+    public List<Estudiante> getListadoEstudiantes(DatosBusquedaEstudiante datos, boolean ordenAscendente,
+            String columna, int firstResult, int maxResult)
+                throws DataAccessException {
 
         // se crean los filtro de la busqueda
         Criterion eqCarne = Restrictions.eq("carne", datos.getCarneBusqueda());
         Criterion eqNombre = Restrictions.ilike("nombre", datos.getNombreBusqueda(), MatchMode.ANYWHERE);
         Criterion eqApellido = Restrictions.ilike("apellido", datos.getApellidoBusqueda(), MatchMode.ANYWHERE);
-        DetachedCriteria criteria = DetachedCriteria.forClass(Estudiante.class);
+        Criteria criteria = this.daoGeneralImpl.getSesion().createCriteria(Estudiante.class);
+//        DetachedCriteria criteria = DetachedCriteria.forClass(Estudiante.class);
 
         // si no se envia el carne se crea un filtro or con nombre y apellido
         if(datos.getCarneBusqueda().isEmpty()) {
             if(!datos.getNombreBusqueda().isEmpty() && !datos.getApellidoBusqueda().isEmpty()) {
                 LogicalExpression orExp = Restrictions.or(eqNombre, eqApellido);
                 criteria.add(orExp);
-                
+
             } else if(!datos.getNombreBusqueda().isEmpty() && datos.getApellidoBusqueda().isEmpty())
                 criteria.add(eqNombre);
 
@@ -203,6 +208,10 @@ public class ServicioEstudianteImpl implements ServicioEstudiante {
         else
             criteria.addOrder(Order.desc(columna));
 
-        return this.daoGeneralImpl.find(criteria);
+        criteria.setFirstResult(firstResult);
+        criteria.setMaxResults(maxResult);
+
+        return criteria.list();
+//        return this.daoGeneralImpl.find(criteria);
     }
 }

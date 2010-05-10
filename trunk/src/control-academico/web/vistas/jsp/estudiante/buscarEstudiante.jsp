@@ -50,37 +50,40 @@
         <br/><br/><br/>
 
         <%-- tabla con el listado de estudiantes --%>
-        <fieldset>
-            <legend><fmt:message key="buscarEstudiante.tituloListado"/></legend>
-            <table id="tablaEstudiantes" class="ui-widget ui-widget-content">
-                <thead>
-                    <tr class="ui-widget-header ">
-                        <th><fmt:message key="agregarEstudiante.carne"/></th>
-                        <th><fmt:message key="agregarEstudiante.nombre"/></th>
-                        <th><fmt:message key="agregarEstudiante.apellido"/></th>
-                        <th><fmt:message key="agregarEstudiante.direccion"/></th>
-                        <th><fmt:message key="agregarEstudiante.telefono"/></th>
-                        <th><fmt:message key="agregarEstudiante.celular"/></th>
-                        <th><fmt:message key="agregarEstudiante.email"/></th>
-                        <th><fmt:message key="agregarEstudiante.fechaNacimiento"/></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <c:forEach items="${listadoEstudiantes}" var="estudiante">
-                        <tr>
-                            <td><c:out value="${estudiante.carne}" /></td>
-                            <td><c:out value="${estudiante.nombre}" /></td>
-                            <td><c:out value="${estudiante.apellido}" /></td>
-                            <td><c:out value="${estudiante.direccion}" /></td>
-                            <td><c:out value="${estudiante.telefono}" /></td>
-                            <td><c:out value="${estudiante.celular}" /></td>
-                            <td><c:out value="${estudiante.email}" /></td>
-                            <td><fmt:formatDate pattern="dd-MM-yyyy" value="${estudiante.fechaNacimiento}" /></td>
+        <form method="post" action="paginarBuscarEstudiante.htm" id="formularioTabla">
+            <fieldset>
+                <legend><fmt:message key="buscarEstudiante.tituloListado"/></legend>
+                <table id="tablaEstudiantes" class="ui-widget ui-widget-content">
+                    <thead>
+                        <tr class="ui-widget-header ">
+                            <th><fmt:message key="agregarEstudiante.carne"/></th>
+                            <th><fmt:message key="agregarEstudiante.nombre"/></th>
+                            <th><fmt:message key="agregarEstudiante.apellido"/></th>
+                            <th><fmt:message key="agregarEstudiante.direccion"/></th>
+                            <th><fmt:message key="agregarEstudiante.telefono"/></th>
+                            <th><fmt:message key="agregarEstudiante.celular"/></th>
+                            <th><fmt:message key="agregarEstudiante.email"/></th>
+                            <th><fmt:message key="agregarEstudiante.fechaNacimiento"/></th>
                         </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
-        </fieldset>
+                    </thead>
+                    <tbody>
+                        <c:forEach items="${listadoEstudiantes}" var="estudiante">
+                            <tr>
+                                <td><c:out value="${estudiante.carne}" /></td>
+                                <td><c:out value="${estudiante.nombre}" /></td>
+                                <td><c:out value="${estudiante.apellido}" /></td>
+                                <td><c:out value="${estudiante.direccion}" /></td>
+                                <td><c:out value="${estudiante.telefono}" /></td>
+                                <td><c:out value="${estudiante.celular}" /></td>
+                                <td><c:out value="${estudiante.email}" /></td>
+                                <td><fmt:formatDate pattern="dd-MM-yyyy" value="${estudiante.fechaNacimiento}" /></td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+                <input id="btnSiguiente" type="submit" value='<fmt:message key="btnSiguiente"/>' />
+            </fieldset>
+        </form>
 
         <%-- fragmento que muestra como mensaje popup el resultado de las operaciones --%>
         <%@include file="../../jspf/mensaje/resultado.jspf" %>

@@ -26,6 +26,7 @@
                 <value>/idiomas/textosEstudiante</value>
                 <value>/idiomas/textosCurso</value>
                 <value>/idiomas/textosSemestre</value>
+                <value>/idiomas/textosCatedratico</value>
             </list>
         </property>
 	<property name="cacheSeconds" value="0" />

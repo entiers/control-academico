@@ -82,9 +82,11 @@ public interface ServicioEstudiante {
      * @param datos Contiene los filtros para el listado
      * @param ordenAscendente true si se quiere un listado en orden ascendente
      * @param columna Nombre de la columna por la cual se ordenara
+     * @param firstResult Numero que indica el primer registro que se mostrara
+     * @param maxResult Numero que indica la cantidad de registros que se mostraran
      * @return List Listado de estudiantes
      * @throws DataAccessException Si ocurrio un error de acceso a datos
      */
-    List<Estudiante> getListadoEstudiantes(DatosBusquedaEstudiante datos,
-            boolean ordenAscendente, String columna) throws DataAccessException;
+    List<Estudiante> getListadoEstudiantes(DatosBusquedaEstudiante datos, boolean ordenAscendente,
+            String columna, int firstResult, int maxResult) throws DataAccessException;
 }

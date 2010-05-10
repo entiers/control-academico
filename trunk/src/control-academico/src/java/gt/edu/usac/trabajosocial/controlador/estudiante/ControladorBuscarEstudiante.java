@@ -8,7 +8,6 @@ package gt.edu.usac.trabajosocial.controlador.estudiante;
 
 import gt.edu.usac.trabajosocial.dominio.Estudiante;
 import gt.edu.usac.trabajosocial.servicio.ServicioEstudiante;
-import gt.edu.usac.trabajosocial.util.MensajePopup;
 import gt.edu.usac.trabajosocial.util.Mensajes;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,14 +30,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller("controladorBuscarEstudiante")
 public class ControladorBuscarEstudiante {
 
-    //______________________________________________________________________________
-    /**
-     * <p>
-     * Lleva el nombre del titulo para el mensaje en la página
-     * <p>
-     */
-    private static String TITULO_MENSAJE = "editarEstudiante.titulo";
-
     /**
      * <p>Matiene una bitacora de lo realizado por esta clase.</p>
      */
@@ -54,6 +45,12 @@ public class ControladorBuscarEstudiante {
     protected ServicioEstudiante servicioEstudianteImpl;
 
     private List<Estudiante> listadoEstudiantes;
+
+    private DatosBusquedaEstudiante datosBusquedaEstudiante;
+
+    private int firstResult = 0;
+
+    private int maxResult = 3;
 
 
     /**
@@ -75,8 +72,9 @@ public class ControladorBuscarEstudiante {
 
         // se agregan los objetos que se usaran en la pagina
         this.listadoEstudiantes = new ArrayList<Estudiante>();
+        this.datosBusquedaEstudiante = new DatosBusquedaEstudiante();
         modelo.addAttribute("listadoEstudiantes", this.listadoEstudiantes);
-        modelo.addAttribute("datosBusquedaEstudiante", new DatosBusquedaEstudiante());
+        modelo.addAttribute("datosBusquedaEstudiante", this.datosBusquedaEstudiante);
 
         return "estudiante/buscarEstudiante";
     }
@@ -107,31 +105,92 @@ public class ControladorBuscarEstudiante {
     public String buscarEstudiantes(@Valid DatosBusquedaEstudiante datosBusquedaEstudiante,
             BindingResult bindingResult, Model modelo, HttpServletRequest request) {
 
+        this.datosBusquedaEstudiante = datosBusquedaEstudiante;
         this.listadoEstudiantes.clear();
         modelo.addAttribute("listadoEstudiantes", this.listadoEstudiantes);
 
         if(bindingResult.hasErrors())
             return "estudiante/buscarEstudiante";
 
-        if(datosBusquedaEstudiante.isEmpty())
+        if(this.datosBusquedaEstudiante.isEmpty())
             return "estudiante/buscarEstudiante";
-        
+
         try {
+            // se inicializan las datos de la paginacion
+            this.firstResult = 0;
+            this.maxResult = 3;
+
             // se trata de hacer la busqueda
-            List<Estudiante> listado = this.servicioEstudianteImpl.getListadoEstudiantes(datosBusquedaEstudiante, true, "carne");
+            List<Estudiante> listado = this.servicioEstudianteImpl.getListadoEstudiantes(this.datosBusquedaEstudiante, true, "carne", this.firstResult, this.maxResult);
             if(listado.isEmpty())
-                MensajePopup.configurar(request, true, true, TITULO_MENSAJE,  "buscarEstudiante.sinResultados");
+                this.configurarMensajePopup(request, true, true, "buscarEstudiante.sinResultados");
             else
                 this.listadoEstudiantes.addAll(listado);
 
         } catch (DataAccessException e) {
             // error de acceso a datos
-            MensajePopup.configurar(request, false, false, TITULO_MENSAJE, "dataAccessException");
+            this.configurarMensajePopup(request, false, false, "dataAccessException");
 
             log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
         }
 
         return "estudiante/buscarEstudiante";
     }
+//______________________________________________________________________________
+    @RequestMapping(value = "paginarBuscarEstudiante.htm", method = RequestMethod.POST)
+    public String paginarListadoEstudiantes(Model modelo, HttpServletRequest request) {
 
+        this.listadoEstudiantes.clear();
+        modelo.addAttribute("datosBusquedaEstudiante", this.datosBusquedaEstudiante);
+        modelo.addAttribute("listadoEstudiantes", this.listadoEstudiantes);
+
+        try {
+            // se inicializan las datos de la paginacion
+            this.firstResult = this.firstResult + this.maxResult;
+            this.maxResult = 3;
+
+            // se trata de hacer la busqueda
+            List<Estudiante> listado = this.servicioEstudianteImpl.getListadoEstudiantes(this.datosBusquedaEstudiante, true, "carne", this.firstResult, this.maxResult);
+            if(listado.isEmpty())
+                this.configurarMensajePopup(request, true, true, "buscarEstudiante.sinResultados");
+            else
+                this.listadoEstudiantes.addAll(listado);
+
+        } catch (DataAccessException e) {
+            // error de acceso a datos
+            this.configurarMensajePopup(request, false, false, "dataAccessException");
+
+            log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
+        }
+
+        return "estudiante/buscarEstudiante";
+    }
+//______________________________________________________________________________
+    /**
+     * <p>Este metodo se encarga de agregar los parametros necesarios en el
+     * {@link HttpServletRequest} para que se muestre el mensaje popup de
+     * resultados.</p>
+     *
+     * @param request Objeto {@link HttpServletRequest}
+     * @param exito Si es true el mensaje a mostrar es de exito, si es false
+     *        el mensaje a mostrar es de error
+     * @param limpiar Si es true se limpia el formulario
+     * @param mensaje Texto que mostrar el mensaje
+     */
+    private void configurarMensajePopup(HttpServletRequest request, Boolean exito,
+            Boolean limpiar, String mensaje) {
+
+        request.setAttribute("limpiarCampos", limpiar);
+        request.setAttribute("mostrarPopup", "true");
+        request.setAttribute("cuerpoMensaje", mensaje);
+
+        if(exito) {
+            request.setAttribute("tituloMensaje", "editarEstudiante.titulo");
+            request.setAttribute("cssMensaje", "cssMensajeExito");
+
+        } else {
+            request.setAttribute("tituloMensaje", "tituloError");
+            request.setAttribute("cssMensaje", "cssMensajeError");
+        }
+    }
 }
