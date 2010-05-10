@@ -2,17 +2,24 @@
 <%@ page pageEncoding="UTF-8" %>
 <h2>Menu superior</h2>
 <a href="agregarEstudiante.htm"><fmt:message key="agregarEstudiante.titulo"/></a>
-&nbsp;&nbsp;
 
+&nbsp;&nbsp;
 <a href="editarEstudiante.htm"><fmt:message key="editarEstudiante.titulo"/></a>
-&nbsp;&nbsp;
 
+&nbsp;&nbsp;
 <a href="buscarEstudiante.htm"><fmt:message key="buscarEstudiante.titulo"/></a>
-&nbsp;&nbsp;
 
+&nbsp;&nbsp;
 <a href="agregarCurso.htm"><fmt:message key="agregarCurso.titulo"/></a>
-&nbsp;&nbsp;
 
+&nbsp;&nbsp;
 <a href="editarCurso.htm"><fmt:message key="editarCurso.titulo"/></a>
+
 &nbsp;&nbsp;
 <a href="agregarSemestre.htm"><fmt:message key="agregarSemestre.titulo"/></a>
+
+&nbsp;&nbsp;
+<a href="agregarCatedratico.htm"><fmt:message key="agregarCatedratico.titulo"/></a>
+
+&nbsp;&nbsp;
+<a href="editarCatedratico.htm"><fmt:message key="editarCatedratico.titulo"/></a>

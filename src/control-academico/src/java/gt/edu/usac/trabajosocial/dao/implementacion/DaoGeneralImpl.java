@@ -10,6 +10,7 @@ import gt.edu.usac.trabajosocial.dao.DaoGeneral;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -143,5 +144,9 @@ public class DaoGeneralImpl extends HibernateDaoSupport implements DaoGeneral {
     public <T> T uniqueResult(DetachedCriteria criteria) throws DataAccessException {
         final T entidad = (T)DataAccessUtils.uniqueResult(getHibernateTemplate().findByCriteria(criteria));
         return entidad;
+    }
+//______________________________________________________________________________
+    public Session getSesion() {
+        return this.getSession(true);
     }
 }

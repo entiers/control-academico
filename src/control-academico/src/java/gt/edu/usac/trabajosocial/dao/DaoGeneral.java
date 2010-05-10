@@ -9,6 +9,7 @@ package gt.edu.usac.trabajosocial.dao;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
+import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.dao.DataAccessException;
 
@@ -241,4 +242,11 @@ public interface DaoGeneral {
      *         con el accedo a la base de datos
      */
     <T> T uniqueResult(DetachedCriteria criteria) throws DataAccessException;
+//______________________________________________________________________________
+    /**
+     * <p>Este metodo retorna el objeto {@link Session} que utiliza el dao.</p>
+     *
+     * @return Session
+     */
+    Session getSesion();
 }
