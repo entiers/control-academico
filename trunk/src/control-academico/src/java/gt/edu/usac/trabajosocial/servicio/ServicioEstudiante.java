@@ -11,6 +11,7 @@ import gt.edu.usac.trabajosocial.dominio.Carrera;
 import gt.edu.usac.trabajosocial.dominio.Estudiante;
 import gt.edu.usac.trabajosocial.dominio.Usuario;
 import java.util.List;
+import org.hibernate.HibernateException;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 
@@ -58,7 +59,7 @@ public interface ServicioEstudiante {
     /**
      * <p>Este metodo permite la busqueda de estudiantes por su numero de
      * carne.</p>
-     * 
+     *
      * @param carne Numero de carne del estudiante
      * @return Estudiante
      * @throws DataAccessException Si ocurrio un error de acceso a datos
@@ -80,13 +81,21 @@ public interface ServicioEstudiante {
      * de orden y columna indicados.</p>
      *
      * @param datos Contiene los filtros para el listado
-     * @param ordenAscendente true si se quiere un listado en orden ascendente
-     * @param columna Nombre de la columna por la cual se ordenara
-     * @param firstResult Numero que indica el primer registro que se mostrara
-     * @param maxResult Numero que indica la cantidad de registros que se mostraran
      * @return List Listado de estudiantes
-     * @throws DataAccessException Si ocurrio un error de acceso a datos
+     * @throws HibernateException Si ocurrio un error de acceso a datos
      */
-    List<Estudiante> getListadoEstudiantes(DatosBusquedaEstudiante datos, boolean ordenAscendente,
-            String columna, int firstResult, int maxResult) throws DataAccessException;
+    List<Estudiante> getListadoEstudiantes(DatosBusquedaEstudiante datos)
+            throws HibernateException;
+//______________________________________________________________________________
+    /**
+     * <p>Este metodo obtiene la cantidad de registros que retornaria una
+     * busqueda hecha en base a los parametros de busqueda enviados por el
+     * usuario.</p>
+     *
+     * @param datos Contiene los filtros para el listado
+     * @return Integer Cantidad de registros
+     * @throws HibernateException Si ocurrio un error de acceso a datos
+     */
+    Integer rowCount(DatosBusquedaEstudiante datos)
+            throws HibernateException;
 }

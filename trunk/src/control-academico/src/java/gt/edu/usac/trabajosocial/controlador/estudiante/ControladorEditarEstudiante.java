@@ -30,11 +30,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller("controladorEditarEstudiante")
 public class ControladorEditarEstudiante {
 
-//______________________________________________________________________________
-    /**
-     * <p>
-     * Lleva el nombre del titulo para el mensaje en la página
-     * <p>
+/**
+     * <p>Lleva el nombre del titulo para el mensaje en la página</p>
      */
     private static String TITULO_MENSAJE = "editarEstudiante.titulo";
 

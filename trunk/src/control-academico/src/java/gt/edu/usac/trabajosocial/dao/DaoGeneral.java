@@ -193,6 +193,24 @@ public interface DaoGeneral {
     <T> List<T> find(String hql, Object valor) throws DataAccessException;
 //______________________________________________________________________________
     /**
+     * <p>Realiza una busqueda en la base de datos, la busqueda se realiza en
+     * base a la consulta HQL que se envia como parametro. La direfencia de este
+     * metodo es que la consulta HQL contiene una variable, a dicha variable
+     * se le asigna un valor en el momento en que se ejecuta. El valor de esta
+     * variable es el valor que se envia como parametro.</p>
+     *
+     * @param <T> Se utiliza para establecer el tipo de la instancia de entidad
+     *        que sera retornada
+     * @param hql Consulta que se realizara en la base de datos
+     * @param valores Array con las variables para la consulta
+     * @return List Listado que contiene objetos del mismo tipo que se define
+     *         en el parametro <T>
+     * @throws org.springframework.dao.DataAccessException Si ocurre algun error
+     *         con el accedo a la base de datos
+     */
+    <T> List<T> find(String hql, Object... valores) throws DataAccessException;
+//______________________________________________________________________________
+    /**
      * <p>Realiza una consulta en la base de datos, la consulta a realizar esta
      * definida por el objeto <code>DetachedCriteria</code> que se envia como
      * parametro.</p>
@@ -233,7 +251,7 @@ public interface DaoGeneral {
      * definida por el objeto <code>DetachedCriteria</code> que se envia como
      * parametro. Este metodo asume que la consulta solo devolvera un unico
      * valor, de lo contrario se lanza una excepciom.</p>
-     * 
+     *
      * @param <T> Se utiliza para establecer el tipo de la instancia de entidad
      *        que sera retornada
      * @param criteria Objeto <code>DetachedCriteria</code> que define la

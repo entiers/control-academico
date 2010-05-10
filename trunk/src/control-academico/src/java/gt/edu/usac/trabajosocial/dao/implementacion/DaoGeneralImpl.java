@@ -131,6 +131,11 @@ public class DaoGeneralImpl extends HibernateDaoSupport implements DaoGeneral {
         return entidades;
     }
 //______________________________________________________________________________
+    public <T> List<T> find(String hql, Object... valores) throws DataAccessException {
+        final List<T> entidades = getHibernateTemplate().find(hql, valores);
+        return entidades;
+    }
+//______________________________________________________________________________
     public <T> List<T> find(DetachedCriteria criteria) throws DataAccessException {
         final List<T> entidades = getHibernateTemplate().findByCriteria(criteria);
         return entidades;

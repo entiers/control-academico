@@ -27,9 +27,6 @@
         <script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-1.4.2.min.js"></script>
         <script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-ui-1.8.custom.min.js"></script>
 
-        <%-- script necesario para utilzar json --%>
-        <script type="text/javascript" src="<%= request.getContextPath() %>/js/json.min.js"></script>
-
 	<!--[if IE 6]>
 	<style>
 		#pitch .infoline {margin-top:-74px;}
