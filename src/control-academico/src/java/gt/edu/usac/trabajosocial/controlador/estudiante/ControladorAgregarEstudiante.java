@@ -35,11 +35,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping(value = "agregarEstudiante.htm")
 public class ControladorAgregarEstudiante {
 
-    //______________________________________________________________________________
     /**
-     * <p>
-     * Lleva el nombre del titulo para el mensaje en la página
-     * <p>
+     * <p>Lleva el nombre del titulo para el mensaje en la página.</p>
      */
     private static String TITULO_MENSAJE = "agregarEstudiante.titulo";
 

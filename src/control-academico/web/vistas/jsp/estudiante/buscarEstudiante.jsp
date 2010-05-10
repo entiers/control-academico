@@ -1,4 +1,4 @@
-<%-- 
+<%--
     Document   : buscarEstudiante
     Created on : 3/05/2010, 11:34:08 AM
     Author     : Daniel Castillo
@@ -17,6 +17,17 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title><fmt:message key="buscarEstudiante.titulo"/></title>
         <%@include file="../../jspf/estudiante/scripts.jspf" %>
+        <script type="text/javascript">
+            function paginarAdelante() {
+                document.forms[1].action = "paginarAdelanteBuscarEstudiante.htm";
+                document.forms[1].submit();
+            }
+
+            function paginarAtras() {
+                document.forms[1].action = "paginarAtrasBuscarEstudiante.htm";
+                document.forms[1].submit();
+            }
+        </script>
     </head>
     <body>
         <h1><fmt:message key="buscarEstudiante.titulo"/></h1>
@@ -50,7 +61,7 @@
         <br/><br/><br/>
 
         <%-- tabla con el listado de estudiantes --%>
-        <form method="post" action="paginarBuscarEstudiante.htm" id="formularioTabla">
+        <form method="post" name="formularioTabla" action="">
             <fieldset>
                 <legend><fmt:message key="buscarEstudiante.tituloListado"/></legend>
                 <table id="tablaEstudiantes" class="ui-widget ui-widget-content">
@@ -81,7 +92,9 @@
                         </c:forEach>
                     </tbody>
                 </table>
-                <input id="btnSiguiente" type="submit" value='<fmt:message key="btnSiguiente"/>' />
+
+                <%-- botones para hacer paginacion de resultados --%>
+                <%@include file="../../jspf/paginacion/botonesPaginacion.jspf" %>
             </fieldset>
         </form>
 

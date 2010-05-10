@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public class MensajePopup {
     
-    //______________________________________________________________________________
+    
     /**
      * <p>Este metodo se encarga de agregar los parametros necesarios en el
      * {@link HttpServletRequest} para que se muestre el mensaje popup de

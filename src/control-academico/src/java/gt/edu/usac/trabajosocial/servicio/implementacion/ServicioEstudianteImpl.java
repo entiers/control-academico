@@ -13,15 +13,18 @@ import gt.edu.usac.trabajosocial.dominio.Carrera;
 import gt.edu.usac.trabajosocial.dominio.Estudiante;
 import gt.edu.usac.trabajosocial.dominio.Usuario;
 import gt.edu.usac.trabajosocial.servicio.ServicioEstudiante;
+import gt.edu.usac.trabajosocial.util.BotonesPaginacion;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.Resource;
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.LogicalExpression;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -130,7 +133,7 @@ public class ServicioEstudianteImpl implements ServicioEstudiante {
     /**
      * <p>Este metodo permite la busqueda de estudiantes por su numero de
      * carne.</p>
-     * 
+     *
      * @param carne Numero de carne del estudiante
      * @return Estudiante
      * @throws DataAccessException Si ocurrio un error de acceso a datos
@@ -169,23 +172,64 @@ public class ServicioEstudianteImpl implements ServicioEstudiante {
      * de orden y columna indicados.</p>
      *
      * @param datos Contiene los filtros para el listado
-     * @param ordenAscendente true si se quiere un listado en orden ascendente
-     * @param columna Nombre de la columna por la cual se ordenara
-     * @param firstResult Numero que indica el primer registro que se mostrara
-     * @param maxResult Numero que indica la cantidad de registros que se mostraran
      * @return List Listado de estudiantes
      * @throws DataAccessException Si ocurrio un error de acceso a datos
      */
-    public List<Estudiante> getListadoEstudiantes(DatosBusquedaEstudiante datos, boolean ordenAscendente,
-            String columna, int firstResult, int maxResult)
-                throws DataAccessException {
+    public List<Estudiante> getListadoEstudiantes(DatosBusquedaEstudiante datos)
+                throws HibernateException {
+
+        // se crea la consulta
+        Criteria criteria = this.crearCriteriaBusqueda(datos);
+
+        // se ordena el resultado
+        if(datos.isOrdenAscendente())
+            criteria.addOrder(Order.asc(datos.getColumnaOrden()));
+        else
+            criteria.addOrder(Order.desc(datos.getColumnaOrden()));
+
+        // se pagina el resultado
+        criteria.setFirstResult(datos.getPrimerRegistro());
+        criteria.setMaxResults(BotonesPaginacion.REGISTROS_MAXIMOS);
+
+        return criteria.list();
+    }
+//______________________________________________________________________________
+    /**
+     * <p>Este metodo obtiene la cantidad de registros que retornaria una
+     * busqueda hecha en base a los parametros de busqueda enviados por el
+     * usuario.</p>
+     *
+     * @param datos Contiene los filtros para el listado
+     * @return Integer Cantidad de registros
+     * @throws HibernateException Si ocurrio un error de acceso a datos
+     */
+    public Integer rowCount(DatosBusquedaEstudiante datos)
+            throws HibernateException {
+
+        // se crea la consulta
+        Criteria criteria = this.crearCriteriaBusqueda(datos);
+
+        criteria.setProjection(Projections.rowCount());
+
+        return (Integer) criteria.list().get(0);
+    }
+//______________________________________________________________________________
+    /**
+     * <p>Este metodo se encarga de crear el objeto {@link Criteria} que se usa
+     * para realizar las busquedas en base a los parametros de busqueda ingresados
+     * por el usuario.</p>
+     * @param datos Objeto {@link DatosBusquedaEstudiante} que contiene los
+     *        parametros de busqueda ingresados por el usuario
+     * @return Criteria
+     */
+    private Criteria crearCriteriaBusqueda(DatosBusquedaEstudiante datos) {
+        // se crea la consulta
+        Criteria criteria = this.daoGeneralImpl.getSesion().createCriteria(Estudiante.class);
 
         // se crean los filtro de la busqueda
         Criterion eqCarne = Restrictions.eq("carne", datos.getCarneBusqueda());
         Criterion eqNombre = Restrictions.ilike("nombre", datos.getNombreBusqueda(), MatchMode.ANYWHERE);
         Criterion eqApellido = Restrictions.ilike("apellido", datos.getApellidoBusqueda(), MatchMode.ANYWHERE);
-        Criteria criteria = this.daoGeneralImpl.getSesion().createCriteria(Estudiante.class);
-//        DetachedCriteria criteria = DetachedCriteria.forClass(Estudiante.class);
 
         // si no se envia el carne se crea un filtro or con nombre y apellido
         if(datos.getCarneBusqueda().isEmpty()) {
@@ -202,16 +246,6 @@ public class ServicioEstudianteImpl implements ServicioEstudiante {
         } else
             criteria.add(eqCarne);
 
-        // se ordena el resultado
-        if(ordenAscendente)
-            criteria.addOrder(Order.asc(columna));
-        else
-            criteria.addOrder(Order.desc(columna));
-
-        criteria.setFirstResult(firstResult);
-        criteria.setMaxResults(maxResult);
-
-        return criteria.list();
-//        return this.daoGeneralImpl.find(criteria);
+        return criteria;
     }
 }

@@ -23,3 +23,6 @@
 
 &nbsp;&nbsp;
 <a href="editarCatedratico.htm"><fmt:message key="editarCatedratico.titulo"/></a>
+
+&nbsp;&nbsp;
+<a href="buscarCatedratico.htm"><fmt:message key="buscarCatedratico.titulo"/></a>

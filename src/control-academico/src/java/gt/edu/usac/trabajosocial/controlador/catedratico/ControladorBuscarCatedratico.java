@@ -4,10 +4,10 @@
  * Universidad de San Carlos de Guatemala
  */
 
-package gt.edu.usac.trabajosocial.controlador.estudiante;
+package gt.edu.usac.trabajosocial.controlador.catedratico;
 
-import gt.edu.usac.trabajosocial.dominio.Estudiante;
-import gt.edu.usac.trabajosocial.servicio.ServicioEstudiante;
+import gt.edu.usac.trabajosocial.dominio.Catedratico;
+import gt.edu.usac.trabajosocial.servicio.ServicioCatedratico;
 import gt.edu.usac.trabajosocial.util.BotonesPaginacion;
 import gt.edu.usac.trabajosocial.util.MensajePopup;
 import gt.edu.usac.trabajosocial.util.Mensajes;
@@ -29,37 +29,37 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @author Daniel Castillo
  * @version 2.0
  */
-@Controller("controladorBuscarEstudiante")
-public class ControladorBuscarEstudiante {
+@Controller("controladorBuscarCatedratico")
+public class ControladorBuscarCatedratico {
 
     /**
      * <p>Lleva el nombre del titulo para el mensaje en la página.</p>
      */
-    private static String TITULO_MENSAJE = "buscarEstudiante.titulo";
+    private static String TITULO_MENSAJE = "buscarCatedratico.titulo";
 
     /**
      * <p>Matiene una bitacora de lo realizado por esta clase.</p>
      */
-    private static Logger log = Logger.getLogger(ControladorBuscarEstudiante.class);
+    private static Logger log = Logger.getLogger(ControladorBuscarCatedratico.class);
 
     /**
      * <p>Contiene metodos que permiten el manejo de la informacion relacionada
-     * con el estudiante en la base de datos. Este objeto se encuentra registrado
+     * con el catedratico en la base de datos. Este objeto se encuentra registrado
      * como un bean de servicio en Spring, por lo que este es el encargado de
      * inyectar la dependencia.</p>
      */
     @Resource
-    protected ServicioEstudiante servicioEstudianteImpl;
+    protected ServicioCatedratico servicioCatedraticoImpl;
 
     /**
-     * <p>Mantiene una lista con los estudiantes devueltos en una busqueda.</p>
+     * <p>Mantiene una lista con los catedraticos devueltos en una busqueda.</p>
      */
-    private List<Estudiante> listadoEstudiantes;
+    private List<Catedratico> listadoCatedraticos;
 
     /**
      * <p>Mantiene los parametros de busqueda ingresados por el usuario.</p>
      */
-    private DatosBusquedaEstudiante datosBusquedaEstudiante;
+    private DatosBusquedaCatedratico datosBusquedaCatedratico;
 
     /**
      * <p>Mantiene el total de registros que retorna la busqueda.</p>
@@ -70,64 +70,64 @@ public class ControladorBuscarEstudiante {
     /**
      * <p>Constructor de la clase, no realiza ninguna accion.</p>
      */
-    public ControladorBuscarEstudiante() {}
+    public ControladorBuscarCatedratico() {}
 //______________________________________________________________________________
     /**
      * <p>Este metodo se ejecuta cada vez que se realiza una solicitud del tipo
-     * GET de la pagina <code>buscarEstudiante.htm</code>. El metodo se encarga
+     * GET de la pagina <code>buscarCatedratico.htm</code>. El metodo se encarga
      * de iniciar los objetos que se usaran en la pagina.</p>
      *
      * @param modelo Objeto {@link Model} que contiene todos los objetos que
      *        seran usados en la pagina
      * @return String Contiene el nombre de la vista a mostrar
      */
-    @RequestMapping(value = "buscarEstudiante.htm", method = RequestMethod.GET)
+    @RequestMapping(value = "buscarCatedratico.htm", method = RequestMethod.GET)
     public String crearFormulario(Model modelo) {
 
         // se agregan los objetos que se usaran en la pagina
-        this.listadoEstudiantes = new ArrayList<Estudiante>();
-        this.datosBusquedaEstudiante = new DatosBusquedaEstudiante();
-        modelo.addAttribute("listadoEstudiantes", this.listadoEstudiantes);
-        modelo.addAttribute("datosBusquedaEstudiante", this.datosBusquedaEstudiante);
+        this.listadoCatedraticos = new ArrayList<Catedratico>();
+        this.datosBusquedaCatedratico = new DatosBusquedaCatedratico();
+        modelo.addAttribute("listadoCatedraticos", this.listadoCatedraticos);
+        modelo.addAttribute("datosBusquedaCatedratico", this.datosBusquedaCatedratico);
 
-        return "estudiante/buscarEstudiante";
+        return "catedratico/buscarCatedratico";
     }
 //______________________________________________________________________________
     /**
      * <p>Este metodo se ejecuta cuando se solicita una busqueda desde la pagina
-     * de buscar estudiante. Las busquedas solo se realizan por el numero de
-     * carne, nombre o apellido del estudiante. El metodo realiza los siguientes
-     * pasos:
+     * de buscar catedratico. Las busquedas solo se realizan por el codigo de
+     * personal, nombre o apellido del catedratico. El metodo realiza los
+     * siguientes pasos:
      * <ul>
      * <li>Se valida que al menos se envio un parametro de busqueda</li>
      * <li>Valida los datos ingresados</li>
-     * <li>Se delega la busqueda al metodo <code>buscarEstudiantes</code></li>
+     * <li>Se delega la busqueda al metodo <code>buscarCatedraticos</code></li>
      * </ul>
      * </p>
      *
-     * @param datosBusquedaEstudiante Contiene los parametros de la busqueda
+     * @param datosBusquedaCatedratico Contiene los parametros de la busqueda
      * @param bindingResult Objeto {@link BindingResult} que valida los datos
      * @param modelo Objeto {@link Model} que contiene todos los objetos que
      *        seran usados en la pagina
      * @param request Peticion HTTP
      * @return String Contiene el nombre de la vista a mostrar
      */
-    @RequestMapping(value = "buscarBuscarEstudiante.htm", method = RequestMethod.POST)
-    public String buscarEstudiantes(@Valid DatosBusquedaEstudiante datosBusquedaEstudiante,
+    @RequestMapping(value = "buscarBuscarCatedratico.htm", method = RequestMethod.POST)
+    public String buscarCatedraticos(@Valid DatosBusquedaCatedratico datosBusquedaCatedratico,
             BindingResult bindingResult, Model modelo, HttpServletRequest request) {
 
         // se almacenan los parametros de busqueda ingresados en la pagina
-        this.datosBusquedaEstudiante = datosBusquedaEstudiante;
+        this.datosBusquedaCatedratico = datosBusquedaCatedratico;
 
         // no se enviaron parametros de busqueda
-        if(this.datosBusquedaEstudiante.isEmpty())
-            return "estudiante/buscarEstudiante";
+        if(this.datosBusquedaCatedratico.isEmpty())
+            return "catedratico/buscarCatedratico";
 
         // los parametros de busqueda no cumplen las reglas de validacion
         if(bindingResult.hasErrors())
-            return "estudiante/buscarEstudiante";
+            return "catedratico/buscarCatedratico";
 
-        this.datosBusquedaEstudiante.inicializarPrimerRegistro();
+        this.datosBusquedaCatedratico.inicializarPrimerRegistro();
         return this.realizarBusqueda(modelo, request, true);
     }
 //______________________________________________________________________________
@@ -142,14 +142,14 @@ public class ControladorBuscarEstudiante {
      * @param request Peticion HTTP
      * @return String Contiene el nombre de la vista a mostrar
      */
-    @RequestMapping(value = "paginarAdelanteBuscarEstudiante.htm", method = RequestMethod.POST)
+    @RequestMapping(value = "paginarAdelanteBuscarCatedratico.htm", method = RequestMethod.POST)
     public String paginarAdelante(Model modelo, HttpServletRequest request) {
 
         // se aumenta la paginacion
-        this.datosBusquedaEstudiante.aumentarPrimerRegistro();
+        this.datosBusquedaCatedratico.aumentarPrimerRegistro();
 
         // se mantienen los parametros de busqueda
-        modelo.addAttribute("datosBusquedaEstudiante", this.datosBusquedaEstudiante);
+        modelo.addAttribute("datosBusquedaCatedratico", this.datosBusquedaCatedratico);
 
         return this.realizarBusqueda(modelo, request, false);
     }
@@ -165,25 +165,25 @@ public class ControladorBuscarEstudiante {
      * @param request Peticion HTTP
      * @return String Contiene el nombre de la vista a mostrar
      */
-    @RequestMapping(value = "paginarAtrasBuscarEstudiante.htm", method = RequestMethod.POST)
+    @RequestMapping(value = "paginarAtrasBuscarCatedratico.htm", method = RequestMethod.POST)
     public String paginarAtras(Model modelo, HttpServletRequest request) {
 
         // se disminuye la paginacion
-        this.datosBusquedaEstudiante.disminuirPrimerRegistro();
+        this.datosBusquedaCatedratico.disminuirPrimerRegistro();
 
         // se mantienen los parametros de busqueda
-        modelo.addAttribute("datosBusquedaEstudiante", this.datosBusquedaEstudiante);
+        modelo.addAttribute("datosBusquedaCatedratico", this.datosBusquedaCatedratico);
 
         return this.realizarBusqueda(modelo, request, false);
     }
 //______________________________________________________________________________
     /**
-     * <p>Este metodo se encarga de realizar la busqueda de estudiantes segun
+     * <p>Este metodo se encarga de realizar la busqueda de catedraticos segun
      * los parametros de busqueda enviados. El procedimiento para realizar la
      * busqueda es el siguiente:
      * <ul>
-     * <li>La busqueda se delegaga a {@link ServicioEstudiante}, se le envia
-     * el objeto {@link DatosBusquedaEstudiante} el cual contiene los parametros
+     * <li>La busqueda se delegaga a {@link ServicioCatedratico}, se le envia
+     * el objeto {@link DatosBusquedaCatedratico} el cual contiene los parametros
      * de busqueda ingresados por el usuario</li>
      * <li>Si la busqueda no produce resultados se muestra un mensaje popup
      * indicando que no hay resultados que mostrar</li>
@@ -201,33 +201,33 @@ public class ControladorBuscarEstudiante {
     private String realizarBusqueda(Model modelo, HttpServletRequest request, boolean obtenerRowCount) {
 
         // se limpia el resultado anterior
-        this.listadoEstudiantes.clear();
-        modelo.addAttribute("listadoEstudiantes", this.listadoEstudiantes);
+        this.listadoCatedraticos.clear();
+        modelo.addAttribute("listadoCatedraticos", this.listadoCatedraticos);
 
         try {
             // se trata de obtener el total de registros de la consulta
             if(obtenerRowCount)
-                this.rowCount = this.servicioEstudianteImpl.rowCount(datosBusquedaEstudiante);
+                this.rowCount = this.servicioCatedraticoImpl.rowCount(datosBusquedaCatedratico);
 
             // se trata de hacer la busqueda
-            List<Estudiante> listado = this.servicioEstudianteImpl.getListadoEstudiantes(this.datosBusquedaEstudiante);
+            List<Catedratico> listado = this.servicioCatedraticoImpl.getListadoCatedraticos(this.datosBusquedaCatedratico);
             if(listado.isEmpty())
-                MensajePopup.configurar(request, true, true, TITULO_MENSAJE, "buscarEstudiante.sinResultados");
+                MensajePopup.configurar(request, true, true, TITULO_MENSAJE, "buscarCatedratico.sinResultados");
             else
-                this.listadoEstudiantes.addAll(listado);
+                this.listadoCatedraticos.addAll(listado);
 
             // se configuran los botones de la paginacion
-            BotonesPaginacion.configurar(request, this.datosBusquedaEstudiante.getPrimerRegistro(), this.rowCount);
+            BotonesPaginacion.configurar(request, this.datosBusquedaCatedratico.getPrimerRegistro(), this.rowCount);
 
         } catch (HibernateException e) {
             // error de acceso a datos
             MensajePopup.configurar(request, false, false, TITULO_MENSAJE, "dataAccessException");
-            this.datosBusquedaEstudiante.inicializarPrimerRegistro();
+            this.datosBusquedaCatedratico.inicializarPrimerRegistro();
 
             log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
         }
 
         // siempre se retorna la pagina de busquedas
-        return "estudiante/buscarEstudiante";
+        return "catedratico/buscarCatedratico";
     }
 }

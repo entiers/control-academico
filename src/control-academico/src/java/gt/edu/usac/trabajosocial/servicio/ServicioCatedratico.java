@@ -6,8 +6,11 @@
 
 package gt.edu.usac.trabajosocial.servicio;
 
+import gt.edu.usac.trabajosocial.controlador.catedratico.DatosBusquedaCatedratico;
 import gt.edu.usac.trabajosocial.dominio.Catedratico;
 import gt.edu.usac.trabajosocial.dominio.Escuela;
+import java.util.List;
+import org.hibernate.HibernateException;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 
@@ -61,4 +64,28 @@ public interface ServicioCatedratico {
      */
     Catedratico buscarCatedraticoPorCodigo(String codigo)
             throws DataAccessException;
+//______________________________________________________________________________
+    /**
+     * <p>Este metodo se encarga de crear un listado de catedraticos, el listado
+     * se filtra en base a los datos de busqueda y se ordena en base al tipo
+     * de orden y columna indicados.</p>
+     *
+     * @param datos Contiene los filtros para el listado
+     * @return List Listado de estudiantes
+     * @throws HibernateException Si ocurrio un error de acceso a datos
+     */
+    List<Catedratico> getListadoCatedraticos(DatosBusquedaCatedratico datos)
+            throws HibernateException;
+//______________________________________________________________________________
+    /**
+     * <p>Este metodo obtiene la cantidad de registros que retornaria una
+     * busqueda hecha en base a los parametros de busqueda enviados por el
+     * usuario.</p>
+     *
+     * @param datos Contiene los filtros para el listado
+     * @return Integer Cantidad de registros
+     * @throws HibernateException Si ocurrio un error de acceso a datos
+     */
+    Integer rowCount(DatosBusquedaCatedratico datos)
+            throws HibernateException;
 }
