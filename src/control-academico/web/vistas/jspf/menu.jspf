@@ -16,6 +16,16 @@
 <a href="editarCurso.htm"><fmt:message key="editarCurso.titulo"/></a>
 
 &nbsp;&nbsp;
+
+<a href="agregarSemestre.htm"><fmt:message key="agregarSemestre.titulo"/></a>
+
+&nbsp;&nbsp;
+<a href="agregarSalon.htm"><fmt:message key="agregarSalon.titulo"/></a>
+
+&nbsp;&nbsp;
+<a href="editarSalon.htm"><fmt:message key="editarSalon.titulo"/></a>
+
+&nbsp;&nbsp;
 <a href="agregarSemestre.htm"><fmt:message key="agregarSemestre.titulo"/></a>
 
 &nbsp;&nbsp;

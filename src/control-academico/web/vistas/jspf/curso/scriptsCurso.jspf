@@ -1,21 +1,18 @@
 
 <%@ page pageEncoding="UTF-8" %>
+<%@ page import="gt.edu.usac.trabajosocial.util.RequestUtil" %>
+<%@ page import="gt.edu.usac.trabajosocial.dominio.wrapper.WrapperCurso" %>
 
 <script type="text/javascript">
     $(function(){        
         // se crea y configura el panel popup que muestra los
         // mensajes de resultados de las operaciones 
         <%
-            boolean mostrar =
-                    request.getAttribute("mostrarPopup") == null
-                    ? false
-                    : Boolean.parseBoolean(request.getAttribute("mostrarPopup").toString());
+            RequestUtil requestUtil = new RequestUtil(request);
+            boolean mostrar = requestUtil.isMostrar();
+            boolean limpiar = requestUtil.isLimpiar();
 
-
-            boolean limpiar =
-                    request.getAttribute("limpiarCampos") == null
-                    ? false
-                    : Boolean.parseBoolean(request.getAttribute("limpiarCampos").toString());
+            WrapperCurso wrapperCurso = new WrapperCurso();
         %>
 
         $("#mensajePopup").dialog({
@@ -24,12 +21,12 @@
             buttons: {
                 '<fmt:message key="btnAceptar"/>': function() {
                     if(<%= limpiar %>) {
-                        $("#codigo").val("");
-                        $("#creditosPracticos").val("1");
-                        $("#creditosPrerrequisito").val("1");
-                        $("#creditosTeoricos").val("1");
-                        $("#nombre").val("");
-                        $("#semestre").val("1");
+                        $("#codigo").val("<%= wrapperCurso.getCodigo() %>");
+                        $("#creditosPracticos").val("<%= wrapperCurso.getCreditosPracticos() %>");
+                        $("#creditosPrerrequisito").val("<%= wrapperCurso.getCreditosPrerrequisito() %>");
+                        $("#creditosTeoricos").val("<%= wrapperCurso.getCreditosTeoricos() %>");
+                        $("#nombre").val("<%= wrapperCurso.getNombre() %>");
+                        $("#semestre").val("<%= wrapperCurso.getSemestre() %>");
                     }
                     
                     $(this).dialog('close');

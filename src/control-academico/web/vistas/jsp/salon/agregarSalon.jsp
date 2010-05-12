@@ -1,6 +1,6 @@
 <%-- 
-    Document   : agregarSemestre
-    Created on : May 7, 2010, 7:46:39 PM
+    Document   : agregarSalon
+    Created on : 8/05/2010, 04:20:03 PM
     Author     : Mario Batres
 --%>
 
@@ -15,16 +15,18 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title><fmt:message key="agregarSemestre.titulo"/></title>
-        <%@include file="../../jspf/semestre/scriptsSemestre.jspf" %>
+        <title><fmt:message key="agregarSalon.titulo"/></title>
+
+        <c:set var="readOnly" scope="page" value="false" />
+        <%@include file="../../jspf/salon/scriptsSalon.jspf" %>
     </head>
     <body>
-        <h1><fmt:message key="agregarSemestre.titulo"/></h1>
+        <h1><fmt:message key="agregarSalon.titulo"/></h1>
         <%-- formulario para ingresar los datos del estudiante --%>
-        <form:form modelAttribute="wrapperSemestre" method="post">
+        <form:form modelAttribute="wrapperSalon" method="post">
             <fieldset>
                 <%-- se importan los demas campos --%>
-                <%@include file="../../jspf/semestre/formularioSemestre.jspf" %>
+                <%@include file="../../jspf/salon/formularioSalon.jspf" %>
                 <%-- boton --%>
                 <input type="submit" value='<fmt:message key="btnAgregar"/>' />
             </fieldset>
