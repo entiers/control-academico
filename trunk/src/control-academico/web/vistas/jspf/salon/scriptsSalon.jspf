@@ -1,7 +1,9 @@
 
 <%@ page pageEncoding="UTF-8" %>
 <%@ page import="gt.edu.usac.trabajosocial.util.RequestUtil" %>
-<%@ page import="gt.edu.usac.trabajosocial.dominio.wrapper.WrapperSemestre" %>
+<%@ page import="gt.edu.usac.trabajosocial.dominio.wrapper.WrapperSalon" %>
+
+
 
 <script type="text/javascript">
     $(function(){
@@ -12,7 +14,7 @@
             boolean mostrar = requestUtil.isMostrar();
             boolean limpiar = requestUtil.isLimpiar();
 
-            WrapperSemestre wrapperSemestre = new WrapperSemestre();
+            WrapperSalon wrapperSalon = new WrapperSalon();
         %>
 
         $("#mensajePopup").dialog({
@@ -21,9 +23,11 @@
             buttons: {
                 '<fmt:message key="btnAceptar"/>': function() {
                     if(<%= limpiar %>) {
-                        $("#anio").val("<%= wrapperSemestre.getAnio() %>");
-                        $("#numero").val("<%= wrapperSemestre.getNumero() %>");
+                        $("#numero").val("<%= wrapperSalon.getNumero() %>");
+                        $("#edificio").val("<%= wrapperSalon.getEdificio() %>");
+                        $("#capacidad").val("<%= wrapperSalon.getCapacidad() %>");
                     }
+
                     $(this).dialog('close');
                 }
             }

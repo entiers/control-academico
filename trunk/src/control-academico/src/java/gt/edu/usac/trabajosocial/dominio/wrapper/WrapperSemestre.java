@@ -9,8 +9,7 @@ package gt.edu.usac.trabajosocial.dominio.wrapper;
 import gt.edu.usac.trabajosocial.dominio.Semestre;
 import java.util.Calendar;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.Pattern;
-import org.hibernate.validator.constraints.NotEmpty;
+
 
 
 /**
@@ -27,7 +26,7 @@ public class WrapperSemestre {
     }
 
 
-    @Min(value=2000, message="validacion.minimo")
+    @Min(value=2000, message="{validacion.minimo}")
     private short anio;
 
     //@NotEmpty(message = "{validacion.campoObligatorio}")
