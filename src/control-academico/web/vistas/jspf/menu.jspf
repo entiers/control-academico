@@ -36,3 +36,9 @@
 
 &nbsp;&nbsp;
 <a href="buscarCatedratico.htm"><fmt:message key="buscarCatedratico.titulo"/></a>
+
+&nbsp;&nbsp;
+<a href="agregarHorario.htm"><fmt:message key="agregarHorario.titulo"/></a>
+
+&nbsp;&nbsp;
+<a href="buscarHorario.htm"><fmt:message key="buscarHorario.titulo"/></a>

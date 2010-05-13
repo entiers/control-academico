@@ -11,6 +11,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 /**
  *
  * @author Mario Batres
+ * @version 1.0
  */
 public class DatosBusquedaCurso {
 //______________________________________________________________________________

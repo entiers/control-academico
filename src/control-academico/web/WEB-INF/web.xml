@@ -110,7 +110,7 @@
             <param-value>sessionFactory</param-value>
         </init-param>
     </filter>
-
+    
 
     <!-- ·······································································
     ··· Configuracion de Spring Security 3.0
