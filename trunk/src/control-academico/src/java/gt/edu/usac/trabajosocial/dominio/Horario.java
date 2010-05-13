@@ -118,7 +118,7 @@ public class Horario implements java.io.Serializable {
         this.semestre = semestre;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(
         name = "id_curso",
         nullable = false
@@ -175,7 +175,7 @@ public class Horario implements java.io.Serializable {
     @Column(
         name = "dia",
         nullable = false,
-        length = 6
+        length = 10
     )
     public String getDia() {
         return this.dia;

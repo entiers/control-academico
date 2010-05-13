@@ -25,6 +25,7 @@
         <intercept-url pattern="/*Semestre.htm" filters='none'/>
         <intercept-url pattern="/*Salon.htm" filters='none'/>
         <intercept-url pattern="/*Catedratico.htm" filters='none'/>
+        <intercept-url pattern="/*Horario.htm" filters='none'/>
         <!-- se aplican los roles a las paginas -->
         <intercept-url pattern="/**" access="ROLE_CONSULTAR" />
 

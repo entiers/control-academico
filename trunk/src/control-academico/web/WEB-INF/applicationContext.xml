@@ -28,6 +28,7 @@
                 <value>/idiomas/textosSemestre</value>
                 <value>/idiomas/textosSalon</value>
                 <value>/idiomas/textosCatedratico</value>
+                <value>/idiomas/textosHorario</value>
             </list>
         </property>
 	<property name="cacheSeconds" value="0" />
