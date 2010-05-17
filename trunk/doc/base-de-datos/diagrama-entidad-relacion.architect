@@ -4,18 +4,8 @@
  <print-settings numCopies="1" zoom="1.0" pageNumbersPrinted="true" orientation="1" paperWidth="612.0" paperHeight="792.0" leftBorder="50.0" rightBorder="50.0" topBorder="50.0" bottomBorder="50.0" />
  <project-data-sources>
   <data-source id="DS0">
-   <property key="Connection Type" value="PostgreSQL" />
-   <property key="Logical" value="control_academico" />
-   <property key="JDBC URL" value="jdbc:postgresql://localhost:5432/control_academico" />
-   <property key="UID" value="u_control_academico" />
-   <property key="PWD" value="abc123" />
-   <property key="ca.sqlpower.architect.etl.kettle.database" value="" />
-   <property key="ca.sqlpower.architect.etl.kettle.port" value="" />
-   <property key="ca.sqlpower.architect.etl.kettle.hostname" value="" />
-   <property key="ca.sqlpower.architect.etl.kettle.repos.login" value="" />
-   <property key="ca.sqlpower.architect.etl.kettle.repos.password" value="" />
   </data-source>
-  <data-source id="DS0">
+  <data-source id="DS2">
    <property key="Connection Type" value="PostgreSQL" />
    <property key="Logical" value="control_academico" />
    <property key="JDBC URL" value="jdbc:postgresql://localhost:5432/control_academico" />
@@ -29,7 +19,7 @@
   </data-source>
  </project-data-sources>
  <source-databases>
-  <database id="DB0" populated="true" UUID="715cab82-7dd3-4671-b3c6-a9cc7af1f9d7" dbcs-ref="DS0" name="control_academico" physicalName="control_academico" >
+  <database id="DB0" populated="true" UUID="715cab82-7dd3-4671-b3c6-a9cc7af1f9d7" dbcs-ref="DS2" name="control_academico" physicalName="control_academico" >
    <catalog id="CAT1" populated="true" UUID="bf68df7c-6cf9-4808-8299-907617d91935" name="control_academico" nativeTerm="database" physicalName="control_academico" >
     <schema id="SCH2" populated="true" UUID="990752ca-9258-48fd-81a8-d49802a10666" name="information_schema" nativeTerm="schema" physicalName="information_schema" >
     </schema>
@@ -156,7 +146,7 @@
     <column id="COL62" populated="true" UUID="efb0fe1d-f8ef-44ec-8271-76483321d0dc" autoIncrement="true" autoIncrementSequenceName="Horario_id_horario_seq" defaultValue="" name="id_horario" nullable="0" physicalName="id_horario" precision="10" primaryKeySeq="0" referenceCount="1" remarks="" scale="0" type="4" />
     <column id="COL63" populated="true" UUID="8d9706ee-c7b5-4df5-b028-ddb99150857f" autoIncrement="false" autoIncrementSequenceName="Horario_hora_inicio_seq" defaultValue="" name="hora_inicio" nullable="0" physicalName="hora_inicio" precision="10" referenceCount="1" remarks="" scale="0" type="92" />
     <column id="COL64" populated="true" UUID="048344a5-d5ca-493a-8de5-46856402f82c" autoIncrement="false" autoIncrementSequenceName="Horario_hora_fin_seq" defaultValue="" name="hora_fin" nullable="0" physicalName="hora_fin" precision="10" referenceCount="1" remarks="" scale="0" type="92" />
-    <column id="COL65" populated="true" UUID="e3d35f00-fc5e-46c0-b310-3679d212425e" autoIncrement="false" autoIncrementSequenceName="Horario_dia_seq" defaultValue="" name="dia" nullable="0" physicalName="dia" precision="6" referenceCount="1" remarks="" scale="6" type="12" />
+    <column id="COL65" populated="true" UUID="e3d35f00-fc5e-46c0-b310-3679d212425e" autoIncrement="false" autoIncrementSequenceName="Horario_dia_seq" defaultValue="" name="dia" nullable="0" physicalName="dia" precision="10" referenceCount="1" remarks="" scale="6" type="12" />
     <column id="COL66" populated="true" UUID="b0da8c9e-44f8-45be-89f6-7fc3f349ce40" autoIncrement="false" autoIncrementSequenceName="Horario_seccion_seq" defaultValue="" name="seccion" nullable="0" physicalName="seccion" precision="2" referenceCount="1" remarks="" scale="0" type="12" />
     <column id="COL67" populated="true" UUID="31cba74a-668d-44f0-81fc-92077e00d797" autoIncrement="false" autoIncrementSequenceName="Horario_tipo_seq" defaultValue="" name="tipo" nullable="0" physicalName="tipo" precision="20" referenceCount="1" remarks="" scale="0" type="12" />
     <column id="COL68" populated="true" UUID="7c8835fd-0c1a-42fb-83dc-2a4bd5e4c00e" autoIncrement="false" autoIncrementSequenceName="Horario_estado_seq" defaultValue="" name="estado" nullable="0" physicalName="estado" precision="10" referenceCount="1" remarks="" scale="0" type="16" />
@@ -854,7 +844,7 @@
  </target-database>
  <ddl-generator type="ca.sqlpower.architect.ddl.PostgresDDLGenerator" allow-connection="true" target-schema="control"> </ddl-generator>
  <create-kettle-job-settings filePath="" jobName="" schemaName="" kettleJoinType="0" savingToFile="true" />
- <play-pen zoom="1.0000000000000009" viewportX="997" viewportY="0" relationship-style="rectilinear" names-displayLogicalNames="true" showPrimaryTag="true" showForeignTag="true" showAlternateTag="true" columnVisibility="ALL" relationshipLabelVisibility="true">
+ <play-pen zoom="1.0000000000000009" viewportX="1888" viewportY="0" relationship-style="rectilinear" names-displayLogicalNames="true" showPrimaryTag="true" showForeignTag="true" showAlternateTag="true" columnVisibility="ALL" relationshipLabelVisibility="true">
   <table-pane table-ref="TAB7" x="1404" y="979" bgColor="0xf0f0f0" fgColor="0x000000" rounded="true" dashed="false"/>
   <table-pane table-ref="TAB17" x="2498" y="1473" bgColor="0xf0f0f0" fgColor="0x000000" rounded="true" dashed="false"/>
   <table-pane table-ref="TAB23" x="1442" y="1547" bgColor="0xf0f0f0" fgColor="0x000000" rounded="true" dashed="false"/>
