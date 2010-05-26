@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+            http://www.springframework.org/schema/context
+            http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+
+    <!-- ·······································································
+    ··· Paquete base en donde se encuentran los beans de Spring
+    ········································································ -->
+    <context:component-scan base-package="gt.edu.usac.trabajosocial" />
+
+
+    <!-- ·······································································
+    ··· Internacionalizacion
+    ········································································ -->
+    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <!-- ubicacion de los archivos de idioma -->
+        <property name="basenames">
+            <list>
+                <value>/idiomas/textosGenerales</value>
+                <value>/idiomas/textosEstudiante</value>
+                <value>/idiomas/textosCurso</value>
+                <value>/idiomas/textosSemestre</value>
+                <value>/idiomas/textosSalon</value>
+                <value>/idiomas/textosCatedratico</value>
+                <value>/idiomas/textosHorario</value>
+            </list>
+        </property>
+	<property name="cacheSeconds" value="0" />
+    </bean>
+
+
+    <!-- ·······································································
+    ··· Archivo de configuracion para Spring MVC
+    ········································································ -->
+    <import resource="mvc-config.xml" />
+
+
+    <!-- ·······································································
+    ··· Archivo de configuracion para Hibernate
+    ········································································ -->
+    <import resource="hibernate-config.xml" />
+
+
+    <!-- ·······································································
+    ··· Archivo de  configuracion para Spring Security
+    ········································································ -->
+    <import resource="security-config.xml" />
+</beans>
