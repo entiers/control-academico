@@ -1,0 +1,35 @@
+
+<%@ page pageEncoding="UTF-8" %>
+<%@ page import="gt.edu.usac.trabajosocial.util.RequestUtil" %>
+<%@ page import="gt.edu.usac.trabajosocial.dominio.wrapper.WrapperSemestre" %>
+
+<script type="text/javascript">
+    $(function(){
+        // se crea y configura el panel popup que muestra los
+        // mensajes de resultados de las operaciones
+        <%
+            RequestUtil requestUtil = new RequestUtil(request);
+            boolean mostrar = requestUtil.isMostrar();
+            boolean limpiar = requestUtil.isLimpiar();
+
+            WrapperSemestre wrapperSemestre = new WrapperSemestre();
+        %>
+
+        $("#mensajePopup").dialog({
+            autoOpen: <%= mostrar %>,
+            modal: true,
+            buttons: {
+                '<fmt:message key="btnAceptar"/>': function() {
+                    if(<%= limpiar %>) {
+                        $("#anio").val("<%= wrapperSemestre.getAnio() %>");
+                        $("#numero").val("<%= wrapperSemestre.getNumero() %>");
+                    }
+                    $(this).dialog('close');
+                }
+            }
+        });
+
+    });
+</script>
+
+

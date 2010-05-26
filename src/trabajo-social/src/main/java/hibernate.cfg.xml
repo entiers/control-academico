@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <mapping class="gt.edu.usac.trabajosocial.dominio.AsignacionCatedraticoHorario"/>
+    <mapping class="gt.edu.usac.trabajosocial.dominio.AsignacionUsuarioPerfil"/>
+    <mapping class="gt.edu.usac.trabajosocial.dominio.DetalleAsignacion"/>
+    <mapping class="gt.edu.usac.trabajosocial.dominio.AsignacionIndicador"/>
+    <mapping class="gt.edu.usac.trabajosocial.dominio.AsignacionDocumento"/>
+    <mapping class="gt.edu.usac.trabajosocial.dominio.Usuario"/>
+    <mapping class="gt.edu.usac.trabajosocial.dominio.TipoAsignacion"/>
+    <mapping class="gt.edu.usac.trabajosocial.dominio.Documento"/>
+    <mapping class="gt.edu.usac.trabajosocial.dominio.CursoExtra"/>
+    <mapping class="gt.edu.usac.trabajosocial.dominio.Catedratico"/>
+    <mapping class="gt.edu.usac.trabajosocial.dominio.Indicador"/>
+    <mapping class="gt.edu.usac.trabajosocial.dominio.CalendarioActividades"/>
+    <mapping class="gt.edu.usac.trabajosocial.dominio.Salon"/>
+    <mapping class="gt.edu.usac.trabajosocial.dominio.ProgramaCurso"/>
+    <mapping class="gt.edu.usac.trabajosocial.dominio.Pensum"/>
+    <mapping class="gt.edu.usac.trabajosocial.dominio.Escuela"/>
+    <mapping class="gt.edu.usac.trabajosocial.dominio.AsignacionRolPerfil"/>
+    <mapping class="gt.edu.usac.trabajosocial.dominio.Semestre"/>
+    <mapping class="gt.edu.usac.trabajosocial.dominio.Estudiante"/>
+    <mapping class="gt.edu.usac.trabajosocial.dominio.AreaEstudio"/>
+    <mapping class="gt.edu.usac.trabajosocial.dominio.NotaIndicador"/>
+    <mapping class="gt.edu.usac.trabajosocial.dominio.AsignacionCursoPensum"/>
+    <mapping class="gt.edu.usac.trabajosocial.dominio.Perfil"/>
+    <mapping class="gt.edu.usac.trabajosocial.dominio.Curso"/>
+    <mapping class="gt.edu.usac.trabajosocial.dominio.Log"/>
+    <mapping class="gt.edu.usac.trabajosocial.dominio.Horario"/>
+    <mapping class="gt.edu.usac.trabajosocial.dominio.Asignacion"/>
+    <mapping class="gt.edu.usac.trabajosocial.dominio.Desasignacion"/>
+    <mapping class="gt.edu.usac.trabajosocial.dominio.Rol"/>
+    <mapping class="gt.edu.usac.trabajosocial.dominio.Prerrequisito"/>
+    <mapping class="gt.edu.usac.trabajosocial.dominio.CursoAprobado"/>
+    <mapping class="gt.edu.usac.trabajosocial.dominio.ConteoAsignacion"/>
+    <mapping class="gt.edu.usac.trabajosocial.dominio.Carrera"/>
+    <mapping class="gt.edu.usac.trabajosocial.dominio.AsignacionCatedraticoEscuela"/>
+    <mapping class="gt.edu.usac.trabajosocial.dominio.AsignacionEstudianteCarrera"/>
+    <mapping class="gt.edu.usac.trabajosocial.dominio.CuentaCorriente"/>
+    <mapping class="gt.edu.usac.trabajosocial.dominio.Movimiento"/>
+  </session-factory>
+</hibernate-configuration>
