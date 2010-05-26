@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+    xmlns:beans="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/security
+        http://www.springframework.org/schema/security/spring-security-3.0.xsd">
+
+
+    <!-- ·······································································
+    ··· Configuracion rapida de la seguridad, crea la cadena de filtros
+    ··· de mas uso para la seguridad
+    ········································································ -->
+    <http auto-config='true'>
+        <!-- indica a que paginas no se aplican los filtros de seguridad-->
+        <intercept-url pattern="/js/**" filters='none'/>
+        <intercept-url pattern="/css/**" filters='none'/>
+        <intercept-url pattern="/login.htm" filters='none'/>
+        <intercept-url pattern="/accesoDenegado.htm" filters='none'/>
+
+        <intercept-url pattern="/*Estudiante.htm" filters='none'/>
+        <intercept-url pattern="/*Curso.htm" filters='none'/>
+        <intercept-url pattern="/*Semestre.htm" filters='none'/>
+        <intercept-url pattern="/*Salon.htm" filters='none'/>
+        <intercept-url pattern="/*Catedratico.htm" filters='none'/>
+        <intercept-url pattern="/*Horario.htm" filters='none'/>
+        <!-- se aplican los roles a las paginas -->
+        <intercept-url pattern="/**" access="ROLE_CONSULTAR" />
+
+        <!-- se especifica que pagina contiene el formulario de login -->
+        <form-login login-page='/login.htm' default-target-url='/index.htm' always-use-default-target='true'/>
+    </http>
+
+
+    <!-- ·······································································
+    ··· Bean que conecta con el proveedor de antenticacion
+    ········································································ -->
+    <authentication-manager>
+        <!-- proveedor de auntenticacion -->
+        <authentication-provider ref='daoAuthenticationProvider'/>
+    </authentication-manager>
+
+
+    <!-- ·······································································
+    ··· Bean encargado de proporciona la autenticacion, la autenticacion se
+    ··· realiza mediante la implementacion personalizada de la interface
+    ··· UserDetailsService
+    ········································································ -->
+    <beans:bean id="daoAuthenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+        <beans:property name="userDetailsService" ref="userDetailsServiceImpl"/>
+    </beans:bean>
+
+
+    <!-- ·······································································
+    ··· Configuracion basica de Spring Security, utilizada unicamente para
+    ··· probar la integracion de los frameworks y el correcto funcionamiento
+    ··· de Spring Security, si se utiliza esta configuracion se debe de
+    ··· deshabilitar las demas configuracion de este archivo
+    ········································································ -->
+    <!--
+    <http auto-config='true'>
+        <intercept-url pattern="/**" access="ROLE_USER" />
+    </http>
+
+    <authentication-manager>
+        <authentication-provider>
+            <user-service>
+                <user name="usuario1" password="password1" authorities="ROLE_USER, ROLE_ADMIN" />
+                <user name="usuario2" password="password2" authorities="ROLE_USER" />
+            </user-service>
+        </authentication-provider>
+    </authentication-manager>
+    -->
+</beans:beans>

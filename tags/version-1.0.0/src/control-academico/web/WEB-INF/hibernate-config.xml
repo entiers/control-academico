@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+            http://www.springframework.org/schema/context
+            http://www.springframework.org/schema/context/spring-context-3.0.xsd
+            http://www.springframework.org/schema/tx
+            http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+
+
+    <!-- ·······································································
+    ··· Indica que la configuracion para el manejo de transacciones se realiza
+    ··· por medio de anotaciones en las clases especificas. El bean encargado
+    ··· de controlar las transacciones es "transactionManager", el cual esta
+    ··· definido mas adelante en este archivo
+    ········································································ -->
+    <tx:annotation-driven transaction-manager="transactionManager" />
+
+
+    <!-- ·······································································
+    ··· Bean para configurar los parametros de desencriptacion
+    ········································································ -->
+    <bean id="environmentConfiguration" class="org.jasypt.encryption.pbe.config.EnvironmentStringPBEConfig">
+        <property name="password" value="APP_ENCRYPTION_PASSWORD" />
+    </bean>
+
+
+    <!-- ·······································································
+    ··· Bean que realiza las operaciones de encriptacion y desencriptacion
+    ········································································ -->
+    <bean id="configurationEncryptor" class="org.jasypt.encryption.pbe.StandardPBEStringEncryptor">
+        <property name="config" ref="environmentConfiguration" />
+    </bean>
+
+
+    <!-- ·······································································
+    ··· Bean que carga los parametros para la conexion JDBC. Como se esta
+    ··· utilizando Jasypt se usa el bean de propiedades de esta libreria y
+    ··· no el de Spring
+    ········································································ -->
+    <bean id="propertyConfigurer" class="org.jasypt.spring.properties.EncryptablePropertyPlaceholderConfigurer">
+        <constructor-arg ref="configurationEncryptor" />
+        <property name="locations">
+            <list>
+                <value>/WEB-INF/jdbc.properties</value>
+            </list>
+        </property>
+    </bean>
+
+
+    <!-- ·······································································
+    ··· Bean que crea la conexion con la base de datos por medio de JDBC
+    ········································································ -->
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	<property name="driverClassName" value="${jdbc.driverClassName}" />
+	<property name="url" value="${jdbc.url}" />
+	<property name="username" value="${jdbc.username}" />
+	<property name="password" value="${jdbc.password}" />
+    </bean>
+
+
+    <!-- ·······································································
+    ··· Bean de sesion para la base de datos, realiza la integracion con Hibernate
+    ········································································ -->
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+	<property name="dataSource" ref="dataSource" />
+        <!-- Propiedad para controlar las anotaciones -->
+	<property name="configurationClass" value="org.hibernate.cfg.AnnotationConfiguration"/>
+        <property name="hibernateProperties">
+            <props>
+                <!-- Tipo de lenguaje SQL que utiliza la base de datos -->
+                <prop key="hibernate.dialect">${jdbc.dialect}</prop>
+                <!-- Muestra las consultas SQL realizadas por Hibernate -->
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.bytecode.use_reflection_optimizer">true</prop>
+            </props>
+	</property>
+        <!-- Se agregan todos los archivos hbm de configuracion de Hibernate -->
+        <property name="configLocation">
+            <value>classpath:hibernate.cfg.xml</value>
+        </property>
+    </bean>
+
+
+    <!-- ·······································································
+    ··· Bean que controlara las transacciones en Hibernate
+    ········································································ -->
+    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+
+    <!-- ·······································································
+    ··· Bean que se encarga de realizar la encriptacion de datos
+    ········································································ -->
+    <bean id="strongEncryptor" class="org.jasypt.encryption.pbe.StandardPBEStringEncryptor">
+        <property name="algorithm" value="PBEWithMD5AndTripleDES" />
+        <property name="password" value="jasypt" />
+    </bean>
+
+
+    <!-- ·······································································
+    ··· Bean encargado de realizar la tareas de encriptacion y desencriptacion
+    ··· de los campos de la tablas que estan mapeadas con Hibernate
+    ········································································ -->
+    <bean id="hibernateStringEncryptor" class="org.jasypt.hibernate.encryptor.HibernatePBEStringEncryptor">
+        <property name="registeredName" value="strongHibernateStringEncryptor" />
+        <property name="encryptor" ref="strongEncryptor" />
+    </bean>
+</beans>

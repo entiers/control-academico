@@ -1,0 +1,92 @@
+<%@ page pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
+<div id="divCampos">
+    <form:label for="dia" path="dia">
+        <fmt:message key="agregarHorario.dia"/>: *
+    </form:label>
+    <form:select path="dia" cssStyle="width: 250px;" items="${dias}"/>
+    <form:errors path="dia" cssClass="claseError" />
+</div>
+
+<div id="divCampos">
+    <form:label for="estado" path="estado"><fmt:message key="agregarHorario.estado"/>: *</form:label>
+    <form:checkbox path="estado" cssStyle="width:250px;" />
+    <form:errors path="estado" cssClass="claseError" />
+</div>
+
+<div id="divCampos">
+    <form:label for="horaInicio" path="horaInicio"><fmt:message key="agregarHorario.horaInicio"/>:</form:label>
+    <form:input path="horaInicio" cssStyle="width: 250px;" />
+    <form:errors path="horaInicio" cssClass="claseError" />
+</div>
+
+
+<div id="divCampos">
+    <form:label for="horaFin" path="horaFin"><fmt:message key="agregarHorario.horaFin"/>:</form:label>
+    <form:input path="horaFin" cssStyle="width: 250px;" />
+    <form:errors path="horaFin" cssClass="claseError" />    
+</div>
+
+
+
+<div id="divCampos">
+    <form:label for="seccion" path="seccion"><fmt:message key="agregarHorario.seccion"/>:</form:label>
+    <form:input path="seccion" cssStyle="width: 250px;" />
+    <form:errors path="seccion" cssClass="claseError" />
+</div>
+
+<div id="divCampos">
+    <form:label for="tipo" path="tipo"><fmt:message key="agregarHorario.tipo"/>:</form:label>
+    <form:input path="tipo" cssStyle="width: 250px;" />
+    <form:errors path="tipo" cssClass="claseError" />
+</div>
+
+<div id="divCampos">
+    <form:label for="curso.idCurso" path="curso.idCurso">
+        <fmt:message key="agregarHorario.curso"/>: *
+    </form:label>
+        
+    <form:select path="curso.idCurso" cssStyle="width: 250px;">
+        <form:option  value="0" label="Seleccionar un valor" />
+        <form:options items="${cursos}" itemValue="idCurso" itemLabel="nombre" />
+    </form:select>
+    <form:errors path="curso.idCurso" cssClass="claseError" />
+</div>
+
+<div id="divCampos">
+    <form:label for="salon.idSalon" path="salon.idSalon">
+        <fmt:message key="agregarHorario.salon"/>: *
+    </form:label>
+
+    <form:select path="salon.idSalon" cssStyle="width: 250px;">
+        <form:option  value="0" label="Seleccionar un valor" />
+        <c:forEach items="${salones}" var="salon">
+            <form:option value="${salon.idSalon}" >
+                ${salon.numero}  (${salon.edificio})
+            </form:option>
+        </c:forEach>
+    </form:select>
+    <form:errors path="salon.idSalon" cssClass="claseError" />
+</div>
+
+<div id="divCampos">
+    <form:label for="semestre.idSemestre" path="semestre.idSemestre">
+        <fmt:message key="agregarHorario.semestre"/>: *
+    </form:label>
+        
+    <form:select path="semestre.idSemestre" cssStyle="width: 250px;">
+        <form:option  value="0" label="Seleccionar un valor" />
+        <c:forEach items="${semestres}" var="semestre">
+            <form:option value="${semestre.idSemestre}" >
+                ${semestre.numero} - ${semestre.anio}
+            </form:option>
+        </c:forEach>
+    </form:select>
+    <form:errors path="semestre.idSemestre" cssClass="claseError" />
+</div>
+
+
+<br/><br/>
