@@ -161,6 +161,7 @@ CREATE SEQUENCE control.pensum_id_pensum_seq;
 CREATE TABLE control.Pensum (
                 id_pensum SMALLINT NOT NULL DEFAULT nextval('control.pensum_id_pensum_seq'),
                 codigo VARCHAR(20) NOT NULL,
+                estado SMALLINT,
                 fecha_inicio DATE NOT NULL,
                 fecha_fin DATE,
                 id_carrera SMALLINT NOT NULL,
@@ -169,6 +170,10 @@ CREATE TABLE control.Pensum (
 
 
 ALTER SEQUENCE control.pensum_id_pensum_seq OWNED BY control.Pensum.id_pensum;
+
+CREATE UNIQUE INDEX pensum_codigo_unique
+ ON control.Pensum
+ ( codigo );
 
 CREATE SEQUENCE control.salon_id_salon_seq;
 
