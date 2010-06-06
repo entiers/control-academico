@@ -1,0 +1,42 @@
+<%@ page pageEncoding="UTF-8" %>
+<%@ page import="gt.edu.usac.trabajosocial.util.RequestUtil" %>
+
+<script type="text/javascript">
+    $(function() {
+        // configuracion del panel popup para agregar nuevos pensum
+        $("#popupAgregarPensum").dialog({
+            autoOpen: <%= RequestUtil.getValorBoolean(request, "mostrarPopupAgregar") %>,
+            modal: true,
+            buttons: {
+                '<fmt:message key="btnAgregar"/>': function() {
+                    document.forms[1].submit();
+                },
+                '<fmt:message key="btnCancelar"/>': function() {
+                    $(this).dialog('close');
+                    $("#errorCodigo").hide();
+                    $("#errorIdCarrera").hide();
+                }
+            }
+        });
+
+        $("#popupMensaje").dialog({
+        autoOpen: <%= RequestUtil.getValorBoolean(request, "mostrarPopupMensaje") %>,
+            modal: true,
+            buttons: {
+                '<fmt:message key="btnAceptar"/>': function() {
+                    if(<%= RequestUtil.getValorBoolean(request, "limpiarCampos") %>) {
+                        $("#idCarrera").val("0");
+                        $("#codigo").val("");
+                    }
+                    $(this).dialog('close');
+                }
+            }
+        });
+
+        // muestra el panel popup para agregar nuevos pensum
+        $('#btnPopupAgregar').button().click(function() {
+            $('#popupAgregarPensum').dialog('open');
+        });
+
+    });
+</script>

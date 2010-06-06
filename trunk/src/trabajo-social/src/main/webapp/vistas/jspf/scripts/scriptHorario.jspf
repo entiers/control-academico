@@ -1,0 +1,32 @@
+<%@ page pageEncoding="UTF-8" %>
+<%@ page import="gt.edu.usac.trabajosocial.util.RequestUtil" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
+<script type="text/javascript">
+    $(function() {
+
+        // se crea y configura el panel popup que muestra los
+        // mensajes de resultados de las operaciones
+        $("#popupMensaje").dialog({
+            autoOpen: <%= RequestUtil.getValorBoolean(request, "mostrarPopupMensaje") %>,
+            modal: true,
+            buttons: {
+                '<fmt:message key="btnAceptar"/>': function() {
+                    if(<%= RequestUtil.getValorBoolean(request, "limpiarCampos") %>) {
+                        $("#dia").val("0");
+                        $("#estado").val("${wrapperHorario.dia}");
+                        $("#horaFin").val("<fmt:formatDate value="${wrapperHorario.horaFin}"  pattern="hh:mm"/>");
+                        $("#horaInicio").val("<fmt:formatDate value="${wrapperHorario.horaInicio}"  pattern="hh:mm"/>");
+                        $("#seccion").val("${wrapperHorario.seccion}");
+                        $("#tipo").val("${wrapperHorario.tipo}");
+                        $("#curso.idCurso").val("0");
+                        $("#salon.idSalon").val("0");
+                        $("#semestre.idSemestre").val("0");
+                    }
+                    $(this).dialog('close');
+                }
+            }
+        });
+
+    });
+</script>

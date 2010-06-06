@@ -1,0 +1,30 @@
+<%@ page pageEncoding="UTF-8" %>
+<%@ page import="gt.edu.usac.trabajosocial.util.RequestUtil" %>
+<%@ page import="gt.edu.usac.trabajosocial.dominio.wrapper.WrapperSalon" %>
+
+<script type="text/javascript">
+    $(function(){
+        // se crea y configura el panel popup que muestra los
+        // mensajes de resultados de las operaciones
+        <%
+            WrapperSalon wrapperSalon = new WrapperSalon();
+        %>
+
+        $("#popupMensaje").dialog({
+            autoOpen: <%= RequestUtil.getValorBoolean(request, "mostrarPopupMensaje") %>,
+            modal: true,
+            buttons: {
+                '<fmt:message key="btnAceptar"/>': function() {
+                    if(<%= RequestUtil.getValorBoolean(request, "limpiarCampos") %>) {
+                        $("#numero").val("<%= wrapperSalon.getNumero() %>");
+                        $("#edificio").val("<%= wrapperSalon.getEdificio() %>");
+                        $("#capacidad").val("<%= wrapperSalon.getCapacidad() %>");
+                    }
+
+                    $(this).dialog('close');
+                }
+            }
+        });
+
+    });
+</script>
