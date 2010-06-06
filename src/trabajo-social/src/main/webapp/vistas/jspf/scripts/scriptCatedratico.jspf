@@ -1,0 +1,32 @@
+<%@ page pageEncoding="UTF-8" %>
+<%@ page import="gt.edu.usac.trabajosocial.util.RequestUtil" %>
+
+<script type="text/javascript">
+    $(function() {
+        $("#popupMensaje").dialog({
+            autoOpen: <%= RequestUtil.getValorBoolean(request, "mostrarPopupMensaje") %>,
+            modal: true,
+            buttons: {
+                '<fmt:message key="btnAceptar"/>': function() {
+                    if(<%= RequestUtil.getValorBoolean(request, "limpiarCampos") %>) {
+                        $("#idEscuela").val("0");
+                        $("#codigoBusqueda").val("");
+                        $("#nombreBusqueda").val("");
+                        $("#apellidoBusqueda").val("");
+                        $("#codigo").val("");
+                        $("#nombre").val("");
+                        $("#apellido").val("");
+                        $("#profesion").val("");
+                        $("#direccion").val("");
+                        $("#telefono").val("");
+                        $("#celular").val("");
+                        $("#email").val("");
+                    }
+
+                    $(this).dialog('close');
+                }
+            }
+        });
+
+    });
+</script>

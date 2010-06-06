@@ -1,0 +1,338 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>gt.edu.usac</groupId>
+    <artifactId>trabajo-social</artifactId>
+    <packaging>war</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <name>trabajo-social Java EE 6 Webapp</name>
+    <url>http://maven.apache.org</url>
+    <inceptionYear>2010</inceptionYear>
+    <developers>
+        <developer>
+            <id>daniel</id>
+            <name>Daniel Castillo</name>
+            <email></email>
+            <organization></organization>
+        </developer>
+        <developer>
+            <id>mario</id>
+            <name>Mario Batres</name>
+            <email></email>
+            <organization></organization>
+        </developer>
+    </developers>
+    <organization>
+        <name>Nombre de la organizacion</name>
+        <url>http://sitio.organizacion.org</url>
+    </organization>
+
+    <!-- ·······································································
+    ··· Definicion de repositorios
+    ········································································ -->
+    <repositories>
+        <!-- repositorio para jee6 -->
+        <repository>
+            <id>java.net2</id>
+            <name>Repositorio de jee6</name>
+            <url>http://download.java.net/maven/2</url>
+        </repository>
+
+        <!--
+        Repositorio general, este repositorio contiene una biblioteca de librerias
+        bastante amplia. Este repositorio se utiliza para los siguientes artefactos:
+            - sitemesh
+            - log4j
+            - jasypt
+            - postgresql
+            - joda-time
+            - junit
+            - spring-core
+            - spring-tx
+            - spring-webmvc
+            - spring-orm
+            - spring-security-core
+            - spring-security-config
+            - spring-security-web
+            - spring-security-taglibs
+            - slf4j-log4j12
+        -->
+        <repository>
+            <id>mirrors.ibiblio.org</id>
+            <name>Repositorio general</name>
+            <url>http://mirrors.ibiblio.org/pub/mirrors/maven2</url>
+        </repository>
+
+        <!-- 
+        Repositorio de JBOSS, este repositorio se utiliza para obtener los
+        siguientes artefactos:
+            - hibernate-core
+            - hibernate-annotations
+            - hibernate-validator
+            - jstl
+
+        NOTA: Este repositorio dejo de ser el repositorio principal de JBOSS
+        desde el 14/4/2010, por lo que actualmente solo esta como lectura
+        -->
+        <repository>
+            <id>jboss.com</id>
+            <name>Repositorio para hibernate</name>
+            <url>http://repository.jboss.com/maven2</url>
+        </repository>
+    </repositories>
+
+
+    <!-- ·······································································
+    ··· Definicion de dependencias
+    ········································································ -->
+    <dependencies>
+        <!-- javaee-web-api, librerias necesarias para una aplicacion web -->
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-web-api</artifactId>
+            <version>6.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- sitemesh, utilizado para la decoracion de las paginas -->
+        <dependency>
+            <groupId>opensymphony</groupId>
+            <artifactId>sitemesh</artifactId>
+            <version>2.4.2</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- log4j, utilizado para generacion de logs -->
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.16</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- jasypt, utilizado para agregar capacidad de encriptacion -->
+        <dependency>
+            <groupId>org.jasypt</groupId>
+            <artifactId>jasypt</artifactId>
+            <version>1.6</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- postgresql, driver jdbc de postgresql -->
+        <dependency>
+            <groupId>postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>8.4-701.jdbc4</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- joda-time, necesario para el manejo de fechas -->
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>1.6</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- junit, permite la creacion y automatizacion de pruebas unitarias -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.8.1</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- spring-core -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>3.0.2.RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- spring-tx -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+            <version>3.0.2.RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- spring-webmvc -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>3.0.2.RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- spring-orm -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>3.0.2.RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- spring-security-core -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>3.0.2.RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- spring-security-config -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>3.0.2.RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- spring-security-web -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>3.0.2.RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- spring-security-taglibs -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-taglibs</artifactId>
+            <version>3.0.2.RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- slf4j-log4j12 -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.5.8</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- hibernate, nucleo de hibernate -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>3.5.1-Final</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- hibernate-annotations, para anotaciones propias de hibernate -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-annotations</artifactId>
+            <version>3.5.1-Final</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- hibernate-entitymanager, para el control de entidades -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>3.5.1-Final</version>
+            <scope>compile</scope>
+        </dependency>
+        
+        <!-- hibernate-validator, para validaciones de campos a nivel de POJO -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>4.0.2.GA</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- jstl -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
+
+
+    <!-- ·······································································
+    ··· Configuracion para la generacion del archivo de distribucion
+    ········································································ -->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.0.2</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.1-beta-1</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+        </plugins>
+        <finalName>trabajo-social</finalName>
+    </build>
+
+
+    <!-- ·······································································
+    ··· Configuracion para la generacion de la documentacion
+    ········································································ -->
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </reporting>
+
+
+    <!-- ·······································································
+    ··· Definicion de profiles
+    ········································································ -->
+    <profiles>
+        <profile>
+            <id>endorsed</id>
+            <activation>
+                <property>
+                    <name>sun.boot.class.path</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <version>2.0.2</version>
+                        <configuration>
+                            <!-- javaee6 contains upgrades of APIs contained within the JDK itself.
+                                 As such these need to be placed on the bootclasspath, rather than classpath of the
+                                 compiler.
+                                 If you don't make use of these new updated API, you can delete the profile.
+                                 On non-SUN jdk, you will need to create a similar profile for your jdk, with the similar property as sun.boot.class.path in Sun's JDK.-->
+                            <compilerArguments>
+                                <bootclasspath>${settings.localRepository}/javax/javaee-endorsed-api/6.0/javaee-endorsed-api-6.0.jar${path.separator}${sun.boot.class.path}</bootclasspath>
+                            </compilerArguments>
+                        </configuration>
+                        <dependencies>
+                            <dependency>
+                                <groupId>javax</groupId>
+                                <artifactId>javaee-endorsed-api</artifactId>
+                                <version>6.0</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>
