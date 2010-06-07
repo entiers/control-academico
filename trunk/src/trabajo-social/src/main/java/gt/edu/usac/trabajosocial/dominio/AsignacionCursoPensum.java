@@ -34,7 +34,6 @@ import javax.persistence.Table;
     schema = "control"
 )
 public class AsignacionCursoPensum implements java.io.Serializable {
-    private AreaEstudio areaEstudio;
     private Curso curso;
     private short idAsignacionCursoPensum;
     private boolean obligatorio;
@@ -42,11 +41,10 @@ public class AsignacionCursoPensum implements java.io.Serializable {
 
     public AsignacionCursoPensum() {}
 
-    public AsignacionCursoPensum(short idAsignacionCursoPensum, Curso curso, AreaEstudio areaEstudio, Pensum pensum,
+    public AsignacionCursoPensum(short idAsignacionCursoPensum, Curso curso, Pensum pensum,
                                  boolean obligatorio) {
         this.idAsignacionCursoPensum = idAsignacionCursoPensum;
         this.curso = curso;
-        this.areaEstudio = areaEstudio;
         this.pensum = pensum;
         this.obligatorio = obligatorio;
     }
@@ -77,19 +75,6 @@ public class AsignacionCursoPensum implements java.io.Serializable {
 
     public void setCurso(Curso curso) {
         this.curso = curso;
-    }
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(
-        name = "id_area_estudio",
-        nullable = false
-    )
-    public AreaEstudio getAreaEstudio() {
-        return this.areaEstudio;
-    }
-
-    public void setAreaEstudio(AreaEstudio areaEstudio) {
-        this.areaEstudio = areaEstudio;
     }
 
     @ManyToOne(fetch = FetchType.LAZY)

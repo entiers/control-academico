@@ -21,5 +21,7 @@ public class Mensajes {
 
     // mensajes de aviso
     public final static String EXITO_AGREGAR = "EXITO: Se agrego el objeto: ";
-    public final static String EXITO_ACTUALIZACION = "EXITO: Se actualizo el objeto: ";    
+    public final static String EXITO_ACTUALIZACION = "EXITO: Se actualizo el objeto: ";
+    public final static String EXITO_BORRAR = "EXITO: Se borro el objeto: ";
+    public final static String EXITO_ACTIVAR = "EXITO: Se activo el objeto: ";
 }

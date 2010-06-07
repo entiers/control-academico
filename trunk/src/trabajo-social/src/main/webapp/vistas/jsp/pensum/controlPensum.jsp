@@ -37,6 +37,7 @@
                             <th><fmt:message key="controlPensum.fechaInicio"/></th>
                             <th><fmt:message key="controlPensum.fechaFin"/></th>
                             <th><fmt:message key="btnBorrar"/></th>
+                            <th><fmt:message key="controlPensum.btnActivar"/></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -47,7 +48,20 @@
                                 <td><c:out value="${pensum.estado}" /></td>
                                 <td><fmt:formatDate pattern="dd-MM-yyyy" value="${pensum.fechaInicio}" /></td>
                                 <td><fmt:formatDate pattern="dd-MM-yyyy" value="${pensum.fechaFin}" /></td>
-                                <td></td>
+                                <td>
+                                    <c:if test="${pensum.estado == 0}">
+                                        <input id="btnBorrar" type="button" value='<fmt:message key="btnBorrar"/>'
+                                               onclick="document.getElementById('idPensumBorrar').value = ${pensum.idPensum}; $('#popupBorrar').dialog('open')"/>
+                                        <input type="hidden" value="" name="idPensumBorrar" id="idPensumBorrar" >
+                                    </c:if>
+                                </td>
+                                <td>
+                                    <c:if test="${pensum.estado == 0}">
+                                        <input id="btnActivar" type="button" value='<fmt:message key="controlPensum.btnActivar"/>'
+                                               onclick="document.getElementById('idPensumActivar').value = ${pensum.idPensum}; $('#popupActivar').dialog('open')"/>
+                                        <input type="hidden" value="" name="idPensumActivar" id="idPensumActivar" >
+                                    </c:if>
+                                </td>
                             </tr>
                         </c:forEach>
                     </tbody>
@@ -76,6 +90,22 @@
                     </div>
                 </fieldset>
             </form:form>
+        </div>
+
+        <%-- panel popup de confirmacion de eliminacion de pensum --%>
+        <div id="popupBorrar" title='<fmt:message key="controlPensum.tituloBorrarPensum"/>' >
+            <p>
+                <span class="ui-icon ui-icon-trash" style="float:left; margin:0 7px 50px 0;"></span>
+                <fmt:message key="controlPensum.textoBorrarPensum" />
+            </p>
+        </div>
+
+        <%-- panel popup para activar pensum --%>
+        <div id="popupActivar" title='<fmt:message key="controlPensum.btnActivar"/>' >
+            <p>
+                <span class="ui-icon ui-icon-transferthick-e-w" style="float:left; margin:0 7px 50px 0;"></span>
+                <fmt:message key="controlPensum.textoActivarPensum" />
+            </p>
         </div>
 
         <%-- fragmento que muestra como mensaje popup el resultado de las operaciones --%>

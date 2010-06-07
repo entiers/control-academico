@@ -25,6 +25,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -43,6 +45,7 @@ public class Indicador implements java.io.Serializable {
     private String descripcion;
     private short idIndicador;
     private String nombre;
+    private AreaEstudio areaEstudio;
 
     public Indicador() {}
 
@@ -135,6 +138,19 @@ public class Indicador implements java.io.Serializable {
 
     public void setAsignacionIndicadors(Set<AsignacionIndicador> asignacionIndicadors) {
         this.asignacionIndicadors = asignacionIndicadors;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(
+        name = "id_area_estudio",
+        nullable = false
+    )
+    public AreaEstudio getAreaEstudio() {
+        return this.areaEstudio;
+    }
+
+    public void setAreaEstudio(AreaEstudio areaEstudio) {
+        this.areaEstudio = areaEstudio;
     }
 }
 
