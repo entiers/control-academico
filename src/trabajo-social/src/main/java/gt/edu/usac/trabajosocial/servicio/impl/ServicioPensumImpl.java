@@ -75,6 +75,46 @@ public class ServicioPensumImpl implements ServicioPensum {
     }
 //______________________________________________________________________________
     /**
+     * <p>Este metodo se encarga de borrar el objeto {@link Pensum}, enviado
+     * como parametro, de la base de datos. Para que un pensum pueda ser
+     * borrado debe de tener estado = 0.</p>
+     *
+     * @param pensum Objeto a borrar
+     * @return true Si y solo si se borro el pensum
+     * @throws DataAccessException Si ocurrio un error de acceso a datos
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public boolean borrarPensum(Pensum pensum) throws DataAccessException {
+        if(pensum.getEstado() == 0) {
+            this.daoGeneralImpl.delete(pensum);
+            return true;
+        } else {
+            return false;
+        }
+    }
+//______________________________________________________________________________
+    /**
+     * <p>Este metodo se encarga de activar los pensum que se encuentran en
+     * estado = 0, o estado de creacion.</p>
+     *
+     * @param pensum Objeto a borrar
+     * @return true Si y solo si se activo el pensum
+     * @throws DataAccessException Si ocurrio un error de acceso a datos
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public boolean activarPensum(Pensum pensum) throws DataAccessException {
+        if(pensum.getEstado() == 0) {
+            pensum.setEstado(new Short("1"));
+            this.daoGeneralImpl.update(pensum);
+            return true;
+        } else {
+            return false;
+        }
+    }
+//______________________________________________________________________________
+    /**
      * <p>Este metodo realiza busquedas de pensum por medio de su codigo, como el
      * codigo de pensum es unico, el metodo solo retorna un objeto {@link Pensum},
      * en el caso de no encontrar ningun objeto retorna <code>null</code>.</p>
@@ -84,8 +124,7 @@ public class ServicioPensumImpl implements ServicioPensum {
      * @throws DataAccessException Si ocurrio un error de acceso a datos
      */
     @Override
-    public Pensum buscarPensumPorCodigo(String codigo)
-            throws DataAccessException {
+    public Pensum buscarPensumPorCodigo(String codigo) throws DataAccessException {
 
         // se busca el pensum por el codigo
         DetachedCriteria criteria = DetachedCriteria.forClass(Pensum.class);

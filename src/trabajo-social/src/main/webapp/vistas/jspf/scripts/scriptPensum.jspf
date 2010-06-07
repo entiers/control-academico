@@ -19,8 +19,9 @@
             }
         });
 
+        // configuracion del panel popup que muestra los resultados de las operaciones
         $("#popupMensaje").dialog({
-        autoOpen: <%= RequestUtil.getValorBoolean(request, "mostrarPopupMensaje") %>,
+            autoOpen: <%= RequestUtil.getValorBoolean(request, "mostrarPopupMensaje") %>,
             modal: true,
             buttons: {
                 '<fmt:message key="btnAceptar"/>': function() {
@@ -28,6 +29,36 @@
                         $("#idCarrera").val("0");
                         $("#codigo").val("");
                     }
+                    $(this).dialog('close');
+                }
+            }
+        });
+
+        // configuracion del panel popup para borrar pensum
+        $("#popupBorrar").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                '<fmt:message key="btnAceptar"/>': function() {
+                    document.forms[0].action = "borrarControlPensum.htm";
+                    document.forms[0].submit();
+                },
+                '<fmt:message key="btnCancelar"/>': function() {
+                    $(this).dialog('close');
+                }
+            }
+        });
+
+        // configuracion del panel popup para activar pensum
+        $("#popupActivar").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                '<fmt:message key="btnAceptar"/>': function() {
+                    document.forms[0].action = "activarControlPensum.htm";
+                    document.forms[0].submit();
+                },
+                '<fmt:message key="btnCancelar"/>': function() {
                     $(this).dialog('close');
                 }
             }

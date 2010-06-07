@@ -37,7 +37,7 @@ import javax.persistence.Table;
     schema = "control"
 )
 public class AreaEstudio implements java.io.Serializable {
-    private Set<AsignacionCursoPensum> asignacionCursoPensums = new HashSet<AsignacionCursoPensum>(0);
+    private Set<Indicador> indicadores = new HashSet<Indicador>(0);
     private String descripcion;
     private short idAreaEstudio;
     private String nombre;
@@ -50,11 +50,11 @@ public class AreaEstudio implements java.io.Serializable {
     }
 
     public AreaEstudio(short idAreaEstudio, String nombre, String descripcion,
-                       Set<AsignacionCursoPensum> asignacionCursoPensums) {
+                       Set<Indicador> indicadores) {
         this.idAreaEstudio = idAreaEstudio;
         this.nombre = nombre;
         this.descripcion = descripcion;
-        this.asignacionCursoPensums = asignacionCursoPensums;
+        this.indicadores = indicadores;
     }
 
     @Id
@@ -99,12 +99,12 @@ public class AreaEstudio implements java.io.Serializable {
         fetch = FetchType.LAZY,
         mappedBy = "areaEstudio"
     )
-    public Set<AsignacionCursoPensum> getAsignacionCursoPensums() {
-        return this.asignacionCursoPensums;
+    public Set<Indicador> getIndicadores() {
+        return this.indicadores;
     }
 
-    public void setAsignacionCursoPensums(Set<AsignacionCursoPensum> asignacionCursoPensums) {
-        this.asignacionCursoPensums = asignacionCursoPensums;
+    public void setIndicadores(Set<Indicador> indicadores) {
+        this.indicadores = indicadores;
     }
 }
 

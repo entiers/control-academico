@@ -165,6 +165,76 @@ public class ControladorControlPensum {
     }
 //______________________________________________________________________________
     /**
+     * 
+     * @param modelo
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "borrarControlPensum.htm", method = RequestMethod.POST)
+    public String borrarPensum(Model modelo, HttpServletRequest request) {
+
+        // se agregan los objetos usados por la pagina
+        modelo.addAttribute("wrapperPensum", new WrapperPensum());
+        modelo.addAttribute("listadoPensum", this.listadoPensum);
+        modelo.addAttribute("listadoCarreras", this.listadoCarreras);
+
+        // se obtiene el id del pensum seleccionado
+        Pensum pensum = this.getPensumSeleccionado(request.getParameter("idPensumBorrar"));
+        try {
+            boolean b = this.servicioPensumImpl.borrarPensum(pensum);
+            if(b) {
+                // se registra el evento
+                this.listadoPensum.remove(pensum);
+                MensajePopup.crearMensajeRespuesta(request, TITULO_MENSAJE, "controlPensum.borrarExito", true);
+                String msg = Mensajes.EXITO_BORRAR + "Pensum, codigo " + pensum.getCodigo();
+                log.info(msg);
+            } else
+                MensajePopup.crearMensajeRespuesta(request, TITULO_MENSAJE, "controlPensum.borrarError", true);
+
+        } catch (DataAccessException e) {
+            // error de acceso a datos
+            MensajePopup.crearMensajeRespuesta(request, null, "dataAccessException", false);
+            log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
+        }
+
+        return "pensum/controlPensum";
+    }
+//______________________________________________________________________________
+    /**
+     * 
+     * @param modelo
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "activarControlPensum.htm", method = RequestMethod.POST)
+    public String activarPensum(Model modelo, HttpServletRequest request) {
+
+        // se agregan los objetos usados por la pagina
+        modelo.addAttribute("wrapperPensum", new WrapperPensum());
+        modelo.addAttribute("listadoPensum", this.listadoPensum);
+        modelo.addAttribute("listadoCarreras", this.listadoCarreras);
+
+        // se obtiene el id del pensum seleccionado
+        Pensum pensum = this.getPensumSeleccionado(request.getParameter("idPensumActivar"));
+        try {
+            boolean b = this.servicioPensumImpl.activarPensum(pensum);
+            if(b) {
+                MensajePopup.crearMensajeRespuesta(request, TITULO_MENSAJE, "controlPensum.activarExito", true);
+                String msg = Mensajes.EXITO_ACTIVAR + "Pensum, codigo " + pensum.getCodigo();
+                log.info(msg);
+            } else 
+                MensajePopup.crearMensajeRespuesta(request, TITULO_MENSAJE, "controlPensum.activarError", true);
+            
+        } catch (DataAccessException e) {
+            // error de acceso a datos
+            MensajePopup.crearMensajeRespuesta(request, null, "dataAccessException", false);
+            log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
+        }
+
+        return "pensum/controlPensum";
+    }
+//______________________________________________________________________________
+    /**
      * <p>Este metodo se encarga de crear un listado de {@link Carrera} y un
      * listado de {@link Pensum}. En el caso de que alguno de los dos listados
      * no se pueda crear, ambos listados se dejan en vacios.</p>
@@ -203,6 +273,22 @@ public class ControladorControlPensum {
         for(Carrera carrera : this.listadoCarreras) {
             if(carrera.getIdCarrera() == idCarrera)
                 return carrera;
+        }
+        return null;
+    }
+//______________________________________________________________________________
+    /**
+     * <p>Este metodo se encarga de obtener el pensum que fue seleccionado en
+     * el listado de pensum.</p>
+     *
+     * @param idPensum Identificador del pensum
+     * @return Pensum
+     */
+    private Pensum getPensumSeleccionado(String idPensum) {
+        short id = Short.parseShort(idPensum);
+        for(Pensum p : this.listadoPensum) {
+            if(p.getIdPensum() == id)
+                return p;
         }
         return null;
     }
