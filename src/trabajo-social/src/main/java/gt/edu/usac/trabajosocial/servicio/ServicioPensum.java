@@ -7,7 +7,9 @@
 package gt.edu.usac.trabajosocial.servicio;
 
 import gt.edu.usac.trabajosocial.dominio.Carrera;
+import gt.edu.usac.trabajosocial.dominio.Curso;
 import gt.edu.usac.trabajosocial.dominio.Pensum;
+import java.util.List;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 
@@ -52,6 +54,16 @@ public interface ServicioPensum {
     boolean activarPensum(Pensum pensum) throws DataAccessException;
 //______________________________________________________________________________
     /**
+     * <p>Este metodo se encarga de caducar los pensum. Los unicos pensum que
+     * se pueden caducar son los pensum activos, los que tienen estado = 1.</p>
+     *
+     * @param pensum Objeto a caducar
+     * @return true Si y solo si se caduco el pensum
+     * @throws DataAccessException Si ocurrio un error de acceso a datos
+     */
+    boolean caducarPensum(Pensum pensum) throws DataAccessException;
+//______________________________________________________________________________
+    /**
      * <p>Este metodo realiza busquedas de pensum por medio de su codigo, como el
      * codigo de pensum es unico, el metodo solo retorna un objeto {@link Pensum},
      * en el caso de no encontrar ningun objeto retorna <code>null</code>.</p>
@@ -61,4 +73,13 @@ public interface ServicioPensum {
      * @throws DataAccessException Si ocurrio un error de acceso a datos
      */
     Pensum buscarPensumPorCodigo(String codigo) throws DataAccessException;
+//______________________________________________________________________________
+    List<Curso> buscarCursosAsignados(Pensum pensum)
+            throws DataAccessException;
+//______________________________________________________________________________
+    List<Curso> buscarCursosNoAsignados(Pensum pensum)
+            throws DataAccessException;
+//______________________________________________________________________________
+    void agregarCursoPensum(Pensum pensum, Curso curso, boolean obligatorio)
+            throws DataAccessException;
 }

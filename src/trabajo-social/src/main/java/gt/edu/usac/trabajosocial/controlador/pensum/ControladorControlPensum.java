@@ -7,7 +7,9 @@
 package gt.edu.usac.trabajosocial.controlador.pensum;
 
 import gt.edu.usac.trabajosocial.dominio.Carrera;
+import gt.edu.usac.trabajosocial.dominio.Curso;
 import gt.edu.usac.trabajosocial.dominio.Pensum;
+import gt.edu.usac.trabajosocial.dominio.wrapper.WrapperCursoPensum;
 import gt.edu.usac.trabajosocial.dominio.wrapper.WrapperPensum;
 import gt.edu.usac.trabajosocial.servicio.ServicioGeneral;
 import gt.edu.usac.trabajosocial.servicio.ServicioPensum;
@@ -72,6 +74,16 @@ public class ControladorControlPensum {
     private List<Carrera> listadoCarreras;
 //______________________________________________________________________________
     /**
+     * <p>Listado de todas las carreras disponibles.</p>
+     */
+    private List<Curso> listadoCursos;
+//______________________________________________________________________________
+    /**
+     * <p>Contiene temporalmente el pensum al que se le van a agregar cursos.</p>
+     */
+    private Pensum pensumSeleccionado;
+//______________________________________________________________________________
+    /**
      * <p>Constructor de la clase, no realiza ninguna accion.</p>
      */
     public ControladorControlPensum() {}
@@ -93,8 +105,10 @@ public class ControladorControlPensum {
 
         // se agregan los objetos usados por la pagina
         modelo.addAttribute("wrapperPensum", new WrapperPensum());
+        modelo.addAttribute("wrapperCursoPensum", new WrapperCursoPensum());
         modelo.addAttribute("listadoPensum", this.listadoPensum);
         modelo.addAttribute("listadoCarreras", this.listadoCarreras);
+        modelo.addAttribute("listadoCursos", this.listadoCursos);
 
         return "pensum/controlPensum";
     }
@@ -127,8 +141,10 @@ public class ControladorControlPensum {
     public String agregarPensum(@Valid WrapperPensum wrapperPensum, BindingResult bindingResult,
             Model modelo, HttpServletRequest request) {
 
+        modelo.addAttribute("wrapperCursoPensum", new WrapperCursoPensum());
         modelo.addAttribute("listadoPensum", this.listadoPensum);
         modelo.addAttribute("listadoCarreras", this.listadoCarreras);
+        modelo.addAttribute("listadoCursos", this.listadoCursos);
 
         // se validan los campos ingresados en el formulario, si existen errores
         // se regresa al formulario para que se muestren los mensajes correspondientes
@@ -175,8 +191,10 @@ public class ControladorControlPensum {
 
         // se agregan los objetos usados por la pagina
         modelo.addAttribute("wrapperPensum", new WrapperPensum());
+        modelo.addAttribute("wrapperCursoPensum", new WrapperCursoPensum());
         modelo.addAttribute("listadoPensum", this.listadoPensum);
         modelo.addAttribute("listadoCarreras", this.listadoCarreras);
+        modelo.addAttribute("listadoCursos", this.listadoCursos);
 
         // se obtiene el id del pensum seleccionado
         Pensum pensum = this.getPensumSeleccionado(request.getParameter("idPensumBorrar"));
@@ -211,8 +229,10 @@ public class ControladorControlPensum {
 
         // se agregan los objetos usados por la pagina
         modelo.addAttribute("wrapperPensum", new WrapperPensum());
+        modelo.addAttribute("wrapperCursoPensum", new WrapperCursoPensum());
         modelo.addAttribute("listadoPensum", this.listadoPensum);
         modelo.addAttribute("listadoCarreras", this.listadoCarreras);
+        modelo.addAttribute("listadoCursos", this.listadoCursos);
 
         // se obtiene el id del pensum seleccionado
         Pensum pensum = this.getPensumSeleccionado(request.getParameter("idPensumActivar"));
@@ -235,12 +255,125 @@ public class ControladorControlPensum {
     }
 //______________________________________________________________________________
     /**
+     *
+     * @param modelo
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "caducarControlPensum.htm", method = RequestMethod.POST)
+    public String caducarPensum(Model modelo, HttpServletRequest request) {
+
+        // se agregan los objetos usados por la pagina
+        modelo.addAttribute("wrapperPensum", new WrapperPensum());
+        modelo.addAttribute("wrapperCursoPensum", new WrapperCursoPensum());
+        modelo.addAttribute("listadoPensum", this.listadoPensum);
+        modelo.addAttribute("listadoCarreras", this.listadoCarreras);
+        modelo.addAttribute("listadoCursos", this.listadoCursos);
+
+        // se obtiene el id del pensum seleccionado
+        Pensum pensum = this.getPensumSeleccionado(request.getParameter("idPensumCaducar"));
+        try {
+            boolean b = this.servicioPensumImpl.caducarPensum(pensum);
+            if(b) {
+                MensajePopup.crearMensajeRespuesta(request, TITULO_MENSAJE, "controlPensum.caducarExito", true);
+                String msg = Mensajes.EXITO_CADUCAR + "Pensum, codigo " + pensum.getCodigo();
+                log.info(msg);
+            } else
+                MensajePopup.crearMensajeRespuesta(request, TITULO_MENSAJE, "controlPensum.caducarError", true);
+
+        } catch (DataAccessException e) {
+            // error de acceso a datos
+            MensajePopup.crearMensajeRespuesta(request, null, "dataAccessException", false);
+            log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
+        }
+
+        return "pensum/controlPensum";
+    }
+//______________________________________________________________________________
+    /**
+     *
+     * @param modelo
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "popupAgregarCursoControlPensum.htm", method = RequestMethod.POST)
+    public String mostrarPopupAgregarCurso(Model modelo, HttpServletRequest request) {
+
+        // se agregan los objetos usados por la pagina
+        modelo.addAttribute("wrapperPensum", new WrapperPensum());
+        modelo.addAttribute("wrapperCursoPensum", new WrapperCursoPensum());
+        modelo.addAttribute("listadoPensum", this.listadoPensum);
+        modelo.addAttribute("listadoCarreras", this.listadoCarreras);
+        modelo.addAttribute("listadoCursos", this.listadoCursos);
+
+        // se obtiene el id del pensum seleccionado
+        this.pensumSeleccionado = this.getPensumSeleccionado(request.getParameter("idPensumAgregarCurso"));
+        try {
+            this.listadoCursos.clear();
+            this.listadoCursos.addAll(this.servicioPensumImpl.buscarCursosNoAsignados(this.pensumSeleccionado));
+            request.setAttribute("mostrarPopupAgregarCurso", true);
+        } catch (DataAccessException e) {
+            // error de acceso a datos
+            MensajePopup.crearMensajeRespuesta(request, null, "dataAccessException", false);
+            log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
+        }
+
+        return "pensum/controlPensum";
+    }
+//______________________________________________________________________________
+    /**
+     *
+     * @param modelo
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "agregarCursoControlPensum.htm", method = RequestMethod.POST)
+    public String agregarCursoPensum(@Valid WrapperCursoPensum wrapperCursoPensum, BindingResult bindingResult,
+            Model modelo, HttpServletRequest request) {
+
+        // se agregan los objetos usados por la pagina
+        modelo.addAttribute("wrapperPensum", new WrapperPensum());
+        modelo.addAttribute("listadoPensum", this.listadoPensum);
+        modelo.addAttribute("listadoCarreras", this.listadoCarreras);
+        modelo.addAttribute("listadoCursos", this.listadoCursos);
+
+        // se validan los campos ingresados en el formulario, si existen errores
+        // se regresa al formulario para que se muestren los mensajes correspondientes
+        if(bindingResult.hasErrors()) {
+            request.setAttribute("mostrarPopupAgregarCurso", true);
+            return "pensum/controlPensum";
+        }
+
+        // se obtiene el id del curso seleccionado
+        Curso curso = this.getCursoSeleccionado(wrapperCursoPensum.getIdCurso());
+        try {
+            // se trata de crear la asignacion del curso al pensum
+            this.servicioPensumImpl.agregarCursoPensum(this.pensumSeleccionado, curso, wrapperCursoPensum.isObligatorio());
+
+            // se registra el evento
+            MensajePopup.crearMensajeRespuesta(request, TITULO_MENSAJE, "controlPensum.agregarCursoExito", true);
+            String msg = Mensajes.EXITO_AGREGAR + "AsignacionCursoPensum, curso " +
+                    curso.getCodigo() + ", pensum " + this.pensumSeleccionado.getCodigo();
+            log.info(msg);
+
+        } catch (DataAccessException e) {
+            // error de acceso a datos
+            MensajePopup.crearMensajeRespuesta(request, null, "dataAccessException", false);
+            log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
+        }
+
+        return "pensum/controlPensum";
+    }
+//______________________________________________________________________________
+    /**
      * <p>Este metodo se encarga de crear un listado de {@link Carrera} y un
      * listado de {@link Pensum}. En el caso de que alguno de los dos listados
      * no se pueda crear, ambos listados se dejan en vacios.</p>
      */
     private void cargarListados() {
-        
+
+        this.listadoCursos = new ArrayList<Curso>();
+
         try {
             // se trata de obtener el listado de pensums
             this.listadoPensum = this.servicioGeneralImpl.listarEntidad(Pensum.class);
@@ -289,6 +422,21 @@ public class ControladorControlPensum {
         for(Pensum p : this.listadoPensum) {
             if(p.getIdPensum() == id)
                 return p;
+        }
+        return null;
+    }
+//______________________________________________________________________________
+    /**
+     * <p>Este metodo se encarga de obtener el curso que fue seleccionado en
+     * el listado de cursos.</p>
+     *
+     * @param idCurso Identificador del curso
+     * @return Curso
+     */
+    private Curso getCursoSeleccionado(short idCurso) {
+        for(Curso c : this.listadoCursos) {
+            if(c.getIdCurso() == idCurso)
+                return c;
         }
         return null;
     }
