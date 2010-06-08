@@ -7,10 +7,13 @@
 package gt.edu.usac.trabajosocial.servicio.impl;
 
 import gt.edu.usac.trabajosocial.dao.DaoGeneral;
+import gt.edu.usac.trabajosocial.dominio.AsignacionCursoPensum;
 import gt.edu.usac.trabajosocial.dominio.Carrera;
+import gt.edu.usac.trabajosocial.dominio.Curso;
 import gt.edu.usac.trabajosocial.dominio.Pensum;
 import gt.edu.usac.trabajosocial.servicio.ServicioPensum;
 import java.util.Date;
+import java.util.List;
 import javax.annotation.Resource;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
@@ -115,6 +118,27 @@ public class ServicioPensumImpl implements ServicioPensum {
     }
 //______________________________________________________________________________
     /**
+     * <p>Este metodo se encarga de caducar los pensum. Los unicos pensum que
+     * se pueden caducar son los pensum activos, los que tienen estado = 1.</p>
+     *
+     * @param pensum Objeto a caducar
+     * @return true Si y solo si se caduco el pensum
+     * @throws DataAccessException Si ocurrio un error de acceso a datos
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public boolean caducarPensum(Pensum pensum) throws DataAccessException {
+        if(pensum.getEstado() == 1) {
+            pensum.setEstado(new Short("2"));
+            pensum.setFechaFin(new Date());
+            this.daoGeneralImpl.update(pensum);
+            return true;
+        } else {
+            return false;
+        }
+    }
+//______________________________________________________________________________
+    /**
      * <p>Este metodo realiza busquedas de pensum por medio de su codigo, como el
      * codigo de pensum es unico, el metodo solo retorna un objeto {@link Pensum},
      * en el caso de no encontrar ningun objeto retorna <code>null</code>.</p>
@@ -132,5 +156,34 @@ public class ServicioPensumImpl implements ServicioPensum {
 
         // se retorna el estudiante o null sino se encontro
         return this.daoGeneralImpl.uniqueResult(criteria);
+    }
+//______________________________________________________________________________
+    @Override
+    public List<Curso> buscarCursosAsignados(Pensum pensum) throws DataAccessException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+//______________________________________________________________________________
+    @Override
+    public List<Curso> buscarCursosNoAsignados(Pensum pensum) throws DataAccessException {
+        String hql = "FROM Curso AS C1 " +
+                     "WHERE C1.idCurso NOT IN " +
+                        "(SELECT C2.idCurso " +
+                        "FROM Curso AS C2 " +
+                            "JOIN C2.asignacionCursoPensums AS A1 " +
+                            "JOIN A1.pensum AS P1 " +
+                        "WHERE P1.idPensum = " + pensum.getIdPensum() + ")";
+
+        return this.daoGeneralImpl.find(hql);
+    }
+//______________________________________________________________________________
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void agregarCursoPensum(Pensum pensum, Curso curso, boolean obligatorio) throws DataAccessException {
+        AsignacionCursoPensum a = new AsignacionCursoPensum();
+        a.setPensum(pensum);
+        a.setCurso(curso);
+        a.setObligatorio(obligatorio);
+
+        this.daoGeneralImpl.save(a);
     }
 }

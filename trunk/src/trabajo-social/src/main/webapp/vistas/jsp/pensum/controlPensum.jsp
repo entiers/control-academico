@@ -38,6 +38,8 @@
                             <th><fmt:message key="controlPensum.fechaFin"/></th>
                             <th><fmt:message key="btnBorrar"/></th>
                             <th><fmt:message key="controlPensum.btnActivar"/></th>
+                            <th><fmt:message key="controlPensum.btnCaducar"/></th>
+                            <th><fmt:message key="controlPensum.btnAgregarCurso"/></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -60,6 +62,20 @@
                                         <input id="btnActivar" type="button" value='<fmt:message key="controlPensum.btnActivar"/>'
                                                onclick="document.getElementById('idPensumActivar').value = ${pensum.idPensum}; $('#popupActivar').dialog('open')"/>
                                         <input type="hidden" value="" name="idPensumActivar" id="idPensumActivar" >
+                                    </c:if>
+                                </td>
+                                <td>
+                                    <c:if test="${pensum.estado == 1}">
+                                        <input id="btnCaducar" type="button" value='<fmt:message key="controlPensum.btnCaducar"/>'
+                                               onclick="document.getElementById('idPensumCaducar').value = ${pensum.idPensum}; $('#popupCaducar').dialog('open')"/>
+                                        <input type="hidden" value="" name="idPensumCaducar" id="idPensumCaducar" >
+                                    </c:if>
+                                </td>
+                                <td>
+                                    <c:if test="${pensum.estado == 0}">
+                                        <input id="btnAgregarCurso" type="button" value='<fmt:message key="controlPensum.btnAgregarCurso"/>'
+                                               onclick='document.getElementById("idPensumAgregarCurso").value = ${pensum.idPensum}; document.forms[0].action = "popupAgregarCursoControlPensum.htm"; document.forms[0].submit();'/>
+                                        <input type="hidden" value="" name="idPensumAgregarCurso" id="idPensumAgregarCurso" >
                                     </c:if>
                                 </td>
                             </tr>
@@ -106,6 +122,40 @@
                 <span class="ui-icon ui-icon-transferthick-e-w" style="float:left; margin:0 7px 50px 0;"></span>
                 <fmt:message key="controlPensum.textoActivarPensum" />
             </p>
+        </div>
+
+        <%-- panel popup para caducar pensum --%>
+        <div id="popupCaducar" title='<fmt:message key="controlPensum.btnCaducar"/>' >
+            <p>
+                <span class="ui-icon ui-icon-arrowthick-1-s" style="float:left; margin:0 7px 50px 0;"></span>
+                <fmt:message key="controlPensum.textoCaducarPensum" />
+            </p>
+        </div>
+
+        <%-- panel popup para agregar cursos al pensum --%>
+        <div id="popupAgregarCurso" title='<fmt:message key="controlPensum.btnAgregarCurso"/>' >
+            <p>
+                <span class="ui-icon ui-icon-note" style="float:left; margin:0 7px 50px 0;"></span>
+                <fmt:message key="controlPensum.textoAgregarCurso" />
+            </p>
+            <form:form modelAttribute="wrapperCursoPensum" method="post" action="agregarCursoControlPensum.htm">
+                <fieldset>
+                    <div id="divCampos">
+                        <form:label for="obligatorio" path="obligatorio"><fmt:message key="controlPensum.cursoObligatorio"/> *:</form:label>
+                        <form:checkbox path="obligatorio" cssStyle="width: 250px;" />
+                    </div>
+
+                    <%-- selector para escoger cursos --%>
+                    <div id="divCampos">
+                        <form:label for="idCurso" path="idCurso"><fmt:message key="controlPensum.curso"/>: *</form:label>
+                        <form:select path="idCurso" cssStyle="width: 250px;">
+                            <form:option  value="0" label="Seleccione un valor" />
+                            <form:options items="${listadoCursos}" itemValue="idCurso" itemLabel="nombre" />
+                        </form:select>
+                        <form:errors id="errorIdCurso" path="idCurso" cssClass="claseError" />
+                    </div>
+                </fieldset>
+            </form:form>
         </div>
 
         <%-- fragmento que muestra como mensaje popup el resultado de las operaciones --%>

@@ -64,6 +64,36 @@
             }
         });
 
+        // configuracion del panel popup para activar pensum
+        $("#popupCaducar").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                '<fmt:message key="btnAceptar"/>': function() {
+                    document.forms[0].action = "caducarControlPensum.htm";
+                    document.forms[0].submit();
+                },
+                '<fmt:message key="btnCancelar"/>': function() {
+                    $(this).dialog('close');
+                }
+            }
+        });
+
+        // configuracion del panel popup para agregar cursos a un pensum
+        $("#popupAgregarCurso").dialog({
+            autoOpen: <%= RequestUtil.getValorBoolean(request, "mostrarPopupAgregarCurso") %>,
+            modal: true,
+            buttons: {
+                '<fmt:message key="btnAgregar"/>': function() {
+                    document.forms[2].submit();
+                },
+                '<fmt:message key="btnCancelar"/>': function() {
+                    $(this).dialog('close');
+                    $("#errorIdCurso").hide();
+                }
+            }
+        });
+
         // muestra el panel popup para agregar nuevos pensum
         $('#btnPopupAgregar').button().click(function() {
             $('#popupAgregarPensum').dialog('open');

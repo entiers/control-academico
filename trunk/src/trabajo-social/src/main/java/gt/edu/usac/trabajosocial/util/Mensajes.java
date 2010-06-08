@@ -24,4 +24,5 @@ public class Mensajes {
     public final static String EXITO_ACTUALIZACION = "EXITO: Se actualizo el objeto: ";
     public final static String EXITO_BORRAR = "EXITO: Se borro el objeto: ";
     public final static String EXITO_ACTIVAR = "EXITO: Se activo el objeto: ";
+    public final static String EXITO_CADUCAR = "EXITO: Se caduco el objeto: ";
 }
