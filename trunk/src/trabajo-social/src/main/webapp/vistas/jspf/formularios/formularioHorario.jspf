@@ -18,14 +18,14 @@
 </div>
 
 <div id="divCampos">
-    <form:label for="horaInicio" path="horaInicio"><fmt:message key="agregarHorario.horaInicio"/>:</form:label>
+    <form:label for="horaInicio" path="horaInicio"><fmt:message key="agregarHorario.horaInicio"/>: *</form:label>
     <form:input path="horaInicio" cssStyle="width: 250px;" />
     <form:errors path="horaInicio" cssClass="claseError" />
 </div>
 
 
 <div id="divCampos">
-    <form:label for="horaFin" path="horaFin"><fmt:message key="agregarHorario.horaFin"/>:</form:label>
+    <form:label for="horaFin" path="horaFin"><fmt:message key="agregarHorario.horaFin"/>: *</form:label>
     <form:input path="horaFin" cssStyle="width: 250px;" />
     <form:errors path="horaFin" cssClass="claseError" />
 </div>
@@ -33,13 +33,13 @@
 
 
 <div id="divCampos">
-    <form:label for="seccion" path="seccion"><fmt:message key="agregarHorario.seccion"/>:</form:label>
+    <form:label for="seccion" path="seccion"><fmt:message key="agregarHorario.seccion"/>: *</form:label>
     <form:input path="seccion" cssStyle="width: 250px;" />
     <form:errors path="seccion" cssClass="claseError" />
 </div>
 
 <div id="divCampos">
-    <form:label for="tipo" path="tipo"><fmt:message key="agregarHorario.tipo"/>:</form:label>
+    <form:label for="tipo" path="tipo"><fmt:message key="agregarHorario.tipo"/>: *</form:label>
     <form:input path="tipo" cssStyle="width: 250px;" />
     <form:errors path="tipo" cssClass="claseError" />
 </div>

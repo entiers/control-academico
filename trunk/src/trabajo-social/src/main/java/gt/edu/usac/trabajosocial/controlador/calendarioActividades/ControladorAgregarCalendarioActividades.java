@@ -68,14 +68,6 @@ public class ControladorAgregarCalendarioActividades {
     protected ServicioSemestre servicioSemestreImpl;
 //______________________________________________________________________________
     /**
-     * <p>Contiene metodos basicos de acceso a la base de datos, estos metodos
-     * permiten realizar operaciones basicas sobre cualquier tabla de la base
-     * de datos.</p>
-     */
-    @Resource
-    protected ServicioGeneral servicioGeneralImpl;
-//______________________________________________________________________________
-    /**
      * <p>Listado de todas las semestres disponibles.</p>
      */
     protected List <Semestre> listadoSemestres;

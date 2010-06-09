@@ -9,6 +9,7 @@ package gt.edu.usac.trabajosocial.servicio.impl;
 import gt.edu.usac.trabajosocial.dao.DaoGeneral;
 import gt.edu.usac.trabajosocial.dominio.Salon;
 import gt.edu.usac.trabajosocial.servicio.ServicioSalon;
+import java.util.List;
 import javax.annotation.Resource;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
@@ -49,11 +50,11 @@ public class ServicioSalonImpl implements ServicioSalon {
     }
 //______________________________________________________________________________
     /**
-     * <p></p>
-     * @param numero
-     * @param edificio
-     * @return
-     * @throws DataAccessException
+     * <p>Este método permite obtener un salon por el número y el nombre del edificio</p>
+     *
+     * @param numero Número del salón
+     * @param edificio Nombre del edificio
+     * @throws DataAccessException Si ocurrio un error de acceso a datos
      */
     @Override
     public Salon buscarSalonPorNumeroYEdificio(short numero, String edificio)
@@ -70,9 +71,11 @@ public class ServicioSalonImpl implements ServicioSalon {
     }
 //______________________________________________________________________________
     /**
-     * <p></p>
-     * @param salon
-     * @throws DataAccessException
+     * <p>Este método permite actualizar la información de un salón a la base
+     * de datos</p>
+     *
+     * @param salon Pojo del tipo {@link salon}
+     * @throws DataAccessException Si ocurrió un error de acceso a datos
      */
     @Transactional(rollbackFor = Exception.class)
     @Override
@@ -80,5 +83,16 @@ public class ServicioSalonImpl implements ServicioSalon {
             throws DataAccessException {
 
         this.daoGeneralImpl.update(salon);
+    }
+//______________________________________________________________________________
+    /**
+     * <p>Este método permite obtener todos los salones disponibles</p>
+     *
+     * @return List de tipo {@link Salon}
+     * @throws DataAccessException Si ocurrió un error de acceso a datos
+     */
+    @Override
+    public List<Salon> getSalones() throws DataAccessException {
+        return this.daoGeneralImpl.loadAll(Salon.class);
     }
 }

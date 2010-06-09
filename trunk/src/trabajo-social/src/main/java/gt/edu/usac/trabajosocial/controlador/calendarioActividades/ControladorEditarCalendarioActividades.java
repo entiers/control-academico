@@ -108,8 +108,7 @@ public class ControladorEditarCalendarioActividades {
         modelo.addAttribute("wrapperCalendarioActividades", wrapperCalendarioActividades);
         return "calendarioActividades/editarCalendarioActividades";
     }
-//______________________________________________________________________________
-    @RequestMapping(method=RequestMethod.POST)
+//______________________________________________________________________________    
     /**
      * <p>Este metodo se ejecuta cuando se presiona el boton de editar de la
      * pagina. El metodo se encarga de actualizar la informacion del calendario de
@@ -126,6 +125,7 @@ public class ControladorEditarCalendarioActividades {
      * @param request Objeto {@link HttpServletRequest}
      * @return String
      */
+    @RequestMapping(method=RequestMethod.POST)
     public String editar(@Valid WrapperCalendarioActividades wrapperCalendarioActividades
             , BindingResult bindingResult, Model modelo, HttpServletRequest request){
 

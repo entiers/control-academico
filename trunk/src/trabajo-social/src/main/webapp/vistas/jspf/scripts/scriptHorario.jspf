@@ -15,13 +15,13 @@
                     if(<%= RequestUtil.getValorBoolean(request, "limpiarCampos") %>) {
                         $("#dia").val("0");
                         $("#estado").val("${wrapperHorario.dia}");
-                        $("#horaFin").val("<fmt:formatDate value="${wrapperHorario.horaFin}"  pattern="hh:mm"/>");
-                        $("#horaInicio").val("<fmt:formatDate value="${wrapperHorario.horaInicio}"  pattern="hh:mm"/>");
+                        $("#horaFin").val("<fmt:formatDate value="${wrapperHorario.horaFin}"  pattern="HH:mm"/>");
+                        $("#horaInicio").val("<fmt:formatDate value="${wrapperHorario.horaInicio}"  pattern="HH:mm"/>");
                         $("#seccion").val("${wrapperHorario.seccion}");
                         $("#tipo").val("${wrapperHorario.tipo}");
-                        $("#curso.idCurso").val("0");
-                        $("#salon.idSalon").val("0");
-                        $("#semestre.idSemestre").val("0");
+                        $("#curso.idCurso").val("${wrapperHorario.curso.idCurso}");
+                        $("#salon.idSalon").val("${wrapperHorario.salon.idSalon}");
+                        $("#semestre.idSemestre").val("${wrapperHorario.semestre.idSemestre}");
                     }
                     $(this).dialog('close');
                 }

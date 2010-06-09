@@ -7,6 +7,7 @@
 package gt.edu.usac.trabajosocial.servicio;
 
 import gt.edu.usac.trabajosocial.dominio.Curso;
+import java.util.List;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 
@@ -39,12 +40,22 @@ public interface ServicioCurso {
             throws DataAccessException;
 //______________________________________________________________________________
     /**
-     * <p>Este metodo permite la busqueda de un curso por su código .</p>
+     * <p>Este metodo permite la busqueda de un curso por su codigo .</p>
      *
-     * @param codigo Código del curso
+     * @param codigo Codigo del curso
      * @return Curso
      * @throws DataAccessException Si ocurrio un error de acceso a datos
      */
     Curso buscarCursoPorCodigo(String codigo)
             throws DataAccessException;
+
+//______________________________________________________________________________
+    /**
+     * <p>Este metodo permite obtener todos los cursos disponibles</p>
+     *
+     * @return List de tipo {@link Curso}
+     * @throws DataAccessException Si ocurrio un error de acceso a datos
+     */
+    List <Curso> getCursos() throws DataAccessException;
+
 }
