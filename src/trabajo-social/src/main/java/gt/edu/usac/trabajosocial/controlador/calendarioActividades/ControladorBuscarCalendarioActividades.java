@@ -105,7 +105,7 @@ public class ControladorBuscarCalendarioActividades {
      * </ul>
      * </p>
      *
-     * @param datosBusquedaHorario Contiene los parametros de la busqueda
+     * @param datosBusquedaCalendarioActividades Contiene los parametros de la busqueda
      * @param bindingResult Objeto {@link BindingResult} que valida los datos
      * @param modelo Objeto {@link Model} que contiene todos los objetos que
      *        seran usados en la pagina
@@ -113,7 +113,7 @@ public class ControladorBuscarCalendarioActividades {
      * @return String Contiene el nombre de la vista a mostrar
      */
     @RequestMapping(method = RequestMethod.POST)
-    public String buscar(@Valid DatosBusquedaCalendarioActividades datosBusquedaHorario,
+    public String buscar(@Valid DatosBusquedaCalendarioActividades datosBusquedaCalendarioActividades,
             BindingResult bindingResult, Model modelo, HttpServletRequest request){
         modelo.addAttribute("semestres", this.listadoSemestres);
 
@@ -121,7 +121,7 @@ public class ControladorBuscarCalendarioActividades {
             return "calendarioActividades/buscarCalendarioActividades";
 
         try{
-            Semestre semestre = datosBusquedaHorario.getSemestre();
+            Semestre semestre = datosBusquedaCalendarioActividades.getSemestre();
 
             this.listadoCalendarioActividades = this.servicioCalendarioActividadesImpl.getCalendarioActividadesPorSemestre(semestre);
 

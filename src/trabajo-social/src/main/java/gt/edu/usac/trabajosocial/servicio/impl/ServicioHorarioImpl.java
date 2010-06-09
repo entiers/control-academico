@@ -69,9 +69,13 @@ public class ServicioHorarioImpl implements ServicioHorario {
     
 //______________________________________________________________________________
     /**
-     * <p></p>
-     * @param horario
-     * @throws DataAccessException
+     * <p>Este metodo permite actualizar la informacion de un horario a la base
+     * de datos.
+     *
+     * @param horario Pojo del tipo {@link Horario}
+     * @throws DataAccessException Si ocurrio un error de acceso a datos
+     * @throws DataIntegrityViolationException Si ocurrio una violacion de
+     *         de integridad de datos
      */
     @Transactional(rollbackFor = Exception.class)
     @Override
@@ -79,5 +83,21 @@ public class ServicioHorarioImpl implements ServicioHorario {
         throws DataAccessException {
 
         this.daoGeneralImpl.update(horario);
+    }
+
+//______________________________________________________________________________
+    /**
+     * <p>Obtiene el horario según el id que poose</p>
+     *
+     * @param id Identificador del horario
+     *
+     * @throws DataAccessException Si oucrrió un error de acesso a datos
+     */
+    @Override
+    public Horario getHorarioPorID(int id) throws DataAccessException {
+        DetachedCriteria criteria = DetachedCriteria.forClass(Horario.class);
+        criteria.add(Restrictions.eq("idHorario", id));
+
+        return this.daoGeneralImpl.uniqueResult(criteria);
     }
 }

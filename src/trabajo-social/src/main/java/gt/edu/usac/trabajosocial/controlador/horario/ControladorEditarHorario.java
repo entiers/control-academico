@@ -1,7 +1,6 @@
 /*
- * Sistema de Control Academico
- * Escuela de Trabajo Social
- * Universidad de San Carlos de Guatemala
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
  */
 
 package gt.edu.usac.trabajosocial.controlador.horario;
@@ -35,24 +34,25 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @version 1.0
  */
 
-@Controller("controladorAgregarHorario")
-@RequestMapping(value = "agregarHorario.htm")
-public class ControladorAgregarHorario{
+@Controller("controladorEditarHorario")
+@RequestMapping(value="editarHorario.htm")
+public class ControladorEditarHorario {
 //_____________________________________________________________________________
     protected static final String [] LISTADO_DIAS =
     {"Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"};
-//______________________________________________________________________________
+//_____________________________________________________________________________
     /**
-     * <p>Lleva el nombre del titulo para el mensaje en la p√°gina.<p>
+     * <p>
+     * Lleva el nombre del titulo para el mensaje en la p·gina
+     * <p>
      */
-    private static String TITULO_MENSAJE = "agregarHorario.titulo";
-//______________________________________________________________________________
+    private static final String TITULO_MENSAJE = "editarHorario.titulo";
 
+//______________________________________________________________________________
     /**
      * <p>Matiene una bitacora de lo realizado por esta clase.</p>
      */
-    private static Logger log = Logger.getLogger(ControladorAgregarHorario.class);
-
+    private static Logger log = Logger.getLogger(ControladorEditarHorario.class);
 //______________________________________________________________________________
     /**
      * <p>Listado de todas las cursos disponibles.</p>
@@ -69,7 +69,7 @@ public class ControladorAgregarHorario{
      * <p>Listado de todas las cursos disponibles.</p>
      */
     protected List <Curso> listadoCursos;
-//______________________________________________________________________________
+//______________________________________________________________________________    
     /**
      * <p>Contiene metodos que permiten el manejo de la informacion relacionada
      * con el semestre en la base de datos. Este objeto se encuentra registrado
@@ -110,9 +110,16 @@ public class ControladorAgregarHorario{
     protected ServicioCurso servicioCursoImpl;
 
 //______________________________________________________________________________
+
+    /**
+     * <p>Se utiliza para mantener todos los datos del horario que se
+     * encontro en la busqueda.</p>
+     */
+    private Horario horario;
+//______________________________________________________________________________
     /**
      * <p>Este metodo se ejecuta cada vez que se realiza una solicitud del tipo
-     * GET de la pagina <code>agregarHorario.htm</code>. El metodo se encarga
+     * GET de la pagina <code>editarHorario.htm</code>. El metodo se encarga
      * de iniciar los objetos que se usaran en la pagina.</p>
      *
      * @param modelo Objeto {@link Model} que contiene todos los objetos que
@@ -120,75 +127,72 @@ public class ControladorAgregarHorario{
      * @return String Contiene el nombre de la vista a mostrar
      */
     @RequestMapping(method = RequestMethod.GET)
-    public String crearFormulario(Model modelo) {
+    public String crearFormularioEditar(Model modelo, int idHorario, HttpServletRequest request){
 
-        // se agregan los objetos que se usaran en la pagina
-        modelo.addAttribute("wrapperHorario", new WrapperHorario());
+        this.horario = this.servicioHorarioImpl.getHorarioPorID(idHorario);
+
+        if(this.horario == null){
+            MensajePopup.crearMensajeRespuesta(request, TITULO_MENSAJE, "buscarCalendarioActividades.sinResultados", false);
+            return "horario/buscarHorario";
+        }
+
+        WrapperHorario wrapperHorario = new WrapperHorario();
+        wrapperHorario.agregarWrapper(this.horario);
 
         this.listadoSalones = this.servicioSalonImpl.getSalones();
         this.listadoSemestres = this.servicioSemestreImpl.getSemestres();
         this.listadoCursos = this.servicioCursoImpl.getCursos();
 
-        modelo.addAttribute("cursos", this.listadoCursos);
         modelo.addAttribute("salones", this.listadoSalones);
         modelo.addAttribute("semestres", this.listadoSemestres);
+        modelo.addAttribute("cursos", listadoCursos);
         modelo.addAttribute("dias", LISTADO_DIAS);
-
-        return "horario/agregarHorario";
+        modelo.addAttribute("wrapperHorario", wrapperHorario);
+        return "horario/editarHorario";
     }
-//______________________________________________________________________________
+
     /**
-     * <p>Este metodo es llamado cuando se realiza un SUBMIT desde la pagina de
-     * agregar horario. El metodo se encarga de agregar la informacion
-     * ingresada en el formulario de la pagina en la base de datos, el procedimiento
-     * que sigue el metodo es el siguiente:
+     * <p>Este metodo se ejecuta cuando se presiona el boton de editar de la
+     * pagina. El metodo se encarga de actualizar la informacion del horario
+     * que se obtuvo en la busqueda. El metodo realiza las siguiente acciones:
      * <ul>
-     * <li>Se realiza la validacion de datos ingresados, si algun dato no cumple
-     * con las reglas de validacion se retorna a la pagina para que se muestren
-     * los mensajes de error</li>
-     * <li>Si la validacion tuvo exito se trata de agregar la informacion a la
-     * base de datos por medio de {@link ServicioHorario}</li>
-     * <li>Se procesa el resultado de la operacion y se le indica a la pagina el
-     * mensaje de respuesta que debe de mostrar, el mensaje puede ser de exito o
-     * de error</li>
+     * <li>Realiza las validaciones de los datos del formulario</li>
+     * <li>Delega la funcion de actualizacion a {@link ServicioCalendarioActividades}</li>
+     * <li>Muestra un mensaje popup con el resultado de la operacion</li>
      * </ul></p>
      *
-     * @param horario Pojo del tipo {@link Horario}
-     * @param resultado Objeto {@link BindingResult}, contiene el resultado de
-     *        las validaciones
-     * @param modelo Objeto {@link Model} que contiene todos los objetos que
-     *        seran usados en la pagina
+     * @param wrapperCalendarioActividades Pojo del tipo {@link WrapperCalendarioActividades}
+     * @param bindingResult Ojeto {@link BindingResult} que realiza las validaciones
+     * @param modelo Objeto {@link Model} que contiene los objeto de la pagina
      * @param request Objeto {@link HttpServletRequest}
-     * @return String Con la url de la pagina a mostrar
+     * @return String
      */
-    @RequestMapping(method = RequestMethod.POST)
-    public String submit(@Valid WrapperHorario wrapperHorario, BindingResult bindingResult,
-            Model modelo, HttpServletRequest request) {
 
-        modelo.addAttribute("cursos", this.listadoCursos);
+    @RequestMapping(method = RequestMethod.POST)
+    public String editar(@Valid WrapperHorario wrapperHorario, BindingResult bindingResult,
+            Model modelo, HttpServletRequest request){
+
         modelo.addAttribute("salones", this.listadoSalones);
         modelo.addAttribute("semestres", this.listadoSemestres);
+        modelo.addAttribute("cursos", this.listadoCursos);
         modelo.addAttribute("dias", LISTADO_DIAS);
 
-        // se validan los campos ingresados en el formulario, si existen errores
-        // se regresa al formulario para que se muestren los mensajes correspondientes
-        if(bindingResult.hasErrors())
-            return "horario/agregarHorario";
+
+        if(bindingResult.hasErrors()){
+            return "horario/editarHorario";
+        }
 
         try {
-            // se obtiene la carrera seleccionada            
-
-            // se quita el envoltorio y se trata de agregar el horario
-            Horario horario = new Horario();
-            wrapperHorario.quitarWrapper(horario);
-            this.servicioHorarioImpl.agregarHorario(horario);
-
-            modelo.addAttribute("wrapperHorario", new WrapperHorario());
+            // se quita el envoltorio y se trata de actualizar al horario
+            wrapperHorario.quitarWrapper(this.horario);
+            this.servicioHorarioImpl.actualizarHorario(this.horario);
 
             // se registra el evento
-            MensajePopup.crearMensajeRespuesta(request, TITULO_MENSAJE, "agregarHorario.exito", true);
-            String msg = Mensajes.EXITO_AGREGAR + "Horario, id " + horario.getIdHorario();
+            MensajePopup.crearMensajeRespuesta(request, TITULO_MENSAJE, "editarHorario.exito", true);
+            String msg = Mensajes.EXITO_ACTUALIZACION + "Catedratico, codigo " + this.horario.getIdHorario();
             log.info(msg);
+
+            modelo.addAttribute("wrapperHorario", wrapperHorario);
 
         } catch (DataAccessException e) {
             // error de acceso a datos
@@ -196,6 +200,6 @@ public class ControladorAgregarHorario{
             log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
         }
 
-        return "horario/agregarHorario";
+        return "horario/editarHorario";
     }
 }

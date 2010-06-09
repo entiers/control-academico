@@ -1,17 +1,14 @@
 /*
- * Sistema de Control Academico
- * Escuela de Trabajo Social
- * Universidad de San Carlos de Guatemala
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
  */
 
 package gt.edu.usac.trabajosocial.controlador.horario;
 
-import gt.edu.usac.trabajosocial.dominio.Curso;
 import gt.edu.usac.trabajosocial.dominio.Horario;
 import gt.edu.usac.trabajosocial.dominio.Salon;
 import gt.edu.usac.trabajosocial.dominio.Semestre;
-import gt.edu.usac.trabajosocial.dominio.wrapper.WrapperHorario;
-import gt.edu.usac.trabajosocial.servicio.ServicioCurso;
+import gt.edu.usac.trabajosocial.dominio.busqueda.DatosBusquedaHorario;
 import gt.edu.usac.trabajosocial.servicio.ServicioHorario;
 import gt.edu.usac.trabajosocial.servicio.ServicioSalon;
 import gt.edu.usac.trabajosocial.servicio.ServicioSemestre;
@@ -35,24 +32,21 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @version 1.0
  */
 
-@Controller("controladorAgregarHorario")
-@RequestMapping(value = "agregarHorario.htm")
-public class ControladorAgregarHorario{
-//_____________________________________________________________________________
-    protected static final String [] LISTADO_DIAS =
-    {"Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"};
+@Controller("controladorBuscarHorario")
+@RequestMapping(value="buscarHorario.htm")
+public class ControladorBuscarHorario {
+
 //______________________________________________________________________________
     /**
-     * <p>Lleva el nombre del titulo para el mensaje en la p√°gina.<p>
+     * <p>Lleva el nombre del titulo para el mensaje en la p·gina de buscar.</p>
      */
-    private static String TITULO_MENSAJE = "agregarHorario.titulo";
-//______________________________________________________________________________
+    private static final String TITULO_MENSAJE = "buscarHorario.titulo";
 
+//______________________________________________________________________________
     /**
      * <p>Matiene una bitacora de lo realizado por esta clase.</p>
      */
-    private static Logger log = Logger.getLogger(ControladorAgregarHorario.class);
-
+    private static Logger log = Logger.getLogger(ControladorBuscarHorario.class);
 //______________________________________________________________________________
     /**
      * <p>Listado de todas las cursos disponibles.</p>
@@ -63,12 +57,12 @@ public class ControladorAgregarHorario{
      * <p>Listado de todas las salones disponibles.</p>
      */
     protected List <Salon> listadoSalones;
-
 //______________________________________________________________________________
     /**
-     * <p>Listado de todas las cursos disponibles.</p>
+     * <p>Listado de todas las horarios disponibles.</p>
      */
-    protected List <Curso> listadoCursos;
+    protected List <Horario> listadoHorarios;
+
 //______________________________________________________________________________
     /**
      * <p>Contiene metodos que permiten el manejo de la informacion relacionada
@@ -101,101 +95,72 @@ public class ControladorAgregarHorario{
 
 //______________________________________________________________________________
     /**
-     * <p>Contiene metodos que permiten el manejo de la informacion relacionada
-     * con el curso en la base de datos. Este objeto se encuentra registrado
-     * como un bean de servicio en Spring, por lo que este es el encargado de
-     * inyectar la dependencia.</p>
-     */
-    @Resource
-    protected ServicioCurso servicioCursoImpl;
-
-//______________________________________________________________________________
-    /**
      * <p>Este metodo se ejecuta cada vez que se realiza una solicitud del tipo
-     * GET de la pagina <code>agregarHorario.htm</code>. El metodo se encarga
+     * GET de la pagina <code>buscarHorario.htm</code>. El metodo se encarga
      * de iniciar los objetos que se usaran en la pagina.</p>
      *
      * @param modelo Objeto {@link Model} que contiene todos los objetos que
      *        seran usados en la pagina
      * @return String Contiene el nombre de la vista a mostrar
-     */
+     */    
     @RequestMapping(method = RequestMethod.GET)
-    public String crearFormulario(Model modelo) {
-
-        // se agregan los objetos que se usaran en la pagina
-        modelo.addAttribute("wrapperHorario", new WrapperHorario());
-
+    public String crearFormulario(Model modelo) {        
         this.listadoSalones = this.servicioSalonImpl.getSalones();
         this.listadoSemestres = this.servicioSemestreImpl.getSemestres();
-        this.listadoCursos = this.servicioCursoImpl.getCursos();
 
-        modelo.addAttribute("cursos", this.listadoCursos);
         modelo.addAttribute("salones", this.listadoSalones);
         modelo.addAttribute("semestres", this.listadoSemestres);
-        modelo.addAttribute("dias", LISTADO_DIAS);
 
-        return "horario/agregarHorario";
+        modelo.addAttribute("datosBusquedaHorario", new DatosBusquedaHorario());
+        return "horario/buscarHorario";
     }
+
 //______________________________________________________________________________
     /**
-     * <p>Este metodo es llamado cuando se realiza un SUBMIT desde la pagina de
-     * agregar horario. El metodo se encarga de agregar la informacion
-     * ingresada en el formulario de la pagina en la base de datos, el procedimiento
-     * que sigue el metodo es el siguiente:
+     * <p>Este metodo se ejecuta cuando se solicita una busqueda desde la pagina
+     * de buscar horario. Las busquedas solo se realizan por el
+     * salon y semestre asigando al horari. El metodo realiza los siguientes
+     * pasos:
      * <ul>
-     * <li>Se realiza la validacion de datos ingresados, si algun dato no cumple
-     * con las reglas de validacion se retorna a la pagina para que se muestren
-     * los mensajes de error</li>
-     * <li>Si la validacion tuvo exito se trata de agregar la informacion a la
-     * base de datos por medio de {@link ServicioHorario}</li>
-     * <li>Se procesa el resultado de la operacion y se le indica a la pagina el
-     * mensaje de respuesta que debe de mostrar, el mensaje puede ser de exito o
-     * de error</li>
-     * </ul></p>
+     * <li>Se valida que al menos se envio un parametro de busqueda</li>
+     * <li>Valida los datos ingresados</li>
+     * <li>Se delega la busqueda al metodo <code>buscar</code></li>
+     * </ul>
+     * </p>
      *
-     * @param horario Pojo del tipo {@link Horario}
-     * @param resultado Objeto {@link BindingResult}, contiene el resultado de
-     *        las validaciones
+     * @param datosBusquedaHorario Contiene los parametros de la busqueda
+     * @param bindingResult Objeto {@link BindingResult} que valida los datos
      * @param modelo Objeto {@link Model} que contiene todos los objetos que
      *        seran usados en la pagina
-     * @param request Objeto {@link HttpServletRequest}
-     * @return String Con la url de la pagina a mostrar
+     * @param request Peticion HTTP
+     * @return String Contiene el nombre de la vista a mostrar
      */
     @RequestMapping(method = RequestMethod.POST)
-    public String submit(@Valid WrapperHorario wrapperHorario, BindingResult bindingResult,
+    public String buscar(@Valid DatosBusquedaHorario datosBusquedaHorario, BindingResult bindingResult,
             Model modelo, HttpServletRequest request) {
 
-        modelo.addAttribute("cursos", this.listadoCursos);
         modelo.addAttribute("salones", this.listadoSalones);
         modelo.addAttribute("semestres", this.listadoSemestres);
-        modelo.addAttribute("dias", LISTADO_DIAS);
 
-        // se validan los campos ingresados en el formulario, si existen errores
-        // se regresa al formulario para que se muestren los mensajes correspondientes
         if(bindingResult.hasErrors())
-            return "horario/agregarHorario";
+            return "horario/buscarHorario";
 
-        try {
-            // se obtiene la carrera seleccionada            
+        try{
+            Salon salon = datosBusquedaHorario.getSalon();
+            Semestre semestre = datosBusquedaHorario.getSemestre();
 
-            // se quita el envoltorio y se trata de agregar el horario
-            Horario horario = new Horario();
-            wrapperHorario.quitarWrapper(horario);
-            this.servicioHorarioImpl.agregarHorario(horario);
+            this.listadoHorarios = this.servicioHorarioImpl.buscarHorarioPorSalonYSemestre(salon, semestre);
 
-            modelo.addAttribute("wrapperHorario", new WrapperHorario());
-
-            // se registra el evento
-            MensajePopup.crearMensajeRespuesta(request, TITULO_MENSAJE, "agregarHorario.exito", true);
-            String msg = Mensajes.EXITO_AGREGAR + "Horario, id " + horario.getIdHorario();
-            log.info(msg);
-
+            if(listadoHorarios == null || listadoHorarios.size() == 0) {
+                MensajePopup.crearMensajeRespuesta(request, TITULO_MENSAJE, "buscarHorario.sinResultados", true);
+            }
+            modelo.addAttribute("horarios", listadoHorarios);
         } catch (DataAccessException e) {
             // error de acceso a datos
             MensajePopup.crearMensajeRespuesta(request, null, "dataAccessException", false);
             log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
         }
-
-        return "horario/agregarHorario";
+        return "horario/buscarHorario";
     }
+
 }

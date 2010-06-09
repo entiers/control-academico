@@ -27,10 +27,10 @@ public class WrapperHorario {
 //______________________________________________________________________________
     private boolean estado;
 //______________________________________________________________________________
-    @DateTimeFormat(pattern = "hh:mm")
+    @DateTimeFormat(pattern = "HH:mm")
     private Date horaFin;
 //______________________________________________________________________________
-    @DateTimeFormat(pattern = "hh:mm")
+    @DateTimeFormat(pattern = "HH:mm")
     private Date horaInicio;
 //______________________________________________________________________________
     @NotEmpty(message = "{validacion.campoObligatorio}")

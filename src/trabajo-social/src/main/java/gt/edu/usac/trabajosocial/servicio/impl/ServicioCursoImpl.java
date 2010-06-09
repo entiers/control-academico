@@ -9,6 +9,7 @@ package gt.edu.usac.trabajosocial.servicio.impl;
 import gt.edu.usac.trabajosocial.dao.DaoGeneral;
 import gt.edu.usac.trabajosocial.dominio.Curso;
 import gt.edu.usac.trabajosocial.servicio.ServicioCurso;
+import java.util.List;
 import javax.annotation.Resource;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
@@ -78,5 +79,16 @@ public class ServicioCursoImpl implements ServicioCurso{
 
         // se retorna el estudiante o null sino se encontro
         return this.daoGeneralImpl.uniqueResult(criteria);
+    }
+//______________________________________________________________________________
+    /**
+     * <p>Este metodo permite obtener todos los salones disponibles</p>
+     *
+     * @return List de tipo {@link Salon}
+     * @throws DataAccessException Si ocurrio un error de acceso a datos
+     */
+    @Override
+    public List<Curso> getCursos() throws DataAccessException {
+        return this.daoGeneralImpl.loadAll(Curso.class);
     }
 }
