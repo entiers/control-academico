@@ -7,6 +7,7 @@
 package gt.edu.usac.trabajosocial.servicio;
 
 import gt.edu.usac.trabajosocial.dominio.Semestre;
+import java.util.List;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 
@@ -17,6 +18,7 @@ import org.springframework.dao.DataIntegrityViolationException;
  */
 public interface ServicioSemestre {
 
+//______________________________________________________________________________
     /**
      * <p>Este metodo permite agregar la informacion de un semestre a la base
      * de datos.
@@ -28,4 +30,12 @@ public interface ServicioSemestre {
      */
     void agregarSemestre(Semestre semestre)
         throws DataIntegrityViolationException, DataAccessException;
+
+//______________________________________________________________________________
+    /**
+     * <p>Obtiene todo los semestres válido en la DB</p>
+     */
+    List <Semestre> getSemestres() throws DataAccessException;
+
+
 }
