@@ -1,0 +1,42 @@
+<%@ page pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
+<div id="divCampos">
+    <form:label for="fechaInicio" path="fechaInicio"><fmt:message key="agregarCalendarioActividades.fechaInicio"/>: *</form:label>
+    <form:input path="fechaInicio" cssStyle="width:250px;" />
+    <form:errors path="fechaInicio" cssClass="claseError" />
+</div>
+
+<div id="divCampos">
+    <form:label for="fechaFin" path="fechaFin"><fmt:message key="agregarCalendarioActividades.fechaFin"/>: *</form:label>
+    <form:input path="fechaFin" cssStyle="width: 250px;" />
+    <form:errors path="fechaFin" cssClass="claseError" />
+</div>
+
+
+<div id="divCampos">
+    <form:label for="actividad" path="actividad"><fmt:message key="agregarCalendarioActividades.actividad"/>: *</form:label>
+    <form:textarea path="actividad" cssStyle="width: 250px;" />
+    <form:errors path="actividad" cssClass="claseError" />
+</div>
+
+<div id="divCampos">
+    <form:label for="semestre.idSemestre" path="semestre.idSemestre">
+        <fmt:message key="agregarCalendarioActividades.semestre"/>: *
+    </form:label>
+
+    <form:select path="semestre.idSemestre" cssStyle="width: 250px;">
+        <form:option  value="0" label="Seleccionar un valor" />
+        <c:forEach items="${semestres}" var="semestre">
+            <form:option value="${semestre.idSemestre}" >
+                ${semestre.numero} - ${semestre.anio}
+            </form:option>
+        </c:forEach>
+    </form:select>
+    <form:errors path="semestre.idSemestre" cssClass="claseError" />
+</div>
+
+
+<br/><br/>

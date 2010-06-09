@@ -70,7 +70,7 @@ public class CalendarioActividades implements java.io.Serializable {
         this.idCalendarioActividades = idCalendarioActividades;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(
         name = "id_semestre",
         nullable = false

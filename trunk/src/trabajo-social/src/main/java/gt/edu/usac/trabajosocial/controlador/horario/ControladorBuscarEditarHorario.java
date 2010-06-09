@@ -36,7 +36,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class ControladorBuscarEditarHorario extends ControladorHorarioAbstracto {
 
     /**
-     * <p>Lleva el nombre del titulo para el mensaje en la p√°gina de buscar.</p>
+     * <p>Lleva el nombre del titulo para el mensaje en la p·gina de buscar.</p>
      */
     private static final String TITULO_MENSAJE_BUSCAR = "buscarHorario.titulo";
     private static final String TITULO_MENSAJE_EDITAR = "editarHorario.titulo";
@@ -179,12 +179,10 @@ public class ControladorBuscarEditarHorario extends ControladorHorarioAbstracto 
 
 
         if(bindingResult.hasErrors()){
-
             return "horario/editarHorario";
         }
 
         try {
-
             // se quita el envoltorio y se trata de actualizar al horario
             wrapperHorario.quitarWrapper(this.horario);
             this.servicioHorarioImpl.actualizarHorario(this.horario);

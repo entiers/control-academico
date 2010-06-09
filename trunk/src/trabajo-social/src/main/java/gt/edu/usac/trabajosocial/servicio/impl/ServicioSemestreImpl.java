@@ -9,6 +9,7 @@ package gt.edu.usac.trabajosocial.servicio.impl;
 import gt.edu.usac.trabajosocial.dao.DaoGeneral;
 import gt.edu.usac.trabajosocial.dominio.Semestre;
 import gt.edu.usac.trabajosocial.servicio.ServicioSemestre;
+import java.util.List;
 import javax.annotation.Resource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -43,5 +44,13 @@ public class ServicioSemestreImpl implements ServicioSemestre{
             throws DataIntegrityViolationException, DataAccessException {
 
         this.daoGeneralImpl.save(semestre);
+    }
+//______________________________________________________________________________
+    /**
+     * <p>Obtiene todo los semestres válido en la DB</p>
+     */
+    @Override
+    public List <Semestre> getSemestres() throws DataAccessException {
+       return this.daoGeneralImpl.loadAll(Semestre.class);
     }
 }

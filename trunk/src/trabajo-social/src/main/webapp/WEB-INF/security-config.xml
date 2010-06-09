@@ -25,6 +25,7 @@
         <intercept-url pattern="/*Salon.htm" filters='none'/>
         <intercept-url pattern="/*Horario.htm" filters='none'/>
         <intercept-url pattern="/*Pensum.htm" filters='none'/>
+        <intercept-url pattern="/*CalendarioActividades.htm" filters='none' />
 
         <!-- se aplican los roles a las paginas protegidas -->
         <intercept-url pattern="/index.htm" access="hasRole('ROLE_USUARIO_REGISTRADO')" />
