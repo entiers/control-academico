@@ -1,6 +1,7 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Sistema de Control Academico
+ * Escuela de Trabajo Social
+ * Universidad de San Carlos de Guatemala
  */
 
 package gt.edu.usac.trabajosocial.controlador.calendarioActividades;
@@ -26,7 +27,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
- *
+ * Esta clase se encarga de modificar un calendario de actividades existente en
+ * la BD. La información se pide en la página de <code>editarCalendarioActividades.htm</code>.
+ * 
  * @author Mario Batres
  * @version 1.0
  */
@@ -111,8 +114,9 @@ public class ControladorEditarCalendarioActividades {
 //______________________________________________________________________________    
     /**
      * <p>Este metodo se ejecuta cuando se presiona el boton de editar de la
-     * pagina. El metodo se encarga de actualizar la informacion del calendario de
-     * actividades que se obtuvo en la busqueda. El metodo realiza las siguiente acciones:
+     * pagina <code>editarCalendarioActividades</code>. El metodo se encarga de
+     * actualizar la informacion del calendario de actividades que se obtuvo en
+     * la busqueda. El metodo realiza las siguiente acciones:
      * <ul>
      * <li>Realiza las validaciones de los datos del formulario</li>
      * <li>Delega la funcion de actualizacion a {@link ServicioCalendarioActividades}</li>

@@ -8,7 +8,6 @@ package gt.edu.usac.trabajosocial.controlador.semestre;
 
 import gt.edu.usac.trabajosocial.dominio.Semestre;
 import gt.edu.usac.trabajosocial.dominio.wrapper.WrapperSemestre;
-import gt.edu.usac.trabajosocial.servicio.ServicioGeneral;
 import gt.edu.usac.trabajosocial.servicio.ServicioSemestre;
 import gt.edu.usac.trabajosocial.util.MensajePopup;
 import gt.edu.usac.trabajosocial.util.Mensajes;
@@ -17,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.dao.DataAccessException;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
+ * Esta clase se encarga de almacenar los semestres en la BD.
+ * La información se pide en la pagina de <code>agregarSemestre.htm</code>.
  *
  * @author Mario Batres
  * @version 1.0
@@ -35,7 +35,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class ControladorAgregarSemestre {
 
     /**
-     * <p>Lleva el nombre del titulo para el mensaje en la pÃ¡gina.<p>
+     * <p>Lleva el nombre del titulo para el mensaje en la pagina.<p>
      */
     private static final String TITULO_MENSAJE = "agregarSemestre.titulo";
 //______________________________________________________________________________
@@ -52,14 +52,7 @@ public class ControladorAgregarSemestre {
      */
     @Resource
     protected ServicioSemestre servicioSemestreImpl;
-//______________________________________________________________________________
-    /**
-     * <p>Contiene metodos basicos de acceso a la base de datos, estos metodos
-     * permiten realizar operaciones basicas sobre cualquier tabla de la base
-     * de datos.</p>
-     */
-    @Resource
-    protected ServicioGeneral servicioGeneralImpl;
+    
 //______________________________________________________________________________
     /**
      * <p>Este metodo se ejecuta cada vez que se realiza una solicitud del tipo
@@ -81,9 +74,9 @@ public class ControladorAgregarSemestre {
 //______________________________________________________________________________
     /**
      * <p>Este metodo es llamado cuando se realiza un SUBMIT desde la pagina de
-     * agregar semestre. El metodo se encarga de agregar la informacion
-     * ingresada en el formulario de la pagina en la base de datos, el procedimiento
-     * que sigue el metodo es el siguiente:
+     * agregar semestre <code>agregarSemestre.htm</code>. El metodo se encarga
+     * de agregar la informacion ingresada en el formulario de la pagina en la
+     * base de datos, el procedimiento que sigue el metodo es el siguiente:
      * <ul>
      * <li>Se realiza la validacion de datos ingresados, si algun dato no cumple
      * con las reglas de validacion se retorna a la pagina para que se muestren
@@ -113,7 +106,7 @@ public class ControladorAgregarSemestre {
 
         try {
 
-            // se quita el envoltorio y se trata de agregar al estudiante
+            // se quita el envoltorio y se trata de agregar al semestre
             Semestre semestre = new Semestre();
             wrapperSemestre.quitarWrapper(semestre);
             this.servicioSemestreImpl.agregarSemestre(semestre);

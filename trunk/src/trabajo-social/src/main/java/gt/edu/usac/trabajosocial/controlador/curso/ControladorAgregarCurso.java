@@ -9,7 +9,6 @@ package gt.edu.usac.trabajosocial.controlador.curso;
 import gt.edu.usac.trabajosocial.dominio.Curso;
 import gt.edu.usac.trabajosocial.dominio.wrapper.WrapperCurso;
 import gt.edu.usac.trabajosocial.servicio.ServicioCurso;
-import gt.edu.usac.trabajosocial.servicio.ServicioGeneral;
 import gt.edu.usac.trabajosocial.util.MensajePopup;
 import gt.edu.usac.trabajosocial.util.Mensajes;
 import javax.annotation.Resource;
@@ -24,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
+ * Esta clase se encarga de almacenar los cursos en la BD.
+ * La información se pide en la pagina de <code>agregarCurso.htm</code>.
  *
  * @author Mario Batres
  * @version 1.0
@@ -33,7 +34,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class ControladorAgregarCurso {
 
     /**
-     * <p>Lleva el nombre del titulo para el mensaje en la pÃ¡gina<p>
+     * <p>Lleva el nombre del titulo para el mensaje en la pagina<p>
      */
     private static String TITULO_MENSAJE = "agregarCurso.titulo";
 //______________________________________________________________________________
@@ -52,16 +53,8 @@ public class ControladorAgregarCurso {
     protected ServicioCurso servicioCursoImpl;
 //______________________________________________________________________________
     /**
-     * <p>Contiene metodos basicos de acceso a la base de datos, estos metodos
-     * permiten realizar operaciones basicas sobre cualquier tabla de la base
-     * de datos.</p>
-     */
-    @Resource
-    protected ServicioGeneral servicioGeneralImpl;
-//______________________________________________________________________________
-    /**
      * <p>Este metodo se ejecuta cada vez que se realiza una solicitud del tipo
-     * GET de la pagina <code>agregarEstudiante.htm</code>. El metodo se encarga
+     * GET de la pagina <code>agregarCurso.htm</code>. El metodo se encarga
      * de iniciar los objetos que se usaran en la pagina.</p>
      *
      * @param modelo Objeto {@link Model} que contiene todos los objetos que
@@ -111,7 +104,7 @@ public class ControladorAgregarCurso {
 
         try {
 
-            // se quita el envoltorio y se trata de agregar al estudiante
+            // se quita el envoltorio y se trata de agregar al curso
             Curso curso = new Curso();
             wrapperCurso.quitarWrapper(curso);
             this.servicioCursoImpl.agregarCurso(curso);

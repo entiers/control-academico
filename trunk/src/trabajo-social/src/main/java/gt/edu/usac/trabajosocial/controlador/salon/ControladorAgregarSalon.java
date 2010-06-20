@@ -24,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
+ * Esta clase se encarga de almacenar los salones en la BD.
+ * La información se pide en la pagina de <code>agregarSalon.htm</code>.
  *
  * @author Mario Batres
  * @version 1.0
@@ -34,7 +36,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class ControladorAgregarSalon {
 
     /**
-     * <p>Lleva el nombre del titulo para el mensaje en la pÃ¡gina<p>
+     * <p>Lleva el nombre del titulo para el mensaje en la pagina<p>
      */
     private static final String TITULO_MENSAJE = "agregarSalon.titulo";
 //______________________________________________________________________________
@@ -51,14 +53,6 @@ public class ControladorAgregarSalon {
      */
     @Resource
     protected ServicioSalon servicioSalonImpl;
-//______________________________________________________________________________
-    /**
-     * <p>Contiene metodos basicos de acceso a la base de datos, estos metodos
-     * permiten realizar operaciones basicas sobre cualquier tabla de la base
-     * de datos.</p>
-     */
-    @Resource
-    protected ServicioGeneral servicioGeneralImpl;
 //______________________________________________________________________________
     /**
      * <p>Este metodo se ejecuta cada vez que se realiza una solicitud del tipo
@@ -80,9 +74,9 @@ public class ControladorAgregarSalon {
 //______________________________________________________________________________
     /**
      * <p>Este metodo es llamado cuando se realiza un SUBMIT desde la pagina de
-     * agregar salon. El metodo se encarga de agregar la informacion
-     * ingresada en el formulario de la pagina en la base de datos, el procedimiento
-     * que sigue el metodo es el siguiente:
+     * agregar salon <code>agregarSalon.htm</code>. El metodo se encarga de agregar
+     * la informacion ingresada en el formulario de la pagina en la base de datos,
+     * el procedimiento que sigue el metodo es el siguiente:
      * <ul>
      * <li>Se realiza la validacion de datos ingresados, si algun dato no cumple
      * con las reglas de validacion se retorna a la pagina para que se muestren
@@ -112,7 +106,7 @@ public class ControladorAgregarSalon {
 
         try {
 
-            // se quita el envoltorio y se trata de agregar al estudiante
+            // se quita el envoltorio y se trata de agregar el salon
             Salon salon = new Salon();
             wrapperSalon.quitarWrapper(salon);
             this.servicioSalonImpl.agregarSalon(salon);

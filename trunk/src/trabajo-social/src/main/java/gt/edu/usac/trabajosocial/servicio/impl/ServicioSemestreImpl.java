@@ -17,7 +17,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
+ * <p>Contiene la implementación de los metodos que permiten el manejo de la
+ * informacion relacionada con el Semestre en la base de datos.</p>
  *
+ * @see ServicioSemestre
  * @author Mario Batres
  * @version 1.0
  */

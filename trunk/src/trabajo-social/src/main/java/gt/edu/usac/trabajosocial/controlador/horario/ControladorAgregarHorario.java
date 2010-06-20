@@ -30,6 +30,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
+ * Esta clase se encarga de almacenar horarios en la BD.
+ * La información se pide en la página de <code>agregarHorario.htm</code>.
  *
  * @author Mario Batres
  * @version 1.0
@@ -43,7 +45,7 @@ public class ControladorAgregarHorario{
     {"Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"};
 //______________________________________________________________________________
     /**
-     * <p>Lleva el nombre del titulo para el mensaje en la pÃ¡gina.<p>
+     * <p>Lleva el nombre del titulo para el mensaje en la pagina.<p>
      */
     private static String TITULO_MENSAJE = "agregarHorario.titulo";
 //______________________________________________________________________________
@@ -139,8 +141,9 @@ public class ControladorAgregarHorario{
 //______________________________________________________________________________
     /**
      * <p>Este metodo es llamado cuando se realiza un SUBMIT desde la pagina de
-     * agregar horario. El metodo se encarga de agregar la informacion
-     * ingresada en el formulario de la pagina en la base de datos, el procedimiento
+     * agregar horario <code>agregarHorario.htm</code>. El metodo se encarga de
+     * agregar la informacion ingresada en el formulario de la pagina en la
+     * base de datos, el procedimiento
      * que sigue el metodo es el siguiente:
      * <ul>
      * <li>Se realiza la validacion de datos ingresados, si algun dato no cumple
