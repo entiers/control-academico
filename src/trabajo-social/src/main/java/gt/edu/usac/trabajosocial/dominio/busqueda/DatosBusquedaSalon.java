@@ -11,6 +11,11 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
+ * </p>Contiene los atributos de busqueda de salon. Se utiliza
+ * en la página de <code>buscarSalon.htm</code>.</p>
+ *
+ * <p>La busqueda de salones se realiza solo por el eficio y numero de salon
+ * que tiene asignado.</p>
  *
  * @author Mario Batres
  * @version 1.0
@@ -28,38 +33,32 @@ public class DatosBusquedaSalon {
         this.edificio = "";
         this.numero = 1;
     }
-
+//______________________________________________________________________________
     /**
-     * @return the edificio
+     * @return El edificio que tiene asignado el salon
      */
     public String getEdificio() {
         return edificio;
     }
 
     /**
-     * @param edificio the edificio to set
+     * @param edificio El edificio que tiene asignado el salon
      */
     public void setEdificio(String edificio) {
         this.edificio = edificio;
     }
-
+//______________________________________________________________________________
     /**
-     * @return the numero
+     * @return the El numero que tiene asignado el salon
      */
     public short getNumero() {
         return numero;
     }
 
     /**
-     * @param numero the numero to set
+     * @param numero El numero que tiene asignado el salon
      */
     public void setNumero(short numero) {
         this.numero = numero;
     }
-
-
-
-
-
-
 }

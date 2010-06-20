@@ -12,6 +12,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 
 /**
+ * <p>Contiene los metodos que permiten el manejo de la informacion relacionada
+ * con el salon en la base de datos.</p>
  *
  * @author Mario Batres
  * @version 1.0

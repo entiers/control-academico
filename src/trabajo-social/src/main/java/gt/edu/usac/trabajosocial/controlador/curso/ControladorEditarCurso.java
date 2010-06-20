@@ -24,6 +24,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
+ * Esta clase se encarga de buscar y modficar un curso existente en la BD.
+ * La informaci�n se pide en la p�gina de <code>buscarCurso.htm</code>.
+ * Y se modifica en la p�gina de <code>editarCurso.htm</code>.
  *
  * @author Mario Batres
  * @version 1.0
@@ -34,7 +37,7 @@ public class ControladorEditarCurso {
 
     /**
      * <p>
-     * Lleva el nombre del titulo para el mensaje en la página
+     * Lleva el nombre del titulo para el mensaje en la pagina
      * <p>
      */
     private static String TITULO_MENSAJE = "editarCurso.titulo";
@@ -83,8 +86,8 @@ public class ControladorEditarCurso {
      * de editar curso. Las busquedas solo se realizan por el código. El metodo
      * realiza los siguientes pasos:
      * <ul>
-     * <li>Valida que el código ingresado sea valido</li>
-     * <li>Si el código es valido se realiza la busqueda y se muestra la
+     * <li>Valida que el codigo ingresado sea valido</li>
+     * <li>Si el codigo es valido se realiza la busqueda y se muestra la
      * informacion del curso en la pagina, si la busqueda no genera
      * resultados se muestra un mensaje popup</li>
      * <li>Si ocurre un error de acceso a la base de datos se muestra un mensaje
@@ -134,8 +137,9 @@ public class ControladorEditarCurso {
 //______________________________________________________________________________
     /**
      * <p>Este metodo se ejecuta cuando se presiona el boton de editar de la
-     * pagina. El metodo se encarga de actualizar la informacion del curso
-     * que se obtuvo en la busqueda. El metodo realiza las siguiente acciones:
+     * pagina <code>editarCurso.htm</code>. El metodo se encarga de actualizar
+     * la informacion del curso que se obtuvo en la busqueda. El metodo realiza
+     * las siguiente acciones:
      * <ul>
      * <li>Realiza las validaciones de los datos del formulario</li>
      * <li>Delega la funcion de actualizacion a {@link ServicioCurso}</li>

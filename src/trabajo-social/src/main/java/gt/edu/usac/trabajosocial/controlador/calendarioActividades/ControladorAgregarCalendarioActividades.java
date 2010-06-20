@@ -1,6 +1,7 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Sistema de Control Academico
+ * Escuela de Trabajo Social
+ * Universidad de San Carlos de Guatemala
  */
 
 package gt.edu.usac.trabajosocial.controlador.calendarioActividades;
@@ -9,7 +10,6 @@ import gt.edu.usac.trabajosocial.dominio.CalendarioActividades;
 import gt.edu.usac.trabajosocial.dominio.Semestre;
 import gt.edu.usac.trabajosocial.dominio.wrapper.WrapperCalendarioActividades;
 import gt.edu.usac.trabajosocial.servicio.ServicioCalendarioActividades;
-import gt.edu.usac.trabajosocial.servicio.ServicioGeneral;
 import gt.edu.usac.trabajosocial.servicio.ServicioSemestre;
 import gt.edu.usac.trabajosocial.util.MensajePopup;
 import gt.edu.usac.trabajosocial.util.Mensajes;
@@ -27,6 +27,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
+ * Esta clase se encarga de almacenar los calendarios de actividades en la BD.
+ * La información se pide en la página de <code>agregarCalendarioActividades.htm</code>.
  *
  * @author Mario Batres
  * @version 1.0
@@ -38,7 +40,7 @@ public class ControladorAgregarCalendarioActividades {
 //______________________________________________________________________________
     /**
      * <p>
-     * Lleva el nombre del titulo para el mensaje en la pÃ¡gina
+     * Lleva el nombre del titulo para el mensaje en la pagina
      * <p>
      */
     private static final String TITULO_MENSAJE = "agregarCalendarioActividades.titulo";
@@ -66,6 +68,7 @@ public class ControladorAgregarCalendarioActividades {
      */
     @Resource
     protected ServicioSemestre servicioSemestreImpl;
+    
 //______________________________________________________________________________
     /**
      * <p>Listado de todas las semestres disponibles.</p>

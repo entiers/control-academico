@@ -1,6 +1,7 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Sistema de Control Academico
+ * Escuela de Trabajo Social
+ * Universidad de San Carlos de Guatemala
  */
 
 package gt.edu.usac.trabajosocial.servicio.impl;
@@ -20,7 +21,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
+ * <p>Contiene la implementación de los metodos que permiten el manejo de la
+ * informacion relacionada con el calendario de actividades en la base de datos.</p>
  *
+ * @see ServicioCalendarioActividades
  * @author Mario Batres
  * @version 1.0
  */

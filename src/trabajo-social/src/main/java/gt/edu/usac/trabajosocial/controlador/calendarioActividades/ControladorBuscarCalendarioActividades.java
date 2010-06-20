@@ -27,6 +27,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 
 /**
+ * Esta clase se encarga de la búsqueda de Calendarios de Actividades en la BD
+ * para mostrarlos en la página de <code>buscarCalendarioActividades.htm</code>.
  *
  * @author Mario Batres
  * @version 1.0

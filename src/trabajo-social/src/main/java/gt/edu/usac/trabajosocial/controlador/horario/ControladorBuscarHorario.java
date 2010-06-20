@@ -1,6 +1,7 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Sistema de Control Academico
+ * Escuela de Trabajo Social
+ * Universidad de San Carlos de Guatemala
  */
 
 package gt.edu.usac.trabajosocial.controlador.horario;
@@ -27,6 +28,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
+ * Esta clase se encarga de la búsqueda de Horarios en la BD
+ * para mostrarlos en la página de <code>buscarHorario.htm</code>.
  *
  * @author Mario Batres
  * @version 1.0
@@ -38,7 +41,9 @@ public class ControladorBuscarHorario {
 
 //______________________________________________________________________________
     /**
-     * <p>Lleva el nombre del titulo para el mensaje en la página de buscar.</p>
+     * <p>
+     * Lleva el nombre del titulo para el mensaje en la página
+     * </p>
      */
     private static final String TITULO_MENSAJE = "buscarHorario.titulo";
 
@@ -76,7 +81,7 @@ public class ControladorBuscarHorario {
 //______________________________________________________________________________
     /**
      * <p>Contiene metodos que permiten el manejo de la informacion relacionada
-     * con el salon en la base de datos. Este objeto se encuentra registrado
+     * con el horario en la base de datos. Este objeto se encuentra registrado
      * como un bean de servicio en Spring, por lo que este es el encargado de
      * inyectar la dependencia.</p>
      */
@@ -86,7 +91,7 @@ public class ControladorBuscarHorario {
 //______________________________________________________________________________
     /**
      * <p>Contiene metodos que permiten el manejo de la informacion relacionada
-     * con el salon en la base de datos. Este objeto se encuentra registrado
+     * con el horario en la base de datos. Este objeto se encuentra registrado
      * como un bean de servicio en Spring, por lo que este es el encargado de
      * inyectar la dependencia.</p>
      */

@@ -8,6 +8,9 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
+ * Contiene los atributos del Curso que serán ingresados
+ * o actualizado a la BD. El wrapper se utiliza en las páginas de
+ * <code>agregarCurso.htm</code> y <code>editarCurso.htm</code>.
  *
  * @author Mario Batres
  * @version 1.0
@@ -35,6 +38,10 @@ public class WrapperCurso {
     @Max(value = 10, message = "{validacion.maximo}")
     private short semestre;
 //______________________________________________________________________________
+    /**
+     * Constructor del wrapper, se inicializan los atributos a mostrar en las
+     * páginas de <code>agregarCurso.htm</code> y <code>editarCurso.htm</code>.
+     */
     public WrapperCurso() {
         this.setCodigo("");
         this.setCreditosPracticos((short) 1);
@@ -45,6 +52,11 @@ public class WrapperCurso {
     }
 
 //______________________________________________________________________________
+    /**
+     * Se agrega al wrapper la informacion del pojo de tipo {@link Curso}.
+     *
+     * @param curso Pojo de tipo {@link Curso}
+     */
     public void agregarWrapper(Curso curso) {
         this.setCodigo(curso.getCodigo());
         this.setCreditosPracticos(curso.getCreditosPracticos());
@@ -55,6 +67,11 @@ public class WrapperCurso {
     }
 
 //______________________________________________________________________________
+    /**
+     * Se agrega la informacion del pojo de tipo {@link Curso} al wrapper.
+     *
+     * @param curso Pojo de tipo {@link Curso}
+     */
     public void quitarWrapper(Curso curso) {
         curso.setCodigo(this.getCodigo());
         curso.setCreditosPracticos(this.getCreditosPracticos());
@@ -66,14 +83,14 @@ public class WrapperCurso {
 
 //______________________________________________________________________________
     /**
-     * @return the codigo
+     * @return El codigo del curso
      */
     public String getCodigo() {
         return codigo;
     }
 
     /**
-     * @param codigo the codigo to set
+     * @param codigo El codigo del curso
      */
     public void setCodigo(String codigo) {
         this.codigo = codigo;
@@ -81,14 +98,14 @@ public class WrapperCurso {
 
 //______________________________________________________________________________
     /**
-     * @return the creditosPracticos
+     * @return Los creditos practicos del curso.
      */
     public short getCreditosPracticos() {
         return creditosPracticos;
     }
 
     /**
-     * @param creditosPracticos the creditosPracticos to set
+     * @param creditosPracticos Los creditos practicos del curso.
      */
     public void setCreditosPracticos(short creditosPracticos) {
         this.creditosPracticos = creditosPracticos;
@@ -96,14 +113,15 @@ public class WrapperCurso {
 
 //______________________________________________________________________________
     /**
-     * @return the creditosPrerrequisito
+     * @return Los creditos que sirven como prerrequisito del curso
      */
     public short getCreditosPrerrequisito() {
         return creditosPrerrequisito;
     }
 
     /**
-     * @param creditosPrerrequisito the creditosPrerrequisito to set
+     * @param creditosPrerrequisito Los creditos que sirven como prerrequisito
+     * del curso
      */
     public void setCreditosPrerrequisito(short creditosPrerrequisito) {
         this.creditosPrerrequisito = creditosPrerrequisito;
@@ -111,14 +129,14 @@ public class WrapperCurso {
 
 //______________________________________________________________________________
     /**
-     * @return the creditosTeoricos
+     * @return Los creditos teoricos del curso.
      */
     public short getCreditosTeoricos() {
         return creditosTeoricos;
     }
 
     /**
-     * @param creditosTeoricos the creditosTeoricos to set
+     * @param creditosTeoricos Los creditos teoricos del curso.
      */
     public void setCreditosTeoricos(short creditosTeoricos) {
         this.creditosTeoricos = creditosTeoricos;
@@ -126,14 +144,14 @@ public class WrapperCurso {
 
 //______________________________________________________________________________
     /**
-     * @return the nombre
+     * @return El nombre del curso
      */
     public String getNombre() {
         return nombre;
     }
 
     /**
-     * @param nombre the nombre to set
+     * @param nombre El nombre del curso
      */
     public void setNombre(String nombre) {
         this.nombre = nombre;
@@ -141,14 +159,14 @@ public class WrapperCurso {
 
 //______________________________________________________________________________
     /**
-     * @return the semestre
+     * @return pojo de tipo {@link Semestre}
      */
     public short getSemestre() {
         return semestre;
     }
 
     /**
-     * @param semestre the semestre to set
+     * @param semestre pojo de tipo {@link Semestre}
      */
     public void setSemestre(short semestre) {
         this.semestre = semestre;

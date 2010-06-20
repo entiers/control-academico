@@ -24,6 +24,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
+ * Esta clase se encarga de buscar y modficar un salon existente en la BD.
+ * La informaci�n se pide en la p�gina de <code>buscarSalon.htm</code>.
+ * Y se modifica en la p�gina de <code>editarSalon.htm</code>.
  *
  * @author Mario Batres
  * @version 1.0
@@ -32,7 +35,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class ControladorEditarSalon {
     
     /**
-     * <p>Lleva el nombre del titulo para el mensaje en la página.<p>
+     * <p>Lleva el nombre del titulo para el mensaje en la pagina.<p>
      */
     private static String TITULO_MENSAJE = "editarSalon.titulo";
 //______________________________________________________________________________
@@ -77,11 +80,11 @@ public class ControladorEditarSalon {
 //______________________________________________________________________________
     /**
      * <p>Este metodo se ejecuta cuando se solicita una busqueda desde la pagina
-     * de editar salon. Las busquedas solo se realizan por el código. El metodo
+     * de editar salon. Las busquedas solo se realizan por el codigo. El metodo
      * realiza los siguientes pasos:
      * <ul>
-     * <li>Valida que el código ingresado sea valido</li>
-     * <li>Si el código es valido se realiza la busqueda y se muestra la
+     * <li>Valida que el codigo ingresado sea valido</li>
+     * <li>Si el codigo es valido se realiza la busqueda y se muestra la
      * informacion del salon en la pagina, si la busqueda no genera
      * resultados se muestra un mensaje popup</li>
      * <li>Si ocurre un error de acceso a la base de datos se muestra un mensaje

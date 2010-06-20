@@ -9,6 +9,10 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
+ * <p>Contiene los atributos de busqueda de cursos. Se utiliza en la página de
+ * <code>buscarCurso.htm</code>.</p>
+ *
+ * <p>La busqueda de cursos se realiza solo por el codigo que tiene asignado.</p>
  *
  * @author Mario Batres
  * @version 1.0
@@ -24,10 +28,16 @@ public class DatosBusquedaCurso {
         this.codigo = "";
     }
 //______________________________________________________________________________
+    /**
+     * @return Codigo del curso
+     */
     public String getCodigo() {
         return codigo;
     }
 //______________________________________________________________________________
+    /**
+     * @param codigo Código del curso del que se va a buscar
+     */
     public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
