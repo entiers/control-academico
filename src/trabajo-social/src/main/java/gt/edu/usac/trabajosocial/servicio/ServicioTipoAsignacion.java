@@ -7,6 +7,7 @@ package gt.edu.usac.trabajosocial.servicio;
 
 import gt.edu.usac.trabajosocial.dominio.TipoAsignacion;
 import java.util.List;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 
@@ -50,7 +51,7 @@ public interface ServicioTipoAsignacion {
 
      */
     void elimiarTipoAsignacion(TipoAsignacion tipoAsignacion)
-            throws DataAccessException;
+            throws DataAccessException, DataIntegrityViolationException, ConstraintViolationException;
 //______________________________________________________________________________
     /**
      * <p>Este metodo obtiene todos los tipo de asignacion habilitados

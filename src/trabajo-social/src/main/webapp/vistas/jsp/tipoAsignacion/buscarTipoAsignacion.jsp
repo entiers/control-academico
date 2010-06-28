@@ -28,7 +28,7 @@
                         <tr class="ui-widget-header ">
                             <th><fmt:message key="agregarTipoAsignacion.nombre"/></th>
                             <th><fmt:message key="agregarTipoAsignacion.descripcion"/></th>
-                            <th><fmt:message key="acciones"/></th>
+                            <th colspan="2"><fmt:message key="acciones"/></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -41,10 +41,17 @@
                                         <fmt:message key="editarTipoAsignacion.editar"/>
                                     </a>
                                 </td>
+                                <td>
+                                    <a href="eliminarTipoAsignacion.htm?idTipoAsignacion=${tipoAsignacion.idTipoAsignacion}">
+                                        <fmt:message key="eliminarTipoAsignacion.eliminar"/>
+                                    </a>
+                                </td>
                             </tr>
                         </c:forEach>
                     </tbody>
                 </table>
         </fieldset>
+        <%-- fragmento que muestra como mensaje popup el resultado de las operaciones --%>
+        <%@include file="../../jspf/plantilla/popupMensaje.jspf" %>
     </body>
 </html>
