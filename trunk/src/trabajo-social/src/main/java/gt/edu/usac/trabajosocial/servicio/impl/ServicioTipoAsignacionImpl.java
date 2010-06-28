@@ -12,6 +12,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -71,7 +72,8 @@ public class ServicioTipoAsignacionImpl implements ServicioTipoAsignacion {
      */
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void elimiarTipoAsignacion(TipoAsignacion tipoAsignacion) throws DataAccessException {
+    public void elimiarTipoAsignacion(TipoAsignacion tipoAsignacion) 
+            throws DataAccessException, DataIntegrityViolationException, ConstraintViolationException{
         this.daoGeneralImpl.delete(tipoAsignacion);
     }
 //______________________________________________________________________________

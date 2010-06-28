@@ -95,7 +95,7 @@ public class TipoAsignacion implements java.io.Serializable {
     }
 
     @OneToMany(
-        cascade = CascadeType.ALL,
+        //cascade = CascadeType.ALL,
         fetch = FetchType.LAZY,
         mappedBy = "tipoAsignacion"
     )

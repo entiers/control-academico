@@ -69,6 +69,9 @@ public class ControladorEditarTipoAsignacion {
      *
      * @param modelo Objeto {@link Model} que contiene todos los objetos que
      *        seran usados en la pagina
+     * @param idTipoAsignacion Identificador del pojo {@link TipoAsignacion} que
+     *        se va a mostrar para poder ser modificado.
+     * @param request Objeto {@link HttpServletRequest}
      * @return String Contiene el nombre de la vista a mostrar
      */
     @RequestMapping(method = RequestMethod.GET)
