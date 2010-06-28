@@ -53,6 +53,7 @@
                     <li><a href="agregarCalendarioActividades.htm"><fmt:message key="agregarCalendarioActividades.titulo"/></a></li>
                     <li><a href="buscarCalendarioActividades.htm"><fmt:message key="buscarCalendarioActividades.titulo"/></a></li>
                     <li><a href="agregarTipoAsignacion.htm"><fmt:message key="agregarTipoAsignacion.titulo"/></a></li>
+                    <li><a href="buscarTipoAsignacion.htm"><fmt:message key="buscarTipoAsignacion.titulo"/></a></li>
                 </ul>
             </li>
         </ul>
