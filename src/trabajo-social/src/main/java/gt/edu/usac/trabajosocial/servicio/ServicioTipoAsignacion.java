@@ -66,6 +66,6 @@ public interface ServicioTipoAsignacion {
      *
      * @throws DataAccessException Si ocurrio un error de acceso a datos
      */
-    TipoAsignacion getTipoAsignacion(short idTipoAsignacion)
+    TipoAsignacion getTipoAsignacionPorID(short idTipoAsignacion)
             throws DataAccessException;
 }

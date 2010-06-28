@@ -58,7 +58,7 @@ public class ServicioTipoAsignacionImpl implements ServicioTipoAsignacion {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void actualizarTipoAsignacion(TipoAsignacion tipoAsignacion) throws DataAccessException {
-        this.daoGeneralImpl.save(tipoAsignacion);
+        this.daoGeneralImpl.update(tipoAsignacion);
     }
 //______________________________________________________________________________
     /**
@@ -72,7 +72,7 @@ public class ServicioTipoAsignacionImpl implements ServicioTipoAsignacion {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void elimiarTipoAsignacion(TipoAsignacion tipoAsignacion) throws DataAccessException {
-        this.daoGeneralImpl.save(tipoAsignacion);
+        this.daoGeneralImpl.delete(tipoAsignacion);
     }
 //______________________________________________________________________________
     /**
@@ -96,8 +96,11 @@ public class ServicioTipoAsignacionImpl implements ServicioTipoAsignacion {
      * @throws DataAccessException Si ocurrio un error de acceso a datos
      */
     @Override
-    public TipoAsignacion getTipoAsignacion(short idTipoAsignacion) throws DataAccessException {
-        return this.daoGeneralImpl.load(TipoAsignacion.class, idTipoAsignacion);
+    public TipoAsignacion getTipoAsignacionPorID(short idTipoAsignacion) throws DataAccessException {
+        DetachedCriteria criteria = DetachedCriteria.forClass(TipoAsignacion.class);
+        criteria.add(Restrictions.eq("idTipoAsignacion", idTipoAsignacion));
+
+        return this.daoGeneralImpl.uniqueResult(criteria);
     }
 
 }

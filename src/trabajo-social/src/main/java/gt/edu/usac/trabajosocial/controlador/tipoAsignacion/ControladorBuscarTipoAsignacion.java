@@ -10,7 +10,6 @@ import gt.edu.usac.trabajosocial.dominio.TipoAsignacion;
 import gt.edu.usac.trabajosocial.servicio.ServicioTipoAsignacion;
 import java.util.List;
 import javax.annotation.Resource;
-import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,21 +25,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller("controladorBuscarTipoAsignacion")
 @RequestMapping(value = "buscarTipoAsignacion.htm")
 public class ControladorBuscarTipoAsignacion {
-
-//______________________________________________________________________________
-    /**
-     * <p>
-     * Lleva el nombre del titulo para el mensaje en la página
-     * </p>
-     */
-    private static final String TITULO_MENSAJE = "buscarHorario.titulo";
-
-//______________________________________________________________________________
-    /**
-     * <p>Matiene una bitacora de lo realizado por esta clase.</p>
-     */
-    private static Logger log = Logger.getLogger(ControladorBuscarTipoAsignacion.class);
-//______________________________________________________________________________
 
     /**
      * <p>Listado de todas las cursos disponibles.</p>
