@@ -4,7 +4,7 @@
     Author     : Mario Batres
 --%>
 
-<%@page contentType="text/html" pageEncoding="ISO-8859-1"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
    "http://www.w3.org/TR/html4/loose.dtd">
 
@@ -37,7 +37,7 @@
                                 <td><c:out value="${tipoAsignacion.nombre}" /></td>
                                 <td><c:out value="${tipoAsignacion.descripcion}" /></td>
                                 <td>
-                                    <a href="editarHorario.htm?idTipoAsignacion=${tipoAsignacion.idTipoAsignacion}">
+                                    <a href="editarTipoAsignacion.htm?idTipoAsignacion=${tipoAsignacion.idTipoAsignacion}">
                                         <fmt:message key="editarTipoAsignacion.editar"/>
                                     </a>
                                 </td>
