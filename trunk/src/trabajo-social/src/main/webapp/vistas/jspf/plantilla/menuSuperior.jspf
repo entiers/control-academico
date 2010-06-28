@@ -52,6 +52,7 @@
                     <li><a href="controlPensum.htm"><fmt:message key="controlPensum.titulo"/></a></li>
                     <li><a href="agregarCalendarioActividades.htm"><fmt:message key="agregarCalendarioActividades.titulo"/></a></li>
                     <li><a href="buscarCalendarioActividades.htm"><fmt:message key="buscarCalendarioActividades.titulo"/></a></li>
+                    <li><a href="agregarTipoAsignacion.htm"><fmt:message key="agregarTipoAsignacion.titulo"/></a></li>
                 </ul>
             </li>
         </ul>

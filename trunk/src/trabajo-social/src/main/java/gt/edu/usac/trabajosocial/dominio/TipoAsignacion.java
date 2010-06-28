@@ -41,6 +41,7 @@ public class TipoAsignacion implements java.io.Serializable {
     private String descripcion;
     private short idTipoAsignacion;
     private String nombre;
+    private boolean habilitado;
 
     public TipoAsignacion() {}
 
@@ -105,6 +106,19 @@ public class TipoAsignacion implements java.io.Serializable {
     public void setAsignacions(Set<Asignacion> asignacions) {
         this.asignacions = asignacions;
     }
+
+    @Column(
+        name = "habilitado",
+        nullable = false
+    )
+    public boolean isHabilitado() {
+        return habilitado;
+    }
+
+    public void setHabilitado(boolean habilitado) {
+        this.habilitado = habilitado;
+    }
+    
 }
 
 

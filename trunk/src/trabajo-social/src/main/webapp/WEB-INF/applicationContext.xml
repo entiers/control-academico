@@ -31,6 +31,7 @@
                 <value>/idiomas/textosHorario</value>
                 <value>/idiomas/textosPensum</value>
                 <value>/idiomas/textosCalendarioActividades</value>
+                <value>/idiomas/textosTipoAsignacion</value>
             </list>
         </property>
 	<property name="cacheSeconds" value="0" />
