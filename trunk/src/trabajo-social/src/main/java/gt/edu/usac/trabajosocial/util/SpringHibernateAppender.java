@@ -4,17 +4,18 @@
  * Universidad de San Carlos de Guatemala
  */
 
-
-
 package gt.edu.usac.trabajosocial.util;
 
 import gt.edu.usac.trabajosocial.dao.DaoGeneral;
 import gt.edu.usac.trabajosocial.dominio.Log;
 import gt.edu.usac.trabajosocial.dominio.Usuario;
+import gt.edu.usac.trabajosocial.seguridad.UserDetailsImpl;
 import java.util.Date;
 import org.apache.log4j.Appender;
 import org.apache.log4j.AppenderSkeleton;
 import org.apache.log4j.spi.LoggingEvent;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -23,7 +24,6 @@ import org.springframework.web.context.WebApplicationContext;
  * @author Daniel Castillo
  * @version 1.0
  */
-
 public class SpringHibernateAppender extends AppenderSkeleton implements Appender {
     
     /** Bean encargado de los accesos a la base de datos */
@@ -65,6 +65,7 @@ public class SpringHibernateAppender extends AppenderSkeleton implements Appende
      * <p>Este metodo se ejecuta cuando se cierra este Appender. Se encarga
      * de liberar los recursos utilizados.</p>
      */
+    @Override
     public void close() {}
 //______________________________________________________________________________
     /**
@@ -72,6 +73,7 @@ public class SpringHibernateAppender extends AppenderSkeleton implements Appende
      * mensajes de log.</p>
      * @return true si y solo si se debe de usar un Layout
      */
+    @Override
     public boolean requiresLayout() {
         return false;
     }
@@ -125,10 +127,22 @@ public class SpringHibernateAppender extends AppenderSkeleton implements Appende
      */
     private void guardarLog(Log log) {
         // se obtiene el usuario que genero el evento
-        Usuario usuario = this.daoGeneralImpl.load(Usuario.class, new Short("1"));
-        log.setUsuario(usuario);
+        log.setUsuario(this.getUsuario());
 
         // se almacena el log
         this.daoGeneralImpl.save(log);
+    }
+//______________________________________________________________________________
+    /**
+     * <p>Obtiene el {@link Usuario} asociado a la sesion.</p>
+     *
+     * @return Usuario
+     */
+    private Usuario getUsuario() {
+        // se obtiene el contexto de seguridad para obtener el
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDetailsImpl userDetails = (UserDetailsImpl) auth.getPrincipal();
+
+        return userDetails.getUsuario();
     }
 }

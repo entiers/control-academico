@@ -22,8 +22,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
- * Esta clase se encarga de modficar un tipo de asignación existente en la BD.
- * La información se pide en la página de <code>editarTipoAsignacion.htm</code>.
+ * Esta clase se encarga de modficar un tipo de asignacion existente en la BD.
+ * La informacion se pide en la pagina de <code>editarTipoAsignacion.htm</code>.
  *
  * @author Mario Batres
  * @version 1.0
@@ -34,7 +34,7 @@ public class ControladorEditarTipoAsignacion {
     //_____________________________________________________________________________
     /**
      * <p>
-     * Lleva el nombre del titulo para el mensaje en la página
+     * Lleva el nombre del titulo para el mensaje en la pagina
      * <p>
      */
     private static final String TITULO_MENSAJE = "editarTipoAsignacion.titulo";

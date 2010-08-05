@@ -57,6 +57,30 @@ public interface ServicioEstudiante {
             throws DataAccessException;
 //______________________________________________________________________________
     /**
+     * <p>Este metodo realiza la asignacion del perfil ESTUDIANTE a un
+     * estudiante. Este perfil contiene todos los permisos/roles para las
+     * operaciones un estudiante puede realizar en el sistema. Para realizar la
+     * asignacion se debe de enviar el usuario asignado al estudiante.</p>
+     *
+     * @param usuario Pojo del tipo {@link Usuario}
+     * @throws DataAccessException Si ocurrio un error de acceso a datos
+     */
+    public void asignarPerfil(Usuario usuario)
+            throws DataAccessException;
+//______________________________________________________________________________
+    /**
+     * <p>Este metodo se encarga de habilitar o deshabilitar el acceso de un
+     * {@link Estudiante} al sistema.</p>
+     *
+     * @param estudiante Pojo del tipo {@link Estudiante}
+     * @param habilitar <code>true</code> para habilitar y <code>false</code>
+     *        para deshabilitar
+     * @throws DataAccessException Si ocurrio un error de acceso a datos
+     */
+    void habilitarEstudiante(Estudiante estudiante, boolean habilitar)
+            throws DataAccessException;
+//______________________________________________________________________________
+    /**
      * <p>Este metodo permite la busqueda de estudiantes por su numero de
      * carne.</p>
      *

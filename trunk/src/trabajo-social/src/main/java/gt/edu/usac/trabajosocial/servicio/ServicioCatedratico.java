@@ -8,6 +8,7 @@ package gt.edu.usac.trabajosocial.servicio;
 
 import gt.edu.usac.trabajosocial.dominio.Catedratico;
 import gt.edu.usac.trabajosocial.dominio.Escuela;
+import gt.edu.usac.trabajosocial.dominio.Usuario;
 import gt.edu.usac.trabajosocial.dominio.busqueda.DatosBusquedaCatedratico;
 import java.util.List;
 import org.hibernate.HibernateException;
@@ -55,6 +56,30 @@ public interface ServicioCatedratico {
             throws DataAccessException;
 //______________________________________________________________________________
     /**
+     * <p>Este metodo realiza la asignacion del perfil CATEDRATICO a un
+     * catedratico. Este perfil contiene todos los permisos/roles para las
+     * operaciones un catedratico puede realizar en el sistema. Para realizar
+     * la asignacion se debe de enviar el usuario asignado al catedratico.</p>
+     *
+     * @param usuario Pojo del tipo {@link Usuario}
+     * @throws DataAccessException Si ocurrio un error de acceso a datos
+     */
+    public void asignarPerfil(Usuario usuario)
+            throws DataAccessException;
+//______________________________________________________________________________
+    /**
+     * <p>Este metodo se encarga de habilitar o deshabilitar el acceso de un
+     * {@link Catedratico} al sistema.</p>
+     *
+     * @param catedratico Pojo del tipo {@link Catedratico}
+     * @param habilitar <code>true</code> para habilitar y <code>false</code>
+     *        para deshabilitar
+     * @throws DataAccessException Si ocurrio un error de acceso a datos
+     */
+    void habilitarCatedratico(Catedratico catedratico, boolean habilitar)
+            throws DataAccessException;
+//______________________________________________________________________________
+    /**
      * <p>Este metodo permite la busqueda de catedraticos por su codigo de
      * personal.</p>
      *
@@ -64,6 +89,15 @@ public interface ServicioCatedratico {
      */
     Catedratico buscarCatedraticoPorCodigo(String codigo)
             throws DataAccessException;
+//______________________________________________________________________________
+    /**
+     * <p>Este metodo obtiene el {@link Usuario} del {@link Catedratico}.</p>
+     *
+     * @param catedratico Pojo del tipo {@link Catedratico}
+     * @return Usuario
+     * @throws DataAccessException Si ocurrio un error de acceso a datos
+     */
+    Usuario getUsuarioCatedratico(Catedratico catedratico) throws DataAccessException;
 //______________________________________________________________________________
     /**
      * <p>Este metodo se encarga de crear un listado de catedraticos, el listado

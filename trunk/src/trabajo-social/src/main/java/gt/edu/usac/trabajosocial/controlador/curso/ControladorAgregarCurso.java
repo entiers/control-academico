@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * Esta clase se encarga de almacenar los cursos en la BD.
- * La información se pide en la pagina de <code>agregarCurso.htm</code>.
+ * La informacion se pide en la pagina de <code>agregarCurso.htm</code>.
  *
  * @author Mario Batres
  * @version 1.0

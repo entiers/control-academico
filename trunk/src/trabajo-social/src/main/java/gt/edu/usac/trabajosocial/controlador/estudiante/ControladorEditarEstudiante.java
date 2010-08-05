@@ -24,6 +24,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
+ * <p>Esta clase se encuentra registrada en Spring como un controlador. Este
+ * controlador esta asociado a la pagina <code>editarEstudiante</code> y a todas
+ * las peticiones que esta pagina realiza.</p>
+ *
+ * <p>El controlador responde a tres eventos distintos de la pagina antes
+ * mencionada, los eventos son:
+ * <ul>
+ * <li>Creacion de la pagina, este evento se genera cada vez que se solicita
+ * la pagina desde algun link u otro controlador. El controlador responde a este
+ * evento por medio del metodo {@link crearFormulario(Model modelo)} el cual es
+ * el encargado de crear la pagina.</li>
+ * <li>Buscar estudiante, este evento se genera desde la pagina asociada a este
+ * controlador cuando se solicita buscar un estudiante por medio de su numero de
+ * carne. El metodo encargado de responder a este evento es
+ * {@link buscarEstudiante(DatosBusquedaEstudiante datosBusquedaEstudiante,
+ * BindingResult bindingResult, Model modelo, HttpServletRequest request)}</li>
+ * <li>Editar estudiante, este evento se genera desde la pagina asociada a este
+ * controlador cuando se solicita editar la informacion de un estudiante. El
+ * metodo que responde a este evento es {@link submit(WrapperEstudiante
+ * wrapperEstudiante, BindingResult bindingResult, Model modelo,
+ * HttpServletRequest request)}</li>
+ * </ul>
+ * </p>
  *
  * @author Daniel Castillo
  * @version 1.0
@@ -32,7 +55,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class ControladorEditarEstudiante {
 
     /**
-     * <p>Lleva el nombre del titulo para el mensaje en la página</p>
+     * <p>Lleva el nombre del titulo para el mensaje en la pagina</p>
      */
     private static String TITULO_MENSAJE = "editarEstudiante.titulo";
 //______________________________________________________________________________
@@ -120,6 +143,10 @@ public class ControladorEditarEstudiante {
             // se realiza la busqueda del estudiante
             this.estudiante = this.servicioEstudianteImpl.buscarEstudiantePorCarne(carne);
 
+            // se activan los componentes para activar o dar de baja
+            request.setAttribute("funcionDeshabilitar", true);
+            request.setAttribute("estaHabilitado", this.estudiante.getUsuario().isHabilitado());
+
             if(this.estudiante == null)
                 MensajePopup.crearMensajeRespuesta(request, TITULO_MENSAJE, "editarEstudiante.sinResultados", true);
             else
@@ -143,15 +170,15 @@ public class ControladorEditarEstudiante {
      * <li>Delega la funcion de actualizacion a {@link ServicioEstudiante}</li>
      * <li>Muestra un mensaje popup con el resultado de la operacion</li>
      * </ul></p>
-     * 
-     * @param estudiante Pojo del tipo {@link Estudiante}
+     *
+     * @param wrapperEstudiante Envoltorio para el pojo {@link Estudiante}
      * @param bindingResult Ojeto {@link BindingResult} que realiza las validaciones
      * @param modelo Objeto {@link Model} que contiene los objeto de la pagina
      * @param request Objeto {@link HttpServletRequest}
-     * @return String
+     * @return String Contiene el nombre de la vista a mostrar
      */
     @RequestMapping(value = "editarEstudiante.htm", method = RequestMethod.POST)
-    public String submit(@Valid WrapperEstudiante wrapperEstudiante, BindingResult bindingResult,
+    public String editarEstudiante(@Valid WrapperEstudiante wrapperEstudiante, BindingResult bindingResult,
             Model modelo, HttpServletRequest request) {
 
         modelo.addAttribute("datosBusquedaEstudiante", new DatosBusquedaEstudiante());
@@ -175,6 +202,62 @@ public class ControladorEditarEstudiante {
             MensajePopup.crearMensajeRespuesta(request, TITULO_MENSAJE, "editarEstudiante.exito", true);
             String msg = Mensajes.EXITO_ACTUALIZACION + "Estudiante, carne " + this.estudiante.getCarne();
             log.info(msg);
+
+        } catch (DataAccessException e) {
+            // error de acceso a datos
+            MensajePopup.crearMensajeRespuesta(request, null, "dataAccessException", false);
+            log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
+        }
+
+        return "estudiante/editarEstudiante";
+    }
+//______________________________________________________________________________
+    /**
+     * <p>Este metodo se ejecuta cuando se presiona el boton de Deshabilitar
+     * Estudiante de la pagina. El metodo se encarga de deshabilitar el acceso
+     * de un estudiante al sistema.</p>
+     *
+     * @param modelo Objeto {@link Model} que contiene los objeto de la pagina
+     * @param request Objeto {@link HttpServletRequest}
+     * @return String Nombre de la pagina que se debe de mostrar
+     */
+    @RequestMapping(value = "deshabilitarEstudiante.htm", method = RequestMethod.POST)
+    public String deshabilitarEstudiante(Model modelo, HttpServletRequest request) {
+
+        modelo.addAttribute("wrapperEstudiante", new WrapperEstudiante());
+        modelo.addAttribute("datosBusquedaEstudiante", new DatosBusquedaEstudiante());
+
+        try {
+            // se trata de deshabilitar al estudiante
+            this.servicioEstudianteImpl.habilitarEstudiante(this.estudiante, false);
+
+        } catch (DataAccessException e) {
+            // error de acceso a datos
+            MensajePopup.crearMensajeRespuesta(request, null, "dataAccessException", false);
+            log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
+        }
+
+        return "estudiante/editarEstudiante";
+    }
+//______________________________________________________________________________
+    /**
+     * <p>Este metodo se ejecuta cuando se presiona el boton de Habilitar
+     * Estudiante de la pagina. El metodo se encarga de habilitar el acceso
+     * de un estudiante al sistema.</p>
+     *
+     * @param modelo Objeto {@link Model} que contiene los objeto de la pagina
+     * @param request Objeto {@link HttpServletRequest}
+     * @return String Nombre de la pagina que se debe de mostrar
+     */
+    @RequestMapping(value = "habilitarEstudiante.htm", method = RequestMethod.POST)
+    public String habilitarEstudiante(Model modelo, HttpServletRequest request) {
+
+        modelo.addAttribute("wrapperEstudiante", new WrapperEstudiante());
+        modelo.addAttribute("datosBusquedaEstudiante", new DatosBusquedaEstudiante());
+
+        try {
+            // se trata de habilitar al estudiante
+            this.servicioEstudianteImpl.habilitarEstudiante(this.estudiante, true);
 
         } catch (DataAccessException e) {
             // error de acceso a datos

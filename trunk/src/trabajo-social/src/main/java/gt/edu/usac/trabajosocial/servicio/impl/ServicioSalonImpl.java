@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * <p>Contiene la implementación de los metodos que permiten el manejo de la
+ * <p>Contiene la implementacion de los metodos que permiten el manejo de la
  * informacion relacionada con el salon en la base de datos.</p>
  *
  * @see ServicioSalon
@@ -53,9 +53,9 @@ public class ServicioSalonImpl implements ServicioSalon {
     }
 //______________________________________________________________________________
     /**
-     * <p>Este método permite obtener un salon por el número y el nombre del edificio</p>
+     * <p>Este metodo permite obtener un salon por el numero y el nombre del edificio</p>
      *
-     * @param numero Número del salón
+     * @param numero Numero del salon
      * @param edificio Nombre del edificio
      * @throws DataAccessException Si ocurrio un error de acceso a datos
      */
@@ -74,11 +74,11 @@ public class ServicioSalonImpl implements ServicioSalon {
     }
 //______________________________________________________________________________
     /**
-     * <p>Este método permite actualizar la información de un salón a la base
+     * <p>Este metodo permite actualizar la informacion de un salon a la base
      * de datos</p>
      *
      * @param salon Pojo del tipo {@link salon}
-     * @throws DataAccessException Si ocurrió un error de acceso a datos
+     * @throws DataAccessException Si ocurrio un error de acceso a datos
      */
     @Transactional(rollbackFor = Exception.class)
     @Override
@@ -89,10 +89,10 @@ public class ServicioSalonImpl implements ServicioSalon {
     }
 //______________________________________________________________________________
     /**
-     * <p>Este método permite obtener todos los salones disponibles</p>
+     * <p>Este metodo permite obtener todos los salones disponibles</p>
      *
      * @return List de tipo {@link Salon}
-     * @throws DataAccessException Si ocurrió un error de acceso a datos
+     * @throws DataAccessException Si ocurrio un error de acceso a datos
      */
     @Override
     public List<Salon> getSalones() throws DataAccessException {

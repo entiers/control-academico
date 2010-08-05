@@ -11,8 +11,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  *
- * Contiene los atributos del Tipo de Asignación que serán ingresados
- * o actualizado a la BD. El wrapper se utiliza en las páginas de
+ * Contiene los atributos del Tipo de Asignacion que seran ingresados
+ * o actualizado a la BD. El wrapper se utiliza en las paginas de
  * <code>agregarTipoAsignacion.htm</code> y <code>editarTipoAsignacion.htm</code>.
  * @author Mario Batres
  * @version 1.0
@@ -29,8 +29,8 @@ public class WrapperTipoAsignacion {
     private boolean habilitado;
 //______________________________________________________________________________
     /**
-     * Constructor del Tipo de Asignación, se inicializan los atributos a mostrar en las
-     * páginas de <code>agregarTipoAsignacion.htm</code> y <code>editarTipoAsignacion.htm</code>.
+     * Constructor del Tipo de Asignacion, se inicializan los atributos a mostrar en las
+     * paginas de <code>agregarTipoAsignacion.htm</code> y <code>editarTipoAsignacion.htm</code>.
      */
     public WrapperTipoAsignacion() {
         this.descripcion = "";

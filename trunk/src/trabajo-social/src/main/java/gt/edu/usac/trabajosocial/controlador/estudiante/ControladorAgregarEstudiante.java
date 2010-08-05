@@ -11,15 +11,19 @@ import gt.edu.usac.trabajosocial.dominio.Estudiante;
 import gt.edu.usac.trabajosocial.dominio.wrapper.WrapperEstudiante;
 import gt.edu.usac.trabajosocial.servicio.ServicioEstudiante;
 import gt.edu.usac.trabajosocial.servicio.ServicioGeneral;
+import gt.edu.usac.trabajosocial.util.EmailSender;
 import gt.edu.usac.trabajosocial.util.MensajePopup;
 import gt.edu.usac.trabajosocial.util.Mensajes;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Resource;
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.dao.DataAccessException;
+import org.springframework.mail.MailException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,6 +31,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
+ * <p>Esta clase se encuentra registrada en Spring como un controlador. Este
+ * controlador esta asociado a la pagina <code>agregarEstudiante</code> y a todas
+ * las peticiones que esta pagina realiza.</p>
+ *
+ * <p>El controlador responde a dos eventos distintos de la pagina antes
+ * mencionada, los eventos son:
+ * <ul>
+ * <li>Creacion de la pagina, este evento se genera cada vez que se solicita
+ * la pagina desde algun link u otro controlador. El controlador responde a este
+ * evento por medio del metodo {@link crearFormulario(Model modelo)} el cual es
+ * el encargado de crear la pagina.</li>
+ * <li>Agregar estudiante, este evento se genera desde la pagina asociada a este
+ * controlador cuando se solicita agregar un nuevo estudiante. El metodo que
+ * responde a este evento es {@link submit(WrapperEstudiante wrapperEstudiante,
+ * BindingResult bindingResult, Model modelo, HttpServletRequest request)}</li>
+ * </ul>
+ * </p>
  *
  * @author Daniel Castillo
  * @version 1.0
@@ -36,7 +57,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class ControladorAgregarEstudiante {
 
     /**
-     * <p>Lleva el nombre del titulo para el mensaje en la página.</p>
+     * <p>Lleva el nombre del titulo para el mensaje en la pagina.</p>
      */
     private static String TITULO_MENSAJE = "agregarEstudiante.titulo";
 //______________________________________________________________________________
@@ -52,7 +73,7 @@ public class ControladorAgregarEstudiante {
      * inyectar la dependencia.</p>
      */
     @Resource
-    protected ServicioEstudiante servicioEstudianteImpl;
+    private ServicioEstudiante servicioEstudianteImpl;
 //______________________________________________________________________________
     /**
      * <p>Contiene metodos basicos de acceso a la base de datos, estos metodos
@@ -60,7 +81,13 @@ public class ControladorAgregarEstudiante {
      * de datos.</p>
      */
     @Resource
-    protected ServicioGeneral servicioGeneralImpl;
+    private ServicioGeneral servicioGeneralImpl;
+//______________________________________________________________________________
+    /**
+     * <p>Bean de servicio que permite enviar correos electronicos</p>
+     */
+    @Resource
+    private EmailSender emailSender;
 //______________________________________________________________________________
     /**
      * <p>Listado de todas las carreras disponibles.</p>
@@ -124,11 +151,11 @@ public class ControladorAgregarEstudiante {
      * @return String Con la url de la pagina a mostrar
      */
     @RequestMapping(method = RequestMethod.POST)
-    public String submit(@Valid WrapperEstudiante wrapperEstudiante, BindingResult bindingResult,
+    public String agregarEstudiante(@Valid WrapperEstudiante wrapperEstudiante, BindingResult bindingResult,
             Model modelo, HttpServletRequest request) {
 
         modelo.addAttribute("carreras", this.listadoCarreras);
-        
+
         // se validan los campos ingresados en el formulario, si existen errores
         // se regresa al formulario para que se muestren los mensajes correspondientes
         if(bindingResult.hasErrors())
@@ -142,6 +169,9 @@ public class ControladorAgregarEstudiante {
             Estudiante estudiante = new Estudiante();
             wrapperEstudiante.quitarWrapper(estudiante);
             this.servicioEstudianteImpl.agregarEstudiante(estudiante, carrera);
+
+            // se envia correo electronico de confirmacion
+            this.enviarEmail(estudiante);
 
             // se registra el evento
             MensajePopup.crearMensajeRespuesta(request, TITULO_MENSAJE, "agregarEstudiante.exito", true);
@@ -172,5 +202,42 @@ public class ControladorAgregarEstudiante {
                 return carrera;
         }
         return null;
+    }
+//______________________________________________________________________________
+    /**
+     * <p>Este metodo permite enviar un correo electronico al estudiante que se
+     * agrego al sistema. El correo notifica al estudiante que su registro se
+     * realizo con exito, ademas el correo incluye las credenciales de acceso
+     * al sistema que fueron asignadas al estudiante.</p>
+     *
+     * @param destinatario Correo electronico al que se debe de enviar el correo
+     */
+    private void enviarEmail(Estudiante estudiante) {
+        String subject = "Informe de registro (Escuela de Trabajo Social)";
+        String mensaje = estudiante.getNombre() + " " +
+                estudiante.getApellido() +
+                "\n\nTu registro en el sitio de la Escuela de Trabajo Social se realizo con exito. " +
+                "Para acceder al sitio utiliza los siguientes datos:" +
+                "\n\nUSUARIO:  " + estudiante.getCarne() +
+                "\nPASSWORD: " + estudiante.getPassword();
+
+
+        this.emailSender.setSubject(subject);
+        this.emailSender.setDestinatario(estudiante.getEmail());
+        this.emailSender.setMensaje(mensaje);
+
+        try {
+            // se trata de enviar el correo
+            this.emailSender.enviarCorreo();
+
+        } catch (MailException ex) {
+            log.error(Mensajes.MAIL_EXCEPTION, ex);
+
+        } catch (MessagingException ex) {
+            log.error(Mensajes.MESSAGING_EXCEPTION, ex);
+
+        } catch (IOException ex) {
+            log.error(Mensajes.IO_EXCEPTION, ex);
+        }
     }
 }

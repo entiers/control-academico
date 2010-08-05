@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * <p>Contiene la implementación de los metodos que permiten el manejo de la
+ * <p>Contiene la implementacion de los metodos que permiten el manejo de la
  * informacion relacionada con el Semestre en la base de datos.</p>
  *
  * @see ServicioSemestre
@@ -50,10 +50,10 @@ public class ServicioSemestreImpl implements ServicioSemestre{
     }
 //______________________________________________________________________________
     /**
-     * <p>Este método permite obtener todos los semestres disponibles</p>
+     * <p>Este metodo permite obtener todos los semestres disponibles</p>
      *
      * @return List de tipo {@link Salon}
-     * @throws DataAccessException Si ocurrió un error de acceso a datos
+     * @throws DataAccessException Si ocurrio un error de acceso a datos
      */
     @Override
     public List <Semestre> getSemestres() throws DataAccessException {

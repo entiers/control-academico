@@ -13,8 +13,8 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
- * Contiene los atributos del Salon que serán ingresados
- * o actualizado a la BD. El wrapper se utiliza en las páginas de
+ * Contiene los atributos del Salon que seran ingresados
+ * o actualizado a la BD. El wrapper se utiliza en las paginas de
  * <code>agregarSalon.htm</code> y <code>editarSalon.htm</code>.
  *
  * @author Mario Batres
@@ -36,7 +36,7 @@ public class WrapperSalon {
 //______________________________________________________________________________
     /**
      * Constructor del wrapper, se inicializan los atributos a mostrar en las
-     * páginas de <code>agregarSalon.htm</code> y <code>editarSalon.htm</code>.
+     * paginas de <code>agregarSalon.htm</code> y <code>editarSalon.htm</code>.
      */
     public WrapperSalon() {
         this.capacidad = 1;

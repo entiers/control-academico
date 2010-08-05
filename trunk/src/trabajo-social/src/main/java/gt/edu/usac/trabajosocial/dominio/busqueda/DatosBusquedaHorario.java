@@ -9,7 +9,7 @@ import gt.edu.usac.trabajosocial.dominio.Salon;
 import gt.edu.usac.trabajosocial.dominio.Semestre;
 
 /**
- * <p>Contiene los atributos de busqueda de horarios. Se utiliza en la página
+ * <p>Contiene los atributos de busqueda de horarios. Se utiliza en la pagina
  * de <code>buscarHorario.htm</code>.</p>
  *
  * <p>La busqueda de horarios se realiza solo por el salon y semestre que

@@ -3,6 +3,36 @@
 
 <script type="text/javascript">
     $(function() {
+        // configuracion del panel popup para deshabilitar catedraticos
+        $("#popupDeshabilitar").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                '<fmt:message key="btnAceptar"/>': function() {
+                    document.forms[1].action = "deshabilitarCatedratico.htm";
+                    document.forms[1].submit();
+                },
+                '<fmt:message key="btnCancelar"/>': function() {
+                    $(this).dialog('close');
+                }
+            }
+        });
+
+        // configuracion del panel popup para habilitar catedraticos
+        $("#popupHabilitar").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                '<fmt:message key="btnAceptar"/>': function() {
+                    document.forms[1].action = "habilitarCatedratico.htm";
+                    document.forms[1].submit();
+                },
+                '<fmt:message key="btnCancelar"/>': function() {
+                    $(this).dialog('close');
+                }
+            }
+        });
+
         $("#popupMensaje").dialog({
             autoOpen: <%= RequestUtil.getValorBoolean(request, "mostrarPopupMensaje") %>,
             modal: true,

@@ -9,11 +9,14 @@ package gt.edu.usac.trabajosocial.servicio.impl;
 import gt.edu.usac.trabajosocial.dominio.busqueda.DatosBusquedaEstudiante;
 import gt.edu.usac.trabajosocial.dao.DaoGeneral;
 import gt.edu.usac.trabajosocial.dominio.AsignacionEstudianteCarrera;
+import gt.edu.usac.trabajosocial.dominio.AsignacionUsuarioPerfil;
 import gt.edu.usac.trabajosocial.dominio.Carrera;
 import gt.edu.usac.trabajosocial.dominio.Estudiante;
+import gt.edu.usac.trabajosocial.dominio.Perfil;
 import gt.edu.usac.trabajosocial.dominio.Usuario;
 import gt.edu.usac.trabajosocial.servicio.ServicioEstudiante;
 import gt.edu.usac.trabajosocial.util.BotonesPaginacion;
+import gt.edu.usac.trabajosocial.util.GeneradorPassword;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.Resource;
@@ -73,14 +76,21 @@ public class ServicioEstudianteImpl implements ServicioEstudiante {
     public void agregarEstudiante(Estudiante estudiante, Carrera carrera)
             throws DataIntegrityViolationException, DataAccessException {
 
+        // se genera el password para el usuario del estudiante
+        String password = GeneradorPassword.generarPassword();
+        estudiante.setPassword(password);
+
         // se genera el usuario para el estudiante
         Usuario usuario = new Usuario();
         usuario.setNombreUsuario(estudiante.getCarne());
-        usuario.setPassword(estudiante.getCarne());
+        usuario.setPassword(password);
         usuario.setHabilitado(true);
 
         // se guarda el usuario en la BD
         this.daoGeneralImpl.save(usuario);
+
+        // se asignan los perfiles al usuario
+        this.asignarPerfil(usuario);
 
         // se le asigna el usuario al estudiante
         estudiante.setUsuario(usuario);
@@ -130,6 +140,53 @@ public class ServicioEstudianteImpl implements ServicioEstudiante {
 
         // se guarda la asignacion en la base de datos
         this.daoGeneralImpl.save(asignacionCarrera);
+    }
+//______________________________________________________________________________
+    /**
+     * <p>Este metodo realiza la asignacion del perfil ESTUDIANTE a un
+     * estudiante. Este perfil contiene todos los permisos/roles para las
+     * operaciones un estudiante puede realizar en el sistema. Para realizar la
+     * asignacion se debe de enviar el usuario asignado al estudiante.</p>
+     *
+     * @param estudiante Pojo del tipo {@link Estudiante}
+     * @throws DataAccessException Si ocurrio un error de acceso a datos
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void asignarPerfil(Usuario usuario)
+            throws DataAccessException {
+
+        // se obtiene el perfil de estudiante
+        DetachedCriteria criteria = DetachedCriteria.forClass(Perfil.class);
+        criteria.add(Restrictions.eq("nombre", "ESTUDIANTE"));
+        Perfil perfil = this.daoGeneralImpl.uniqueResult(criteria);
+
+        // se crea la asignacion del perfil
+        AsignacionUsuarioPerfil asignacion = new AsignacionUsuarioPerfil();
+        asignacion.setPerfil(perfil);
+        asignacion.setUsuario(usuario);
+
+        // se guarda la asignacion en la base de datos
+        this.daoGeneralImpl.save(asignacion);
+    }
+//______________________________________________________________________________
+    /**
+     * <p>Este metodo se encarga de habilitar o deshabilitar el acceso de un
+     * {@link Estudiante} al sistema.</p>
+     *
+     * @param estudiante Pojo del tipo {@link Estudiante}
+     * @param habilitar <code>true</code> para habilitar y <code>false</code>
+     *        para deshabilitar
+     * @throws DataAccessException Si ocurrio un error de acceso a datos
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void habilitarEstudiante(Estudiante estudiante, boolean habilitar)
+            throws DataAccessException {
+
+        Usuario usuario = this.getUsuarioEstudiante(estudiante);
+        usuario.setHabilitado(habilitar);
+        this.daoGeneralImpl.update(usuario);
     }
 //______________________________________________________________________________
     /**

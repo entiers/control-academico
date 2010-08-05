@@ -27,8 +27,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 
 /**
- * Esta clase se encarga de la búsqueda de Calendarios de Actividades en la BD
- * para mostrarlos en la página de <code>buscarCalendarioActividades.htm</code>.
+ * Esta clase se encarga de la busqueda de Calendarios de Actividades en la BD
+ * para mostrarlos en la pagina de <code>buscarCalendarioActividades.htm</code>.
  *
  * @author Mario Batres
  * @version 1.0
@@ -40,8 +40,8 @@ public class ControladorBuscarCalendarioActividades {
 //_____________________________________________________________________________
     /**
      * <p>
-     * Lleva el nombre del titulo para el mensaje en la página
-     * <p>
+     * Lleva el nombre del titulo para el mensaje en la pagina
+     * </p>
      */
     private static final String TITULO_MENSAJE = "buscarCalendarioActividades.titulo";
 //______________________________________________________________________________

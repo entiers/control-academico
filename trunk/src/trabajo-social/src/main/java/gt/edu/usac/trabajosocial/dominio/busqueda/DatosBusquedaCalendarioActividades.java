@@ -11,7 +11,7 @@ import gt.edu.usac.trabajosocial.dominio.Semestre;
 
 /**
  * <p>Contiene los atributos de busqueda para Calendario de Actividades.  Se utiliza
- * en la página de <code>buscarCalendarioActividades.htm</code>.</p>
+ * en la pagina de <code>buscarCalendarioActividades.htm</code>.</p>
  *
  * <p>La busqueda de calendario de actividades se realiza solo por el semestre
  * que tiene asignado {@link Semestre}.</p>

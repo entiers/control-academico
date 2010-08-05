@@ -50,10 +50,41 @@
                 <%-- se importan los demas campos --%>
                 <%@include file="../../jspf/formularios/formularioCatedratico.jspf" %>
 
-                <%-- boton --%>
-                <input id="btnEditar" type="submit" value='<fmt:message key="btnEditar"/>' />
+                <%-- boton para editar --%>
+                <input id="btnEditar" type="button" value='<fmt:message key="btnEditar"/>'
+                       onclick="document.forms[1].action = 'editarCatedratico.htm'; document.forms[1].submit();"/>
+
+                <c:if test='<%= RequestUtil.getValorBoolean(request, "funcionDeshabilitar") %>'>
+                    <c:if test='<%= RequestUtil.getValorBoolean(request, "estaHabilitado") %>'>
+                        <%-- boton para deshabilitar --%>
+                        <input id="btnDeshabilitar" type="button" value='<fmt:message key="editarCatedratico.btnDeshabilitar"/>'
+                               onclick="$('#popupDeshabilitar').dialog('open')"/>
+                    </c:if>
+                    <c:if test='<%= !RequestUtil.getValorBoolean(request, "estaHabilitado") %>'>
+                        <%-- boton para habilitar --%>
+                        <input id="btnHabilitar" type="button" value='<fmt:message key="editarCatedratico.btnHabilitar"/>'
+                               onclick="$('#popupHabilitar').dialog('open')"/>
+                    </c:if>
+                </c:if>
+
             </fieldset>
         </form:form>
+
+        <%-- panel popup para deshabilitar al catedratico --%>
+        <div id="popupDeshabilitar" title='<fmt:message key="editarCatedratico.btnDeshabilitar"/>' >
+            <p>
+                <span class="ui-icon ui-icon-trash" style="float:left; margin:0 7px 50px 0;"></span>
+                <fmt:message key="editarCatedratico.textoDeshabilitar" />
+            </p>
+        </div>
+
+        <%-- panel popup para habilitar al catedratico --%>
+        <div id="popupHabilitar" title='<fmt:message key="editarCatedratico.btnHabilitar"/>' >
+            <p>
+                <span class="ui-icon ui-icon-trash" style="float:left; margin:0 7px 50px 0;"></span>
+                <fmt:message key="editarCatedratico.textoHabilitar" />
+            </p>
+        </div>
 
         <%-- fragmento que muestra como mensaje popup el resultado de las operaciones --%>
         <%@include file="../../jspf/plantilla/popupMensaje.jspf" %>

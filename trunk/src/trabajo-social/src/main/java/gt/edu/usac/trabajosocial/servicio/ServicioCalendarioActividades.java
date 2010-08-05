@@ -38,18 +38,18 @@ public interface ServicioCalendarioActividades {
      *
      * @param semestre Pojo del tipo {@link semestre}
      *
-     * @throws DataAccessException Si ocurrió un error de acceso a datos
+     * @throws DataAccessException Si ocurrio un error de acceso a datos
      **/
     List <CalendarioActividades> getCalendarioActividadesPorSemestre(Semestre semestre)
             throws DataAccessException;
 
 //______________________________________________________________________________
     /**
-     * <p>Obtiene el calendario de actividades según el id que poose</p>
+     * <p>Obtiene el calendario de actividades segun el id que poose</p>
      *
      * @param id Identificador del Calendario de Actividades
      *
-     * @throws DataAccessException Si oucrrió un error de acesso a datos
+     * @throws DataAccessException Si oucrrio un error de acesso a datos
      */
     CalendarioActividades getCalendarioActividadesPorID(short id)
             throws DataAccessException;

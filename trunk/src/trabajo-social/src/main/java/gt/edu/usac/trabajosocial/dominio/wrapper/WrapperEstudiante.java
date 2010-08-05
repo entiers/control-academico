@@ -47,6 +47,7 @@ public class WrapperEstudiante {
     @Pattern(regexp = "|[0-9]{8}", message = "{validacion.telefonoInvalido}")
     private String celular;
 //______________________________________________________________________________
+    @NotEmpty(message = "{validacion.campoObligatorio}")
     @Size(max = 100, message = "{validacion.caracteresMaximos}")
     @Email(message = "{validacion.emailInvalido}")
     private String email;

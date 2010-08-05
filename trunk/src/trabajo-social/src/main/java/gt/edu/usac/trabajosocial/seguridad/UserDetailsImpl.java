@@ -108,4 +108,14 @@ public class UserDetailsImpl implements Serializable, UserDetails {
     public boolean isCredentialsNonExpired() {
         return true;
     }
+//______________________________________________________________________________
+    /**
+     * <p>Retorna el objeto {@link Usuario} asociado a la clase.</p>
+     *
+     * @return Usuario
+     */
+    public Usuario getUsuario() {
+        return this.usuario;
+    }
+
 }

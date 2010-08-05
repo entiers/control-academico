@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * Esta clase se encarga de modificar un calendario de actividades existente en
- * la BD. La información se pide en la página de <code>editarCalendarioActividades.htm</code>.
+ * la BD. La informacion se pide en la pagina de <code>editarCalendarioActividades.htm</code>.
  * 
  * @author Mario Batres
  * @version 1.0
@@ -40,8 +40,8 @@ public class ControladorEditarCalendarioActividades {
 //_____________________________________________________________________________
     /**
      * <p>
-     * Lleva el nombre del titulo para el mensaje en la página
-     * <p>
+     * Lleva el nombre del titulo para el mensaje en la pagina
+     * </p>
      */
     private static final String TITULO_MENSAJE = "editarCalendarioActividades.titulo";
 //______________________________________________________________________________

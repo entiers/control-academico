@@ -21,7 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * <p>Contiene la implementación de los metodos que permiten el manejo de la
+ * <p>Contiene la implementacion de los metodos que permiten el manejo de la
  * informacion relacionada con el calendario de actividades en la base de datos.</p>
  *
  * @see ServicioCalendarioActividades
@@ -58,7 +58,7 @@ public class ServicioCalendarioActividadesImpl implements ServicioCalendarioActi
      *
      * @param semestre Pojo del tipo {@link semestre}
      *
-     * @throws DataAccessException Si ocurrió un error de acceso a datos
+     * @throws DataAccessException Si ocurrio un error de acceso a datos
      **/
     @Override
     public List<CalendarioActividades> getCalendarioActividadesPorSemestre(Semestre semestre)
@@ -73,11 +73,11 @@ public class ServicioCalendarioActividadesImpl implements ServicioCalendarioActi
     }
 //______________________________________________________________________________
     /**
-     * <p>Obtiene el calendario de actividades según el id que poose</p>
+     * <p>Obtiene el calendario de actividades segun el id que poose</p>
      *
      * @param id Identificador del Calendario de Actividades
      *
-     * @throws DataAccessException Si oucrrió un error de acesso a datos
+     * @throws DataAccessException Si oucrrio un error de acesso a datos
      */
     @Override
     public CalendarioActividades getCalendarioActividadesPorID(short id)

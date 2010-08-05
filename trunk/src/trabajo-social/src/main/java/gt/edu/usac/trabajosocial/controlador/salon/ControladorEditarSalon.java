@@ -25,8 +25,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * Esta clase se encarga de buscar y modficar un salon existente en la BD.
- * La información se pide en la página de <code>buscarSalon.htm</code>.
- * Y se modifica en la página de <code>editarSalon.htm</code>.
+ * La informacion se pide en la pagina de <code>buscarSalon.htm</code>.
+ * Y se modifica en la pagina de <code>editarSalon.htm</code>.
  *
  * @author Mario Batres
  * @version 1.0

@@ -15,8 +15,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
- * Contiene los atributos del Horario que serán ingresados
- * o actualizado a la BD. El wrapper se utiliza en las páginas de
+ * Contiene los atributos del Horario que seran ingresados
+ * o actualizado a la BD. El wrapper se utiliza en las paginas de
  * <code>agregarHorario.htm</code> y <code>editarHorario.htm</code>.
  *
  * @author Mario Batres
@@ -53,7 +53,7 @@ public class WrapperHorario {
 //______________________________________________________________________________
      /**
      * Constructor del wrapper, se inicializan los atributos a mostrar en las
-     * páginas de <code>agregarHorario.htm</code> y <code>editarHorario.htm</code>.
+     * paginas de <code>agregarHorario.htm</code> y <code>editarHorario.htm</code>.
      */
     public WrapperHorario() {
         this.dia = "";
@@ -99,14 +99,14 @@ public class WrapperHorario {
     }
 //______________________________________________________________________________
     /**
-     * @return El dia que será impartido el curso
+     * @return El dia que sera impartido el curso
      */
     public String getDia() {
         return dia;
     }
 
     /**
-     * @param dia El dia que será impartido el curso
+     * @param dia El dia que sera impartido el curso
      */
     public void setDia(String dia) {
         this.dia = dia;
@@ -155,14 +155,14 @@ public class WrapperHorario {
     }
 //______________________________________________________________________________
     /**
-     * @return La sección del curso en el horario.
+     * @return La seccion del curso en el horario.
      */
     public String getSeccion() {
         return seccion;
     }
 
     /**
-     * @param seccion La sección del curso en el horario.
+     * @param seccion La seccion del curso en el horario.
      */
     public void setSeccion(String seccion) {
         this.seccion = seccion;

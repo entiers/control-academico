@@ -26,15 +26,38 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
+ * <p>Esta clase se encuentra registrada en Spring como un controlador. Este
+ * controlador esta asociado a la pagina <code>buscarCatedratico</code> y a todas
+ * las peticiones que esta pagina realiza.</p>
+ *
+ * <p>El controlador responde a tres eventos distintos de la pagina antes
+ * mencionada, los eventos son:
+ * <ul>
+ * <li>Creacion de la pagina, este evento se genera cada vez que se solicita
+ * la pagina desde algun link u otro controlador. El controlador responde a este
+ * evento por medio del metodo {@link crearFormulario(Model modelo)} el cual es
+ * el encargado de crear la pagina.</li>
+ * <li>Buscar catedratico, este evento se genera desde la pagina asociada a este
+ * controlador cuando se solicita buscar un catedratico por cualquiera de los
+ * criterios de busqueda de la pagina. El metodo que responde a este evento es
+ * {@link buscarCatedraticos(DatosBusquedaCatedratico datosBusquedaCatedratico,
+ * BindingResult bindingResult, Model modelo, HttpServletRequest request)}</li>
+ * <li>Los eventos de paginacion, estos eventos se generan cada vez que se
+ * solicitan los resultados anteriores o posteriores en la tabla que muestra los
+ * resultados de la busqueda, los metodos que responden a estos eventos son
+ * {@link paginarAdelante(Model modelo, HttpServletRequest request)} y
+ * {@link paginarAtras(Model modelo, HttpServletRequest request)}</li>
+ * </ul>
+ * </p>
  *
  * @author Daniel Castillo
- * @version 2.0
+ * @version 1.0
  */
 @Controller("controladorBuscarCatedratico")
 public class ControladorBuscarCatedratico {
 
     /**
-     * <p>Lleva el nombre del titulo para el mensaje en la página.</p>
+     * <p>Lleva el nombre del titulo para el mensaje en la pagina.</p>
      */
     private static String TITULO_MENSAJE = "buscarCatedratico.titulo";
 //______________________________________________________________________________
