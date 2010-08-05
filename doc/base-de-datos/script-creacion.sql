@@ -97,6 +97,7 @@ CREATE TABLE control.Tipo_Asignacion (
                 id_tipo_asignacion SMALLINT NOT NULL DEFAULT nextval('control.tipo_asignacion_id_tipo_asignacion_seq'),
                 nombre VARCHAR(100) NOT NULL,
                 descripcion TEXT,
+                habilitado BOOLEAN NOT NULL,
                 CONSTRAINT tipo_asignacion_pk PRIMARY KEY (id_tipo_asignacion)
 );
 
