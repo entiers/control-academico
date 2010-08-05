@@ -13,14 +13,14 @@ import org.springframework.dao.DataIntegrityViolationException;
 
 /**
  * <p>Contiene los metodos que permiten el manejo de la informacion relacionada
- * con el Tipo de Asignación en la base de datos.</p>
+ * con el Tipo de Asignacion en la base de datos.</p>
  *
  * @author Mario Batres
  * @version 1.0
  */
 public interface ServicioTipoAsignacion {
     /**
-     * <p>Este metodo permite agregar la informacion de un tipo de asignación
+     * <p>Este metodo permite agregar la informacion de un tipo de asignacion
      * a la base de datos.</p>
      *
      * @param tipoAsignacion Pojo del tipo {@link TipoAsignacion}

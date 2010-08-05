@@ -21,7 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * <p>Contiene la implementación de los metodos que permiten el manejo de la
+ * <p>Contiene la implementacion de los metodos que permiten el manejo de la
  * informacion relacionada con el horario en la base de datos.</p>
  *
  * @see ServicioHorario
@@ -90,11 +90,11 @@ public class ServicioHorarioImpl implements ServicioHorario {
 
 //______________________________________________________________________________
     /**
-     * <p>Obtiene el horario según el id que poose</p>
+     * <p>Obtiene el horario segun el id que poose</p>
      *
      * @param id Identificador del horario
      *
-     * @throws DataAccessException Si oucrrió un error de acesso a datos
+     * @throws DataAccessException Si oucrrio un error de acesso a datos
      */
     @Override
     public Horario getHorarioPorID(int id) throws DataAccessException {

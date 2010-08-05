@@ -13,8 +13,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
- * Contiene los atributos del Calendario de Actividades que serán ingresados 
- * o actualizado a la BD. El wrapper se utiliza en las páginas de
+ * Contiene los atributos del Calendario de Actividades que seran ingresados
+ * o actualizado a la BD. El wrapper se utiliza en las paginas de
  * <code>agregarCalendarioActividades.htm</code> y
  * <code>editarCalendarioActividades.htm</code>.
  *
@@ -38,7 +38,7 @@ public class WrapperCalendarioActividades {
 //______________________________________________________________________________
     /**
      * Constructor del wrapper, se inicializan los atributos a mostrar en las
-     * páginas de <code>agregarCalendarioActividades.htm</code> y
+     * paginas de <code>agregarCalendarioActividades.htm</code> y
      * <code>editarCalendarioActividades.htm</code>.
      */
     public WrapperCalendarioActividades() {
@@ -86,14 +86,14 @@ public class WrapperCalendarioActividades {
     }
 //______________________________________________________________________________
     /**
-     * @return La fecha de finalización del calendario de actividades.
+     * @return La fecha de finalizacion del calendario de actividades.
      */
     public Date getFechaFin() {
         return fechaFin;
     }
 
     /**
-     * @param fechaFin La fecha de finalización del calendario de actividades.
+     * @param fechaFin La fecha de finalizacion del calendario de actividades.
      */
     public void setFechaFin(Date fechaFin) {
         this.fechaFin = fechaFin;

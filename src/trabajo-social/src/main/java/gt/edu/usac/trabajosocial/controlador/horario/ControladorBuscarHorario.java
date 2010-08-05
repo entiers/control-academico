@@ -28,8 +28,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
- * Esta clase se encarga de la búsqueda de Horarios en la BD
- * para mostrarlos en la página de <code>buscarHorario.htm</code>.
+ * Esta clase se encarga de la busqueda de Horarios en la BD
+ * para mostrarlos en la pagina de <code>buscarHorario.htm</code>.
  *
  * @author Mario Batres
  * @version 1.0
@@ -42,7 +42,7 @@ public class ControladorBuscarHorario {
 //______________________________________________________________________________
     /**
      * <p>
-     * Lleva el nombre del titulo para el mensaje en la página
+     * Lleva el nombre del titulo para el mensaje en la pagina
      * </p>
      */
     private static final String TITULO_MENSAJE = "buscarHorario.titulo";

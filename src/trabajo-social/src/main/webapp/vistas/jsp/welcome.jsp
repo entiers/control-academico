@@ -18,6 +18,6 @@
     <body>
         <h1><fmt:message key="welcome.titulo"/></h1>
         <h2><fmt:message key="welcome.subtitulo"/></h2>
-        <p>Pagina de inicio</p>
+        <p>Pagina de inicio 555555</p>
     </body>
 </html>

@@ -18,6 +18,9 @@ public class Mensajes {
     public final static String ERROR_CARGAR_LISTADO = "ERROR: No se pudo cargar el listado de: ";
     public final static String DATA_ACCESS_EXCEPTION = "Error de acceso a datos";
     public final static String DATA_INTEGRITY_VIOLATION_EXCEPTION = "Error de integridad de datos";
+    public final static String MAIL_EXCEPTION = "ERROR: no se pudo enviar el correo electronico";
+    public final static String MESSAGING_EXCEPTION = "ERROR: no se pudo crear el correo electronico";
+    public final static String IO_EXCEPTION = "ERROR: no se pudo cargar la configuracion de correo electronico";
 
     // mensajes de aviso
     public final static String EXITO_AGREGAR = "EXITO: Se agrego el objeto: ";

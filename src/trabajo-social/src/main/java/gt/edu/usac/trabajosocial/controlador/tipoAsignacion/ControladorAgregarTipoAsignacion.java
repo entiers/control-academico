@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * Esta clase se encarga de almacenar los tipos de asignacion en la BD.
- * La información se pide en la pagina de <code>agregarTipoAsignacion.htm</code>.
+ * La informacion se pide en la pagina de <code>agregarTipoAsignacion.htm</code>.
  * 
  * @author Mario Batres
  * @version 1.0

@@ -47,11 +47,11 @@ public interface ServicioHorario {
             throws DataAccessException;
 //______________________________________________________________________________
     /**
-     * <p>Obtiene el horario según el id que poose</p>
+     * <p>Obtiene el horario segun el id que poose</p>
      *
      * @param id Identificador del horario
      *
-     * @throws DataAccessException Si oucrrió un error de acesso a datos
+     * @throws DataAccessException Si oucrrio un error de acesso a datos
      */
     Horario getHorarioPorID(int id)
             throws DataAccessException;

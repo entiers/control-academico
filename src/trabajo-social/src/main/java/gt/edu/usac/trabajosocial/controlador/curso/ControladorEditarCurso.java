@@ -25,8 +25,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * Esta clase se encarga de buscar y modficar un curso existente en la BD.
- * La información se pide en la página de <code>buscarCurso.htm</code>.
- * Y se modifica en la página de <code>editarCurso.htm</code>.
+ * La informacion se pide en la pagina de <code>buscarCurso.htm</code>.
+ * Y se modifica en la pagina de <code>editarCurso.htm</code>.
  *
  * @author Mario Batres
  * @version 1.0

@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
- * Esta clase se encarga de la búsqueda de Tipo de Asignacion en la BD
- * para mostrarlos en la página de <code>buscarTipoAsignacion.htm</code>.
+ * Esta clase se encarga de la busqueda de Tipo de Asignacion en la BD
+ * para mostrarlos en la pagina de <code>buscarTipoAsignacion.htm</code>.
  *
  * @author Mario Batres
  * @version 1.0

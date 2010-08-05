@@ -2,7 +2,11 @@
 <%@ page pageEncoding="UTF-8" %>
 
 <ul class="dropdown">
-    <li><a href="index.htm"><fmt:message key="menu.inicio"/></a>
+    <sec:authorize access="hasRole('ROLE_USUARIO_REGISTRADO')">
+        <li><a href="index.htm"><fmt:message key="menu.inicio"/></a>
+    </sec:authorize>
+
+    <%-- menu de catalogos --%>
     <li><a href="#"><fmt:message key="menu.catalogo"/></a>
         <ul class="sub_menu">
             <%-- catalogo de estudiantes --%>
@@ -58,5 +62,8 @@
             </li>
         </ul>
     </li>
+
+    <%-- formulario para logearse --%>
+    <li><a href="login.htm"><fmt:message key="login.titulo"/></a>
 </ul>
 <br/><br/>

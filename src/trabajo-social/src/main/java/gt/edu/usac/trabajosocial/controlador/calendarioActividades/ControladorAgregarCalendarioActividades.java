@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * Esta clase se encarga de almacenar los calendarios de actividades en la BD.
- * La información se pide en la página de <code>agregarCalendarioActividades.htm</code>.
+ * La informacion se pide en la pagina de <code>agregarCalendarioActividades.htm</code>.
  *
  * @author Mario Batres
  * @version 1.0

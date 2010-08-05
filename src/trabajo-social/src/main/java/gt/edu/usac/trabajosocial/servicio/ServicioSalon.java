@@ -33,9 +33,9 @@ public interface ServicioSalon {
             throws DataIntegrityViolationException, DataAccessException;
 //______________________________________________________________________________
     /**
-     * <p>Este método permite obtener un salon por el número y el nombre del edificio</p>
+     * <p>Este metodo permite obtener un salon por el numero y el nombre del edificio</p>
      *
-     * @param numero Número del salón
+     * @param numero Numero del salon
      * @param edificio Nombre del edificio
      * @throws DataAccessException Si ocurrio un error de acceso a datos
      */
@@ -43,11 +43,11 @@ public interface ServicioSalon {
             throws DataAccessException;
 //______________________________________________________________________________
     /**
-     * <p>Este método permite actualizar la información de un salón a la base
+     * <p>Este metodo permite actualizar la informacion de un salon a la base
      * de datos</p>
      *
      * @param salon Pojo del tipo {@link salon}
-     * @throws DataAccessException Si ocurrió un error de acceso a datos
+     * @throws DataAccessException Si ocurrio un error de acceso a datos
      */
     void actualizarSalon (Salon salon)
             throws DataAccessException;

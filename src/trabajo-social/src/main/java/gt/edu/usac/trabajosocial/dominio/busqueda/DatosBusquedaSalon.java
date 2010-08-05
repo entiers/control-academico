@@ -12,7 +12,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  * </p>Contiene los atributos de busqueda de salon. Se utiliza
- * en la página de <code>buscarSalon.htm</code>.</p>
+ * en la pagina de <code>buscarSalon.htm</code>.</p>
  *
  * <p>La busqueda de salones se realiza solo por el eficio y numero de salon
  * que tiene asignado.</p>

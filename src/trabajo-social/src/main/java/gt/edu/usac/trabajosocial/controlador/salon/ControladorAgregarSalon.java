@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * Esta clase se encarga de almacenar los salones en la BD.
- * La información se pide en la pagina de <code>agregarSalon.htm</code>.
+ * La informacion se pide en la pagina de <code>agregarSalon.htm</code>.
  *
  * @author Mario Batres
  * @version 1.0

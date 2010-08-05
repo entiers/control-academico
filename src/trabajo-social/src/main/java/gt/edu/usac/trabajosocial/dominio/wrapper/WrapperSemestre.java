@@ -11,8 +11,8 @@ import java.util.Calendar;
 import javax.validation.constraints.Min;
 
 /**
- * Contiene los atributos del Semestre que serán ingresados a la BD. El wrapper
- * se utiliza en la páginas de <code>agregarSemestre.htm</code>
+ * Contiene los atributos del Semestre que seran ingresados a la BD. El wrapper
+ * se utiliza en la paginas de <code>agregarSemestre.htm</code>
  *
  * @author Mario Batres
  * @version 1.0
@@ -32,7 +32,7 @@ public class WrapperSemestre {
 //______________________________________________________________________________
     /**
      * Constructor del wrapper, se inicializan los atributos a mostrar en la
-     * página de <code>agregarSemestre.htm</code>.
+     * pagina de <code>agregarSemestre.htm</code>.
      */
     public WrapperSemestre() {
         this.numero='1';
@@ -63,14 +63,14 @@ public class WrapperSemestre {
     }
 //______________________________________________________________________________
     /**
-     * @return El año del semestre
+     * @return El anio del semestre
      */
     public short getAnio() {
         return anio;
     }
 
     /**
-     * @param anio El año del semestre
+     * @param anio El anio del semestre
      */
     public void setAnio(short anio) {
         this.anio = anio;

@@ -9,7 +9,7 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
- * <p>Contiene los atributos de busqueda de cursos. Se utiliza en la página de
+ * <p>Contiene los atributos de busqueda de cursos. Se utiliza en la pagina de
  * <code>buscarCurso.htm</code>.</p>
  *
  * <p>La busqueda de cursos se realiza solo por el codigo que tiene asignado.</p>
@@ -36,7 +36,7 @@ public class DatosBusquedaCurso {
     }
 //______________________________________________________________________________
     /**
-     * @param codigo Código del curso del que se va a buscar
+     * @param codigo Codigo del curso del que se va a buscar
      */
     public void setCodigo(String codigo) {
         this.codigo = codigo;

@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * Esta clase se encarga de almacenar horarios en la BD.
- * La información se pide en la página de <code>agregarHorario.htm</code>.
+ * La informacion se pide en la pagina de <code>agregarHorario.htm</code>.
  *
  * @author Mario Batres
  * @version 1.0

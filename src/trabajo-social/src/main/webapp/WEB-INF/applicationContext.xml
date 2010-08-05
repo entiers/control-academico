@@ -51,7 +51,7 @@
 
 
     <!-- ·······································································
-    ··· Archivo de  configuracion para Spring Security
+    ··· Archivo de configuracion para Spring Security
     ········································································ -->
     <import resource="security-config.xml" />
 </beans>

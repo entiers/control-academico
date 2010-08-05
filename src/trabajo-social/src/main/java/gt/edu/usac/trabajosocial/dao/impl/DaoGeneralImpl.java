@@ -66,91 +66,109 @@ public class DaoGeneralImpl extends HibernateDaoSupport implements DaoGeneral {
     }
 //______________________________________________________________________________
     @Transactional(rollbackFor = Exception.class)
+    @Override
     public void save(Object entidad) throws DataAccessException {
         this.getHibernateTemplate().save(entidad);
     }
 //______________________________________________________________________________
     @Transactional(rollbackFor = Exception.class)
+    @Override
     public void persist(Object entidad) throws DataAccessException {
         this.getHibernateTemplate().persist(entidad);
     }
 //______________________________________________________________________________
     @Transactional(rollbackFor = Exception.class)
+    @Override
     public void update(Object entidad) throws DataAccessException {
         this.getHibernateTemplate().update(entidad);
     }
 //______________________________________________________________________________
     @Transactional(rollbackFor = Exception.class)
+    @Override
     public void saveOrUpdate(Object entidad) throws DataAccessException {
         this.getHibernateTemplate().saveOrUpdate(entidad);
     }
 //______________________________________________________________________________
     @Transactional(rollbackFor = Exception.class)
+    @Override
     public void saveOrUpdateAll(Collection entidades) throws DataAccessException {
         this.getHibernateTemplate().saveOrUpdateAll(entidades);
     }
 //______________________________________________________________________________
     @Transactional(rollbackFor = Exception.class)
+    @Override
     public void delete(Object entidad) throws DataAccessException {
         this.getHibernateTemplate().delete(entidad);
     }
 //______________________________________________________________________________
     @Transactional
+    @Override
     public void bulkUpdate(String queryString) throws DataAccessException {
         this.getHibernateTemplate().bulkUpdate(queryString);
     }
 //______________________________________________________________________________
     @Transactional(rollbackFor = Exception.class)
+    @Override
     public void bulkUpdate(String queryString, Object value) throws DataAccessException {
         this.getHibernateTemplate().bulkUpdate(queryString, value);
     }
 //______________________________________________________________________________
+    @Override
     public <T> T load(Class<T> claseEntidad, Serializable id) throws DataAccessException {
         final T entidad = (T)getHibernateTemplate().load(claseEntidad, id);
         return entidad;
     }
 //______________________________________________________________________________
+    @Override
     public <T> List<T> loadAll(Class<T> claseEntidad) throws DataAccessException {
         List<T> entidades = getHibernateTemplate().loadAll(claseEntidad);
         return entidades;
     }
 //______________________________________________________________________________
+    @Override
     public <T> List<T> find(Class<T> claseEntidad) throws DataAccessException {
         String hql = "from " + claseEntidad.getName();
         final List<T> entidades = getHibernateTemplate().find(hql);
         return entidades;
     }
 //______________________________________________________________________________
+    @Override
     public <T> List<T> find(String hql) throws DataAccessException {
         final List<T> entidades = getHibernateTemplate().find(hql);
         return entidades;
     }
 //______________________________________________________________________________
+    @Override
     public <T> List<T> find(String hql, Object valor) throws DataAccessException {
         final List<T> entidades = getHibernateTemplate().find(hql, valor);
         return entidades;
     }
 //______________________________________________________________________________
+    @Override
     public <T> List<T> find(String hql, Object... valores) throws DataAccessException {
         final List<T> entidades = getHibernateTemplate().find(hql, valores);
         return entidades;
     }
 //______________________________________________________________________________
+    @Override
     public <T> List<T> find(DetachedCriteria criteria) throws DataAccessException {
         final List<T> entidades = getHibernateTemplate().findByCriteria(criteria);
         return entidades;
     }
 //______________________________________________________________________________
+    @Override
     public <T> T uniqueResult(String hql, Object valor) throws DataAccessException {
         final T entidad = (T)DataAccessUtils.uniqueResult(getHibernateTemplate().find(hql, valor));
         return entidad;
     }
 //______________________________________________________________________________
+    @Override
     public <T> T uniqueResult(DetachedCriteria criteria) throws DataAccessException {
         final T entidad = (T)DataAccessUtils.uniqueResult(getHibernateTemplate().findByCriteria(criteria));
         return entidad;
     }
 //______________________________________________________________________________
+    @Override
     public Session getSesion() {
         return this.getSession(true);
     }

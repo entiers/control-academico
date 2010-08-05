@@ -25,19 +25,12 @@
     <mvc:view-controller path="login.htm" view-name="login/login" />
     <mvc:view-controller path="accesoDenegado.htm" view-name="login/accesoDenegado" />
 
-    <!-- paginas de la seccion de estudiantes
-    <mvc:view-controller path="agregarEstudiante.htm" view-name="estudiante/agregar" />
-    <mvc:view-controller path="editarEstudiante.htm" view-name="estudiante/editar" />
-    <mvc:view-controller path="resultadoEstudiante.htm" view-name="estudiante/resultado" />
-    <mvc:view-controller path="listarEstudiante.htm" view-name="estudiante/listar" />
-    <mvc:view-controller path="listarEstudiante.htm/availability" view-name="estudiante/listar" />
-    -->
 
     <!-- ·······································································
     ··· Configuracion de interceptores
     ········································································ -->
     <mvc:interceptors>
-        <!-- Cambia la localidad cuando el parametro de request 'locale' es enviado e.g. /?locale=es -->
+        <!-- cambia la localidad cuando el parametro de request 'locale' es enviado e.g. /?locale=es -->
 	<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" />
     </mvc:interceptors>
 

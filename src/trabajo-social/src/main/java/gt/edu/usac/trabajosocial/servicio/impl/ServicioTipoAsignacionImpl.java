@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * <p>Contiene la implementación de los metodos que permiten el manejo de la
+ * <p>Contiene la implementacion de los metodos que permiten el manejo de la
  * informacion relacionada con el Tipo Asignacion en la base de datos.</p>
  *
  * @author Mario Batres
@@ -34,7 +34,7 @@ public class ServicioTipoAsignacionImpl implements ServicioTipoAsignacion {
 //______________________________________________________________________________
 
     /**
-     * <p>Este metodo permite agregar la informacion de un tipo de asignación
+     * <p>Este metodo permite agregar la informacion de un tipo de asignacion
      * a la base de datos.</p>
      *
      * @param tipoAsignacion Pojo del tipo {@link TipoAsignacion}

@@ -8,8 +8,8 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
- * Contiene los atributos del Curso que serán ingresados
- * o actualizado a la BD. El wrapper se utiliza en las páginas de
+ * Contiene los atributos del Curso que seran ingresados
+ * o actualizado a la BD. El wrapper se utiliza en las paginas de
  * <code>agregarCurso.htm</code> y <code>editarCurso.htm</code>.
  *
  * @author Mario Batres
@@ -40,7 +40,7 @@ public class WrapperCurso {
 //______________________________________________________________________________
     /**
      * Constructor del wrapper, se inicializan los atributos a mostrar en las
-     * páginas de <code>agregarCurso.htm</code> y <code>editarCurso.htm</code>.
+     * paginas de <code>agregarCurso.htm</code> y <code>editarCurso.htm</code>.
      */
     public WrapperCurso() {
         this.setCodigo("");

@@ -33,7 +33,7 @@ public class ControladorEliminarTipoAsignacion {
 //_____________________________________________________________________________
     /**
      * <p>
-     * Lleva el nombre del titulo para el mensaje en la página
+     * Lleva el nombre del titulo para el mensaje en la pagina
      * <p>
      */
     private static final String TITULO_MENSAJE = "eliminarTipoAsignacion.titulo";

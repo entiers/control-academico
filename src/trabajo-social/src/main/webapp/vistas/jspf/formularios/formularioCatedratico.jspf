@@ -37,7 +37,7 @@
 </div>
 
 <div id="divCampos">
-    <form:label for="email" path="email"><fmt:message key="agregarCatedratico.email"/>:</form:label>
+    <form:label for="email" path="email"><fmt:message key="agregarCatedratico.email"/>: *</form:label>
     <form:input path="email" cssStyle="width: 250px;" />
     <form:errors path="email" cssClass="claseError" />
 </div>

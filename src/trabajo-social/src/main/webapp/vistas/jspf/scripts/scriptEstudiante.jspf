@@ -12,6 +12,36 @@
             dateFormat: 'dd-mm-yy'
         });
 
+        // configuracion del panel popup para deshabilitar estudiantes
+        $("#popupDeshabilitar").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                '<fmt:message key="btnAceptar"/>': function() {
+                    document.forms[1].action = "deshabilitarEstudiante.htm";
+                    document.forms[1].submit();
+                },
+                '<fmt:message key="btnCancelar"/>': function() {
+                    $(this).dialog('close');
+                }
+            }
+        });
+
+        // configuracion del panel popup para habilitar estudiantes
+        $("#popupHabilitar").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                '<fmt:message key="btnAceptar"/>': function() {
+                    document.forms[1].action = "habilitarEstudiante.htm";
+                    document.forms[1].submit();
+                },
+                '<fmt:message key="btnCancelar"/>': function() {
+                    $(this).dialog('close');
+                }
+            }
+        });
+
         // se crea y configura el panel popup que muestra los
         // mensajes de resultados de las operaciones
         $("#popupMensaje").dialog({

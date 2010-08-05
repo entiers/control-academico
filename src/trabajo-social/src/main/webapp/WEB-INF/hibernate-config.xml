@@ -63,7 +63,7 @@
     </bean>
 
 
-    <!-- ·······································································
+    <!-- ····················�··················································
     ··· Bean de sesion para la base de datos, realiza la integracion con Hibernate
     ········································································ -->
     <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">

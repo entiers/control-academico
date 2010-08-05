@@ -38,7 +38,7 @@
         <br/><br/><br/>
 
         <%-- formulario para editar los datos del estudiante --%>
-        <form:form modelAttribute="wrapperEstudiante" method="post" action="editarEstudiante.htm">
+        <form:form modelAttribute="wrapperEstudiante" method="post" action="">
             <fieldset>
                 <%-- se deshabilita para evitar su edicion --%>
                 <div id="divCampos">
@@ -50,10 +50,44 @@
                 <%-- se importan los demas campos --%>
                 <%@include file="../../jspf/formularios/formularioEstudiante.jspf" %>
 
-                <%-- boton --%>
+                <%-- boton para editar --%>
+                <input id="btnEditar" type="button" value='<fmt:message key="btnEditar"/>'
+                       onclick="document.forms[1].action = 'editarEstudiante.htm'; document.forms[1].submit();"/>
+                <%--
                 <input id="btnEditar" type="submit" value='<fmt:message key="btnEditar"/>' />
+                --%>
+
+                <c:if test='<%= RequestUtil.getValorBoolean(request, "funcionDeshabilitar") %>'>
+                    <c:if test='<%= RequestUtil.getValorBoolean(request, "estaHabilitado") %>'>
+                        <%-- boton para deshabilitar --%>
+                        <input id="btnDeshabilitar" type="button" value='<fmt:message key="editarEstudiante.btnDeshabilitar"/>'
+                               onclick="$('#popupDeshabilitar').dialog('open')"/>
+                    </c:if>
+                    <c:if test='<%= !RequestUtil.getValorBoolean(request, "estaHabilitado") %>'>
+                        <%-- boton para habilitar --%>
+                        <input id="btnHabilitar" type="button" value='<fmt:message key="editarEstudiante.btnHabilitar"/>'
+                               onclick="$('#popupHabilitar').dialog('open')"/>
+                    </c:if>
+                </c:if>
+                
             </fieldset>
         </form:form>
+
+        <%-- panel popup para deshabilitar al estudiante --%>
+        <div id="popupDeshabilitar" title='<fmt:message key="editarEstudiante.btnDeshabilitar"/>' >
+            <p>
+                <span class="ui-icon ui-icon-trash" style="float:left; margin:0 7px 50px 0;"></span>
+                <fmt:message key="editarEstudiante.textoDeshabilitar" />
+            </p>
+        </div>
+
+        <%-- panel popup para habilitar al estudiante --%>
+        <div id="popupHabilitar" title='<fmt:message key="editarEstudiante.btnHabilitar"/>' >
+            <p>
+                <span class="ui-icon ui-icon-trash" style="float:left; margin:0 7px 50px 0;"></span>
+                <fmt:message key="editarEstudiante.textoHabilitar" />
+            </p>
+        </div>
 
         <%-- fragmento que muestra como mensaje popup el resultado de las operaciones --%>
         <%@include file="../../jspf/plantilla/popupMensaje.jspf" %>

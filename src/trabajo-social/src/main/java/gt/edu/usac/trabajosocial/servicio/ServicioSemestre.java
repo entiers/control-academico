@@ -35,10 +35,10 @@ public interface ServicioSemestre {
 
 //______________________________________________________________________________
     /**
-     * <p>Este método permite obtener todos los semestres disponibles</p>
+     * <p>Este metodo permite obtener todos los semestres disponibles</p>
      *
      * @return List de tipo {@link Salon}
-     * @throws DataAccessException Si ocurrió un error de acceso a datos
+     * @throws DataAccessException Si ocurrio un error de acceso a datos
      */
     List <Semestre> getSemestres() throws DataAccessException;
 

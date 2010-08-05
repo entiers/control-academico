@@ -24,6 +24,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
+ * <p>Esta clase se encuentra registrada en Spring como un controlador. Este
+ * controlador esta asociado a la pagina <code>editarCatedratico</code> y a todas
+ * las peticiones que esta pagina realiza.</p>
+ *
+ * <p>El controlador responde a tres eventos distintos de la pagina antes
+ * mencionada, los eventos son:
+ * <ul>
+ * <li>Creacion de la pagina, este evento se genera cada vez que se solicita
+ * la pagina desde algun link u otro controlador. El controlador responde a este
+ * evento por medio del metodo {@link crearFormulario(Model modelo)} el cual es
+ * el encargado de crear la pagina.</li>
+ * <li>Buscar catedratico, este evento se genera desde la pagina asociada a este
+ * controlador cuando se solicita buscar un catedratico por medio de su codigo
+ * de registro de personal. El metodo encargado de responder a este evento es
+ * {@link buscarCatedratico(DatosBusquedaCatedratico datosBusquedaCatedratico,
+ * BindingResult bindingResult, Model modelo, HttpServletRequest request)}</li>
+ * <li>Editar catedratico, este evento se genera desde la pagina asociada a este
+ * controlador cuando se solicita editar la informacion de un catedratico. El
+ * metodo que responde a este evento es {@link submit(WrapperCatedratico
+ * wrapperCatedratico, BindingResult bindingResult, Model modelo,
+ * HttpServletRequest request)}</li>
+ * </ul>
+ * </p>
  *
  * @author Daniel Castillo
  * @version 1.0
@@ -32,7 +55,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class ControladorEditarCatedratico {
 
     /**
-     * <p>Lleva el nombre del titulo para el mensaje en la página.</p>
+     * <p>Lleva el nombre del titulo para el mensaje en la pagina.</p>
      */
     private static String TITULO_MENSAJE = "editarCatedratico.titulo";
 //______________________________________________________________________________
@@ -120,6 +143,10 @@ public class ControladorEditarCatedratico {
             // se realiza la busqueda del catedratico
             this.catedratico = this.servicioCatedraticoImpl.buscarCatedraticoPorCodigo(codigo);
 
+            // se activan los componentes para activar o dar de baja
+            request.setAttribute("funcionDeshabilitar", true);
+            request.setAttribute("estaHabilitado", this.catedratico.getUsuario().isHabilitado());
+
             if(this.catedratico == null)
                 MensajePopup.crearMensajeRespuesta(request, TITULO_MENSAJE, "editarCatedratico.sinResultados", true);
             else
@@ -144,14 +171,14 @@ public class ControladorEditarCatedratico {
      * <li>Muestra un mensaje popup con el resultado de la operacion</li>
      * </ul></p>
      *
-     * @param catedratico Pojo del tipo {@link Catedratico}
+     * @param wrapperCatedratico Envoltorio del pojo {@link Catedratico}
      * @param bindingResult Ojeto {@link BindingResult} que realiza las validaciones
      * @param modelo Objeto {@link Model} que contiene los objeto de la pagina
      * @param request Objeto {@link HttpServletRequest}
      * @return String
      */
     @RequestMapping(value = "editarCatedratico.htm", method = RequestMethod.POST)
-    public String submit(@Valid WrapperCatedratico wrapperCatedratico, BindingResult bindingResult,
+    public String editarCatedratico(@Valid WrapperCatedratico wrapperCatedratico, BindingResult bindingResult,
             Model modelo, HttpServletRequest request) {
 
         modelo.addAttribute("datosBusquedaCatedratico", new DatosBusquedaCatedratico());
@@ -175,6 +202,62 @@ public class ControladorEditarCatedratico {
             MensajePopup.crearMensajeRespuesta(request, TITULO_MENSAJE, "editarCatedratico.exito", true);
             String msg = Mensajes.EXITO_ACTUALIZACION + "Catedratico, codigo " + this.catedratico.getCodigo();
             log.info(msg);
+
+        } catch (DataAccessException e) {
+            // error de acceso a datos
+            MensajePopup.crearMensajeRespuesta(request, null, "dataAccessException", false);
+            log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
+        }
+
+        return "catedratico/editarCatedratico";
+    }
+//______________________________________________________________________________
+    /**
+     * <p>Este metodo se ejecuta cuando se presiona el boton de Deshabilitar
+     * Catedratico de la pagina. El metodo se encarga de deshabilitar el acceso
+     * de un catedratico al sistema.</p>
+     *
+     * @param modelo Objeto {@link Model} que contiene los objeto de la pagina
+     * @param request Objeto {@link HttpServletRequest}
+     * @return String Nombre de la pagina que se debe de mostrar
+     */
+    @RequestMapping(value = "deshabilitarCatedratico.htm", method = RequestMethod.POST)
+    public String deshabilitarCatedratico(Model modelo, HttpServletRequest request) {
+
+        modelo.addAttribute("wrapperCatedratico", new WrapperCatedratico());
+        modelo.addAttribute("datosBusquedaCatedratico", new DatosBusquedaCatedratico());
+
+        try {
+            // se trata de deshabilitar al catedratico
+            this.servicioCatedraticoImpl.habilitarCatedratico(this.catedratico, false);
+
+        } catch (DataAccessException e) {
+            // error de acceso a datos
+            MensajePopup.crearMensajeRespuesta(request, null, "dataAccessException", false);
+            log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
+        }
+
+        return "catedratico/editarCatedratico";
+    }
+//______________________________________________________________________________
+    /**
+     * <p>Este metodo se ejecuta cuando se presiona el boton de Habilitar
+     * Catedratico de la pagina. El metodo se encarga de habilitar el acceso
+     * de un catedratico al sistema.</p>
+     *
+     * @param modelo Objeto {@link Model} que contiene los objeto de la pagina
+     * @param request Objeto {@link HttpServletRequest}
+     * @return String Nombre de la pagina que se debe de mostrar
+     */
+    @RequestMapping(value = "habilitarCatedratico.htm", method = RequestMethod.POST)
+    public String habilitarCatedratico(Model modelo, HttpServletRequest request) {
+
+        modelo.addAttribute("wrapperCatedratico", new WrapperCatedratico());
+        modelo.addAttribute("datosBusquedaCatedratico", new DatosBusquedaCatedratico());
+
+        try {
+            // se trata de habilitar al catedratico
+            this.servicioCatedraticoImpl.habilitarCatedratico(this.catedratico, true);
 
         } catch (DataAccessException e) {
             // error de acceso a datos
