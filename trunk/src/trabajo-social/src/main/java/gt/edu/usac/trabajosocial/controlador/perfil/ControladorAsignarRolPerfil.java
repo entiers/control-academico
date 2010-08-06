@@ -5,11 +5,11 @@
 
 package gt.edu.usac.trabajosocial.controlador.perfil;
 
+import gt.edu.usac.trabajosocial.dominio.AsignacionRolPerfil;
 import gt.edu.usac.trabajosocial.dominio.Perfil;
 import gt.edu.usac.trabajosocial.dominio.Rol;
+import gt.edu.usac.trabajosocial.servicio.ServicioAsignacionRolPerfil;
 import gt.edu.usac.trabajosocial.servicio.ServicioPerfil;
-import gt.edu.usac.trabajosocial.servicio.ServicioRol;
-import gt.edu.usac.trabajosocial.servicio.impl.ServicioAsignacionRolPerfilImpl;
 import gt.edu.usac.trabajosocial.util.MensajePopup;
 import java.util.List;
 import javax.annotation.Resource;
@@ -37,12 +37,7 @@ public class ControladorAsignarRolPerfil {
     private ServicioPerfil servicioPerfilImpl;
 //______________________________________________________________________________
     @Resource
-    private ServicioRol servicioRolImpl;
-//______________________________________________________________________________
-    private List <Rol> listadoRol;
-
-    @Resource
-    private ServicioAsignacionRolPerfilImpl servicioAsignacionRolPerfilImpl;
+    private ServicioAsignacionRolPerfil servicioAsignacionRolPerfilImpl;
 
 //______________________________________________________________________________
     @RequestMapping(method = RequestMethod.GET)
@@ -53,21 +48,25 @@ public class ControladorAsignarRolPerfil {
         if(this.perfil == null){
             MensajePopup.crearMensajeRespuesta(request, TITULO_MENSAJE, "buscarPerfil.sinResultados", false);
             return "perfil/buscarPerfil";
-        }
+        }        
 
-        this.listadoRol = this.servicioRolImpl.getRoles();
-
-        this.servicioAsignacionRolPerfilImpl.getAsignacionRolPerfilPorPerfil(perfil);
-
+        List <Rol> listadoRolAsignado = this.servicioAsignacionRolPerfilImpl.getRolesAsignadosPorPerfil(perfil);
+        List <Rol> listadoRolNoAsignado = this.servicioAsignacionRolPerfilImpl.getRolesNoAsignadosPorPerfil(perfil);
         // se agregan los objetos que se usaran en la pagina
         modelo.addAttribute("perfil", this.perfil);
-        modelo.addAttribute("listadoRol", this.listadoRol);
+        AsignacionRolPerfil asignacionRolPerfil = new AsignacionRolPerfil();
+        asignacionRolPerfil.setPerfil(perfil);
+
+        modelo.addAttribute("asignacionRolPerfil", asignacionRolPerfil);
+        modelo.addAttribute("listadoRolAsignado", listadoRolAsignado);
+        modelo.addAttribute("listadoRolNoAsignado", listadoRolNoAsignado);
+
         return "perfil/asignarRolPerfil";
     }
 
     public String submit(Model modelo, String [] asignacionRolPerfils, HttpServletRequest request){
         modelo.addAttribute("perfil", this.perfil);
-        modelo.addAttribute("listadoRol", this.listadoRol);
+        
 
         return "perfil/asignarRolPerfil";
     }

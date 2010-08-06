@@ -6,6 +6,7 @@
 package gt.edu.usac.trabajosocial.servicio;
 
 import gt.edu.usac.trabajosocial.dominio.Perfil;
+import gt.edu.usac.trabajosocial.dominio.Rol;
 import java.util.List;
 import org.springframework.dao.DataAccessException;
 
@@ -15,5 +16,7 @@ import org.springframework.dao.DataAccessException;
  */
 public interface ServicioAsignacionRolPerfil {
 
-    List getAsignacionRolPerfilPorPerfil(Perfil perfil) throws DataAccessException;
+    List <Rol> getRolesAsignadosPorPerfil(Perfil perfil) throws DataAccessException;
+    
+    List <Rol> getRolesNoAsignadosPorPerfil(Perfil perfil) throws DataAccessException;
 }

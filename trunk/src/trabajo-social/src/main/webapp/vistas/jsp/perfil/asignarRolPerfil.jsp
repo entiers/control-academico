@@ -7,6 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
    "http://www.w3.org/TR/html4/loose.dtd">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
@@ -16,17 +17,40 @@
         <%@include file="../../jspf/scripts/scriptPerfil.jspf" %>
     </head>
     <body>
-        <h1><fmt:message key="asignarRolPerfil.title" /></h1>
+        <h1><fmt:message key="asignarRolPerfil.titulo" /></h1>
 
-        <form:form modelAttribute="perfil" method="post">
+        <form:form modelAttribute="asignacionRolPerfil" method="post">
             <fieldset>
-                <legend><fmt:message key="perfil.rolesAsignados" /></legend>
-                <div>
-                    <form:checkboxes path="asignacionRolPerfils" items="${listadoRol}"
-                                     itemLabel="nombre" itemValue="idRol" delimiter="<br/>"  />
-                </div>
+                <legend><fmt:message key="perfil.rolesNoAsignados"/></legend>
+                <form:select path="rol.idRol" itemLabel="nombre" itemValue="idRol" items="${listadoRolNoAsignado}" />
             </fieldset>
-            <input type="submit" value='<fmt:message key="profile.button.addRoles"/>' />
+            <input type="submit" value='<fmt:message key="btnAgregar"/>' />
         </form:form>
+
+        <fieldset>
+            <legend><fmt:message key="perfil.rolesAsignados"/></legend>
+            <table>
+                <thead>
+                    <tr>
+                        <th><fmt:message key="agregarRol.nombre"/></th>
+                        <th><fmt:message key="acciones"/></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach items="${listadoRolAsignado}" var="rol">
+                        <tr>
+                            <td>${rol.nombre}</td>
+                            <td>
+                                <a href="desasignarRolPerfil.htm?idRol=${rol.idRol}">
+                                    <fmt:message key="asignarRolPerfil.eliminar"/>
+                                </a>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+        </fieldset>
+
+
     </body>
 </html>
