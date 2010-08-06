@@ -32,17 +32,12 @@
                 <value>/idiomas/textosPensum</value>
                 <value>/idiomas/textosCalendarioActividades</value>
                 <value>/idiomas/textosTipoAsignacion</value>
+                <value>/idiomas/textosPerfil</value>
+                <value>/idiomas/textosRol</value>
             </list>
         </property>
 	<property name="cacheSeconds" value="0" />
     </bean>
-
-
-    <!-- ·······································································
-    ··· Archivo de configuracion para Spring MVC
-    ········································································ -->
-    <import resource="mvc-config.xml" />
-
 
     <!-- ·······································································
     ··· Archivo de configuracion para Hibernate
@@ -54,4 +49,9 @@
     ··· Archivo de configuracion para Spring Security
     ········································································ -->
     <import resource="security-config.xml" />
+
+    <!-- ·······································································
+    ··· Archivo de configuracion para Spring MVC
+    ········································································ -->
+    <import resource="mvc-config.xml" />
 </beans>
