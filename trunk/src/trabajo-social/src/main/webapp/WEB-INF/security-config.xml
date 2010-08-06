@@ -26,6 +26,8 @@
         <intercept-url pattern="/*Horario.htm" filters='none'/>
         <intercept-url pattern="/*Pensum.htm" filters='none'/>
         <intercept-url pattern="/*CalendarioActividades.htm" filters='none' />
+        <intercept-url pattern="/*Perfil.htm" access="hasRole('ROLE_USUARIO_REGISTRADO')" />
+        <intercept-url pattern="/*Rol.htm" access="hasRole('ROLE_USUARIO_REGISTRADO')" />
 
         <!-- se aplican los roles a las paginas protegidas -->
         <intercept-url pattern="/index.htm" access="hasRole('ROLE_USUARIO_REGISTRADO')" />
@@ -62,7 +64,7 @@
 
 
     <!-- ·······································································
-    ··· Configuracion basica de Spring Security, utilizada unicamente para
+    �·· Configuracion basica de Spring Security, utilizada unicamente para
     ··· probar la integracion de los frameworks y el correcto funcionamiento
     ··· de Spring Security, si se utiliza esta configuracion se debe de
     ··· deshabilitar las demas configuracion de este archivo

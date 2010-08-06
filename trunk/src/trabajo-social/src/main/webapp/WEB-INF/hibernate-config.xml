@@ -63,7 +63,7 @@
     </bean>
 
 
-    <!-- ····················�··················································
+    <!-- ····················��··················································
     ··· Bean de sesion para la base de datos, realiza la integracion con Hibernate
     ········································································ -->
     <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
@@ -85,6 +85,23 @@
         </property>
     </bean>
 
+    <!-- 
+        Para evitar la excepción de Lazy
+    -->
+    <bean id="urlMapping"
+	class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+	  <property name="interceptors">
+	  <list>
+		  <ref bean="OpenSessionInViewInterceptor"/>
+	  </list>
+	  </property>
+      </bean>
+
+
+      <bean name="OpenSessionInViewInterceptor"
+	  class="org.springframework.orm.hibernate3.support.OpenSessionInViewInterceptor">
+	  <property name="sessionFactory"><ref bean="sessionFactory"/></property>
+      </bean>
 
     <!-- ·······································································
     ··· Bean que controlara las transacciones en Hibernate

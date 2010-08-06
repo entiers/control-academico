@@ -1,6 +1,7 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Sistema de Control Academico
+ * Escuela de Trabajo Social
+ * Universidad de San Carlos de Guatemala
  */
 
 package gt.edu.usac.trabajosocial.dominio.wrapper;
@@ -67,7 +68,7 @@ public class WrapperHorario {
     /**
      * Se agrega al wrapper la informacion del pojo de tipo {@link Horario}.
      *
-     * @param curso Pojo de tipo {@link Horario}
+     * @param horario Pojo de tipo {@link Horario}
      */
     public void agregarWrapper(Horario horario){
         this.dia = horario.getDia();
@@ -84,7 +85,7 @@ public class WrapperHorario {
     /**
      * Se agrega la informacion del pojo de tipo {@link Horario} al wrapper.
      *
-     * @param curso Pojo de tipo {@link Horario}
+     * @param horario Pojo de tipo {@link Horario}
      */
     public void quitarWrapper(Horario horario){
         horario.setDia(this.dia);
