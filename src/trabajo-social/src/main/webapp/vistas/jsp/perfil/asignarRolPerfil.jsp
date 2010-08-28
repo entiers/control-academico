@@ -22,9 +22,19 @@
         <form:form modelAttribute="asignacionRolPerfil" method="post">
             <fieldset>
                 <legend><fmt:message key="perfil.rolesNoAsignados"/></legend>
-                <form:select path="rol.idRol" itemLabel="nombre" itemValue="idRol" items="${listadoRolNoAsignado}" />
+
+                <div id="divCampos">
+                    <label for="perfil"><fmt:message key="asignarRolPerfil.perfil"/>: </label>
+                    <span>${perfil.nombre}</span>
+                </div>
+
+                <div id="divCampos">
+                    <label for="rol"><fmt:message key="asignarRolPerfil.rol"/>: </label>
+                    <form:select path="rol.idRol" itemLabel="nombre" itemValue="idRol"
+                                 items="${listadoRolNoAsignado}" />
+                    <input type="submit" value='<fmt:message key="btnAgregar"/>' />
+                </div>
             </fieldset>
-            <input type="submit" value='<fmt:message key="btnAgregar"/>' />
         </form:form>
 
         <fieldset>
@@ -37,11 +47,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <c:forEach items="${listadoRolAsignado}" var="rol">
+                    <c:forEach items="${listadoAsignacionRolPerfil}" var="asignacionRolPerfil">
                         <tr>
-                            <td>${rol.nombre}</td>
+                            <td>${asignacionRolPerfil.rol.nombre}</td>
                             <td>
-                                <a href="desasignarRolPerfil.htm?idRol=${rol.idRol}">
+                                <a href="desasignarRolPerfil.htm?idAsignacionRolPerfil=${asignacionRolPerfil.idAsignacionRolPerfil}">
                                     <fmt:message key="asignarRolPerfil.eliminar"/>
                                 </a>
                             </td>
@@ -50,7 +60,8 @@
                 </tbody>
             </table>
         </fieldset>
-
-
+                    
+        <%-- fragmento que muestra como mensaje popup el resultado de las operaciones --%>
+        <%@include file="../../jspf/plantilla/popupMensaje.jspf" %>
     </body>
 </html>
