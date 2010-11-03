@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<architect-project version="1.0" appversion="0.9.16">
+ <project-name>esquema_temporal</project-name>
+ <print-settings numCopies="1" zoom="1.0" pageNumbersPrinted="true" orientation="1" paperWidth="612.0" paperHeight="792.0" leftBorder="50.0" rightBorder="50.0" topBorder="50.0" bottomBorder="50.0" />
+ <project-data-sources>
+  <data-source id="DS0">
+  </data-source>
+ </project-data-sources>
+ <source-databases>
+ </source-databases>
+ <target-database id="ppdb" dbcs-ref="DS0">
+  <table id="TAB1" populated="true" UUID="2b89893d-e1fc-4ed7-af0e-66d84eebd9f2" name="registro_csv" objectType="TABLE" physicalName="registro_csv" remarks="" >
+   <folder id="FOLTAB11" populated="true" name="Columns" physicalName="Columns" type="1">
+    <column id="COL2" populated="true" UUID="c9c88a00-2cb9-48ad-84c4-0bb24d359196" autoIncrement="true" autoIncrementSequenceName="registro_csv_id_seq" defaultValue="" name="id" nullable="0" physicalName="id" precision="10" primaryKeySeq="0" referenceCount="1" remarks="" scale="0" type="4" />
+    <column id="COL3" populated="true" UUID="8d16f5cc-25a9-4089-a077-02d589bebe6b" autoIncrement="false" autoIncrementSequenceName="registro_csv_ua_seq" defaultValue="" name="ua" nullable="1" physicalName="ua" precision="10" referenceCount="1" remarks="" scale="0" type="4" />
+    <column id="COL4" populated="true" UUID="677b76d1-1219-481e-b4aa-5d199ee029b0" autoIncrement="false" autoIncrementSequenceName="registro_csv_ext_seq" defaultValue="" name="ext" nullable="1" physicalName="ext" precision="10" referenceCount="1" remarks="" scale="0" type="4" />
+    <column id="COL5" populated="true" UUID="24ff730e-5e30-4b6b-a4e8-9d1686a9dc6f" autoIncrement="false" autoIncrementSequenceName="registro_csv_car_seq" defaultValue="" name="car" nullable="1" physicalName="car" precision="10" referenceCount="1" remarks="" scale="0" type="4" />
+    <column id="COL6" populated="true" UUID="822a9cf4-c1c5-4d18-abb3-1eeb82a95bc5" autoIncrement="false" autoIncrementSequenceName="registro_csv_carnet_seq" defaultValue="" name="carnet" nullable="1" physicalName="carnet" precision="10" referenceCount="1" remarks="" scale="0" type="4" />
+    <column id="COL7" populated="true" UUID="07bba7fe-3f42-46bb-a06c-dd44f0214267" autoIncrement="false" autoIncrementSequenceName="registro_csv_situacion_seq" defaultValue="" name="situacion" nullable="1" physicalName="situacion" precision="10" referenceCount="1" remarks="" scale="0" type="4" />
+    <column id="COL8" populated="true" UUID="5d151a26-7a52-40e0-9a18-ca1c39f6945a" autoIncrement="false" autoIncrementSequenceName="registro_csv_ciclo_seq" defaultValue="" name="ciclo" nullable="1" physicalName="ciclo" precision="10" referenceCount="1" remarks="" scale="0" type="4" />
+    <column id="COL9" populated="true" UUID="e34cd839-b18d-49ae-8aff-edb688c4ef71" autoIncrement="false" autoIncrementSequenceName="registro_csv_sem_seq" defaultValue="" name="sem" nullable="1" physicalName="sem" precision="10" referenceCount="1" remarks="" scale="0" type="4" />
+    <column id="COL10" populated="true" UUID="66fd7d78-4682-465a-9583-5396e9adc3e2" autoIncrement="false" autoIncrementSequenceName="registro_csv_inscripcion_seq" defaultValue="" name="inscripcion" nullable="1" physicalName="inscripcion" precision="10" referenceCount="1" remarks="" scale="0" type="91" />
+    <column id="COL11" populated="true" UUID="2866686c-8e25-4ef0-bd7f-ee4c32df84d5" autoIncrement="false" autoIncrementSequenceName="registro_csv_cierre_seq" defaultValue="" name="cierre" nullable="1" physicalName="cierre" precision="10" referenceCount="1" remarks="" scale="0" type="91" />
+    <column id="COL12" populated="true" UUID="5c32fe91-99a4-447a-a0a3-2452441cd430" autoIncrement="false" autoIncrementSequenceName="registro_csv_nombre_seq" defaultValue="" name="nombre" nullable="1" physicalName="nombre" precision="100" referenceCount="1" remarks="" scale="0" type="12" />
+    <column id="COL13" populated="true" UUID="f0b4de08-8d26-492b-b54c-4047424fc8d3" autoIncrement="false" autoIncrementSequenceName="registro_csv_apellido_seq" defaultValue="" name="apellido" nullable="1" physicalName="apellido" precision="70" referenceCount="1" remarks="" scale="0" type="12" />
+    <column id="COL14" populated="true" UUID="18286d01-5ef8-4077-9ec4-d1b35a893959" autoIncrement="false" autoIncrementSequenceName="registro_csv_sexo_seq" defaultValue="" name="sexo" nullable="1" physicalName="sexo" precision="2" referenceCount="1" remarks="" scale="0" type="4" />
+    <column id="COL15" populated="true" UUID="56a9e214-7fa4-47fa-a686-3ee4b7afbd8f" autoIncrement="false" autoIncrementSequenceName="registro_csv_nacimiento_seq" defaultValue="" name="nacimiento" nullable="1" physicalName="nacimiento" precision="10" referenceCount="1" remarks="" scale="0" type="91" />
+    <column id="COL16" populated="true" UUID="d3ab8e18-12fd-42b1-8c7e-74ff107c1409" autoIncrement="false" autoIncrementSequenceName="registro_csv_telefono_seq" defaultValue="" name="telefono" nullable="1" physicalName="telefono" precision="10" referenceCount="1" remarks="" scale="0" type="12" />
+    <column id="COL17" populated="true" UUID="5d38f260-f326-4104-b94a-9f06bc336585" autoIncrement="false" autoIncrementSequenceName="registro_csv_celular_seq" defaultValue="" name="celular" nullable="1" physicalName="celular" precision="10" referenceCount="1" remarks="" scale="0" type="4" />
+    <column id="COL18" populated="true" UUID="26db5a16-b67a-45cb-b9cf-a412dfc88a2e" autoIncrement="false" autoIncrementSequenceName="registro_csv_email_seq" defaultValue="" name="email" nullable="1" physicalName="email" precision="35" referenceCount="1" remarks="" scale="0" type="12" />
+    <column id="COL19" populated="true" UUID="35152ee5-3638-4cd5-8a75-5ee04622ea0d" autoIncrement="false" autoIncrementSequenceName="registro_csv_lugar_nac_seq" defaultValue="" name="lugar_nac" nullable="1" physicalName="lugar_nac" precision="10" referenceCount="1" remarks="" scale="0" type="4" />
+    <column id="COL20" populated="true" UUID="cef9b9ad-c5a6-4c10-b9f7-1f674df51b87" autoIncrement="false" autoIncrementSequenceName="registro_csv_nacionalidad_seq" defaultValue="" name="nacionalidad" nullable="1" physicalName="nacionalidad" precision="10" referenceCount="1" remarks="" scale="0" type="4" />
+    <column id="COL21" populated="true" UUID="623ed04b-3579-40e8-bd07-faf496cd042c" autoIncrement="false" autoIncrementSequenceName="registro_csv_carnet_modi_seq" defaultValue="" name="carnet_modi" nullable="1" physicalName="carnet_modi" precision="10" referenceCount="1" remarks="" scale="0" type="4" />
+    <column id="COL22" populated="true" UUID="99af7170-799f-4a9e-b196-346316692c9b" autoIncrement="false" autoIncrementSequenceName="registro_csv_nov_seq" defaultValue="" name="nov" nullable="1" physicalName="nov" precision="10" referenceCount="1" remarks="" scale="0" type="4" />
+    <column id="COL23" populated="true" UUID="ac46edd0-78fe-4997-926c-1fdf13ec2eb2" autoIncrement="false" autoIncrementSequenceName="registro_csv_nivel_seq" defaultValue="" name="nivel" nullable="1" physicalName="nivel" precision="10" referenceCount="1" remarks="" scale="0" type="4" />
+    <column id="COL24" populated="true" UUID="e24f5c5a-0964-4d33-b061-9759e18d3068" autoIncrement="false" autoIncrementSequenceName="registro_csv_facultad_seq" defaultValue="" name="facultad" nullable="1" physicalName="facultad" precision="60" referenceCount="1" remarks="" scale="0" type="12" />
+    <column id="COL25" populated="true" UUID="6cffd08e-60a6-4d27-915d-0ef868963258" autoIncrement="false" autoIncrementSequenceName="registro_csv_extension_seq" defaultValue="" name="extension" nullable="1" physicalName="extension" precision="60" referenceCount="1" remarks="" scale="0" type="12" />
+    <column id="COL26" populated="true" UUID="615173a0-2f6a-4cf5-9de9-38340f57a45b" autoIncrement="false" autoIncrementSequenceName="registro_csv_carrera_seq" defaultValue="" name="carrera" nullable="1" physicalName="carrera" precision="60" referenceCount="1" remarks="" scale="0" type="4" />
+    </folder>
+    <folder id="FOLTAB13" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
+    </folder>
+    <folder id="FOLTAB12" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
+    </folder>
+    <folder id="FOLTAB14" populated="true" name="Indices" physicalName="Indices" type="4">
+    <index id="IDX27" populated="true" UUID="7ef8e902-ca63-4a2d-adb1-26aafa53c5d7" clustered="false" name="registro_csv_pk" physicalName="registro_csv_pk" primaryKeyIndex="true" unique="false" >
+     <index-column id="IDC28" populated="true" UUID="271a08bd-5744-44df-b8d6-c97c5dc9a54c" ascendingOrDescending="UNSPECIFIED" column-ref="COL2" name="id" physicalName="id" />
+    </index>
+   </folder>
+  </table>
+  <relationships>
+  </relationships>
+ </target-database>
+ <ddl-generator type="ca.sqlpower.architect.ddl.GenericDDLGenerator" allow-connection="true"> </ddl-generator>
+ <compare-dm-settings  ddlGenerator="ca.sqlpower.architect.ddl.PostgresDDLGenerator"  outputFormatAsString="SQL" >
+  <source-stuff   datastoreTypeAsString="DATABASE"   connectName="postgres"   filePath=""  />  <target-stuff   datastoreTypeAsString="PROJECT"   filePath=""  /> </compare-dm-settings>
+ <create-kettle-job-settings filePath="" jobName="" schemaName="" kettleJoinType="0" savingToFile="true" />
+ <play-pen zoom="1.0" viewportX="0" viewportY="0" relationship-style="rectilinear" names-displayLogicalNames="true" showPrimaryTag="true" showForeignTag="true" showAlternateTag="true" columnVisibility="ALL" relationshipLabelVisibility="true">
+  <table-pane table-ref="TAB1" x="81" y="147" bgColor="0xf0f0f0" fgColor="0x000000" rounded="false" dashed="false"/>
+ </play-pen>
+ <profiles topNCount="10">
+  </profiles>
+  <olap>
+  </olap>
+  <olap-gui>
+  </olap-gui>
+</architect-project>
