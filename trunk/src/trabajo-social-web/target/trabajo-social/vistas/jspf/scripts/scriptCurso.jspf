@@ -1,0 +1,30 @@
+<%@ page pageEncoding="UTF-8" %>
+<%@ page import="gt.edu.usac.cats.util.RequestUtil" %>
+<%@ page import="gt.edu.usac.cats.dominio.wrapper.WrapperCurso" %>
+
+<script type="text/javascript">
+    $(function(){
+        <%
+            WrapperCurso wrapperCurso = new WrapperCurso();
+        %>
+
+        $("#popupMensaje").dialog({
+            autoOpen: <%= RequestUtil.getValorBoolean(request, "mostrarPopupMensaje") %>,
+            modal: true,
+            buttons: {
+                '<fmt:message key="btnAceptar"/>': function() {
+                    if(<%= RequestUtil.getValorBoolean(request, "limpiarCampos") %>) {
+                        $("#codigo").val("<%= wrapperCurso.getCodigo() %>");
+                        $("#creditosPracticos").val("<%= wrapperCurso.getCreditosPracticos() %>");
+                        $("#creditosPrerrequisito").val("<%= wrapperCurso.getCreditosPrerrequisito() %>");
+                        $("#creditosTeoricos").val("<%= wrapperCurso.getCreditosTeoricos() %>");
+                        $("#nombre").val("<%= wrapperCurso.getNombre() %>");
+                        $("#semestre").val("<%= wrapperCurso.getSemestre() %>");
+                    }
+
+                    $(this).dialog('close');
+                }
+            }
+        });
+    });
+</script>

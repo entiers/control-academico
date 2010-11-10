@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : decorators.xml
+    Created on : 21 de marzo de 2010, 09:59 PM
+    Author     : Daniel Castillo
+    Description:
+        Archivo que contiene la configuracion para Sitemesh
+-->
+
+<decorators defaultdir="/decoradores">
+    <!-- paginas a las cuales no se les aplicara decoracion -->
+    <!-- -->
+    <excludes>
+        <pattern>/login.htm</pattern>
+    </excludes>
+    
+
+    <!-- definicion de los decoradores -->
+    <decorator name="principal" page="principal.jsp">
+        <pattern>/*</pattern>
+    </decorator>
+</decorators>

@@ -1,0 +1,10 @@
+<%@ page pageEncoding="UTF-8" %>
+<%@ page import="gt.edu.usac.cats.util.RequestUtil" %>
+
+<%-- mensaje que muestra el resultado de operaciones realizadas --%>
+<div id="popupMensaje" title='<fmt:message key='<%= RequestUtil.getValorString(request, "tituloPopupMensaje") %>'/>' >
+    <p>
+        <span class='<fmt:message key='<%= RequestUtil.getValorString(request, "cssPopupMensaje") %>'/>' style="float:left; margin:0 7px 50px 0;"></span>
+        <fmt:message key='<%= RequestUtil.getValorString(request, "textoPopupMensaje") %>'/>
+    </p>
+</div>

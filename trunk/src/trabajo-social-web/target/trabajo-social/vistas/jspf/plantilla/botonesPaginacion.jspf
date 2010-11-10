@@ -1,0 +1,16 @@
+<%@ page pageEncoding="UTF-8" %>
+<%@ page import="gt.edu.usac.cats.util.RequestUtil" %>
+
+<br/><br/>
+<%
+    if(RequestUtil.getValorBoolean(request, "disabledBtnAnterior")) {
+%>
+        <input id="btnAnterior" type="button" onclick="paginarAtras()"  value='<fmt:message key="btnAnterior"/>' />
+<%
+    }
+    
+    if(RequestUtil.getValorBoolean(request, "disabledBtnSiguiente")) {
+%>
+        &nbsp;&nbsp;
+        <input id="btnSiguiente" type="button" onclick="paginarAdelante()" value='<fmt:message key="btnSiguiente"/>'/>
+<%  } %>

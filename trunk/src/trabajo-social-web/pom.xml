@@ -1,0 +1,477 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>gt.edu.usac</groupId>
+    <artifactId>trabajo-social-web</artifactId>
+    <packaging>war</packaging>
+    <version>1.0.0</version>
+    <name>trabajo-social-web</name>
+    <url>http://www.usac.edu.gt/</url>
+    <inceptionYear>2010</inceptionYear>
+    <developers>
+        <developer>
+            <id>daniel</id>
+            <name>Daniel Castillo</name>
+            <organization>Universidad de San Carlos de Guatemala</organization>
+        </developer>
+        <developer>
+            <id>mario</id>
+            <name>Mario Batres</name>
+            <organization>Universidad de San Carlos de Guatemala</organization>
+        </developer>
+    </developers>
+    <organization>
+        <name>Universidad de San Carlos de Guatemala</name>
+        <url>http://www.usac.edu.gt/</url>
+    </organization>
+
+
+    <!-- ·······································································
+    ··· Definicion de repositorios
+    ········································································ -->
+    <repositories>
+        <!-- repositorio para jee6 -->
+        <repository>
+            <id>java.net2</id>
+            <name>Repositorio de jee6</name>
+            <url>http://download.java.net/maven/2</url>
+        </repository>
+
+        <!--
+        Repositorio general, este repositorio contiene una biblioteca de librerias
+        bastante amplia. Este repositorio se utiliza para los siguientes artefactos:
+            - sitemesh
+            - log4j
+            - jasypt
+            - postgresql
+            - joda-time
+            - junit
+            - spring-core
+            - spring-tx
+            - spring-webmvc
+            - spring-orm
+            - spring-security-core
+            - spring-security-config
+            - spring-security-web
+            - spring-security-taglibs
+            - slf4j-log4j12
+        -->
+        <repository>
+            <id>mirrors.ibiblio.org</id>
+            <name>Repositorio general</name>
+            <url>http://mirrors.ibiblio.org/pub/mirrors/maven2</url>
+        </repository>
+
+        <!--
+        Repositorio de JBOSS, este repositorio se utiliza para obtener los
+        siguientes artefactos:
+            - hibernate-core
+            - hibernate-annotations
+            - hibernate-validator
+            - jstl
+
+        NOTA: Este repositorio dejo de ser el repositorio principal de JBOSS
+        desde el 14/4/2010, por lo que actualmente solo esta como lectura
+        -->
+        <repository>
+            <id>jboss.com</id>
+            <name>Repositorio para hibernate</name>
+            <url>http://repository.jboss.com/maven2</url>
+        </repository>
+    </repositories>
+
+
+    <!-- ·······································································
+    ··· Definicion de dependencias
+    ········································································ -->
+    <dependencies>
+        <!-- ······· proyecto que contiene la capa de acceso a datos ······· -->
+        <dependency>
+            <groupId>gt.edu.usac</groupId>
+            <artifactId>trabajo-social-orm</artifactId>
+            <version>${project.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- ·········· proyecto que contiene la capa de servicio ·········· -->
+        <dependency>
+            <groupId>gt.edu.usac</groupId>
+            <artifactId>trabajo-social-servicio</artifactId>
+            <version>${project.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- ·········· proyecto que contiene la capa de seguridad ········· -->
+        <dependency>
+            <groupId>gt.edu.usac</groupId>
+            <artifactId>trabajo-social-seguridad</artifactId>
+            <version>${project.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- ······· dependencias necesarias para una aplicacion web ······· -->
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-web-api</artifactId>
+            <version>6.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- ······ dependencias necesarias para HIBERNATE FRAMEWORK ······· -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-annotations</artifactId>
+            <version>3.5.1-Final</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-commons-annotations</artifactId>
+            <version>3.2.0.Final</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>3.5.1-Final</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>3.5.1-Final</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.0-api</artifactId>
+            <version>1.0.0.Final</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>4.0.2.GA</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- ········ dependencias necesarias para SPRING FRAMEWORK ········ -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aop</artifactId>
+            <version>3.0.2.RELEASE</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-asm</artifactId>
+            <version>3.0.2.RELEASE</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+            <version>3.0.2.RELEASE</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>3.0.2.RELEASE</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>3.0.2.RELEASE</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>3.0.2.RELEASE</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-expression</artifactId>
+            <version>3.0.2.RELEASE</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>3.0.2.RELEASE</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>3.0.2.RELEASE</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+            <version>3.0.2.RELEASE</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- ······ dependencias necesarias para SPRING WEB FRAMEWORK ······ -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>3.0.2.RELEASE</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>3.0.2.RELEASE</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- ····· dependencias necesarias para DRIVER JDBC POSTGRESQL ····· -->
+        <dependency>
+            <groupId>postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>8.4-701.jdbc4</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- ············ dependencias necesarias para JAVA MAIL ··········· -->
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.4.3</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- ············· dependencias necesarias para COMMONS ············ -->
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.1</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.1</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.1.1</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- ············· dependencias necesarias para LOG4J ·············· -->
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.14</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- ········· dependencias necesarias para SLF4J-LOG4J12 ·········· -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.5.8</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- ···· dependencias necesarias para SPRING SECURITY FRAMEWORK ··· -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>3.0.2.RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>3.0.2.RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>3.0.2.RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-taglibs</artifactId>
+            <version>3.0.2.RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-acl</artifactId>
+            <version>3.0.2.RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- ············ dependencias necesarias para SITEMESH ············ -->
+        <dependency>
+            <groupId>opensymphony</groupId>
+            <artifactId>sitemesh</artifactId>
+            <version>2.4.2</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- ············· dependencias necesarias para JASYPT ············· -->
+        <dependency>
+            <groupId>org.jasypt</groupId>
+            <artifactId>jasypt</artifactId>
+            <version>1.6</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- ············ dependencias necesarias para JODA TIME ··········· -->
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>1.6</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- ············· dependencias necesarias para JUNIT ·············· -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.8.1</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    
+    <!-- ·······································································
+    ··· Configuracion para la generacion del archivo de distribucion
+    ········································································ -->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.0.2</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.1-beta-1</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+        </plugins>
+        <finalName>trabajo-social</finalName>
+    </build>
+
+
+    <!-- ·······································································
+    ··· Configuracion para la generacion de la documentacion
+    ········································································ -->
+    <reporting>
+        <plugins>
+            <!--
+                plugin para generar javadoc, este se integra con
+                graphviz para generar los diagramas UML del codigo
+            -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <configuration>
+                    <doclet>gr.spinellis.umlgraph.doclet.UmlGraphDoc</doclet>
+                    <docletArtifact>
+                        <groupId>gr.spinellis</groupId>
+                        <artifactId>UmlGraph</artifactId>
+                        <version>4.6</version>
+                    </docletArtifact>
+                    <additionalparam>
+                        -inferrel -inferdep -quiet -hide java.* -collpackages java.util.* -qualify
+                        -postfixpackage -nodefontsize 9
+                        -nodefontpackagesize 7
+                    </additionalparam>
+                </configuration>
+            </plugin>
+        </plugins>
+    </reporting>
+
+
+    <!-- ·······································································
+    ··· Definicion de profiles
+    ········································································ -->
+    <profiles>
+        <profile>
+            <id>endorsed</id>
+            <activation>
+                <property>
+                    <name>sun.boot.class.path</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <version>2.0.2</version>
+                        <configuration>
+                            <!-- javaee6 contains upgrades of APIs contained within the JDK itself.
+                                 As such these need to be placed on the bootclasspath, rather than classpath of the
+                                 compiler.
+                                 If you don't make use of these new updated API, you can delete the profile.
+                                 On non-SUN jdk, you will need to create a similar profile for your jdk, with the similar property as sun.boot.class.path in Sun's JDK.-->
+                            <compilerArguments>
+                                <bootclasspath>${settings.localRepository}/javax/javaee-endorsed-api/6.0/javaee-endorsed-api-6.0.jar${path.separator}${sun.boot.class.path}</bootclasspath>
+                            </compilerArguments>
+                        </configuration>
+                        <dependencies>
+                            <dependency>
+                                <groupId>javax</groupId>
+                                <artifactId>javaee-endorsed-api</artifactId>
+                                <version>6.0</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>
+
