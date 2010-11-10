@@ -1,0 +1,30 @@
+<%@ page pageEncoding="UTF-8" %>
+<%@ page import="gt.edu.usac.cats.util.RequestUtil" %>
+<%@ page import="gt.edu.usac.cats.dominio.wrapper.WrapperSemestre" %>
+
+<script type="text/javascript">
+    $(function(){
+        // se crea y configura el panel popup que muestra los
+        // mensajes de resultados de las operaciones
+        <%
+            WrapperSemestre wrapperSemestre = new WrapperSemestre();
+        %>
+
+        $("#popupMensaje").dialog({
+            autoOpen: <%= RequestUtil.getValorBoolean(request, "mostrarPopupMensaje") %>,
+            modal: true,
+            buttons: {
+                '<fmt:message key="btnAceptar"/>': function() {
+                    if(<%= RequestUtil.getValorBoolean(request, "limpiarCampos") %>) {
+                        $("#anio").val("<%= wrapperSemestre.getAnio() %>");
+                        $("#numero").val("<%= wrapperSemestre.getNumero() %>");
+                    }
+                    $(this).dialog('close');
+                }
+            }
+        });
+
+    });
+</script>
+
+

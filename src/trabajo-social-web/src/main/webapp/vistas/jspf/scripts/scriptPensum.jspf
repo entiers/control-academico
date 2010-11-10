@@ -1,0 +1,103 @@
+<%@ page pageEncoding="UTF-8" %>
+<%@ page import="gt.edu.usac.cats.util.RequestUtil" %>
+
+<script type="text/javascript">
+    $(function() {
+        // configuracion del panel popup para agregar nuevos pensum
+        $("#popupAgregarPensum").dialog({
+            autoOpen: <%= RequestUtil.getValorBoolean(request, "mostrarPopupAgregar") %>,
+            modal: true,
+            buttons: {
+                '<fmt:message key="btnAgregar"/>': function() {
+                    document.forms[1].submit();
+                },
+                '<fmt:message key="btnCancelar"/>': function() {
+                    $(this).dialog('close');
+                    $("#errorCodigo").hide();
+                    $("#errorIdCarrera").hide();
+                }
+            }
+        });
+
+        // configuracion del panel popup que muestra los resultados de las operaciones
+        $("#popupMensaje").dialog({
+            autoOpen: <%= RequestUtil.getValorBoolean(request, "mostrarPopupMensaje") %>,
+            modal: true,
+            buttons: {
+                '<fmt:message key="btnAceptar"/>': function() {
+                    if(<%= RequestUtil.getValorBoolean(request, "limpiarCampos") %>) {
+                        $("#idCarrera").val("0");
+                        $("#codigo").val("");
+                    }
+                    $(this).dialog('close');
+                }
+            }
+        });
+
+        // configuracion del panel popup para borrar pensum
+        $("#popupBorrar").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                '<fmt:message key="btnAceptar"/>': function() {
+                    document.forms[0].action = "borrarControlPensum.htm";
+                    document.forms[0].submit();
+                },
+                '<fmt:message key="btnCancelar"/>': function() {
+                    $(this).dialog('close');
+                }
+            }
+        });
+
+        // configuracion del panel popup para activar pensum
+        $("#popupActivar").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                '<fmt:message key="btnAceptar"/>': function() {
+                    document.forms[0].action = "activarControlPensum.htm";
+                    document.forms[0].submit();
+                },
+                '<fmt:message key="btnCancelar"/>': function() {
+                    $(this).dialog('close');
+                }
+            }
+        });
+
+        // configuracion del panel popup para activar pensum
+        $("#popupCaducar").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                '<fmt:message key="btnAceptar"/>': function() {
+                    document.forms[0].action = "caducarControlPensum.htm";
+                    document.forms[0].submit();
+                },
+                '<fmt:message key="btnCancelar"/>': function() {
+                    $(this).dialog('close');
+                }
+            }
+        });
+
+        // configuracion del panel popup para agregar cursos a un pensum
+        $("#popupAgregarCurso").dialog({
+            autoOpen: <%= RequestUtil.getValorBoolean(request, "mostrarPopupAgregarCurso") %>,
+            modal: true,
+            buttons: {
+                '<fmt:message key="btnAgregar"/>': function() {
+                    document.forms[2].submit();
+                },
+                '<fmt:message key="btnCancelar"/>': function() {
+                    $(this).dialog('close');
+                    $("#errorIdCurso").hide();
+                }
+            }
+        });
+
+        // muestra el panel popup para agregar nuevos pensum
+        $('#btnPopupAgregar').button().click(function() {
+            $('#popupAgregarPensum').dialog('open');
+        });
+
+    });
+</script>
