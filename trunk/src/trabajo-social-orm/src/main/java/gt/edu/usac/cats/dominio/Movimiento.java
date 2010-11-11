@@ -1,6 +1,6 @@
 /*
  * @(#)Movimiento.java   13.04.10
- * 
+ *
  * Universidad de San Carlos de Guatemala
  * Escuela de Trabajo Social
  * Control Academico

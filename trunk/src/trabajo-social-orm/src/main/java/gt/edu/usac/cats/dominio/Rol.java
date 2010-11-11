@@ -38,7 +38,7 @@ import javax.persistence.Table;
 )
 public class Rol implements java.io.Serializable {
     private Set<AsignacionRolPerfil> asignacionRolPerfils = new HashSet<AsignacionRolPerfil>(0);
-    private byte[] descripcion;
+    private String descripcion;
     private short idRol;
     private String nombre;
 
@@ -49,7 +49,7 @@ public class Rol implements java.io.Serializable {
         this.nombre = nombre;
     }
 
-    public Rol(short idRol, String nombre, byte[] descripcion, Set<AsignacionRolPerfil> asignacionRolPerfils) {
+    public Rol(short idRol, String nombre, String descripcion, Set<AsignacionRolPerfil> asignacionRolPerfils) {
         this.idRol = idRol;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -85,11 +85,11 @@ public class Rol implements java.io.Serializable {
     }
 
     @Column(name = "descripcion")
-    public byte[] getDescripcion() {
+    public String getDescripcion() {
         return this.descripcion;
     }
 
-    public void setDescripcion(byte[] descripcion) {
+    public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
 
