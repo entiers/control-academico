@@ -1,6 +1,6 @@
 /*
  * @(#)Desasignacion.java   29.03.10
- * 
+ *
  * Universidad de San Carlos de Guatemala
  * Escuela de Trabajo Social
  * Control Academico
