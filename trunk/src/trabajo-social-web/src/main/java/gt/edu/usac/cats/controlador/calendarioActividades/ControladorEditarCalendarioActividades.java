@@ -79,7 +79,7 @@ public class ControladorEditarCalendarioActividades {
      * @return String Contiene el nombre de la vista a mostrar
      */
     @RequestMapping(method = RequestMethod.GET)
-    public String crearFormulario(Model modelo, short idCalendarioActividades, 
+    public String crearFormulario(Model modelo, short idCalendarioActividades,
             HttpServletRequest request) {
 
         WrapperCalendarioActividades wrapperCalendarioActividades = new WrapperCalendarioActividades();
