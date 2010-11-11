@@ -24,7 +24,7 @@ import org.springframework.stereotype.Service;
 @Service("servicioCursoImpl")
 public class ServicioCursoImpl extends ServicioGeneralImpl implements ServicioCurso {
 
-    /**
+     /**
      * <p>Constructor predeterminado de la clase.</p>
      */
     public ServicioCursoImpl() {}

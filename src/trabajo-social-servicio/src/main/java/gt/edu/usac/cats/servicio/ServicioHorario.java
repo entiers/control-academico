@@ -22,7 +22,7 @@ import org.springframework.dao.DataAccessException;
 public interface ServicioHorario extends ServicioGeneral {
 
     /**
-     * <p>Este metodo permite obtener un salon por el numero y el nombre del 
+     * <p>Este metodo permite obtener un salon por el numero y el nombre del
      * edificio.</p>
      *
      * @param numero Numero del salon
@@ -32,7 +32,7 @@ public interface ServicioHorario extends ServicioGeneral {
     Salon buscarSalonPorNumeroYEdificio(short numero, String edificio)
             throws DataAccessException;
 //______________________________________________________________________________
-    /**
+     /**
      * <p>Este metodo permite agregar la informacion de un horario a la base
      * de datos.</p>
      *

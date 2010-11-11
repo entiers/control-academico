@@ -44,7 +44,7 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
     public Salon buscarSalonPorNumeroYEdificio(short numero, String edificio)
             throws DataAccessException {
 
-        DetachedCriteria criteria = DetachedCriteria.forClass(Salon.class);
+        DetachedCriteria criteria = DetachedCriteria.forClass(Horario.class);
 
         criteria.add(Restrictions.and(
                 Restrictions.eq("numero", numero),
@@ -65,7 +65,7 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
      */
     @Override
     public List <Horario> buscarHorarioPorSalonYSemestre(Salon salon, Semestre semestre)
-            throws DataAccessException {
+        throws DataAccessException {
 
         DetachedCriteria criteria = DetachedCriteria.forClass(Horario.class);
 
