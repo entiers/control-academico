@@ -65,7 +65,7 @@ public class ControladorEditarHorario {
      * <p>Listado de todas las cursos disponibles.</p>
      */
     protected List <Curso> listadoCursos;
-//______________________________________________________________________________
+//______________________________________________________________________________    
     /**
      * <p>Contiene metodos que permiten el manejo de la informacion relacionada
      * con el salon en la base de datos. Este objeto se encuentra registrado

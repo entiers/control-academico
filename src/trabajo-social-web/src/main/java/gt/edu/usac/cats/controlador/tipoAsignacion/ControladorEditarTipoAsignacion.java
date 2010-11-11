@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller("controladorEditarTipoAsignacion")
 @RequestMapping(value="editarTipoAsignacion.htm")
 public class ControladorEditarTipoAsignacion {
-    //_____________________________________________________________________________
+//_____________________________________________________________________________
     /**
      * <p>
      * Lleva el nombre del titulo para el mensaje en la pagina

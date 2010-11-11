@@ -114,14 +114,14 @@
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
             <version>6.0</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
             <version>1.2</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
 
         <!-- ······ dependencias necesarias para HIBERNATE FRAMEWORK ······· -->
@@ -129,42 +129,42 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-annotations</artifactId>
             <version>3.5.1-Final</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-commons-annotations</artifactId>
             <version>3.2.0.Final</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>3.5.1-Final</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
             <version>3.5.1-Final</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>org.hibernate.javax.persistence</groupId>
             <artifactId>hibernate-jpa-2.0-api</artifactId>
             <version>1.0.0.Final</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
             <version>4.0.2.GA</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
 
         <!-- ········ dependencias necesarias para SPRING FRAMEWORK ········ -->
@@ -172,70 +172,70 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-aop</artifactId>
             <version>3.0.2.RELEASE</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-asm</artifactId>
             <version>3.0.2.RELEASE</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-beans</artifactId>
             <version>3.0.2.RELEASE</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
             <version>3.0.2.RELEASE</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
             <version>3.0.2.RELEASE</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
             <version>3.0.2.RELEASE</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-expression</artifactId>
             <version>3.0.2.RELEASE</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
             <version>3.0.2.RELEASE</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
             <version>3.0.2.RELEASE</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-tx</artifactId>
             <version>3.0.2.RELEASE</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
 
         <!-- ······ dependencias necesarias para SPRING WEB FRAMEWORK ······ -->
@@ -243,14 +243,14 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
             <version>3.0.2.RELEASE</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
             <version>3.0.2.RELEASE</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
 
         <!-- ····· dependencias necesarias para DRIVER JDBC POSTGRESQL ····· -->
@@ -258,7 +258,7 @@
             <groupId>postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>8.4-701.jdbc4</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
 
         <!-- ············ dependencias necesarias para JAVA MAIL ··········· -->
@@ -266,7 +266,7 @@
             <groupId>javax.mail</groupId>
             <artifactId>mail</artifactId>
             <version>1.4.3</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
 
         <!-- ············· dependencias necesarias para COMMONS ············ -->
@@ -274,21 +274,21 @@
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
             <version>2.1</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
             <version>1.1</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
             <version>1.1.1</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
 
         <!-- ············· dependencias necesarias para LOG4J ·············· -->
@@ -296,7 +296,7 @@
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <version>1.2.14</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
 
         <!-- ········· dependencias necesarias para SLF4J-LOG4J12 ·········· -->
@@ -304,7 +304,7 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
             <version>1.5.8</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
 
         <!-- ···· dependencias necesarias para SPRING SECURITY FRAMEWORK ··· -->
@@ -364,7 +364,7 @@
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
             <version>1.6</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
 
         <!-- ············· dependencias necesarias para JUNIT ·············· -->
@@ -407,31 +407,6 @@
     <!-- ·······································································
     ··· Configuracion para la generacion de la documentacion
     ········································································ -->
-    <reporting>
-        <plugins>
-            <!--
-                plugin para generar javadoc, este se integra con
-                graphviz para generar los diagramas UML del codigo
-            -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <configuration>
-                    <doclet>gr.spinellis.umlgraph.doclet.UmlGraphDoc</doclet>
-                    <docletArtifact>
-                        <groupId>gr.spinellis</groupId>
-                        <artifactId>UmlGraph</artifactId>
-                        <version>4.6</version>
-                    </docletArtifact>
-                    <additionalparam>
-                        -inferrel -inferdep -quiet -hide java.* -collpackages java.util.* -qualify
-                        -postfixpackage -nodefontsize 9
-                        -nodefontpackagesize 7
-                    </additionalparam>
-                </configuration>
-            </plugin>
-        </plugins>
-    </reporting>
 
 
     <!-- ·······································································
@@ -473,5 +448,8 @@
             </build>
         </profile>
     </profiles>
+    <properties>
+        <netbeans.hint.deploy.server>Tomcat60</netbeans.hint.deploy.server>
+    </properties>
 </project>
 

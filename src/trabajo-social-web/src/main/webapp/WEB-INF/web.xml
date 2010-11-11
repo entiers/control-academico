@@ -17,28 +17,25 @@
 
 
     <!-- ·······································································
+    ··· Front-end encargado de escuchar todas las peticiones web
+    ········································································ -->
+     <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>/WEB-INF/applicationContext.xml</param-value>
+    </context-param>
+    
+    <!-- ·······································································
     ··· Se encarga de iniciar el contexto para Spring
     ········································································ -->
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
-
-
-    <!-- ·······································································
-    ··· Front-end encargado de escuchar todas las peticiones web
-    ········································································ -->
+    
     <servlet>
         <servlet-name>dispatcher</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-        <init-param>
-            <!-- indica los archivos de configuracion -->
-            <param-name>contextConfigLocation</param-name>
-            <param-value>/WEB-INF/applicationContext.xml</param-value>
-        </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
-
-    <!-- url a las que se aplicara el servlet -->
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>*.htm</url-pattern>
@@ -91,6 +88,11 @@
         </init-param>
     </filter>
 
+
+    <filter-mapping>
+        <filter-name>OpenSessionInView</filter-name>
+        <url-pattern>*.htm</url-pattern>
+    </filter-mapping>
 
     <!-- ·······································································
     ··· Configuracion de Spring Security 3.0
