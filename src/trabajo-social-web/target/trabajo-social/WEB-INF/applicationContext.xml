@@ -32,6 +32,8 @@
                 <value>/idiomas/textosPensum</value>
                 <value>/idiomas/textosCalendarioActividades</value>
                 <value>/idiomas/textosTipoAsignacion</value>
+                <value>/idiomas/textosPerfil</value>
+                <value>/idiomas/textosRol</value>
             </list>
         </property>
 	<property name="cacheSeconds" value="0" />
@@ -43,22 +45,20 @@
     ··· de JavaMail con el servidor de correo electronico, este bean esta
     ··· controlado por Tomcat, por lo que la llamada se realiza por JNDI
     ········································································ -->
-    <bean id="javaMailSession" class="org.springframework.jndi.JndiObjectFactoryBean">
-        <property name="jndiName" value="java:comp/env/mail/Session" />
-    </bean>
     
+    <!--<bean id="javaMailSession" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="java:comp/env/mail/Session" />
+    </bean>-->
+
     <bean id="javaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-        <property name="session" ref="javaMailSession" />
+        <!--<property name="session" ref="javaMailSession" />-->
         <property name="username" value="adaniel.castillo@gmail.com" />
+        <property name="host" value="smtp.gmail.com "/>
     </bean>
 
-    <!-- ·······································································
-    ··· Archivo de configuracion para Spring MVC
-    ········································································ -->
-    <import resource="mvc-config.xml" />
 
 
-    <!-- ·······································································
+   <!-- ·······································································
     ··· Archivo de configuracion para Hibernate
     ········································································ -->
     <import resource="hibernate-config.xml" />
@@ -66,6 +66,11 @@
 
     <!-- ·······································································
     ··· Archivo de configuracion para Spring Security
-    ····�··································································· -->
+    ········································································ -->
     <import resource="security-config.xml" />
+
+    <!-- ·······································································
+    ··· Archivo de configuracion para Spring MVC
+    ········································································ -->
+    <import resource="mvc-config.xml" />
 </beans>

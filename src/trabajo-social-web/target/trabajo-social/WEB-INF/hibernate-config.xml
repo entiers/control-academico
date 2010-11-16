@@ -54,32 +54,28 @@
 
     <!-- ·······································································
     ··· Bean que crea la conexion con la base de datos por medio de JDBC
-    ··· este bean se utiliza unicamente si el Data Source sera controlado
-    ··· por la aplicacion
     ········································································ -->
-    <!--
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 	<property name="driverClassName" value="${jdbc.driverClassName}" />
 	<property name="url" value="${jdbc.url}" />
 	<property name="username" value="${jdbc.username}" />
 	<property name="password" value="${jdbc.password}" />
     </bean>
-    -->
 
-    <!-- ·······································································
+ <!-- ·······································································
     ··· Bean que crea la conexion con la base de datos por medio de JDBC
     ··· este bean se utiliza cuando el Data Source se encuentra controlado
     ··· por Tomcat, la busqueda se realiza por medio de JNDI
     ········································································ -->
-    <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+    <!--<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
         <property name="lookupOnStartup" value="true" />
         <property name="jndiName" value="java:comp/env/jdbc/postgresDS" />
         <property name="cache" value="false" />
         <property name="proxyInterface" value="javax.sql.DataSource" />
-    </bean>
+    </bean>-->
 
 
-    <!-- ·······································································
+    <!-- ····················���··················································
     ··· Bean de sesion para la base de datos, realiza la integracion con Hibernate
     ········································································ -->
     <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
@@ -101,6 +97,23 @@
         </property>
     </bean>
 
+    <!-- 
+        Para evitar la excepción de Lazy
+    -->
+    <bean id="urlMapping"
+	class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+	  <property name="interceptors">
+	  <list>
+		  <ref bean="OpenSessionInViewInterceptor"/>
+	  </list>
+	  </property>
+      </bean>
+
+
+      <bean name="OpenSessionInViewInterceptor"
+	  class="org.springframework.orm.hibernate3.support.OpenSessionInViewInterceptor">
+	  <property name="sessionFactory"><ref bean="sessionFactory"/></property>
+      </bean>
 
     <!-- ·······································································
     ··· Bean que controlara las transacciones en Hibernate

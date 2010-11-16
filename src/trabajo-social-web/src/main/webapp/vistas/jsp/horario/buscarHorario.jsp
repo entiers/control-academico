@@ -11,6 +11,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <html>
     <head>
@@ -71,7 +72,9 @@
                             <th><fmt:message key="agregarHorario.horaFin"/></th>
                             <th><fmt:message key="agregarHorario.seccion"/></th>
                             <th><fmt:message key="agregarHorario.estado"/></th>
-                            <th><fmt:message key="acciones"/></th>
+                            <sec:authorize access="hasAnyRole('ROLE_EDITAR_HORARIO')">
+                                <th><fmt:message key="acciones"/></th>
+                            </sec:authorize>
                         </tr>
                     </thead>
                     <tbody>
@@ -87,11 +90,13 @@
                                 </td>
                                 <td><c:out value="${horario.seccion}" /></td>
                                 <td><c:out value="${horario.estado}" /></td>
-                                <td>
-                                    <a href="editarHorario.htm?idHorario=${horario.idHorario}">
-                                        <fmt:message key="editarHorario.editar"/>
-                                    </a>
-                                </td>
+                                <sec:authorize access="hasRole('ROLE_EDITAR_HORARIO')">
+                                    <td>
+                                        <a href="editarHorario.htm?idHorario=${horario.idHorario}">
+                                            <fmt:message key="editarHorario.editar"/>
+                                        </a>
+                                    </td>
+                                </sec:authorize>
                             </tr>
                         </c:forEach>
                     </tbody>

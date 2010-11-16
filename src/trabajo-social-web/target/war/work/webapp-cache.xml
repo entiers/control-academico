@@ -4,8 +4,11 @@
       <string>currentBuild</string>
       <path-set>
         <pathsSet class="linked-hash-set">
+          <string>idiomas/textosRol_en_US.properties</string>
           <string>idiomas/textosSalon_en_US.properties</string>
           <string>idiomas/textosPensum.properties</string>
+          <string>idiomas/textosRol.properties</string>
+          <string>idiomas/textosPerfil_en_US.properties</string>
           <string>idiomas/textosHorario_en_US.properties</string>
           <string>idiomas/textosCalendarioActividades_en_US.properties</string>
           <string>idiomas/textosCatedratico_en_US.properties</string>
@@ -19,6 +22,7 @@
           <string>idiomas/textosSalon.properties</string>
           <string>idiomas/textosEstudiante.properties</string>
           <string>idiomas/textosSemestre_en_US.properties</string>
+          <string>idiomas/textosPerfil.properties</string>
           <string>idiomas/textosCatedratico.properties</string>
           <string>idiomas/textosCurso_en_US.properties</string>
           <string>idiomas/textosTipoAsignacion.properties</string>
@@ -33,6 +37,10 @@
           <string>vistas/jsp/tipoAsignacion/buscarTipoAsignacion.jsp</string>
           <string>vistas/jsp/tipoAsignacion/editarTipoAsignacion.jsp</string>
           <string>vistas/jsp/tipoAsignacion/agregarTipoAsignacion.jsp</string>
+          <string>vistas/jsp/perfil/asignarRolPerfil.jsp</string>
+          <string>vistas/jsp/perfil/agregarPerfil.jsp</string>
+          <string>vistas/jsp/perfil/editarPerfil.jsp</string>
+          <string>vistas/jsp/perfil/buscarPerfil.jsp</string>
           <string>vistas/jsp/semestre/agregarSemestre.jsp</string>
           <string>vistas/jsp/welcome.jsp</string>
           <string>vistas/jsp/index.jsp</string>
@@ -50,6 +58,8 @@
           <string>vistas/jsp/pensum/controlPensum.jsp</string>
           <string>vistas/jsp/login/login.jsp</string>
           <string>vistas/jsp/login/accesoDenegado.jsp</string>
+          <string>vistas/jsp/rol/buscarRol.jsp</string>
+          <string>vistas/jsp/rol/editarRol.jsp</string>
           <string>vistas/jspf/formularios/formularioSalon.jspf</string>
           <string>vistas/jspf/formularios/formularioEstudiante.jspf</string>
           <string>vistas/jspf/formularios/formularioCurso.jspf</string>
@@ -57,12 +67,16 @@
           <string>vistas/jspf/formularios/formularioHorario.jspf</string>
           <string>vistas/jspf/formularios/formularioTipoAsignacion.jspf</string>
           <string>vistas/jspf/formularios/formularioSemestre.jspf</string>
+          <string>vistas/jspf/formularios/formularioPerfil.jspf</string>
           <string>vistas/jspf/formularios/formularioCatedratico.jspf</string>
+          <string>vistas/jspf/formularios/formularioRol.jspf</string>
+          <string>vistas/jspf/scripts/scriptPerfil.jspf</string>
           <string>vistas/jspf/scripts/scriptPensum.jspf</string>
           <string>vistas/jspf/scripts/scriptCatedratico.jspf</string>
           <string>vistas/jspf/scripts/scriptSalon.jspf</string>
           <string>vistas/jspf/scripts/scriptHorario.jspf</string>
           <string>vistas/jspf/scripts/scriptCurso.jspf</string>
+          <string>vistas/jspf/scripts/scriptRol.jspf</string>
           <string>vistas/jspf/scripts/scriptEstudiante.jspf</string>
           <string>vistas/jspf/scripts/scriptSemestre.jspf</string>
           <string>vistas/jspf/scripts/scriptCalendarioActividades.jspf</string>
@@ -78,13 +92,46 @@
           <string>WEB-INF/jdbc.properties</string>
           <string>WEB-INF/hibernate-config.xml</string>
           <string>WEB-INF/smtp.properties</string>
+          <string>WEB-INF/dispatcher-servlet.xml</string>
           <string>WEB-INF/applicationContext.xml</string>
           <string>WEB-INF/decorators.xml</string>
           <string>WEB-INF/security-config.xml</string>
           <string>WEB-INF/log4j.properties</string>
           <string>redirect.jsp</string>
+          <string>css/images/Header.jpg</string>
+          <string>css/images/rssIcon.png</string>
+          <string>css/images/nav.png</string>
+          <string>css/images/Sheet-c.png</string>
+          <string>css/images/BlockHeaderIcon.png</string>
+          <string>css/images/BlockHeader.png</string>
+          <string>css/images/subitem-bg.png</string>
+          <string>css/images/Page-BgSimpleGradient.jpg</string>
+          <string>css/images/BlockContent-s.png</string>
+          <string>css/images/Sheet-v.png</string>
+          <string>css/images/BlockContentBullets.png</string>
+          <string>css/images/spectacles.gif</string>
+          <string>css/images/03.png</string>
+          <string>css/images/Footer.png</string>
+          <string>css/images/contact.jpg</string>
+          <string>css/images/02.png</string>
+          <string>css/images/Sheet-s.png</string>
+          <string>css/images/Button.png</string>
+          <string>css/images/MenuItem.png</string>
+          <string>css/images/spacer.gif</string>
+          <string>css/images/PostBullets.png</string>
+          <string>css/images/BlockContent-h.png</string>
+          <string>css/images/PostQuote.png</string>
+          <string>css/images/Sheet-h.png</string>
+          <string>css/images/01.png</string>
+          <string>css/images/BlockContent-v.png</string>
+          <string>css/images/Post-v.png</string>
+          <string>css/images/Post-h.png</string>
+          <string>css/images/Post-s.png</string>
+          <string>css/style.css</string>
           <string>css/estilo.css</string>
+          <string>css/style.ie7.css</string>
           <string>css/estiloMenuIE.css</string>
+          <string>css/style.ie6.css</string>
           <string>css/cupertino/images/ui-bg_glass_100_e4f1fb_1x400.png</string>
           <string>css/cupertino/images/ui-icons_72a7cf_256x240.png</string>
           <string>css/cupertino/images/ui-icons_3d80b3_256x240.png</string>
@@ -106,7 +153,9 @@
           <string>js/jquery-ui-1.8.custom.min.js</string>
           <string>js/hoverIntent.js</string>
           <string>js/jquery.dropdownPlain.js</string>
+          <string>js/script.js</string>
           <string>js/jquery.dropdown.js</string>
+          <string>META-INF/context.xml</string>
           <string>WEB-INF/classes/gt/edu/usac/cats/controlador/curso/ControladorAgregarCurso.class</string>
           <string>WEB-INF/classes/gt/edu/usac/cats/controlador/curso/ControladorEditarCurso.class</string>
           <string>WEB-INF/classes/gt/edu/usac/cats/controlador/horario/ControladorBuscarHorario.class</string>
@@ -116,6 +165,11 @@
           <string>WEB-INF/classes/gt/edu/usac/cats/controlador/tipoAsignacion/ControladorEditarTipoAsignacion.class</string>
           <string>WEB-INF/classes/gt/edu/usac/cats/controlador/tipoAsignacion/ControladorBuscarTipoAsignacion.class</string>
           <string>WEB-INF/classes/gt/edu/usac/cats/controlador/tipoAsignacion/ControladorAgregarTipoAsignacion.class</string>
+          <string>WEB-INF/classes/gt/edu/usac/cats/controlador/perfil/ControladorAsignarRolPerfil.class</string>
+          <string>WEB-INF/classes/gt/edu/usac/cats/controlador/perfil/ControladorBuscarPerfil.class</string>
+          <string>WEB-INF/classes/gt/edu/usac/cats/controlador/perfil/ControladorAgregarPerfil.class</string>
+          <string>WEB-INF/classes/gt/edu/usac/cats/controlador/perfil/ControladorAsignarPerfil.class</string>
+          <string>WEB-INF/classes/gt/edu/usac/cats/controlador/perfil/ControladorEditarPerfil.class</string>
           <string>WEB-INF/classes/gt/edu/usac/cats/controlador/semestre/ControladorAgregarSemestre.class</string>
           <string>WEB-INF/classes/gt/edu/usac/cats/controlador/calendarioActividades/ControladorAgregarCalendarioActividades.class</string>
           <string>WEB-INF/classes/gt/edu/usac/cats/controlador/calendarioActividades/ControladorEditarCalendarioActividades.class</string>
@@ -129,12 +183,53 @@
           <string>WEB-INF/classes/gt/edu/usac/cats/controlador/salon/ControladorEditarSalon.class</string>
           <string>WEB-INF/classes/gt/edu/usac/cats/controlador/salon/ControladorAgregarSalon.class</string>
           <string>WEB-INF/classes/gt/edu/usac/cats/controlador/pensum/ControladorControlPensum.class</string>
+          <string>WEB-INF/classes/gt/edu/usac/cats/controlador/rol/ControladorEditarRol.class</string>
+          <string>WEB-INF/classes/gt/edu/usac/cats/controlador/rol/ControladorBuscarRol.class</string>
           <string>WEB-INF/classes/gt/edu/usac/cats/util/SpringHibernateAppender.class</string>
           <string>WEB-INF/classes/gt/edu/usac/cats/util/EmailSender.class</string>
           <string>WEB-INF/classes/gt/edu/usac/cats/util/RequestUtil.class</string>
           <string>WEB-INF/classes/gt/edu/usac/cats/util/Mensajes.class</string>
+          <string>WEB-INF/lib/log4j-1.2.14.jar</string>
+          <string>WEB-INF/lib/hibernate-commons-annotations-3.2.0.Final.jar</string>
+          <string>WEB-INF/lib/slf4j-api-1.5.8.jar</string>
+          <string>WEB-INF/lib/hibernate-entitymanager-3.5.1-Final.jar</string>
+          <string>WEB-INF/lib/hibernate-core-3.5.1-Final.jar</string>
+          <string>WEB-INF/lib/antlr-2.7.6.jar</string>
+          <string>WEB-INF/lib/commons-collections-3.1.jar</string>
+          <string>WEB-INF/lib/dom4j-1.6.1.jar</string>
+          <string>WEB-INF/lib/xml-apis-1.0.b2.jar</string>
+          <string>WEB-INF/lib/jta-1.1.jar</string>
+          <string>WEB-INF/lib/hibernate-annotations-3.5.1-Final.jar</string>
+          <string>WEB-INF/lib/hibernate-jpa-2.0-api-1.0.0.Final.jar</string>
+          <string>WEB-INF/lib/cglib-2.2.jar</string>
+          <string>WEB-INF/lib/asm-3.1.jar</string>
+          <string>WEB-INF/lib/javassist-3.9.0.GA.jar</string>
+          <string>WEB-INF/lib/commons-lang-2.1.jar</string>
           <string>WEB-INF/lib/jasypt-1.6.jar</string>
+          <string>WEB-INF/lib/commons-codec-1.1.jar</string>
+          <string>WEB-INF/lib/spring-beans-3.0.2.RELEASE.jar</string>
+          <string>WEB-INF/lib/spring-core-3.0.2.RELEASE.jar</string>
+          <string>WEB-INF/lib/spring-asm-3.0.2.RELEASE.jar</string>
+          <string>WEB-INF/lib/commons-logging-1.1.1.jar</string>
           <string>WEB-INF/lib/trabajo-social-orm-1.0.0.jar</string>
+          <string>WEB-INF/lib/postgresql-8.4-701.jdbc4.jar</string>
+          <string>WEB-INF/lib/slf4j-log4j12-1.5.8.jar</string>
+          <string>WEB-INF/lib/hibernate-validator-4.0.2.GA.jar</string>
+          <string>WEB-INF/lib/validation-api-1.0.0.GA.jar</string>
+          <string>WEB-INF/lib/jaxb-api-2.1.jar</string>
+          <string>WEB-INF/lib/stax-api-1.0-2.jar</string>
+          <string>WEB-INF/lib/activation-1.1.jar</string>
+          <string>WEB-INF/lib/jaxb-impl-2.1.3.jar</string>
+          <string>WEB-INF/lib/spring-aop-3.0.2.RELEASE.jar</string>
+          <string>WEB-INF/lib/aopalliance-1.0.jar</string>
+          <string>WEB-INF/lib/spring-context-3.0.2.RELEASE.jar</string>
+          <string>WEB-INF/lib/spring-expression-3.0.2.RELEASE.jar</string>
+          <string>WEB-INF/lib/spring-context-support-3.0.2.RELEASE.jar</string>
+          <string>WEB-INF/lib/spring-jdbc-3.0.2.RELEASE.jar</string>
+          <string>WEB-INF/lib/spring-tx-3.0.2.RELEASE.jar</string>
+          <string>WEB-INF/lib/spring-orm-3.0.2.RELEASE.jar</string>
+          <string>WEB-INF/lib/mail-1.4.3.jar</string>
+          <string>WEB-INF/lib/jstl-1.2.jar</string>
           <string>WEB-INF/lib/trabajo-social-seguridad-1.0.0.jar</string>
           <string>WEB-INF/lib/spring-security-core-3.0.2.RELEASE.jar</string>
           <string>WEB-INF/lib/aspectjrt-1.6.8.jar</string>
@@ -144,7 +239,11 @@
           <string>WEB-INF/lib/trabajo-social-servicio-1.0.0.jar</string>
           <string>WEB-INF/lib/spring-security-taglibs-3.0.2.RELEASE.jar</string>
           <string>WEB-INF/lib/spring-security-web-3.0.2.RELEASE.jar</string>
+          <string>WEB-INF/lib/spring-web-3.0.2.RELEASE.jar</string>
+          <string>WEB-INF/lib/spring-webmvc-3.0.2.RELEASE.jar</string>
           <string>WEB-INF/lib/sitemesh-2.4.2.jar</string>
+          <string>WEB-INF/lib/joda-time-1.6.jar</string>
+          <string>WEB-INF/lib/javaee-web-api-6.0.jar</string>
         </pathsSet>
       </path-set>
     </entry>
@@ -156,10 +255,11 @@
         <artifactId>log4j</artifactId>
         <version>1.2.14</version>
         <type>jar</type>
-        <scope>provided</scope>
+        <scope>compile</scope>
         <exclusions/>
         <optional>false</optional>
       </dependency>
+      <targetFileName>log4j-1.2.14.jar</targetFileName>
     </org.apache.maven.plugin.war.util.DependencyInfo>
     <org.apache.maven.plugin.war.util.DependencyInfo>
       <dependency>
@@ -167,10 +267,11 @@
         <artifactId>hibernate-commons-annotations</artifactId>
         <version>3.2.0.Final</version>
         <type>jar</type>
-        <scope>provided</scope>
+        <scope>compile</scope>
         <exclusions/>
         <optional>false</optional>
       </dependency>
+      <targetFileName>hibernate-commons-annotations-3.2.0.Final.jar</targetFileName>
     </org.apache.maven.plugin.war.util.DependencyInfo>
     <org.apache.maven.plugin.war.util.DependencyInfo>
       <dependency>
@@ -178,10 +279,11 @@
         <artifactId>hibernate-entitymanager</artifactId>
         <version>3.5.1-Final</version>
         <type>jar</type>
-        <scope>provided</scope>
+        <scope>compile</scope>
         <exclusions/>
         <optional>false</optional>
       </dependency>
+      <targetFileName>hibernate-entitymanager-3.5.1-Final.jar</targetFileName>
     </org.apache.maven.plugin.war.util.DependencyInfo>
     <org.apache.maven.plugin.war.util.DependencyInfo>
       <dependency>
@@ -189,10 +291,11 @@
         <artifactId>commons-lang</artifactId>
         <version>2.1</version>
         <type>jar</type>
-        <scope>provided</scope>
+        <scope>compile</scope>
         <exclusions/>
         <optional>false</optional>
       </dependency>
+      <targetFileName>commons-lang-2.1.jar</targetFileName>
     </org.apache.maven.plugin.war.util.DependencyInfo>
     <org.apache.maven.plugin.war.util.DependencyInfo>
       <dependency>
@@ -212,10 +315,11 @@
         <artifactId>spring-beans</artifactId>
         <version>3.0.2.RELEASE</version>
         <type>jar</type>
-        <scope>provided</scope>
+        <scope>compile</scope>
         <exclusions/>
         <optional>false</optional>
       </dependency>
+      <targetFileName>spring-beans-3.0.2.RELEASE.jar</targetFileName>
     </org.apache.maven.plugin.war.util.DependencyInfo>
     <org.apache.maven.plugin.war.util.DependencyInfo>
       <dependency>
@@ -235,10 +339,11 @@
         <artifactId>mail</artifactId>
         <version>1.4.3</version>
         <type>jar</type>
-        <scope>provided</scope>
+        <scope>compile</scope>
         <exclusions/>
         <optional>false</optional>
       </dependency>
+      <targetFileName>mail-1.4.3.jar</targetFileName>
     </org.apache.maven.plugin.war.util.DependencyInfo>
     <org.apache.maven.plugin.war.util.DependencyInfo>
       <dependency>
@@ -246,10 +351,11 @@
         <artifactId>spring-asm</artifactId>
         <version>3.0.2.RELEASE</version>
         <type>jar</type>
-        <scope>provided</scope>
+        <scope>compile</scope>
         <exclusions/>
         <optional>false</optional>
       </dependency>
+      <targetFileName>spring-asm-3.0.2.RELEASE.jar</targetFileName>
     </org.apache.maven.plugin.war.util.DependencyInfo>
     <org.apache.maven.plugin.war.util.DependencyInfo>
       <dependency>
@@ -257,10 +363,11 @@
         <artifactId>spring-core</artifactId>
         <version>3.0.2.RELEASE</version>
         <type>jar</type>
-        <scope>provided</scope>
+        <scope>compile</scope>
         <exclusions/>
         <optional>false</optional>
       </dependency>
+      <targetFileName>spring-core-3.0.2.RELEASE.jar</targetFileName>
     </org.apache.maven.plugin.war.util.DependencyInfo>
     <org.apache.maven.plugin.war.util.DependencyInfo>
       <dependency>
@@ -268,10 +375,11 @@
         <artifactId>jstl</artifactId>
         <version>1.2</version>
         <type>jar</type>
-        <scope>provided</scope>
+        <scope>compile</scope>
         <exclusions/>
         <optional>false</optional>
       </dependency>
+      <targetFileName>jstl-1.2.jar</targetFileName>
     </org.apache.maven.plugin.war.util.DependencyInfo>
     <org.apache.maven.plugin.war.util.DependencyInfo>
       <dependency>
@@ -279,10 +387,11 @@
         <artifactId>spring-context-support</artifactId>
         <version>3.0.2.RELEASE</version>
         <type>jar</type>
-        <scope>provided</scope>
+        <scope>compile</scope>
         <exclusions/>
         <optional>false</optional>
       </dependency>
+      <targetFileName>spring-context-support-3.0.2.RELEASE.jar</targetFileName>
     </org.apache.maven.plugin.war.util.DependencyInfo>
     <org.apache.maven.plugin.war.util.DependencyInfo>
       <dependency>
@@ -290,10 +399,11 @@
         <artifactId>hibernate-annotations</artifactId>
         <version>3.5.1-Final</version>
         <type>jar</type>
-        <scope>provided</scope>
+        <scope>compile</scope>
         <exclusions/>
         <optional>false</optional>
       </dependency>
+      <targetFileName>hibernate-annotations-3.5.1-Final.jar</targetFileName>
     </org.apache.maven.plugin.war.util.DependencyInfo>
     <org.apache.maven.plugin.war.util.DependencyInfo>
       <dependency>
@@ -336,10 +446,11 @@
         <artifactId>spring-aop</artifactId>
         <version>3.0.2.RELEASE</version>
         <type>jar</type>
-        <scope>provided</scope>
+        <scope>compile</scope>
         <exclusions/>
         <optional>false</optional>
       </dependency>
+      <targetFileName>spring-aop-3.0.2.RELEASE.jar</targetFileName>
     </org.apache.maven.plugin.war.util.DependencyInfo>
     <org.apache.maven.plugin.war.util.DependencyInfo>
       <dependency>
@@ -347,10 +458,11 @@
         <artifactId>hibernate-jpa-2.0-api</artifactId>
         <version>1.0.0.Final</version>
         <type>jar</type>
-        <scope>provided</scope>
+        <scope>compile</scope>
         <exclusions/>
         <optional>false</optional>
       </dependency>
+      <targetFileName>hibernate-jpa-2.0-api-1.0.0.Final.jar</targetFileName>
     </org.apache.maven.plugin.war.util.DependencyInfo>
     <org.apache.maven.plugin.war.util.DependencyInfo>
       <dependency>
@@ -358,10 +470,11 @@
         <artifactId>spring-expression</artifactId>
         <version>3.0.2.RELEASE</version>
         <type>jar</type>
-        <scope>provided</scope>
+        <scope>compile</scope>
         <exclusions/>
         <optional>false</optional>
       </dependency>
+      <targetFileName>spring-expression-3.0.2.RELEASE.jar</targetFileName>
     </org.apache.maven.plugin.war.util.DependencyInfo>
     <org.apache.maven.plugin.war.util.DependencyInfo>
       <dependency>
@@ -369,10 +482,11 @@
         <artifactId>spring-jdbc</artifactId>
         <version>3.0.2.RELEASE</version>
         <type>jar</type>
-        <scope>provided</scope>
+        <scope>compile</scope>
         <exclusions/>
         <optional>false</optional>
       </dependency>
+      <targetFileName>spring-jdbc-3.0.2.RELEASE.jar</targetFileName>
     </org.apache.maven.plugin.war.util.DependencyInfo>
     <org.apache.maven.plugin.war.util.DependencyInfo>
       <dependency>
@@ -392,10 +506,11 @@
         <artifactId>commons-logging</artifactId>
         <version>1.1.1</version>
         <type>jar</type>
-        <scope>provided</scope>
+        <scope>compile</scope>
         <exclusions/>
         <optional>false</optional>
       </dependency>
+      <targetFileName>commons-logging-1.1.1.jar</targetFileName>
     </org.apache.maven.plugin.war.util.DependencyInfo>
     <org.apache.maven.plugin.war.util.DependencyInfo>
       <dependency>
@@ -403,10 +518,11 @@
         <artifactId>hibernate-validator</artifactId>
         <version>4.0.2.GA</version>
         <type>jar</type>
-        <scope>provided</scope>
+        <scope>compile</scope>
         <exclusions/>
         <optional>false</optional>
       </dependency>
+      <targetFileName>hibernate-validator-4.0.2.GA.jar</targetFileName>
     </org.apache.maven.plugin.war.util.DependencyInfo>
     <org.apache.maven.plugin.war.util.DependencyInfo>
       <dependency>
@@ -426,10 +542,11 @@
         <artifactId>spring-context</artifactId>
         <version>3.0.2.RELEASE</version>
         <type>jar</type>
-        <scope>provided</scope>
+        <scope>compile</scope>
         <exclusions/>
         <optional>false</optional>
       </dependency>
+      <targetFileName>spring-context-3.0.2.RELEASE.jar</targetFileName>
     </org.apache.maven.plugin.war.util.DependencyInfo>
     <org.apache.maven.plugin.war.util.DependencyInfo>
       <dependency>
@@ -461,10 +578,11 @@
         <artifactId>spring-web</artifactId>
         <version>3.0.2.RELEASE</version>
         <type>jar</type>
-        <scope>provided</scope>
+        <scope>compile</scope>
         <exclusions/>
         <optional>false</optional>
       </dependency>
+      <targetFileName>spring-web-3.0.2.RELEASE.jar</targetFileName>
     </org.apache.maven.plugin.war.util.DependencyInfo>
     <org.apache.maven.plugin.war.util.DependencyInfo>
       <dependency>
@@ -472,10 +590,11 @@
         <artifactId>spring-webmvc</artifactId>
         <version>3.0.2.RELEASE</version>
         <type>jar</type>
-        <scope>provided</scope>
+        <scope>compile</scope>
         <exclusions/>
         <optional>false</optional>
       </dependency>
+      <targetFileName>spring-webmvc-3.0.2.RELEASE.jar</targetFileName>
     </org.apache.maven.plugin.war.util.DependencyInfo>
     <org.apache.maven.plugin.war.util.DependencyInfo>
       <dependency>
@@ -483,10 +602,11 @@
         <artifactId>hibernate-core</artifactId>
         <version>3.5.1-Final</version>
         <type>jar</type>
-        <scope>provided</scope>
+        <scope>compile</scope>
         <exclusions/>
         <optional>false</optional>
       </dependency>
+      <targetFileName>hibernate-core-3.5.1-Final.jar</targetFileName>
     </org.apache.maven.plugin.war.util.DependencyInfo>
     <org.apache.maven.plugin.war.util.DependencyInfo>
       <dependency>
@@ -506,10 +626,11 @@
         <artifactId>spring-orm</artifactId>
         <version>3.0.2.RELEASE</version>
         <type>jar</type>
-        <scope>provided</scope>
+        <scope>compile</scope>
         <exclusions/>
         <optional>false</optional>
       </dependency>
+      <targetFileName>spring-orm-3.0.2.RELEASE.jar</targetFileName>
     </org.apache.maven.plugin.war.util.DependencyInfo>
     <org.apache.maven.plugin.war.util.DependencyInfo>
       <dependency>
@@ -517,10 +638,11 @@
         <artifactId>postgresql</artifactId>
         <version>8.4-701.jdbc4</version>
         <type>jar</type>
-        <scope>provided</scope>
+        <scope>compile</scope>
         <exclusions/>
         <optional>false</optional>
       </dependency>
+      <targetFileName>postgresql-8.4-701.jdbc4.jar</targetFileName>
     </org.apache.maven.plugin.war.util.DependencyInfo>
     <org.apache.maven.plugin.war.util.DependencyInfo>
       <dependency>
@@ -528,10 +650,11 @@
         <artifactId>joda-time</artifactId>
         <version>1.6</version>
         <type>jar</type>
-        <scope>provided</scope>
+        <scope>compile</scope>
         <exclusions/>
         <optional>false</optional>
       </dependency>
+      <targetFileName>joda-time-1.6.jar</targetFileName>
     </org.apache.maven.plugin.war.util.DependencyInfo>
     <org.apache.maven.plugin.war.util.DependencyInfo>
       <dependency>
@@ -551,10 +674,11 @@
         <artifactId>slf4j-log4j12</artifactId>
         <version>1.5.8</version>
         <type>jar</type>
-        <scope>provided</scope>
+        <scope>compile</scope>
         <exclusions/>
         <optional>false</optional>
       </dependency>
+      <targetFileName>slf4j-log4j12-1.5.8.jar</targetFileName>
     </org.apache.maven.plugin.war.util.DependencyInfo>
     <org.apache.maven.plugin.war.util.DependencyInfo>
       <dependency>
@@ -562,10 +686,11 @@
         <artifactId>javaee-web-api</artifactId>
         <version>6.0</version>
         <type>jar</type>
-        <scope>provided</scope>
+        <scope>compile</scope>
         <exclusions/>
         <optional>false</optional>
       </dependency>
+      <targetFileName>javaee-web-api-6.0.jar</targetFileName>
     </org.apache.maven.plugin.war.util.DependencyInfo>
     <org.apache.maven.plugin.war.util.DependencyInfo>
       <dependency>
@@ -573,10 +698,11 @@
         <artifactId>commons-codec</artifactId>
         <version>1.1</version>
         <type>jar</type>
-        <scope>provided</scope>
+        <scope>compile</scope>
         <exclusions/>
         <optional>false</optional>
       </dependency>
+      <targetFileName>commons-codec-1.1.jar</targetFileName>
     </org.apache.maven.plugin.war.util.DependencyInfo>
     <org.apache.maven.plugin.war.util.DependencyInfo>
       <dependency>
@@ -584,10 +710,11 @@
         <artifactId>spring-tx</artifactId>
         <version>3.0.2.RELEASE</version>
         <type>jar</type>
-        <scope>provided</scope>
+        <scope>compile</scope>
         <exclusions/>
         <optional>false</optional>
       </dependency>
+      <targetFileName>spring-tx-3.0.2.RELEASE.jar</targetFileName>
     </org.apache.maven.plugin.war.util.DependencyInfo>
   </dependenciesInfo>
 </webapp-structure>

@@ -20,25 +20,52 @@
         <intercept-url pattern="/login.htm" filters='none'/>
         <intercept-url pattern="/accesoDenegado.htm" filters='none'/>
 
-        <intercept-url pattern="/*Curso.htm" filters='none'/>
-        <intercept-url pattern="/*Semestre.htm" filters='none'/>
-        <intercept-url pattern="/*Salon.htm" filters='none'/>
-        <intercept-url pattern="/*Horario.htm" filters='none'/>
-        <intercept-url pattern="/*Pensum.htm" filters='none'/>
-        <intercept-url pattern="/*CalendarioActividades.htm" filters='none' />
-
         <!-- se aplican los roles a las paginas protegidas -->
         <intercept-url pattern="/index.htm" access="hasRole('ROLE_USUARIO_REGISTRADO')" />
-        <intercept-url pattern="/agregarEstudiante.htm" access="hasRole('ROLE_AGREGAR_ESTUDIANTE')" />
-        <intercept-url pattern="/editarEstudiante.htm" access="hasRole('ROLE_EDITAR_ESTUDIANTE')" />
-        <intercept-url pattern="/buscarEstudiante.htm" access="hasRole('ROLE_BUSCAR_ESTUDIANTE')" />
+
+        <intercept-url pattern="/agregarCalendarioActividades.htm" access="hasRole('ROLE_AGREGAR_CALENDARIO_ACT')" />
+        <intercept-url pattern="/buscarCalendarioActividades.htm" access="hasRole('ROLE_BUSCAR_CALENDARIO_ACT')" />
+        <intercept-url pattern="/editarCalendarioActividades.htm" access="hasRole('ROLE_EDITAR_CALENDARIO_ACT')" />
 
         <intercept-url pattern="/agregarCatedratico.htm" access="hasRole('ROLE_AGREGAR_CATEDRATICO')" />
-        <intercept-url pattern="/editarCatedratico.htm" access="hasRole('ROLE_EDITAR_CATEDRATICO')" />
         <intercept-url pattern="/buscarCatedratico.htm" access="hasRole('ROLE_BUSCAR_CATEDRATICO')" />
+        <intercept-url pattern="/editarCatedratico.htm" access="hasRole('ROLE_EDITAR_CATEDRATICO')" />
+
+        <intercept-url pattern="/agregarCurso.htm" access="hasRole('ROLE_AGREGAR_CURSO')"/>
+        <intercept-url pattern="/editarCurso.htm" access="hasRole('ROLE_EDITAR_CURSO')"/>
+
+        <intercept-url pattern="/agregarEstudiante.htm" access="hasRole('ROLE_AGREGAR_ESTUDIANTE')" />
+        <intercept-url pattern="/buscarEstudiante.htm" access="hasRole('ROLE_BUSCAR_ESTUDIANTE')" />
+        <intercept-url pattern="/editarEstudiante.htm" access="hasRole('ROLE_EDITAR_ESTUDIANTE')" />
+
+        <intercept-url pattern="/agregarHorario.htm" access="hasRole('ROLE_AGREGAR_HORARIO')" />
+        <intercept-url pattern="/buscarHorario.htm" access="hasRole('ROLE_BUSCAR_HORARIO')" />
+        <intercept-url pattern="/editarHorario.htm" access="hasRole('ROLE_EDITAR_HORARIO')" />
+        
+        <intercept-url pattern="/controlPensum.htm" access="hasRole('ROLE_CONTROL_PENSUM')"/>
+
+        <intercept-url pattern="/agregarPerfil.htm" access="hasRole('ROLE_AGREGAR_PERFIL')" />
+        <intercept-url pattern="/buscarPerfil.htm" access="hasRole('ROLE_BUSCAR_PERFIL')" />
+        <intercept-url pattern="/editatPerfil.htm" access="hasRole('ROLE_EDITAR_PERFIL')" />
+        <intercept-url pattern="/asignarRolPerfil.htm" access="hasRole('ROLE_ASIGNAR_ROL_PERFIL')" />
+
+        <intercept-url pattern="/buscarRol.htm" access="hasRole('ROLE_BUSCAR_ROL')" />
+        <intercept-url pattern="/editarRol.htm" access="hasRole('ROLE_EDITAR_ROL')" />
+
+        <intercept-url pattern="/agregarSalon.htm" access="hasRole('ROLE_AGREGAR_SALON')"/>
+        <intercept-url pattern="/editarSalon.htm" access="hasRole('ROLE_EDITAR_SALON')"/>
+                
+        <intercept-url pattern="/agregarSemestre.htm" access="hasRole('ROLE_AGREGAR_SEMESTRE')"/>
+
+        <intercept-url pattern="/agregarTipoAsignacion.htm" access="hasRole('ROLE_AGREGAR_TIPO_ASIGN')"/>
+        <intercept-url pattern="/buscarTipoAsignacion.htm" access="hasRole('ROLE_BUSCAR_TIPO_ASIGN')"/>
+        <intercept-url pattern="/editarTipoAsignacion.htm" access="hasRole('ROLE_EDITAR_TIPO_ASIGN')"/>
 
         <!-- se especifica que pagina contiene el formulario de login -->
         <form-login login-page='/login.htm' default-target-url='/index.htm' always-use-default-target='true'/>
+        
+        <!-- configuración para logout del sistema-->
+        <logout logout-success-url="/welcome.htm" />
     </http>
 
 
@@ -62,7 +89,7 @@
 
 
     <!-- ·······································································
-    ··· Configuracion basica de Spring Security, utilizada unicamente para
+    �·· Configuracion basica de Spring Security, utilizada unicamente para
     ··· probar la integracion de los frameworks y el correcto funcionamiento
     ··· de Spring Security, si se utiliza esta configuracion se debe de
     ··· deshabilitar las demas configuracion de este archivo

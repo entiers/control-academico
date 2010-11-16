@@ -14,6 +14,11 @@
     </sec:authorize>
 
     <%-- menu de catalogos --%>
+    <sec:authorize access="hasAnyRole('ROLE_AGREGAR_ESTUDIANTE','ROLE_EDITAR_ESTUDIANTE','ROLE_BUSCAR_ESTUDIANTE',
+                                    'ROLE_AGREGAR_CATEDRATICO','ROLE_EDITAR_CATEDRATICO','ROLE_BUSCAR_CATEDRATICO',
+                                    'ROLE_AGREGAR_PERFIL','ROLE_BUSCAR_PERFIL','ROLE_BUSCAR_ROL','ROLE_AGREGAR_CURSO',
+                                    'ROLE_EDITAR_CURSO','ROLE_AGREGAR_SALON','ROLE_EDITAR_SALON','ROLE_AGREGAR_SEMESTRE',
+                                    'ROLE_AGREGAR_HORARIO','ROLE_BUSCAR_HORARIO','ROLE_AGREGAR_TIPO_ASIGN','ROLE_BUSCAR_TIPO_ASIGN')">
     <li><a href="#">
             <span class="l"></span><span class="r"></span><span class="t">
             <fmt:message key="menu.catalogo"/></span></a>
@@ -52,43 +57,148 @@
                 </li>
             </sec:authorize>
 
+            <%--Catálogo de perfiles--%>
+             <sec:authorize access="hasAnyRole('ROLE_AGREGAR_PERFIL','ROLE_BUSCAR_PERFIL')">
+                <li><a href="#"><fmt:message key="perfil.menu"/></a>
+                    <ul>
+                        <sec:authorize access="hasRole('ROLE_AGREGAR_PERFIL')">
+                            <li><a href="agregarPerfil.htm"><fmt:message key="agregarPerfil.titulo"/></a></li>
+                        </sec:authorize>
+                        <sec:authorize access="hasRole('ROLE_BUSCAR_PERFIL')">
+                            <li><a href="buscarPerfil.htm"><fmt:message key="buscarPerfil.titulo"/></a></li>
+                        </sec:authorize>
+                    </ul>
+                </li>
+            </sec:authorize>
+            
+            <%--Catálogo de roles--%>
+            <sec:authorize access="hasAnyRole('ROLE_BUSCAR_ROL')">
+                <li><a href="#"><fmt:message key="rol.menu"/></a>
+                    <ul>
+                        <sec:authorize access="hasRole('ROLE_BUSCAR_ROL')">
+                            <li><a href="buscarRol.htm"><fmt:message key="buscarRol.titulo"/></a></li>
+                        </sec:authorize>
+                    </ul>
+                </li>
+            </sec:authorize>
 
-            <li><a href="#"><fmt:message key="perfil.menu"/></a>
-                <ul>
-                    <li><a href="agregarPerfil.htm"><fmt:message key="agregarPerfil.titulo"/></a></li>
-                    <li><a href="buscarPerfil.htm"><fmt:message key="buscarPerfil.titulo"/></a></li>
-                </ul>
-            </li>
+            <%--Catálogo de cursos--%>
+            <sec:authorize access="hasAnyRole('ROLE_AGREGAR_CURSO','ROLE_EDITAR_CURSO')">
+                <li><a href="#"><fmt:message key="curso.menu"/></a>
+                    <ul>
+                        <sec:authorize access="hasRole('ROLE_AGREGAR_CURSO')">
+                            <li><a href="agregarCurso.htm"><fmt:message key="agregarCurso.titulo"/></a></li>
+                        </sec:authorize>
+                        <sec:authorize access="hasRole('ROLE_EDITAR_CURSO')">
+                            <li><a href="editarCurso.htm"><fmt:message key="editarCurso.titulo"/></a></li>
+                        </sec:authorize>
+                    </ul>
+                </li>
+            </sec:authorize>
 
-            <li><a href="#"><fmt:message key="rol.menu"/></a>
-                <ul>
-                    <li><a href="buscarRol.htm"><fmt:message key="buscarRol.titulo"/></a></li>
-                </ul>
-            </li>
+            <%--Catálogo de salones--%>
+            <sec:authorize access="hasAnyRole('ROLE_AGREGAR_SALON','ROLE_EDITAR_SALON')">
+                <li><a href="#"><fmt:message key="salon.menu"/></a>
+                    <ul>
+                        <sec:authorize access="hasRole('ROLE_AGREGAR_SALON')">
+                            <li><a href="agregarSalon.htm"><fmt:message key="agregarSalon.titulo"/></a></li>
+                        </sec:authorize>
+                        <sec:authorize access="hasRole('ROLE_EDITAR_SALON')">
+                            <li><a href="editarSalon.htm"><fmt:message key="editarSalon.titulo"/></a></li>
+                        </sec:authorize>
+                    </ul>
+                </li>
+            </sec:authorize>
 
-            <%-- sin clasificar --%>
-            <li><a href="#">Sin Clasificar</a>
-                <ul>
-                    <li><a href="agregarCurso.htm"><fmt:message key="agregarCurso.titulo"/></a></li>
-                    <li><a href="editarCurso.htm"><fmt:message key="editarCurso.titulo"/></a></li>
-                    <li><a href="agregarSalon.htm"><fmt:message key="agregarSalon.titulo"/></a></li>
-                    <li><a href="editarSalon.htm"><fmt:message key="editarSalon.titulo"/></a></li>
-                    <li><a href="agregarSemestre.htm"><fmt:message key="agregarSemestre.titulo"/></a></li>
-                    <li><a href="agregarHorario.htm"><fmt:message key="agregarHorario.titulo"/></a></li>
-                    <li><a href="buscarHorario.htm"><fmt:message key="buscarHorario.titulo"/></a></li>
-                    <li><a href="controlPensum.htm"><fmt:message key="controlPensum.titulo"/></a></li>
-                    <li><a href="agregarCalendarioActividades.htm"><fmt:message key="agregarCalendarioActividades.titulo"/></a></li>
-                    <li><a href="buscarCalendarioActividades.htm"><fmt:message key="buscarCalendarioActividades.titulo"/></a></li>
-                    <li><a href="agregarTipoAsignacion.htm"><fmt:message key="agregarTipoAsignacion.titulo"/></a></li>
-                    <li><a href="buscarTipoAsignacion.htm"><fmt:message key="buscarTipoAsignacion.titulo"/></a></li>
-                </ul>
-            </li>
+            <%--Catálogo de semestre--%>
+            <sec:authorize access="hasAnyRole('ROLE_AGREGAR_SEMESTRE')">
+                <li><a href="#"><fmt:message key="semestre.menu" /></a>
+                    <ul>
+                        <sec:authorize access="hasRole('ROLE_AGREGAR_SEMESTRE')">
+                            <li><a href="agregarSemestre.htm"><fmt:message key="agregarSemestre.titulo"/></a></li>
+                        </sec:authorize>
+                    </ul>
+                </li>
+            </sec:authorize>
+
+            <%--Catálogo de horarios--%>
+            <sec:authorize access="hasAnyRole('ROLE_AGREGAR_HORARIO','ROLE_BUSCAR_HORARIO')">
+                <li><a href="#"><fmt:message key="horario.menu"/></a>
+                    <ul>
+                        <sec:authorize access="hasRole('ROLE_AGREGAR_HORARIO')">
+                            <li><a href="agregarHorario.htm"><fmt:message key="agregarHorario.titulo"/></a></li>
+                        </sec:authorize>
+                        <sec:authorize access="hasRole('ROLE_BUSCAR_HORARIO')">
+                            <li><a href="buscarHorario.htm"><fmt:message key="buscarHorario.titulo"/></a></li>
+                        </sec:authorize>
+                    </ul>
+                </li>
+            </sec:authorize>
+
+            <%--Catálogo de calendario de actividades--%>
+            <sec:authorize access="hasAnyRole('AGREGAR_CALENDARIO_ACT','BUSCAR_CALENDARIO_ACT')">
+                <li><a href="#"><fmt:message key="horario.menu"/></a>
+                    <ul>
+                        <sec:authorize access="hasRole('AGREGAR_CALENDARIO_ACT')">
+                            <li><a href="agregarCalendarioActividades.htm"><fmt:message key="agregarCalendarioActividades.titulo"/></a></li>
+                        </sec:authorize>
+                        <sec:authorize access="hasRole('BUSCAR_CALENDARIO_ACT')">
+                            <li><a href="buscarCalendarioActividades.htm"><fmt:message key="buscarCalendarioActividades.titulo"/></a></li>
+                        </sec:authorize>
+                    </ul>
+                </li>
+            </sec:authorize>
+
+            <%--Catálogo de tipo de asignación--%>
+            <sec:authorize access="hasAnyRole('ROLE_AGREGAR_TIPO_ASIGN','ROLE_BUSCAR_TIPO_ASIGN')">
+                <li><a href="#"><fmt:message key="tipoAsignacion.menu"/></a>
+                  <ul>
+                        <sec:authorize access="hasRole('ROLE_AGREGAR_TIPO_ASIGN')">
+                            <li><a href="agregarTipoAsignacion.htm"><fmt:message key="agregarTipoAsignacion.titulo"/></a></li>
+                        </sec:authorize>
+                        <sec:authorize access="hasRole('ROLE_BUSCAR_TIPO_ASIGN')">
+                            <li><a href="buscarTipoAsignacion.htm"><fmt:message key="buscarTipoAsignacion.titulo"/></a></li>
+                        </sec:authorize>
+                    </ul>
+                </li>
+            </sec:authorize>
+
         </ul>
     </li>
+    </sec:authorize>
+
+    <sec:authorize access="hasAnyRole('ROLE_CONTROL_PENSUM')">
+        <li>
+            <a href="#">
+                <span class="l"></span><span class="r"></span><span class="t">
+                <fmt:message key="operaciones.menu"/></span>
+            </a>
+            <ul>
+                <sec:authorize access="hasRole('ROLE_CONTROL_PENSUM')">
+                    <li><a href="controlPensum.htm"><fmt:message key="controlPensum.titulo"/></a></li>
+                </sec:authorize>
+            </ul>
+        </li>
+    </sec:authorize>
 
     <%-- formulario para logearse --%>
-    <li><a href="login.htm">
-            <span class="l"></span><span class="r"></span><span class="t">
-            <fmt:message key="login.titulo"/></span></a>
+    <sec:authorize access="isAnonymous()">
+        <li>
+            <a href="login.htm">
+                <span class="l"></span><span class="r"></span><span class="t">
+                <fmt:message key="login.titulo"/></span>
+            </a>
+        </li>
+    </sec:authorize>
+
+    <%-- formulario para logout --%>
+    <sec:authorize access="isAuthenticated()">
+        <li>
+            <a href="j_spring_security_logout">
+                <span class="l"></span><span class="r"></span><span class="t">
+                <fmt:message key="logout.titulo"/></span>
+            </a>
+        </li>
+    </sec:authorize>
 </ul>
 </div>
