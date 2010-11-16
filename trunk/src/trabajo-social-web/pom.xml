@@ -448,8 +448,6 @@
             </build>
         </profile>
     </profiles>
-    <properties>
-        <netbeans.hint.deploy.server>Tomcat60</netbeans.hint.deploy.server>
-    </properties>
+    <properties></properties>
 </project>
 

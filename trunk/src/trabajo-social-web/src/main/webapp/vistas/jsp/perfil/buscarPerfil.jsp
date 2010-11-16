@@ -11,6 +11,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <html>
     <head>
@@ -28,7 +29,9 @@
                         <tr class="ui-widget-header ">
                             <th><fmt:message key="agregarPerfil.nombre"/></th>
                             <th><fmt:message key="agregarPerfil.descripcion"/></th>
-                            <th colspan="2"><fmt:message key="acciones"/></th>
+                            <sec:authorize access="hasAnyRole('ROLE_EDITAR_PERFIL','ROLE_ASIGNAR_ROL_PERFIL')">
+                                <th colspan="2"><fmt:message key="acciones"/></th>
+                            </sec:authorize>
                         </tr>
                     </thead>
                     <tbody>
@@ -36,16 +39,20 @@
                             <tr>
                                 <td><c:out value="${perfil.nombre}" /></td>
                                 <td><c:out value="${perfil.descripcion}" /></td>
-                                <td>
-                                    <a href="editarPerfil.htm?idPerfil=${perfil.idPerfil}">
-                                        <fmt:message key="editarPerfil.editar"/>
-                                    </a>
-                                </td>
-                                <td>
-                                    <a href="asignarRolPerfil.htm?idPerfil=${perfil.idPerfil}">
-                                        <fmt:message key="asignarRolPerfil.editar"/>
-                                    </a>
-                                </td>
+                                <sec:authorize access="hasRole('ROLE_EDITAR_PERFIL')">
+                                    <td>
+                                        <a href="editarPerfil.htm?idPerfil=${perfil.idPerfil}">
+                                            <fmt:message key="editarPerfil.editar"/>
+                                        </a>
+                                    </td>
+                                </sec:authorize>
+                                <sec:authorize access="hasRole('ROLE_ASIGNAR_ROL_PERFIL')">
+                                    <td>
+                                        <a href="asignarRolPerfil.htm?idPerfil=${perfil.idPerfil}">
+                                            <fmt:message key="asignarRolPerfil.editar"/>
+                                        </a>
+                                    </td>
+                                </sec:authorize>
                             </tr>
                         </c:forEach>
                     </tbody>

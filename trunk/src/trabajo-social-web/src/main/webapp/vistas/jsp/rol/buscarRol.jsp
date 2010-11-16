@@ -11,6 +11,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <html>
     <head>
@@ -28,7 +29,9 @@
                         <tr class="ui-widget-header ">
                             <th><fmt:message key="agregarRol.nombre"/></th>
                             <th><fmt:message key="agregarRol.descripcion"/></th>
-                            <th colspan="2"><fmt:message key="acciones"/></th>
+                            <sec:authorize access="hasAnyRole('ROLE_EDITAR_ROL')">
+                                <th colspan="2"><fmt:message key="acciones"/></th>
+                            </sec:authorize>
                         </tr>
                     </thead>
                     <tbody>
@@ -36,11 +39,13 @@
                             <tr>
                                 <td><c:out value="${rol.nombre}" /></td>
                                 <td><c:out value="${rol.descripcion}" /></td>
-                                <td>
-                                    <a href="editarRol.htm?idRol=${rol.idRol}">
-                                        <fmt:message key="editarRol.editar"/>
-                                    </a>
-                                </td>
+                                <sec:authorize access="hasRole('ROLE_EDITAR_ROL')">
+                                    <td>
+                                        <a href="editarRol.htm?idRol=${rol.idRol}">
+                                            <fmt:message key="editarRol.editar"/>
+                                        </a>
+                                    </td>
+                                </sec:authorize>
                                 <td>
                                     &nbsp;
                                 </td>

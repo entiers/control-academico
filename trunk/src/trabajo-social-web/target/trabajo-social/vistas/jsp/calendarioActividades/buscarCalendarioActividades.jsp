@@ -11,6 +11,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <html>
     <head>
@@ -53,7 +54,9 @@
                             <th><fmt:message key="agregarCalendarioActividades.fechaInicio"/></th>
                             <th><fmt:message key="agregarCalendarioActividades.fechaFin"/></th>
                             <th><fmt:message key="agregarCalendarioActividades.actividad"/></th>
-                            <th><fmt:message key="acciones"/></th>
+                            <sec:authorize access="hasAnyRole('ROLE_EDITAR_CALENDARIO_ACT')">
+                                <th><fmt:message key="acciones"/></th>
+                            </sec:authorize>
                         </tr>
                     </thead>
                     <tbody>
@@ -61,12 +64,14 @@
                             <tr>
                                 <td><fmt:formatDate pattern="dd-MM-yyyy" value="${calendarioActividades.fechaInicio}" /></td>
                                 <td><fmt:formatDate pattern="dd-MM-yyyy" value="${calendarioActividades.fechaFin}" /></td>
-                                <td><c:out value="${calendarioActividades.actividad}" /></td>                                
-                                <td>
-                                    <a href="editarCalendarioActividades.htm?idCalendarioActividades=${calendarioActividades.idCalendarioActividades}">
-                                        <fmt:message key="editarCalendarioActividades.editar"/>
-                                    </a>
-                                </td>
+                                <td><c:out value="${calendarioActividades.actividad}" /></td>
+                                <sec:authorize access="hasRole('ROLE_EDITAR_CALENDARIO_ACT')">
+                                    <td>
+                                        <a href="editarCalendarioActividades.htm?idCalendarioActividades=${calendarioActividades.idCalendarioActividades}">
+                                            <fmt:message key="editarCalendarioActividades.editar"/>
+                                        </a>
+                                    </td>
+                                </sec:authorize>
                             </tr>
                         </c:forEach>
                     </tbody>

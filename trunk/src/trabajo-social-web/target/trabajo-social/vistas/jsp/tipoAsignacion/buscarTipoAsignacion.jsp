@@ -11,6 +11,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <html>
     <head>
@@ -28,7 +29,9 @@
                         <tr class="ui-widget-header ">
                             <th><fmt:message key="agregarTipoAsignacion.nombre"/></th>
                             <th><fmt:message key="agregarTipoAsignacion.descripcion"/></th>
-                            <th colspan="2"><fmt:message key="acciones"/></th>
+                            <sec:authorize access="hasAnyRole('ROLE_EDITAR_TIPO_ASIGN','ROLE_ELIMINAR_TIPO_ASIGN')">
+                                <th colspan="2"><fmt:message key="acciones"/></th>
+                            </sec:authorize>
                         </tr>
                     </thead>
                     <tbody>
@@ -36,16 +39,20 @@
                             <tr>
                                 <td><c:out value="${tipoAsignacion.nombre}" /></td>
                                 <td><c:out value="${tipoAsignacion.descripcion}" /></td>
-                                <td>
-                                    <a href="editarTipoAsignacion.htm?idTipoAsignacion=${tipoAsignacion.idTipoAsignacion}">
-                                        <fmt:message key="editarTipoAsignacion.editar"/>
-                                    </a>
-                                </td>
-                                <td>
-                                    <a href="eliminarTipoAsignacion.htm?idTipoAsignacion=${tipoAsignacion.idTipoAsignacion}">
-                                        <fmt:message key="eliminarTipoAsignacion.eliminar"/>
-                                    </a>
-                                </td>
+                                <sec:authorize access="hasRole('ROLE_EDITAR_TIPO_ASIGN')">
+                                    <td>
+                                        <a href="editarTipoAsignacion.htm?idTipoAsignacion=${tipoAsignacion.idTipoAsignacion}">
+                                            <fmt:message key="editarTipoAsignacion.editar"/>
+                                        </a>
+                                    </td>
+                                </sec:authorize>
+                                <sec:authorize access="hasRole('ROLE_ELIMINAR_TIPO_ASIGN')">
+                                    <td>
+                                        <a href="eliminarTipoAsignacion.htm?idTipoAsignacion=${tipoAsignacion.idTipoAsignacion}">
+                                            <fmt:message key="eliminarTipoAsignacion.eliminar"/>
+                                        </a>
+                                    </td>
+                                </sec:authorize>
                             </tr>
                         </c:forEach>
                     </tbody>
