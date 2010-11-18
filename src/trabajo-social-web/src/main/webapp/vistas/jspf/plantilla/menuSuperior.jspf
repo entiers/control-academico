@@ -163,6 +163,17 @@
                 </li>
             </sec:authorize>
 
+            <%--Catálogo de usuarios--%>
+            <sec:authorize access="hasAnyRole('ROLE_BUSCAR_USUARIO')">
+                <li><a href="#"><fmt:message key="Usuario.menu"/></a>
+                    <ul>
+                        <sec:authorize access="hasRole('ROLE_BUSCAR_USUARIO')">
+                            <li><a href="buscarUsuario.htm"><fmt:message key="buscarUsuario.titulo"/></a></li>
+                        </sec:authorize>
+                    </ul>
+                </li>
+            </sec:authorize>
+
         </ul>
     </li>
     </sec:authorize>
