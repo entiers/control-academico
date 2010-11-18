@@ -34,6 +34,7 @@
                 <value>/idiomas/textosTipoAsignacion</value>
                 <value>/idiomas/textosPerfil</value>
                 <value>/idiomas/textosRol</value>
+                <value>/idiomas/textosUsuario</value>
             </list>
         </property>
 	<property name="cacheSeconds" value="0" />
