@@ -6,10 +6,13 @@
 
 package gt.edu.usac.cats.servicio;
 
-import gt.edu.usac.cats.dominio.busqueda.DatosBusquedaUsuario;
+import gt.edu.usac.cats.dominio.AsignacionUsuarioPerfil;
+import gt.edu.usac.cats.dominio.Perfil;
 import gt.edu.usac.cats.dominio.Usuario;
+import gt.edu.usac.cats.dominio.busqueda.DatosBusquedaUsuario;
 import java.util.List;
 import org.hibernate.HibernateException;
+import org.springframework.dao.DataAccessException;
 
 /**
  * <p></p>
@@ -31,7 +34,7 @@ public interface ServicioUsuario extends ServicioGeneral {
     List<Usuario> getListadoUsuarios(DatosBusquedaUsuario datos)
             throws HibernateException;
 
-    //______________________________________________________________________________
+//______________________________________________________________________________
     /**
      * <p>Este metodo obtiene la cantidad de registros que retornaria una
      * busqueda hecha en base a los parametros de busqueda enviados por el
@@ -44,5 +47,35 @@ public interface ServicioUsuario extends ServicioGeneral {
     Integer rowCount(DatosBusquedaUsuario datos)
             throws HibernateException;
 
+//______________________________________________________________________________
+    /**
+     * @param usuario
+     *
+     * @throws DataAccessException
+     *
+     * @return
+     **/
+    List<Perfil> getPerfilesAsignadosPorUsuario(Usuario usuario)
+            throws DataAccessException;
+//______________________________________________________________________________
+    /**
+     * @param usuario
+     *
+     * @throws DataAccessException
+     *
+     * @return
+     **/
+    List<Perfil> getPerfilesNoAsignadosPorUsuario(Usuario usuario)
+            throws DataAccessException;
+//______________________________________________________________________________
+    /**
+     * @param usuario
+     *
+     * @throws DataAccessException
+     *
+     * @return
+     **/
+    List <AsignacionUsuarioPerfil> getAsignacionUsuarioPerfilPorUsuario(Usuario usuario)
+            throws DataAccessException;
 
 }
