@@ -7,17 +7,21 @@
 package gt.edu.usac.cats.servicio.impl;
 
 import gt.edu.usac.cats.dao.impl.DaoGeneralImpl;
+import gt.edu.usac.cats.dominio.AsignacionUsuarioPerfil;
+import gt.edu.usac.cats.dominio.Perfil;
 import gt.edu.usac.cats.dominio.busqueda.DatosBusquedaUsuario;
 import gt.edu.usac.cats.dominio.Usuario;
 import gt.edu.usac.cats.servicio.ServicioUsuario;
 import java.util.List;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.HibernateException;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 /**
@@ -46,7 +50,7 @@ public class ServicioUsuarioImpl extends ServicioGeneralImpl implements Servicio
 
         return criteria.list();
     }
-
+//______________________________________________________________________________
     @Override
     public Integer rowCount(DatosBusquedaUsuario datos) throws HibernateException {
          // se crea la consulta
@@ -57,14 +61,6 @@ public class ServicioUsuarioImpl extends ServicioGeneralImpl implements Servicio
         return ((Long) criteria.list().get(0)).intValue();
     }
 //______________________________________________________________________________
-    /**
-     * <p>Este metodo se encarga de crear el objeto {@link Criteria} que se usa
-     * para realizar las busquedas en base a los parametros de busqueda ingresados
-     * por el usuario.</p>
-     * @param datos Objeto {@link DatosBusquedaUsuario} que contiene los
-     *        parametros de busqueda ingresados por el usuario
-     * @return Criteria
-     */
     private Criteria crearCriteriaBusqueda(DatosBusquedaUsuario datos) {
         // se crea la consulta
         Criteria criteria = this.daoGeneralImpl.getSesion().createCriteria(Usuario.class);
@@ -79,6 +75,42 @@ public class ServicioUsuarioImpl extends ServicioGeneralImpl implements Servicio
             criteria.add(eqNombre);
 
         return criteria;
+    }
+//______________________________________________________________________________
+    @Override
+    public List<Perfil> getPerfilesAsignadosPorUsuario(Usuario usuario) throws DataAccessException {
+        StringBuilder builder = new StringBuilder();
+        builder.append(" select per from AsignacionUsuarioPerfil as aup ")
+               .append(" inner join aup.perfil as per")
+               .append(" where aup.usuario = :usuario")
+               .append(" order by aup.perfil.nombre");
+
+        Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
+        query.setParameter("usuario", usuario);
+        return query.list();
+    }
+//______________________________________________________________________________
+    @Override
+    public List<Perfil> getPerfilesNoAsignadosPorUsuario(Usuario usuario) throws DataAccessException {
+        StringBuilder builder = new StringBuilder();
+        builder.append(" select perfil from Perfil as perfil where perfil.idPerfil not in ( ")
+               .append(" select aup.perfil.idPerfil from AsignacionUsuarioPerfil as aup where " )
+               .append(" aup.usuario = :usuario)")
+               .append(" order by perfil.nombre");
+        Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
+        query.setParameter("usuario", usuario);
+        return query.list();
+    }
+//______________________________________________________________________________
+    @Override
+    public List<AsignacionUsuarioPerfil> getAsignacionUsuarioPerfilPorUsuario(Usuario usuario) throws DataAccessException {
+        StringBuilder builder = new StringBuilder();
+        builder.append(" select aup from AsignacionUsuarioPerfil as aup ")
+               .append(" where aup.usuario = :usuario ")
+               .append(" order by aup.perfil.nombre");
+        Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
+        query.setParameter("usuario", usuario);
+        return query.list();
     }
 
 }
