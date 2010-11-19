@@ -92,11 +92,10 @@
                 </table>
 
                 <%-- botones para hacer paginacion de resultados --%>
-            
+                <%@include file="../../jspf/plantilla/botonesPaginacion.jspf" %>
+                
             </fieldset>
         </form>
 
-        <%-- fragmento que muestra como mensaje popup el resultado de las operaciones --%>
-        
-    </body>
+   </body>
 </html>

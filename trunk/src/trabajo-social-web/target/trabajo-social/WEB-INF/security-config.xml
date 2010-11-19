@@ -61,6 +61,9 @@
         <intercept-url pattern="/buscarTipoAsignacion.htm" access="hasRole('ROLE_BUSCAR_TIPO_ASIGN')"/>
         <intercept-url pattern="/editarTipoAsignacion.htm" access="hasRole('ROLE_EDITAR_TIPO_ASIGN')"/>
 
+        <intercept-url pattern="/buscarUsuario.htm" access="hasRole('ROLE_BUSCAR_USUARIO')"/>
+        <intercept-url pattern="/asignarPerfilUsuario.htm" access="hasRole('ROLE_ASIGNAR_PERFIL_USUARIO')"/>
+
         <!-- se especifica que pagina contiene el formulario de login -->
         <form-login login-page='/login.htm' default-target-url='/index.htm' always-use-default-target='true'/>
         
