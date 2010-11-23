@@ -42,7 +42,7 @@
             <table>
                 <thead>
                     <tr>
-                        <th><fmt:message key="Perfil.menu"/></th>
+                        <th><fmt:message key="perfil.menu"/></th>
                         <th><fmt:message key="acciones"/></th>
                     </tr>
                 </thead>

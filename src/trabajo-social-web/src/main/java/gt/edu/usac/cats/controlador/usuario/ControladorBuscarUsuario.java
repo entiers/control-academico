@@ -52,7 +52,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @author Carlos Solórzano
  * @version 1.0
  */
-@Controller("controladorBuscarUsuario")
+@Controller
 public class ControladorBuscarUsuario {
 /**
      * <p>Lleva el nombre del titulo para el mensaje en la pagina.</p>
@@ -139,10 +139,6 @@ public class ControladorBuscarUsuario {
 
         // se almacenan los parametros de busqueda ingresados en la pagina
         this.datosBusquedaUsuario = datosBusquedaUsuario;
-
-        // no se enviaron parametros de busqueda
-        if(this.datosBusquedaUsuario.isEmpty())
-            return "usuario/buscarUsuario";
 
         // los parametros de busqueda no cumplen las reglas de validacion
         if(bindingResult.hasErrors())

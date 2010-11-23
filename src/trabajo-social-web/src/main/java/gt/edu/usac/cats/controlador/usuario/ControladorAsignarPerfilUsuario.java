@@ -46,7 +46,7 @@ public class ControladorAsignarPerfilUsuario {
 //______________________________________________________________________________
     /**
      * @param modelo
-     * @param idPerfil
+     * @param idUsuario
      * @param request
      *
      * @return
@@ -55,14 +55,14 @@ public class ControladorAsignarPerfilUsuario {
     public String crearFormulario(Model modelo, Short idUsuario, HttpServletRequest request) {
 
         if(idUsuario == null){
-            return "usuario/buscarUsuario";
+            return "redirect:buscarUsuario.htm";
         }
 
         this.usuario = this.servicioGeneralImpl.cargarEntidadPorID(Usuario.class, idUsuario);
 
         if(this.usuario == null){
             RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "buscarUsuario.sinResultados", false);
-            return "usuario/buscarUsuario";
+            return "redirect:buscarUsuario.htm";
         }
 
         this.setModel(modelo);
@@ -72,13 +72,13 @@ public class ControladorAsignarPerfilUsuario {
     //______________________________________________________________________________
     /**
      * @param modelo
-     * @param asignacionRolPerfil
+     * @param asignacionUsuarioPerfil
      * @param request
      *
      * @return
      */
     @RequestMapping(value="asignarPerfilUsuario.htm", method = RequestMethod.POST)
-    public String asignarRolPerfil(Model modelo, AsignacionUsuarioPerfil
+    public String asignarUsuarioPerfil(Model modelo, AsignacionUsuarioPerfil
             asignacionUsuarioPerfil,  HttpServletRequest request){
 
         try
@@ -98,7 +98,7 @@ public class ControladorAsignarPerfilUsuario {
         }
 
         this.setModel(modelo);
-        return "usuario/asignarPerfilUsuario";
+        return "redirect:asignarPerfilUsuario.htm?idUsuario=" + this.usuario.getIdUsuario() ;
     }
     /**
      * @param modelo
@@ -128,7 +128,7 @@ public class ControladorAsignarPerfilUsuario {
         }
 
         this.setModel(modelo);
-        return "usuario/asignarPerfilUsuario";
+        return "redirect:asignarPerfilUsuario.htm?idUsuario=" + this.usuario.getIdUsuario() ;
     }
 
 
