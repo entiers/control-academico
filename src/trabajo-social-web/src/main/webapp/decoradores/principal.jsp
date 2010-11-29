@@ -27,32 +27,27 @@
         <link type="text/css" rel="stylesheet" href="<%= request.getContextPath() %>/css/cupertino/style.css" />
         <script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-1.4.2.min.js"></script>
         <script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-ui-1.8.custom.min.js"></script>
-
-        <!--[if IE 6]>
-            <style>
-                #pitch .infoline {margin-top:-74px;}
-                .post-options {margin:-55px 0 40px 138px;}
-            </style>
-	<![endif]-->
-
-        <%-- css y scripts necesarios para crear el menu --%>
-        <link type="text/css" rel="stylesheet" href="<%= request.getContextPath() %>/css/estiloMenu.css" media="screen, projection" />
-        <!--[if lte IE 7]>
-            <link type="text/css" rel="stylesheet" href="<%= request.getContextPath() %>/css/estiloMenuIE.css" media="screen" />
-        <![endif]-->
+        <script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery.ui.datepicker-es.js"></script>        
         <script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery.dropdownPlain.js"></script>
 
-
         <script type="text/javascript" src="<%= request.getContextPath() %>/js/script.js"></script>
-
         <link rel="stylesheet" href="<%= request.getContextPath() %>/css/style.css" type="text/css" media="screen" />
     <!--[if IE 6]><link rel="stylesheet" href="<%= request.getContextPath() %>/css/style.ie6.css" type="text/css" media="screen" /><![endif]-->
     <!--[if IE 7]><link rel="stylesheet" href="<%= request.getContextPath() %>/css/style.ie7.css" type="text/css" media="screen" /><![endif]-->
 
-        <%-- se inserta el head propia de cada una de las paginas --%>
+    <script type="text/javascript">
+        $(function() {            
+            $(".datepicker").datepicker({
+                showOn: 'button',
+                changeMonth: true,
+                changeYear: true,
+                buttonImage: '<%=request.getContextPath()%>/css/images/calendar.gif',
+                buttonImageOnly: true,
+                dateFormat: 'dd-mm-yy',
+                changeMonth: true,
+                changeYear: true
+            });
 
-        <script type="text/javascript">
-            
 
             $("table").attr({
                     "border" : "0",
@@ -62,11 +57,13 @@
                     "class":"art-article"
             });
 
-            $("input").attr({
-                    "class":"art-button"
+            $("input:submit, input:button").attr({
+                "class": "art-button"
             });
-        </script>
+        });
+    </script>
 
+        <%-- se inserta el head propia de cada una de las paginas --%>
         <decorator:head />
     </head>
     <body>

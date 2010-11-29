@@ -6,12 +6,6 @@
 
         // agrega un panel popup para seleccionar fecha al input
         // de fecha de nacimiento
-        $("#fechaNacimiento").datepicker({
-            changeMonth: true,
-            changeYear: true,
-            dateFormat: 'dd-mm-yy'
-        });
-
         // configuracion del panel popup para deshabilitar estudiantes
         $("#popupDeshabilitar").dialog({
             autoOpen: false,

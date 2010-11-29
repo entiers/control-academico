@@ -45,15 +45,8 @@
                     <form:label for="nombreBusqueda" path="nombreBusqueda"><fmt:message key="agregarEstudiante.nombre"/>:</form:label>
                     <form:input path="nombreBusqueda" cssStyle="width: 250px;" />
                     <form:errors path="nombreBusqueda" cssClass="claseError" />
-                </div>
-
-                <div id="divCampos">
-                    <form:label for="apellidoBusqueda" path="apellidoBusqueda"><fmt:message key="agregarEstudiante.apellido"/>:</form:label>
-                    <form:input path="apellidoBusqueda" cssStyle="width: 250px;" />
-                    <form:errors path="apellidoBusqueda" cssClass="claseError" />
-                </div>
+                </div>               
                 <br/>
-
                 <%-- boton --%>
                 <input id="btnBuscar" type="submit" value='<fmt:message key="btnBuscar"/>' />
             </fieldset>
@@ -68,8 +61,7 @@
                     <thead>
                         <tr class="ui-widget-header ">
                             <th><fmt:message key="agregarEstudiante.carne"/></th>
-                            <th><fmt:message key="agregarEstudiante.nombre"/></th>
-                            <th><fmt:message key="agregarEstudiante.apellido"/></th>
+                            <th><fmt:message key="agregarEstudiante.nombre"/></th>                     
                             <th><fmt:message key="agregarEstudiante.direccion"/></th>
                             <th><fmt:message key="agregarEstudiante.telefono"/></th>
                             <th><fmt:message key="agregarEstudiante.celular"/></th>
@@ -81,8 +73,7 @@
                         <c:forEach items="${listadoEstudiantes}" var="estudiante">
                             <tr>
                                 <td><c:out value="${estudiante.carne}" /></td>
-                                <td><c:out value="${estudiante.nombre}" /></td>
-                                <td><c:out value="${estudiante.apellido}" /></td>
+                                <td><c:out value="${estudiante.nombre}" /></td>                                
                                 <td><c:out value="${estudiante.direccion}" /></td>
                                 <td><c:out value="${estudiante.telefono}" /></td>
                                 <td><c:out value="${estudiante.celular}" /></td>
