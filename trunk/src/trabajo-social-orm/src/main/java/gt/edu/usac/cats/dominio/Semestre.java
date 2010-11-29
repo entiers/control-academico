@@ -36,31 +36,25 @@ import javax.persistence.UniqueConstraint;
 @Table(
     name = "semestre",
     schema = "control",
-    uniqueConstraints={@UniqueConstraint(columnNames={"numero", "anio"})}
+    uniqueConstraints={
+        @UniqueConstraint(name = "semestre_anio_numero_uk",columnNames = {"anio", "numero"})
+    }
 )
 public class Semestre implements java.io.Serializable {
     private Set<CalendarioActividades> calendarioActividadeses = new HashSet<CalendarioActividades>(0);
     private Set<Horario> horarios = new HashSet<Horario>(0);
+    private Set<AsignacionEstudianteCarrera> asignacionEstudianteCarreras = new HashSet<AsignacionEstudianteCarrera>(0);
     private short anio;
     private short idSemestre;
     private char numero;
+    private String observacion;
 
     public Semestre() {}
 
-    public Semestre(short idSemestre, short anio, char numero) {
-        this.idSemestre = idSemestre;
+    public Semestre(short anio, char numero) {        
         this.anio = anio;
         this.numero = numero;
-    }
-
-    public Semestre(short idSemestre, short anio, char numero, Set<CalendarioActividades> calendarioActividadeses,
-                    Set<Horario> horarios) {
-        this.idSemestre = idSemestre;
-        this.anio = anio;
-        this.numero = numero;
-        this.calendarioActividadeses = calendarioActividadeses;
-        this.horarios = horarios;
-    }
+    }    
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -101,7 +95,20 @@ public class Semestre implements java.io.Serializable {
     public void setNumero(char numero) {
         this.numero = numero;
     }
+//______________________________________________________________________________    
+    @Column(
+        name = "observacion",        
+        length = 1000
+    )
 
+    public String getObservacion() {
+        return observacion;
+    }
+
+    public void setObservacion(String observacion) {
+        this.observacion = observacion;
+    }
+//______________________________________________________________________________
     @OneToMany(
         cascade = CascadeType.ALL,
         fetch = FetchType.LAZY,
@@ -114,7 +121,7 @@ public class Semestre implements java.io.Serializable {
     public void setCalendarioActividadeses(Set<CalendarioActividades> calendarioActividadeses) {
         this.calendarioActividadeses = calendarioActividadeses;
     }
-
+//______________________________________________________________________________
     @OneToMany(
         cascade = CascadeType.ALL,
         fetch = FetchType.LAZY,
@@ -127,7 +134,19 @@ public class Semestre implements java.io.Serializable {
     public void setHorarios(Set<Horario> horarios) {
         this.horarios = horarios;
     }
+//______________________________________________________________________________
+    @OneToMany(
+        cascade = CascadeType.ALL,
+        fetch = FetchType.LAZY,
+        mappedBy = "semestre"
+    )
+    public Set<AsignacionEstudianteCarrera> getAsignacionEstudianteCarreras() {
+        return asignacionEstudianteCarreras;
+    }
+    
+    public void setAsignacionEstudianteCarreras(Set<AsignacionEstudianteCarrera> asignacionEstudianteCarreras) {
+        this.asignacionEstudianteCarreras = asignacionEstudianteCarreras;
+    }
 }
-
 
 //~ Formatted by Jindent --- http://www.jindent.com

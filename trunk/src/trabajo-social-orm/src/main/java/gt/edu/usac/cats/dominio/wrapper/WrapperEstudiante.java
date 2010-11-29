@@ -9,7 +9,6 @@ package gt.edu.usac.cats.dominio.wrapper;
 //import gt.edu.usac.trabajosocial.anotacion.CarneEstudianteValidador;
 import gt.edu.usac.cats.dominio.Estudiante;
 import java.util.Date;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
@@ -20,24 +19,21 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
- * @author Daniel Castillo
- * @version 1.0
+ * @author Daniel Castillo y Mario Batres
+ *
+ * @version 3.0
  */
 public class WrapperEstudiante {
 
     @NotEmpty(message = "{validacion.campoObligatorio}")
-    @Pattern(regexp = "|[0-9]{9}", message = "{validacion.carneInvalido}")
+    @Pattern(regexp = "|[0-9]{5,9}", message = "{validacion.carneInvalido}")
 //    @CarneEstudianteValidador
     private String carne;
 //______________________________________________________________________________
     @NotEmpty(message = "{validacion.campoObligatorio}")
-    @Size(max = 50, message = "{validacion.caracteresMaximos}")
+    @Size(max = 100, message = "{validacion.caracteresMaximos}")
     private String nombre;
-//______________________________________________________________________________
-    @NotEmpty(message = "{validacion.campoObligatorio}")
-    @Size(max = 50, message = "{validacion.caracteresMaximos}")
-    private String apellido;
-//______________________________________________________________________________
+//______________________________________________________________________________    
     @Size(max = 200, message = "{validacion.caracteresMaximos}")
     private String direccion;
 //______________________________________________________________________________
@@ -57,35 +53,63 @@ public class WrapperEstudiante {
     @Past(message = "{validacion.fechaPasada}")
     private Date fechaNacimiento;
 //______________________________________________________________________________
-    @Min(value = 1, message = "{validacion.seleccion}")
-    private short idCarrera;
+    /*@Min(value = 1, message = "{validacion.seleccion}")
+    private short idCarrera;*/
 //______________________________________________________________________________
     private boolean requisitos;
 //______________________________________________________________________________
-    public WrapperEstudiante() {}
+    @NotNull(message = "{validacion.campoObligatorio}")    
+    private char sexo;
+//______________________________________________________________________________
+    private short lugarNacimiento;
+//______________________________________________________________________________
+    private short nacionalidad;
+//______________________________________________________________________________
+    private String carneModificado;
+//______________________________________________________________________________
+    private String nov;
+//______________________________________________________________________________
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    private Date cierre;
+//______________________________________________________________________________
+
+    public WrapperEstudiante() {
+        this.sexo = 'M';
+    }
 //______________________________________________________________________________
     public void agregarWrapper(Estudiante estudiante) {
         this.setCarne(estudiante.getCarne());
-        this.setNombre(estudiante.getNombre());
-        this.setApellido(estudiante.getApellido());
+        this.setNombre(estudiante.getNombre());        
         this.setDireccion(estudiante.getDireccion());
         this.setTelefono(estudiante.getTelefono());
         this.setCelular(estudiante.getCelular());
         this.setEmail(estudiante.getEmail());
         this.setFechaNacimiento(estudiante.getFechaNacimiento());
         this.setRequisitos(estudiante.isRequisitos());
+        this.setSexo(estudiante.getSexo());
+        this.setLugarNacimiento(estudiante.getLugarNacimiento());
+        this.setNacionalidad(estudiante.getNacionalidad());
+        this.setCarneModificado(estudiante.getCarneModificado());
+        this.setNov(estudiante.getNov());
+        this.setCierre(estudiante.getCierre());
+
     }
 //______________________________________________________________________________
     public void quitarWrapper(Estudiante estudiante) {
         estudiante.setCarne(this.getCarne());
-        estudiante.setNombre(this.getNombre());
-        estudiante.setApellido(this.getApellido());
+        estudiante.setNombre(this.getNombre());        
         estudiante.setDireccion(this.getDireccion());
         estudiante.setTelefono(this.getTelefono());
         estudiante.setCelular(this.getCelular());
         estudiante.setEmail(this.getEmail());
         estudiante.setFechaNacimiento(this.getFechaNacimiento());
         estudiante.setRequisitos(this.isRequisitos());
+        estudiante.setSexo(this.getSexo());
+        estudiante.setLugarNacimiento(this.getLugarNacimiento());
+        estudiante.setNacionalidad(this.getNacionalidad());
+        estudiante.setCarneModificado(this.getCarneModificado());
+        estudiante.setNov(this.getNov());
+        estudiante.setCierre(this.getCierre());
     }
 //______________________________________________________________________________
     public String getCarne() {
@@ -102,14 +126,6 @@ public class WrapperEstudiante {
 //______________________________________________________________________________
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-//______________________________________________________________________________
-    public String getApellido() {
-        return apellido;
-    }
-//______________________________________________________________________________
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
     }
 //______________________________________________________________________________
     public String getDireccion() {
@@ -151,6 +167,7 @@ public class WrapperEstudiante {
     public void setFechaNacimiento(Date fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
+    /*
 //______________________________________________________________________________
     public short getIdCarrera() {
         return idCarrera;
@@ -158,7 +175,7 @@ public class WrapperEstudiante {
 //______________________________________________________________________________
     public void setIdCarrera(short idCarrera) {
         this.idCarrera = idCarrera;
-    }
+    }*/
 //______________________________________________________________________________
     public boolean isRequisitos() {
         return requisitos;
@@ -166,5 +183,53 @@ public class WrapperEstudiante {
 //______________________________________________________________________________
     public void setRequisitos(boolean requisitos) {
         this.requisitos = requisitos;
+    }
+//______________________________________________________________________________
+    public char getSexo() {
+        return sexo;
+    }
+    
+    public void setSexo(char sexo) {
+        this.sexo = sexo;
+    }
+//______________________________________________________________________________    
+    public short getLugarNacimiento() {
+        return lugarNacimiento;
+    }
+
+    public void setLugarNacimiento(short lugarNacimiento) {
+        this.lugarNacimiento = lugarNacimiento;
+    }
+//______________________________________________________________________________
+    public short getNacionalidad() {
+        return nacionalidad;
+    }
+
+    public void setNacionalidad(short nacionalidad) {
+        this.nacionalidad = nacionalidad;
+    }
+//______________________________________________________________________________
+    public String getCarneModificado() {
+        return carneModificado;
+    }
+
+    public void setCarneModificado(String carneModificado) {
+        this.carneModificado = carneModificado;
+    }
+//______________________________________________________________________________
+    public String getNov() {
+        return nov;
+    }
+
+    public void setNov(String nov) {
+        this.nov = nov;
+    }
+//______________________________________________________________________________
+    public Date getCierre() {
+        return cierre;
+    }
+
+    public void setCierre(Date cierre) {
+        this.cierre = cierre;
     }
 }

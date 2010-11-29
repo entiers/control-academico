@@ -14,12 +14,12 @@ import javax.validation.constraints.Size;
  * <p>Esta clase tiene como objetivo almacenar los datos que se ingresan en los
  * formularios de busquedas de estudiantes.</p>
  *
- * @author Daniel Castillo
- * @version 2.0
+ * @author Daniel Castillo y Mario Batres
+ * @version 2.1
  */
 public class DatosBusquedaEstudiante {
 
-    @Pattern(regexp = "|[0-9]{9}", message = "{validacion.carneInvalido}")
+    @Pattern(regexp = "|[0-9]{5,9}", message = "{validacion.carneInvalido}")
     private String carneBusqueda;
 
     @Size(max = 50, message = "{validacion.caracteresMaximos}")
