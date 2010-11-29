@@ -8,6 +8,7 @@ package gt.edu.usac.cats.controlador.estudiante;
 
 import gt.edu.usac.cats.dominio.Carrera;
 import gt.edu.usac.cats.dominio.Estudiante;
+import gt.edu.usac.cats.dominio.Semestre;
 import gt.edu.usac.cats.dominio.wrapper.WrapperEstudiante;
 import gt.edu.usac.cats.servicio.ServicioEstudiante;
 import gt.edu.usac.cats.servicio.ServicioGeneral;
@@ -47,8 +48,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * </ul>
  * </p>
  *
- * @author Daniel Castillo
- * @version 1.0
+ * @author Daniel Castillo y Mario Batres
+ * @version 1.5
  */
 @Controller("controladorAgregarEstudiante")
 @RequestMapping(value = "agregarEstudiante.htm")
@@ -92,6 +93,8 @@ public class ControladorAgregarEstudiante {
      */
     private List<Carrera> listadoCarreras;
 //______________________________________________________________________________
+    private List<Semestre> listadoSemestres;
+//______________________________________________________________________________
     /**
      * <p>Constructor de la clase, no realiza ninguna accion.</p>
      */
@@ -117,9 +120,13 @@ public class ControladorAgregarEstudiante {
             log.error("ERROR: no se puede cargar el listado de carreras", e);
         }
 
+        this.listadoSemestres = this.servicioGeneralImpl.listarEntidad(Semestre.class, true, "anio");
+
         // se agregan los objetos que se usaran en la pagina
         modelo.addAttribute("wrapperEstudiante", new WrapperEstudiante());
-        modelo.addAttribute("carreras", this.listadoCarreras);
+        //modelo.addAttribute("carreras", this.listadoCarreras);
+//        modelo.addAttribute("listadoSemestres", this.listadoSemestres);
+//        modelo.addAttribute("situaciones", Situacion.values());
 
         return "estudiante/agregarEstudiante";
     }
@@ -161,12 +168,14 @@ public class ControladorAgregarEstudiante {
 
         try {
             // se obtiene la carrera seleccionada
-            Carrera carrera = this.getCarreraSeleccionada(wrapperEstudiante.getIdCarrera());
+            //Carrera carrera = this.getCarreraSeleccionada(wrapperEstudiante.getIdCarrera());
+            //Semestre semestre = this.servicioGeneralImpl.cargarEntidadPorID(Semestre.class, idSemestre);
 
+            //Situacion situacion = Situacion.valueOf(situacionName);
             // se quita el envoltorio y se trata de agregar al estudiante
             Estudiante estudiante = new Estudiante();
             wrapperEstudiante.quitarWrapper(estudiante);
-            this.servicioEstudianteImpl.agregarEstudiante(estudiante, carrera);
+            //this.servicioEstudianteImpl.agregarEstudiante(estudiante, carrera, semestre, situacion);
 
             // se envia correo electronico de confirmacion
             this.enviarEmail(estudiante);
@@ -212,8 +221,7 @@ public class ControladorAgregarEstudiante {
      */
     private void enviarEmail(Estudiante estudiante) {
         String subject = "Informe de registro (Escuela de Trabajo Social)";
-        String mensaje = estudiante.getNombre() + " " +
-                estudiante.getApellido() +
+        String mensaje = estudiante.getNombre() +
                 "\n\nTu registro en el sitio de la Escuela de Trabajo Social se realizo con exito. " +
                 "Para acceder al sitio utiliza los siguientes datos:" +
                 "\n\nUSUARIO:  " + estudiante.getCarne() +
