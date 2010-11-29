@@ -9,6 +9,7 @@ package gt.edu.usac.cats.servicio;
 import gt.edu.usac.cats.dominio.busqueda.DatosBusquedaEstudiante;
 import gt.edu.usac.cats.dominio.Carrera;
 import gt.edu.usac.cats.dominio.Estudiante;
+import gt.edu.usac.cats.dominio.Semestre;
 import gt.edu.usac.cats.dominio.Usuario;
 import java.util.List;
 import org.hibernate.HibernateException;
@@ -29,13 +30,13 @@ public interface ServicioEstudiante extends ServicioGeneral {
      * de datos, el metodo ademas realiza la asignacion de carrera al
      * estudiante.</p>
      *
-     * @param estudiante Pojo del tipo {@link Estudiante}
-     * @param estudiante Pojo del tipo {@link Carrera}
+     * @param estudiante Pojo del tipo {@link Estudiante}     
+     *
      * @throws DataAccessException Si ocurrio un error de acceso a datos
      * @throws DataIntegrityViolationException Si ocurrio una violacion de
      *         de integridad de datos
      */
-    void agregarEstudiante(Estudiante estudiante, Carrera carrera)
+    void agregarEstudiante(Estudiante estudiante)
             throws DataIntegrityViolationException, DataAccessException;
 //______________________________________________________________________________
     /**
@@ -43,10 +44,13 @@ public interface ServicioEstudiante extends ServicioGeneral {
      *
      * @param estudiante Pojo del tipo {@link Estudiante}
      * @param carrera Pojo del tipo {@link Carrera}
+     * @param semestre Pojo del tipo {@link Semestre}
+     * @param situacion Enum del tipo {@link situacion}
+     *
      * @throws DataAccessException Si ocurrio un error de acceso a datos
      */
-    void asignarCarrera(Estudiante estudiante, Carrera carrera)
-            throws DataAccessException;
+    /*void asignarCarrera(Estudiante estudiante, Carrera carrera, Semestre semestre, Situacion situacion)
+            throws DataAccessException;*/
 //______________________________________________________________________________
     /**
      * <p>Este metodo realiza la asignacion del perfil ESTUDIANTE a un

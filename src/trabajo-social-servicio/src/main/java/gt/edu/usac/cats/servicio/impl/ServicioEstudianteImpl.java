@@ -13,6 +13,7 @@ import gt.edu.usac.cats.dominio.AsignacionUsuarioPerfil;
 import gt.edu.usac.cats.dominio.Carrera;
 import gt.edu.usac.cats.dominio.Estudiante;
 import gt.edu.usac.cats.dominio.Perfil;
+import gt.edu.usac.cats.dominio.Semestre;
 import gt.edu.usac.cats.dominio.Usuario;
 import gt.edu.usac.cats.servicio.ServicioEstudiante;
 import gt.edu.usac.cats.util.GeneradorPassword;
@@ -61,6 +62,9 @@ public class ServicioEstudianteImpl extends ServicioGeneralImpl implements Servi
      *
      * @param estudiante Pojo del tipo {@link Estudiante}
      * @param carrera Pojo del tipo {@link Carrera}
+     * @param semestre Pojo del tipo {@link Semestre}
+     * @param situacion Enum del tipo {@link situacion}
+     * 
      * @throws DataIntegrityViolationException Se dio una violacion de integridad
      *         de los datos
      * @throws DataAccessException Ocurrio un error con el acceso a la base de
@@ -68,7 +72,7 @@ public class ServicioEstudianteImpl extends ServicioGeneralImpl implements Servi
      */
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void agregarEstudiante(Estudiante estudiante, Carrera carrera)
+    public void agregarEstudiante(Estudiante estudiante)
             throws DataIntegrityViolationException, DataAccessException {
 
         // se genera el password para el usuario del estudiante
@@ -95,7 +99,7 @@ public class ServicioEstudianteImpl extends ServicioGeneralImpl implements Servi
         this.daoGeneralImpl.save(estudiante);
 
         // se asigna la carrera al estudiante
-        this.asignarCarrera(estudiante, carrera);
+        //this.asignarCarrera(estudiante, carrera, semestre, situacion);
     }
 //______________________________________________________________________________
     /**
@@ -105,23 +109,28 @@ public class ServicioEstudianteImpl extends ServicioGeneralImpl implements Servi
      *
      * @param estudiante Pojo del tipo {@link Estudiante}
      * @param carrera Pojo del tipo {@link Carrera}
+     * @param semestre Pojo del tipo {@link Semestre}
+     * @param situacion Enum del tipo {@link situacion}
+     *
      * @throws DataAccessException Ocurrio un error con el acceso a la base de
      *         datos
      */
-    @Transactional(rollbackFor = Exception.class)
+    /*@Transactional(rollbackFor = Exception.class)
     @Override
-    public void asignarCarrera(Estudiante estudiante, Carrera carrera)
+    public void asignarCarrera(Estudiante estudiante, Carrera carrera,
+            Semestre semestre, Situacion situacion)
             throws DataAccessException {
 
         // se crea la nueva asignacion de carrera del estudiante
         AsignacionEstudianteCarrera asignacionCarrera = new AsignacionEstudianteCarrera();
         asignacionCarrera.setCarrera(carrera);
         asignacionCarrera.setEstudiante(estudiante);
-        asignacionCarrera.setFechaInicio(new Date());
-
+        asignacionCarrera.setSemestre(semestre);
+        asignacionCarrera.setFechaInscripcion(new Date());
+        asignacionCarrera.setSituacion(situacion.getId());
         // se guarda la asignacion en la base de datos
         this.daoGeneralImpl.save(asignacionCarrera);
-    }
+    }*/
 //______________________________________________________________________________
     /**
      * <p>Este metodo realiza la asignacion del perfil ESTUDIANTE a un
