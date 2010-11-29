@@ -27,6 +27,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import javax.validation.constraints.NotNull;
 
@@ -36,7 +37,10 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(
     name = "usuario",
-    schema = "control"
+    schema = "control",
+    uniqueConstraints={
+        @UniqueConstraint(name="usuario_nombre_uk", columnNames={"nombre_usuario"})
+    }
 )
 public class Usuario implements java.io.Serializable {
     private Set<Catedratico> catedraticos = new HashSet<Catedratico>(0);
@@ -44,7 +48,7 @@ public class Usuario implements java.io.Serializable {
     private Set<Estudiante> estudiantes = new HashSet<Estudiante>(0);
     private Set<AsignacionUsuarioPerfil> asignacionUsuarioPerfils = new HashSet<AsignacionUsuarioPerfil>(0);
     private boolean habilitado;
-    private short idUsuario;
+    private int idUsuario;
     @NotNull
     private String nombreUsuario;
     @NotNull
@@ -52,14 +56,14 @@ public class Usuario implements java.io.Serializable {
 
     public Usuario() {}
 
-    public Usuario(short idUsuario, String nombreUsuario, String password, boolean habilitado) {
+    public Usuario(int idUsuario, String nombreUsuario, String password, boolean habilitado) {
         this.idUsuario = idUsuario;
         this.nombreUsuario = nombreUsuario;
         this.password = password;
         this.habilitado = habilitado;
     }
 
-    public Usuario(short idUsuario, String nombreUsuario, String password, boolean habilitado,
+    public Usuario(int idUsuario, String nombreUsuario, String password, boolean habilitado,
                    Set<Catedratico> catedraticos, Set<Log> logs, Set<AsignacionUsuarioPerfil> asignacionUsuarioPerfils,
                    Set<Estudiante> estudiantes) {
         this.idUsuario = idUsuario;
@@ -79,11 +83,11 @@ public class Usuario implements java.io.Serializable {
         unique = true,
         nullable = false
     )
-    public short getIdUsuario() {
+    public int getIdUsuario() {
         return this.idUsuario;
     }
 
-    public void setIdUsuario(short idUsuario) {
+    public void setIdUsuario(int idUsuario) {
         this.idUsuario = idUsuario;
     }
 
