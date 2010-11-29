@@ -10,10 +10,10 @@
 
 <decorators defaultdir="/decoradores">
     <!-- paginas a las cuales no se les aplicara decoracion -->
-    <!-- -->
+    <!-- 
     <excludes>
         <pattern>/login.htm</pattern>
-    </excludes>
+    </excludes>-->
     
 
     <!-- definicion de los decoradores -->
