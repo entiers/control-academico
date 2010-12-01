@@ -52,7 +52,7 @@ public class ControladorAsignarPerfilUsuario {
      * @return
      */
     @RequestMapping(value="asignarPerfilUsuario.htm", method = RequestMethod.GET)
-    public String crearFormulario(Model modelo, Short idUsuario, HttpServletRequest request) {
+    public String crearFormulario(Model modelo, Integer idUsuario, HttpServletRequest request) {
 
         if(idUsuario == null){
             return "redirect:buscarUsuario.htm";
