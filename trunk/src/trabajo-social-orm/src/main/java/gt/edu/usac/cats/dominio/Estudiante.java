@@ -47,31 +47,29 @@ import javax.persistence.UniqueConstraint;
     }
 )
 public class Estudiante implements java.io.Serializable {
-    private Set<CursoAprobado> cursoAprobados = new HashSet<CursoAprobado>(0);
-    private Set<Desasignacion> desasignacions = new HashSet<Desasignacion>(0);
-    private Set<CursoExtra> cursoExtras = new HashSet<CursoExtra>(0);
-    private Set<ConteoAsignacion> conteoAsignacions = new HashSet<ConteoAsignacion>(0);
-    private Set<Asignacion> asignacions = new HashSet<Asignacion>(0);
-    private Set<AsignacionEstudianteCarrera> asignacionEstudianteCarreras = new HashSet<AsignacionEstudianteCarrera>(0);
-    private Set<AsignacionDocumento> asignacionDocumentos = new HashSet<AsignacionDocumento>(0);
-    private Set<CuentaCorriente> cuentaCorrientes = new HashSet<CuentaCorriente>(0);
-    private int idEstudiante;
-    private boolean requisitos;
-    private Usuario usuario;
-    private String carne;
-    private String nombre;    
-    private String direccion;
-    private String telefono;
-    private String celular;
-    private String email;
-    private Date fechaNacimiento;
-    private String password;
-    private char sexo;
-    private short lugarNacimiento;
-    private short nacionalidad;
-    private String carneModificado;
-    private String nov;
-    private Date cierre;
+     private int idEstudiante;
+     private Usuario usuario;
+     private String carne;
+     private String nombre;
+     private String direccion;
+     private String telefono;
+     private String celular;
+     private String email;
+     private Date fechaNacimiento;
+     private Boolean requisitos;
+     private String carneModificado;
+     private Short lugarNacimiento;
+     private Short nacionalidad;
+     private String nov;
+     private char sexo;
+     private Set<CuentaCorriente> cuentaCorrientes = new HashSet<CuentaCorriente>(0);
+     private Set<Desasignacion> desasignacions = new HashSet<Desasignacion>(0);
+     private Set<AsignacionDocumento> asignacionDocumentos = new HashSet<AsignacionDocumento>(0);
+     private Set<CursoExtra> cursoExtras = new HashSet<CursoExtra>(0);
+     private Set<AsignacionEstudianteCarrera> asignacionEstudianteCarreras = new HashSet<AsignacionEstudianteCarrera>(0);
+     private Set<ConteoAsignacion> conteoAsignacions = new HashSet<ConteoAsignacion>(0);
+
+     private String password;
     
 
     public Estudiante() {}
@@ -212,38 +210,12 @@ public class Estudiante implements java.io.Serializable {
         fetch = FetchType.LAZY,
         mappedBy = "estudiante"
     )
-    public Set<CursoAprobado> getCursoAprobados() {
-        return this.cursoAprobados;
-    }
-//______________________________________________________________________________
-    public void setCursoAprobados(Set<CursoAprobado> cursoAprobados) {
-        this.cursoAprobados = cursoAprobados;
-    }
-//______________________________________________________________________________
-    @OneToMany(
-        cascade = CascadeType.ALL,
-        fetch = FetchType.LAZY,
-        mappedBy = "estudiante"
-    )
     public Set<Desasignacion> getDesasignacions() {
         return this.desasignacions;
     }
 //______________________________________________________________________________
     public void setDesasignacions(Set<Desasignacion> desasignacions) {
         this.desasignacions = desasignacions;
-    }
-//______________________________________________________________________________
-    @OneToMany(
-        cascade = CascadeType.ALL,
-        fetch = FetchType.LAZY,
-        mappedBy = "estudiante"
-    )
-    public Set<Asignacion> getAsignacions() {
-        return this.asignacions;
-    }
-//______________________________________________________________________________
-    public void setAsignacions(Set<Asignacion> asignacions) {
-        this.asignacions = asignacions;
     }
 //______________________________________________________________________________
     @OneToMany(
@@ -376,19 +348,6 @@ public class Estudiante implements java.io.Serializable {
     
     public void setNov(String nov) {
         this.nov = nov;
-    }
-//______________________________________________________________________________
-    @Temporal(TemporalType.DATE)
-    @Column(
-        name = "cierre",
-        length = 13
-    )
-    public Date getCierre() {
-        return cierre;
-    }
-    
-    public void setCierre(Date cierre) {
-        this.cierre = cierre;
     }
 //______________________________________________________________________________
 }

@@ -1,33 +1,7 @@
 <%@ page pageEncoding="UTF-8" %>
 
 <div id="divCampos">
-    <form:label for="semestre" path="semestre"><fmt:message key="agregarCurso.semestre"/>: *</form:label>
-    <form:input path="semestre" cssStyle="width: 250px;" />
-    <form:errors path="semestre" cssClass="claseError" />
-</div>
-
-<div id="divCampos">
     <form:label for="nombre" path="nombre"><fmt:message key="agregarCurso.nombre"/>: *</form:label>
     <form:input path="nombre" cssStyle="width: 250px;" />
     <form:errors path="nombre" cssClass="claseError" />
 </div>
-
-<div id="divCampos">
-    <form:label for="creditosTeoricos" path="creditosTeoricos"><fmt:message key="agregarCurso.creditosTeoricos"/>:</form:label>
-    <form:input path="creditosTeoricos" cssStyle="width: 250px;" />
-    <form:errors path="creditosTeoricos" cssClass="claseError" />
-</div>
-
-<div id="divCampos">
-    <form:label for="creditosPracticos" path="creditosPracticos"><fmt:message key="agregarCurso.creditosPracticos"/>:</form:label>
-    <form:input path="creditosPracticos" cssStyle="width: 250px;" />
-    <form:errors path="creditosPracticos" cssClass="claseError" />
-</div>
-
-<div id="divCampos">
-    <form:label for="creditosPrerrequisito" path="creditosPrerrequisito"><fmt:message key="agregarCurso.creditosPrerrequisito"/>:</form:label>
-    <form:input path="creditosPrerrequisito" cssStyle="width: 250px;" />
-    <form:errors path="creditosPrerrequisito" cssClass="claseError" />
-</div>
-
-<br/><br/>

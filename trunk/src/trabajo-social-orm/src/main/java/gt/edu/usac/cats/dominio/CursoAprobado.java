@@ -42,43 +42,19 @@ import javax.persistence.TemporalType;
     schema = "control"
 )
 public class CursoAprobado implements java.io.Serializable {
-    private Set<NotaIndicador> notaIndicadors = new HashSet<NotaIndicador>(0);
-    private Curso curso;
-    private Estudiante estudiante;
-    private short examenFinal;
-    private Date fechaAprobacion;
     private int idCursoAprobado;
-    private short laboratorio;
-    private String observaciones;
-    private short zona;
+     private Asignacion asignacion;
+     private Curso curso;
+     private Date fechaAprobacion;
+     private short zona;
+     private short laboratorio;
+     private short examenFinal;
+     private String observaciones;
+     private Set<NotaIndicador> notaIndicadors = new HashSet<NotaIndicador>(0);
 
     public CursoAprobado() {}
 
-    public CursoAprobado(int idCursoAprobado, Estudiante estudiante, Curso curso, Date fechaAprobacion, short zona,
-                         short laboratorio, short examenFinal) {
-        this.idCursoAprobado = idCursoAprobado;
-        this.estudiante = estudiante;
-        this.curso = curso;
-        this.fechaAprobacion = fechaAprobacion;
-        this.zona = zona;
-        this.laboratorio = laboratorio;
-        this.examenFinal = examenFinal;
-    }
-
-    public CursoAprobado(int idCursoAprobado, Estudiante estudiante, Curso curso, Date fechaAprobacion, short zona,
-                         short laboratorio, short examenFinal, String observaciones,
-                         Set<NotaIndicador> notaIndicadors) {
-        this.idCursoAprobado = idCursoAprobado;
-        this.estudiante = estudiante;
-        this.curso = curso;
-        this.fechaAprobacion = fechaAprobacion;
-        this.zona = zona;
-        this.laboratorio = laboratorio;
-        this.examenFinal = examenFinal;
-        this.observaciones = observaciones;
-        this.notaIndicadors = notaIndicadors;
-    }
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(
@@ -94,17 +70,14 @@ public class CursoAprobado implements java.io.Serializable {
         this.idCursoAprobado = idCursoAprobado;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(
-        name = "id_estudiante",
-        nullable = false
-    )
-    public Estudiante getEstudiante() {
-        return this.estudiante;
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="id_asignacion", nullable=false)
+    public Asignacion getAsignacion() {
+        return this.asignacion;
     }
 
-    public void setEstudiante(Estudiante estudiante) {
-        this.estudiante = estudiante;
+    public void setAsignacion(Asignacion asignacion) {
+        this.asignacion = asignacion;
     }
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -41,13 +41,13 @@ import javax.persistence.UniqueConstraint;
     }
 )
 public class Semestre implements java.io.Serializable {
-    private Set<CalendarioActividades> calendarioActividadeses = new HashSet<CalendarioActividades>(0);
-    private Set<Horario> horarios = new HashSet<Horario>(0);
-    private Set<AsignacionEstudianteCarrera> asignacionEstudianteCarreras = new HashSet<AsignacionEstudianteCarrera>(0);
-    private short anio;
-    private short idSemestre;
-    private char numero;
-    private String observacion;
+     private short idSemestre;
+     private short anio;
+     private char numero;
+     private String observacion;
+     private Set<CalendarioActividades> calendarioActividadeses = new HashSet<CalendarioActividades>(0);
+     private Set<HistorialAsignacionEstudianteCarrera> historialAsignacionEstudianteCarreras = new HashSet<HistorialAsignacionEstudianteCarrera>(0);
+     private Set<Horario> horarios = new HashSet<Horario>(0);
 
     public Semestre() {}
 
@@ -135,17 +135,13 @@ public class Semestre implements java.io.Serializable {
         this.horarios = horarios;
     }
 //______________________________________________________________________________
-    @OneToMany(
-        cascade = CascadeType.ALL,
-        fetch = FetchType.LAZY,
-        mappedBy = "semestre"
-    )
-    public Set<AsignacionEstudianteCarrera> getAsignacionEstudianteCarreras() {
-        return asignacionEstudianteCarreras;
+    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="semestre")
+    public Set<HistorialAsignacionEstudianteCarrera> getHistorialAsignacionEstudianteCarreras() {
+        return this.historialAsignacionEstudianteCarreras;
     }
-    
-    public void setAsignacionEstudianteCarreras(Set<AsignacionEstudianteCarrera> asignacionEstudianteCarreras) {
-        this.asignacionEstudianteCarreras = asignacionEstudianteCarreras;
+
+    public void setHistorialAsignacionEstudianteCarreras(Set<HistorialAsignacionEstudianteCarrera> historialAsignacionEstudianteCarreras) {
+        this.historialAsignacionEstudianteCarreras = historialAsignacionEstudianteCarreras;
     }
 }
 

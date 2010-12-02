@@ -339,7 +339,7 @@ public class ControladorControlPensum {
         Curso curso = this.getCursoSeleccionado(wrapperCursoPensum.getIdCurso());
         try {
             // se trata de crear la asignacion del curso al pensum
-            this.servicioCarreraImpl.agregarCursoPensum(this.pensumSeleccionado, curso, wrapperCursoPensum.isObligatorio());
+//            this.servicioCarreraImpl.agregarCursoPensum(this.pensumSeleccionado, curso, wrapperCursoPensum.isObligatorio());
 
             // se registra el evento
             RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "controlPensum.agregarCursoExito", true);

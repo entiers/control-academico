@@ -37,53 +37,17 @@ import javax.persistence.Table;
     schema = "control"
 )
 public class Curso implements java.io.Serializable {
-    private Set<ProgramaCurso> programaCursos = new HashSet<ProgramaCurso>(0);
-    private Set<Prerrequisito> prerrequisitosForIdCursoPrerrequisito = new HashSet<Prerrequisito>(0);
-    private Set<Prerrequisito> prerrequisitosForIdCurso = new HashSet<Prerrequisito>(0);
-    private Set<Horario> horarios = new HashSet<Horario>(0);
-    private Set<Desasignacion> desasignacions = new HashSet<Desasignacion>(0);
-    private Set<CursoAprobado> cursoAprobados = new HashSet<CursoAprobado>(0);
-    private Set<ConteoAsignacion> conteoAsignacions = new HashSet<ConteoAsignacion>(0);
-    private Set<AsignacionCursoPensum> asignacionCursoPensums = new HashSet<AsignacionCursoPensum>(0);
-    private String codigo;
-    private Short creditosPracticos;
-    private Short creditosPrerrequisito;
-    private Short creditosTeoricos;
     private short idCurso;
-    private String nombre;
-    private short semestre;
+     private String codigo;
+     private String nombre;
+     private Set<ProgramaCurso> programaCursos = new HashSet<ProgramaCurso>(0);
+     private Set<CursoAprobado> cursoAprobados = new HashSet<CursoAprobado>(0);
+     private Set<AsignacionCursoPensum> asignacionCursoPensumsForIdCurso = new HashSet<AsignacionCursoPensum>(0);
+     private Set<Desasignacion> desasignacions = new HashSet<Desasignacion>(0);
+     private Set<Horario> horarios = new HashSet<Horario>(0);
+     private Set<ConteoAsignacion> conteoAsignacions = new HashSet<ConteoAsignacion>(0);
+     private Set<AsignacionCursoPensum> asignacionCursoPensumsForIdCursoPrerrequisito = new HashSet<AsignacionCursoPensum>(0);
 
-    public Curso() {}
-
-    public Curso(short idCurso, String codigo, short semestre, String nombre) {
-        this.idCurso = idCurso;
-        this.codigo = codigo;
-        this.semestre = semestre;
-        this.nombre = nombre;
-    }
-
-    public Curso(short idCurso, String codigo, short semestre, String nombre, Short creditosTeoricos,
-                 Short creditosPracticos, Short creditosPrerrequisito, Set<ProgramaCurso> programaCursos,
-                 Set<CursoAprobado> cursoAprobados, Set<AsignacionCursoPensum> asignacionCursoPensums,
-                 Set<Desasignacion> desasignacions, Set<Horario> horarios,
-                 Set<Prerrequisito> prerrequisitosForIdCursoPrerrequisito, Set<ConteoAsignacion> conteoAsignacions,
-                 Set<Prerrequisito> prerrequisitosForIdCurso) {
-        this.idCurso = idCurso;
-        this.codigo = codigo;
-        this.semestre = semestre;
-        this.nombre = nombre;
-        this.creditosTeoricos = creditosTeoricos;
-        this.creditosPracticos = creditosPracticos;
-        this.creditosPrerrequisito = creditosPrerrequisito;
-        this.programaCursos = programaCursos;
-        this.cursoAprobados = cursoAprobados;
-        this.asignacionCursoPensums = asignacionCursoPensums;
-        this.desasignacions = desasignacions;
-        this.horarios = horarios;
-        this.prerrequisitosForIdCursoPrerrequisito = prerrequisitosForIdCursoPrerrequisito;
-        this.conteoAsignacions = conteoAsignacions;
-        this.prerrequisitosForIdCurso = prerrequisitosForIdCurso;
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -113,17 +77,7 @@ public class Curso implements java.io.Serializable {
         this.codigo = codigo;
     }
 
-    @Column(
-        name = "semestre",
-        nullable = false
-    )
-    public short getSemestre() {
-        return this.semestre;
-    }
-
-    public void setSemestre(short semestre) {
-        this.semestre = semestre;
-    }
+    
 
     @Column(
         name = "nombre",
@@ -138,32 +92,7 @@ public class Curso implements java.io.Serializable {
         this.nombre = nombre;
     }
 
-    @Column(name = "creditos_teoricos")
-    public Short getCreditosTeoricos() {
-        return this.creditosTeoricos;
-    }
-
-    public void setCreditosTeoricos(Short creditosTeoricos) {
-        this.creditosTeoricos = creditosTeoricos;
-    }
-
-    @Column(name = "creditos_practicos")
-    public Short getCreditosPracticos() {
-        return this.creditosPracticos;
-    }
-
-    public void setCreditosPracticos(Short creditosPracticos) {
-        this.creditosPracticos = creditosPracticos;
-    }
-
-    @Column(name = "creditos_prerrequisito")
-    public Short getCreditosPrerrequisito() {
-        return this.creditosPrerrequisito;
-    }
-
-    public void setCreditosPrerrequisito(Short creditosPrerrequisito) {
-        this.creditosPrerrequisito = creditosPrerrequisito;
-    }
+    
 
     @OneToMany(
         cascade = CascadeType.ALL,
@@ -191,17 +120,22 @@ public class Curso implements java.io.Serializable {
         this.cursoAprobados = cursoAprobados;
     }
 
-    @OneToMany(
-        cascade = CascadeType.ALL,
-        fetch = FetchType.LAZY,
-        mappedBy = "curso"
-    )
-    public Set<AsignacionCursoPensum> getAsignacionCursoPensums() {
-        return this.asignacionCursoPensums;
+    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="cursoByIdCurso")
+    public Set<AsignacionCursoPensum> getAsignacionCursoPensumsForIdCurso() {
+        return this.asignacionCursoPensumsForIdCurso;
     }
 
-    public void setAsignacionCursoPensums(Set<AsignacionCursoPensum> asignacionCursoPensums) {
-        this.asignacionCursoPensums = asignacionCursoPensums;
+    public void setAsignacionCursoPensumsForIdCurso(Set<AsignacionCursoPensum> asignacionCursoPensumsForIdCurso) {
+        this.asignacionCursoPensumsForIdCurso = asignacionCursoPensumsForIdCurso;
+    }
+
+    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="cursoByIdCursoPrerrequisito")
+    public Set<AsignacionCursoPensum> getAsignacionCursoPensumsForIdCursoPrerrequisito() {
+        return this.asignacionCursoPensumsForIdCursoPrerrequisito;
+    }
+
+    public void setAsignacionCursoPensumsForIdCursoPrerrequisito(Set<AsignacionCursoPensum> asignacionCursoPensumsForIdCursoPrerrequisito) {
+        this.asignacionCursoPensumsForIdCursoPrerrequisito = asignacionCursoPensumsForIdCursoPrerrequisito;
     }
 
     @OneToMany(
@@ -230,19 +164,7 @@ public class Curso implements java.io.Serializable {
         this.horarios = horarios;
     }
 
-    @OneToMany(
-        cascade = CascadeType.ALL,
-        fetch = FetchType.LAZY,
-        mappedBy = "cursoByIdCursoPrerrequisito"
-    )
-    public Set<Prerrequisito> getPrerrequisitosForIdCursoPrerrequisito() {
-        return this.prerrequisitosForIdCursoPrerrequisito;
-    }
-
-    public void setPrerrequisitosForIdCursoPrerrequisito(Set<Prerrequisito> prerrequisitosForIdCursoPrerrequisito) {
-        this.prerrequisitosForIdCursoPrerrequisito = prerrequisitosForIdCursoPrerrequisito;
-    }
-
+    
     @OneToMany(
         cascade = CascadeType.ALL,
         fetch = FetchType.LAZY,
@@ -254,20 +176,7 @@ public class Curso implements java.io.Serializable {
 
     public void setConteoAsignacions(Set<ConteoAsignacion> conteoAsignacions) {
         this.conteoAsignacions = conteoAsignacions;
-    }
-
-    @OneToMany(
-        cascade = CascadeType.ALL,
-        fetch = FetchType.LAZY,
-        mappedBy = "cursoByIdCurso"
-    )
-    public Set<Prerrequisito> getPrerrequisitosForIdCurso() {
-        return this.prerrequisitosForIdCurso;
-    }
-
-    public void setPrerrequisitosForIdCurso(Set<Prerrequisito> prerrequisitosForIdCurso) {
-        this.prerrequisitosForIdCurso = prerrequisitosForIdCurso;
-    }
+    }    
 }
 
 

@@ -86,7 +86,7 @@ public interface ServicioCarrera extends ServicioGeneral {
     List<Curso> buscarCursosNoAsignados(Pensum pensum)
             throws DataAccessException;
 //______________________________________________________________________________
-    /**
+    /*
      * <p>Este metodo permite asignar el {@link Curso} enviado como parametro
      * al {@link Pensum} que tambien se envia como parametro.</p>
      *
@@ -95,6 +95,6 @@ public interface ServicioCarrera extends ServicioGeneral {
      * @param obligatorio <code>true</code> si el {@link Curso} es obligatorio
      * @throws DataAccessException Si ocurrio un error de acceso a datos
      */
-    void agregarCursoPensum(Pensum pensum, Curso curso, boolean obligatorio)
-            throws DataAccessException;
+    /*void agregarCursoPensum(Pensum pensum, Curso curso, boolean obligatorio)
+            throws DataAccessException;*/
 }

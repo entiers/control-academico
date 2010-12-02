@@ -48,13 +48,7 @@
                 </div>
 
                 <%-- se importan los demas campos --%>
-                <%@include file="../../jspf/formularios/formularioEstudiante.jspf" %>
-
-                <div id="divCampos">
-                    <form:label for="cierre" path="cierre"><fmt:message key="agregarEstudiante.cierre"/>:</form:label>
-                    <form:input path="cierre" cssStyle="width: 250px;" />
-                    <form:errors path="cierre" cssClass="claseError" />
-                </div>
+                <%@include file="../../jspf/formularios/formularioEstudiante.jspf" %>                
 
                 <%-- boton para editar --%>
                 <input id="btnEditar" type="button" value='<fmt:message key="btnEditar"/>'

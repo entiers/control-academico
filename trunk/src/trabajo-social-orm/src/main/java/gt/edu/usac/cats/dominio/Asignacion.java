@@ -43,33 +43,16 @@ import javax.persistence.TemporalType;
     schema = "control"
 )
 public class Asignacion implements java.io.Serializable {
-    private Set<DetalleAsignacion> detalleAsignacions = new HashSet<DetalleAsignacion>(0);
-    private Estudiante estudiante;
-    private Date fecha;
-    private int idAsignacion;
-    private TipoAsignacion tipoAsignacion;
-    private String transaccion;
+     private int idAsignacion;
+     private TipoAsignacion tipoAsignacion;
+     private AsignacionEstudianteCarrera asignacionEstudianteCarrera;
+     private String transaccion;
+     private Date fecha;
+     private Set<DetalleAsignacion> detalleAsignacions = new HashSet<DetalleAsignacion>(0);
+     private Set<CursoAprobado> cursoAprobados = new HashSet<CursoAprobado>(0);
 
     public Asignacion() {}
-
-    public Asignacion(int idAsignacion, Estudiante estudiante, TipoAsignacion tipoAsignacion, String transaccion,
-                      Date fecha) {
-        this.idAsignacion = idAsignacion;
-        this.estudiante = estudiante;
-        this.tipoAsignacion = tipoAsignacion;
-        this.transaccion = transaccion;
-        this.fecha = fecha;
-    }
-
-    public Asignacion(int idAsignacion, Estudiante estudiante, TipoAsignacion tipoAsignacion, String transaccion,
-                      Date fecha, Set<DetalleAsignacion> detalleAsignacions) {
-        this.idAsignacion = idAsignacion;
-        this.estudiante = estudiante;
-        this.tipoAsignacion = tipoAsignacion;
-        this.transaccion = transaccion;
-        this.fecha = fecha;
-        this.detalleAsignacions = detalleAsignacions;
-    }
+    
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -86,17 +69,17 @@ public class Asignacion implements java.io.Serializable {
         this.idAsignacion = idAsignacion;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(
-        name = "id_estudiante",
-        nullable = false
+        name="id_asignacion_estudiante_carrera"
+        , nullable=false
     )
-    public Estudiante getEstudiante() {
-        return this.estudiante;
+    public AsignacionEstudianteCarrera getAsignacionEstudianteCarrera() {
+        return this.asignacionEstudianteCarrera;
     }
 
-    public void setEstudiante(Estudiante estudiante) {
-        this.estudiante = estudiante;
+    public void setAsignacionEstudianteCarrera(AsignacionEstudianteCarrera asignacionEstudianteCarrera) {
+        this.asignacionEstudianteCarrera = asignacionEstudianteCarrera;
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -150,6 +133,15 @@ public class Asignacion implements java.io.Serializable {
 
     public void setDetalleAsignacions(Set<DetalleAsignacion> detalleAsignacions) {
         this.detalleAsignacions = detalleAsignacions;
+    }
+
+    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="asignacion")
+    public Set<CursoAprobado> getCursoAprobados() {
+        return this.cursoAprobados;
+    }
+
+    public void setCursoAprobados(Set<CursoAprobado> cursoAprobados) {
+        this.cursoAprobados = cursoAprobados;
     }
 }
 

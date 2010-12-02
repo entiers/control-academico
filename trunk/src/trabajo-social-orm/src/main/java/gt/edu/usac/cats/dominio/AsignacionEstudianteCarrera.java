@@ -15,6 +15,9 @@ package gt.edu.usac.cats.dominio;
 
 //Generated 16/03/2010 06:31:00 PM by Hibernate Tools 3.2.1.GA
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.CascadeType;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,6 +27,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -38,22 +42,24 @@ import javax.persistence.UniqueConstraint;
     schema = "control",
     uniqueConstraints={
         @UniqueConstraint(name = "asignacion_estudiante_carrera_semestre_uk",
-            columnNames = {"id_estudiante", "id_carrera", "id_semestre"})
+            columnNames = {"id_estudiante", "id_carrera"})
     }
 )
 
 public class AsignacionEstudianteCarrera implements java.io.Serializable {
-    private int idAsignacionEstudianteCarrera;    
-    private Date fechaInscripcion;
-    private Situacion situacion;
+    private int idAsignacionEstudianteCarrera;
+    
     private Estudiante estudiante;
     private Carrera carrera;    
-    private Semestre semestre;
+    private Date fechaCierre;
+    private Set<Asignacion> asignacions = new HashSet<Asignacion>(0);
+    private Set <HistorialAsignacionEstudianteCarrera> historialAsignacionEstudianteCarreras
+            = new HashSet<HistorialAsignacionEstudianteCarrera>(0);
 
 
 
     public AsignacionEstudianteCarrera() {}    
-
+//______________________________________________________________________________
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(
@@ -68,7 +74,7 @@ public class AsignacionEstudianteCarrera implements java.io.Serializable {
     public void setIdAsignacionEstudianteCarrera(int idAsignacionEstudianteCarrera) {
         this.idAsignacionEstudianteCarrera = idAsignacionEstudianteCarrera;
     }
-
+//______________________________________________________________________________
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
         name = "id_estudiante",
@@ -82,6 +88,7 @@ public class AsignacionEstudianteCarrera implements java.io.Serializable {
         this.estudiante = estudiante;
     }
 
+//______________________________________________________________________________
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
         name = "id_carrera",
@@ -94,47 +101,47 @@ public class AsignacionEstudianteCarrera implements java.io.Serializable {
     public void setCarrera(Carrera carrera) {
         this.carrera = carrera;
     }
-
+//______________________________________________________________________________
     @Temporal(TemporalType.DATE)
     @Column(
-        name = "fecha_inscripcion",
-        nullable = false,
+        name = "cierre",
         length = 13
     )
-    public Date getFechaInscripcion() {
-        return this.fechaInscripcion;
+    public Date getFechaCierre() {
+        return fechaCierre;
     }
 
-    public void setFechaInscripcion(Date fechaInscripcion) {
-        this.fechaInscripcion = fechaInscripcion;
-    }
-    
-//______________________________________________________________________________
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(
-        name = "id_semestre",
-        nullable = false
-    )
-    public Semestre getSemestre() {
-        return semestre;
-    }
-    
-    public void setSemestre(Semestre semestre) {
-        this.semestre = semestre;
+    public void setFechaCierre(Date fechaCierre) {
+        this.fechaCierre = fechaCierre;
     }
 //______________________________________________________________________________
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(
-        name = "id_situacion",
-        nullable = false
+    @OneToMany(
+        cascade=CascadeType.ALL,
+        fetch=FetchType.LAZY,
+        mappedBy="asignacionEstudianteCarrera"
     )
-    public Situacion getSituacion() {
-        return situacion;
+    public Set<Asignacion> getAsignacions() {
+        return this.asignacions;
     }
 
-    public void setSituacion(Situacion situacion) {
-        this.situacion = situacion;
+    public void setAsignacions(Set<Asignacion> asignacions) {
+        this.asignacions = asignacions;
+    }    
+//______________________________________________________________________________
+    @OneToMany(
+        cascade = CascadeType.ALL,
+        fetch = FetchType.LAZY,
+        mappedBy = "asignacionEstudianteCarrera"
+    )
+    public Set<HistorialAsignacionEstudianteCarrera> getHistorialAsignacionEstudianteCarreras() {
+        return historialAsignacionEstudianteCarreras;
     }
+
+    public void setHistorialAsignacionEstudianteCarreras(Set<HistorialAsignacionEstudianteCarrera> historialAsignacionEstudianteCarreras) {
+        this.historialAsignacionEstudianteCarreras = historialAsignacionEstudianteCarreras;
+    }
+//______________________________________________________________________________
+
 }
 
 

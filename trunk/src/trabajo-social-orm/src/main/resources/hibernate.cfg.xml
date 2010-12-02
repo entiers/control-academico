@@ -30,8 +30,7 @@
     <mapping class="gt.edu.usac.cats.dominio.Horario"/>
     <mapping class="gt.edu.usac.cats.dominio.Asignacion"/>
     <mapping class="gt.edu.usac.cats.dominio.Desasignacion"/>
-    <mapping class="gt.edu.usac.cats.dominio.Rol"/>
-    <mapping class="gt.edu.usac.cats.dominio.Prerrequisito"/>
+    <mapping class="gt.edu.usac.cats.dominio.Rol"/>    
     <mapping class="gt.edu.usac.cats.dominio.CursoAprobado"/>
     <mapping class="gt.edu.usac.cats.dominio.ConteoAsignacion"/>
     <mapping class="gt.edu.usac.cats.dominio.Carrera"/>
@@ -40,5 +39,6 @@
     <mapping class="gt.edu.usac.cats.dominio.CuentaCorriente"/>
     <mapping class="gt.edu.usac.cats.dominio.Movimiento"/>
     <mapping class="gt.edu.usac.cats.dominio.Situacion"/>
+    <mapping class="gt.edu.usac.cats.dominio.HistorialAsignacionEstudianteCarrera"/>
   </session-factory>
 </hibernate-configuration>
