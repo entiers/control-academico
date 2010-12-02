@@ -174,7 +174,7 @@ public class ServicioCarreraImpl extends ServicioGeneralImpl implements Servicio
         return this.daoGeneralImpl.find(hql);
     }
 //______________________________________________________________________________
-    /**
+    /*
      * <p>Este metodo permite asignar el {@link Curso} enviado como parametro
      * al {@link Pensum} que tambien se envia como parametro.</p>
      *
@@ -183,7 +183,7 @@ public class ServicioCarreraImpl extends ServicioGeneralImpl implements Servicio
      * @param obligatorio <code>true</code> si el {@link Curso} es obligatorio
      * @throws DataAccessException Si ocurrio un error de acceso a datos
      */
-    @Transactional(rollbackFor = Exception.class)
+    /*@Transactional(rollbackFor = Exception.class)
     @Override
     public void agregarCursoPensum(Pensum pensum, Curso curso, boolean obligatorio) throws DataAccessException {
         AsignacionCursoPensum a = new AsignacionCursoPensum();
@@ -192,5 +192,5 @@ public class ServicioCarreraImpl extends ServicioGeneralImpl implements Servicio
         a.setObligatorio(obligatorio);
 
         this.daoGeneralImpl.save(a);
-    }
+    }*/
 }

@@ -14,12 +14,8 @@
             buttons: {
                 '<fmt:message key="btnAceptar"/>': function() {
                     if(<%= RequestUtil.getValorBoolean(request, "limpiarCampos") %>) {
-                        $("#codigo").val("<%= wrapperCurso.getCodigo() %>");
-                        $("#creditosPracticos").val("<%= wrapperCurso.getCreditosPracticos() %>");
-                        $("#creditosPrerrequisito").val("<%= wrapperCurso.getCreditosPrerrequisito() %>");
-                        $("#creditosTeoricos").val("<%= wrapperCurso.getCreditosTeoricos() %>");
+                        $("#codigo").val("<%= wrapperCurso.getCodigo() %>");                        
                         $("#nombre").val("<%= wrapperCurso.getNombre() %>");
-                        $("#semestre").val("<%= wrapperCurso.getSemestre() %>");
                     }
 
                     $(this).dialog('close');

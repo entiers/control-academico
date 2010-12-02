@@ -34,21 +34,19 @@ import javax.persistence.Table;
     schema = "control"
 )
 public class AsignacionCursoPensum implements java.io.Serializable {
-    private Curso curso;
-    private short idAsignacionCursoPensum;
-    private boolean obligatorio;
-    private Pensum pensum;
+     private short idAsignacionCursoPensum;
+     private Curso cursoByIdCursoPrerrequisito;
+     private Curso cursoByIdCurso;
+     private Pensum pensum;
+     private boolean obligatorio;
+     private Short creditosPracticos;
+     private Short creditosPrerrequisito;
+     private Short creditosTeoricos;
+     private short numeroSemestre;
 
     public AsignacionCursoPensum() {}
 
-    public AsignacionCursoPensum(short idAsignacionCursoPensum, Curso curso, Pensum pensum,
-                                 boolean obligatorio) {
-        this.idAsignacionCursoPensum = idAsignacionCursoPensum;
-        this.curso = curso;
-        this.pensum = pensum;
-        this.obligatorio = obligatorio;
-    }
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(
@@ -56,6 +54,7 @@ public class AsignacionCursoPensum implements java.io.Serializable {
         unique = true,
         nullable = false
     )
+//______________________________________________________________________________
     public short getIdAsignacionCursoPensum() {
         return this.idAsignacionCursoPensum;
     }
@@ -63,20 +62,27 @@ public class AsignacionCursoPensum implements java.io.Serializable {
     public void setIdAsignacionCursoPensum(short idAsignacionCursoPensum) {
         this.idAsignacionCursoPensum = idAsignacionCursoPensum;
     }
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(
-        name = "id_curso",
-        nullable = false
-    )
-    public Curso getCurso() {
-        return this.curso;
+//______________________________________________________________________________
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="id_curso", nullable=false)
+    public Curso getCursoByIdCurso() {
+        return this.cursoByIdCurso;
     }
 
-    public void setCurso(Curso curso) {
-        this.curso = curso;
+    public void setCursoByIdCurso(Curso cursoByIdCurso) {
+        this.cursoByIdCurso = cursoByIdCurso;
+    }
+//______________________________________________________________________________
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="id_curso_prerrequisito")
+    public Curso getCursoByIdCursoPrerrequisito() {
+        return this.cursoByIdCursoPrerrequisito;
     }
 
+    public void setCursoByIdCursoPrerrequisito(Curso cursoByIdCursoPrerrequisito) {
+        this.cursoByIdCursoPrerrequisito = cursoByIdCursoPrerrequisito;
+    }
+//______________________________________________________________________________
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
         name = "id_pensum",
@@ -90,6 +96,7 @@ public class AsignacionCursoPensum implements java.io.Serializable {
         this.pensum = pensum;
     }
 
+//______________________________________________________________________________
     @Column(
         name = "obligatorio",
         nullable = false
@@ -100,6 +107,48 @@ public class AsignacionCursoPensum implements java.io.Serializable {
 
     public void setObligatorio(boolean obligatorio) {
         this.obligatorio = obligatorio;
+    }
+    
+//______________________________________________________________________________
+    @Column(
+        name = "semestre",
+        nullable = false
+    )
+
+    public short getNumeroSemestre() {
+        return this.numeroSemestre;
+    }
+
+    public void setNumeroSemestre(short numeroSemestre) {
+        this.numeroSemestre = numeroSemestre;
+    }
+
+//______________________________________________________________________________
+    @Column(name = "creditos_teoricos")
+    public Short getCreditosTeoricos() {
+        return this.creditosTeoricos;
+    }
+
+    public void setCreditosTeoricos(Short creditosTeoricos) {
+        this.creditosTeoricos = creditosTeoricos;
+    }
+//______________________________________________________________________________
+    @Column(name = "creditos_practicos")
+    public Short getCreditosPracticos() {
+        return this.creditosPracticos;
+    }
+
+    public void setCreditosPracticos(Short creditosPracticos) {
+        this.creditosPracticos = creditosPracticos;
+    }
+//______________________________________________________________________________
+    @Column(name = "creditos_prerrequisito")
+    public Short getCreditosPrerrequisito() {
+        return this.creditosPrerrequisito;
+    }
+
+    public void setCreditosPrerrequisito(Short creditosPrerrequisito) {
+        this.creditosPrerrequisito = creditosPrerrequisito;
     }
 }
 

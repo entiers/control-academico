@@ -1,0 +1,184 @@
+/* begin Box, Sheet */
+.art-Sheet-tl
+{
+	clip: rect(auto 37px 37px auto);
+}
+
+.art-Sheet-tr
+{
+	clip: rect(auto auto 37px 37px);
+}
+
+.art-Sheet-bl
+{
+	clip: rect(37px 37px auto auto);
+}
+
+.art-Sheet-br
+{
+	clip: rect(37px auto auto 37px);
+}
+
+.art-Sheet-tc
+{
+	clip: rect(auto auto 37px auto);
+}
+
+.art-Sheet-bc
+{
+	clip: rect(37px auto auto auto);
+}
+
+.art-Sheet-cr
+{
+	clip: rect(auto auto auto 37px);
+}
+
+.art-Sheet-cl
+{
+	clip: rect(auto 37px auto auto);
+}
+
+.art-Sheet-body
+{
+	zoom: 1;
+}
+/* end Box, Sheet */
+
+/* begin Menu */
+.art-nav .r
+{
+	clip: rect(auto auto auto 880px);
+}
+/* end Menu */
+
+/* begin MenuItem */
+.art-menu a .r
+{
+	clip: rect(auto auto auto 400px);
+}
+/* end MenuItem */
+
+/* begin Box, Block */
+
+.art-Block-body
+{
+	zoom: 1;
+}
+/* end Box, Block */
+
+/* begin BlockHeader */
+.art-BlockHeader .r
+{
+	clip: rect(auto auto auto 875px);
+}
+/* end BlockHeader */
+
+/* begin Box, BlockContent */
+.art-BlockContent-tl
+{
+	clip: rect(auto 9px 9px auto);
+}
+
+.art-BlockContent-tr
+{
+	clip: rect(auto auto 9px 9px);
+}
+
+.art-BlockContent-bl
+{
+	clip: rect(9px 9px auto auto);
+}
+
+.art-BlockContent-br
+{
+	clip: rect(9px auto auto 9px);
+}
+
+.art-BlockContent-tc
+{
+	clip: rect(auto auto 9px auto);
+}
+
+.art-BlockContent-bc
+{
+	clip: rect(9px auto auto auto);
+}
+
+.art-BlockContent-cr
+{
+	clip: rect(auto auto auto 9px);
+}
+
+.art-BlockContent-cl
+{
+	clip: rect(auto 9px auto auto);
+}
+
+.art-BlockContent-body
+{
+	zoom: 1;
+}
+/* end Box, BlockContent */
+
+/* begin Box, Post */
+.art-Post-tl
+{
+	clip: rect(auto 10px 10px auto);
+}
+
+.art-Post-tr
+{
+	clip: rect(auto auto 10px 10px);
+}
+
+.art-Post-bl
+{
+	clip: rect(10px 10px auto auto);
+}
+
+.art-Post-br
+{
+	clip: rect(10px auto auto 10px);
+}
+
+.art-Post-tc
+{
+	clip: rect(auto auto 10px auto);
+}
+
+.art-Post-bc
+{
+	clip: rect(10px auto auto auto);
+}
+
+.art-Post-cr
+{
+	clip: rect(auto auto auto 10px);
+}
+
+.art-Post-cl
+{
+	clip: rect(auto 10px auto auto);
+}
+
+.art-Post-body
+{
+	zoom: 1;
+}
+/* end Box, Post */
+
+/* begin PostContent */
+.art-PostContent
+{
+	height:1%;
+}
+/* end PostContent */
+
+/* begin Button */
+.art-button-wrapper .r
+{
+	clip: rect(auto auto auto 406px);
+}
+/* end Button */
+

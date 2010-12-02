@@ -39,7 +39,7 @@ public class Situacion implements java.io.Serializable {
     private short codigo;
     private String nombre;
     private String descripcion;
-    private Set<AsignacionEstudianteCarrera> asignacionEstudianteCarreras = new HashSet<AsignacionEstudianteCarrera>(0);
+    private Set<HistorialAsignacionEstudianteCarrera> historialAsignacionEstudianteCarreras = new HashSet<HistorialAsignacionEstudianteCarrera>(0);
 
 
     public Situacion(){}
@@ -102,12 +102,12 @@ public class Situacion implements java.io.Serializable {
         fetch = FetchType.LAZY,
         mappedBy = "situacion"
     )
-    public Set<AsignacionEstudianteCarrera> getAsignacionEstudianteCarreras() {
-        return this.asignacionEstudianteCarreras;
+    public Set<HistorialAsignacionEstudianteCarrera> getAsignacionEstudianteCarreras() {
+        return this.historialAsignacionEstudianteCarreras;
     }
 
-    public void setAsignacionEstudianteCarreras(Set<AsignacionEstudianteCarrera> asignacionEstudianteCarreras) {
-        this.asignacionEstudianteCarreras = asignacionEstudianteCarreras;
+    public void setAsignacionEstudianteCarreras(Set<HistorialAsignacionEstudianteCarrera> historialAsignacionEstudianteCarreras) {
+        this.historialAsignacionEstudianteCarreras = historialAsignacionEstudianteCarreras;
     }
 //______________________________________________________________________________
 }

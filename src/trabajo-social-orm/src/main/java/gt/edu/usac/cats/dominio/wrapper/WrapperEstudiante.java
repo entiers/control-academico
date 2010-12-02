@@ -69,9 +69,6 @@ public class WrapperEstudiante {
 //______________________________________________________________________________
     private String nov;
 //______________________________________________________________________________
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private Date cierre;
-//______________________________________________________________________________
 
     public WrapperEstudiante() {
         this.sexo = 'M';
@@ -91,7 +88,6 @@ public class WrapperEstudiante {
         this.setNacionalidad(estudiante.getNacionalidad());
         this.setCarneModificado(estudiante.getCarneModificado());
         this.setNov(estudiante.getNov());
-        this.setCierre(estudiante.getCierre());
 
     }
 //______________________________________________________________________________
@@ -108,8 +104,7 @@ public class WrapperEstudiante {
         estudiante.setLugarNacimiento(this.getLugarNacimiento());
         estudiante.setNacionalidad(this.getNacionalidad());
         estudiante.setCarneModificado(this.getCarneModificado());
-        estudiante.setNov(this.getNov());
-        estudiante.setCierre(this.getCierre());
+        estudiante.setNov(this.getNov());        
     }
 //______________________________________________________________________________
     public String getCarne() {
@@ -223,13 +218,5 @@ public class WrapperEstudiante {
 
     public void setNov(String nov) {
         this.nov = nov;
-    }
-//______________________________________________________________________________
-    public Date getCierre() {
-        return cierre;
-    }
-
-    public void setCierre(Date cierre) {
-        this.cierre = cierre;
     }
 }
