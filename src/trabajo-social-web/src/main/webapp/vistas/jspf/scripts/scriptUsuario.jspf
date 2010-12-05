@@ -11,10 +11,6 @@
             modal: true,
             buttons: {
                 '<fmt:message key="btnAceptar"/>': function() {
-                    if(<%= RequestUtil.getValorBoolean(request, "limpiarCampos") %>) {
-                        $("#nombre").val("${wrapperPerfil.nombre}");
-                        $("#descripcion").val("${wrapperPerfil.descripcion}");
-                    }
                     $(this).dialog('close');
                 }
             }

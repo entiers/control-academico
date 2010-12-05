@@ -11,6 +11,17 @@
                 <fmt:message key="menu.inicio"/>
             </span>
             </a>
+        </li>
+        <li>
+            <a href="#">
+                <span class="l"></span><span class="r"></span><span class="t">
+                <fmt:message key="modificarDatosPersonales.DatosFijos"/></span>
+            </a>
+            <ul>
+                <li><a href="modificarDatosPersonales.htm"><fmt:message key="modificarDatosPersonales.titulo"/></a></li>
+                <li><a href="modificarContrasenia.htm"><fmt:message key="modificarContrasenia.titulo"/></a></li>
+            </ul>
+        </li>
     </sec:authorize>
 
     <%-- menu de catalogos --%>
@@ -70,7 +81,7 @@
                     </ul>
                 </li>
             </sec:authorize>
-            
+
             <%--Catálogo de roles--%>
             <sec:authorize access="hasAnyRole('ROLE_BUSCAR_ROL')">
                 <li><a href="#"><fmt:message key="rol.menu"/></a>

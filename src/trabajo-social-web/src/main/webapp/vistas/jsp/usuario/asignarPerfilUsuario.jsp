@@ -1,4 +1,4 @@
-<%-- 
+<%--
     Document   : asignarPerfilUsuario
     Created on : 17/11/2010, 09:21:12 PM
     Author     : Carlos Solórzano
@@ -60,9 +60,9 @@
                 </tbody>
             </table>
         </fieldset>
-        
+
         <%-- fragmento que muestra como mensaje popup el resultado de las operaciones --%>
         <%@include file="../../jspf/plantilla/popupMensaje.jspf" %>
-        
+
     </body>
 </html>

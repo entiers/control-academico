@@ -41,7 +41,7 @@
         <intercept-url pattern="/agregarHorario.htm" access="hasRole('ROLE_AGREGAR_HORARIO')" />
         <intercept-url pattern="/buscarHorario.htm" access="hasRole('ROLE_BUSCAR_HORARIO')" />
         <intercept-url pattern="/editarHorario.htm" access="hasRole('ROLE_EDITAR_HORARIO')" />
-        
+
         <intercept-url pattern="/controlPensum.htm" access="hasRole('ROLE_CONTROL_PENSUM')"/>
 
         <intercept-url pattern="/agregarPerfil.htm" access="hasRole('ROLE_AGREGAR_PERFIL')" />
@@ -54,7 +54,7 @@
 
         <intercept-url pattern="/agregarSalon.htm" access="hasRole('ROLE_AGREGAR_SALON')"/>
         <intercept-url pattern="/editarSalon.htm" access="hasRole('ROLE_EDITAR_SALON')"/>
-                
+
         <intercept-url pattern="/agregarSemestre.htm" access="hasRole('ROLE_AGREGAR_SEMESTRE')"/>
 
         <intercept-url pattern="/agregarTipoAsignacion.htm" access="hasRole('ROLE_AGREGAR_TIPO_ASIGN')"/>
@@ -66,7 +66,9 @@
 
         <!-- se especifica que pagina contiene el formulario de login -->
         <form-login login-page='/login.htm' default-target-url='/index.htm' always-use-default-target='true'/>
-        
+
+        <intercept-url pattern="/modificarDatosPersonales.htm" access="hasRole('ROLE_USUARIO_REGISTRADO')"/>
+
         <!-- configuración para logout del sistema-->
         <logout logout-success-url="/welcome.htm" />
     </http>
