@@ -17,6 +17,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.HibernateException;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
@@ -111,6 +112,16 @@ public class ServicioUsuarioImpl extends ServicioGeneralImpl implements Servicio
         Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
         query.setParameter("usuario", usuario);
         return query.list();
+    }
+
+    @Override
+    public Usuario cargarUsuarioPorNombre(String nombreUsuario) throws HibernateException {
+        // se busca el usuario por nombre
+        DetachedCriteria criteria = DetachedCriteria.forClass(Usuario.class);
+        criteria.add(Restrictions.eq("nombreUsuario", nombreUsuario));
+
+        // se retorna el usuario o null sino se encontro
+        return this.daoGeneralImpl.uniqueResult(criteria);
     }
 
 }

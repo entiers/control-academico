@@ -21,7 +21,18 @@ import org.springframework.dao.DataAccessException;
  * @version 1.0
  */
 public interface ServicioUsuario extends ServicioGeneral {
-//______________________________________________________________________________
+
+    //______________________________________________________________________________
+    /**
+     * <p>Este metodo se encarga de buscar un usuario en base al nombre del mismo</p>
+     *
+     * @param nombre Contiene el nombre del usuario a buscar
+     * @return Usuario
+     * @throws HibernateException Si ocurrio un error de acceso a datos
+     */
+    Usuario cargarUsuarioPorNombre(String nombre)
+            throws HibernateException;
+    //______________________________________________________________________________
     /**
      * <p>Este metodo se encarga de crear un listado de usuarios, el listado
      * se filtra en base a los datos de busqueda y se ordena en base al tipo
