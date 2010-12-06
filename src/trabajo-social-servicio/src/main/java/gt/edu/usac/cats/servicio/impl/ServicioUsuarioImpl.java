@@ -124,4 +124,29 @@ public class ServicioUsuarioImpl extends ServicioGeneralImpl implements Servicio
         return this.daoGeneralImpl.uniqueResult(criteria);
     }
 
+    @Override
+    public Usuario getUsuarioPorEmail(String email) throws HibernateException {
+        Usuario usuario = null;
+        List lista;
+        StringBuilder builderEst = new StringBuilder();
+        StringBuilder builderCat = new StringBuilder();
+        Query query;
+
+        builderEst.append(" Select est.usuario from Estudiante as est")
+               .append(" where est.email = :email ");
+        query = this.daoGeneralImpl.getSesion().createQuery(builderEst.toString());
+        query.setParameter("email", email);
+        lista = query.list();
+        if(lista.isEmpty()){
+            builderCat.append(" Select cat.usuario from Catedratico as cat")
+                   .append(" where cat.email = :email ");
+            query = this.daoGeneralImpl.getSesion().createQuery(builderCat.toString());
+            query.setParameter("email", email);
+            lista = query.list();
+        }
+        if(!lista.isEmpty())
+            usuario = (Usuario) lista.get(0);
+        return usuario;
+    }
+
 }

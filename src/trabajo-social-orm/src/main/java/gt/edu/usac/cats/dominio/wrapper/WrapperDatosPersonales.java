@@ -33,7 +33,12 @@ public class WrapperDatosPersonales {
     private String email;
 //______________________________________________________________________________
 
-    public WrapperDatosPersonales(){}
+    public WrapperDatosPersonales(){
+        this.direccion ="";
+        this.telefono="";
+        this.celular="";
+        this.email="";
+    }
 
     public String getCelular() {
         return celular;

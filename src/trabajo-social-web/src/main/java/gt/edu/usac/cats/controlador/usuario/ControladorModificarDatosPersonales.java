@@ -35,19 +35,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class ControladorModificarDatosPersonales {
     private static Logger log = Logger.getLogger(ControladorAsignarPerfilUsuario.class);
-//______________________________________________________________________________
+//_____________________________________________________________________________
     private static final String TITULO_MENSAJE = "modificarDatosPersonales.titulo";
 //______________________________________________________________________________
     private Estudiante estudiante;
-
+//_____________________________________________________________________________
     private Usuario usuario;
-
+//_____________________________________________________________________________
     @Resource
     private ServicioEstudiante servicioEstudianteImpl;
-
+//_____________________________________________________________________________
     @Resource
     private ServicioUsuario servicioUsuarioImpl;
-
  //______________________________________________________________________________
     /**
      * @param modelo
@@ -87,7 +86,7 @@ public class ControladorModificarDatosPersonales {
         modelo.addAttribute("wrapperDatosPersonales", wrapperDatosPersonales);
         return "usuario/modificarDatosPersonales";
     }
-
+//_____________________________________________________________________________
     @RequestMapping(value="modificarDatosPersonales.htm",method = RequestMethod.POST)
     public String modificarDatos(@Valid WrapperDatosPersonales wrapperDatosPersonales, BindingResult bindingResult,
                         Model modelo, HttpServletRequest request) {

@@ -89,4 +89,16 @@ public interface ServicioUsuario extends ServicioGeneral {
     List <AsignacionUsuarioPerfil> getAsignacionUsuarioPerfilPorUsuario(Usuario usuario)
             throws DataAccessException;
 
+
+    //______________________________________________________________________________
+    /**
+     * <p>Este metodo se encarga de obtener un usuario en base
+     * al correo electronico registrado en el sistema.</p>
+     *
+     * @param datos Contiene los filtros para el listado
+     * @return List Listado de usuarios
+     * @throws HibernateException Si ocurrio un error de acceso a datos
+     */
+    Usuario getUsuarioPorEmail(String email)
+            throws HibernateException;
 }
