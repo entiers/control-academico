@@ -61,7 +61,10 @@
                         <label id="lj_password" for="j_password"><fmt:message key="login.password"/> *:</label>
                         <input type="password" name="j_password" id="j_password" />
                     </div>
-
+                    <div id="divCampos">
+                        <a href="recordarUsuario.htm"><fmt:message key="login.recordarUsuario"/></a><br/>
+                        <a href="recordarContrasenia.htm"><fmt:message key="login.recordarContrasenia"/></a>
+                    </div>
                     <input type="submit" value='<fmt:message key="btnAcceder"/>' />
                 </fieldset>
             </form>

@@ -14,10 +14,12 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title><fmt:message key="welcome.titulo"/></title>
+        <%@include file="../jspf/scripts/scriptUsuario.jspf" %>
     </head>
     <body>
         <h1><fmt:message key="welcome.titulo"/></h1>
         <h2><fmt:message key="welcome.subtitulo"/></h2>
         <p>Pagina de inicio 555555</p>
+        <%@include file="../jspf/plantilla/popupMensaje.jspf" %>
     </body>
 </html>
