@@ -55,7 +55,7 @@ public class ControladorRecordarUsuario {
      */
     @RequestMapping(method = RequestMethod.GET)
     public String crearFormulario(Model modelo,HttpServletRequest request) {
-        modelo.addAttribute("wrapperRecordarUsuario",new WrapperDatosPersonales());
+        modelo.addAttribute("wrapperDatosPersonales",new WrapperDatosPersonales());
         return "usuario/recordarUsuario";
     }
 //______________________________________________________________________________
@@ -67,16 +67,16 @@ public class ControladorRecordarUsuario {
      */
 
     @RequestMapping(method = RequestMethod.POST)
-    public String recordarUsuario(@Valid WrapperDatosPersonales wrapperRecordarUsuario, BindingResult bindingResult,
+    public String recordarUsuario(@Valid WrapperDatosPersonales wrapperDatosPersonales, BindingResult bindingResult,
                         Model modelo, HttpServletRequest request) throws MessagingException {
 
-        //Validar que no existan errores en el formulario
-        if(bindingResult.hasErrors())
-            return "usuario/recordarUsuario";
+        //Validar que no existan errores en el formulario        
+        if(bindingResult.hasErrors())            
+            return "usuario/recordarUsuario";        
 
         try{
             //Buscar usuario por email
-            this.usuario = this.servicioUsuarioImpl.getUsuarioPorEmail(wrapperRecordarUsuario.getEmail());
+            this.usuario = this.servicioUsuarioImpl.getUsuarioPorEmail(wrapperDatosPersonales.getEmail());
 
             //Si el correo no esta registrado en el sistema
             if (this.usuario==null){
@@ -85,7 +85,7 @@ public class ControladorRecordarUsuario {
             }
             try {
                 //Se envia el correo con el nombre de usuario hacia el correo especificado
-                this.enviarEmail(this.usuario, wrapperRecordarUsuario.getEmail());
+                this.enviarEmail(this.usuario, wrapperDatosPersonales.getEmail());
                 RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "recordarUsuario.exito", true);
             } catch (IOException ex) {
                 // error en envio de correo electronico
