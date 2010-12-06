@@ -20,7 +20,7 @@
     </head>
     <body>
         <h1><fmt:message key="recordarUsuario.titulo"/></h1>
-        <form:form modelAttribute="wrapperRecordarUsuario" method="post" action="">
+        <form:form modelAttribute="wrapperDatosPersonales" method="post">
             <fieldset>
                 <div id="divCampos">
                     <form:label for="email" path="email"><fmt:message key="recordarUsuario.email"/>:</form:label>
