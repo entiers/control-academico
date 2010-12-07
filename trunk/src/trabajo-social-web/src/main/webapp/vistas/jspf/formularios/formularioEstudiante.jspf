@@ -49,13 +49,21 @@
 
 <div id="divCampos">
     <form:label for="lugarNacimiento" path="lugarNacimiento"><fmt:message key="agregarEstudiante.lugarNacimiento"/>:</form:label>
-    <form:input path="lugarNacimiento" cssStyle="width: 250px;" />
+    <form:select path="lugarNacimiento.idLugarNacimiento"
+                 items="${listadoLugaresNacimiento}"
+                 itemLabel="codigoNombre"
+                 itemValue="idLugarNacimiento"
+                 cssStyle="width: 250px;"/>
     <form:errors path="lugarNacimiento" cssClass="claseError" />
 </div>
 
 <div id="divCampos">
     <form:label for="nacionalidad" path="nacionalidad"><fmt:message key="agregarEstudiante.nacionalidad"/>:</form:label>
-    <form:input path="nacionalidad" cssStyle="width: 250px;" />
+    <form:select path="nacionalidad.idNacionalidad"
+                 items="${listadoNacionalidades}"
+                 itemLabel="codigoNombre"
+                 itemValue="idNacionalidad"
+                 cssStyle="width: 250px;"/>
     <form:errors path="nacionalidad" cssClass="claseError" />
 </div>
 

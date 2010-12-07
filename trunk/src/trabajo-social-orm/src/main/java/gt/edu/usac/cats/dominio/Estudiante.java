@@ -48,7 +48,10 @@ import javax.persistence.UniqueConstraint;
 )
 public class Estudiante implements java.io.Serializable {
      private int idEstudiante;
+     private Nacionalidad nacionalidad;
+     private LugarNacimiento lugarNacimiento;
      private Usuario usuario;
+     private Pensum pensum;
      private String carne;
      private String nombre;
      private String direccion;
@@ -56,10 +59,8 @@ public class Estudiante implements java.io.Serializable {
      private String celular;
      private String email;
      private Date fechaNacimiento;
-     private Boolean requisitos;
+     private boolean requisitos;
      private String carneModificado;
-     private Short lugarNacimiento;
-     private Short nacionalidad;
      private String nov;
      private char sexo;
      private Set<CuentaCorriente> cuentaCorrientes = new HashSet<CuentaCorriente>(0);
@@ -77,212 +78,198 @@ public class Estudiante implements java.io.Serializable {
 //______________________________________________________________________________
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(
-        name = "id_estudiante",
-        unique = true,
-        nullable = false
-    )
+@Column(name="id_estudiante", unique=true, nullable=false)
     public int getIdEstudiante() {
         return this.idEstudiante;
     }
-//______________________________________________________________________________
+
     public void setIdEstudiante(int idEstudiante) {
         this.idEstudiante = idEstudiante;
     }
-//______________________________________________________________________________
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(
-        name = "id_usuario",
-        nullable = true
-    )
+@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="id_nacionalidad")
+    public Nacionalidad getNacionalidad() {
+        return this.nacionalidad;
+    }
+
+    public void setNacionalidad(Nacionalidad nacionalidad) {
+        this.nacionalidad = nacionalidad;
+    }
+@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="id_lugar_nacimiento")
+    public LugarNacimiento getLugarNacimiento() {
+        return this.lugarNacimiento;
+    }
+
+    public void setLugarNacimiento(LugarNacimiento lugarNacimiento) {
+        this.lugarNacimiento = lugarNacimiento;
+    }
+@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="id_usuario")
     public Usuario getUsuario() {
         return this.usuario;
     }
-//______________________________________________________________________________
+
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
-//______________________________________________________________________________
-    @Column(
-        name = "carne",
-        nullable = false,
-        length = 10,
-        unique = true
-    )
+@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="id_pensum")
+    public Pensum getPensum() {
+        return this.pensum;
+    }
+
+    public void setPensum(Pensum pensum) {
+        this.pensum = pensum;
+    }
+
+    @Column(name="carne", unique=true, nullable=false, length=10)
     public String getCarne() {
         return this.carne;
     }
-//______________________________________________________________________________
+
     public void setCarne(String carne) {
         this.carne = carne;
     }
-//______________________________________________________________________________
-    @Column(
-        name = "nombre",
-        nullable = false,
-        length = 100
-    )
+
+    @Column(name="nombre", nullable=false, length=50)
     public String getNombre() {
         return this.nombre;
     }
-//______________________________________________________________________________
+
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
-//______________________________________________________________________________
-    @Column(
-        name = "direccion",
-        length = 200
-    )
+    @Column(name="direccion", length=200)
     public String getDireccion() {
         return this.direccion;
     }
-//______________________________________________________________________________
+
     public void setDireccion(String direccion) {
         this.direccion = direccion;
     }
-//______________________________________________________________________________
-    @Column(
-        name = "telefono",
-        length = 10
-    )
+
+    @Column(name="telefono", length=10)
     public String getTelefono() {
         return this.telefono;
     }
-//______________________________________________________________________________
+
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
-//______________________________________________________________________________
-    @Column(
-        name = "celular",
-        length = 10
-    )
+
+    @Column(name="celular", length=10)
     public String getCelular() {
         return this.celular;
     }
-//______________________________________________________________________________
+
     public void setCelular(String celular) {
         this.celular = celular;
     }
-//______________________________________________________________________________
-    @Column(
-        name = "email",
-        length = 100
-    )
+
+    @Column(name="email", length=100)
     public String getEmail() {
         return this.email;
     }
-//______________________________________________________________________________
+
     public void setEmail(String email) {
         this.email = email;
     }
-//______________________________________________________________________________
     @Temporal(TemporalType.DATE)
-    @Column(
-        name = "fecha_nacimiento",
-        nullable = false,
-        length = 13
-    )
+    @Column(name="fecha_nacimiento", nullable=false, length=13)
     public Date getFechaNacimiento() {
         return this.fechaNacimiento;
     }
-//______________________________________________________________________________
+
     public void setFechaNacimiento(Date fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
-//______________________________________________________________________________
-    @Column(
-        name = "requisitos",
-        nullable = true
-    )
+
+    @Column(name="requisitos")
     public boolean isRequisitos() {
         return this.requisitos;
     }
-//______________________________________________________________________________
-    public void setRequisitos(boolean requisitos) {
+
+    public void setRequisitos(Boolean requisitos) {
         this.requisitos = requisitos;
     }
-//______________________________________________________________________________
-    @OneToMany(
-        cascade = CascadeType.ALL,
-        fetch = FetchType.LAZY,
-        mappedBy = "estudiante"
-    )
-    public Set<Desasignacion> getDesasignacions() {
-        return this.desasignacions;
+
+    @Column(name="carne_modificado", length=10)
+    public String getCarneModificado() {
+        return this.carneModificado;
     }
-//______________________________________________________________________________
-    public void setDesasignacions(Set<Desasignacion> desasignacions) {
-        this.desasignacions = desasignacions;
+
+    public void setCarneModificado(String carneModificado) {
+        this.carneModificado = carneModificado;
     }
-//______________________________________________________________________________
-    @OneToMany(
-        cascade = CascadeType.ALL,
-        fetch = FetchType.LAZY,
-        mappedBy = "estudiante"
-    )
-    public Set<AsignacionDocumento> getAsignacionDocumentos() {
-        return this.asignacionDocumentos;
+
+    @Column(name="nov", length=12)
+    public String getNov() {
+        return this.nov;
     }
-//______________________________________________________________________________
-    public void setAsignacionDocumentos(Set<AsignacionDocumento> asignacionDocumentos) {
-        this.asignacionDocumentos = asignacionDocumentos;
+
+    public void setNov(String nov) {
+        this.nov = nov;
     }
-//______________________________________________________________________________
-    @OneToMany(
-        cascade = CascadeType.ALL,
-        fetch = FetchType.LAZY,
-        mappedBy = "estudiante"
-    )
+
+    @Column(name="sexo", nullable=false, length=1)
+    public char getSexo() {
+        return this.sexo;
+    }
+
+    public void setSexo(char sexo) {
+        this.sexo = sexo;
+    }
+@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="estudiante")
     public Set<CuentaCorriente> getCuentaCorrientes() {
         return this.cuentaCorrientes;
     }
-//______________________________________________________________________________
+
     public void setCuentaCorrientes(Set<CuentaCorriente> cuentaCorrientes) {
         this.cuentaCorrientes = cuentaCorrientes;
     }
-//______________________________________________________________________________
-    @OneToMany(
-        cascade = CascadeType.ALL,
-        fetch = FetchType.LAZY,
-        mappedBy = "estudiante"
-    )
+@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="estudiante")
+    public Set<Desasignacion> getDesasignacions() {
+        return this.desasignacions;
+    }
+
+    public void setDesasignacions(Set<Desasignacion> desasignacions) {
+        this.desasignacions = desasignacions;
+    }
+@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="estudiante")
+    public Set<AsignacionDocumento> getAsignacionDocumentos() {
+        return this.asignacionDocumentos;
+    }
+
+    public void setAsignacionDocumentos(Set<AsignacionDocumento> asignacionDocumentos) {
+        this.asignacionDocumentos = asignacionDocumentos;
+    }
+@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="estudiante")
     public Set<CursoExtra> getCursoExtras() {
         return this.cursoExtras;
     }
-//______________________________________________________________________________
+
     public void setCursoExtras(Set<CursoExtra> cursoExtras) {
         this.cursoExtras = cursoExtras;
     }
-//______________________________________________________________________________
-    @OneToMany(
-        cascade = CascadeType.ALL,
-        fetch = FetchType.LAZY,
-        mappedBy = "estudiante"
-    )
+@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="estudiante")
     public Set<AsignacionEstudianteCarrera> getAsignacionEstudianteCarreras() {
         return this.asignacionEstudianteCarreras;
     }
-//______________________________________________________________________________
+
     public void setAsignacionEstudianteCarreras(Set<AsignacionEstudianteCarrera> asignacionEstudianteCarreras) {
         this.asignacionEstudianteCarreras = asignacionEstudianteCarreras;
     }
-//______________________________________________________________________________
-    @OneToMany(
-        cascade = CascadeType.ALL,
-        fetch = FetchType.LAZY,
-        mappedBy = "estudiante"
-    )
+@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="estudiante")
     public Set<ConteoAsignacion> getConteoAsignacions() {
         return this.conteoAsignacions;
     }
-//______________________________________________________________________________
+
     public void setConteoAsignacions(Set<ConteoAsignacion> conteoAsignacions) {
         this.conteoAsignacions = conteoAsignacions;
     }
-//______________________________________________________________________________
+
     @Transient
     public String getPassword() {
         return password;
@@ -291,65 +278,6 @@ public class Estudiante implements java.io.Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-//______________________________________________________________________________
-    @Column(
-        name = "sexo",
-        length = 1
-    )
-    public char getSexo() {
-        return sexo;
-    }
-
-    public void setSexo(char sexo) {
-        this.sexo = sexo;
-    }
-//______________________________________________________________________________
-    @Column(
-        name = "lugar_nacimiento"        
-    )
-    public short getLugarNacimiento() {
-        return lugarNacimiento;
-    }
-    
-    public void setLugarNacimiento(short lugarNacimiento) {
-        this.lugarNacimiento = lugarNacimiento;
-    }
-//______________________________________________________________________________
-    @Column(
-        name = "nacionalidad"        
-    )
-    public short getNacionalidad() {
-        return nacionalidad;
-    }
-    
-    public void setNacionalidad(short nacionalidad) {
-        this.nacionalidad = nacionalidad;
-    }
-//______________________________________________________________________________
-    @Column(
-        name = "carne_modificado",
-        length = 10
-    )
-    public String getCarneModificado() {
-        return carneModificado;
-    }
-
-    public void setCarneModificado(String carneModificado) {
-        this.carneModificado = carneModificado;
-    }
-//______________________________________________________________________________
-    @Column(
-        name = "nov",
-        length = 10
-    )
-    public String getNov() {
-        return nov;
-    }
-    
-    public void setNov(String nov) {
-        this.nov = nov;
-    }
-//______________________________________________________________________________
 }
 
 

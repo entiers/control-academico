@@ -15,6 +15,9 @@ package gt.edu.usac.cats.dominio;
 
 //~--- JDK imports ------------------------------------------------------------
 
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -22,6 +25,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -35,26 +40,22 @@ import javax.persistence.Table;
 )
 public class AsignacionCursoPensum implements java.io.Serializable {
      private short idAsignacionCursoPensum;
-     private Curso cursoByIdCursoPrerrequisito;
-     private Curso cursoByIdCurso;
+     private Curso curso;
      private Pensum pensum;
      private boolean obligatorio;
      private Short creditosPracticos;
      private Short creditosPrerrequisito;
      private Short creditosTeoricos;
      private short numeroSemestre;
+     private Set<AsignacionCursoPensum> asignacionCursoPensumsForIdCursoPensumPrerequisito = new HashSet<AsignacionCursoPensum>(0);
+     private Set<AsignacionCursoPensum> asignacionCursoPensumsForIdCursoPensum = new HashSet<AsignacionCursoPensum>(0);
 
     public AsignacionCursoPensum() {}
 
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(
-        name = "id_asignacion_curso_pensum",
-        unique = true,
-        nullable = false
-    )
-//______________________________________________________________________________
+    @Column(name="id_asignacion_curso_pensum", unique=true, nullable=false)
     public short getIdAsignacionCursoPensum() {
         return this.idAsignacionCursoPensum;
     }
@@ -62,32 +63,17 @@ public class AsignacionCursoPensum implements java.io.Serializable {
     public void setIdAsignacionCursoPensum(short idAsignacionCursoPensum) {
         this.idAsignacionCursoPensum = idAsignacionCursoPensum;
     }
-//______________________________________________________________________________
-    @ManyToOne(fetch=FetchType.LAZY)
+@ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="id_curso", nullable=false)
-    public Curso getCursoByIdCurso() {
-        return this.cursoByIdCurso;
+    public Curso getCurso() {
+        return this.curso;
     }
 
-    public void setCursoByIdCurso(Curso cursoByIdCurso) {
-        this.cursoByIdCurso = cursoByIdCurso;
+    public void setCurso(Curso curso) {
+        this.curso = curso;
     }
-//______________________________________________________________________________
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="id_curso_prerrequisito")
-    public Curso getCursoByIdCursoPrerrequisito() {
-        return this.cursoByIdCursoPrerrequisito;
-    }
-
-    public void setCursoByIdCursoPrerrequisito(Curso cursoByIdCursoPrerrequisito) {
-        this.cursoByIdCursoPrerrequisito = cursoByIdCursoPrerrequisito;
-    }
-//______________________________________________________________________________
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(
-        name = "id_pensum",
-        nullable = false
-    )
+@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="id_pensum", nullable=false)
     public Pensum getPensum() {
         return this.pensum;
     }
@@ -96,11 +82,7 @@ public class AsignacionCursoPensum implements java.io.Serializable {
         this.pensum = pensum;
     }
 
-//______________________________________________________________________________
-    @Column(
-        name = "obligatorio",
-        nullable = false
-    )
+    @Column(name="obligatorio", nullable=false)
     public boolean isObligatorio() {
         return this.obligatorio;
     }
@@ -108,32 +90,8 @@ public class AsignacionCursoPensum implements java.io.Serializable {
     public void setObligatorio(boolean obligatorio) {
         this.obligatorio = obligatorio;
     }
-    
-//______________________________________________________________________________
-    @Column(
-        name = "semestre",
-        nullable = false
-    )
 
-    public short getNumeroSemestre() {
-        return this.numeroSemestre;
-    }
-
-    public void setNumeroSemestre(short numeroSemestre) {
-        this.numeroSemestre = numeroSemestre;
-    }
-
-//______________________________________________________________________________
-    @Column(name = "creditos_teoricos")
-    public Short getCreditosTeoricos() {
-        return this.creditosTeoricos;
-    }
-
-    public void setCreditosTeoricos(Short creditosTeoricos) {
-        this.creditosTeoricos = creditosTeoricos;
-    }
-//______________________________________________________________________________
-    @Column(name = "creditos_practicos")
+    @Column(name="creditos_practicos")
     public Short getCreditosPracticos() {
         return this.creditosPracticos;
     }
@@ -141,8 +99,8 @@ public class AsignacionCursoPensum implements java.io.Serializable {
     public void setCreditosPracticos(Short creditosPracticos) {
         this.creditosPracticos = creditosPracticos;
     }
-//______________________________________________________________________________
-    @Column(name = "creditos_prerrequisito")
+
+    @Column(name="creditos_prerrequisito")
     public Short getCreditosPrerrequisito() {
         return this.creditosPrerrequisito;
     }
@@ -150,6 +108,49 @@ public class AsignacionCursoPensum implements java.io.Serializable {
     public void setCreditosPrerrequisito(Short creditosPrerrequisito) {
         this.creditosPrerrequisito = creditosPrerrequisito;
     }
+
+    @Column(name="creditos_teoricos")
+    public Short getCreditosTeoricos() {
+        return this.creditosTeoricos;
+    }
+
+    public void setCreditosTeoricos(Short creditosTeoricos) {
+        this.creditosTeoricos = creditosTeoricos;
+    }
+
+    @Column(name="numero_semestre", nullable=false)
+    public short getNumeroSemestre() {
+        return this.numeroSemestre;
+    }
+
+    public void setNumeroSemestre(short numeroSemestre) {
+        this.numeroSemestre = numeroSemestre;
+    }
+@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+    @JoinTable(name="prerrequisito", schema="control", joinColumns = {
+        @JoinColumn(name="id_curso_pensum", nullable=false, updatable=false) }, inverseJoinColumns = {
+        @JoinColumn(name="id_curso_pensum_prerequisito", nullable=false, updatable=false) })
+    public Set<AsignacionCursoPensum> getAsignacionCursoPensumsForIdCursoPensumPrerequisito() {
+        return this.asignacionCursoPensumsForIdCursoPensumPrerequisito;
+    }
+
+    public void setAsignacionCursoPensumsForIdCursoPensumPrerequisito(Set<AsignacionCursoPensum> asignacionCursoPensumsForIdCursoPensumPrerequisito) {
+        this.asignacionCursoPensumsForIdCursoPensumPrerequisito = asignacionCursoPensumsForIdCursoPensumPrerequisito;
+    }
+@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+    @JoinTable(name="prerrequisito", schema="control", joinColumns = {
+        @JoinColumn(name="id_curso_pensum_prerequisito", nullable=false, updatable=false) }, inverseJoinColumns = {
+        @JoinColumn(name="id_curso_pensum", nullable=false, updatable=false) })
+    public Set<AsignacionCursoPensum> getAsignacionCursoPensumsForIdCursoPensum() {
+        return this.asignacionCursoPensumsForIdCursoPensum;
+    }
+
+    public void setAsignacionCursoPensumsForIdCursoPensum(Set<AsignacionCursoPensum> asignacionCursoPensumsForIdCursoPensum) {
+        this.asignacionCursoPensumsForIdCursoPensum = asignacionCursoPensumsForIdCursoPensum;
+    }
+
+
+
 }
 
 
