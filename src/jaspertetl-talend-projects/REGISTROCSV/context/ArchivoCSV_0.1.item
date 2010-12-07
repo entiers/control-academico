@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<talendfile:ContextType xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:talendfile="platform:/resource/org.talend.model/model/TalendFile.xsd" confirmationNeeded="false" name="Default">
+  <contextParameter comment="" name="ArchivoCSV_File" prompt="ArchivoCSV_File?" promptNeeded="false" type="id_File" value="/home/shakamca/Trabajo Social/Data/registro.csv"/>
+  <contextParameter comment="" name="ArchivoCSV_FieldSeparator" prompt="ArchivoCSV_FieldSeparator?" promptNeeded="false" type="id_String" value="&quot;,&quot;"/>
+  <contextParameter comment="" name="ArchivoCSV_RowSeparator" prompt="ArchivoCSV_RowSeparator?" promptNeeded="false" type="id_String" value="&quot;\n&quot;"/>
+  <contextParameter comment="" name="ArchivoCSV_Encoding" prompt="ArchivoCSV_Encoding?" promptNeeded="false" type="id_String" value="UTF-8"/>
+</talendfile:ContextType>
