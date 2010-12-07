@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TalendMetadata:DatabaseConnection xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:TalendMetadata="http://www.talend.org" ContextMode="true" ContextId="_p-6IIPLJEd-Kxr2kCO7ilg" DatabaseType="PostgreSQL" URL="jdbc:postgresql://localhost:5432/control_academico" Port="context.ConexionPostgres_Port" Username="context.ConexionPostgres_Login" Password="context.ConexionPostgres_Password" ServerName="context.ConexionPostgres_Server" Schema="context.ConexionPostgres_Schema" SID="context.ConexionPostgres_Database" SqlSynthax="SQL Syntax" DbmsId="postgres_id" ProductId="POSTGRESQL" StandardSQL="true">
+  <tables id="__-GRYPLLEd-Kxr2kCO7ilg" label="escuela" sourceName="escuela" tableType="TABLE">
+    <columns label="id_escuela" sourceType="INT2" defaultValue="&quot;nextval('control.escuela_id_escuela_seq'::regclass)&quot;" talendType="id_Short" key="true" nullable="false" length="2" precision="0" originalField="id_escuela"/>
+    <columns label="nombre" sourceType="VARCHAR" talendType="id_String" nullable="false" length="100" precision="0" originalField="nombre"/>
+    <columns label="descripcion" sourceType="TEXT" talendType="id_String" precision="0" originalField="descripcion"/>
+    <columns label="codigo" sourceType="INT2" talendType="id_Short" length="2" precision="0" originalField="codigo"/>
+  </tables>
+  <tables id="_AXbXYPLMEd-Kxr2kCO7ilg" label="carrera" sourceName="carrera" tableType="TABLE">
+    <columns label="id_carrera" sourceType="int2" talendType="id_String" nullable="false" length="5" precision="0" originalField="id_carrera" pattern="&quot;dd-MM-yyyy&quot;"/>
+    <columns label="nombre" sourceType="varchar" talendType="id_String" nullable="false" length="100" precision="0" originalField="nombre" pattern="&quot;dd-MM-yyyy&quot;"/>
+    <columns label="descripcion" sourceType="text" talendType="id_String" length="0" precision="0" originalField="descripcion" pattern="&quot;dd-MM-yyyy&quot;"/>
+    <columns label="id_escuela" sourceType="int2" talendType="id_String" nullable="false" length="5" precision="0" originalField="id_escuela" pattern="&quot;dd-MM-yyyy&quot;"/>
+    <columns label="codigo" sourceType="int2" talendType="id_String" length="5" precision="0" originalField="codigo" pattern="&quot;dd-MM-yyyy&quot;"/>
+    <columns label="nivel" sourceType="int2" talendType="id_String" nullable="false" length="5" precision="0" originalField="nivel" pattern="&quot;dd-MM-yyyy&quot;"/>
+  </tables>
+  <tables id="_AwCrsPLMEd-Kxr2kCO7ilg" label="estudiante" sourceName="estudiante" tableType="TABLE">
+    <columns label="id_estudiante" sourceType="SERIAL" defaultValue="&quot;nextval('control.estudiante_id_estudiante_seq'::regclass)&quot;" talendType="id_Integer" key="true" nullable="false" length="4" precision="0" originalField="id_estudiante"/>
+    <columns label="carne" sourceType="VARCHAR" talendType="id_String" nullable="false" length="10" precision="0" originalField="carne"/>
+    <columns label="nombre" sourceType="VARCHAR" talendType="id_String" nullable="false" length="50" precision="0" originalField="nombre"/>
+    <columns label="direccion" sourceType="VARCHAR" talendType="id_String" length="200" precision="0" originalField="direccion"/>
+    <columns label="telefono" sourceType="VARCHAR" talendType="id_String" length="10" precision="0" originalField="telefono"/>
+    <columns label="celular" sourceType="VARCHAR" talendType="id_String" length="10" precision="0" originalField="celular"/>
+    <columns label="email" sourceType="VARCHAR" talendType="id_String" length="100" precision="0" originalField="email"/>
+    <columns label="fecha_nacimiento" sourceType="DATE" talendType="id_Date" nullable="false" length="4" precision="0" originalField="fecha_nacimiento" pattern="&quot;dd-MM-yyyy&quot;"/>
+    <columns label="requisitos" sourceType="BOOL" talendType="id_Boolean" length="1" precision="0" originalField="requisitos"/>
+    <columns label="id_usuario" sourceType="INT4" talendType="id_Integer" length="4" precision="0" originalField="id_usuario"/>
+    <columns label="carne_modificado" sourceType="VARCHAR" talendType="id_String" length="10" precision="0" originalField="carne_modificado"/>
+    <columns label="nov" sourceType="VARCHAR" talendType="id_String" length="12" precision="0" originalField="nov"/>
+    <columns label="sexo" sourceType="BPCHAR" talendType="id_String" nullable="false" length="1" precision="0" originalField="sexo"/>
+    <columns label="id_lugar_nacimiento" sourceType="INT2" talendType="id_Short" length="2" precision="0" originalField="id_lugar_nacimiento"/>
+    <columns label="id_nacionalidad" sourceType="INT2" talendType="id_Short" length="2" precision="0" originalField="id_nacionalidad"/>
+    <columns label="id_pensum" sourceType="INT2" talendType="id_Short" length="2" precision="0" originalField="id_pensum"/>
+  </tables>
+  <tables id="_BVaCkPLMEd-Kxr2kCO7ilg" label="asignacion_estudiante_carrera" sourceName="asignacion_estudiante_carrera" tableType="TABLE">
+    <columns label="id_asignacion_estudiante_carrera" sourceType="SERIAL" defaultValue="&quot;nextval('control.asignacion_estudiante_carrera_id_asignacion_estudiante_carre995'::regclass)&quot;" talendType="id_Integer" key="true" nullable="false" length="4" precision="0" originalField="id_asignacion_estudiante_carrera"/>
+    <columns label="id_estudiante" sourceType="INT4" talendType="id_Integer" nullable="false" length="4" precision="0" originalField="id_estudiante"/>
+    <columns label="id_carrera" sourceType="INT2" talendType="id_Short" nullable="false" length="2" precision="0" originalField="id_carrera"/>
+    <columns label="fecha_cierre" sourceType="DATE" talendType="id_Date" length="4" precision="0" originalField="fecha_cierre" pattern="&quot;dd-MM-yyyy&quot;"/>
+  </tables>
+  <tables id="_B3y98PLMEd-Kxr2kCO7ilg" label="semestre" sourceName="semestre" tableType="TABLE">
+    <columns label="id_semestre" sourceType="INT2" defaultValue="&quot;nextval('control.semestre_id_semestre_seq'::regclass)&quot;" talendType="id_Short" key="true" nullable="false" length="2" precision="0" originalField="id_semestre"/>
+    <columns label="anio" sourceType="INT2" talendType="id_Short" nullable="false" length="2" precision="0" originalField="anio"/>
+    <columns label="numero" sourceType="BPCHAR" talendType="id_String" nullable="false" length="1" precision="0" originalField="numero"/>
+    <columns label="observacion" sourceType="VARCHAR" talendType="id_String" length="1000" precision="0" originalField="observacion"/>
+  </tables>
+  <tables id="_sv11EPXyEd-jqPAqU5kN8g" label="usuario" sourceName="usuario" tableType="TABLE">
+    <columns label="id_usuario" sourceType="SERIAL" defaultValue="&quot;nextval('control.usuario_id_usuario_seq'::regclass)&quot;" talendType="id_Integer" key="true" nullable="false" length="4" precision="0" originalField="id_usuario"/>
+    <columns label="nombre_usuario" sourceType="VARCHAR" talendType="id_String" nullable="false" length="256" precision="0" originalField="nombre_usuario"/>
+    <columns label="password" sourceType="VARCHAR" talendType="id_String" nullable="false" length="256" precision="0" originalField="password"/>
+    <columns label="habilitado" sourceType="BOOL" talendType="id_Boolean" nullable="false" length="1" precision="0" originalField="habilitado"/>
+  </tables>
+  <tables id="_lFy8sPYBEd-hsIxifyr6YA" label="asignacion_usuario_perfil" sourceName="asignacion_usuario_perfil" tableType="TABLE">
+    <columns label="id_asignacion_usuario_perfil" sourceType="SERIAL" defaultValue="&quot;nextval('control.asignacion_usuario_perfil_id_asignacion_usuario_perfil_seq'::regclass)&quot;" talendType="id_Integer" key="true" nullable="false" length="4" precision="0" originalField="id_asignacion_usuario_perfil"/>
+    <columns label="id_usuario" sourceType="INT4" talendType="id_Integer" nullable="false" length="4" precision="0" originalField="id_usuario"/>
+    <columns label="id_perfil" sourceType="INT2" talendType="id_Short" nullable="false" length="2" precision="0" originalField="id_perfil"/>
+  </tables>
+  <tables id="_4-ELAPsMEd-s-M1MMuN_xw" label="situacion" sourceName="situacion" tableType="TABLE">
+    <columns label="id_situacion" sourceType="INT2" defaultValue="&quot;nextval('control.situacion_id_situacion_seq'::regclass)&quot;" talendType="id_Short" key="true" nullable="false" length="2" precision="0" originalField="id_situacion"/>
+    <columns label="codigo" sourceType="INT2" talendType="id_Short" nullable="false" length="2" precision="0" originalField="codigo"/>
+    <columns label="nombre" sourceType="VARCHAR" talendType="id_String" nullable="false" length="50" precision="0" originalField="nombre"/>
+    <columns label="descripcion" sourceType="VARCHAR" talendType="id_String" length="250" precision="0" originalField="descripcion"/>
+  </tables>
+  <tables id="_YdsBgP2oEd-UKtvoddfbLw" label="historial_asignacion_estudiante_carrera" sourceName="historial_asignacion_estudiante_carrera" tableType="TABLE">
+    <columns label="id_historial_asignacion_estudiante_carrera" sourceType="SERIAL" defaultValue="&quot;nextval('control.historial_asignacion_estudiante_carrera_id_historial_asignac355'::regclass)&quot;" talendType="id_Integer" key="true" nullable="false" length="4" precision="0" originalField="id_historial_asignacion_estudiante_carrera"/>
+    <columns label="id_asignacion_estudiante_carrera" sourceType="INT4" talendType="id_Integer" nullable="false" length="4" precision="0" originalField="id_asignacion_estudiante_carrera"/>
+    <columns label="fecha_inscripcion" sourceType="DATE" talendType="id_Date" nullable="false" length="4" precision="0" originalField="fecha_inscripcion" pattern="&quot;dd-MM-yyyy&quot;"/>
+    <columns label="id_situacion" sourceType="INT2" talendType="id_Short" nullable="false" length="2" precision="0" originalField="id_situacion"/>
+    <columns label="id_semestre" sourceType="INT2" talendType="id_Short" nullable="false" length="2" precision="0" originalField="id_semestre"/>
+  </tables>
+  <tables id="_WRqHUAGkEeCHKIlBZrh8nA" label="nacionalidad" sourceName="nacionalidad" tableType="TABLE">
+    <columns label="id_nacionalidad" sourceType="INT2" defaultValue="&quot;nextval('control.nacionalidad_id_nacionalidad_seq'::regclass)&quot;" talendType="id_Short" key="true" nullable="false" length="2" precision="0" originalField="id_nacionalidad"/>
+    <columns label="codigo" sourceType="INT2" talendType="id_Short" nullable="false" length="2" precision="0" originalField="codigo"/>
+    <columns label="nombre" sourceType="VARCHAR" talendType="id_String" length="100" precision="0" originalField="nombre"/>
+  </tables>
+  <tables id="_ZspAcAGkEeCHKIlBZrh8nA" label="lugar_nacimiento" sourceName="lugar_nacimiento" tableType="TABLE">
+    <columns label="id_lugar_nacimiento" sourceType="INT2" defaultValue="&quot;nextval('control.lugar_nacimiento_id_lugar_nacimiento_seq'::regclass)&quot;" talendType="id_Short" key="true" nullable="false" length="2" precision="0" originalField="id_lugar_nacimiento"/>
+    <columns label="codigo" sourceType="INT2" talendType="id_Short" nullable="false" length="2" precision="0" originalField="codigo"/>
+    <columns label="nombre" sourceType="VARCHAR" talendType="id_String" length="50" precision="0" originalField="nombre"/>
+  </tables>
+</TalendMetadata:DatabaseConnection>

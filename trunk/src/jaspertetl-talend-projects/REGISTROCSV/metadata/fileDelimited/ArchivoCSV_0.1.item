@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TalendMetadata:DelimitedFileConnection xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:TalendMetadata="http://www.talend.org" ContextMode="true" ContextId="_81yukPLJEd-Kxr2kCO7ilg" Server="Localhost 127.0.0.1" FilePath="context.ArchivoCSV_File" Format="WINDOWS" Encoding="context.ArchivoCSV_Encoding" FieldSeparatorValue="context.ArchivoCSV_FieldSeparator" RowSeparatorValue="context.ArchivoCSV_RowSeparator" FirstLineCaption="true" EscapeType="CSV" EscapeChar="&quot;\&quot;&quot;" TextEnclosure="&quot;\&quot;&quot;" CsvOption="true" FieldSeparatorType="Custom UTF8">
+  <tables id="_udJOAPLJEd-Kxr2kCO7ilg" label="metadataArchivoCSV">
+    <columns label="ua" talendType="id_Integer" length="2" precision="0" pattern="&quot;dd-MM-yyyy&quot;"/>
+    <columns label="ext" talendType="id_Integer" length="1" precision="0" pattern="&quot;dd-MM-yyyy&quot;"/>
+    <columns label="car" talendType="id_Integer" length="1" precision="0" pattern="&quot;dd-MM-yyyy&quot;"/>
+    <columns label="carnet" talendType="id_Integer" length="7" precision="0" pattern="&quot;dd-MM-yyyy&quot;"/>
+    <columns label="situacion" talendType="id_String" length="11" precision="0" pattern="&quot;dd-MM-yyyy&quot;"/>
+    <columns label="ciclo" talendType="id_Integer" length="4" precision="0" pattern="&quot;dd-MM-yyyy&quot;"/>
+    <columns label="sem" talendType="id_Integer" length="1" precision="0" pattern="&quot;dd-MM-yyyy&quot;"/>
+    <columns label="inscripcion" talendType="id_Date" length="10" precision="0" pattern="&quot;dd/MM/yyyy&quot;"/>
+    <columns label="cierre" talendType="id_Date" length="10" precision="0" pattern="&quot;dd/MM/yyyy&quot;"/>
+    <columns label="nombre" talendType="id_String" length="36" precision="0" pattern="&quot;dd-MM-yyyy&quot;"/>
+    <columns label="sexo" talendType="id_Integer" length="1" precision="0" pattern="&quot;dd-MM-yyyy&quot;"/>
+    <columns label="nacimiento" talendType="id_Date" length="10" precision="0" pattern="&quot;dd/MM/yyyy&quot;"/>
+    <columns label="telefono" talendType="id_String" length="8" precision="0" pattern="&quot;dd-MM-yyyy&quot;"/>
+    <columns label="celular" talendType="id_String" length="8" precision="0" pattern="&quot;dd-MM-yyyy&quot;"/>
+    <columns label="email" talendType="id_String" length="30" precision="0" pattern="&quot;dd-MM-yyyy&quot;"/>
+    <columns label="lugar_nac" talendType="id_Integer" length="2" precision="0" pattern="&quot;dd-MM-yyyy&quot;"/>
+    <columns label="nacionalidad" talendType="id_Integer" length="2" precision="0" pattern="&quot;dd-MM-yyyy&quot;"/>
+    <columns label="carnet_modificado" talendType="id_Integer" length="1" precision="0" pattern="&quot;dd-MM-yyyy&quot;"/>
+    <columns label="nov" talendType="id_Integer" length="8" precision="0" pattern="&quot;dd-MM-yyyy&quot;"/>
+    <columns label="nivel" talendType="id_Integer" length="1" precision="0" pattern="&quot;dd-MM-yyyy&quot;"/>
+    <columns label="facultad" talendType="id_String" length="25" precision="0" pattern="&quot;dd-MM-yyyy&quot;"/>
+    <columns label="extension" talendType="id_String" length="11" precision="0" pattern="&quot;dd-MM-yyyy&quot;"/>
+    <columns label="carrera" talendType="id_String" length="30" precision="0" pattern="&quot;dd-MM-yyyy&quot;"/>
+  </tables>
+</TalendMetadata:DelimitedFileConnection>
