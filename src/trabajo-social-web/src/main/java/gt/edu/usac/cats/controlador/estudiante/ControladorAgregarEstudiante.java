@@ -8,14 +8,14 @@ package gt.edu.usac.cats.controlador.estudiante;
 
 import gt.edu.usac.cats.dominio.Carrera;
 import gt.edu.usac.cats.dominio.Estudiante;
-import gt.edu.usac.cats.dominio.Semestre;
+import gt.edu.usac.cats.dominio.LugarNacimiento;
+import gt.edu.usac.cats.dominio.Nacionalidad;
 import gt.edu.usac.cats.dominio.wrapper.WrapperEstudiante;
 import gt.edu.usac.cats.servicio.ServicioEstudiante;
 import gt.edu.usac.cats.servicio.ServicioGeneral;
 import gt.edu.usac.cats.util.EmailSender;
 import gt.edu.usac.cats.util.RequestUtil;
 import gt.edu.usac.cats.util.Mensajes;
-import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.mail.MessagingException;
@@ -53,7 +53,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller("controladorAgregarEstudiante")
 @RequestMapping(value = "agregarEstudiante.htm")
-public class ControladorAgregarEstudiante {
+public class ControladorAgregarEstudiante extends ControladorEstudianteAbstracto{
 
     /**
      * <p>Lleva el nombre del titulo para el mensaje en la pagina.</p>
@@ -64,36 +64,13 @@ public class ControladorAgregarEstudiante {
      * <p>Matiene una bitacora de lo realizado por esta clase.</p>
      */
     private static Logger log = Logger.getLogger(ControladorAgregarEstudiante.class);
-//______________________________________________________________________________
-    /**
-     * <p>Contiene metodos que permiten el manejo de la informacion relacionada
-     * con el estudiante en la base de datos. Este objeto se encuentra registrado
-     * como un bean de servicio en Spring, por lo que este es el encargado de
-     * inyectar la dependencia.</p>
-     */
-    @Resource
-    private ServicioEstudiante servicioEstudianteImpl;
-//______________________________________________________________________________
-    /**
-     * <p>Contiene metodos basicos de acceso a la base de datos, estos metodos
-     * permiten realizar operaciones basicas sobre cualquier tabla de la base
-     * de datos.</p>
-     */
-    @Resource
-    private ServicioGeneral servicioGeneralImpl;
+    
 //______________________________________________________________________________
     /**
      * <p>Bean de servicio que permite enviar correos electronicos</p>
      */
     @Resource
     private EmailSender emailSender;
-//______________________________________________________________________________
-    /**
-     * <p>Listado de todas las carreras disponibles.</p>
-     */
-    private List<Carrera> listadoCarreras;
-//______________________________________________________________________________
-    private List<Semestre> listadoSemestres;
 //______________________________________________________________________________
     /**
      * <p>Constructor de la clase, no realiza ninguna accion.</p>
@@ -111,22 +88,13 @@ public class ControladorAgregarEstudiante {
      */
     @RequestMapping(method = RequestMethod.GET)
     public String crearFormulario(Model modelo) {
-
-        // se trata de cargar el listado de carreras
-        try {
-            this.listadoCarreras = this.servicioGeneralImpl.listarEntidad(Carrera.class);
-        } catch (DataAccessException e) {
-            this.listadoCarreras = new ArrayList<Carrera>();
-            log.error("ERROR: no se puede cargar el listado de carreras", e);
-        }
-
-        this.listadoSemestres = this.servicioGeneralImpl.listarEntidad(Semestre.class, true, "anio");
+        
+        this.listarEntidades(modelo);
 
         // se agregan los objetos que se usaran en la pagina
         modelo.addAttribute("wrapperEstudiante", new WrapperEstudiante());
-        //modelo.addAttribute("carreras", this.listadoCarreras);
-//        modelo.addAttribute("listadoSemestres", this.listadoSemestres);
-//        modelo.addAttribute("situaciones", Situacion.values());
+
+        
 
         return "estudiante/agregarEstudiante";
     }
@@ -159,7 +127,7 @@ public class ControladorAgregarEstudiante {
     public String agregarEstudiante(@Valid WrapperEstudiante wrapperEstudiante, BindingResult bindingResult,
             Model modelo, HttpServletRequest request) {
 
-        modelo.addAttribute("carreras", this.listadoCarreras);
+        this.agregarAlModeloListadoEntidades(modelo);
 
         // se validan los campos ingresados en el formulario, si existen errores
         // se regresa al formulario para que se muestren los mensajes correspondientes
@@ -192,23 +160,6 @@ public class ControladorAgregarEstudiante {
         }
 
         return "estudiante/agregarEstudiante";
-    }
-//______________________________________________________________________________
-    /**
-     * <p>Este metodo se encarga de obtener el objeto {@link Carrera} que se
-     * selecciono en el combo box de la pagina. El metodo itera la lista de
-     * carreras hasta que encuentra la carrera seleccionada, y despues de
-     * encontrarla la retorna.</p>
-     *
-     * @param idCarrera Identificador de la Carrera
-     * @return Carrera
-     */
-    private Carrera getCarreraSeleccionada(short idCarrera) {
-        for(Carrera carrera : this.listadoCarreras) {
-            if(carrera.getIdCarrera() == idCarrera)
-                return carrera;
-        }
-        return null;
     }
 //______________________________________________________________________________
     /**

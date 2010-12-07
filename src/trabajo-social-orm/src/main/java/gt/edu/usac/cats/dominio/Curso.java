@@ -42,20 +42,15 @@ public class Curso implements java.io.Serializable {
      private String nombre;
      private Set<ProgramaCurso> programaCursos = new HashSet<ProgramaCurso>(0);
      private Set<CursoAprobado> cursoAprobados = new HashSet<CursoAprobado>(0);
-     private Set<AsignacionCursoPensum> asignacionCursoPensumsForIdCurso = new HashSet<AsignacionCursoPensum>(0);
+     private Set<AsignacionCursoPensum> asignacionCursoPensums = new HashSet<AsignacionCursoPensum>(0);
      private Set<Desasignacion> desasignacions = new HashSet<Desasignacion>(0);
      private Set<Horario> horarios = new HashSet<Horario>(0);
      private Set<ConteoAsignacion> conteoAsignacions = new HashSet<ConteoAsignacion>(0);
-     private Set<AsignacionCursoPensum> asignacionCursoPensumsForIdCursoPrerrequisito = new HashSet<AsignacionCursoPensum>(0);
 
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(
-        name = "id_curso",
-        unique = true,
-        nullable = false
-    )
+    @Column(name="id_curso", unique=true, nullable=false)
     public short getIdCurso() {
         return this.idCurso;
     }
@@ -64,11 +59,7 @@ public class Curso implements java.io.Serializable {
         this.idCurso = idCurso;
     }
 
-    @Column(
-        name = "codigo",
-        nullable = false,
-        length = 15
-    )
+    @Column(name="codigo", nullable=false, length=15)
     public String getCodigo() {
         return this.codigo;
     }
@@ -77,13 +68,7 @@ public class Curso implements java.io.Serializable {
         this.codigo = codigo;
     }
 
-    
-
-    @Column(
-        name = "nombre",
-        nullable = false,
-        length = 50
-    )
+    @Column(name="nombre", nullable=false, length=50)
     public String getNombre() {
         return this.nombre;
     }
@@ -91,14 +76,7 @@ public class Curso implements java.io.Serializable {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
-    
-
-    @OneToMany(
-        cascade = CascadeType.ALL,
-        fetch = FetchType.LAZY,
-        mappedBy = "curso"
-    )
+@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="curso")
     public Set<ProgramaCurso> getProgramaCursos() {
         return this.programaCursos;
     }
@@ -106,12 +84,7 @@ public class Curso implements java.io.Serializable {
     public void setProgramaCursos(Set<ProgramaCurso> programaCursos) {
         this.programaCursos = programaCursos;
     }
-
-    @OneToMany(
-        cascade = CascadeType.ALL,
-        fetch = FetchType.LAZY,
-        mappedBy = "curso"
-    )
+@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="curso")
     public Set<CursoAprobado> getCursoAprobados() {
         return this.cursoAprobados;
     }
@@ -119,30 +92,15 @@ public class Curso implements java.io.Serializable {
     public void setCursoAprobados(Set<CursoAprobado> cursoAprobados) {
         this.cursoAprobados = cursoAprobados;
     }
-
-    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="cursoByIdCurso")
-    public Set<AsignacionCursoPensum> getAsignacionCursoPensumsForIdCurso() {
-        return this.asignacionCursoPensumsForIdCurso;
+@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="curso")
+    public Set<AsignacionCursoPensum> getAsignacionCursoPensums() {
+        return this.asignacionCursoPensums;
     }
 
-    public void setAsignacionCursoPensumsForIdCurso(Set<AsignacionCursoPensum> asignacionCursoPensumsForIdCurso) {
-        this.asignacionCursoPensumsForIdCurso = asignacionCursoPensumsForIdCurso;
+    public void setAsignacionCursoPensums(Set<AsignacionCursoPensum> asignacionCursoPensums) {
+        this.asignacionCursoPensums = asignacionCursoPensums;
     }
-
-    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="cursoByIdCursoPrerrequisito")
-    public Set<AsignacionCursoPensum> getAsignacionCursoPensumsForIdCursoPrerrequisito() {
-        return this.asignacionCursoPensumsForIdCursoPrerrequisito;
-    }
-
-    public void setAsignacionCursoPensumsForIdCursoPrerrequisito(Set<AsignacionCursoPensum> asignacionCursoPensumsForIdCursoPrerrequisito) {
-        this.asignacionCursoPensumsForIdCursoPrerrequisito = asignacionCursoPensumsForIdCursoPrerrequisito;
-    }
-
-    @OneToMany(
-        cascade = CascadeType.ALL,
-        fetch = FetchType.LAZY,
-        mappedBy = "curso"
-    )
+@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="curso")
     public Set<Desasignacion> getDesasignacions() {
         return this.desasignacions;
     }
@@ -150,12 +108,7 @@ public class Curso implements java.io.Serializable {
     public void setDesasignacions(Set<Desasignacion> desasignacions) {
         this.desasignacions = desasignacions;
     }
-
-    @OneToMany(
-        cascade = CascadeType.ALL,
-        fetch = FetchType.LAZY,
-        mappedBy = "curso"
-    )
+@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="curso")
     public Set<Horario> getHorarios() {
         return this.horarios;
     }
@@ -163,20 +116,14 @@ public class Curso implements java.io.Serializable {
     public void setHorarios(Set<Horario> horarios) {
         this.horarios = horarios;
     }
-
-    
-    @OneToMany(
-        cascade = CascadeType.ALL,
-        fetch = FetchType.LAZY,
-        mappedBy = "curso"
-    )
+@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="curso")
     public Set<ConteoAsignacion> getConteoAsignacions() {
         return this.conteoAsignacions;
     }
 
     public void setConteoAsignacions(Set<ConteoAsignacion> conteoAsignacions) {
         this.conteoAsignacions = conteoAsignacions;
-    }    
+    }
 }
 
 

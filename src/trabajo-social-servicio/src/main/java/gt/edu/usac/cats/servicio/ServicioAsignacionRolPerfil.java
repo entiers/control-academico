@@ -10,7 +10,7 @@ import gt.edu.usac.cats.dominio.Perfil;
 import gt.edu.usac.cats.dominio.Rol;
 import java.util.List;
 import org.springframework.dao.DataAccessException;
-import org.springframework.dao.DataIntegrityViolationException;
+
 
 /**
  *

@@ -48,6 +48,9 @@
                         $("#carneBusqueda").val("");
                         $("#nombreBusqueda").val("");
                         $("#apellidoBusqueda").val("");
+                        $("#sexo1").attr({
+                            "checked": true
+                        });
                         $("#carne").val("");
                         $("#nombre").val("");
                         $("#apellido").val("");
@@ -56,6 +59,8 @@
                         $("#celular").val("");
                         $("#email").val("");
                         $("#fechaNacimiento").val("");
+                        $("#nov").val("");
+                        $("#carneModificado").val("");
                     }
 
                     $(this).dialog('close');

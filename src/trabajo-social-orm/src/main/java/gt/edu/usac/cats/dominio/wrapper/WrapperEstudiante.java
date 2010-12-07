@@ -8,6 +8,8 @@ package gt.edu.usac.cats.dominio.wrapper;
 
 //import gt.edu.usac.trabajosocial.anotacion.CarneEstudianteValidador;
 import gt.edu.usac.cats.dominio.Estudiante;
+import gt.edu.usac.cats.dominio.LugarNacimiento;
+import gt.edu.usac.cats.dominio.Nacionalidad;
 import java.util.Date;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -61,9 +63,9 @@ public class WrapperEstudiante {
     @NotNull(message = "{validacion.campoObligatorio}")    
     private char sexo;
 //______________________________________________________________________________
-    private short lugarNacimiento;
+    private LugarNacimiento lugarNacimiento;
 //______________________________________________________________________________
-    private short nacionalidad;
+    private Nacionalidad nacionalidad;
 //______________________________________________________________________________
     private String carneModificado;
 //______________________________________________________________________________
@@ -188,19 +190,19 @@ public class WrapperEstudiante {
         this.sexo = sexo;
     }
 //______________________________________________________________________________    
-    public short getLugarNacimiento() {
+    public LugarNacimiento getLugarNacimiento() {
         return lugarNacimiento;
     }
 
-    public void setLugarNacimiento(short lugarNacimiento) {
+    public void setLugarNacimiento(LugarNacimiento lugarNacimiento) {
         this.lugarNacimiento = lugarNacimiento;
     }
 //______________________________________________________________________________
-    public short getNacionalidad() {
+    public Nacionalidad getNacionalidad() {
         return nacionalidad;
     }
 
-    public void setNacionalidad(short nacionalidad) {
+    public void setNacionalidad(Nacionalidad nacionalidad) {
         this.nacionalidad = nacionalidad;
     }
 //______________________________________________________________________________

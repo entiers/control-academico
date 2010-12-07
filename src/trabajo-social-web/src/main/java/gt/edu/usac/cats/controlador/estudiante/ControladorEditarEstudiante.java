@@ -52,7 +52,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @version 1.0
  */
 @Controller("controladorEditarEstudiante")
-public class ControladorEditarEstudiante {
+public class ControladorEditarEstudiante extends ControladorEstudianteAbstracto {
 
     /**
      * <p>Lleva el nombre del titulo para el mensaje en la pagina</p>
@@ -96,9 +96,12 @@ public class ControladorEditarEstudiante {
     @RequestMapping(value = "editarEstudiante.htm", method = RequestMethod.GET)
     public String crearFormulario(Model modelo) {
 
+        
         // se agregan los objetos que se usaran en la pagina
         modelo.addAttribute("wrapperEstudiante", new WrapperEstudiante());
         modelo.addAttribute("datosBusquedaEstudiante", new DatosBusquedaEstudiante());
+
+
 
         return "estudiante/editarEstudiante";
     }
@@ -129,6 +132,8 @@ public class ControladorEditarEstudiante {
     public String buscarEstudiante(@Valid DatosBusquedaEstudiante datosBusquedaEstudiante,
             BindingResult bindingResult, Model modelo, HttpServletRequest request) {
 
+        this.listarEntidades(modelo);
+        
         // se crea el envoltorio para el estudiante
         WrapperEstudiante wrapperEstudiante = new WrapperEstudiante();
         modelo.addAttribute("wrapperEstudiante", wrapperEstudiante);
@@ -181,8 +186,7 @@ public class ControladorEditarEstudiante {
     public String editarEstudiante(@Valid WrapperEstudiante wrapperEstudiante, BindingResult bindingResult,
             Model modelo, HttpServletRequest request) {
 
-        modelo.addAttribute("datosBusquedaEstudiante", new DatosBusquedaEstudiante());
-
+        modelo.addAttribute("datosBusquedaEstudiante", new DatosBusquedaEstudiante());        
         // se validan los campos ingresados en el formulario, si existen errores
         // se regresa al formulario para que se muestren los mensajes correspondientes
         // en este caso se pregunta si la cantidad de errores es mayor a 2
