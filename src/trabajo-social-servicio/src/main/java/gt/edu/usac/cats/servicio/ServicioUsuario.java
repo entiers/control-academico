@@ -88,9 +88,7 @@ public interface ServicioUsuario extends ServicioGeneral {
      **/
     List <AsignacionUsuarioPerfil> getAsignacionUsuarioPerfilPorUsuario(Usuario usuario)
             throws DataAccessException;
-
-
-    //______________________________________________________________________________
+//______________________________________________________________________________
     /**
      * <p>Este metodo se encarga de obtener un usuario en base
      * al correo electronico registrado en el sistema.</p>
@@ -101,4 +99,16 @@ public interface ServicioUsuario extends ServicioGeneral {
      */
     Usuario getUsuarioPorEmail(String email)
             throws HibernateException;
+//______________________________________________________________________________
+    /**
+     * <p>Este metodo se encarga de crear un codigo verificador para el
+     * usuario, para poder procesar el reinicio de la contraseña del mismo.</p>
+     *
+     * @param usuario Contiene el usuario al que se le genera el codigo de validacion
+     * @throws HibernateException Si ocurrio un error de acceso a datos
+     */
+
+    void setCodigoVerficadorReinicioContrasenia(Usuario usuario)
+            throws HibernateException;
+
 }

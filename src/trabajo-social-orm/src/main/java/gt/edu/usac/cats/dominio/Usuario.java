@@ -53,6 +53,7 @@ public class Usuario implements java.io.Serializable {
     private String nombreUsuario;
     @NotNull
     private String password;
+    private String codigoValidacion;
 
     public Usuario() {}
 
@@ -180,6 +181,21 @@ public class Usuario implements java.io.Serializable {
     public void setEstudiantes(Set<Estudiante> estudiantes) {
         this.estudiantes = estudiantes;
     }
+
+    @Column(
+        name = "codigo_validacion",
+        nullable = true,
+        length = 256
+    )
+    public String getCodigoValidacion() {
+        return codigoValidacion;
+    }
+
+    public void setCodigoValidacion(String codigoValidacion) {
+        this.codigoValidacion = codigoValidacion;
+    }
+
+
 }
 
 
