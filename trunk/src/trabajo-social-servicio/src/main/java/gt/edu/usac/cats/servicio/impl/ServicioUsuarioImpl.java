@@ -12,6 +12,7 @@ import gt.edu.usac.cats.dominio.Perfil;
 import gt.edu.usac.cats.dominio.busqueda.DatosBusquedaUsuario;
 import gt.edu.usac.cats.dominio.Usuario;
 import gt.edu.usac.cats.servicio.ServicioUsuario;
+import gt.edu.usac.cats.util.GeneradorPassword;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -147,6 +148,12 @@ public class ServicioUsuarioImpl extends ServicioGeneralImpl implements Servicio
         if(!lista.isEmpty())
             usuario = (Usuario) lista.get(0);
         return usuario;
+    }
+
+    @Override
+    public void setCodigoVerficadorReinicioContrasenia(Usuario usuario) throws HibernateException {
+        usuario.setCodigoValidacion(GeneradorPassword.generarPassword(6));
+        this.actualizar(usuario);
     }
 
 }

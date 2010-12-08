@@ -111,7 +111,8 @@ public class ControladorRecordarUsuario {
      */
     private void enviarEmail(Usuario usuario, String email) throws IOException {
         String subject = "Usuario registrado (Escuela de Trabajo Social)";
-        String mensaje = "Se ha solicitado recordar el usuario registrado en el sistema de la Escuela de Trabajo Social. " +
+        String mensaje = "Estimado usuario, \n\n"+
+                "Se ha solicitado recordar el usuario registrado en el sistema de la Escuela de Trabajo Social. " +
                 "El nombre del usuario asociado a esta cuenta de correo electrónico es:\n\n"+
                 "Nombre de usuario: " + usuario.getNombreUsuario();
 

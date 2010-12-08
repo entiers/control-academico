@@ -1,6 +1,6 @@
 <%-- 
-    Document   : modificarContrasenia
-    Created on : 3/12/2010, 09:41:08 PM
+    Document   : reiCont
+    Created on : 7/12/2010, 12:02:03 AM
     Author     : Carlos Solorzano
 --%>
 
@@ -20,32 +20,12 @@
     </head>
     <body>
         <h1><fmt:message key="modificarContrasenia.titulo"/></h1>
-        <table width="100%" align="center" id="tablaUsuarios" class="ui-widget ui-widget-content">
-            <thead>
-                <tr class="ui-widget-header ">
-                    <th colspan="2"><fmt:message key="modificarDatosPersonales.DatosFijos"/></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><fmt:message key="agregarEstudiante.carne"/></td>
-                    <td><c:out value="${estudiante.carne}" /></td>
-                </tr>
-                <tr>
-                    <td><fmt:message key="agregarEstudiante.nombre"/></td>
-                    <td><c:out value="${estudiante.nombre}" /></td>
-                </tr>
-                <tr>
-                    <td><fmt:message key="agregarEstudiante.fechaNacimiento"/></td>
-                    <td><c:out value="${estudiante.fechaNacimiento}" /></td>
-                </tr>
-            </tbody>
-        </table>
-        <%-- formulario para realizar el cambio de contraseña --%>
+
+        <%-- formulario para realizar el cambio de contraseña--%>
         <form:form modelAttribute="wrapperContrasenia" method="post" action="">
             <fieldset>
                 <div id="divCampos">
-                    <form:label for="contraseniaAnterior" path="contraseniaAnterior"><fmt:message key="modificarContrasenia.anterior"/>:</form:label>
+                    <form:label for="contraseniaAnterior" path="contraseniaAnterior"><fmt:message key="reiniciarContrasenia.CodValidacion"/>:</form:label>
                     <form:password path="contraseniaAnterior" cssStyle="width: 250px;" />
                     <form:errors path="contraseniaAnterior" cssClass="claseError" />
                 </div>
