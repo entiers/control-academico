@@ -1,0 +1,118 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>gt.edu.usac</groupId>
+  <artifactId>trabajo-social-etl</artifactId>
+  <packaging>jar</packaging>
+  <version>1.0.0</version>
+  <name>trabajo-social-etl</name>
+  <url>http://www.usac.edu.gt/</url>
+  <inceptionYear>2010</inceptionYear>
+
+  <developers>
+    <developer>
+        <id>mario</id>
+        <name>Mario Batres</name>
+        <organization>Universidad de San Carlos de Guatemala</organization>
+    </developer>
+   </developers>
+
+    <organization>
+        <name>Universidad de San Carlos de Guatemala</name>
+        <url>http://www.usac.edu.gt/</url>
+    </organization>
+
+
+  <repositories>
+    <repository>
+      <id>internal</id>
+      <name>Archiva Managed Internal Repository</name>
+      <url>http://shakamca.sytes.net:8080/archiva/repository/internal</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+
+    <repository>
+        <id>mvnRepository</id>
+        <name>MVN Repository</name>
+        <url>http://javacsv.sourceforge.net</url>
+    </repository>
+
+    <repository>
+        <id>mirrors.ibiblio.org</id>
+        <name>Repositorio general</name>
+        <url>http://mirrors.ibiblio.org/pub/mirrors/maven2</url>
+    </repository>
+
+  </repositories>
+  
+  <dependencies>
+    <dependency>
+      <groupId>talend</groupId>
+      <artifactId>routines</artifactId>
+      <version>1.0</version>
+      <scope>compile</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>talend</groupId>
+      <artifactId>JEntiers</artifactId>
+      <version>1.0</version>
+      <scope>compile</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>gt.edu.usac.cats.etl</groupId>
+      <artifactId>registro-csv</artifactId>
+      <version>1.0</version>
+      <scope>compile</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>net.sourceforge.javacsv</groupId>
+      <artifactId>javacsv</artifactId>
+      <version>2.0</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+        <groupId>postgresql</groupId>
+        <artifactId>postgresql</artifactId>
+        <version>8.4-701.jdbc4</version>
+        <scope>test</scope>
+    </dependency>
+
+    <dependency>
+        <groupId>talend</groupId>
+        <artifactId>advancedPersistentLookupLib</artifactId>
+        <version>1.0</version>
+        <scope>test</scope>
+    </dependency>
+
+
+  </dependencies>
+
+  <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
