@@ -43,10 +43,20 @@ public abstract class ManejadorETL {
      * @throws IOException
      */
     public String [][] realizar() throws IOException{
-        ServerSocket serverSocket = new ServerSocket(3334);        
-        String [][]ret = this.realizarETL();
-        serverSocket.close();
+        ServerSocket serverSocket = null;
+        String [][] ret = new String [0][0];
+        try{
+            serverSocket = new ServerSocket(3334);
+            ret = this.realizarETL();
+        }catch(IOException e){
+            throw e;
+        }finally{
+            if(serverSocket != null){
+                serverSocket.close();
+            }
+        }
         return ret;
+        
     }
 //______________________________________________________________________________
 }
