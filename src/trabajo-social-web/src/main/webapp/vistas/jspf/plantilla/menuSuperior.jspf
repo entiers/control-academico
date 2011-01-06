@@ -203,6 +203,21 @@
         </li>
     </sec:authorize>
 
+    <sec:authorize access="hasAnyRole('ROLE_CARGAR_ARCHIVO_REGISTRO_ESTADISTICA')">
+        <li>
+            <a href="#">
+                <span class="l"></span><span class="r"></span><span class="t">
+                <fmt:message key="etl.menu"/></span>
+            </a>
+            <ul>
+                <sec:authorize access="hasRole('ROLE_CARGAR_ARCHIVO_REGISTRO_ESTADISTICA')">
+                    <li><a href="ingresarRegistroCSV.htm"><fmt:message key="etl.ingresarRegistroCSV.titulo"/></a></li>
+                </sec:authorize>
+
+            </ul>
+        </li>
+    </sec:authorize>
+
     <%-- formulario para logearse --%>
     <sec:authorize access="isAnonymous()">
         <li>
