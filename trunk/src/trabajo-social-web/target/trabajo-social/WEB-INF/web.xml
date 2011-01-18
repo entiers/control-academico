@@ -154,4 +154,19 @@
     <welcome-file-list>
         <welcome-file>redirect.jsp</welcome-file>
     </welcome-file-list>
+
+    <!-- ·······································································
+    ··· Configuracion de SimpleCaptcha
+    ········································································ -->
+
+    <servlet>
+        <servlet-name>SimpleCaptchaServlet</servlet-name>
+        <servlet-class>nl.captcha.servlet.SimpleCaptchaServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>SimpleCaptchaServlet</servlet-name>
+        <url-pattern>/simpleImg</url-pattern>
+    </servlet-mapping>
+
 </web-app>

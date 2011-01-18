@@ -42,7 +42,8 @@ import javax.validation.constraints.NotNull;
         @UniqueConstraint(name="usuario_nombre_uk", columnNames={"nombre_usuario"})
     }
 )
-public class Usuario implements java.io.Serializable {
+public class Usuario implements java.io.Serializable {    
+    private Set<AsignacionPrimerIngreso> asignacionPrimerIngresos = new HashSet<AsignacionPrimerIngreso>(0);
     private Set<Catedratico> catedraticos = new HashSet<Catedratico>(0);
     private Set<Log> logs = new HashSet<Log>(0);
     private Set<Estudiante> estudiantes = new HashSet<Estudiante>(0);
@@ -195,8 +196,18 @@ public class Usuario implements java.io.Serializable {
         this.codigoValidacion = codigoValidacion;
     }
 
+    @OneToMany(
+        cascade = CascadeType.ALL,
+        mappedBy = "usuario",
+        fetch = FetchType.LAZY
+    )
+    public Set<AsignacionPrimerIngreso> getAsignacionPrimerIngresos() {
+        return this.asignacionPrimerIngresos;
+    }
 
-}
+    public void setAsignacionPrimerIngresos(Set<AsignacionPrimerIngreso> asignacionPrimerIngresos) {
+        this.asignacionPrimerIngresos = asignacionPrimerIngresos;
+    }
 
-
+ }
 //~ Formatted by Jindent --- http://www.jindent.com

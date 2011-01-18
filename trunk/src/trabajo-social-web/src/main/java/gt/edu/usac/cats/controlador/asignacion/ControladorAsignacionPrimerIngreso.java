@@ -6,12 +6,13 @@
 
 package gt.edu.usac.cats.controlador.asignacion;
 
-//import gt.edu.usac.cats.dominio.AsignacionPrimerIngreso;
+import gt.edu.usac.cats.dominio.AsignacionPrimerIngreso;
 import gt.edu.usac.cats.dominio.Estudiante;
 import gt.edu.usac.cats.dominio.Usuario;
 import gt.edu.usac.cats.servicio.ServicioEstudiante;
 import gt.edu.usac.cats.servicio.ServicioGeneral;
 import gt.edu.usac.cats.servicio.ServicioUsuario;
+import gt.edu.usac.cats.util.Mensajes;
 import gt.edu.usac.cats.util.RequestUtil;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +24,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import java.util.List;
+import org.springframework.dao.DataAccessException;
 
 
 /**
@@ -53,6 +55,7 @@ public class ControladorAsignacionPrimerIngreso {
     @RequestMapping(value="asignacionPrimerIngreso.htm",method = RequestMethod.GET)
     public String validarPeriodoValidoAsignacion(Model modelo, HttpServletRequest request) {
 
+        modelo.addAttribute("procesoEjecutado","false");
         //Validar perido de asignacion primer ingreso
         if(true)
             modelo.addAttribute("periodoValido","true");
@@ -64,23 +67,33 @@ public class ControladorAsignacionPrimerIngreso {
 
 //_____________________________________________________________________________
     @RequestMapping(value="asignacionPrimerIngreso.htm",method=RequestMethod.POST)
-    public String procesarAsignacionPrimerIngreso(HttpServletRequest request){
+    public String procesarAsignacionPrimerIngreso(Model modelo,HttpServletRequest request){
 
         //Buscar usuario para asociarlo en la asignacion de primer ingreso
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        this.usuario = this.servicioUsuarioImpl.cargarUsuarioPorNombre(auth.getName().toString());
-        if(this.usuario==null){
+        usuario = this.servicioUsuarioImpl.cargarUsuarioPorNombre(auth.getName().toString());
+        if(usuario==null){
             RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "buscarUsuario.sinResultados", false);
             return "asignacion/asignacionPrimerIngreso";
         }
 
-        //Grabar asignacion de primer ingreso
-        //AsignacionPrimerIngreso asignacionPrimerIngreso = new AsignacionPrimerIngreso(this.usuario);
-        //this.servicioGeneralImpl.agregar(asignacionPrimerIngreso);
+        try{
+            //Grabar asignacion de primer ingreso
+            AsignacionPrimerIngreso asignacionPrimerIngreso = new AsignacionPrimerIngreso();
+            asignacionPrimerIngreso.setUsuario(usuario);
+            this.servicioGeneralImpl.agregar(asignacionPrimerIngreso);
 
-        //Obtener estudiantes de primer ingreso
-       //List <Estudiante> lstEstudiantes = this.servicioEstudianteImpl.getListadoEstudiantesPrimerIngreso();
-
+            //Obtener estudiantes de primer ingreso
+            List <Estudiante> lstEstudiantes = this.servicioEstudianteImpl.getListadoEstudiantesPrimerIngreso();
+            modelo.addAttribute("procesoEjecutado","true");
+            modelo.addAttribute("idAsignacionPrimerIngreso",asignacionPrimerIngreso.getIdAsignacionPrimerIngreso());
+        }
+        catch (DataAccessException e) {
+            // error de acceso a datos
+            modelo.addAttribute("procesoEjecutado","false");
+            RequestUtil.crearMensajeRespuesta(request, null, "dataAccessException", false);
+            log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
+        }
         return "asignacion/asignacionPrimerIngreso";
     }
 
