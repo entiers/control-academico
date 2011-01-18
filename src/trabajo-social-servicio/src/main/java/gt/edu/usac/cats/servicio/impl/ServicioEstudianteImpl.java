@@ -17,6 +17,7 @@ import gt.edu.usac.cats.dominio.Semestre;
 import gt.edu.usac.cats.dominio.Usuario;
 import gt.edu.usac.cats.servicio.ServicioEstudiante;
 import gt.edu.usac.cats.util.GeneradorPassword;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import org.hibernate.Criteria;
@@ -300,5 +301,15 @@ public class ServicioEstudianteImpl extends ServicioGeneralImpl implements Servi
             criteria.add(eqCarne);
 
         return criteria;
+    }
+
+    @Override
+    public List<Estudiante> getListadoEstudiantesPrimerIngreso() throws HibernateException {
+        
+        Criteria criteria = this.daoGeneralImpl.getSesion().createCriteria(Estudiante.class);
+        Criterion eqCarne = Restrictions.ilike("carne", String.valueOf(Calendar.YEAR), MatchMode.START);
+        criteria.add(eqCarne);
+
+        return criteria.list();
     }
 }

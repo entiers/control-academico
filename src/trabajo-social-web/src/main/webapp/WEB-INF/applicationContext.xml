@@ -36,6 +36,8 @@
                 <value>/idiomas/textosRol</value>
                 <value>/idiomas/textosUsuario</value>
                 <value>/idiomas/textosETL</value>
+                <value>/idiomas/textosAsignacion</value>
+                <value>/idiomas/textosReportes</value>
             </list>
         </property>
 	<property name="cacheSeconds" value="0" />
