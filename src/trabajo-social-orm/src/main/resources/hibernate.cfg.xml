@@ -42,5 +42,6 @@
     <mapping class="gt.edu.usac.cats.dominio.HistorialAsignacionEstudianteCarrera"/>
     <mapping class="gt.edu.usac.cats.dominio.LugarNacimiento"/>
     <mapping class="gt.edu.usac.cats.dominio.Nacionalidad"/>
+    <mapping class="gt.edu.usac.cats.dominio.AsignacionPrimerIngreso"/>
   </session-factory>
 </hibernate-configuration>

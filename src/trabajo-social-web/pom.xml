@@ -19,6 +19,11 @@
             <name>Mario Batres</name>
             <organization>Universidad de San Carlos de Guatemala</organization>
         </developer>
+        <developer>
+            <id>carlos</id>
+            <name>Carlos Solórzano</name>
+            <organization>Universidad de San Carlos de Guatemala</organization>
+        </developer>
     </developers>
     <organization>
         <name>Universidad de San Carlos de Guatemala</name>
@@ -141,6 +146,11 @@
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>1.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.batch</groupId>
+            <artifactId>spring-batch-core</artifactId>
+            <version>2.0.4.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>javax</groupId>

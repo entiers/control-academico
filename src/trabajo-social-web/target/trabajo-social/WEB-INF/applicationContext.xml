@@ -35,6 +35,9 @@
                 <value>/idiomas/textosPerfil</value>
                 <value>/idiomas/textosRol</value>
                 <value>/idiomas/textosUsuario</value>
+                <value>/idiomas/textosETL</value>
+                <value>/idiomas/textosAsignacion</value>
+                <value>/idiomas/textosReportes</value>
             </list>
         </property>
 	<property name="cacheSeconds" value="0" />
@@ -58,6 +61,15 @@
     </bean>
 
 
+    <!--
+        Configuración para la carga de archivos al sistema.  El límite máximo es
+        de 10MB.
+    -->
+    <bean id="multipartResolver"
+         class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+
+        <property name="maxUploadSize" value="10485760"/>
+    </bean>
 
    <!-- ·······································································
     ··· Archivo de configuracion para Hibernate

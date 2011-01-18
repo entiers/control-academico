@@ -46,6 +46,7 @@ public class Asignacion implements java.io.Serializable {
      private int idAsignacion;
      private TipoAsignacion tipoAsignacion;
      private AsignacionEstudianteCarrera asignacionEstudianteCarrera;
+     private AsignacionPrimerIngreso asignacionPrimerIngreso;
      private String transaccion;
      private Date fecha;
      private Set<DetalleAsignacion> detalleAsignacions = new HashSet<DetalleAsignacion>(0);
@@ -143,7 +144,19 @@ public class Asignacion implements java.io.Serializable {
     public void setCursoAprobados(Set<CursoAprobado> cursoAprobados) {
         this.cursoAprobados = cursoAprobados;
     }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(
+        name = "id_asignacion_primer_ingreso",
+        nullable = false
+    )
+    public AsignacionPrimerIngreso getAsignacionPrimerIngreso() {
+        return asignacionPrimerIngreso;
+    }
+
+    public void setAsignacionPrimerIngreso(AsignacionPrimerIngreso asignacionPrimerIngreso) {
+        this.asignacionPrimerIngreso = asignacionPrimerIngreso;
+    }
+
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com
