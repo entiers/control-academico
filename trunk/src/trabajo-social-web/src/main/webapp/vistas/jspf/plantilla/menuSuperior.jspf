@@ -189,15 +189,25 @@
     </li>
     </sec:authorize>
 
-    <sec:authorize access="hasAnyRole('ROLE_CONTROL_PENSUM')">
+    <%--menu de operaciones--%>
+    <sec:authorize access="hasAnyRole('ROLE_CONTROL_PENSUM','ROLE_ASIGNACION_PRIMER_INGRESO','ROLE_CAMBIO_CIERRE_SECCION')">
         <li>
             <a href="#">
                 <span class="l"></span><span class="r"></span><span class="t">
                 <fmt:message key="operaciones.menu"/></span>
             </a>
+            <%--Control de pensum--%>
             <ul>
                 <sec:authorize access="hasRole('ROLE_CONTROL_PENSUM')">
                     <li><a href="controlPensum.htm"><fmt:message key="controlPensum.titulo"/></a></li>
+                </sec:authorize>
+                 <%--Proceso asignacion primer ingreso--%>
+                <sec:authorize access="hasRole('ROLE_ASIGNACION_PRIMER_INGRESO')">
+                    <li><a href="asignacionPrimerIngreso.htm"><fmt:message key="asignacionPrimerIngreso.titulo"/></a></li>
+                </sec:authorize>
+                <%--Operacion cambio y/o cierre de seccion--%>
+                <sec:authorize access="hasRole('ROLE_CAMBIO_CIERRE_SECCION')">
+                    <li><a href="cambioCierreSeccion.htm"><fmt:message key="cambioCierreSeccion.titulo"/></a></li>
                 </sec:authorize>
             </ul>
         </li>
@@ -213,7 +223,22 @@
                 <sec:authorize access="hasRole('ROLE_CARGAR_ARCHIVO_REGISTRO_ESTADISTICA')">
                     <li><a href="ingresarRegistroCSV.htm"><fmt:message key="etl.ingresarRegistroCSV.titulo"/></a></li>
                 </sec:authorize>
+            </ul>
+        </li>
+    </sec:authorize>
 
+    <%--menu de reportes--%>
+    <sec:authorize access="hasAnyRole('ROLE_REPORTE_ASIGNACION_PRIMER_INGRESO')">
+        <li>
+            <a href="#">
+                <span class="l"></span><span class="r"></span><span class="t">
+                <fmt:message key="reportes.menu"/></span>
+            </a>
+            <%--Asignacion primer ingreso--%>
+            <ul>
+                <sec:authorize access="hasRole('ROLE_REPORTE_ASIGNACION_PRIMER_INGRESO')">
+                    <li><a href="rptAsignacionPrimerIngreso.htm"><fmt:message key="rptAsignacionPrimerIngreso.titulo"/></a></li>
+                </sec:authorize>
             </ul>
         </li>
     </sec:authorize>

@@ -118,4 +118,16 @@ public interface ServicioEstudiante extends ServicioGeneral {
      */
     Integer rowCount(DatosBusquedaEstudiante datos)
             throws HibernateException;
+//______________________________________________________________________________
+    /**
+     * <p>Este metodo se encarga de crear un listado de estudiantes, el listado
+     * se filtra en base al numero de carnet de cada estudiante, en donde este
+     * sea igual al año actual.</p>
+     *
+     * @param datos Contiene los filtros para el listado
+     * @return List Listado de estudiantes
+     * @throws HibernateException Si ocurrio un error de acceso a datos
+     */
+    List<Estudiante> getListadoEstudiantesPrimerIngreso()
+            throws HibernateException;
 }
