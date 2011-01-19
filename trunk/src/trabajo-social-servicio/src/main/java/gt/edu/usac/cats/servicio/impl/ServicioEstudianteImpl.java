@@ -305,10 +305,13 @@ public class ServicioEstudianteImpl extends ServicioGeneralImpl implements Servi
 
     @Override
     public List<Estudiante> getListadoEstudiantesPrimerIngreso() throws HibernateException {
-        
+        Calendar fecha = Calendar.getInstance();
+
         Criteria criteria = this.daoGeneralImpl.getSesion().createCriteria(Estudiante.class);
-        Criterion eqCarne = Restrictions.ilike("carne", String.valueOf(Calendar.YEAR), MatchMode.START);
+        Criterion eqCarne = Restrictions.ilike("carne", String.valueOf(fecha.get(Calendar.YEAR)), MatchMode.START);
+        Order orCarrera = Order.asc("asignacionEstudianteCarreras");
         criteria.add(eqCarne);
+        criteria.addOrder(orCarrera);
 
         return criteria.list();
     }

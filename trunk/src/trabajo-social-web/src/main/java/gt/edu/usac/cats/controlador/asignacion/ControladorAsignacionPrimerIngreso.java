@@ -7,11 +7,10 @@
 package gt.edu.usac.cats.controlador.asignacion;
 
 import gt.edu.usac.cats.dominio.AsignacionPrimerIngreso;
-import gt.edu.usac.cats.dominio.Estudiante;
 import gt.edu.usac.cats.dominio.Usuario;
-import gt.edu.usac.cats.servicio.ServicioEstudiante;
 import gt.edu.usac.cats.servicio.ServicioGeneral;
 import gt.edu.usac.cats.servicio.ServicioUsuario;
+import gt.edu.usac.cats.servicio.ServicioAsignacionPrimerIngreso;
 import gt.edu.usac.cats.util.Mensajes;
 import gt.edu.usac.cats.util.RequestUtil;
 import javax.annotation.Resource;
@@ -23,7 +22,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import java.util.List;
 import org.springframework.dao.DataAccessException;
 
 
@@ -50,7 +48,7 @@ public class ControladorAsignacionPrimerIngreso {
     private ServicioGeneral servicioGeneralImpl;
 //_____________________________________________________________________________
     @Resource
-    private ServicioEstudiante servicioEstudianteImpl;
+    private ServicioAsignacionPrimerIngreso servicioAsignacionPrimerIngresoImpl;
 //_____________________________________________________________________________
     @RequestMapping(value="asignacionPrimerIngreso.htm",method = RequestMethod.GET)
     public String validarPeriodoValidoAsignacion(Model modelo, HttpServletRequest request) {
@@ -83,8 +81,8 @@ public class ControladorAsignacionPrimerIngreso {
             asignacionPrimerIngreso.setUsuario(usuario);
             this.servicioGeneralImpl.agregar(asignacionPrimerIngreso);
 
-            //Obtener estudiantes de primer ingreso
-            List <Estudiante> lstEstudiantes = this.servicioEstudianteImpl.getListadoEstudiantesPrimerIngreso();
+            //Llamar a proceso de asignacion de primer ingreso
+            this.servicioAsignacionPrimerIngresoImpl.asignacionCursosPrimerIngreso(asignacionPrimerIngreso.getIdAsignacionPrimerIngreso());
             modelo.addAttribute("procesoEjecutado","true");
             modelo.addAttribute("idAsignacionPrimerIngreso",asignacionPrimerIngreso.getIdAsignacionPrimerIngreso());
         }

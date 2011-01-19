@@ -11,7 +11,7 @@ import org.springframework.dao.DataAccessException;
 
 /**
  * <p>
- * Servicio para manejar el proceso de asignación de cursos a estudiantes
+ * Servicio para manejar el proceso de asignaciï¿½n de cursos a estudiantes
  * de primer ingreso
  * </p>
  *
@@ -26,6 +26,6 @@ public interface ServicioAsignacionPrimerIngreso{
      *
      * @throws DataAccessException Si ocurrio un error de acceso a datos
      */
-    public void asignacionCursosPrimerIngreso()
+    public void asignacionCursosPrimerIngreso(Integer idAsignacionPrimerIngreso)
             throws DataAccessException;
 }
