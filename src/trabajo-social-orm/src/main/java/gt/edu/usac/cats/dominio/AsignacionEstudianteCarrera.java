@@ -104,7 +104,7 @@ public class AsignacionEstudianteCarrera implements java.io.Serializable {
 //______________________________________________________________________________
     @Temporal(TemporalType.DATE)
     @Column(
-        name = "cierre",
+        name = "fecha_cierre",
         length = 13
     )
     public Date getFechaCierre() {

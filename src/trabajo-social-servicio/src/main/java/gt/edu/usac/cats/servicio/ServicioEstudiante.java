@@ -122,7 +122,7 @@ public interface ServicioEstudiante extends ServicioGeneral {
     /**
      * <p>Este metodo se encarga de crear un listado de estudiantes, el listado
      * se filtra en base al numero de carnet de cada estudiante, en donde este
-     * sea igual al año actual.</p>
+     * sea igual al anio actual, asi como el estudiante no debe de tener asignaciones previas</p>
      *
      * @param datos Contiene los filtros para el listado
      * @return List Listado de estudiantes

@@ -52,7 +52,9 @@ public class Asignacion implements java.io.Serializable {
      private Set<DetalleAsignacion> detalleAsignacions = new HashSet<DetalleAsignacion>(0);
      private Set<CursoAprobado> cursoAprobados = new HashSet<CursoAprobado>(0);
 
-    public Asignacion() {}
+    public Asignacion() {
+        this.fecha = new Date();
+    }
     
 
     @Id
