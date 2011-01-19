@@ -40,15 +40,15 @@ public class ControladorRealizarETL {
 
 //______________________________________________________________________________
     /**
-     * Este método se encarga de almacenar los archivos cargados desde de la página
+     * Este metodo se encarga de almacenar los archivos cargados desde de la pagina
      * y lee los atributos de los archivos .properties que utiliza el modulo ETL realizado
-     * por Jasper ETL y los almacena en la ubicación que allí se menciona.
+     * por Jasper ETL y los almacena en la ubicacion que alla se menciona.
      *
      * @param file Es el archivo que es cargado desde el sistema.
-     * @param key Es la clave del archivo .properties utilizado por el módulo de
-     * JasperETL que tiene la ubicación del archivo a procesar.
-     * @param pathArchivoPropiedades Es la ubicación del archivo .properties que útiliza
-     * el módulo ETL.
+     * @param key Es la clave del archivo .properties utilizado por el modulo de
+     * JasperETL que tiene la ubicaciï¿½n del archivo a procesar.
+     * @param pathArchivoPropiedades Es la ubicaciï¿½n del archivo .properties que utiliza
+     * el modulo ETL.
      *
      * @throws IOException
      */
@@ -79,13 +79,13 @@ public class ControladorRealizarETL {
 
 //______________________________________________________________________________
     /**
-     * Este método realiza el proceso ETL.
+     * Este mï¿½todo realiza el proceso ETL.
      *
-     * @param tipo Es de tipo {@link FabricaManejoETL} que identifica que módulo de
+     * @param tipo Es de tipo {@link FabricaManejoETL} que identifica que modulo de
      * ETL llamar para reliazliar el proceso.
      *
      * @return Devuelve <k>true</k> si no han existido errores en el proceso de ETL
-     * y <k>false</k> si existió al menos un error en el proceso.
+     * y <k>false</k> si existio al menos un error en el proceso.
      *
      * @throws IOException
      **/
@@ -111,18 +111,18 @@ public class ControladorRealizarETL {
 
 //______________________________________________________________________________
     /**
-     * Este método se utiliza cuando se hace un <k>submit</k> desde la página
+     * Este mï¿½todo se utiliza cuando se hace un <k>submit</k> desde la pï¿½gina
      * <code>ingresarRegistroCSV.htm</code>.  Este metodo realiza lo siguiente:
      *
      * <ol>
      *  <li>Verifica que se haya seleccionado un archivo</li>
-     *  <li>Verifica que el archivo seleccionado sea un CSV válido</li>
+     *  <li>Verifica que el archivo seleccionado sea un CSV vï¿½lido</li>
      *  <li> Guarda el archivo en disco</li>
      *  <li> Realiza el proceso de ETL</li>
      *  <li> Verifica que el proceso de ETL se haya realizado satisfactoriamente</li>
      * </ol>
      *
-     * @param archivoCSV Archivo CSV que se selecciona desde la aplicación web.
+     * @param archivoCSV Archivo CSV que se selecciona desde la aplicacion web.
      * @param request Objeto {@link HttpServletRequest}
      *
      * @return Contiene el nombre de la vista a mostrar
@@ -147,7 +147,7 @@ public class ControladorRealizarETL {
                         RequestUtil.crearMensajeRespuesta(request, "etl.ingresarRegistroCSV.titulo",
                             "etl.ingresarRegistroCSV.exito", true);
 
-                        log.info("Se realizó el ETL del archivo CSV de Registro y Estadística satisfactoriamente");
+                        log.info("Se realizï¿½ el ETL del archivo CSV de Registro y Estadï¿½stica satisfactoriamente");
                     }else{
 
                         RequestUtil.crearMensajeRespuesta(request, "etl.ingresarRegistroCSV.titulo", "etl.archivoCSV.error",
@@ -159,17 +159,17 @@ public class ControladorRealizarETL {
                     RequestUtil.crearMensajeRespuesta(request, "etl.ingresarRegistroCSV.titulo", "etl.archivoCSV.contentTypeInvalido",
                         false);
 
-                    log.error("El archivo CSV a cargar no es un archivo csv válido");
+                    log.error("El archivo CSV a cargar no es un archivo csv vï¿½lido");
                 }
             }else{
                 RequestUtil.crearMensajeRespuesta(request, "etl.ingresarRegistroCSV.titulo", "etl.archivoCSV.obligatorio",
                         false);
-                log.error("No se cargó ningún archivo CSV");
+                log.error("No se cargï¿½ ningï¿½n archivo CSV");
             }
 
         } catch (IOException e) {
             RequestUtil.crearMensajeRespuesta(request, "etl.ingresarRegistroCSV.titulo", "etl.ioException", false);
-            log.error("Ocurrió un problema en la lectura/escritura de un archivo", e);
+            log.error("Ocurriï¿½ un problema en la lectura/escritura de un archivo", e);
         } catch( Exception e){
             RequestUtil.crearMensajeRespuesta(request, "etl.ingresarRegistroCSV.titulo", "etl.exception", false);
             log.error("Error no identificado", e);
