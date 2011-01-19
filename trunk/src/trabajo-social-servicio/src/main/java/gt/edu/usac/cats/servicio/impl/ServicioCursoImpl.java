@@ -6,8 +6,11 @@
 
 package gt.edu.usac.cats.servicio.impl;
 
+import gt.edu.usac.cats.dominio.Carrera;
 import gt.edu.usac.cats.dominio.Curso;
 import gt.edu.usac.cats.servicio.ServicioCurso;
+import java.util.List;
+import org.hibernate.Query;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.DataAccessException;
@@ -46,5 +49,21 @@ public class ServicioCursoImpl extends ServicioGeneralImpl implements ServicioCu
 
         // se retorna el estudiante o null sino se encontro
         return this.daoGeneralImpl.uniqueResult(criteria);
+    }
+
+    @Override
+    public List<Curso> getCursoPrimerSemestre(Carrera carrera) throws DataAccessException {
+         StringBuilder builder = new StringBuilder();
+        builder.append(" select horario from Horario as hor ")
+               .append(" where hor.curso in( ")
+               .append("    select acp.curso from AsignacionCursoPensum as acp ")
+               .append("    where acp.pensum.carrera = :carrera ")
+               .append("    and acp.numeroSemestre = 1")
+               .append("    and acp.pensum.estado = 1")
+               .append(")");
+               
+        Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
+        query.setParameter("carrera", carrera);
+        return query.list();
     }
 }

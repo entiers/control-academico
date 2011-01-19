@@ -6,17 +6,25 @@
 
 package gt.edu.usac.cats.servicio.impl;
 
-import gt.edu.usac.cats.dominio.Estudiante;
-import gt.edu.usac.cats.servicio.ServicioAsignacionPrimerIngreso;
-import gt.edu.usac.cats.servicio.ServicioEstudiante;
+import gt.edu.usac.cats.dominio.Asignacion;
+import java.security.*;
 import javax.annotation.Resource;
 import java.util.List;
 
-/*import org.springframework.batch.core.StepContribution;
-import org.springframework.batch.core.scope.context.ChunkContext;
-import org.springframework.batch.core.step.tasklet.Tasklet;
-import org.springframework.batch.repeat.RepeatStatus;
-*/
+import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
+import gt.edu.usac.cats.dominio.AsignacionPrimerIngreso;
+import gt.edu.usac.cats.dominio.Carrera;
+import gt.edu.usac.cats.dominio.Curso;
+import gt.edu.usac.cats.dominio.Estudiante;
+import gt.edu.usac.cats.dominio.TipoAsignacion;
+import gt.edu.usac.cats.servicio.ServicioAsignacionPrimerIngreso;
+import gt.edu.usac.cats.servicio.ServicioCurso;
+import gt.edu.usac.cats.servicio.ServicioEstudiante;
+import gt.edu.usac.cats.servicio.ServicioGeneral;
+import java.io.IOException;
+import java.util.Properties;
+import java.util.Set;
+import java.util.UUID;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
@@ -31,13 +39,41 @@ public class ServicioAsignacionPrimerIngresoImpl implements ServicioAsignacionPr
     @Resource
     private ServicioEstudiante servicioEstudianteImpl;
 //_____________________________________________________________________________
+    @Resource
+    private ServicioCurso servicioCursoImpl;
+//_____________________________________________________________________________
+    @Resource
+    private ServicioGeneral servicioGeneralImpl;
+//_____________________________________________________________________________
     @Override
-    public void asignacionCursosPrimerIngreso(Integer idAsignacionPrimerIngreso) throws DataAccessException {
+    public void asignacionCursosPrimerIngreso(AsignacionPrimerIngreso asignacionPrimerIngreso) throws DataAccessException {
+        //Cargar configuraciones
+        Properties prop = this.cargarConfiguraciones();
+        System.out.println("***********-----------------**********" + prop.getProperty("asignacionPrimerIngreso.TipoAsignacion"));
+
         //Obtener estudiantes de primer ingreso(carne con anio actual)
         List<Estudiante> lstEstudiantes = this.servicioEstudianteImpl.getListadoEstudiantesPrimerIngreso();
-        if (!lstEstudiantes.isEmpty()){
+        Set<AsignacionEstudianteCarrera> lstAEC;
+        TipoAsignacion tipoAsignacion = this.servicioGeneralImpl.cargarEntidadPorID(TipoAsignacion.class, prop.getProperty("asignacionPrimerIngreso.TipoAsignacion"));
+
+        if (!lstEstudiantes.isEmpty()){            
             for (Estudiante estudiante: lstEstudiantes){
-                System.out.println(estudiante.getCarne());
+                lstAEC = estudiante.getAsignacionEstudianteCarreras();
+                for (AsignacionEstudianteCarrera aec: lstAEC){
+                    //Obtener cursos de primer semestre de la carrera del estudiante
+                    List<Curso> lstCursosPrimerSemestre = this.servicioCursoImpl.getCursoPrimerSemestre(aec.getCarrera());
+                    if (!lstCursosPrimerSemestre.isEmpty()){
+                        //Crear nueva asignación para el estudiante
+                        Asignacion asignacion = new Asignacion();
+                        //Generarar ID unico de asignacion por medio de UUID en base al carne y fecha
+                        //asignacion.setTransaccion(this.getUUID(estudiante.getCarne() + asignacion.getFecha().toString()));
+                        asignacion.setTransaccion("123456");
+                        asignacion.setAsignacionEstudianteCarrera(aec);
+                        asignacion.setAsignacionPrimerIngreso(asignacionPrimerIngreso);
+                        asignacion.setTipoAsignacion(tipoAsignacion);
+                        this.servicioGeneralImpl.agregar(asignacion);
+                    }
+                }
             }
         }
         else{
@@ -45,4 +81,19 @@ public class ServicioAsignacionPrimerIngresoImpl implements ServicioAsignacionPr
         }
     }
 
+    private String getUUID(String cadena){
+        UUID id = UUID.fromString(cadena);
+        return id.toString();
+    }
+
+    private Properties cargarConfiguraciones(){
+        Properties pro=new Properties();
+        try{
+            pro.load(this.getClass().getResource("ConfProcesosNegocio.properties").openStream());
+        }
+        catch(IOException ex){
+        }
+        
+        return pro;
+    }
 }

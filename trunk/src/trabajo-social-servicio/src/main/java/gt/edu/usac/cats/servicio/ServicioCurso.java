@@ -6,6 +6,9 @@
 
 package gt.edu.usac.cats.servicio;
 
+import gt.edu.usac.cats.dominio.Carrera;
+import java.util.List;
+
 import gt.edu.usac.cats.dominio.Curso;
 import org.springframework.dao.DataAccessException;
 
@@ -26,5 +29,8 @@ public interface ServicioCurso extends ServicioGeneral {
      * @throws DataAccessException Si ocurrio un error de acceso a datos
      */
     Curso buscarCursoPorCodigo(String codigo)
+            throws DataAccessException;
+
+    List<Curso> getCursoPrimerSemestre(Carrera carrera)
             throws DataAccessException;
 }

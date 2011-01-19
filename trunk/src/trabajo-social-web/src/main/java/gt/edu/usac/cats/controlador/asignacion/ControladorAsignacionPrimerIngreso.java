@@ -82,7 +82,7 @@ public class ControladorAsignacionPrimerIngreso {
             this.servicioGeneralImpl.agregar(asignacionPrimerIngreso);
 
             //Llamar a proceso de asignacion de primer ingreso
-            this.servicioAsignacionPrimerIngresoImpl.asignacionCursosPrimerIngreso(asignacionPrimerIngreso.getIdAsignacionPrimerIngreso());
+            this.servicioAsignacionPrimerIngresoImpl.asignacionCursosPrimerIngreso(asignacionPrimerIngreso);
             modelo.addAttribute("procesoEjecutado","true");
             modelo.addAttribute("idAsignacionPrimerIngreso",asignacionPrimerIngreso.getIdAsignacionPrimerIngreso());
         }

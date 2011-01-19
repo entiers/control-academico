@@ -22,6 +22,7 @@ import java.util.Date;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.LogicalExpression;
@@ -306,13 +307,15 @@ public class ServicioEstudianteImpl extends ServicioGeneralImpl implements Servi
     @Override
     public List<Estudiante> getListadoEstudiantesPrimerIngreso() throws HibernateException {
         Calendar fecha = Calendar.getInstance();
+        StringBuilder builder = new StringBuilder();
+        builder.append(" select aec.estudiante from AsignacionEstudianteCarrera as aec ")
+               .append(" left join aec.asignacions as asign")
+               .append(" where aec.estudiante.carne like '")
+               .append(String.valueOf(fecha.get(Calendar.YEAR)))
+               .append("%' and asign.idAsignacion is null");
 
-        Criteria criteria = this.daoGeneralImpl.getSesion().createCriteria(Estudiante.class);
-        Criterion eqCarne = Restrictions.ilike("carne", String.valueOf(fecha.get(Calendar.YEAR)), MatchMode.START);
-        Order orCarrera = Order.asc("asignacionEstudianteCarreras");
-        criteria.add(eqCarne);
-        criteria.addOrder(orCarrera);
+        Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
 
-        return criteria.list();
+        return query.list();
     }
 }

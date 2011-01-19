@@ -7,6 +7,7 @@
 package gt.edu.usac.cats.servicio;
 
 
+import gt.edu.usac.cats.dominio.AsignacionPrimerIngreso;
 import org.springframework.dao.DataAccessException;
 
 /**
@@ -26,6 +27,6 @@ public interface ServicioAsignacionPrimerIngreso{
      *
      * @throws DataAccessException Si ocurrio un error de acceso a datos
      */
-    public void asignacionCursosPrimerIngreso(Integer idAsignacionPrimerIngreso)
+    public void asignacionCursosPrimerIngreso(AsignacionPrimerIngreso asignacionPrimerIngreso)
             throws DataAccessException;
 }
