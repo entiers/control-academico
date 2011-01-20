@@ -7,9 +7,7 @@
 package gt.edu.usac.cats.servicio;
 
 import gt.edu.usac.cats.dominio.busqueda.DatosBusquedaEstudiante;
-import gt.edu.usac.cats.dominio.Carrera;
 import gt.edu.usac.cats.dominio.Estudiante;
-import gt.edu.usac.cats.dominio.Semestre;
 import gt.edu.usac.cats.dominio.Usuario;
 import java.util.List;
 import org.hibernate.HibernateException;
@@ -117,17 +115,5 @@ public interface ServicioEstudiante extends ServicioGeneral {
      * @throws HibernateException Si ocurrio un error de acceso a datos
      */
     Integer rowCount(DatosBusquedaEstudiante datos)
-            throws HibernateException;
-//______________________________________________________________________________
-    /**
-     * <p>Este metodo se encarga de crear un listado de estudiantes, el listado
-     * se filtra en base al numero de carnet de cada estudiante, en donde este
-     * sea igual al anio actual, asi como el estudiante no debe de tener asignaciones previas</p>
-     *
-     * @param datos Contiene los filtros para el listado
-     * @return List Listado de estudiantes
-     * @throws HibernateException Si ocurrio un error de acceso a datos
-     */
-    List<Estudiante> getListadoEstudiantesPrimerIngreso()
             throws HibernateException;
 }

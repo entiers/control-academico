@@ -16,11 +16,9 @@ import gt.edu.usac.cats.dominio.Semestre;
 import gt.edu.usac.cats.dominio.Usuario;
 import gt.edu.usac.cats.servicio.ServicioEstudiante;
 import gt.edu.usac.cats.util.GeneradorPassword;
-import java.util.Calendar;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
-import org.hibernate.Query;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.LogicalExpression;
@@ -300,20 +298,5 @@ public class ServicioEstudianteImpl extends ServicioGeneralImpl implements Servi
             criteria.add(eqCarne);
 
         return criteria;
-    }
-
-    @Override
-    public List<Estudiante> getListadoEstudiantesPrimerIngreso() throws HibernateException {
-        Calendar fecha = Calendar.getInstance();
-        StringBuilder builder = new StringBuilder();
-        builder.append(" select aec.estudiante from AsignacionEstudianteCarrera as aec ")
-               .append(" left join aec.asignacions as asign")
-               .append(" where aec.estudiante.carne like '")
-               .append(String.valueOf(fecha.get(Calendar.YEAR)))
-               .append("%' and asign.idAsignacion is null");
-
-        Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
-
-        return query.list();
-    }
+    }    
 }

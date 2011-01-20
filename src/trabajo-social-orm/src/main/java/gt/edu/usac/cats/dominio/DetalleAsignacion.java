@@ -47,7 +47,11 @@ public class DetalleAsignacion implements java.io.Serializable {
     private short laboratorio;
     private short zona;
 
-    public DetalleAsignacion() {}
+    public DetalleAsignacion() {
+        this.zona = 0;
+        this.laboratorio = 0;
+        this.examenFinal = 0;
+    }
 
     public DetalleAsignacion(int idDetalleAsignacion, Asignacion asignacion, Horario horario, short zona,
                              short laboratorio, short examenFinal) {
