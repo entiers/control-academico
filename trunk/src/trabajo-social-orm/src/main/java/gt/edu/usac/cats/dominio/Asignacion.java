@@ -101,7 +101,7 @@ public class Asignacion implements java.io.Serializable {
     @Column(
         name = "transaccion",
         nullable = false,
-        length = 20
+        length = 40
     )
     public String getTransaccion() {
         return this.transaccion;

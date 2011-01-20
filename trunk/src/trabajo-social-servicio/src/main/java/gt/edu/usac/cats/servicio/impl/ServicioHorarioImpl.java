@@ -11,6 +11,7 @@ import gt.edu.usac.cats.dominio.Horario;
 import gt.edu.usac.cats.dominio.Salon;
 import gt.edu.usac.cats.dominio.Semestre;
 import gt.edu.usac.cats.servicio.ServicioHorario;
+import java.util.Calendar;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.criterion.DetachedCriteria;
@@ -81,14 +82,18 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
 
     @Override
     public List<Horario> getHorarioPrimerSemestre(Carrera carrera) throws DataAccessException {
-         StringBuilder builder = new StringBuilder();
+        Calendar fecha = Calendar.getInstance();
+        StringBuilder builder = new StringBuilder();
+
         builder.append(" select horario from Horario as horario ")
-               .append(" where horario.curso in( ")
+               .append(" where horario.curso in ( ")
                .append("    select acp.curso from AsignacionCursoPensum as acp ")
                .append("    where acp.pensum.carrera = :carrera ")
                .append("    and acp.numeroSemestre = 1")
-               .append("    and acp.pensum.estado = 1")
-               .append(")");
+               .append("    and acp.pensum.estado = 1 )")
+               .append(" and horario.semestre.numero='1'")
+               .append(" and horario.semestre.anio= ")
+               .append(String.valueOf(fecha.get(Calendar.YEAR)));
 
         Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
         query.setParameter("carrera", carrera);

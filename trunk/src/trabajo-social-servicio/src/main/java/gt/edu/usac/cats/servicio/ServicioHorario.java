@@ -44,7 +44,15 @@ public interface ServicioHorario extends ServicioGeneral {
      */
     List <Horario> buscarHorarioPorSalonYSemestre(Salon salon, Semestre semestre)
             throws DataAccessException;
-
+ //______________________________________________________________________________
+     /**
+     * <p>Este método se encarga de devolver los horarios disponibles en el 
+      * primer semestres de una carrera especifica.</p>
+     *
+     * @param carrera Pojo del tipo {@link Carrera}     
+     * @throws DataAccessException Si ocurrio un error de acceso a datos
+     * @return List
+     */
     List<Horario> getHorarioPrimerSemestre(Carrera carrera)
             throws DataAccessException;
 }
