@@ -6,6 +6,7 @@
 
 package gt.edu.usac.cats.servicio;
 
+import gt.edu.usac.cats.dominio.Carrera;
 import gt.edu.usac.cats.dominio.Horario;
 import gt.edu.usac.cats.dominio.Salon;
 import gt.edu.usac.cats.dominio.Semestre;
@@ -42,5 +43,8 @@ public interface ServicioHorario extends ServicioGeneral {
      * @return List
      */
     List <Horario> buscarHorarioPorSalonYSemestre(Salon salon, Semestre semestre)
+            throws DataAccessException;
+
+    List<Horario> getHorarioPrimerSemestre(Carrera carrera)
             throws DataAccessException;
 }

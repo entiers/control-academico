@@ -6,11 +6,13 @@
 
 package gt.edu.usac.cats.servicio.impl;
 
+import gt.edu.usac.cats.dominio.Carrera;
 import gt.edu.usac.cats.dominio.Horario;
 import gt.edu.usac.cats.dominio.Salon;
 import gt.edu.usac.cats.dominio.Semestre;
 import gt.edu.usac.cats.servicio.ServicioHorario;
 import java.util.List;
+import org.hibernate.Query;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.DataAccessException;
@@ -75,5 +77,21 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
                 );
 
         return this.daoGeneralImpl.find(criteria);
+    }
+
+    @Override
+    public List<Horario> getHorarioPrimerSemestre(Carrera carrera) throws DataAccessException {
+         StringBuilder builder = new StringBuilder();
+        builder.append(" select horario from Horario as horario ")
+               .append(" where horario.curso in( ")
+               .append("    select acp.curso from AsignacionCursoPensum as acp ")
+               .append("    where acp.pensum.carrera = :carrera ")
+               .append("    and acp.numeroSemestre = 1")
+               .append("    and acp.pensum.estado = 1")
+               .append(")");
+
+        Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
+        query.setParameter("carrera", carrera);
+        return query.list();
     }
 }

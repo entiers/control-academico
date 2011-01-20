@@ -8,7 +8,6 @@ package gt.edu.usac.cats.servicio.impl;
 
 import gt.edu.usac.cats.dao.impl.DaoGeneralImpl;
 import gt.edu.usac.cats.dominio.busqueda.DatosBusquedaEstudiante;
-import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
 import gt.edu.usac.cats.dominio.AsignacionUsuarioPerfil;
 import gt.edu.usac.cats.dominio.Carrera;
 import gt.edu.usac.cats.dominio.Estudiante;
@@ -18,7 +17,6 @@ import gt.edu.usac.cats.dominio.Usuario;
 import gt.edu.usac.cats.servicio.ServicioEstudiante;
 import gt.edu.usac.cats.util.GeneradorPassword;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
