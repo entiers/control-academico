@@ -6,7 +6,7 @@
 
 package gt.edu.usac.cats.servicio.impl;
 
-import gt.edu.usac.cats.dominio.Carrera;
+import gt.edu.usac.cats.dominio.Curso;
 import gt.edu.usac.cats.dominio.Horario;
 import gt.edu.usac.cats.dominio.Salon;
 import gt.edu.usac.cats.dominio.Semestre;
@@ -81,22 +81,27 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
     }
 
     @Override
-    public List<Horario> getHorarioPrimerSemestre(Carrera carrera) throws DataAccessException {
+    public Horario getHorarioPorCursoPrimerIngreso(Curso curso) throws DataAccessException {
         Calendar fecha = Calendar.getInstance();
+        
         StringBuilder builder = new StringBuilder();
 
-        builder.append(" select horario from Horario as horario ")
-               .append(" where horario.curso in ( ")
-               .append("    select acp.curso from AsignacionCursoPensum as acp ")
-               .append("    where acp.pensum.carrera = :carrera ")
-               .append("    and acp.numeroSemestre = 1")
-               .append("    and acp.pensum.estado = 1 )")
-               .append(" and horario.semestre.numero='1'")
+        builder.append(" select horario.idHorario from Horario as horario ")
+               .append(" left join horario.detalleAsignacions as det ")
+               .append(" where horario.curso = :curso ")
+               .append(" and horario.semestre.numero='1' ")
                .append(" and horario.semestre.anio= ")
-               .append(String.valueOf(fecha.get(Calendar.YEAR)));
+               .append( String.valueOf(fecha.get(Calendar.YEAR)))
+               .append(" group by horario.idHorario")
+               .append(" order by count(det)");
 
         Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
-        query.setParameter("carrera", carrera);
-        return query.list();
+        query.setParameter("curso", curso);
+
+        List list = query.list();
+        if (!list.isEmpty())
+            return this.cargarEntidadPorID(Horario.class, Integer.valueOf(list.get(0).toString())) ;
+        else
+            return null;
     }
 }

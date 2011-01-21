@@ -6,7 +6,7 @@
 
 package gt.edu.usac.cats.servicio;
 
-import gt.edu.usac.cats.dominio.Carrera;
+import gt.edu.usac.cats.dominio.Curso;
 import gt.edu.usac.cats.dominio.Horario;
 import gt.edu.usac.cats.dominio.Salon;
 import gt.edu.usac.cats.dominio.Semestre;
@@ -49,10 +49,10 @@ public interface ServicioHorario extends ServicioGeneral {
      * <p>Este método se encarga de devolver los horarios disponibles en el 
       * primer semestres de una carrera especifica.</p>
      *
-     * @param carrera Pojo del tipo {@link Carrera}     
+     * @param curso Pojo del tipo {@link Curso}
      * @throws DataAccessException Si ocurrio un error de acceso a datos
      * @return List
      */
-    List<Horario> getHorarioPrimerSemestre(Carrera carrera)
+    Horario getHorarioPorCursoPrimerIngreso(Curso curso)
             throws DataAccessException;
 }

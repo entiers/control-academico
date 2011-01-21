@@ -47,30 +47,31 @@ import javax.persistence.UniqueConstraint;
     }
 )
 public class Estudiante implements java.io.Serializable {
-     private int idEstudiante;
-     private Nacionalidad nacionalidad;
-     private LugarNacimiento lugarNacimiento;
-     private Usuario usuario;
-     private Pensum pensum;
-     private String carne;
-     private String nombre;
-     private String direccion;
-     private String telefono;
-     private String celular;
-     private String email;
-     private Date fechaNacimiento;
-     private boolean requisitos;
-     private String carneModificado;
-     private String nov;
-     private char sexo;
-     private Set<CuentaCorriente> cuentaCorrientes = new HashSet<CuentaCorriente>(0);
-     private Set<Desasignacion> desasignacions = new HashSet<Desasignacion>(0);
-     private Set<AsignacionDocumento> asignacionDocumentos = new HashSet<AsignacionDocumento>(0);
-     private Set<CursoExtra> cursoExtras = new HashSet<CursoExtra>(0);
-     private Set<AsignacionEstudianteCarrera> asignacionEstudianteCarreras = new HashSet<AsignacionEstudianteCarrera>(0);
-     private Set<ConteoAsignacion> conteoAsignacions = new HashSet<ConteoAsignacion>(0);
+    private int idEstudiante;
+    private Nacionalidad nacionalidad;
+    private LugarNacimiento lugarNacimiento;
+    private Usuario usuario;
+    private Pensum pensum;
+    private String carne;
+    private String nombre;
+    private String direccion;
+    private String telefono;
+    private String celular;
+    private String email;
+    private Date fechaNacimiento;
+    private boolean requisitos;
+    private String carneModificado;
+    private String nov;
+    private char sexo;
+    private Set<CuentaCorriente> cuentaCorrientes = new HashSet<CuentaCorriente>(0);
+    private Set<Desasignacion> desasignacions = new HashSet<Desasignacion>(0);
+    private Set<AsignacionDocumento> asignacionDocumentos = new HashSet<AsignacionDocumento>(0);
+    private Set<CursoExtra> cursoExtras = new HashSet<CursoExtra>(0);
+    private Set<AsignacionEstudianteCarrera> asignacionEstudianteCarreras = new HashSet<AsignacionEstudianteCarrera>(0);
+    private Set<ConteoAsignacion> conteoAsignacions = new HashSet<ConteoAsignacion>(0);
+    private Set<DetalleAsignacionPrimerIngreso> detalleAsignacionPrimerIngresos = new HashSet<DetalleAsignacionPrimerIngreso>(0);
 
-     private String password;
+    private String password;
     
 
     public Estudiante() {}
@@ -278,6 +279,16 @@ public class Estudiante implements java.io.Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
+
+@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="estudiante")
+    public Set<DetalleAsignacionPrimerIngreso> getDetalleAsignacionPrimerIngresos() {
+        return detalleAsignacionPrimerIngresos;
+    }
+
+    public void setDetalleAsignacionPrimerIngresos(Set<DetalleAsignacionPrimerIngreso> detalleAsignacionPrimerIngresos) {
+        this.detalleAsignacionPrimerIngresos = detalleAsignacionPrimerIngresos;
+    }
+
 }
 
 
