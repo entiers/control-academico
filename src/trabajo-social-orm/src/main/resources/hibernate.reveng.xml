@@ -40,4 +40,5 @@
   <table-filter match-name="cuenta_corriente"/>
   <table-filter match-name="movimiento"/>
   <table-filter match-name="asignacion_primer_ingreso"/>
+  <table-filter match-name="detalle_asignacion_primer_ingreso"/>
 </hibernate-reverse-engineering>

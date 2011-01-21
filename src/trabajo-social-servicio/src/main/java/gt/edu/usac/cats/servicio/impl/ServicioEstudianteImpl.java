@@ -7,6 +7,7 @@
 package gt.edu.usac.cats.servicio.impl;
 
 import gt.edu.usac.cats.dao.impl.DaoGeneralImpl;
+import gt.edu.usac.cats.dominio.Curso;
 import gt.edu.usac.cats.dominio.busqueda.DatosBusquedaEstudiante;
 import gt.edu.usac.cats.dominio.AsignacionUsuarioPerfil;
 import gt.edu.usac.cats.dominio.Carrera;
@@ -19,6 +20,7 @@ import gt.edu.usac.cats.util.GeneradorPassword;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.LogicalExpression;
@@ -298,5 +300,24 @@ public class ServicioEstudianteImpl extends ServicioGeneralImpl implements Servi
             criteria.add(eqCarne);
 
         return criteria;
-    }    
+    }
+
+    @Override
+    public boolean tieneCursoAsignadoPrimerIngreso(Estudiante estudiante, Curso curso) throws HibernateException {
+        StringBuilder builder = new StringBuilder();
+
+        builder.append(" select asign from Asignacion as asign")
+               .append(" inner join asign.detalleAsignacions deta ")
+               .append(" where asign.asignacionEstudianteCarrera.estudiante= :estudiante ")
+               .append(" and deta.horario.curso = :curso");
+
+        Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
+        query.setParameter("estudiante", estudiante);
+        query.setParameter("curso", curso);
+        
+        if(query.list().isEmpty())
+            return false;
+        else
+            return true;
+    }
 }

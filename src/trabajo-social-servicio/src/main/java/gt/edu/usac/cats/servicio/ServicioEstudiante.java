@@ -8,6 +8,7 @@ package gt.edu.usac.cats.servicio;
 
 import gt.edu.usac.cats.dominio.busqueda.DatosBusquedaEstudiante;
 import gt.edu.usac.cats.dominio.Estudiante;
+import gt.edu.usac.cats.dominio.Curso;
 import gt.edu.usac.cats.dominio.Usuario;
 import java.util.List;
 import org.hibernate.HibernateException;
@@ -115,5 +116,17 @@ public interface ServicioEstudiante extends ServicioGeneral {
      * @throws HibernateException Si ocurrio un error de acceso a datos
      */
     Integer rowCount(DatosBusquedaEstudiante datos)
+            throws HibernateException;
+ //______________________________________________________________________________
+    /**
+     * <p>Valida que el estudiante este asignado en un curso en un horario
+     * especifico.</p>
+     *
+     * @param estdiante Contiene el estudiante a buscar (@link Estudiante)
+     * @param horario contiene el horario por el que se busca (@link Horario)
+     * @return boolean true si esta asignado, de lo contrario false 
+     * @throws HibernateException Si ocurrio un error de acceso a datos
+     */
+    boolean tieneCursoAsignadoPrimerIngreso(Estudiante estudiante, Curso curso)
             throws HibernateException;
 }

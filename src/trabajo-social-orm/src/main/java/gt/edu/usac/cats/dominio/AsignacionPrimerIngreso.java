@@ -43,6 +43,7 @@ public class AsignacionPrimerIngreso implements java.io.Serializable {
     private Date fechaFin;    
     private Usuario usuario;
     private Set<Asignacion> asignaciones = new HashSet<Asignacion>(0);
+    private Set<DetalleAsignacionPrimerIngreso> detalleAsignacionPrimerIngresos = new HashSet<DetalleAsignacionPrimerIngreso>(0);
 
     public AsignacionPrimerIngreso() {
         this.fechaInicio = new Date();
@@ -108,6 +109,21 @@ public class AsignacionPrimerIngreso implements java.io.Serializable {
     public void setAsignaciones(Set<Asignacion> asignaciones) {
         this.asignaciones = asignaciones;
     }
+
+    @OneToMany(
+        cascade = CascadeType.ALL,
+        fetch = FetchType.LAZY,
+        mappedBy = "asignacionPrimerIngreso"
+    )
+    public Set<DetalleAsignacionPrimerIngreso> getDetalleAsignacionPrimerIngresos() {
+        return detalleAsignacionPrimerIngresos;
+    }
+
+    public void setDetalleAsignacionPrimerIngresos(Set<DetalleAsignacionPrimerIngreso> detalleAsignacionPrimerIngresos) {
+        this.detalleAsignacionPrimerIngresos = detalleAsignacionPrimerIngresos;
+    }
+
+
 
 
 }
