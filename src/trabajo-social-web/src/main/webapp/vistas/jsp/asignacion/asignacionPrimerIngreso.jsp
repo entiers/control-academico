@@ -30,20 +30,25 @@
                     }
                 });
 
+                $("form").submit(function(){
+                    $.ajax({
+                        url: "ajxEjecutarAsignacionPrimerIngreso.htm"                        
+                    });
+                    return true;
+                });
+
             });
         </script>
     </head>
     <body>
         <h1><fmt:message key="asignacionPrimerIngreso.titulo"/></h1>
 
-        <form:form name="form" method="post" enctype="multipart/form-data">
+        <form:form method="post" enctype="multipart/form-data">
                 <c:choose>
                     <c:when test="${procesoEjecutado}">
                         <div align="center">
                             <label for="sumbit">
-                                <fmt:message key="asignacionPrimerIngreso.ejecutado1"/>
-                                ${idAsignacionPrimerIngreso}
-                                <fmt:message key="asignacionPrimerIngreso.ejecutado2"/>
+                                <fmt:message key="asignacionPrimerIngreso.ejecutado"/>
                             </label>
                         </div>
                     </c:when>

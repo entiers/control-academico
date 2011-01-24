@@ -7,6 +7,8 @@
 package gt.edu.usac.cats.servicio.impl;
 
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.Properties;
@@ -25,11 +27,14 @@ import gt.edu.usac.cats.dominio.TipoAsignacion;
 import gt.edu.usac.cats.servicio.ServicioAsignacionEstudianteCarrera;
 import gt.edu.usac.cats.servicio.ServicioAsignacionPrimerIngreso;
 import gt.edu.usac.cats.servicio.ServicioCurso;
-import gt.edu.usac.cats.servicio.ServicioDetalleAsignacion;
 import gt.edu.usac.cats.servicio.ServicioEstudiante;
 import gt.edu.usac.cats.servicio.ServicioGeneral;
 import gt.edu.usac.cats.servicio.ServicioHorario;
+import gt.edu.usac.cats.util.EmailSender;
+import java.util.Date;
+import javax.mail.MessagingException;
 import org.springframework.dao.DataAccessException;
+import org.springframework.mail.MailException;
 import org.springframework.stereotype.Service;
 
 /**
@@ -55,11 +60,16 @@ public class ServicioAsignacionPrimerIngresoImpl implements ServicioAsignacionPr
     @Resource
     private ServicioEstudiante servicioEstudianteImpl;
 //_____________________________________________________________________________
+    @Resource
+    private EmailSender emailSender;
+//_____________________________________________________________________________
     @Override
     public void asignacionCursosPrimerIngreso(AsignacionPrimerIngreso asignacionPrimerIngreso) throws DataAccessException {
         List<AsignacionEstudianteCarrera> lstAEC;
         
         int totalAsignaciones;
+        int totEstudianteAsignados = 0;
+        int totEstudianteNoAsignados = 0;
 
         //Cargar configuraciones
         Properties prop = this.cargarConfiguraciones();
@@ -70,6 +80,7 @@ public class ServicioAsignacionPrimerIngresoImpl implements ServicioAsignacionPr
         List<Carrera> lstCarreras = this.servicioGeneralImpl.cargarEntidades(Carrera.class);
         if (!lstCarreras.isEmpty()){
             for(Carrera carrera: lstCarreras){
+                //Obtener estudiantes de primer ingreso por carrera
                 lstAEC = this.servicioAsignacionEstudianteCarreraImpl.getAsignacionEstudianteCarreraPrimerIngreso(carrera);
                 //Obtener cursos por carrera
                 List<Curso> lstCursoPrimerSemestre = this.servicioCursoImpl.getCursoPrimerSemestreXCarrera(carrera);
@@ -104,7 +115,11 @@ public class ServicioAsignacionPrimerIngresoImpl implements ServicioAsignacionPr
                             if (totalAsignaciones==0){
                                 this.servicioGeneralImpl.borrar(asignacion);
                                 dapi.setAsignado(false);
+                                totEstudianteNoAsignados++;
                             }
+                            else
+                                totEstudianteAsignados++;
+                            
                             this.servicioGeneralImpl.agregar(dapi);
                         }
                         
@@ -112,6 +127,12 @@ public class ServicioAsignacionPrimerIngresoImpl implements ServicioAsignacionPr
                 }
             }
         }
+        //Actualizar fecha final del proceso de asignacion
+        asignacionPrimerIngreso.setFechaFin(new Date());
+        this.servicioGeneralImpl.actualizar(asignacionPrimerIngreso);
+
+        //Enviar correo con detalle del proceso
+        this.enviarCorreo(asignacionPrimerIngreso, totEstudianteAsignados, totEstudianteNoAsignados);
   }
  //______________________________________________________________________________
      /**
@@ -139,5 +160,36 @@ public class ServicioAsignacionPrimerIngresoImpl implements ServicioAsignacionPr
             System.out.println(ex.getMessage());
         }        
         return pro;
+    }
+
+    private void enviarCorreo(AsignacionPrimerIngreso asignacionPrimerIngreso,
+                                int totalAsignados,
+                                int totalNoAsignados){
+        Properties prop = this.cargarConfiguraciones();
+        String mensaje = "Estimado usuario, \n\n"+
+                         "El proceso de asignación de cursos a estudiantes de primer ingreso, ha finalizado. A continuación se le presenta un resumen con el resultado del mismo: \n\n" +
+                         "  - Fecha inicio: " + asignacionPrimerIngreso.getFechaInicio() + "\n" +
+                         "  - Fecha fin: " + asignacionPrimerIngreso.getFechaFin() + "\n" +
+                         "  - Total estudiantes asignados: " + totalAsignados + "\n" +
+                         "  - Total estudiantes no asignados: " + totalNoAsignados + "\n\n" +
+                         "Sistema de control académico\nEscuela de trabajo social";
+
+        try {
+            this.emailSender.setDestinatario("usuario@dominio.com");
+            this.emailSender.setSubject("Proceso de asignacion de primer ingreso");
+            this.emailSender.setMensaje(mensaje);
+                try {
+                    // se trata de enviar el correo
+                    this.emailSender.enviarCorreo2();
+                } catch (IOException ex) {
+                    Logger.getLogger(ServicioAsignacionPrimerIngresoImpl.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (MailException ex) {
+                    Logger.getLogger(ServicioAsignacionPrimerIngresoImpl.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+        } catch (MessagingException ex) {
+            Logger.getLogger(ServicioAsignacionPrimerIngresoImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.println(mensaje);
     }
 }

@@ -65,14 +65,19 @@ public class ControladorAsignacionPrimerIngreso {
 
 //_____________________________________________________________________________
     @RequestMapping(value="asignacionPrimerIngreso.htm",method=RequestMethod.POST)
-    public String procesarAsignacionPrimerIngreso(Model modelo,HttpServletRequest request){
+    public String mostrarMensajeUsuario(Model modelo,HttpServletRequest request){
+        modelo.addAttribute("procesoEjecutado","true");
+        return "asignacion/asignacionPrimerIngreso";
+    }
 
+//_____________________________________________________________________________
+    @RequestMapping(value="ajxEjecutarAsignacionPrimerIngreso.htm",method=RequestMethod.GET)
+    public void procesarAsignacionPrimerIngreso(HttpServletRequest request){
         //Buscar usuario para asociarlo en la asignacion de primer ingreso
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         usuario = this.servicioUsuarioImpl.cargarUsuarioPorNombre(auth.getName().toString());
         if(usuario==null){
             RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "buscarUsuario.sinResultados", false);
-            return "asignacion/asignacionPrimerIngreso";
         }
 
         try{
@@ -83,17 +88,11 @@ public class ControladorAsignacionPrimerIngreso {
 
             //Llamar a proceso de asignacion de primer ingreso
             this.servicioAsignacionPrimerIngresoImpl.asignacionCursosPrimerIngreso(asignacionPrimerIngreso);
-            modelo.addAttribute("procesoEjecutado","true");
-            modelo.addAttribute("idAsignacionPrimerIngreso",asignacionPrimerIngreso.getIdAsignacionPrimerIngreso());
         }
         catch (DataAccessException e) {
             // error de acceso a datos
-            modelo.addAttribute("procesoEjecutado","false");
             RequestUtil.crearMensajeRespuesta(request, null, "dataAccessException", false);
             log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
         }
-        return "asignacion/asignacionPrimerIngreso";
     }
-
-
 }

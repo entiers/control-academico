@@ -46,7 +46,7 @@ public interface ServicioHorario extends ServicioGeneral {
             throws DataAccessException;
  //______________________________________________________________________________
      /**
-     * <p>Este método se encarga de devolver los horarios disponibles en el 
+     * <p>Este metodo se encarga de devolver los horarios disponibles en el
       * primer semestres de una carrera especifica.</p>
      *
      * @param curso Pojo del tipo {@link Curso}
