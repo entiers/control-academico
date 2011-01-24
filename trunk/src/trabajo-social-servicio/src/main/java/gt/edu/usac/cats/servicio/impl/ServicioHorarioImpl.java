@@ -92,6 +92,10 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
                .append(" and horario.semestre.numero='1' ")
                .append(" and horario.semestre.anio= ")
                .append( String.valueOf(fecha.get(Calendar.YEAR)))
+               .append(" and horario.salon.capacidad > (")
+               .append("    select count(*) from DetalleAsignacion det")
+               .append("    where det.horario = horario")
+               .append(" )")
                .append(" group by horario.idHorario")
                .append(" order by count(det)");
 

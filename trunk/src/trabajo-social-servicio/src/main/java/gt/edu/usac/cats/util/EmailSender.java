@@ -18,8 +18,6 @@ import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.ContextLoader;
-import org.springframework.web.context.WebApplicationContext;
 
 /**
  *
@@ -109,7 +107,7 @@ public class EmailSender {
             throws IOException, MailException, MessagingException {
 
         // se carga la configuracion
-        Properties properties = this.leerArchivoProperties();
+        Properties properties = this.cargarProperties();
 
         // se crea el objeto que permite el envio de los correos
         JavaMailSenderImpl javaMailSender2 = new JavaMailSenderImpl();
@@ -139,20 +137,14 @@ public class EmailSender {
      * @return Properties Contiene la configuracion para JavaMail
      * @throws IOException Si no se pudo leer el archivo de propiedades
      */
-    private Properties leerArchivoProperties() throws IOException {
-        // se obtiene el contexto de Spring
-        WebApplicationContext applicationContext = ContextLoader.getCurrentWebApplicationContext();
-
-        // se obtiene la path absoluto del archivo de propiedades
-        String nombreArchivo = applicationContext.getServletContext().getRealPath("/WEB-INF/smtp.properties");
-
+    private Properties cargarProperties() throws IOException {
         // se crea el desencriptador
         StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
         encryptor.setPassword("APP_ENCRYPTION_PASSWORD");
 
         // se crea el archivo de propiedades
         Properties properties = new EncryptableProperties(encryptor);
-        properties.load(new FileInputStream(nombreArchivo));
+        properties.load(this.getClass().getResourceAsStream("/gt/edu/usac/cats/util/smtp.properties"));
 
         return properties;
     }

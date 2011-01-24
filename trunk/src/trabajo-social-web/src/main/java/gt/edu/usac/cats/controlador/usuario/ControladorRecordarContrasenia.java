@@ -38,7 +38,7 @@ import org.springframework.web.context.WebApplicationContext;
 @Controller
 @RequestMapping(value = "recordarContrasenia.htm")
 public class ControladorRecordarContrasenia {
-        private static Logger log = Logger.getLogger(ControladorAsignarPerfilUsuario.class);
+    private static Logger log = Logger.getLogger(ControladorRecordarContrasenia.class);
 //______________________________________________________________________________
     private static final String TITULO_MENSAJE = "recordarContrasenia.titulo";
 //______________________________________________________________________________
