@@ -28,6 +28,7 @@
 
                 <%-- boton --%>
                 <input type="submit" value='<fmt:message key="btnEditar"/>' />
+                <a href="javascript:history.back();"><fmt:message key="link.regresar"/></a>
             </fieldset>
         </form:form>
 

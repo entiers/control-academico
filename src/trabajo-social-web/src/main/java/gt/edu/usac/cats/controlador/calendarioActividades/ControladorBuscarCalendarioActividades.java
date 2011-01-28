@@ -9,11 +9,9 @@ package gt.edu.usac.cats.controlador.calendarioActividades;
 import gt.edu.usac.cats.dominio.CalendarioActividades;
 import gt.edu.usac.cats.dominio.Semestre;
 import gt.edu.usac.cats.dominio.busqueda.DatosBusquedaCalendarioActividades;
-import gt.edu.usac.cats.servicio.ServicioActividad;
 import gt.edu.usac.cats.util.RequestUtil;
 import gt.edu.usac.cats.util.Mensajes;
 import java.util.List;
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
@@ -35,7 +33,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller("controladorBuscarCalendarioActividades")
 @RequestMapping("buscarCalendarioActividades.htm")
-public class ControladorBuscarCalendarioActividades {
+public class ControladorBuscarCalendarioActividades extends ControladorAbstractoCalendarioActividades{
 //_____________________________________________________________________________
     /**
      * <p>
@@ -48,25 +46,14 @@ public class ControladorBuscarCalendarioActividades {
      * <p>Matiene una bitacora de lo realizado por esta clase.</p>
      */
     private static Logger log = Logger.getLogger(ControladorBuscarCalendarioActividades.class);
-//______________________________________________________________________________
-    /**
-     * <p>Listado de todas las semestres disponibles.</p>
-     */
-    private List <Semestre> listadoSemestres;
+
 //______________________________________________________________________________
 
     /**
      * <p>Listado de todos los calendario de actividades disponibles.</p>
      */
     private List <CalendarioActividades> listadoCalendarioActividades;
-//______________________________________________________________________________
-    /**
-     * <p>Contiene metodos basicos de acceso a la base de datos, estos metodos
-     * permiten realizar operaciones basicas sobre cualquier tabla de la base
-     * de datos.</p>
-     */
-    @Resource
-    protected ServicioActividad servicioActividadImpl;
+
 //______________________________________________________________________________
     /**
      * <p>Este metodo se ejecuta cada vez que se realiza una solicitud del tipo
@@ -79,9 +66,10 @@ public class ControladorBuscarCalendarioActividades {
      */
     @RequestMapping(method = RequestMethod.GET)
     public String crearFormulario(Model modelo){
-        this.listadoSemestres = this.servicioActividadImpl.listarEntidad(Semestre.class);
+        this.listadoSemestres = this.servicioSemestreImpl.listarSemestresParaBusqueda();
+
         modelo.addAttribute("datosBusquedaCalendarioActividades", new DatosBusquedaCalendarioActividades());
-        modelo.addAttribute("semestres", this.listadoSemestres);
+        modelo.addAttribute("listadoSemestres", this.listadoSemestres);
         return "calendarioActividades/buscarCalendarioActividades";
     }
 //______________________________________________________________________________
@@ -107,7 +95,7 @@ public class ControladorBuscarCalendarioActividades {
     @RequestMapping(method = RequestMethod.POST)
     public String buscar(@Valid DatosBusquedaCalendarioActividades datosBusquedaCalendarioActividades,
             BindingResult bindingResult, Model modelo, HttpServletRequest request){
-        modelo.addAttribute("semestres", this.listadoSemestres);
+        modelo.addAttribute("listadoSemestres", this.listadoSemestres);
 
         if(bindingResult.hasErrors())
             return "calendarioActividades/buscarCalendarioActividades";
@@ -117,7 +105,7 @@ public class ControladorBuscarCalendarioActividades {
 
             this.listadoCalendarioActividades = this.servicioActividadImpl.getCalendarioActividadesPorSemestre(semestre);
 
-            if(this.listadoCalendarioActividades == null || this.listadoCalendarioActividades.size() == 0) {
+            if(this.listadoCalendarioActividades == null || this.listadoCalendarioActividades.isEmpty()) {
                 RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "buscarHorario.sinResultados", true);
             }
 

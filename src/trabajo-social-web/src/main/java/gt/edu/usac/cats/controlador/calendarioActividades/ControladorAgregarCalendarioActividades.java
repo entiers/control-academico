@@ -9,7 +9,9 @@ package gt.edu.usac.cats.controlador.calendarioActividades;
 import gt.edu.usac.cats.dominio.CalendarioActividades;
 import gt.edu.usac.cats.dominio.Semestre;
 import gt.edu.usac.cats.dominio.wrapper.WrapperCalendarioActividades;
-import gt.edu.usac.cats.servicio.ServicioActividad;
+import gt.edu.usac.cats.enums.TipoActividad;
+import gt.edu.usac.cats.servicio.ServicioCalendarioActividades;
+import gt.edu.usac.cats.servicio.ServicioSemestre;
 import gt.edu.usac.cats.util.RequestUtil;
 import gt.edu.usac.cats.util.Mensajes;
 import java.util.List;
@@ -35,7 +37,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller("controladorAgregarCalendarioActividades")
 @RequestMapping("agregarCalendarioActividades.htm")
-public class ControladorAgregarCalendarioActividades {
+public class ControladorAgregarCalendarioActividades extends ControladorAbstractoCalendarioActividades{
 //______________________________________________________________________________
     /**
      * <p>
@@ -51,21 +53,6 @@ public class ControladorAgregarCalendarioActividades {
 
 //______________________________________________________________________________
     /**
-     * <p>Contiene metodos que permiten el manejo de la informacion relacionada
-     * con el calendario de actividades en la base de datos. Este objeto se encuentra registrado
-     * como un bean de servicio en Spring, por lo que este es el encargado de
-     * inyectar la dependencia.</p>
-     */
-    @Resource
-    protected ServicioActividad servicioActividadImpl;
-    
-//______________________________________________________________________________
-    /**
-     * <p>Listado de todas las semestres disponibles.</p>
-     */
-    protected List <Semestre> listadoSemestres;
-//______________________________________________________________________________
-    /**
      * <p>Este metodo se ejecuta cada vez que se realiza una solicitud del tipo
      * GET de la pagina <code>agregarSemestre.htm</code>. El metodo se encarga
      * de iniciar los objetos que se usaran en la pagina.</p>
@@ -75,12 +62,21 @@ public class ControladorAgregarCalendarioActividades {
      * @return String Contiene el nombre de la vista a mostrar
      */
     @RequestMapping(method = RequestMethod.GET)
-    public String crearFormulario(Model modelo) {
+    public String crearFormulario(Model modelo, HttpServletRequest request) {
         // se agregan los objetos que se usaran en la pagina
-        modelo.addAttribute("wrapperCalendarioActividades", new WrapperCalendarioActividades());
 
-        this.listadoSemestres = this.servicioActividadImpl.listarEntidad(Semestre.class);
-        modelo.addAttribute("semestres", this.listadoSemestres);
+        modelo.addAttribute("wrapperCalendarioActividades",
+                new WrapperCalendarioActividades());
+
+        this.listadoSemestres = this.servicioSemestreImpl.listarSemestresNoVencidos();
+
+        modelo.addAttribute("listadoSemestres", this.listadoSemestres);
+        modelo.addAttribute("listadoTipoActividades", TipoActividad.values());
+
+        if(this.listadoSemestres == null || this.listadoSemestres.isEmpty() ){
+            RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE,
+                    "agregarCalendarioActividades.noExisteSemestresValidos", false);
+        }
 
         return "calendarioActividades/agregarCalendarioActividades";
     }
@@ -116,7 +112,8 @@ public class ControladorAgregarCalendarioActividades {
         // se validan los campos ingresados en el formulario, si existen errores
         // se regresa al formulario para que se muestren los mensajes correspondientes
 
-        modelo.addAttribute("semestres", this.listadoSemestres);
+        modelo.addAttribute("listadoSemestres", this.listadoSemestres);
+        modelo.addAttribute("listadoTipoActividades", TipoActividad.values());
 
         if(bindingResult.hasErrors())
             return "calendarioActividades/agregarCalendarioActividades";
@@ -126,16 +123,41 @@ public class ControladorAgregarCalendarioActividades {
             // se quita el envoltorio y se trata de agregar al calendario de actividades
             CalendarioActividades calendarioActividades = new CalendarioActividades();
             wrapperCalendarioActividades.quitarWrapper(calendarioActividades);
-            this.servicioActividadImpl.agregar(calendarioActividades);
 
-            modelo.addAttribute("wrapperCalendarioActividades", new WrapperCalendarioActividades());
 
-            RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "agregarCalendarioActividades.exito", true);
-            // se registra el evento
-            log.info("Agregar calendario de actividades, id: " + calendarioActividades.getIdCalendarioActividades());
+            boolean existe = false;
+
+            if(calendarioActividades.getTipoActividad() != null){
+                existe = this.servicioActividadImpl.existeTipoActividadPorSemestre(
+                                calendarioActividades.getTipoActividad()
+                                , calendarioActividades.getSemestre());
+            }
+
+
+            if(!existe){
+                this.servicioActividadImpl.agregar(calendarioActividades);
+
+                modelo.addAttribute("wrapperCalendarioActividades", new
+                        WrapperCalendarioActividades());
+
+                RequestUtil.crearMensajeRespuesta(request, 
+                        TITULO_MENSAJE, "agregarCalendarioActividades.exito", true);
+
+                // se registra el evento
+                log.info("Agregar calendario de actividades, id: "
+                        + calendarioActividades.getIdCalendarioActividades());
+            }else{
+                RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, 
+                        "agregarCalendarioActividades.existeTipoActividad", false);
+
+                // se registra el evento, no hay problema que se null porque se valida en el if de arriba
+                log.error("No se puede agregar una actividad para un tipo de actividad ya existen" +
+                        calendarioActividades.getTipoActividad().toString());
+            }
 
         } catch (DataIntegrityViolationException e) {            
-            RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "agregarCalendarioActividades.dataIntegrityViolationException", false);
+            RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE,
+                    "agregarCalendarioActividades.dataIntegrityViolationException", false);
             log.warn(Mensajes.DATA_INTEGRITY_VIOLATION_EXCEPTION, e);
 
         } catch (DataAccessException e) {
