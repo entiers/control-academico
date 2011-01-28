@@ -4,10 +4,15 @@
 cca:cca "ControladorCalendarioActividad"
 sca:sca "ServicioCalendarioActividad"
 
+
 ica:mensaje=cca.ingresarCalendarioActividad()
-cca:existe=sca.buscarTipoActividadPorSemestre(tipoActividad, semestre) 
-[c:Si no existe]
-	cca:sca.guardar(CalendarioActividad)
+[c:Si tipo de mensaje no es igual a nulo]
+	cca:existe=sca.buscarTipoActividadPorSemestre(tipoActividad, semestre) 
+	[c:existe]
+		cca:sca.agregar(CalendarioActividad)
+	[/c]
+--de lo contario
+	cca:sca.agregar(CalendarioActividad)
 [/c]]]></source>
 <configuration>
 <property name="actorWidth" value="25"/>
