@@ -18,8 +18,8 @@
                 <fmt:message key="modificarDatosPersonales.DatosFijos"/></span>
             </a>
             <ul>
-                <li><a href="modificarDatosPersonales.htm"><fmt:message key="modificarDatosPersonales.titulo"/></a></li>
                 <li><a href="modificarContrasenia.htm"><fmt:message key="modificarContrasenia.titulo"/></a></li>
+                <li><a href="modificarDatosPersonales.htm"><fmt:message key="modificarDatosPersonales.titulo"/></a></li>                
             </ul>
         </li>
     </sec:authorize>
@@ -34,18 +34,16 @@
             <span class="l"></span><span class="r"></span><span class="t">
             <fmt:message key="menu.catalogo"/></span></a>
         <ul>
-            <%-- catalogo de estudiantes --%>
-            <sec:authorize access="hasAnyRole('ROLE_AGREGAR_ESTUDIANTE','ROLE_EDITAR_ESTUDIANTE','ROLE_BUSCAR_ESTUDIANTE')">
-                <li><a href="#"><fmt:message key="estudiante.menu"/></a>
+
+            <%--Catálogo de calendario de actividades--%>
+            <sec:authorize access="hasAnyRole('ROLE_AGREGAR_CALENDARIO_ACTIVIDAD','ROLE_BUSCAR_CALENDARIO')">
+                <li><a href="#"><fmt:message key="calendarioActividades.menu"/></a>
                     <ul>
-                        <sec:authorize access="hasRole('ROLE_AGREGAR_ESTUDIANTE')">
-                            <li><a href="agregarEstudiante.htm"><fmt:message key="agregarEstudiante.titulo"/></a></li>
+                        <sec:authorize access="hasRole('ROLE_AGREGAR_CALENDARIO_ACTIVIDAD')">
+                            <li><a href="agregarCalendarioActividades.htm"><fmt:message key="agregarCalendarioActividades.titulo"/></a></li>
                         </sec:authorize>
-                        <sec:authorize access="hasRole('ROLE_EDITAR_ESTUDIANTE')">
-                            <li><a href="editarEstudiante.htm"><fmt:message key="editarEstudiante.titulo"/></a></li>
-                        </sec:authorize>
-                        <sec:authorize access="hasRole('ROLE_BUSCAR_ESTUDIANTE')">
-                            <li><a href="buscarEstudiante.htm"><fmt:message key="buscarEstudiante.titulo"/></a></li>
+                        <sec:authorize access="hasRole('ROLE_BUSCAR_CALENDARIO_ACTIVIDAD')">
+                            <li><a href="buscarCalendarioActividades.htm"><fmt:message key="buscarCalendarioActividades.titulo"/></a></li>
                         </sec:authorize>
                     </ul>
                 </li>
@@ -58,11 +56,56 @@
                         <sec:authorize access="hasRole('ROLE_AGREGAR_CATEDRATICO')">
                             <li><a href="agregarCatedratico.htm"><fmt:message key="agregarCatedratico.titulo"/></a></li>
                         </sec:authorize>
+                        <sec:authorize access="hasRole('ROLE_BUSCAR_CATEDRATICO')">
+                            <li><a href="buscarCatedratico.htm"><fmt:message key="buscarCatedratico.titulo"/></a></li>
+                        </sec:authorize>
                         <sec:authorize access="hasRole('ROLE_EDITAR_CATEDRATICO')">
                             <li><a href="editarCatedratico.htm"><fmt:message key="editarCatedratico.titulo"/></a></li>
                         </sec:authorize>
-                        <sec:authorize access="hasRole('ROLE_BUSCAR_CATEDRATICO')">
-                            <li><a href="buscarCatedratico.htm"><fmt:message key="buscarCatedratico.titulo"/></a></li>
+                    </ul>
+                </li>
+            </sec:authorize>
+
+            <%--Catálogo de cursos--%>
+            <sec:authorize access="hasAnyRole('ROLE_AGREGAR_CURSO','ROLE_EDITAR_CURSO')">
+                <li><a href="#"><fmt:message key="curso.menu"/></a>
+                    <ul>
+                        <sec:authorize access="hasRole('ROLE_AGREGAR_CURSO')">
+                            <li><a href="agregarCurso.htm"><fmt:message key="agregarCurso.titulo"/></a></li>
+                        </sec:authorize>
+                        <sec:authorize access="hasRole('ROLE_EDITAR_CURSO')">
+                            <li><a href="editarCurso.htm"><fmt:message key="editarCurso.titulo"/></a></li>
+                        </sec:authorize>
+                    </ul>
+                </li>
+            </sec:authorize>
+
+            <%-- catalogo de estudiantes --%>
+            <sec:authorize access="hasAnyRole('ROLE_AGREGAR_ESTUDIANTE','ROLE_EDITAR_ESTUDIANTE','ROLE_BUSCAR_ESTUDIANTE')">
+                <li><a href="#"><fmt:message key="estudiante.menu"/></a>
+                    <ul>
+                        <sec:authorize access="hasRole('ROLE_AGREGAR_ESTUDIANTE')">
+                            <li><a href="agregarEstudiante.htm"><fmt:message key="agregarEstudiante.titulo"/></a></li>
+                        </sec:authorize>
+                        <sec:authorize access="hasRole('ROLE_BUSCAR_ESTUDIANTE')">
+                            <li><a href="buscarEstudiante.htm"><fmt:message key="buscarEstudiante.titulo"/></a></li>
+                        </sec:authorize>
+                        <sec:authorize access="hasRole('ROLE_EDITAR_ESTUDIANTE')">
+                            <li><a href="editarEstudiante.htm"><fmt:message key="editarEstudiante.titulo"/></a></li>
+                        </sec:authorize>                        
+                    </ul>
+                </li>
+            </sec:authorize>
+
+            <%--Catálogo de horarios--%>
+            <sec:authorize access="hasAnyRole('ROLE_AGREGAR_HORARIO','ROLE_BUSCAR_HORARIO')">
+                <li><a href="#"><fmt:message key="horario.menu"/></a>
+                    <ul>
+                        <sec:authorize access="hasRole('ROLE_AGREGAR_HORARIO')">
+                            <li><a href="agregarHorario.htm"><fmt:message key="agregarHorario.titulo"/></a></li>
+                        </sec:authorize>
+                        <sec:authorize access="hasRole('ROLE_BUSCAR_HORARIO')">
+                            <li><a href="buscarHorario.htm"><fmt:message key="buscarHorario.titulo"/></a></li>
                         </sec:authorize>
                     </ul>
                 </li>
@@ -91,21 +134,7 @@
                         </sec:authorize>
                     </ul>
                 </li>
-            </sec:authorize>
-
-            <%--Catálogo de cursos--%>
-            <sec:authorize access="hasAnyRole('ROLE_AGREGAR_CURSO','ROLE_EDITAR_CURSO')">
-                <li><a href="#"><fmt:message key="curso.menu"/></a>
-                    <ul>
-                        <sec:authorize access="hasRole('ROLE_AGREGAR_CURSO')">
-                            <li><a href="agregarCurso.htm"><fmt:message key="agregarCurso.titulo"/></a></li>
-                        </sec:authorize>
-                        <sec:authorize access="hasRole('ROLE_EDITAR_CURSO')">
-                            <li><a href="editarCurso.htm"><fmt:message key="editarCurso.titulo"/></a></li>
-                        </sec:authorize>
-                    </ul>
-                </li>
-            </sec:authorize>
+            </sec:authorize>            
 
             <%--Catálogo de salones--%>
             <sec:authorize access="hasAnyRole('ROLE_AGREGAR_SALON','ROLE_EDITAR_SALON')">
@@ -130,35 +159,7 @@
                         </sec:authorize>
                     </ul>
                 </li>
-            </sec:authorize>
-
-            <%--Catálogo de horarios--%>
-            <sec:authorize access="hasAnyRole('ROLE_AGREGAR_HORARIO','ROLE_BUSCAR_HORARIO')">
-                <li><a href="#"><fmt:message key="horario.menu"/></a>
-                    <ul>
-                        <sec:authorize access="hasRole('ROLE_AGREGAR_HORARIO')">
-                            <li><a href="agregarHorario.htm"><fmt:message key="agregarHorario.titulo"/></a></li>
-                        </sec:authorize>
-                        <sec:authorize access="hasRole('ROLE_BUSCAR_HORARIO')">
-                            <li><a href="buscarHorario.htm"><fmt:message key="buscarHorario.titulo"/></a></li>
-                        </sec:authorize>
-                    </ul>
-                </li>
-            </sec:authorize>
-
-            <%--Catálogo de calendario de actividades--%>
-            <sec:authorize access="hasAnyRole('AGREGAR_CALENDARIO_ACT','BUSCAR_CALENDARIO_ACT')">
-                <li><a href="#"><fmt:message key="horario.menu"/></a>
-                    <ul>
-                        <sec:authorize access="hasRole('AGREGAR_CALENDARIO_ACT')">
-                            <li><a href="agregarCalendarioActividades.htm"><fmt:message key="agregarCalendarioActividades.titulo"/></a></li>
-                        </sec:authorize>
-                        <sec:authorize access="hasRole('BUSCAR_CALENDARIO_ACT')">
-                            <li><a href="buscarCalendarioActividades.htm"><fmt:message key="buscarCalendarioActividades.titulo"/></a></li>
-                        </sec:authorize>
-                    </ul>
-                </li>
-            </sec:authorize>
+            </sec:authorize>            
 
             <%--Catálogo de tipo de asignación--%>
             <sec:authorize access="hasAnyRole('ROLE_AGREGAR_TIPO_ASIGN','ROLE_BUSCAR_TIPO_ASIGN')">
@@ -213,6 +214,7 @@
         </li>
     </sec:authorize>
 
+    <%-- Menú de carga de etl --%>
     <sec:authorize access="hasAnyRole('ROLE_CARGAR_ARCHIVO_REGISTRO_ESTADISTICA')">
         <li>
             <a href="#">
@@ -220,6 +222,7 @@
                 <fmt:message key="etl.menu"/></span>
             </a>
             <ul>
+                <%--ETL del archivo de registro y estadística--%>
                 <sec:authorize access="hasRole('ROLE_CARGAR_ARCHIVO_REGISTRO_ESTADISTICA')">
                     <li><a href="ingresarRegistroCSV.htm"><fmt:message key="etl.ingresarRegistroCSV.titulo"/></a></li>
                 </sec:authorize>

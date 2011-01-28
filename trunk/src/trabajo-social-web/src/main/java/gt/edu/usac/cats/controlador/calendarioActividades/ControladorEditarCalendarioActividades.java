@@ -9,7 +9,8 @@ package gt.edu.usac.cats.controlador.calendarioActividades;
 import gt.edu.usac.cats.dominio.CalendarioActividades;
 import gt.edu.usac.cats.dominio.Semestre;
 import gt.edu.usac.cats.dominio.wrapper.WrapperCalendarioActividades;
-import gt.edu.usac.cats.servicio.ServicioActividad;
+import gt.edu.usac.cats.servicio.ServicioCalendarioActividades;
+import gt.edu.usac.cats.servicio.ServicioSemestre;
 import gt.edu.usac.cats.util.RequestUtil;
 import gt.edu.usac.cats.util.Mensajes;
 import java.util.List;
@@ -34,7 +35,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller("controladorEditarCalendarioActividades")
 @RequestMapping("editarCalendarioActividades")
-public class ControladorEditarCalendarioActividades {
+public class ControladorEditarCalendarioActividades  extends ControladorAbstractoCalendarioActividades{
 //_____________________________________________________________________________
     /**
      * <p>
@@ -47,19 +48,6 @@ public class ControladorEditarCalendarioActividades {
      * <p>Matiene una bitacora de lo realizado por esta clase.</p>
      */
     private static Logger log = Logger.getLogger(ControladorEditarCalendarioActividades.class);
-//______________________________________________________________________________
-    /**
-     * <p>Listado de todas las semestres disponibles.</p>
-     */
-    protected List <Semestre> listadoSemestres;
-//______________________________________________________________________________
-    /**
-     * <p>Contiene metodos basicos de acceso a la base de datos, estos metodos
-     * permiten realizar operaciones basicas sobre cualquier tabla de la base
-     * de datos.</p>
-     */
-    @Resource
-    protected ServicioActividad servicioActividadImpl;
 //______________________________________________________________________________
 
     /**
@@ -92,12 +80,12 @@ public class ControladorEditarCalendarioActividades {
             return "calendarioActividades/buscarCalendarioActividades";
         }
 
-        this.listadoSemestres = this.servicioActividadImpl.listarEntidad(Semestre.class);
+        this.listadoSemestres = this.servicioSemestreImpl.listarSemestresParaBusqueda();
 
 
         wrapperCalendarioActividades.agregarWrapper(this.calendarioActividades);
 
-        modelo.addAttribute("semestres", this.listadoSemestres);
+        modelo.addAttribute("listadoSemestres", this.listadoSemestres);
         modelo.addAttribute("wrapperCalendarioActividades", wrapperCalendarioActividades);
         return "calendarioActividades/editarCalendarioActividades";
     }
@@ -136,11 +124,16 @@ public class ControladorEditarCalendarioActividades {
             this.servicioActividadImpl.actualizar(calendarioActividades);
 
             RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "editarCalendarioActividades.exito", true);
+            RequestUtil.agregarRedirect(request, "buscarCalendarioActividades.htm");
+
+            
             String msg = Mensajes.EXITO_ACTUALIZACION + "Calendario de Actividades, ID "
                     + this.calendarioActividades.getIdCalendarioActividades();
             log.info(msg);
 
             modelo.addAttribute("wrapperCalendarioActividades", wrapperCalendarioActividades);
+
+
 
         } catch(DataAccessException e) {
             // error de acceso a datos

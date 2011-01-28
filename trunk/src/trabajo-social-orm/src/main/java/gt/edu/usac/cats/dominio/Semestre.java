@@ -27,6 +27,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 /**
@@ -143,6 +144,13 @@ public class Semestre implements java.io.Serializable {
     public void setHistorialAsignacionEstudianteCarreras(Set<HistorialAsignacionEstudianteCarrera> historialAsignacionEstudianteCarreras) {
         this.historialAsignacionEstudianteCarreras = historialAsignacionEstudianteCarreras;
     }
+
+//______________________________________________________________________________
+    @Transient
+    public String getAnyoNumero(){
+        return this.anio + " - " + this.numero;
+    }
+
 }
 
 //~ Formatted by Jindent --- http://www.jindent.com

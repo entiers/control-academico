@@ -8,7 +8,7 @@ package gt.edu.usac.cats.controlador.semestre;
 
 import gt.edu.usac.cats.dominio.Semestre;
 import gt.edu.usac.cats.dominio.wrapper.WrapperSemestre;
-import gt.edu.usac.cats.servicio.ServicioActividad;
+import gt.edu.usac.cats.servicio.ServicioSemestre;
 import gt.edu.usac.cats.util.RequestUtil;
 import gt.edu.usac.cats.util.Mensajes;
 import javax.annotation.Resource;
@@ -51,7 +51,7 @@ public class ControladorAgregarSemestre {
      * inyectar la dependencia.</p>
      */
     @Resource
-    protected ServicioActividad servicioActividadImpl;
+    protected ServicioSemestre servicioSemestreImpl;
     
 //______________________________________________________________________________
     /**
@@ -109,11 +109,11 @@ public class ControladorAgregarSemestre {
             // se quita el envoltorio y se trata de agregar al semestre
             Semestre semestre = new Semestre();
             wrapperSemestre.quitarWrapper(semestre);
-            this.servicioActividadImpl.agregar(semestre);
+            this.servicioSemestreImpl.agregar(semestre);
 
             // se registra el evento
             RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "agregarSemestre.exito", true);
-            String msg = Mensajes.EXITO_AGREGAR + "Semestre, anio " + semestre.getAnio() + " y número " + semestre.getNumero();
+            String msg = Mensajes.EXITO_AGREGAR + "Semestre, anio " + semestre.getAnio() + " y numero " + semestre.getNumero();
             log.info(msg);
 
         } catch (DataAccessException e) {

@@ -7,7 +7,10 @@ package gt.edu.usac.cats.dominio.wrapper;
 
 import gt.edu.usac.cats.dominio.CalendarioActividades;
 import gt.edu.usac.cats.dominio.Semestre;
+import gt.edu.usac.cats.enums.TipoActividad;
 import java.util.Date;
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -33,8 +36,11 @@ public class WrapperCalendarioActividades {
     @NotNull(message = "{validacion.campoObligatorio}")
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date fechaInicio;
-//______________________________________________________________________________
+//______________________________________________________________________________    
+    @NotNull(message = "{validacion.campoObligatorio}")
     private Semestre semestre;
+//______________________________________________________________________________
+    private TipoActividad tipoActividad;
 //______________________________________________________________________________
     /**
      * Constructor del wrapper, se inicializan los atributos a mostrar en las
@@ -57,6 +63,7 @@ public class WrapperCalendarioActividades {
         this.setFechaFin(calendarioActividades.getFechaFin());
         this.setFechaInicio(calendarioActividades.getFechaInicio());
         this.setSemestre(calendarioActividades.getSemestre());
+        this.setTipoActividad(calendarioActividades.getTipoActividad());
     }
 //______________________________________________________________________________
     /**
@@ -69,6 +76,7 @@ public class WrapperCalendarioActividades {
         calendarioActividades.setFechaFin(this.getFechaFin());
         calendarioActividades.setFechaInicio(this.getFechaInicio());
         calendarioActividades.setSemestre(this.getSemestre());
+        calendarioActividades.setTipoActividad(this.getTipoActividad());
     }
 //______________________________________________________________________________
     /**
@@ -125,5 +133,19 @@ public class WrapperCalendarioActividades {
      */
     public void setSemestre(Semestre semestre) {
         this.semestre = semestre;
+    }
+
+    /**
+     * @return the tipoActividad
+     */
+    public TipoActividad getTipoActividad() {
+        return tipoActividad;
+    }
+
+    /**
+     * @param tipoActividad the tipoActividad to set
+     */
+    public void setTipoActividad(TipoActividad tipoActividad) {
+        this.tipoActividad = tipoActividad;
     }
 }

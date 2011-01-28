@@ -51,6 +51,20 @@ public class RequestUtil {
     }
 //______________________________________________________________________________
     /**
+     * <p>Agregar el atributo <b>"url"</b> al request con el valor que es enviado en el parametro
+     * para poder ser utilizado en las vista para saber a donde redirigir cuando se presiona el boton
+     * de aceptar de los popups.</p>
+     *
+     * @param request Objeto {@link HttpServletRequest}
+     * @param url El url o la pagina a la que se quiere realizar el redirect.
+     */
+    public static void agregarRedirect(HttpServletRequest request, String url){
+        request.setAttribute("url", url);
+
+    }
+
+//______________________________________________________________________________
+    /**
      * <p>Este metodo se encarga de configurar los botones de paginacion para
      * que estos solo se muestren cuando sea necesario</p>
      *

@@ -28,15 +28,24 @@
     </form:label>
 
     <form:select path="semestre.idSemestre" cssStyle="width: 250px;">
-        <form:option  value="0" label="Seleccionar un valor" />
-        <c:forEach items="${semestres}" var="semestre">
-            <form:option value="${semestre.idSemestre}" >
-                ${semestre.numero} - ${semestre.anio}
-            </form:option>
-        </c:forEach>
+        <form:option value="" label="Seleccionar un valor" />
+        <form:options items="${listadoSemestres}" itemValue="idSemestre" itemLabel="anyoNumero" />
     </form:select>
     <form:errors path="semestre.idSemestre" cssClass="claseError" />
 </div>
 
+
+<div id="divCampos">
+    <form:label for="tipoActividad" path="tipoActividad">
+        <fmt:message key="agregarCalendarioActividades.tipoActividad"/>:
+    </form:label>
+
+    <form:select path="tipoActividad" cssStyle="width: 250px;">
+        <form:option  value="" label="Seleccionar un valor" />
+        <form:options items="${listadoTipoActividades}" itemLabel="descripcion" />
+    </form:select>
+
+    <form:errors path="tipoActividad" cssClass="claseError" />
+</div>
 
 <br/><br/>

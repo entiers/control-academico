@@ -29,13 +29,18 @@
             modal: true,
             buttons: {
                 '<fmt:message key="btnAceptar"/>': function() {
-                    if(<%= RequestUtil.getValorBoolean(request, "limpiarCampos") %>) {
-                        $("#idSemestre").val(${wrapperCalendarioActividades.semestre.idSemestre});
-                        $("#fechaInicio").val("<fmt:formatDate pattern="dd-MM-yyyy" value="${wrapperCalendarioActividades.fechaInicio}"/>");
-                        $("#fechaFin").val("<fmt:formatDate pattern="dd-MM-yyyy" value="${wrapperCalendarioActividades.fechaFin}"/>");
-                        $("#actividad").val("${wrapperCalendarioActividades.actividad}");
-                    }
-                    $(this).dialog('close');
+                    <%if( request.getAttribute("url") != null ) {%>
+                        location.href = "<%= request.getAttribute("url")%>";
+                    <%}else{%>
+                        if(<%= RequestUtil.getValorBoolean(request, "limpiarCampos") %>) {
+                            $("#idSemestre").val(${wrapperCalendarioActividades.semestre.idSemestre});
+                            $("#fechaInicio").val("<fmt:formatDate pattern="dd-MM-yyyy" value="${wrapperCalendarioActividades.fechaInicio}"/>");
+                            $("#fechaFin").val("<fmt:formatDate pattern="dd-MM-yyyy" value="${wrapperCalendarioActividades.fechaFin}"/>");
+                            $("#actividad").val("${wrapperCalendarioActividades.actividad}");
+                        }
+
+                        $(this).dialog('close');
+                    <%}%>
                 }
             }
         });

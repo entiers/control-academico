@@ -58,7 +58,7 @@ public class ControladorModificarContrasenia {
         //Validando que el usuario se haya encontrado
         if(this.usuario==null){
             RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "buscarUsuario.sinResultados", false);
-            return "welcome.htm";
+            return "redirect:index.htm";
         }
 
         //Validando que el usuario sea un estudiante para mostrar datos en pagina
@@ -66,7 +66,7 @@ public class ControladorModificarContrasenia {
             this.estudiante = (Estudiante) this.usuario.getEstudiantes().toArray()[0];            
         }
         else
-            return "welcome.htm";
+            return "redirect:index.htm";
 
         // se agregan los objetos que se usaran en la pagina
         modelo.addAttribute("estudiante", this.estudiante);
