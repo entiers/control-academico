@@ -8,6 +8,8 @@ package gt.edu.usac.cats.servicio;
 
 
 import gt.edu.usac.cats.dominio.AsignacionPrimerIngreso;
+import java.util.Date;
+import java.util.List;
 import org.springframework.dao.DataAccessException;
 
 /**
@@ -28,5 +30,15 @@ public interface ServicioAsignacionPrimerIngreso{
      * @throws DataAccessException Si ocurrio un error de acceso a datos
      */
     public void asignacionCursosPrimerIngreso(AsignacionPrimerIngreso asignacionPrimerIngreso)
+            throws DataAccessException;
+
+    /**
+     * <p>Listado de asignacion de primer ingreso por usuario y rango de fechas</p>
+     *
+     * @throws DataAccessException Si ocurrio un error de acceso a datos
+     */
+    public List<AsignacionPrimerIngreso> getAsignacionPrimerIngreso(String nombreUsuario,
+                                              Date fechaInicio,
+                                              Date fechaFin)
             throws DataAccessException;
 }

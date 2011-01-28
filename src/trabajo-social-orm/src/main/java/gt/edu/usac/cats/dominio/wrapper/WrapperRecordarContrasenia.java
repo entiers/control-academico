@@ -1,6 +1,7 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Sistema de Control Academico
+ * Escuela de Trabajo Social
+ * Universidad de San Carlos de Guatemala
  */
 
 package gt.edu.usac.cats.dominio.wrapper;
@@ -11,7 +12,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  *
- * @author cats
+ * @author Carlos Solorzano
+ * @version 1.0
  */
 public class WrapperRecordarContrasenia {
 //______________________________________________________________________________

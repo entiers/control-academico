@@ -6,10 +6,8 @@
 
 package gt.edu.usac.cats.dominio.busqueda;
 
-import java.util.Date;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-import org.springframework.format.annotation.DateTimeFormat;
+import gt.edu.usac.cats.dominio.TipoAsignacion;
+import javax.validation.constraints.Min;
 
 /**
  * <p>Esta clase tiene como objetivo almacenar los datos que se ingresan en los
@@ -18,16 +16,11 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author Carlos Solórzano
  * @version 1.0
  */
-public class DatosBusquedaUsuario {
+public class DatosBusquedaAsignacion {
 
-    @Pattern(regexp = "[A-Za-z0-9]*(._-)*", message = "{validacion.nombreUsuarioInvalido}")
-    @Size (max=256)
-    private String nombreUsuario;
-    private boolean habilitado;
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private Date fechaInicio;
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private Date fechaFin;
+    @Min(value=2000, message="{validacion.minimo}")
+    private Integer anio;
+    private TipoAsignacion tipoAsignacion;
 
     /**
      * <p>Indica si el resultado se debe de ordenar de forma ascendente (true) o
@@ -49,36 +42,26 @@ public class DatosBusquedaUsuario {
     /**
      * <p>Constructor de la clase, inicializa las variables.</p>
      */
-    public DatosBusquedaUsuario(){
-        this.nombreUsuario = "";
-        this.habilitado = true;
+    public DatosBusquedaAsignacion(){
         this.ordenAscendente = true;
-        this.columnaOrden = "nombreUsuario";
+        this.columnaOrden = "fecha";
         this.primerRegistro = 0;
     }
 //______________________________________________________________________________
-    public Date getFechaInicio() {
-        return fechaInicio;
+    public TipoAsignacion getTipoAsignacion() {
+        return tipoAsignacion;
     }
 //______________________________________________________________________________
-    public void setFechaInicio(Date fecha) {
-        this.fechaInicio = fecha;
-    }
- //______________________________________________________________________________
-    public Date getFechaFin() {
-        return fechaFin;
+    public void setTipoAsignacion(TipoAsignacion tipoAsignacion) {
+        this.tipoAsignacion = tipoAsignacion;
     }
 //______________________________________________________________________________
-    public void setFechaFin(Date fecha) {
-        this.fechaFin = fecha;
+    public Integer getAnio() {
+        return this.anio;
     }
 //______________________________________________________________________________
-    public boolean isHabilitado() {
-        return habilitado;
-    }
-//______________________________________________________________________________
-    public void setHabilitado(boolean habilitado) {
-        this.habilitado = habilitado;
+    public void setAnio(Integer anio) {
+        this.anio = anio;
     }
 //______________________________________________________________________________
     public String getColumnaOrden() {
@@ -87,14 +70,6 @@ public class DatosBusquedaUsuario {
 //______________________________________________________________________________
     public void setColumnaOrden(String columnaOrden) {
         this.columnaOrden = columnaOrden;
-    }
-//______________________________________________________________________________
-    public String getNombreUsuario() {
-        return nombreUsuario;
-    }
-//______________________________________________________________________________
-    public void setNombreUsuario(String nombreUsuario) {
-        this.nombreUsuario = nombreUsuario;
     }
 //______________________________________________________________________________
     public boolean isOrdenAscendente() {
@@ -123,13 +98,6 @@ public class DatosBusquedaUsuario {
 //______________________________________________________________________________
     public void inicializarPrimerRegistro() {
         this.primerRegistro = 0;
-    }
-//______________________________________________________________________________
-    public boolean isEmpty() {
-        if(this.nombreUsuario.isEmpty())
-            return true;
-        else
-            return false;
     }
 
 }

@@ -20,22 +20,22 @@
         <h1><fmt:message key="asignarPerfilUsuario.titulo" /></h1>
 
         <form:form modelAttribute="asignacionUsuarioPerfil" method="post" >
-        <fieldset>
-            <legend><fmt:message key="usuario.perfilesNoAsignados"/></legend>
+            <fieldset>
+                <legend><fmt:message key="usuario.perfilesNoAsignados"/></legend>
 
-            <div id="divCampos">
-                <label for="usuario"><fmt:message key="asignarPerfilUsuario.usuario"/>: </label>
-                <span>${usuario.nombreUsuario}</span>
-            </div>
+                <div id="divCampos">
+                    <label for="usuario"><fmt:message key="asignarPerfilUsuario.usuario"/>: </label>
+                    <span>${usuario.nombreUsuario}</span>
+                </div>
 
-            <div id="divCampos">
-                <label for="perfil"><fmt:message key="asignarPerfilUsuario.perfil"/>: </label>
-                <form:select itemLabel="nombre"path="perfil.idPerfil" itemValue="idPerfil"
-                             items="${listadoPerfilNoAsignado}" />
-                <input type="submit" value='<fmt:message key="btnAgregar"/>' />
-            </div>
-        </fieldset>
-    </form:form>
+                <div id="divCampos">
+                    <label for="perfil"><fmt:message key="asignarPerfilUsuario.perfil"/>: </label>
+                    <form:select itemLabel="nombre" path="perfil.idPerfil" itemValue="idPerfil"
+                                 items="${listadoPerfilNoAsignado}" />
+                    <input type="submit" value='<fmt:message key="btnAgregar"/>' />
+                </div>
+            </fieldset>
+        </form:form>
 
      <fieldset>
             <legend><fmt:message key="usuario.perfilesAsignados"/></legend>
