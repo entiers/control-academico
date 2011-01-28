@@ -33,6 +33,7 @@ import gt.edu.usac.cats.servicio.ServicioHorario;
 import gt.edu.usac.cats.util.EmailSender;
 import java.util.Date;
 import javax.mail.MessagingException;
+import org.hibernate.Query;
 import org.springframework.dao.DataAccessException;
 import org.springframework.mail.MailException;
 import org.springframework.stereotype.Service;
@@ -43,7 +44,7 @@ import org.springframework.stereotype.Service;
  * @version 1.0
  */
 @Service("servicioAsignacionPrimerIngresoImpl")
-public class ServicioAsignacionPrimerIngresoImpl implements ServicioAsignacionPrimerIngreso{
+public class ServicioAsignacionPrimerIngresoImpl extends ServicioGeneralImpl implements ServicioAsignacionPrimerIngreso {
 //_____________________________________________________________________________
     @Resource
     private ServicioAsignacionEstudianteCarrera servicioAsignacionEstudianteCarreraImpl;
@@ -134,6 +135,22 @@ public class ServicioAsignacionPrimerIngresoImpl implements ServicioAsignacionPr
         //Enviar correo con detalle del proceso
         this.enviarCorreo(asignacionPrimerIngreso, totEstudianteAsignados, totEstudianteNoAsignados);
   }
+
+    @Override
+    public List<AsignacionPrimerIngreso> getAsignacionPrimerIngreso(String nombreUsuario,
+                                              Date fechaInicio,
+                                              Date fechaFin) throws DataAccessException {
+        StringBuilder builder = new StringBuilder();
+        builder.append("select api from AsignacionPrimerIngreso as api")
+               .append(" where api.usuario.nombreUsuario like :nombreUsuario")
+               .append(" and api.fechaInicio between :fechaInicio and :fechaFin");
+
+        Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
+        query.setParameter("nombreUsuario", "%" + nombreUsuario + "%");
+        query.setParameter("fechaInicio", fechaInicio);
+        query.setParameter("fechaFin", fechaFin);
+        return query.list();
+    }
  //______________________________________________________________________________
      /**
      * <p>Metodo para generar UUID.</p>
@@ -165,7 +182,6 @@ public class ServicioAsignacionPrimerIngresoImpl implements ServicioAsignacionPr
     private void enviarCorreo(AsignacionPrimerIngreso asignacionPrimerIngreso,
                                 int totalAsignados,
                                 int totalNoAsignados){
-        Properties prop = this.cargarConfiguraciones();
         String mensaje = "Estimado usuario, \n\n"+
                          "El proceso de asignación de cursos a estudiantes de primer ingreso, ha finalizado. A continuación se le presenta un resumen con el resultado del mismo: \n\n" +
                          "  - Fecha inicio: " + asignacionPrimerIngreso.getFechaInicio() + "\n" +

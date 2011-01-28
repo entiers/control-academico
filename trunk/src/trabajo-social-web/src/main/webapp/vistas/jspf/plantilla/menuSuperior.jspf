@@ -240,12 +240,28 @@
             <%--Asignacion primer ingreso--%>
             <ul>
                 <sec:authorize access="hasRole('ROLE_REPORTE_ASIGNACION_PRIMER_INGRESO')">
-                    <li><a href="rptAsignacionPrimerIngreso.htm"><fmt:message key="rptAsignacionPrimerIngreso.titulo"/></a></li>
+                    <li><a href="rptProcesoAsignacionPrimerIngreso.htm"><fmt:message key="rptAsignacionPrimerIngreso.titulo"/></a></li>
                 </sec:authorize>
             </ul>
         </li>
     </sec:authorize>
 
+    <%--menu de cursos asignados--%>
+    <sec:authorize access="hasAnyRole('ROLE_MOSTRAR_CURSOS_ASIGNADOS')">
+        <li>
+            <a href="#">
+                <span class="l"></span><span class="r"></span><span class="t">
+                <fmt:message key="miscursos.menu"/></span>
+            </a>
+            <%--Consulta de cursos asignados por anio y semestre--%>
+            <ul>
+                <sec:authorize access="hasRole('ROLE_MOSTRAR_CURSOS_ASIGNADOS')">
+                    <li><a href="buscarAsignacionPorEstudiante.htm"><fmt:message key="miscursos.asignados"/></a></li>
+                </sec:authorize>
+            </ul>
+        </li>
+    </sec:authorize>
+    
     <%-- formulario para logearse --%>
     <sec:authorize access="isAnonymous()">
         <li>
