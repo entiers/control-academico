@@ -6,7 +6,9 @@
 
 package gt.edu.usac.cats.servicio;
 
+import gt.edu.usac.cats.dominio.DetalleAsignacion;
 import gt.edu.usac.cats.dominio.Horario;
+import java.util.List;
 import org.hibernate.HibernateException;
 
 /**
@@ -28,4 +30,30 @@ public interface ServicioDetalleAsignacion extends ServicioGeneral{
      */
     Integer getCountDetalleAsignacionXHorario(Horario horario)
             throws HibernateException;
+//______________________________________________________________________________
+    /**
+     * <p>Valida que el estudiante este asignado en un curso en un horario
+     * especifico.</p>
+     *
+     * @param estdiante Contiene el estudiante a buscar (@link Estudiante)
+     * @param horario contiene el horario por el que se busca (@link Horario)
+     * @return boolean true si esta asignado, de lo contrario false
+     * @throws HibernateException Si ocurrio un error de acceso a datos
+     */
+    List<DetalleAsignacion> getListadoDetalleAsignacion(Integer idHorario)
+            throws HibernateException;
+
+//______________________________________________________________________________
+    /**
+     * <p>Metodo que se encarga de realizar el cambio de asignacion en base
+     * al horario.</p>
+     *
+     * @param horario Contiene el horario a reemplazar (@link Horario)
+     * @param listadoDetalleAsignacion contiene el listado de idDetalleAsignacion a actualizar
+     * @throws HibernateException Si ocurrio un error de acceso a datos
+     */
+    public void cambioCierreSeccion(Horario horario,
+                                    List lstIdDetalleAsignacion)
+            throws HibernateException;
+
 }

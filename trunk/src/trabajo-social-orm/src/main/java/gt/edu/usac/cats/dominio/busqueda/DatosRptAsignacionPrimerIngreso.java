@@ -7,6 +7,7 @@
 package gt.edu.usac.cats.dominio.busqueda;
 
 import java.util.Date;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -18,12 +19,17 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author Carlos Solórzano
  * @version 1.0
  */
-public class DatosBusquedaUsuario {
+public class DatosRptAsignacionPrimerIngreso {
 
     @Pattern(regexp = "[A-Za-z0-9]*(._-)*", message = "{validacion.nombreUsuarioInvalido}")
     @Size (max=256)
     private String nombreUsuario;
-    private boolean habilitado;
+    @NotNull(message = "{validacion.campoObligatorio}")
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    private Date fechaInicio;
+    @NotNull(message = "{validacion.campoObligatorio}")
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    private Date fechaFin;
 
     /**
      * <p>Indica si el resultado se debe de ordenar de forma ascendente (true) o
@@ -45,20 +51,29 @@ public class DatosBusquedaUsuario {
     /**
      * <p>Constructor de la clase, inicializa las variables.</p>
      */
-    public DatosBusquedaUsuario(){
+    public DatosRptAsignacionPrimerIngreso(){
         this.nombreUsuario = "";
-        this.habilitado = true;
+        this.fechaInicio = new Date();
+        this.fechaFin = new Date();
         this.ordenAscendente = true;
         this.columnaOrden = "nombreUsuario";
         this.primerRegistro = 0;
     }
 //______________________________________________________________________________
-    public boolean isHabilitado() {
-        return habilitado;
+    public Date getFechaInicio() {
+        return fechaInicio;
     }
 //______________________________________________________________________________
-    public void setHabilitado(boolean habilitado) {
-        this.habilitado = habilitado;
+    public void setFechaInicio(Date fecha) {
+        this.fechaInicio = fecha;
+    }
+ //______________________________________________________________________________
+    public Date getFechaFin() {
+        return fechaFin;
+    }
+//______________________________________________________________________________
+    public void setFechaFin(Date fecha) {
+        this.fechaFin = fecha;
     }
 //______________________________________________________________________________
     public String getColumnaOrden() {
@@ -113,3 +128,4 @@ public class DatosBusquedaUsuario {
     }
 
 }
+

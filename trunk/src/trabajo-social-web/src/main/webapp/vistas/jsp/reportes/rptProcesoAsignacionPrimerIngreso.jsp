@@ -24,7 +24,7 @@
     <body>
         <h1><fmt:message key="rptAsignacionPrimerIngreso.titulo" /></h1>
 
-        <form:form modelAttribute="datosBusquedaUsuario" method="post" >
+        <form:form modelAttribute="datosRptAsignacionPrimerIngreso" method="post" >
             <fieldset>
                 <div id="divCampos">
                     <form:label for="nombreUsuario" path="nombreUsuario"><fmt:message key="buscarUsuario.nombreUsuario"/>: </form:label>
@@ -33,12 +33,12 @@
                 </div>
                 <div id="divCampos">
                     <form:label for="fechaInicio" path="fechaInicio"><fmt:message key="rptAsignacionPrimerIngreso.fechaIncio"/>: </form:label>
-                    <form:input path="fechaInicio" cssStyle="width:250px;" />
+                    <form:input path="fechaInicio" cssClass="datepicker" cssStyle="width:250px;" readonly="true" />
                     <form:errors path="fechaInicio" cssClass="claseError" />
                 </div>
                 <div id="divCampos">
                     <form:label for="fechaFin" path="fechaFin"><fmt:message key="rptAsignacionPrimerIngreso.fechaFin"/>: </form:label>
-                    <form:input path="fechaFin" cssStyle="width:250px;" />
+                    <form:input path="fechaFin" cssClass="datepicker" cssStyle="width:250px;" readonly="true" />
                     <form:errors path="fechaFin" cssClass="claseError" />
                 </div>
                 <input type="submit" value='<fmt:message key="btnBuscar"/>' />

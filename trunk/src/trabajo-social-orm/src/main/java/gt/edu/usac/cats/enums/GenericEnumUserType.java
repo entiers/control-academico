@@ -20,7 +20,7 @@ import org.hibernate.usertype.UserType;
 /**
  * <p> Esta clase es importante para la utilizacion de enums como atributos
  * en el modelo objetual.  Ya que sin esta clase no se pueden ingresar u obtener
- * id que estan siendo definidos especificamente para su utilización {@link TipoActividad}.
+ * id que estan siendo definidos especificamente para su utilizacion {@link TipoActividad}.
  * </p>
  *
  * <a href="http://appfuse.org/display/APF/Java+5+Enums+Persistence+with+Hibernate">Referencia</a>

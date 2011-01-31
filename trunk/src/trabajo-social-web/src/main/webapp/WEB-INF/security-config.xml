@@ -66,13 +66,19 @@
 
         <intercept-url pattern="/ingresarRegistroCSV.htm" access="hasRole('ROLE_CARGAR_ARCHIVO_REGISTRO_ESTADISTICA')"/>
 
-        <!-- se especifica que pagina contiene el formulario de login -->
-        <form-login login-page='/login.htm' default-target-url='/index.htm' always-use-default-target='true'/>
-
-
         <intercept-url pattern="/modificarDatosPersonales.htm" access="hasRole('ROLE_USUARIO_REGISTRADO')"/>
         <intercept-url pattern="/modificarContrasenia.htm" access="hasRole('ROLE_USUARIO_REGISTRADO')"/>
 
+        <intercept-url pattern="/ajxEjecutarAsignacionPrimerIngreso.htm" access="hasRole('ROLE_ASIGNACION_PRIMER_INGRESO')" />
+        <intercept-url pattern="/asignacionPrimerIngreso.htm" access="hasRole('ROLE_ASIGNACION_PRIMER_INGRESO')" />
+        <intercept-url pattern="/buscarAsignacionPorEstudiante.htm" access="hasRole('ROLE_MOSTRAR_CURSOS_ASIGNADOS')" />
+        <intercept-url pattern="/cambioCierreSeccion.htm" access="hasRole('ROLE_CAMBIO_CIERRE_SECCION')" />
+        <intercept-url pattern="/cambioCierreSeccion2.htm" access="hasRole('ROLE_CAMBIO_CIERRE_SECCION')" />
+        <intercept-url pattern="/rptProcesoAsignacionPrimerIngreso.htm" access="hasRole('ROLE_REPORTE_ASIGNACION_PRIMER_INGRESO')" />
+
+        <!-- se especifica que pagina contiene el formulario de login -->
+        <form-login login-page='/login.htm' default-target-url='/index.htm' always-use-default-target='true'/>
+        
         <!-- configuración para logout del sistema-->
         <logout logout-success-url="/welcome.htm" />
     </http>

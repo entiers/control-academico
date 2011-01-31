@@ -55,4 +55,29 @@ public interface ServicioHorario extends ServicioGeneral {
      */
     Horario getHorarioPorCursoPrimerIngreso(Curso curso)
             throws DataAccessException;
+
+ //______________________________________________________________________________
+     /**
+     * <p>Este metodo se encarga de devolver los horarios disponibles en el
+      * primer semestres de una carrera especifica.</p>
+     *
+     * @param curso Pojo del tipo {@link Curso}
+     * @throws DataAccessException Si ocurrio un error de acceso a datos
+     * @return List
+     */
+    List <Horario> getHorario(Curso curso, Semestre semestre)
+            throws DataAccessException;
+
+  //______________________________________________________________________________
+     /**
+     * <p>Este metodo se encarga de devolver los horarios disponibles para realizar
+      * un cambio de seccion. Se toma como referencia el horario enviado como parametro,
+      * en donde el curso y el semestre sean el mismo, pero la seccion no.</p>
+     *
+     * @param horario Pojo del tipo {@link Horario}
+     * @throws DataAccessException Si ocurrio un error de acceso a datos
+     * @return List
+     */
+    List <Horario> getHorarioCambioSeccion(Horario horario)
+            throws DataAccessException;
 }
