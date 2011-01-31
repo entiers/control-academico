@@ -30,6 +30,7 @@ import gt.edu.usac.cats.servicio.ServicioCurso;
 import gt.edu.usac.cats.servicio.ServicioEstudiante;
 import gt.edu.usac.cats.servicio.ServicioGeneral;
 import gt.edu.usac.cats.servicio.ServicioHorario;
+import gt.edu.usac.cats.servicio.ServicioUsuario;
 import gt.edu.usac.cats.util.EmailSender;
 import java.util.Date;
 import javax.mail.MessagingException;
@@ -60,6 +61,9 @@ public class ServicioAsignacionPrimerIngresoImpl extends ServicioGeneralImpl imp
 //_____________________________________________________________________________
     @Resource
     private ServicioEstudiante servicioEstudianteImpl;
+//_____________________________________________________________________________
+    @Resource
+    private ServicioUsuario servicioUsuarioImpl;
 //_____________________________________________________________________________
     @Resource
     private EmailSender emailSender;
@@ -190,21 +194,25 @@ public class ServicioAsignacionPrimerIngresoImpl extends ServicioGeneralImpl imp
                          "  - Total estudiantes no asignados: " + totalNoAsignados + "\n\n" +
                          "Sistema de control académico\nEscuela de trabajo social";
 
-        try {
-            this.emailSender.setDestinatario("usuario@dominio.com");
-            this.emailSender.setSubject("Proceso de asignacion de primer ingreso");
-            this.emailSender.setMensaje(mensaje);
-                try {
-                    // se trata de enviar el correo
-                    this.emailSender.enviarCorreo2();
-                } catch (IOException ex) {
-                    Logger.getLogger(ServicioAsignacionPrimerIngresoImpl.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (MailException ex) {
-                    Logger.getLogger(ServicioAsignacionPrimerIngresoImpl.class.getName()).log(Level.SEVERE, null, ex);
-                }
+        String correo = this.servicioUsuarioImpl.getCorreoPorUsuario(asignacionPrimerIngreso.getUsuario());
 
-        } catch (MessagingException ex) {
-            Logger.getLogger(ServicioAsignacionPrimerIngresoImpl.class.getName()).log(Level.SEVERE, null, ex);
+        if(!correo.isEmpty()){
+            try {
+                this.emailSender.setDestinatario(correo);
+                this.emailSender.setSubject("Proceso de asignacion de primer ingreso");
+                this.emailSender.setMensaje(mensaje);
+                    try {
+                        // se trata de enviar el correo
+                        this.emailSender.enviarCorreo2();
+                    } catch (IOException ex) {
+                        Logger.getLogger(ServicioAsignacionPrimerIngresoImpl.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (MailException ex) {
+                        Logger.getLogger(ServicioAsignacionPrimerIngresoImpl.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+            } catch (MessagingException ex) {
+                Logger.getLogger(ServicioAsignacionPrimerIngresoImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         System.out.println(mensaje);
     }

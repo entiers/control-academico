@@ -5,6 +5,7 @@
 
 package gt.edu.usac.cats.dominio.busqueda;
 
+import gt.edu.usac.cats.dominio.Curso;
 import gt.edu.usac.cats.dominio.Salon;
 import gt.edu.usac.cats.dominio.Semestre;
 
@@ -23,6 +24,8 @@ public class DatosBusquedaHorario {
     private Salon salon;
 //______________________________________________________________________________
     private Semestre semestre;
+//______________________________________________________________________________
+    private Curso curso;
 //______________________________________________________________________________
     /**
      * @return pojo de tipo {@link Salon}
@@ -51,6 +54,19 @@ public class DatosBusquedaHorario {
      */
     public void setSemestre(Semestre semestre) {
         this.semestre = semestre;
+    }
+//______________________________________________________________________________
+    /**
+     * @return pojo de tipo {@link Curso}
+     */
+    public Curso getCurso() {
+        return curso;
+    }
+    /**
+     * @param curso pojo de tipo {@link Curso}
+     */
+    public void setCurso(Curso curso) {
+        this.curso = curso;
     }
 
 }

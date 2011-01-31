@@ -8,7 +8,7 @@ package gt.edu.usac.cats.controlador.reportes;
 
 //~--- non-JDK imports --------------------------------------------------------
 
-import gt.edu.usac.cats.dominio.busqueda.DatosBusquedaUsuario;
+import gt.edu.usac.cats.dominio.busqueda.DatosRptAsignacionPrimerIngreso;
 import gt.edu.usac.cats.servicio.ServicioAsignacionPrimerIngreso;
 import gt.edu.usac.cats.util.Mensajes;
 import gt.edu.usac.cats.util.RequestUtil;
@@ -49,7 +49,7 @@ public class ControladorReporteProcesoAsignacionPrimerIngreso {
     )
     public String procesoAsignacionPrimerIngreso(Model modelo, HttpServletRequest request) {
         modelo.addAttribute("post", false);
-        modelo.addAttribute("datosBusquedaUsuario", new DatosBusquedaUsuario());
+        modelo.addAttribute("datosRptAsignacionPrimerIngreso", new DatosRptAsignacionPrimerIngreso());
         return "reportes/rptProcesoAsignacionPrimerIngreso";
     }
 //  _____________________________________________________________________________
@@ -57,15 +57,15 @@ public class ControladorReporteProcesoAsignacionPrimerIngreso {
         value  = "rptProcesoAsignacionPrimerIngreso.htm",
         method = RequestMethod.POST
     )
-    public String buscarProcesoAsignacionPrimerIngreso(@Valid DatosBusquedaUsuario datosBusquedaUsuario
+    public String buscarProcesoAsignacionPrimerIngreso(@Valid DatosRptAsignacionPrimerIngreso datosRptAsignacionPrimerIngreso
                                 , BindingResult bindingResult
                                 , Model modelo, HttpServletRequest request) {
         try{
             modelo.addAttribute("listadoAPI",
                         this.servicioAsignacionPrimerIngresoImpl
-                            .getAsignacionPrimerIngreso(datosBusquedaUsuario.getNombreUsuario(),
-                                                        datosBusquedaUsuario.getFechaInicio(),
-                                                        datosBusquedaUsuario.getFechaFin()));
+                            .getAsignacionPrimerIngreso(datosRptAsignacionPrimerIngreso.getNombreUsuario(),
+                                                        datosRptAsignacionPrimerIngreso.getFechaInicio(),
+                                                        datosRptAsignacionPrimerIngreso.getFechaFin()));
         } catch (DataAccessException e) {
             // error de acceso a datos
             RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "dataAccessException", false);

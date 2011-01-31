@@ -134,13 +134,13 @@ public class ServicioUsuarioImpl extends ServicioGeneralImpl implements Servicio
         Query query;
 
         builderEst.append(" Select est.usuario from Estudiante as est")
-               .append(" where est.email = :email ");
+                  .append(" where est.email = :email ");
         query = this.daoGeneralImpl.getSesion().createQuery(builderEst.toString());
         query.setParameter("email", email);
         lista = query.list();
         if(lista.isEmpty()){
             builderCat.append(" Select cat.usuario from Catedratico as cat")
-                   .append(" where cat.email = :email ");
+                      .append(" where cat.email = :email ");
             query = this.daoGeneralImpl.getSesion().createQuery(builderCat.toString());
             query.setParameter("email", email);
             lista = query.list();
@@ -154,6 +154,33 @@ public class ServicioUsuarioImpl extends ServicioGeneralImpl implements Servicio
     public void setCodigoVerficadorReinicioContrasenia(Usuario usuario) throws HibernateException {
         usuario.setCodigoValidacion(GeneradorPassword.generarPassword(6));
         this.actualizar(usuario);
+    }
+
+    @Override
+    public String getCorreoPorUsuario(Usuario usuario) throws HibernateException {
+        String email = "";
+        List lista;
+        Query query;
+
+        String qryEst = "select est.email from Estudiante as est " +
+                        " where est.usuario = :usuario ";
+        String qryCat = "select cat.email from Catedratico as est " +
+                        " where cat.usuario = :usuario ";
+        query = this.daoGeneralImpl.getSesion().createQuery(qryEst.toString());
+        query.setParameter("usuario", usuario);
+        lista = query.list();
+
+        if(!lista.isEmpty())
+            email = (String) lista.get(0);
+        else{
+            query = this.daoGeneralImpl.getSesion().createQuery(qryCat.toString());
+            query.setParameter("usuario", usuario);
+            lista = query.list();
+            if(!lista.isEmpty())
+                email = (String) lista.get(0);
+        }
+
+        return email;
     }
 
 }

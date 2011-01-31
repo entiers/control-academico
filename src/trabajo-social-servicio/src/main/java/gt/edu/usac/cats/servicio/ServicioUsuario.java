@@ -111,4 +111,14 @@ public interface ServicioUsuario extends ServicioGeneral {
     void setCodigoVerficadorReinicioContrasenia(Usuario usuario)
             throws HibernateException;
 
+//______________________________________________________________________________
+    /**
+     * <p>Este metodo se encarga de buscar el correo electrónico asociado al usuario.</p>
+     *
+     * @param usuario (@link Usuario)
+     * @throws HibernateException Si ocurrio un error de acceso a datos
+     */
+
+    public String getCorreoPorUsuario(Usuario usuario)
+            throws HibernateException;
 }
