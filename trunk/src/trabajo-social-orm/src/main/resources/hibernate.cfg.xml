@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
-  <session-factory>
+  <session-factory>    
     <mapping class="gt.edu.usac.cats.dominio.AsignacionCatedraticoHorario"/>
     <mapping class="gt.edu.usac.cats.dominio.AsignacionUsuarioPerfil"/>
     <mapping class="gt.edu.usac.cats.dominio.DetalleAsignacion"/>
@@ -44,5 +44,6 @@
     <mapping class="gt.edu.usac.cats.dominio.Nacionalidad"/>
     <mapping class="gt.edu.usac.cats.dominio.AsignacionPrimerIngreso"/>
     <mapping class="gt.edu.usac.cats.dominio.DetalleAsignacionPrimerIngreso"/>
+    <mapping class="gt.edu.usac.cats.dominio.conf.Reporte"/>
   </session-factory>
 </hibernate-configuration>

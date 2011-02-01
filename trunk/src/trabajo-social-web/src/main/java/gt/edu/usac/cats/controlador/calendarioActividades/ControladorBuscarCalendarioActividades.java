@@ -9,6 +9,7 @@ package gt.edu.usac.cats.controlador.calendarioActividades;
 import gt.edu.usac.cats.dominio.CalendarioActividades;
 import gt.edu.usac.cats.dominio.Semestre;
 import gt.edu.usac.cats.dominio.busqueda.DatosBusquedaCalendarioActividades;
+import gt.edu.usac.cats.enums.ControlReporte;
 import gt.edu.usac.cats.util.RequestUtil;
 import gt.edu.usac.cats.util.Mensajes;
 import java.util.List;
@@ -112,6 +113,8 @@ public class ControladorBuscarCalendarioActividades extends ControladorAbstracto
             modelo.addAttribute("listadoCalendarioActividades", this.listadoCalendarioActividades);
 
 
+            modelo.addAttribute("nombreControlReporte", ControlReporte.CALENDARIO_ACTIVIDADES);
+            
         }catch(DataAccessException e){
             RequestUtil.crearMensajeRespuesta(request, null, "dataAccessException", false);
             log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
