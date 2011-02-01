@@ -26,7 +26,7 @@ import org.springframework.stereotype.Service;
  * @author Mario Batres
  * @version 1.0
  */
-@Service("servicioActividadImpl")
+@Service
 public class ServicioCalendarioActividadesImpl extends ServicioGeneralImpl implements ServicioCalendarioActividades {
 
     /**

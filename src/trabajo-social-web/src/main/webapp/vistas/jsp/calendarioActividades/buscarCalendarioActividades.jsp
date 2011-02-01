@@ -67,6 +67,24 @@
                     </display:column>
                 </sec:authorize>
             </display:table>
+
+            <c:if test="${not empty listadoCalendarioActividades}">
+                <form:form action="generarReporte.htm" method="post">
+                    <input type="hidden" name="nombreControlReporte" value="${nombreControlReporte}" />
+
+                    <input type="hidden" name="nombreParametro" value="ID_SEMESTRE" />
+                    <input type="hidden" name="valorParametro" value="${datosBusquedaCalendarioActividades.semestre.idSemestre}" />
+                    <input type="hidden" name="tipoParametro" value="integer" />
+
+
+                    <input type="hidden" name="nombreParametro" value="TITULO" />
+                    <input type="hidden" name="valorParametro" value="TITULO DE PRUEBA DESDE LA PÁGINA" />
+                    <input type="hidden" name="tipoParametro" value="string" />
+
+                    <input type="submit" value="Imprimir"/>
+                </form:form>
+            </c:if>
+            
         </fieldset>
 
         <%-- fragmento que muestra como mensaje popup el resultado de las operaciones --%>
