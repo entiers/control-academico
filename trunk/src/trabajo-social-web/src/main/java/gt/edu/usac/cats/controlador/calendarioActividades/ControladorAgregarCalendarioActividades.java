@@ -7,15 +7,11 @@
 package gt.edu.usac.cats.controlador.calendarioActividades;
 
 import gt.edu.usac.cats.dominio.CalendarioActividades;
-import gt.edu.usac.cats.dominio.Semestre;
 import gt.edu.usac.cats.dominio.wrapper.WrapperCalendarioActividades;
 import gt.edu.usac.cats.enums.TipoActividad;
 import gt.edu.usac.cats.servicio.ServicioCalendarioActividades;
-import gt.edu.usac.cats.servicio.ServicioSemestre;
 import gt.edu.usac.cats.util.RequestUtil;
 import gt.edu.usac.cats.util.Mensajes;
-import java.util.List;
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
@@ -128,14 +124,14 @@ public class ControladorAgregarCalendarioActividades extends ControladorAbstract
             boolean existe = false;
 
             if(calendarioActividades.getTipoActividad() != null){
-                existe = this.servicioActividadImpl.existeTipoActividadPorSemestre(
+                existe = this.servicioCalendarioActividadesImpl.existeTipoActividadPorSemestre(
                                 calendarioActividades.getTipoActividad()
                                 , calendarioActividades.getSemestre());
             }
 
 
             if(!existe){
-                this.servicioActividadImpl.agregar(calendarioActividades);
+                this.servicioCalendarioActividadesImpl.agregar(calendarioActividades);
 
                 modelo.addAttribute("wrapperCalendarioActividades", new
                         WrapperCalendarioActividades());

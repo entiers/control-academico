@@ -9,6 +9,7 @@ package gt.edu.usac.cats.servicio;
 import gt.edu.usac.cats.dominio.CalendarioActividades;
 import gt.edu.usac.cats.dominio.Semestre;
 import gt.edu.usac.cats.enums.TipoActividad;
+import java.util.Date;
 import java.util.List;
 import org.springframework.dao.DataAccessException;
 
@@ -56,4 +57,25 @@ public interface ServicioCalendarioActividades extends ServicioGeneral {
      */
     boolean existeTipoActividadPorSemestre(TipoActividad tipoActividad, Semestre semestre)
             throws DataAccessException;
+
+//______________________________________________________________________________
+    /**
+     * <p>Realiza una consulta a la base de datos para verificar que la fecha que es enviada
+     * como parametro sea valida en el rango que ha sido almacenado por tipo de actividad y semestre</p>
+     *
+     * @param tipoActividad Pojo de tipo {@link TipoActividad}
+     * @param semestre Pojo de tipo {@link Semestre}     
+     * @param fecha Fecha para comprobar si es valida en el rango que ha sido almacenado en el calendario de actividades.
+     *
+     * @return
+     *  <p>
+     *      <ul>
+     *          <li><b>True</b> - Si la fecha es válida</li>
+     *          <li><b>False</b> - Si la fecha no es valida</li>
+     *      </ul>
+     * </p>
+     *
+     * @exception DataAccessException
+     */
+    boolean esFechaActividadValida(TipoActividad tipoActividad, Semestre semestre, Date fecha) throws DataAccessException;
 }
