@@ -7,14 +7,9 @@
 package gt.edu.usac.cats.controlador.calendarioActividades;
 
 import gt.edu.usac.cats.dominio.CalendarioActividades;
-import gt.edu.usac.cats.dominio.Semestre;
 import gt.edu.usac.cats.dominio.wrapper.WrapperCalendarioActividades;
-import gt.edu.usac.cats.servicio.ServicioCalendarioActividades;
-import gt.edu.usac.cats.servicio.ServicioSemestre;
 import gt.edu.usac.cats.util.RequestUtil;
 import gt.edu.usac.cats.util.Mensajes;
-import java.util.List;
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
@@ -72,7 +67,8 @@ public class ControladorEditarCalendarioActividades  extends ControladorAbstract
 
         WrapperCalendarioActividades wrapperCalendarioActividades = new WrapperCalendarioActividades();
 
-        this.calendarioActividades = this.servicioActividadImpl.cargarEntidadPorID(CalendarioActividades.class, idCalendarioActividades);
+        this.calendarioActividades = this.servicioCalendarioActividadesImpl
+                .cargarEntidadPorID(CalendarioActividades.class, idCalendarioActividades);
                 
         
         if(this.calendarioActividades == null){
@@ -121,7 +117,7 @@ public class ControladorEditarCalendarioActividades  extends ControladorAbstract
             // se quita el envoltorio y se trata de actualizar al calendario
             wrapperCalendarioActividades.quitarWrapper(this.calendarioActividades);
 
-            this.servicioActividadImpl.actualizar(calendarioActividades);
+            this.servicioCalendarioActividadesImpl.actualizar(calendarioActividades);
 
             RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "editarCalendarioActividades.exito", true);
             RequestUtil.agregarRedirect(request, "buscarCalendarioActividades.htm");

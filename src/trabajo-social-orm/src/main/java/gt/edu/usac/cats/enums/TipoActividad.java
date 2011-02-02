@@ -22,10 +22,10 @@ package gt.edu.usac.cats.enums;
  * @version 1.0
  */
 public enum TipoActividad {
-    SEMESTRE(1, "Semestre"), 
-    PRIMERA_RESTRASADA(2, "Primera Retrasada"), 
-    SEGUNDA_RETRASADA(3, "Segunda Retrasada"), 
-    CURSO_VACACIONES(4, "Curso de Vacaciones") 
+    ASIGNACION_SEMESTRE(1, "ASIGNACION DE SEMESTRE"),
+    PRIMERA_RESTRASADA(2, "PRIMERA RETRASADA"),
+    SEGUNDA_RETRASADA(3, "SEGUNDA RETRASADA"),
+    CURSO_VACACIONES(4, "CURSO DE VACACIONES")
     ;
 
 

@@ -10,6 +10,7 @@ import gt.edu.usac.cats.dominio.CalendarioActividades;
 import gt.edu.usac.cats.dominio.Semestre;
 import gt.edu.usac.cats.enums.TipoActividad;
 import gt.edu.usac.cats.servicio.ServicioCalendarioActividades;
+import java.util.Date;
 import java.util.List;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
@@ -88,6 +89,52 @@ public class ServicioCalendarioActividadesImpl extends ServicioGeneralImpl imple
         return false;
     }
 
+//______________________________________________________________________________
+    /**
+     * <p>Realiza una consulta a la base de datos para verificar que la fecha que es enviada
+     * como parametro sea valida en el rango que ha sido almacenado por tipo de actividad y semestre</p>
+     *
+     * @param tipoActividad Pojo de tipo {@link TipoActividad}
+     * @param semestre Pojo de tipo {@link Semestre}
+     * @param fecha Fecha para comprobar si es valida en el rango que ha sido almacenado en el calendario de actividades.
+     *
+     * @return
+     *  <p>
+     *      <ul>
+     *          <li><b>True</b> - Si la fecha es válida</li>
+     *          <li><b>False</b> - Si la fecha no es valida</li>
+     *      </ul>
+     * </p>
+     *
+     * @exception DataAccessException
+     */
+    @Override
+    public boolean esFechaActividadValida(TipoActividad tipoActividad, Semestre semestre, Date fecha) throws DataAccessException {
+        DetachedCriteria criteria = DetachedCriteria.forClass(CalendarioActividades.class);
 
 
+        criteria.add(
+                Restrictions.and(
+                    Restrictions.not(
+                     Restrictions.or(
+                        Restrictions.gt("fechaInicio", fecha)
+                        , Restrictions.lt("fechaFin", fecha)
+                     )),
+                     Restrictions.and(
+                        Restrictions.eq("tipoActividad", tipoActividad)
+                        , Restrictions.eq("semestre", semestre))
+                     
+                     )
+                );
+
+        criteria.setProjection(Projections.rowCount());
+
+        Long count = (Long) this.daoGeneralImpl.uniqueResult(criteria);
+
+        if(count.longValue() >= 1){
+            return true;
+        }
+
+        return false;
+    }
 }

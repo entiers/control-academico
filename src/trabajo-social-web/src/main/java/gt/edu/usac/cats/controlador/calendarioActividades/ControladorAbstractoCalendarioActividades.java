@@ -24,7 +24,7 @@ public abstract class ControladorAbstractoCalendarioActividades {
      * {@link CalendarioActividades}</p>
      */
     @Resource
-    protected ServicioCalendarioActividades servicioActividadImpl;
+    protected ServicioCalendarioActividades servicioCalendarioActividadesImpl;
 //______________________________________________________________________________
     /**
      * <p>Contiene metodos que son utilizados especificamente para la entidad semestre

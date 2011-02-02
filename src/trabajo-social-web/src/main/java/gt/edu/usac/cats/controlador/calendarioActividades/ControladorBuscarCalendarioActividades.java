@@ -68,7 +68,7 @@ public class ControladorBuscarCalendarioActividades extends ControladorAbstracto
     @RequestMapping(method = RequestMethod.GET)
     public String crearFormulario(Model modelo){
         this.listadoSemestres = this.servicioSemestreImpl.listarSemestresParaBusqueda();
-
+        
         modelo.addAttribute("datosBusquedaCalendarioActividades", new DatosBusquedaCalendarioActividades());
         modelo.addAttribute("listadoSemestres", this.listadoSemestres);
         return "calendarioActividades/buscarCalendarioActividades";
@@ -104,7 +104,7 @@ public class ControladorBuscarCalendarioActividades extends ControladorAbstracto
         try{
             Semestre semestre = datosBusquedaCalendarioActividades.getSemestre();
 
-            this.listadoCalendarioActividades = this.servicioActividadImpl.getCalendarioActividadesPorSemestre(semestre);
+            this.listadoCalendarioActividades = this.servicioCalendarioActividadesImpl.getCalendarioActividadesPorSemestre(semestre);
 
             if(this.listadoCalendarioActividades == null || this.listadoCalendarioActividades.isEmpty()) {
                 RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "buscarHorario.sinResultados", true);
