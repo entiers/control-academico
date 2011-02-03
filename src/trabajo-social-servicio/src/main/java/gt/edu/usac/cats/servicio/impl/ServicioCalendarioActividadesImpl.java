@@ -101,7 +101,7 @@ public class ServicioCalendarioActividadesImpl extends ServicioGeneralImpl imple
      * @return
      *  <p>
      *      <ul>
-     *          <li><b>True</b> - Si la fecha es válida</li>
+     *          <li><b>True</b> - Si la fecha es valida</li>
      *          <li><b>False</b> - Si la fecha no es valida</li>
      *      </ul>
      * </p>
@@ -110,8 +110,8 @@ public class ServicioCalendarioActividadesImpl extends ServicioGeneralImpl imple
      */
     @Override
     public boolean esFechaActividadValida(TipoActividad tipoActividad, Semestre semestre, Date fecha) throws DataAccessException {
-        DetachedCriteria criteria = DetachedCriteria.forClass(CalendarioActividades.class);
 
+        DetachedCriteria criteria = DetachedCriteria.forClass(CalendarioActividades.class);
 
         criteria.add(
                 Restrictions.and(

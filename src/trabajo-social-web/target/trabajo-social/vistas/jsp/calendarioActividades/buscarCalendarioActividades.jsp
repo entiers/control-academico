@@ -12,6 +12,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="display" uri="http://displaytag.sf.net"%>
 
 <html>
     <head>
@@ -31,51 +32,59 @@
                     </form:label>
 
                     <form:select path="semestre.idSemestre" cssStyle="width: 250px;">
-                        <form:option  value="0" label="Seleccionar un valor" />
-                        <c:forEach items="${semestres}" var="semestre">
-                            <form:option value="${semestre.idSemestre}" >
-                                ${semestre.numero} - ${semestre.anio}
-                            </form:option>
-                        </c:forEach>
+                        <form:option value="" label="Seleccionar un valor" />
+                        <form:options items="${listadoSemestres}" itemValue="idSemestre" itemLabel="anyoNumero" />
                     </form:select>
+                        
                     <form:errors path="semestre.idSemestre" cssClass="claseError" />
+                    
                 </div>
                 <%-- boton --%>
-                <input id="btnBuscar" type="submit" value='<fmt:message key="btnBuscar"/>' />
+                <input id="btnBuscar" type="submit" value='<fmt:message key="btnBuscar"/>'/>
             </fieldset>
         </form:form>
 
 
         <fieldset>
-                <legend><fmt:message key="buscarCalendarioActividades.tituloListado"/></legend>
-                <table id="tablaCalendarioActividades" class="ui-widget ui-widget-content">
-                    <thead>
-                        <tr class="ui-widget-header ">
-                            <th><fmt:message key="agregarCalendarioActividades.fechaInicio"/></th>
-                            <th><fmt:message key="agregarCalendarioActividades.fechaFin"/></th>
-                            <th><fmt:message key="agregarCalendarioActividades.actividad"/></th>
-                            <sec:authorize access="hasAnyRole('ROLE_EDITAR_CALENDARIO_ACT')">
-                                <th><fmt:message key="acciones"/></th>
-                            </sec:authorize>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <c:forEach items="${listadoCalendarioActividades}" var="calendarioActividades">
-                            <tr>
-                                <td><fmt:formatDate pattern="dd-MM-yyyy" value="${calendarioActividades.fechaInicio}" /></td>
-                                <td><fmt:formatDate pattern="dd-MM-yyyy" value="${calendarioActividades.fechaFin}" /></td>
-                                <td><c:out value="${calendarioActividades.actividad}" /></td>
-                                <sec:authorize access="hasRole('ROLE_EDITAR_CALENDARIO_ACT')">
-                                    <td>
-                                        <a href="editarCalendarioActividades.htm?idCalendarioActividades=${calendarioActividades.idCalendarioActividades}">
-                                            <fmt:message key="editarCalendarioActividades.editar"/>
-                                        </a>
-                                    </td>
-                                </sec:authorize>
-                            </tr>
-                        </c:forEach>
-                    </tbody>
-                </table>
+            <legend><fmt:message key="buscarCalendarioActividades.tituloListado"/></legend>
+
+            <display:table class="ui-widget ui-widget-content" name="listadoCalendarioActividades" id="calendarioActividades" requestURI="buscarCalendarioActividades.htm">
+                <display:column titleKey="agregarCalendarioActividades.fechaInicio" style="text-align:center;">
+                    <fmt:formatDate value="${calendarioActividades.fechaInicio}" pattern="dd-MM-yyyy" />
+                </display:column>
+                <display:column titleKey="agregarCalendarioActividades.fechaFin" style="text-align:center;">
+                    <fmt:formatDate value="${calendarioActividades.fechaFin}" pattern="dd-MM-yyyy" />
+                </display:column>
+                <display:column property="actividad" titleKey="agregarCalendarioActividades.actividad" />
+
+                <display:column property="tipoActividad.descripcion" titleKey="agregarCalendarioActividades.tipoActividad" />
+
+                <sec:authorize access="hasAnyRole('ROLE_EDITAR_CALENDARIO_ACTIVIDAD')">
+                    <display:column titleKey="acciones" style="text-align:center;">
+                        <a href="editarCalendarioActividades.htm?idCalendarioActividades=${calendarioActividades.idCalendarioActividades}">
+                            <fmt:message key="editarCalendarioActividades.editar"/>
+                        </a>
+                    </display:column>
+                </sec:authorize>
+            </display:table>
+
+            <c:if test="${not empty listadoCalendarioActividades}">
+                <form:form action="generarReporte.htm" method="post">
+                    <input type="hidden" name="nombreControlReporte" value="${nombreControlReporte}" />
+
+                    <input type="hidden" name="nombreParametro" value="ID_SEMESTRE" />
+                    <input type="hidden" name="valorParametro" value="${datosBusquedaCalendarioActividades.semestre.idSemestre}" />
+                    <input type="hidden" name="tipoParametro" value="integer" />
+
+
+                    <input type="hidden" name="nombreParametro" value="TITULO" />
+                    <input type="hidden" name="valorParametro" value="TITULO DE PRUEBA DESDE LA PÁGINA" />
+                    <input type="hidden" name="tipoParametro" value="string" />
+
+                    <input type="submit" value="Imprimir"/>
+                </form:form>
+            </c:if>
+            
         </fieldset>
 
         <%-- fragmento que muestra como mensaje popup el resultado de las operaciones --%>

@@ -67,4 +67,14 @@ public class ServicioSemestreImpl extends ServicioGeneralImpl implements Servici
         return this.daoGeneralImpl.find(criteria);
     }
 
+    @Override
+    public List<Semestre> listarSemestres(Short anio, char numero) throws DataAccessException {
+        DetachedCriteria criteria = DetachedCriteria.forClass(Semestre.class);
+
+        criteria.add(Restrictions.eq("anio",anio));
+        criteria.add(Restrictions.eq("numero",numero));
+        
+        return this.daoGeneralImpl.find(criteria);
+    }
+
 }

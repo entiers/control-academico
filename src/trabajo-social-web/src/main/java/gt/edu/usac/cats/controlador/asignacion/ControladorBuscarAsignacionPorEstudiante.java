@@ -12,6 +12,7 @@ import gt.edu.usac.cats.dominio.Estudiante;
 import gt.edu.usac.cats.dominio.TipoAsignacion;
 import gt.edu.usac.cats.dominio.Usuario;
 import gt.edu.usac.cats.dominio.busqueda.DatosBusquedaAsignacion;
+import gt.edu.usac.cats.enums.ControlReporte;
 import gt.edu.usac.cats.servicio.ServicioAsignacion;
 import gt.edu.usac.cats.servicio.ServicioGeneral;
 import gt.edu.usac.cats.servicio.ServicioUsuario;
@@ -104,6 +105,7 @@ public class ControladorBuscarAsignacionPorEstudiante {
                                 Model modelo, HttpServletRequest request) {
         this.setModelo(modelo,true);
         try{
+            modelo.addAttribute("nombreControlReporte",ControlReporte.DETALLE_ASIGNACION);
             modelo.addAttribute("listadoAsignacion",
                                 this.servicioAsignacionImpl.buscarAsignacionPorEstudiante(this.estudiante,
                                                                                         datosBusquedaAsignacion.getTipoAsignacion(),

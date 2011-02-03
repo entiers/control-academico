@@ -15,7 +15,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title><fmt:message key="agregarEstudiante.titulo"/></title>
+        <title><fmt:message key="agregarEstudiante.titulo"/></title>        
         <%@include file="../../jspf/scripts/scriptEstudiante.jspf" %>
     </head>
     <body>
@@ -35,14 +35,24 @@
                 <%@include file="../../jspf/formularios/formularioEstudiante.jspf" %>
                 
                 <%-- selector para escoger la carrera --%>
+                <%--
                 <div id="divCampos">
-                    <form:label for="idCarrera" path="idCarrera"><fmt:message key="agregarEstudiante.carrera"/>: *</form:label>
-                    <form:select path="idCarrera" cssStyle="width: 250px;">
+                    <form: label for="asignacionEstudianteCarrera.carrera" path="asignacionEstudianteCarrera.carrera.idCarrera"><fmt:message key="agregarEstudiante.carrera"/>: *</form:label>
+                    <form:select path="asignacionEstudianteCarrera.carrera.idCarrera" cssStyle="width: 250px;">
                         <form:option  value="0" label="Seleccionar un valor" />
                         <form:options items="${carreras}" itemValue="idCarrera" itemLabel="nombre" />
                     </form:select>
-                    <form:errors path="idCarrera" cssClass="claseError" />
+                    <form:errors path="asignacionEstudianteCarrera.carrera.idCarrera" cssClass="claseError" />
                 </div>
+
+                <div id="divCampos">
+                    <form:label for="asignacionEstudianteCarrera.semestre" path="asignacionEstudianteCarrera.semestre.idSemestre"><fmt:message key="agregarEstudiante.semestre"/>: *</form:label>
+                    <form:select path="asignacionEstudianteCarrera.semestre.idSemestre" cssStyle="width: 250px;">
+                        <form:option  value="0" label="Seleccionar un valor" />
+                        <form:options items="${listadoSemestres}" itemValue="idSemestre" itemLabel="anio" />
+                    </form:select>
+                    <form:errors path="asignacionEstudianteCarrera.semestre.idSemestre" cssClass="claseError" />
+                </div>--%>
 
                 <%-- boton --%>
                 <input type="submit" value='<fmt:message key="btnAgregar"/>' />

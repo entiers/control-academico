@@ -48,7 +48,7 @@
                 </div>
 
                 <%-- se importan los demas campos --%>
-                <%@include file="../../jspf/formularios/formularioEstudiante.jspf" %>
+                <%@include file="../../jspf/formularios/formularioEstudiante.jspf" %>                
 
                 <%-- boton para editar --%>
                 <input id="btnEditar" type="button" value='<fmt:message key="btnEditar"/>'

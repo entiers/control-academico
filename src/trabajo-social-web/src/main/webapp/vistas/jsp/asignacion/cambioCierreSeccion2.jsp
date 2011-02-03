@@ -72,6 +72,7 @@
             </fieldset>
             <br/>
             <input type="submit" value='<fmt:message key="cambioCierreSeccion.btnRealizar"/>' />
+            <a href="javascript:history.back();"><fmt:message key="link.regresar"/></a>
         </form:form>
         
         <%-- fragmento que muestra como mensaje popup el resultado de las operaciones --%>

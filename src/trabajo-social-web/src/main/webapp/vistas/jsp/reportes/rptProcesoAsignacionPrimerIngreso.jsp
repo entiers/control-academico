@@ -15,11 +15,6 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title><fmt:message key="miscursos.asignados"/></title>
         <%@include file="../../jspf/scripts/scriptUsuario.jspf" %>
-        <script type="text/javascript">
-            function abrirVentana(idAsignacion){
-                window.open('http://www.google.com.gt','a','width=800,height=400,scrollbars=no');
-            }
-        </script>
     </head>
     <body>
         <h1><fmt:message key="rptAsignacionPrimerIngreso.titulo" /></h1>
@@ -66,9 +61,15 @@
                                     <td>${api.fechaInicio}</td>
                                     <td>${api.fechaFin}</td>
                                     <td align="center">
-                                        <a href="javascript:abrirVentana(${api.idAsignacionPrimerIngreso})">
-                                            <fmt:message key="asignacion.verDetalle"/>
-                                        </a>
+                                        <form:form action="generarReporte.htm" method="post">
+                                            <input type="hidden" name="nombreControlReporte" value="${nombreControlReporte}" />
+
+                                            <input type="hidden" name="nombreParametro" value="idAsignacionPrimerIngreso" />
+                                            <input type="hidden" name="valorParametro" value="${api.idAsignacionPrimerIngreso}" />
+                                            <input type="hidden" name="tipoParametro" value="integer" />
+
+                                            <input type="submit" value="Imprimir"/>
+                                        </form:form>                                        
                                     </td>
                                 </tr>
                             </c:forEach>

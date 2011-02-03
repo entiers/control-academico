@@ -102,21 +102,23 @@ public class ControladorCambioCierreSeccion {
     public String cambiarSeccion(@Valid WrapperCambioSeccion wrapperCambioSeccion, BindingResult bindingResult,
                                 Model modelo, HttpServletRequest request) {
         this.setModelo2(modelo, this.horario.getIdHorario());
-        
+
+
         this.servicioDetalleAsignacionImpl.
                 cambioCierreSeccion(wrapperCambioSeccion.getHorario(), wrapperCambioSeccion.getDetalleAsignacion());
+        
+        RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "cambioCierreSeccion.exito", true);
 
-
-        return "asignacion/cambioCierreSeccion2";
+        return "redirect:cambioCierreSeccion.htm";
     }
 
 //  _____________________________________________________________________________
     private void setModelo(Model modelo,boolean post){
         modelo.addAttribute("post", post);
         modelo.addAttribute("listadoCursos",
-                        this.servicioGeneralImpl.cargarEntidades(Curso.class));
+                        this.servicioGeneralImpl.listarEntidad(Curso.class,true,"nombre"));
         modelo.addAttribute("listadoSemestres",
-                        this.servicioGeneralImpl.cargarEntidades(Semestre.class));
+                        this.servicioGeneralImpl.listarEntidad(Semestre.class));
     }
 //_____________________________________________________________________________
     private void setModelo2(Model modelo, Integer idHorario){

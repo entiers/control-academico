@@ -164,7 +164,7 @@ public class ServicioUsuarioImpl extends ServicioGeneralImpl implements Servicio
 
         String qryEst = "select est.email from Estudiante as est " +
                         " where est.usuario = :usuario ";
-        String qryCat = "select cat.email from Catedratico as est " +
+        String qryCat = "select cat.email from Catedratico as cat " +
                         " where cat.usuario = :usuario ";
         query = this.daoGeneralImpl.getSesion().createQuery(qryEst.toString());
         query.setParameter("usuario", usuario);
