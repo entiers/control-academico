@@ -20,16 +20,19 @@
     </head>
     <body>
         <h1><fmt:message key="agregarCalendarioActividades.titulo"/></h1>
-        <%-- formulario para ingresar los datos del calendario de actividades --%>
-        <form:form modelAttribute="wrapperCalendarioActividades" method="post">
-            <fieldset>
-                <%-- se importan los campos --%>
-                <%@include file="../../jspf/formularios/formularioCalendarioActividades.jspf" %>
 
-                <%-- boton --%>
-                <input type="submit" value='<fmt:message key="btnAgregar"/>' />
-            </fieldset>
-        </form:form>
+        <c:if test="${not empty listadoSemestres}">
+            <%-- formulario para ingresar los datos del calendario de actividades --%>
+            <form:form modelAttribute="wrapperCalendarioActividades" method="post">
+                <fieldset>
+                    <%-- se importan los campos --%>
+                    <%@include file="../../jspf/formularios/formularioCalendarioActividades.jspf" %>
+
+                    <%-- boton --%>
+                    <input type="submit" value='<fmt:message key="btnAgregar"/>' />
+                </fieldset>
+            </form:form>
+        </c:if>
 
         <%-- fragmento que muestra como mensaje popup el resultado de las operaciones --%>
         <%@include file="../../jspf/plantilla/popupMensaje.jspf" %>

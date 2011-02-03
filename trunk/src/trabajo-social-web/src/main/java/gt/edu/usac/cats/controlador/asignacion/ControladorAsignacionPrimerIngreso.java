@@ -7,12 +7,17 @@
 package gt.edu.usac.cats.controlador.asignacion;
 
 import gt.edu.usac.cats.dominio.AsignacionPrimerIngreso;
+import gt.edu.usac.cats.dominio.Semestre;
 import gt.edu.usac.cats.dominio.Usuario;
+import gt.edu.usac.cats.enums.TipoActividad;
 import gt.edu.usac.cats.servicio.ServicioGeneral;
 import gt.edu.usac.cats.servicio.ServicioUsuario;
 import gt.edu.usac.cats.servicio.ServicioAsignacionPrimerIngreso;
+import gt.edu.usac.cats.servicio.ServicioCalendarioActividades;
+import gt.edu.usac.cats.servicio.ServicioSemestre;
 import gt.edu.usac.cats.util.Mensajes;
 import gt.edu.usac.cats.util.RequestUtil;
+import java.util.Calendar;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
@@ -45,17 +50,28 @@ public class ControladorAsignacionPrimerIngreso {
     private ServicioUsuario servicioUsuarioImpl;
 //_____________________________________________________________________________
     @Resource
+    private ServicioAsignacionPrimerIngreso servicioAsignacionPrimerIngresoImpl;
+//_____________________________________________________________________________
+    @Resource
+    private ServicioSemestre servicioSemestreImpl;
+//_____________________________________________________________________________
+    @Resource
     private ServicioGeneral servicioGeneralImpl;
 //_____________________________________________________________________________
     @Resource
-    private ServicioAsignacionPrimerIngreso servicioAsignacionPrimerIngresoImpl;
+    private ServicioCalendarioActividades servicioCalendarioActividadesImpl;
 //_____________________________________________________________________________
     @RequestMapping(value="asignacionPrimerIngreso.htm",method = RequestMethod.GET)
     public String validarPeriodoValidoAsignacion(Model modelo, HttpServletRequest request) {
+        
+        Calendar calendar = Calendar.getInstance();
+        Semestre semestre = (Semestre) this.servicioSemestreImpl.
+                                        listarSemestres(Short.valueOf(String.valueOf(calendar.get(Calendar.YEAR))) , '1').get(0);
 
         modelo.addAttribute("procesoEjecutado","false");
         //Validar perido de asignacion primer ingreso
-        if(true)
+        if(this.servicioCalendarioActividadesImpl.esFechaActividadValida
+                (TipoActividad.ASIGNACION_SEMESTRE,semestre,new java.util.Date()))
             modelo.addAttribute("periodoValido","true");
         else
             modelo.addAttribute("periodoValido","false");

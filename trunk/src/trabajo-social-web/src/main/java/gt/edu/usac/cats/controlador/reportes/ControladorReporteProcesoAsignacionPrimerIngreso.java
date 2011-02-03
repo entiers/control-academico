@@ -9,6 +9,7 @@ package gt.edu.usac.cats.controlador.reportes;
 //~--- non-JDK imports --------------------------------------------------------
 
 import gt.edu.usac.cats.dominio.busqueda.DatosRptAsignacionPrimerIngreso;
+import gt.edu.usac.cats.enums.ControlReporte;
 import gt.edu.usac.cats.servicio.ServicioAsignacionPrimerIngreso;
 import gt.edu.usac.cats.util.Mensajes;
 import gt.edu.usac.cats.util.RequestUtil;
@@ -61,6 +62,7 @@ public class ControladorReporteProcesoAsignacionPrimerIngreso {
                                 , BindingResult bindingResult
                                 , Model modelo, HttpServletRequest request) {
         try{
+            modelo.addAttribute("nombreControlReporte",ControlReporte.DETALLE_ASIGNACION_PRIMER_INGRESO);
             modelo.addAttribute("listadoAPI",
                         this.servicioAsignacionPrimerIngresoImpl
                             .getAsignacionPrimerIngreso(datosRptAsignacionPrimerIngreso.getNombreUsuario(),

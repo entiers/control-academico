@@ -42,4 +42,15 @@ public interface ServicioSemestre extends ServicioGeneral {
      */
 
     List <Semestre> listarSemestresParaBusqueda() throws DataAccessException;
+
+    /**
+     * Este metodo retorna el listado de semestres ordenados por anyo y mes descendentemente.
+     * Es de utilizar para la busqueda y modificaciones de calendario de actividades.
+     *
+     * @return Listado de semestres que fueron encontrados.
+     *
+     * @throws DataAccessException Si ocurrio un error de acceso a datos
+     */
+
+    List <Semestre> listarSemestres(Short anio, char numero) throws DataAccessException;
 }

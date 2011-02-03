@@ -12,7 +12,9 @@ package gt.edu.usac.cats.enums;
  */
 public enum ControlReporte {
 
-    CALENDARIO_ACTIVIDADES(1);
+    CALENDARIO_ACTIVIDADES(1),
+    DETALLE_ASIGNACION_PRIMER_INGRESO(2),
+    DETALLE_ASIGNACION(3);
 
     private int id;
 
