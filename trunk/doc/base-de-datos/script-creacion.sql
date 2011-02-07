@@ -1,10 +1,59 @@
 
+CREATE SEQUENCE control.lugar_nacimiento_id_lugar_nacimiento_seq_1;
+
+CREATE TABLE control.lugar_nacimiento (
+                id_lugar_nacimiento SMALLINT NOT NULL DEFAULT nextval('control.lugar_nacimiento_id_lugar_nacimiento_seq_1'),
+                codigo SMALLINT NOT NULL,
+                nombre VARCHAR(50),
+                CONSTRAINT lugar_nacimiento_pk PRIMARY KEY (id_lugar_nacimiento)
+);
+
+
+ALTER SEQUENCE control.lugar_nacimiento_id_lugar_nacimiento_seq_1 OWNED BY control.lugar_nacimiento.id_lugar_nacimiento;
+
+CREATE UNIQUE INDEX lugar_nacimiento_codigo_uk
+ ON control.lugar_nacimiento
+ ( codigo );
+
+CREATE SEQUENCE control.nacionalidad_id_nacionalidad_seq_1;
+
+CREATE TABLE control.nacionalidad (
+                id_nacionalidad SMALLINT NOT NULL DEFAULT nextval('control.nacionalidad_id_nacionalidad_seq_1'),
+                codigo SMALLINT NOT NULL,
+                nombre VARCHAR(100),
+                CONSTRAINT nacionalidad_pk PRIMARY KEY (id_nacionalidad)
+);
+
+
+ALTER SEQUENCE control.nacionalidad_id_nacionalidad_seq_1 OWNED BY control.nacionalidad.id_nacionalidad;
+
+CREATE UNIQUE INDEX nacionalidad_codigo_uk
+ ON control.nacionalidad
+ ( codigo );
+
+CREATE SEQUENCE control.situacion_id_situacion_seq;
+
+CREATE TABLE control.situacion (
+                id_situacion SMALLINT NOT NULL DEFAULT nextval('control.situacion_id_situacion_seq'),
+                codigo SMALLINT NOT NULL,
+                nombre VARCHAR(50) NOT NULL,
+                descripcion VARCHAR(250),
+                CONSTRAINT situacion_pk PRIMARY KEY (id_situacion)
+);
+
+
+ALTER SEQUENCE control.situacion_id_situacion_seq OWNED BY control.situacion.id_situacion;
+
+CREATE UNIQUE INDEX situacion_codigo_uk
+ ON control.situacion
+ ( codigo ASC );
+
 CREATE SEQUENCE control.documento_id_documento_seq;
 
 CREATE TABLE control.Documento (
                 id_documento SMALLINT NOT NULL DEFAULT nextval('control.documento_id_documento_seq'),
                 nombre VARCHAR(150) NOT NULL,
-                descripcion TEXT,
+                descripcion TEXT(250),
                 CONSTRAINT documento_pk PRIMARY KEY (id_documento)
 );
 
@@ -47,22 +96,32 @@ CREATE TABLE control.Asignacion_Rol_Perfil (
 
 ALTER SEQUENCE control.asignacion_rol_perfil_id_asignacion_rol_perfil_seq OWNED BY control.Asignacion_Rol_Perfil.id_asignacion_rol_perfil;
 
-CREATE SEQUENCE control.usuario_id_usuario_seq;
+CREATE SEQUENCE control.usuario_id_usuario_seq_2;
 
 CREATE TABLE control.Usuario (
-                id_usuario SMALLINT NOT NULL DEFAULT nextval('control.usuario_id_usuario_seq'),
+                id_usuario INTEGER NOT NULL DEFAULT nextval('control.usuario_id_usuario_seq_2'),
                 nombre_usuario VARCHAR(256) NOT NULL,
                 password VARCHAR(256) NOT NULL,
                 habilitado BOOLEAN NOT NULL,
+                codigo_validacion_ VARCHAR(256),
                 CONSTRAINT usuario_pk PRIMARY KEY (id_usuario)
 );
 
 
-ALTER SEQUENCE control.usuario_id_usuario_seq OWNED BY control.Usuario.id_usuario;
+ALTER SEQUENCE control.usuario_id_usuario_seq_2 OWNED BY control.Usuario.id_usuario;
 
-CREATE UNIQUE INDEX usuario_nombre_unique
+CREATE UNIQUE INDEX usuario_nombre_uk
  ON control.Usuario
- ( nombre_usuario );
+ ( nombre_usuario ASC );
+
+CREATE TABLE control.asignacion_primer_ingreso (
+                id_asignacion_primer_ingreso INTEGER NOT NULL,
+                fecha_inicio TIMESTAMP NOT NULL,
+                fecha_fin TIMESTAMP NOT NULL,
+                id_usuario INTEGER NOT NULL,
+                CONSTRAINT asignacion_primer_ingreso_pk PRIMARY KEY (id_asignacion_primer_ingreso)
+);
+
 
 CREATE SEQUENCE control.log_id_log_seq;
 
@@ -71,8 +130,8 @@ CREATE TABLE control.Log (
                 fecha TIMESTAMP NOT NULL,
                 prioridad VARCHAR(32),
                 logger VARCHAR(1024),
-                mensaje TEXT,
-                id_usuario SMALLINT NOT NULL,
+                mensaje TEXT(256),
+                id_usuario INTEGER NOT NULL,
                 CONSTRAINT log_pk PRIMARY KEY (id_log)
 );
 
@@ -83,7 +142,7 @@ CREATE SEQUENCE control.asignacion_usuario_perfil_id_asignacion_usuario_perfil_s
 
 CREATE TABLE control.Asignacion_Usuario_Perfil (
                 id_asignacion_usuario_perfil INTEGER NOT NULL DEFAULT nextval('control.asignacion_usuario_perfil_id_asignacion_usuario_perfil_seq'),
-                id_usuario SMALLINT NOT NULL,
+                id_usuario INTEGER NOT NULL,
                 id_perfil SMALLINT NOT NULL,
                 CONSTRAINT asignacion_usuario_perfil_pk PRIMARY KEY (id_asignacion_usuario_perfil)
 );
@@ -91,76 +150,89 @@ CREATE TABLE control.Asignacion_Usuario_Perfil (
 
 ALTER SEQUENCE control.asignacion_usuario_perfil_id_asignacion_usuario_perfil_seq OWNED BY control.Asignacion_Usuario_Perfil.id_asignacion_usuario_perfil;
 
-CREATE SEQUENCE control.tipo_asignacion_id_tipo_asignacion_seq;
+CREATE UNIQUE INDEX asignacion_usuario_perfil_uk
+ ON control.Asignacion_Usuario_Perfil
+ ( id_usuario, id_perfil );
+
+CREATE SEQUENCE control.tipo_asignacion_id_tipo_asignacion_seq_1;
 
 CREATE TABLE control.Tipo_Asignacion (
-                id_tipo_asignacion SMALLINT NOT NULL DEFAULT nextval('control.tipo_asignacion_id_tipo_asignacion_seq'),
+                id_tipo_asignacion SMALLINT NOT NULL DEFAULT nextval('control.tipo_asignacion_id_tipo_asignacion_seq_1'),
                 nombre VARCHAR(100) NOT NULL,
-                descripcion TEXT,
+                descripcion TEXT(250),
                 habilitado BOOLEAN NOT NULL,
                 CONSTRAINT tipo_asignacion_pk PRIMARY KEY (id_tipo_asignacion)
 );
 
 
-ALTER SEQUENCE control.tipo_asignacion_id_tipo_asignacion_seq OWNED BY control.Tipo_Asignacion.id_tipo_asignacion;
+ALTER SEQUENCE control.tipo_asignacion_id_tipo_asignacion_seq_1 OWNED BY control.Tipo_Asignacion.id_tipo_asignacion;
 
 CREATE SEQUENCE control.area_estudio_id_area_estudio_seq;
 
 CREATE TABLE control.Area_Estudio (
                 id_area_estudio SMALLINT NOT NULL DEFAULT nextval('control.area_estudio_id_area_estudio_seq'),
                 nombre VARCHAR(50) NOT NULL,
-                descripcion TEXT,
+                descripcion TEXT(250),
                 CONSTRAINT area_estudio_pk PRIMARY KEY (id_area_estudio)
 );
 
 
 ALTER SEQUENCE control.area_estudio_id_area_estudio_seq OWNED BY control.Area_Estudio.id_area_estudio;
 
-CREATE SEQUENCE control.indicador_id_indicador_seq;
+CREATE SEQUENCE control.indicador_id_indicador_seq_1;
 
 CREATE TABLE control.Indicador (
-                id_indicador SMALLINT NOT NULL DEFAULT nextval('control.indicador_id_indicador_seq'),
+                id_indicador SMALLINT NOT NULL DEFAULT nextval('control.indicador_id_indicador_seq_1'),
                 codigo SMALLINT NOT NULL,
                 nombre VARCHAR(100) NOT NULL,
-                descripcion TEXT,
+                descripcion TEXT(250),
                 id_area_estudio SMALLINT NOT NULL,
                 CONSTRAINT indicador_pk PRIMARY KEY (id_indicador)
 );
 
 
-ALTER SEQUENCE control.indicador_id_indicador_seq OWNED BY control.Indicador.id_indicador;
+ALTER SEQUENCE control.indicador_id_indicador_seq_1 OWNED BY control.Indicador.id_indicador;
 
 CREATE SEQUENCE control.escuela_id_escuela_seq;
 
 CREATE TABLE control.Escuela (
                 id_escuela SMALLINT NOT NULL DEFAULT nextval('control.escuela_id_escuela_seq'),
-                codigo VARCHAR(20) NOT NULL,
+                codigo SMALLINT,
                 nombre VARCHAR(100) NOT NULL,
-                descripcion TEXT,
+                descripcion TEXT(250),
                 CONSTRAINT escuela_pk PRIMARY KEY (id_escuela)
 );
 
 
 ALTER SEQUENCE control.escuela_id_escuela_seq OWNED BY control.Escuela.id_escuela;
 
+CREATE UNIQUE INDEX escuela_codigo_uk
+ ON control.Escuela
+ ( codigo );
+
 CREATE SEQUENCE control.carrera_id_carrera_seq;
 
 CREATE TABLE control.Carrera (
                 id_carrera SMALLINT NOT NULL DEFAULT nextval('control.carrera_id_carrera_seq'),
-                codigo VARCHAR(20) NOT NULL,
-                nombre VARCHAR(100) NOT NULL,
-                descripcion TEXT,
+                codigo SMALLINT,
+                nombre VARCHAR(100),
+                descripcion TEXT(250),
                 id_escuela SMALLINT NOT NULL,
+                nivel SMALLINT NOT NULL,
                 CONSTRAINT carrera_pk PRIMARY KEY (id_carrera)
 );
 
 
 ALTER SEQUENCE control.carrera_id_carrera_seq OWNED BY control.Carrera.id_carrera;
 
-CREATE SEQUENCE control.pensum_id_pensum_seq;
+CREATE UNIQUE INDEX carrera_codigo_uk
+ ON control.Carrera
+ ( codigo );
+
+CREATE SEQUENCE control.pensum_id_pensum_seq_1;
 
 CREATE TABLE control.Pensum (
-                id_pensum SMALLINT NOT NULL DEFAULT nextval('control.pensum_id_pensum_seq'),
+                id_pensum SMALLINT NOT NULL DEFAULT nextval('control.pensum_id_pensum_seq_1'),
                 codigo VARCHAR(20) NOT NULL,
                 estado SMALLINT,
                 fecha_inicio DATE NOT NULL,
@@ -170,11 +242,11 @@ CREATE TABLE control.Pensum (
 );
 
 
-ALTER SEQUENCE control.pensum_id_pensum_seq OWNED BY control.Pensum.id_pensum;
+ALTER SEQUENCE control.pensum_id_pensum_seq_1 OWNED BY control.Pensum.id_pensum;
 
 CREATE UNIQUE INDEX pensum_codigo_unique
  ON control.Pensum
- ( codigo );
+ ( codigo ASC );
 
 CREATE SEQUENCE control.salon_id_salon_seq;
 
@@ -195,23 +267,37 @@ CREATE TABLE control.Estudiante (
                 id_estudiante INTEGER NOT NULL DEFAULT nextval('control.estudiante_id_estudiante_seq'),
                 carne VARCHAR(10) NOT NULL,
                 nombre VARCHAR(50) NOT NULL,
-                apellido VARCHAR(50) NOT NULL,
                 direccion VARCHAR(200),
                 telefono VARCHAR(10),
                 celular VARCHAR(10),
                 email VARCHAR(100),
                 fecha_nacimiento DATE NOT NULL,
-                requisitos BOOLEAN NOT NULL,
-                id_usuario SMALLINT NOT NULL,
+                requisitos BOOLEAN DEFAULT false,
+                id_usuario INTEGER NOT NULL,
+                sexo CHAR(1) NOT NULL,
+                carne_modificado VARCHAR(10),
+                nov VARCHAR(12),
+                id_pensum SMALLINT NOT NULL,
+                id_lugar_nacimiento SMALLINT NOT NULL,
+                id_nacionalidad SMALLINT NOT NULL,
                 CONSTRAINT estudiante_pk PRIMARY KEY (id_estudiante)
 );
 
 
 ALTER SEQUENCE control.estudiante_id_estudiante_seq OWNED BY control.Estudiante.id_estudiante;
 
-CREATE UNIQUE INDEX estudiante_carne_unique
+CREATE UNIQUE INDEX estudiante_carne_uk
  ON control.Estudiante
- ( carne );
+ ( carne ASC );
+
+CREATE TABLE control.detalle_asignacion_primer_ingreso (
+                id_detalle_asignacion_primer_ingreso INTEGER NOT NULL,
+                asignado BOOLEAN NOT NULL,
+                id_asignacion_primer_ingreso INTEGER NOT NULL,
+                id_estudiante INTEGER NOT NULL,
+                CONSTRAINT detalle_asignacion_primer_ingreso_pk PRIMARY KEY (id_detalle_asignacion_primer_ingreso)
+);
+
 
 CREATE SEQUENCE control.cuenta_corriente_id_cuenta_corriente_seq;
 
@@ -272,29 +358,33 @@ CREATE SEQUENCE control.asignacion_estudiante_carrera_id_asignacion_estudiante_c
 
 CREATE TABLE control.Asignacion_Estudiante_Carrera (
                 id_asignacion_estudiante_carrera INTEGER NOT NULL DEFAULT nextval('control.asignacion_estudiante_carrera_id_asignacion_estudiante_carre995'),
-                fecha_inicio DATE NOT NULL,
-                fecha_fin DATE,
                 id_estudiante INTEGER NOT NULL,
                 id_carrera SMALLINT NOT NULL,
+                fecha_cierre DATE,
                 CONSTRAINT asignacion_estudiante_carrera_pk PRIMARY KEY (id_asignacion_estudiante_carrera)
 );
 
 
 ALTER SEQUENCE control.asignacion_estudiante_carrera_id_asignacion_estudiante_carre995 OWNED BY control.Asignacion_Estudiante_Carrera.id_asignacion_estudiante_carrera;
 
-CREATE SEQUENCE control.asignacion_id_asignacion_seq;
+CREATE UNIQUE INDEX asignacion_estudiante_carrera_uk
+ ON control.Asignacion_Estudiante_Carrera
+ ( id_estudiante, id_carrera );
+
+CREATE SEQUENCE control.asignacion_id_asignacion_seq_1;
 
 CREATE TABLE control.Asignacion (
-                id_asignacion INTEGER NOT NULL DEFAULT nextval('control.asignacion_id_asignacion_seq'),
+                id_asignacion INTEGER NOT NULL DEFAULT nextval('control.asignacion_id_asignacion_seq_1'),
                 transaccion VARCHAR(20) NOT NULL,
                 fecha TIMESTAMP NOT NULL,
-                id_estudiante INTEGER NOT NULL,
                 id_tipo_asignacion SMALLINT NOT NULL,
+                id_asignacion_estudiante_carrera INTEGER NOT NULL,
+                id_asignacion_primer_ingreso INTEGER NOT NULL,
                 CONSTRAINT asignacion_pk PRIMARY KEY (id_asignacion)
 );
 
 
-ALTER SEQUENCE control.asignacion_id_asignacion_seq OWNED BY control.Asignacion.id_asignacion;
+ALTER SEQUENCE control.asignacion_id_asignacion_seq_1 OWNED BY control.Asignacion.id_asignacion;
 
 CREATE SEQUENCE control.catedratico_id_catedratico_seq;
 
@@ -308,7 +398,7 @@ CREATE TABLE control.Catedratico (
                 telefono VARCHAR(10),
                 celular VARCHAR(10),
                 email VARCHAR(100),
-                id_usuario SMALLINT NOT NULL,
+                id_usuario INTEGER NOT NULL,
                 CONSTRAINT catedratico_pk PRIMARY KEY (id_catedratico)
 );
 
@@ -317,7 +407,7 @@ ALTER SEQUENCE control.catedratico_id_catedratico_seq OWNED BY control.Catedrati
 
 CREATE UNIQUE INDEX catedratico_codigo_unique
  ON control.Catedratico
- ( codigo );
+ ( codigo ASC );
 
 CREATE SEQUENCE control.asignacion_catedratico_escuela_id_asignacion_catedratico_esc319;
 
@@ -339,11 +429,30 @@ CREATE TABLE control.Semestre (
                 id_semestre SMALLINT NOT NULL DEFAULT nextval('control.semestre_id_semestre_seq'),
                 anio SMALLINT NOT NULL,
                 numero CHAR(1) NOT NULL,
+                observacion VARCHAR(1000),
                 CONSTRAINT semestre_pk PRIMARY KEY (id_semestre)
 );
 
 
 ALTER SEQUENCE control.semestre_id_semestre_seq OWNED BY control.Semestre.id_semestre;
+
+CREATE INDEX semestre_anio_numero_uk
+ ON control.Semestre
+ ( anio, numero );
+
+CREATE SEQUENCE control.historial_asignacion_estudiante_carrera_id_historial_asignac355;
+
+CREATE TABLE control.historial_asignacion_estudiante_carrera (
+                id_historial_asignacion_estudiante_carrera INTEGER NOT NULL DEFAULT nextval('control.historial_asignacion_estudiante_carrera_id_historial_asignac355'),
+                id_asignacion_estudiante_carrera INTEGER NOT NULL,
+                fecha_inscripcion DATE NOT NULL,
+                id_situacion SMALLINT NOT NULL,
+                id_semestre SMALLINT NOT NULL,
+                CONSTRAINT historial_asignacion_estudiante_carrera_pk PRIMARY KEY (id_historial_asignacion_estudiante_carrera)
+);
+
+
+ALTER SEQUENCE control.historial_asignacion_estudiante_carrera_id_historial_asignac355 OWNED BY control.historial_asignacion_estudiante_carrera.id_historial_asignacion_estudiante_carrera;
 
 CREATE SEQUENCE control.calendario_actividades_id_calendario_actividades_seq;
 
@@ -351,8 +460,9 @@ CREATE TABLE control.Calendario_Actividades (
                 id_calendario_actividades SMALLINT NOT NULL DEFAULT nextval('control.calendario_actividades_id_calendario_actividades_seq'),
                 fecha_inicio DATE NOT NULL,
                 fecha_fin DATE NOT NULL,
-                actividad TEXT NOT NULL,
+                actividad TEXT(250) NOT NULL,
                 id_semestre SMALLINT NOT NULL,
+                tipo_actividad INTEGER,
                 CONSTRAINT calendario_actividades_pk PRIMARY KEY (id_calendario_actividades)
 );
 
@@ -364,21 +474,17 @@ CREATE SEQUENCE control.curso_id_curso_seq;
 CREATE TABLE control.Curso (
                 id_curso SMALLINT NOT NULL DEFAULT nextval('control.curso_id_curso_seq'),
                 codigo VARCHAR(15) NOT NULL,
-                semestre SMALLINT NOT NULL,
                 nombre VARCHAR(50) NOT NULL,
-                creditos_teoricos SMALLINT,
-                creditos_practicos SMALLINT,
-                creditos_prerrequisito SMALLINT,
                 CONSTRAINT curso_pk PRIMARY KEY (id_curso)
 );
 
 
 ALTER SEQUENCE control.curso_id_curso_seq OWNED BY control.Curso.id_curso;
 
-CREATE SEQUENCE control.programa_curso_id_programa_curso_seq;
+CREATE SEQUENCE control.programa_curso_id_programa_curso_seq_1;
 
 CREATE TABLE control.Programa_Curso (
-                id_programa_curso SMALLINT NOT NULL DEFAULT nextval('control.programa_curso_id_programa_curso_seq'),
+                id_programa_curso SMALLINT NOT NULL DEFAULT nextval('control.programa_curso_id_programa_curso_seq_1'),
                 fecha_aprobacion DATE NOT NULL,
                 fecha_anulacion DATE,
                 id_curso SMALLINT NOT NULL,
@@ -386,7 +492,7 @@ CREATE TABLE control.Programa_Curso (
 );
 
 
-ALTER SEQUENCE control.programa_curso_id_programa_curso_seq OWNED BY control.Programa_Curso.id_programa_curso;
+ALTER SEQUENCE control.programa_curso_id_programa_curso_seq_1 OWNED BY control.Programa_Curso.id_programa_curso;
 
 CREATE SEQUENCE control.asignacion_indicador_id_asignacion_indicador_seq;
 
@@ -418,7 +524,7 @@ CREATE SEQUENCE control.desasignacion_id_desasignacion_seq;
 CREATE TABLE control.Desasignacion (
                 id_desasignacion INTEGER NOT NULL DEFAULT nextval('control.desasignacion_id_desasignacion_seq'),
                 fecha DATE NOT NULL,
-                observacion TEXT,
+                observacion TEXT(250),
                 id_estudiante INTEGER NOT NULL,
                 id_curso SMALLINT NOT NULL,
                 CONSTRAINT desasignacion_pk PRIMARY KEY (id_desasignacion)
@@ -426,18 +532,6 @@ CREATE TABLE control.Desasignacion (
 
 
 ALTER SEQUENCE control.desasignacion_id_desasignacion_seq OWNED BY control.Desasignacion.id_desasignacion;
-
-CREATE SEQUENCE control.prerrequisito_id_prerrequisito_seq;
-
-CREATE TABLE control.Prerrequisito (
-                id_prerrequisito INTEGER NOT NULL DEFAULT nextval('control.prerrequisito_id_prerrequisito_seq'),
-                id_curso SMALLINT NOT NULL,
-                id_curso_prerrequisito SMALLINT NOT NULL,
-                CONSTRAINT prerrequisito_pk PRIMARY KEY (id_prerrequisito)
-);
-
-
-ALTER SEQUENCE control.prerrequisito_id_prerrequisito_seq OWNED BY control.Prerrequisito.id_prerrequisito;
 
 CREATE SEQUENCE control.curso_aprobado_id_curso_aprobado_seq;
 
@@ -447,9 +541,9 @@ CREATE TABLE control.Curso_Aprobado (
                 zona SMALLINT NOT NULL,
                 laboratorio SMALLINT NOT NULL,
                 examen_final SMALLINT NOT NULL,
-                observaciones TEXT,
-                id_estudiante INTEGER NOT NULL,
+                observaciones TEXT(250),
                 id_curso SMALLINT NOT NULL,
+                id_asignacion INTEGER NOT NULL,
                 CONSTRAINT curso_aprobado_pk PRIMARY KEY (id_curso_aprobado)
 );
 
@@ -460,14 +554,25 @@ CREATE SEQUENCE control.asignacion_curso_pensum_id_asignacion_curso_pensum_seq;
 
 CREATE TABLE control.Asignacion_Curso_Pensum (
                 id_asignacion_curso_pensum SMALLINT NOT NULL DEFAULT nextval('control.asignacion_curso_pensum_id_asignacion_curso_pensum_seq'),
-                obligatorio BOOLEAN NOT NULL,
                 id_curso SMALLINT NOT NULL,
                 id_pensum SMALLINT NOT NULL,
+                numero_semestre SMALLINT NOT NULL,
+                obligatorio BOOLEAN NOT NULL,
+                creditos_teoricos SMALLINT,
+                creditos_practicos SMALLINT,
+                creditos_prerrequisito SMALLINT,
                 CONSTRAINT asignacion_curso_pensum_pk PRIMARY KEY (id_asignacion_curso_pensum)
 );
 
 
 ALTER SEQUENCE control.asignacion_curso_pensum_id_asignacion_curso_pensum_seq OWNED BY control.Asignacion_Curso_Pensum.id_asignacion_curso_pensum;
+
+CREATE TABLE control.Prerrequisito (
+                id_curso_pensum SMALLINT NOT NULL,
+                id_curso_pensum_prerequisito SMALLINT NOT NULL,
+                CONSTRAINT new_table_pk PRIMARY KEY (id_curso_pensum, id_curso_pensum_prerequisito)
+);
+
 
 CREATE SEQUENCE control.horario_id_horario_seq;
 
@@ -480,8 +585,8 @@ CREATE TABLE control.Horario (
                 tipo VARCHAR(20) NOT NULL,
                 estado BOOLEAN NOT NULL,
                 id_salon SMALLINT NOT NULL,
-                id_semestre SMALLINT NOT NULL,
                 id_curso SMALLINT NOT NULL,
+                id_semestre SMALLINT NOT NULL,
                 CONSTRAINT horario_pk PRIMARY KEY (id_horario)
 );
 
@@ -528,6 +633,27 @@ CREATE TABLE control.Nota_Indicador (
 
 
 ALTER SEQUENCE control.nota_indicador_id_nota_indicador_seq OWNED BY control.Nota_Indicador.id_nota_indicador;
+
+ALTER TABLE control.Estudiante ADD CONSTRAINT lugar_nacimiento_estudiante_fk
+FOREIGN KEY (id_lugar_nacimiento)
+REFERENCES control.lugar_nacimiento (id_lugar_nacimiento)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+ALTER TABLE control.Estudiante ADD CONSTRAINT nacionalidad_estudiante_fk
+FOREIGN KEY (id_nacionalidad)
+REFERENCES control.nacionalidad (id_nacionalidad)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+ALTER TABLE control.historial_asignacion_estudiante_carrera ADD CONSTRAINT situacion_historial_asignacion_estudiante_carrera_fk
+FOREIGN KEY (id_situacion)
+REFERENCES control.situacion (id_situacion)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
 
 ALTER TABLE control.Asignacion_Documento ADD CONSTRAINT documento_asignacion_documento_fk
 FOREIGN KEY (id_documento)
@@ -581,6 +707,27 @@ NOT DEFERRABLE;
 ALTER TABLE control.Log ADD CONSTRAINT usuario_log_fk
 FOREIGN KEY (id_usuario)
 REFERENCES control.Usuario (id_usuario)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+ALTER TABLE control.asignacion_primer_ingreso ADD CONSTRAINT usuario_asignacion_primer_ingreso_fk
+FOREIGN KEY (id_usuario)
+REFERENCES control.Usuario (id_usuario)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+ALTER TABLE control.Asignacion ADD CONSTRAINT asignacion_primer_ingreso_asignacion_fk
+FOREIGN KEY (id_asignacion_primer_ingreso)
+REFERENCES control.asignacion_primer_ingreso (id_asignacion_primer_ingreso)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+ALTER TABLE control.detalle_asignacion_primer_ingreso ADD CONSTRAINT asignacion_primer_ingreso_detalle_asignacion_primer_ingreso_fk
+FOREIGN KEY (id_asignacion_primer_ingreso)
+REFERENCES control.asignacion_primer_ingreso (id_asignacion_primer_ingreso)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
@@ -648,6 +795,13 @@ ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
+ALTER TABLE control.Estudiante ADD CONSTRAINT pensum_estudiante_fk
+FOREIGN KEY (id_pensum)
+REFERENCES control.Pensum (id_pensum)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
 ALTER TABLE control.Horario ADD CONSTRAINT salon_horario_fk
 FOREIGN KEY (id_salon)
 REFERENCES control.Salon (id_salon)
@@ -655,21 +809,7 @@ ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
-ALTER TABLE control.Asignacion ADD CONSTRAINT estudiante_asignacion_fk
-FOREIGN KEY (id_estudiante)
-REFERENCES control.Estudiante (id_estudiante)
-ON DELETE NO ACTION
-ON UPDATE NO ACTION
-NOT DEFERRABLE;
-
 ALTER TABLE control.Asignacion_Estudiante_Carrera ADD CONSTRAINT estudiante_asignacion_estudiante_carrera_fk
-FOREIGN KEY (id_estudiante)
-REFERENCES control.Estudiante (id_estudiante)
-ON DELETE NO ACTION
-ON UPDATE NO ACTION
-NOT DEFERRABLE;
-
-ALTER TABLE control.Curso_Aprobado ADD CONSTRAINT estudiante_curso_aprobado_fk
 FOREIGN KEY (id_estudiante)
 REFERENCES control.Estudiante (id_estudiante)
 ON DELETE NO ACTION
@@ -711,6 +851,13 @@ ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
+ALTER TABLE control.detalle_asignacion_primer_ingreso ADD CONSTRAINT estudiante_detalle_asignacion_primer_ingreso_fk
+FOREIGN KEY (id_estudiante)
+REFERENCES control.Estudiante (id_estudiante)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
 ALTER TABLE control.Movimiento ADD CONSTRAINT cuenta_corriente_movimiento_fk
 FOREIGN KEY (id_cuenta_corriente)
 REFERENCES control.Cuenta_Corriente (id_cuenta_corriente)
@@ -718,7 +865,28 @@ ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
+ALTER TABLE control.historial_asignacion_estudiante_carrera ADD CONSTRAINT asignacion_estudiante_carrera_historial_asignacion_estudiant883
+FOREIGN KEY (id_asignacion_estudiante_carrera)
+REFERENCES control.Asignacion_Estudiante_Carrera (id_asignacion_estudiante_carrera)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+ALTER TABLE control.Asignacion ADD CONSTRAINT asignacion_estudiante_carrera_asignacion_fk
+FOREIGN KEY (id_asignacion_estudiante_carrera)
+REFERENCES control.Asignacion_Estudiante_Carrera (id_asignacion_estudiante_carrera)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
 ALTER TABLE control.Detalle_Asignacion ADD CONSTRAINT asignacion_detalle_asignacion_fk
+FOREIGN KEY (id_asignacion)
+REFERENCES control.Asignacion (id_asignacion)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+ALTER TABLE control.Curso_Aprobado ADD CONSTRAINT asignacion_curso_aprobado_fk
 FOREIGN KEY (id_asignacion)
 REFERENCES control.Asignacion (id_asignacion)
 ON DELETE NO ACTION
@@ -753,6 +921,13 @@ ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
+ALTER TABLE control.historial_asignacion_estudiante_carrera ADD CONSTRAINT semestre_historial_asignacion_estudiante_carrera_fk
+FOREIGN KEY (id_semestre)
+REFERENCES control.Semestre (id_semestre)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
 ALTER TABLE control.Horario ADD CONSTRAINT curso_horario_fk
 FOREIGN KEY (id_curso)
 REFERENCES control.Curso (id_curso)
@@ -769,20 +944,6 @@ NOT DEFERRABLE;
 
 ALTER TABLE control.Curso_Aprobado ADD CONSTRAINT curso_curso_aprobado_fk
 FOREIGN KEY (id_curso)
-REFERENCES control.Curso (id_curso)
-ON DELETE NO ACTION
-ON UPDATE NO ACTION
-NOT DEFERRABLE;
-
-ALTER TABLE control.Prerrequisito ADD CONSTRAINT curso_curso_prerrequisito1_fk
-FOREIGN KEY (id_curso)
-REFERENCES control.Curso (id_curso)
-ON DELETE NO ACTION
-ON UPDATE NO ACTION
-NOT DEFERRABLE;
-
-ALTER TABLE control.Prerrequisito ADD CONSTRAINT curso_curso_prerrequisito2_fk
-FOREIGN KEY (id_curso_prerrequisito)
 REFERENCES control.Curso (id_curso)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION
@@ -819,6 +980,20 @@ NOT DEFERRABLE;
 ALTER TABLE control.Nota_Indicador ADD CONSTRAINT curso_aprobado_nota_indicador_fk
 FOREIGN KEY (id_curso_aprobado)
 REFERENCES control.Curso_Aprobado (id_curso_aprobado)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+ALTER TABLE control.Prerrequisito ADD CONSTRAINT asignacion_curso_pensum_id_curso_fk
+FOREIGN KEY (id_curso_pensum)
+REFERENCES control.Asignacion_Curso_Pensum (id_asignacion_curso_pensum)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+ALTER TABLE control.Prerrequisito ADD CONSTRAINT asignacion_curso_pensum_prerrequisito_fk
+FOREIGN KEY (id_curso_pensum_prerequisito)
+REFERENCES control.Asignacion_Curso_Pensum (id_asignacion_curso_pensum)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
