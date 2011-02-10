@@ -5,6 +5,8 @@
  */
 package gt.edu.usac.cats.dominio.wrapper;
 
+import gt.edu.usac.cats.dominio.Catedratico;
+import gt.edu.usac.cats.dominio.Estudiante;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
@@ -32,12 +34,45 @@ public class WrapperDatosPersonales {
     @Email(message = "{validacion.emailInvalido}")
     private String email;
 //______________________________________________________________________________
+    private String profesion;
+//______________________________________________________________________________
 
     public WrapperDatosPersonales(){
         this.direccion ="";
         this.telefono="";
         this.celular="";
         this.email="";
+        this.profesion="";
+    }
+
+    public void agregarWrapper(Estudiante estudiante){
+        this.setDireccion(estudiante.getDireccion());
+        this.setTelefono(estudiante.getTelefono());
+        this.setCelular(estudiante.getCelular());
+        this.setEmail(estudiante.getEmail());
+    }
+
+    public void agregarWrapper(Catedratico catedratico){
+        this.setDireccion(catedratico.getDireccion());
+        this.setTelefono(catedratico.getTelefono());
+        this.setCelular(catedratico.getCelular());
+        this.setEmail(catedratico.getEmail());
+        this.setProfesion(catedratico.getProfesion());
+    }
+
+    public void quitarWrapper(Estudiante estudiante){
+        estudiante.setDireccion(this.getDireccion());
+        estudiante.setTelefono(this.getTelefono());
+        estudiante.setCelular(this.getCelular());
+        estudiante.setEmail(this.getEmail());
+    }
+
+    public void quitarWrapper(Catedratico catedratico){
+        catedratico.setDireccion(this.getDireccion());
+        catedratico.setTelefono(this.getTelefono());
+        catedratico.setCelular(this.getCelular());
+        catedratico.setEmail(this.getEmail());
+        catedratico.setProfesion(this.getProfesion());
     }
 
     public String getCelular() {
@@ -71,5 +106,12 @@ public class WrapperDatosPersonales {
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
-
+//______________________________________________________________________________
+    public String getProfesion() {
+        return profesion;
+    }
+//______________________________________________________________________________
+    public void setProfesion(String profesion) {
+        this.profesion = profesion;
+    }
 }

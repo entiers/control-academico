@@ -7,10 +7,12 @@
 
 package gt.edu.usac.cats.controlador.usuario;
 
+import gt.edu.usac.cats.dominio.Catedratico;
 import org.springframework.stereotype.Controller;
 import gt.edu.usac.cats.dominio.wrapper.WrapperDatosPersonales;
 import gt.edu.usac.cats.dominio.Estudiante;
 import gt.edu.usac.cats.dominio.Usuario;
+import gt.edu.usac.cats.servicio.ServicioCatedratico;
 import gt.edu.usac.cats.servicio.ServicioEstudiante;
 import gt.edu.usac.cats.servicio.ServicioUsuario;
 import gt.edu.usac.cats.util.Mensajes;
@@ -39,8 +41,15 @@ public class ControladorModificarDatosPersonales {
     private static final String TITULO_MENSAJE = "modificarDatosPersonales.titulo";
 //______________________________________________________________________________
     private Estudiante estudiante;
+//______________________________________________________________________________
+    private Catedratico catedratico;
 //_____________________________________________________________________________
     private Usuario usuario;
+//_____________________________________________________________________________
+    private String tipoEntidad;
+//_____________________________________________________________________________
+    @Resource
+    private ServicioCatedratico servicioCatedraticoImpl;
 //_____________________________________________________________________________
     @Resource
     private ServicioEstudiante servicioEstudianteImpl;
@@ -58,7 +67,8 @@ public class ControladorModificarDatosPersonales {
     @RequestMapping(value="modificarDatosPersonales.htm", method = RequestMethod.GET)
     public String crearFormulario(Model modelo,HttpServletRequest request) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        WrapperDatosPersonales wrapperDatosPersonales;
+        WrapperDatosPersonales wrapperDatosPersonales = new WrapperDatosPersonales();
+        boolean error = false;
         
         //Buscando usuario logueado por nombre
         this.usuario = this.servicioUsuarioImpl.cargarUsuarioPorNombre(auth.getName().toString());
@@ -66,24 +76,37 @@ public class ControladorModificarDatosPersonales {
         //Validando que el usuario se haya encontrado
         if(this.usuario==null){
             RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "buscarUsuario.sinResultados", false);
-            return "redirect:index.htm";
+            error = true;
         }
 
         //Validando que el usuario sea un estudiante
         if(this.usuario.getEstudiantes().toArray().length>0){
+            tipoEntidad = "estudiante";
             this.estudiante = (Estudiante) this.usuario.getEstudiantes().toArray()[0];
-            wrapperDatosPersonales = new WrapperDatosPersonales();
-            wrapperDatosPersonales.setDireccion(this.estudiante.getDireccion());
-            wrapperDatosPersonales.setTelefono(this.estudiante.getTelefono());
-            wrapperDatosPersonales.setCelular(this.estudiante.getCelular());
-            wrapperDatosPersonales.setEmail(this.estudiante.getEmail());
+            wrapperDatosPersonales.agregarWrapper(estudiante);
         }
-        else
-            return "redirect:index.htm";
+        //Validando que el usuario sea un catedratico
+        else if(this.usuario.getCatedraticos().toArray().length>0){
+            tipoEntidad = "catedratico";
+            this.catedratico = (Catedratico) this.usuario.getCatedraticos().toArray()[0];
+            wrapperDatosPersonales.agregarWrapper(catedratico);
+        }
+        else{
+            RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "editarDatosPersonales.usuarioSinDatos", true);
+            error = true;
+        }
 
         // se agregan los objetos que se usaran en la pagina
-        modelo.addAttribute("estudiante", this.estudiante);
-        modelo.addAttribute("wrapperDatosPersonales", wrapperDatosPersonales);
+        modelo.addAttribute("error", error);
+        if(!error){
+            modelo.addAttribute("tipoEntidad", this.tipoEntidad);
+            modelo.addAttribute("wrapperDatosPersonales", wrapperDatosPersonales);
+            if(this.tipoEntidad.equals("estudiante"))
+                modelo.addAttribute("estudiante", this.estudiante);
+            else
+                modelo.addAttribute("catedratico", this.catedratico);
+        }
+        
         return "usuario/modificarDatosPersonales";
     }
 //_____________________________________________________________________________
@@ -91,19 +114,26 @@ public class ControladorModificarDatosPersonales {
     public String modificarDatos(@Valid WrapperDatosPersonales wrapperDatosPersonales, BindingResult bindingResult,
                         Model modelo, HttpServletRequest request) {
         
-        modelo.addAttribute("estudiante", this.estudiante);
+        modelo.addAttribute("tipoEntidad", this.tipoEntidad);
+        if(this.tipoEntidad.equals("estudiante"))
+            modelo.addAttribute("estudiante", this.estudiante);
+        else
+            modelo.addAttribute("catedratico", this.catedratico);
 
         if(bindingResult.hasErrors())            
             return "usuario/modificarDatosPersonales";
         
         try {
-            // se actualizan los datos del estudiante
-            this.estudiante.setDireccion(wrapperDatosPersonales.getDireccion());
-            this.estudiante.setTelefono(wrapperDatosPersonales.getTelefono());
-            this.estudiante.setCelular(wrapperDatosPersonales.getCelular());
-            this.estudiante.setEmail(wrapperDatosPersonales.getEmail());
-
-            this.servicioEstudianteImpl.actualizar(this.estudiante);
+            if(this.tipoEntidad.equals("estudiante")){
+                // se actualizan los datos del estudiante
+                wrapperDatosPersonales.quitarWrapper(estudiante);
+                this.servicioEstudianteImpl.actualizar(this.estudiante);
+            }
+            else{
+                // se actualizan los datos del catedratico
+                wrapperDatosPersonales.quitarWrapper(catedratico);            
+                this.servicioCatedraticoImpl.actualizar(this.catedratico);
+            }
 
             // se registra el evento
             RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "editarDatosPersonales.exito", true);
