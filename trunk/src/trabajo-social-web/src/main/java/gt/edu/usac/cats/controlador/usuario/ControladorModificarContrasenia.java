@@ -6,6 +6,7 @@
 
 package gt.edu.usac.cats.controlador.usuario;
 
+import gt.edu.usac.cats.dominio.Catedratico;
 import org.springframework.stereotype.Controller;
 import gt.edu.usac.cats.dominio.Estudiante;
 import gt.edu.usac.cats.dominio.Usuario;
@@ -39,6 +40,8 @@ public class ControladorModificarContrasenia {
 //______________________________________________________________________________
     private Estudiante estudiante;
 //______________________________________________________________________________
+    private Catedratico catedratico;
+//______________________________________________________________________________
     @Resource
     private ServicioUsuario servicioUsuarioImpl;
 //______________________________________________________________________________
@@ -51,7 +54,8 @@ public class ControladorModificarContrasenia {
     @RequestMapping(value="modificarContrasenia.htm", method = RequestMethod.GET)
     public String crearFormulario(Model modelo,HttpServletRequest request) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        
+        String tipoEntidad = "";
+
         //Buscando usuario logueado por nombre
         this.usuario = this.servicioUsuarioImpl.cargarUsuarioPorNombre(auth.getName().toString());
 
@@ -64,12 +68,21 @@ public class ControladorModificarContrasenia {
         //Validando que el usuario sea un estudiante para mostrar datos en pagina
         if(this.usuario.getEstudiantes().toArray().length>0){
             this.estudiante = (Estudiante) this.usuario.getEstudiantes().toArray()[0];            
+            tipoEntidad = "estudiante";
         }
-        else
-            return "redirect:index.htm";
+        //Validando que el usuario sea un catedratico para mostrar datos en pagina
+        else if(this.usuario.getCatedraticos().toArray().length>0){
+            this.catedratico = (Catedratico) this.usuario.getCatedraticos().toArray()[0];
+            tipoEntidad = "catedratico";
+        }
 
         // se agregan los objetos que se usaran en la pagina
-        modelo.addAttribute("estudiante", this.estudiante);
+        modelo.addAttribute("tipoEntidad", tipoEntidad);
+        if (tipoEntidad.equals("estudiante"))
+            modelo.addAttribute("estudiante", this.estudiante);
+        else if (tipoEntidad.equals("catedratico"))
+            modelo.addAttribute("catedratico", this.catedratico);
+
         modelo.addAttribute("wrapperContrasenia", new WrapperContrasenia());
         return "usuario/modificarContrasenia";
     }

@@ -21,24 +21,44 @@
     <body>
         <h1><fmt:message key="modificarContrasenia.titulo"/></h1>
         <table width="100%" align="center" id="tablaUsuarios" class="ui-widget ui-widget-content">
-            <thead>
-                <tr class="ui-widget-header ">
-                    <th colspan="2"><fmt:message key="modificarDatosPersonales.DatosFijos"/></th>
-                </tr>
-            </thead>
+            <c:if test="${tipoEntidad=='estudiante' || tipoEntidad=='catedratico'}">
+                <thead>
+                    <tr class="ui-widget-header ">
+                        <th colspan="2"><fmt:message key="modificarDatosPersonales.DatosFijos"/></th>
+                    </tr>
+                </thead>
+            </c:if>
             <tbody>
-                <tr>
-                    <td><fmt:message key="agregarEstudiante.carne"/></td>
-                    <td><c:out value="${estudiante.carne}" /></td>
-                </tr>
-                <tr>
-                    <td><fmt:message key="agregarEstudiante.nombre"/></td>
-                    <td><c:out value="${estudiante.nombre}" /></td>
-                </tr>
-                <tr>
-                    <td><fmt:message key="agregarEstudiante.fechaNacimiento"/></td>
-                    <td><c:out value="${estudiante.fechaNacimiento}" /></td>
-                </tr>
+                <c:choose>
+                    <c:when test="${tipoEntidad=='estudiante'}">
+                        <tr>
+                            <td><fmt:message key="agregarEstudiante.carne"/></td>
+                            <td><c:out value="${estudiante.carne}" /></td>
+                        </tr>
+                        <tr>
+                            <td><fmt:message key="agregarEstudiante.nombre"/></td>
+                            <td><c:out value="${estudiante.nombre}" /></td>
+                        </tr>
+                        <tr>
+                            <td><fmt:message key="agregarEstudiante.fechaNacimiento"/></td>
+                            <td><c:out value="${estudiante.fechaNacimiento}" /></td>
+                        </tr>
+                    </c:when>
+                    <c:when test="${tipoEntidad=='catedratico'}">
+                        <tr>
+                            <td><fmt:message key="agregarCatedratico.codigo"/></td>
+                            <td><c:out value="${catedratico.codigo}" /></td>
+                        </tr>
+                        <tr>
+                            <td><fmt:message key="agregarCatedratico.nombre"/></td>
+                            <td><c:out value="${catedratico.nombre}" /></td>
+                        </tr>
+                        <tr>
+                            <td><fmt:message key="agregarCatedratico.apellido"/></td>
+                            <td><c:out value="${catedratico.apellido}" /></td>
+                        </tr>
+                    </c:when>
+                </c:choose>
             </tbody>
         </table>
         <%-- formulario para realizar el cambio de contraseña --%>
