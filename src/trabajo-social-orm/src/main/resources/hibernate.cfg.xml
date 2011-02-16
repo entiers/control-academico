@@ -8,7 +8,6 @@
     <mapping class="gt.edu.usac.cats.dominio.AsignacionIndicador"/>
     <mapping class="gt.edu.usac.cats.dominio.AsignacionDocumento"/>
     <mapping class="gt.edu.usac.cats.dominio.Usuario"/>
-    <mapping class="gt.edu.usac.cats.dominio.TipoAsignacion"/>
     <mapping class="gt.edu.usac.cats.dominio.Documento"/>
     <mapping class="gt.edu.usac.cats.dominio.CursoExtra"/>
     <mapping class="gt.edu.usac.cats.dominio.Catedratico"/>

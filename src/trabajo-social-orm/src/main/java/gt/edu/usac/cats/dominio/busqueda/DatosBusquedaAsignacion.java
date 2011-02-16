@@ -6,7 +6,7 @@
 
 package gt.edu.usac.cats.dominio.busqueda;
 
-import gt.edu.usac.cats.dominio.TipoAsignacion;
+import gt.edu.usac.cats.enums.TipoAsignacion;
 import javax.validation.constraints.Min;
 
 /**
@@ -20,6 +20,8 @@ public class DatosBusquedaAsignacion {
 
     @Min(value=2000, message="{validacion.minimo}")
     private Integer anio;
+
+//______________________________________________________________________________
     private TipoAsignacion tipoAsignacion;
 
     /**

@@ -27,8 +27,7 @@
   <table-filter match-name="usuario"/>
   <table-filter match-name="asignacion_estudiante_carrera"/>
   <table-filter match-name="escuela"/>
-  <table-filter match-name="desasignacion"/>
-  <table-filter match-name="tipo_asignacion"/>
+  <table-filter match-name="desasignacion"/>  
   <table-filter match-name="asignacion_documento"/>
   <table-filter match-name="documento"/>
   <table-filter match-name="asignacion_usuario_perfil"/>

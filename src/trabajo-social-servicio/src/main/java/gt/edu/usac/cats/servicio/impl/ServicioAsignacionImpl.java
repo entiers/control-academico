@@ -8,7 +8,7 @@ package gt.edu.usac.cats.servicio.impl;
 
 import gt.edu.usac.cats.dominio.Asignacion;
 import gt.edu.usac.cats.dominio.Estudiante;
-import gt.edu.usac.cats.dominio.TipoAsignacion;
+import gt.edu.usac.cats.enums.TipoAsignacion;
 import gt.edu.usac.cats.servicio.ServicioAsignacion;
 import java.util.List;
 import org.hibernate.Query;
