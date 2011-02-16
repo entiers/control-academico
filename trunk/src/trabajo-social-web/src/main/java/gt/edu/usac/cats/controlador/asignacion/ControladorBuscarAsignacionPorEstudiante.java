@@ -9,7 +9,7 @@ package gt.edu.usac.cats.controlador.asignacion;
 //~--- non-JDK imports --------------------------------------------------------
 
 import gt.edu.usac.cats.dominio.Estudiante;
-import gt.edu.usac.cats.dominio.TipoAsignacion;
+import gt.edu.usac.cats.enums.TipoAsignacion;
 import gt.edu.usac.cats.dominio.Usuario;
 import gt.edu.usac.cats.dominio.busqueda.DatosBusquedaAsignacion;
 import gt.edu.usac.cats.enums.ControlReporte;

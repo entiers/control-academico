@@ -23,7 +23,7 @@ import gt.edu.usac.cats.dominio.Curso;
 import gt.edu.usac.cats.dominio.DetalleAsignacion;
 import gt.edu.usac.cats.dominio.DetalleAsignacionPrimerIngreso;
 import gt.edu.usac.cats.dominio.Horario;
-import gt.edu.usac.cats.dominio.TipoAsignacion;
+import gt.edu.usac.cats.enums.TipoAsignacion;
 import gt.edu.usac.cats.servicio.ServicioAsignacionEstudianteCarrera;
 import gt.edu.usac.cats.servicio.ServicioAsignacionPrimerIngreso;
 import gt.edu.usac.cats.servicio.ServicioCurso;
