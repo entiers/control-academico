@@ -77,4 +77,24 @@
     <variables name="row1.extension" value="null" talendType="id_String" nullable="true"/>
     <variables name="row1.carrera" value="null" talendType="id_String" nullable="true"/>
   </expression:EMFExpression>
+  <expression:EMFExpression id="null=>salida=>inscrito" expression="true">
+    <variables name="row2.carne" value="null" talendType="id_String"/>
+    <variables name="row2.nombre" value="null" talendType="id_String"/>
+    <variables name="row2.telefono" value="null" talendType="id_String" nullable="true"/>
+    <variables name="row2.celular" value="null" talendType="id_String" nullable="true"/>
+    <variables name="row2.email" value="null" talendType="id_String" nullable="true"/>
+    <variables name="row2.fecha_nacimiento" value="null" talendType="id_Date"/>
+    <variables name="row2.carne_modificado" value="null" talendType="id_String" nullable="true"/>
+    <variables name="row2.cierre" value="null" talendType="id_Date" nullable="true"/>
+    <variables name="row2.codigo_lugar_nacimiento" value="null" talendType="id_Short" nullable="true"/>
+    <variables name="row2.codigo_nacionalidad" value="null" talendType="id_Short" nullable="true"/>
+    <variables name="row2.nov" value="null" talendType="id_String" nullable="true"/>
+    <variables name="row2.sexo" value="null" talendType="id_String" nullable="true"/>
+    <variables name="row3.id_lugar_nacimiento" value="0" talendType="id_Short"/>
+    <variables name="row3.codigo" value="0" talendType="id_Short"/>
+    <variables name="row3.nombre" value="null" talendType="id_String" nullable="true"/>
+    <variables name="row4.id_nacionalidad" value="0" talendType="id_Short"/>
+    <variables name="row4.codigo" value="0" talendType="id_Short"/>
+    <variables name="row4.nombre" value="null" talendType="id_String" nullable="true"/>
+  </expression:EMFExpression>
 </xmi:XMI>
