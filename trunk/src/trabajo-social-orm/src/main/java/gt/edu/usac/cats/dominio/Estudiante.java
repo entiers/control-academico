@@ -63,6 +63,7 @@ public class Estudiante implements java.io.Serializable {
     private String carneModificado;
     private String nov;
     private char sexo;
+    private boolean inscrito;
     private Set<CuentaCorriente> cuentaCorrientes = new HashSet<CuentaCorriente>(0);
     private Set<Desasignacion> desasignacions = new HashSet<Desasignacion>(0);
     private Set<AsignacionDocumento> asignacionDocumentos = new HashSet<AsignacionDocumento>(0);
@@ -287,6 +288,17 @@ public class Estudiante implements java.io.Serializable {
 
     public void setDetalleAsignacionPrimerIngresos(Set<DetalleAsignacionPrimerIngreso> detalleAsignacionPrimerIngresos) {
         this.detalleAsignacionPrimerIngresos = detalleAsignacionPrimerIngresos;
+    }
+
+//______________________________________________________________________________
+
+    @Column(name="inscrito")
+    public boolean isInscrito() {
+        return inscrito;
+    }
+
+    public void setInscrito(boolean inscrito) {
+        this.inscrito = inscrito;
     }
 
 }
