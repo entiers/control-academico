@@ -71,9 +71,12 @@ public class WrapperEstudiante {
 //______________________________________________________________________________
     private String nov;
 //______________________________________________________________________________
+    private boolean inscrito;
+//______________________________________________________________________________
 
     public WrapperEstudiante() {
         this.sexo = 'M';
+        this.inscrito = true;
     }
 //______________________________________________________________________________
     public void agregarWrapper(Estudiante estudiante) {
@@ -90,6 +93,7 @@ public class WrapperEstudiante {
         this.setNacionalidad(estudiante.getNacionalidad());
         this.setCarneModificado(estudiante.getCarneModificado());
         this.setNov(estudiante.getNov());
+        this.setInscrito(estudiante.isInscrito());
 
     }
 //______________________________________________________________________________
@@ -106,7 +110,8 @@ public class WrapperEstudiante {
         estudiante.setLugarNacimiento(this.getLugarNacimiento());
         estudiante.setNacionalidad(this.getNacionalidad());
         estudiante.setCarneModificado(this.getCarneModificado());
-        estudiante.setNov(this.getNov());        
+        estudiante.setNov(this.getNov());
+        estudiante.setInscrito(this.isInscrito());
     }
 //______________________________________________________________________________
     public String getCarne() {
@@ -220,5 +225,14 @@ public class WrapperEstudiante {
 
     public void setNov(String nov) {
         this.nov = nov;
+    }
+    
+//______________________________________________________________________________
+    public boolean isInscrito() {
+        return inscrito;
+    }
+
+    public void setInscrito(boolean inscrito) {
+        this.inscrito = inscrito;
     }
 }
