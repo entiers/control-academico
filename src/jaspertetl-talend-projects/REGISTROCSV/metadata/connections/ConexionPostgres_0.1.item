@@ -15,7 +15,7 @@
     <columns label="nivel" sourceType="int2" talendType="id_String" nullable="false" length="5" precision="0" originalField="nivel" pattern="&quot;dd-MM-yyyy&quot;"/>
   </tables>
   <tables id="_AwCrsPLMEd-Kxr2kCO7ilg" label="estudiante" sourceName="estudiante" tableType="TABLE">
-    <columns label="id_estudiante" sourceType="SERIAL" defaultValue="&quot;nextval('control.estudiante_id_estudiante_seq'::regclass)&quot;" talendType="id_Integer" key="true" nullable="false" length="4" precision="0" originalField="id_estudiante"/>
+    <columns label="id_estudiante" sourceType="SERIAL" defaultValue="&quot;nextval('estudiante_id_estudiante_seq'::regclass)&quot;" talendType="id_Integer" key="true" nullable="false" length="4" precision="0" originalField="id_estudiante"/>
     <columns label="carne" sourceType="VARCHAR" talendType="id_String" nullable="false" length="10" precision="0" originalField="carne"/>
     <columns label="nombre" sourceType="VARCHAR" talendType="id_String" nullable="false" length="50" precision="0" originalField="nombre"/>
     <columns label="direccion" sourceType="VARCHAR" talendType="id_String" length="200" precision="0" originalField="direccion"/>
@@ -23,14 +23,15 @@
     <columns label="celular" sourceType="VARCHAR" talendType="id_String" length="10" precision="0" originalField="celular"/>
     <columns label="email" sourceType="VARCHAR" talendType="id_String" length="100" precision="0" originalField="email"/>
     <columns label="fecha_nacimiento" sourceType="DATE" talendType="id_Date" nullable="false" length="4" precision="0" originalField="fecha_nacimiento" pattern="&quot;dd-MM-yyyy&quot;"/>
-    <columns label="requisitos" sourceType="BOOL" talendType="id_Boolean" length="1" precision="0" originalField="requisitos"/>
-    <columns label="id_usuario" sourceType="INT4" talendType="id_Integer" length="4" precision="0" originalField="id_usuario"/>
+    <columns label="requisitos" sourceType="BOOL" defaultValue="&quot;false&quot;" talendType="id_Boolean" length="1" precision="0" originalField="requisitos"/>
+    <columns label="id_usuario" sourceType="INT4" talendType="id_Integer" nullable="false" length="4" precision="0" originalField="id_usuario"/>
     <columns label="carne_modificado" sourceType="VARCHAR" talendType="id_String" length="10" precision="0" originalField="carne_modificado"/>
     <columns label="nov" sourceType="VARCHAR" talendType="id_String" length="12" precision="0" originalField="nov"/>
     <columns label="sexo" sourceType="BPCHAR" talendType="id_String" nullable="false" length="1" precision="0" originalField="sexo"/>
-    <columns label="id_lugar_nacimiento" sourceType="INT2" talendType="id_Short" length="2" precision="0" originalField="id_lugar_nacimiento"/>
-    <columns label="id_nacionalidad" sourceType="INT2" talendType="id_Short" length="2" precision="0" originalField="id_nacionalidad"/>
+    <columns label="id_lugar_nacimiento" sourceType="INT2" talendType="id_Short" nullable="false" length="2" precision="0" originalField="id_lugar_nacimiento"/>
+    <columns label="id_nacionalidad" sourceType="INT2" talendType="id_Short" nullable="false" length="2" precision="0" originalField="id_nacionalidad"/>
     <columns label="id_pensum" sourceType="INT2" talendType="id_Short" length="2" precision="0" originalField="id_pensum"/>
+    <columns label="inscrito" sourceType="BOOL" talendType="id_Boolean" nullable="false" length="1" precision="0" originalField="inscrito"/>
   </tables>
   <tables id="_BVaCkPLMEd-Kxr2kCO7ilg" label="asignacion_estudiante_carrera" sourceName="asignacion_estudiante_carrera" tableType="TABLE">
     <columns label="id_asignacion_estudiante_carrera" sourceType="SERIAL" defaultValue="&quot;nextval('control.asignacion_estudiante_carrera_id_asignacion_estudiante_carre995'::regclass)&quot;" talendType="id_Integer" key="true" nullable="false" length="4" precision="0" originalField="id_asignacion_estudiante_carrera"/>
