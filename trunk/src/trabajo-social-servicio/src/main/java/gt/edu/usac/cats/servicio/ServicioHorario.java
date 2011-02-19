@@ -6,6 +6,7 @@
 
 package gt.edu.usac.cats.servicio;
 
+import gt.edu.usac.cats.dominio.Carrera;
 import gt.edu.usac.cats.dominio.Curso;
 import gt.edu.usac.cats.dominio.Horario;
 import gt.edu.usac.cats.dominio.Salon;
@@ -44,7 +45,7 @@ public interface ServicioHorario extends ServicioGeneral {
      */
     List <Horario> buscarHorarioPorSalonYSemestre(Salon salon, Semestre semestre)
             throws DataAccessException;
- //______________________________________________________________________________
+//______________________________________________________________________________
      /**
      * <p>Este metodo se encarga de devolver los horarios disponibles en el
       * primer semestres de una carrera especifica.</p>
@@ -56,7 +57,7 @@ public interface ServicioHorario extends ServicioGeneral {
     Horario getHorarioPorCursoPrimerIngreso(Curso curso)
             throws DataAccessException;
 
- //______________________________________________________________________________
+//______________________________________________________________________________
      /**
      * <p>Este metodo se encarga de devolver los horarios disponibles en el
       * primer semestres de una carrera especifica.</p>
@@ -68,7 +69,7 @@ public interface ServicioHorario extends ServicioGeneral {
     List <Horario> getHorario(Curso curso, Semestre semestre)
             throws DataAccessException;
 
-  //______________________________________________________________________________
+//______________________________________________________________________________
      /**
      * <p>Este metodo se encarga de devolver los horarios disponibles para realizar
       * un cambio de seccion. Se toma como referencia el horario enviado como parametro,
@@ -79,5 +80,29 @@ public interface ServicioHorario extends ServicioGeneral {
      * @return List
      */
     List <Horario> getHorarioCambioSeccion(Horario horario)
+            throws DataAccessException;
+
+//______________________________________________________________________________
+     /**
+     * <p>Este metodo se encarga de devolver los horarios disponibles para realizar
+      * un cambio de seccion. Se toma como referencia el horario enviado como parametro,
+      * en donde el curso y el semestre sean el mismo, pero la seccion no.</p>
+     *
+     * @param horario Pojo del tipo {@link Horario}
+     * @throws DataAccessException Si ocurrio un error de acceso a datos
+     * @return List
+     */
+    List <Horario> getHorario(Curso curso)
+            throws DataAccessException;
+//______________________________________________________________________________
+     /**
+     * <p>Este metodo se encarga de validar si dentro de la lista de horarios que se
+      * envia por parametro existe un traslape.</p>
+     *
+     * @param horario Pojo del tipo {@link Horario}
+     * @throws DataAccessException Si ocurrio un error de acceso a datos
+     * @return List
+     */
+    boolean existeTraslape(List<Horario> listadoHorario)
             throws DataAccessException;
 }

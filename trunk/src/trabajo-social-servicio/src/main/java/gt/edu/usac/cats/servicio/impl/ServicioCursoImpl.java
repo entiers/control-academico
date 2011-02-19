@@ -66,4 +66,17 @@ public class ServicioCursoImpl extends ServicioGeneralImpl implements ServicioCu
         return query.list();
     }
 
+    @Override
+    public List<Curso> getCursoXCarrera(Carrera carrera) throws DataAccessException {
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("select acp.curso from AsignacionCursoPensum acp ")
+               .append("where acp.pensum.carrera = :carrera ");
+
+        Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
+        query.setParameter("carrera", carrera);
+
+        return query.list();
+    }
+
 }

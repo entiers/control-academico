@@ -31,12 +31,24 @@ public interface ServicioCurso extends ServicioGeneral {
             throws DataAccessException;
 
     /**
-     * <p>Este metodo permite la busqueda de un curso por su codigo .</p>
+     * <p>Este metodo permite la busqueda de los cursos de primer semestre de una
+     * carrera en especifico.</p>
      *
-     * @param codigo Codigo del curso
+     * @param carrera pojo del tipo {@link Carrrera}
      * @return Curso
      * @throws DataAccessException Si ocurrio un error de acceso a datos
      */
     List<Curso> getCursoPrimerSemestreXCarrera(Carrera carrera)
+            throws DataAccessException;
+
+    /**
+     * <p>Este metodo permite la busqueda de los cursos de una
+     * carrera en especifico.</p>
+     *
+     * @param carrera pojo del tipo {@link Carrrera}
+     * @return Curso
+     * @throws DataAccessException Si ocurrio un error de acceso a datos
+     */
+    List<Curso> getCursoXCarrera(Carrera carrera)
             throws DataAccessException;
 }

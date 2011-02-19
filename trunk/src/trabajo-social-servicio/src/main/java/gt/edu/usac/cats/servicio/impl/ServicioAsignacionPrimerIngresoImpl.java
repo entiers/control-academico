@@ -71,15 +71,13 @@ public class ServicioAsignacionPrimerIngresoImpl extends ServicioGeneralImpl imp
     @Override
     public void asignacionCursosPrimerIngreso(AsignacionPrimerIngreso asignacionPrimerIngreso) throws DataAccessException {
         List<AsignacionEstudianteCarrera> lstAEC;
-        
+
         int totalAsignaciones;
         int totEstudianteAsignados = 0;
         int totEstudianteNoAsignados = 0;
 
         //Cargar configuraciones
         Properties prop = this.cargarConfiguraciones();
-        TipoAsignacion tipoAsignacion = this.servicioGeneralImpl.cargarEntidadPorID(TipoAsignacion.class,
-                Short.valueOf(prop.getProperty("asignacionPrimerIngreso.TipoAsignacion")));
 
         //Obtener todas las carreras existentes
         List<Carrera> lstCarreras = this.servicioGeneralImpl.cargarEntidades(Carrera.class);
@@ -90,13 +88,13 @@ public class ServicioAsignacionPrimerIngresoImpl extends ServicioGeneralImpl imp
                 //Obtener cursos por carrera
                 List<Curso> lstCursoPrimerSemestre = this.servicioCursoImpl.getCursoPrimerSemestreXCarrera(carrera);
                 if(!lstAEC.isEmpty()){
-                    for(AsignacionEstudianteCarrera aec: lstAEC){                        
+                    for(AsignacionEstudianteCarrera aec: lstAEC){
                         if (!lstCursoPrimerSemestre.isEmpty()){
                             Asignacion asignacion = new Asignacion();
                             asignacion.setTransaccion(this.getUUID());
                             asignacion.setAsignacionEstudianteCarrera(aec);
                             asignacion.setAsignacionPrimerIngreso(asignacionPrimerIngreso);
-                            asignacion.setTipoAsignacion(tipoAsignacion);
+                            asignacion.setTipoAsignacion(TipoAsignacion.ASIGNACION_PRIMER_INGRESO);
                             this.servicioGeneralImpl.agregar(asignacion);
 
                             totalAsignaciones = 0;
@@ -124,10 +122,10 @@ public class ServicioAsignacionPrimerIngresoImpl extends ServicioGeneralImpl imp
                             }
                             else
                                 totEstudianteAsignados++;
-                            
+
                             this.servicioGeneralImpl.agregar(dapi);
                         }
-                        
+
                     }
                 }
             }
@@ -179,7 +177,7 @@ public class ServicioAsignacionPrimerIngresoImpl extends ServicioGeneralImpl imp
         }
         catch(IOException ex){
             System.out.println(ex.getMessage());
-        }        
+        }
         return pro;
     }
 

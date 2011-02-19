@@ -6,6 +6,7 @@
 
 package gt.edu.usac.cats.servicio.impl;
 
+import gt.edu.usac.cats.dominio.Carrera;
 import gt.edu.usac.cats.dominio.Curso;
 import gt.edu.usac.cats.dominio.Horario;
 import gt.edu.usac.cats.dominio.Salon;
@@ -80,6 +81,7 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
         return this.daoGeneralImpl.find(criteria);
     }
 
+//______________________________________________________________________________
     @Override
     public Horario getHorarioPorCursoPrimerIngreso(Curso curso) throws DataAccessException {
         Calendar fecha = Calendar.getInstance();
@@ -108,7 +110,7 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
         else
             return null;
     }
-
+//______________________________________________________________________________
     @Override
     public List<Horario> getHorario(Curso curso, Semestre semestre)
             throws DataAccessException {
@@ -121,7 +123,7 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
 
         return this.daoGeneralImpl.find(criteria);
     }
-
+//______________________________________________________________________________
     @Override
     public List<Horario> getHorarioCambioSeccion(Horario horario) throws DataAccessException {
         StringBuilder builder = new StringBuilder();
@@ -138,4 +140,34 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
 
         return query.list();
     }
+//______________________________________________________________________________
+    @Override
+    public List<Horario> getHorario(Curso curso) throws DataAccessException {
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("select horario from Horario as horario ")
+               .append("where horario.curso = :curso");
+           
+        Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
+        query.setParameter("curso", curso);
+
+        return query.list();
+    }
+
+    @Override
+    public boolean existeTraslape(List<Horario> listadoHorario) throws DataAccessException {
+        for(Horario h1 : listadoHorario){
+            for(Horario h2 : listadoHorario){
+                if(h1.getIdHorario()!=h2.getIdHorario()){
+                    if((h2.getHoraFin().compareTo(h1.getHoraInicio()) > 0 & h2.getHoraFin().compareTo(h1.getHoraFin()) <= 0)
+                        | (h2.getHoraInicio().compareTo(h1.getHoraFin()) < 0 & h2.getHoraInicio().compareTo(h1.getHoraInicio()) >= 0)
+                        | (h2.getHoraInicio().compareTo(h1.getHoraInicio()) <= 0 & h2.getHoraFin().compareTo(h1.getHoraFin()) >= 0  ))
+                        return true;
+                }
+            }
+        }
+        return false;
+    }
+
+
 }

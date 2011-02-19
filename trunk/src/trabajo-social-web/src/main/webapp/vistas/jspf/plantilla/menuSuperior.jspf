@@ -258,6 +258,10 @@
                 <sec:authorize access="hasRole('ROLE_MOSTRAR_CURSOS_ASIGNADOS')">
                     <li><a href="buscarAsignacionPorEstudiante.htm"><fmt:message key="miscursos.asignados"/></a></li>
                 </sec:authorize>
+                <%--Asignacion de cursos--%>
+                <sec:authorize access="hasRole('ROLE_ASIGNACION_CURSOS')">
+                    <li><a href="asignacionCursos.htm"><fmt:message key="miscursos.asignacionCursos.titulo"/></a></li>
+                </sec:authorize>
             </ul>
         </li>
     </sec:authorize>
