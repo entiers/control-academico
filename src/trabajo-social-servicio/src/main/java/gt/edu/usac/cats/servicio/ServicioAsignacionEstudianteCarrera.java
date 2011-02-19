@@ -10,6 +10,7 @@ import java.util.List;
 
 import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
 import gt.edu.usac.cats.dominio.Carrera;
+import gt.edu.usac.cats.dominio.Estudiante;
 import org.hibernate.HibernateException;
 
 /**
@@ -30,5 +31,16 @@ public interface ServicioAsignacionEstudianteCarrera extends ServicioGeneral{
      * @throws HibernateException Si ocurrio un error de acceso a datos
      */
     List<AsignacionEstudianteCarrera> getAsignacionEstudianteCarreraPrimerIngreso(Carrera carrera)
+            throws HibernateException;
+//______________________________________________________________________________
+    /**
+     * <p>Crear un listado de AsignacionEstudianteCarrera, el listado
+     * se filtra en base al estudiante</p>
+     *
+     * @param estudiante pojo del tipo  {@linl Estudiante}
+     * @return List Listado de AsignacionEstudianteCarrera
+     * @throws HibernateException Si ocurrio un error de acceso a datos
+     */
+    List<AsignacionEstudianteCarrera> getAsignacionEstudianteCarreraPorEstudiante(Estudiante estudiante)
             throws HibernateException;
 }

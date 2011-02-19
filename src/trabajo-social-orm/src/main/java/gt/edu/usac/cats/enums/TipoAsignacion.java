@@ -22,7 +22,9 @@
  * @version 1.0
  */
 public enum TipoAsignacion {
-    DEFAULT(1, "Default")
+    DEFAULT(1, "Default"),
+    ASIGNACION_PRIMER_INGRESO(2,"Asignación de cursos de primer ingreso"),
+    ASIGNACION_CURSOS_SEMESTRE(3,"Asignación de cursos en semestre")
             ;
 
     private int id;

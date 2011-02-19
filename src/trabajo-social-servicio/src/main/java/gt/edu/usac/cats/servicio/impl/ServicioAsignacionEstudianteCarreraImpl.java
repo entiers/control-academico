@@ -7,11 +7,15 @@ package gt.edu.usac.cats.servicio.impl;
 
 import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
 import gt.edu.usac.cats.dominio.Carrera;
+import gt.edu.usac.cats.dominio.Estudiante;
 import gt.edu.usac.cats.servicio.ServicioAsignacionEstudianteCarrera;
 import java.util.Calendar;
 import java.util.List;
+import org.eclipse.persistence.internal.oxm.schema.model.Restriction;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
 
 /**
@@ -21,7 +25,7 @@ import org.springframework.stereotype.Service;
  */
 @Service("servicioAsignacionEstudianteCarreraImpl")
 public class ServicioAsignacionEstudianteCarreraImpl extends ServicioGeneralImpl implements ServicioAsignacionEstudianteCarrera{
-
+//______________________________________________________________________________
     @Override
     public List<AsignacionEstudianteCarrera> getAsignacionEstudianteCarreraPrimerIngreso(Carrera carrera) throws HibernateException {
         Calendar fecha = Calendar.getInstance();
@@ -38,5 +42,12 @@ public class ServicioAsignacionEstudianteCarreraImpl extends ServicioGeneralImpl
         
         return query.list();
     }
-
+//______________________________________________________________________________
+    @Override
+    public List<AsignacionEstudianteCarrera> getAsignacionEstudianteCarreraPorEstudiante(Estudiante estudiante){
+        DetachedCriteria criteria = DetachedCriteria.forClass(AsignacionEstudianteCarrera.class);
+        criteria.add(Restrictions.eq("estudiante", estudiante));
+        
+        return this.daoGeneralImpl.find(criteria);
+    }
 }

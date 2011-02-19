@@ -9,10 +9,10 @@ package gt.edu.usac.cats.controlador.asignacion;
 //~--- non-JDK imports --------------------------------------------------------
 
 import gt.edu.usac.cats.dominio.Estudiante;
-import gt.edu.usac.cats.enums.TipoAsignacion;
 import gt.edu.usac.cats.dominio.Usuario;
 import gt.edu.usac.cats.dominio.busqueda.DatosBusquedaAsignacion;
 import gt.edu.usac.cats.enums.ControlReporte;
+import gt.edu.usac.cats.enums.TipoAsignacion;
 import gt.edu.usac.cats.servicio.ServicioAsignacion;
 import gt.edu.usac.cats.servicio.ServicioGeneral;
 import gt.edu.usac.cats.servicio.ServicioUsuario;
@@ -133,6 +133,6 @@ public class ControladorBuscarAsignacionPorEstudiante {
         modelo.addAttribute("error",false);
         modelo.addAttribute("lstAnio",listadoAnio);
         modelo.addAttribute("listadoTipoAsignacion",
-                            this.servicioGeneralImpl.cargarEntidades(TipoAsignacion.class));
+                            TipoAsignacion.values());
     }
 }
