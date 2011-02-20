@@ -12,8 +12,9 @@ import gt.edu.usac.cats.dominio.Estudiante;
 import gt.edu.usac.cats.dominio.Horario;
 import gt.edu.usac.cats.dominio.Semestre;
 import gt.edu.usac.cats.dominio.Usuario;
-import gt.edu.usac.cats.dominio.wrapper.WrapperAsignacionCursos;
+import gt.edu.usac.cats.dominio.busqueda.DatosBusquedaCarrera;
 import gt.edu.usac.cats.enums.TipoActividad;
+import gt.edu.usac.cats.servicio.ServicioAsignacion;
 import gt.edu.usac.cats.servicio.ServicioAsignacionEstudianteCarrera;
 import gt.edu.usac.cats.servicio.ServicioCalendarioActividades;
 import gt.edu.usac.cats.servicio.ServicioCurso;
@@ -24,6 +25,7 @@ import gt.edu.usac.cats.servicio.ServicioSemestre;
 import gt.edu.usac.cats.servicio.ServicioUsuario;
 import gt.edu.usac.cats.util.Mensajes;
 import gt.edu.usac.cats.util.RequestUtil;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -55,6 +57,8 @@ public class ControladorAsignacionCursos {
 //_____________________________________________________________________________
     private static final String TITULO_MENSAJE = "miscursos.asignacionCursos.titulo";
 //_____________________________________________________________________________
+    private AsignacionEstudianteCarrera asignacionEstudianteCarrera;
+//_____________________________________________________________________________
     private Curso cursoComputacion;
 //_____________________________________________________________________________
     private Estudiante estudiante;
@@ -62,6 +66,14 @@ public class ControladorAsignacionCursos {
     private Usuario usuario;
 //_____________________________________________________________________________
     private Semestre semestre;
+//_____________________________________________________________________________
+    private List<AsignacionEstudianteCarrera> listaAEC;
+//_____________________________________________________________________________
+    private List<Curso> listaCurso;
+//_____________________________________________________________________________
+    private List<Horario> listaHorario;
+//_____________________________________________________________________________
+    private List<Horario> listaHorarioAsignacion;
 //_____________________________________________________________________________
     @Resource
     private ServicioUsuario servicioUsuarioImpl;
@@ -85,6 +97,9 @@ public class ControladorAsignacionCursos {
     private ServicioHorario servicioHorarioImpl;
 //_____________________________________________________________________________
     @Resource
+    private ServicioAsignacion servicioAsignacionImpl;
+//_____________________________________________________________________________
+    @Resource
     private ServicioGeneral servicioGeneralImpl;
 //_____________________________________________________________________________
     @RequestMapping(value="asignacionCursos.htm",method = RequestMethod.GET)
@@ -106,6 +121,12 @@ public class ControladorAsignacionCursos {
             return "asignacion/asignacionCursos";
         }
 
+        //Validando que el estudiante se encuentre inscrito
+        if(!this.estudiante.isInscrito()){
+            modelo.addAttribute("estudianteNoInscrito",true);
+            return "asignacion/asignacionCursos";
+        }
+
         //Validar perido de asignacion de cursos de semestre
         if(!this.servicioCalendarioActividadesImpl.esFechaActividadValida
                                 (TipoActividad.ASIGNACION_SEMESTRE,
@@ -114,46 +135,64 @@ public class ControladorAsignacionCursos {
             modelo.addAttribute("periodoInvalido",true);
             return "asignacion/asignacionCursos";
         }
+
+        this.listaAEC = this.servicioAsignacionEstudianteCarreraImpl.getAsignacionEstudianteCarreraPorEstudiante(estudiante);
+        modelo.addAttribute("listaAEC", this.listaAEC);
+        modelo.addAttribute("datosBusquedaCarrera",  new DatosBusquedaCarrera());
         
-        modelo.addAttribute("wrapperAsignacionCursos", new WrapperAsignacionCursos());
-
-        this.setModelo(modelo);
         return "asignacion/asignacionCursos";
     }
-
 //  _____________________________________________________________________________
-    @RequestMapping(value  = "asignacionCursos.htm",method = RequestMethod.POST)
-    public String postAsignacionCursos(@Valid WrapperAsignacionCursos wrapperAsignacionCursos, BindingResult bindingResult,
-                                Model modelo, HttpServletRequest request) {
-        this.setModelo(modelo);
-        System.out.println("Salon " + wrapperAsignacionCursos.getHorario().getSalon());
-        System.out.println("Seccion " + wrapperAsignacionCursos.getHorario().getSeccion());
-        System.out.println("Curso " + wrapperAsignacionCursos.getHorario().getCurso().getNombre());
-        return "asignacion/asignacionCursos";
+    @RequestMapping(value="asignacionCursos.htm",method = RequestMethod.POST)
+    public String postAsignacionCursos(@Valid DatosBusquedaCarrera datosBusquedaCarrera,
+                                        BindingResult bindingResult,
+                                        Model modelo,
+                                        HttpServletRequest request) {
+        this.asignacionEstudianteCarrera = this.servicioGeneralImpl.cargarEntidadPorID(AsignacionEstudianteCarrera.class, datosBusquedaCarrera.getIdAsignacionEstudianteCarrera());
+        this.listaCurso = this.servicioCursoImpl.getCurso(this.asignacionEstudianteCarrera.getCarrera());
+        this.listaHorario = this.servicioHorarioImpl.getHorario(this.listaCurso.get(0), semestre);
+        this.listaHorarioAsignacion = new ArrayList<Horario>();
+        modelo.addAttribute("datosBusquedaCarrera",  new DatosBusquedaCarrera());
+        modelo.addAttribute("listaCurso", this.listaCurso);
+        modelo.addAttribute("listaHorario",this.listaHorario);
+        return "asignacion/asignacionCursos2";
     }
-
-
-
-    //Llenar combo Horarios
+//  _____________________________________________________________________________
+    @RequestMapping(value="agregarHorario.htm",method = RequestMethod.POST)
+    public String agregarHorario(@Valid DatosBusquedaCarrera datosBusquedaCarrera,
+                                        BindingResult bindingResult,
+                                        Model modelo,
+                                        HttpServletRequest request) {
+        if(datosBusquedaCarrera.getIdCurso() != -1){
+            Curso curso = this.servicioGeneralImpl.cargarEntidadPorID(Curso.class, Short.parseShort(String.valueOf(datosBusquedaCarrera.getIdCurso())));
+            Horario horario = this.servicioGeneralImpl.cargarEntidadPorID(Horario.class, datosBusquedaCarrera.getIdHorario());
+            this.listaHorarioAsignacion.add(horario);
+            for(int i=0;i<listaCurso.size();i++){
+                if(curso.getIdCurso() == listaCurso.get(i).getIdCurso())
+                    listaCurso.remove(i);
+            }
+            for(int i=0;i<listaHorario.size();i++){
+                if(horario.getIdHorario() == listaHorario.get(i).getIdHorario())
+                    listaHorario.remove(i);
+            }
+        }
+        modelo.addAttribute("listaCurso", this.listaCurso);
+        modelo.addAttribute("listaHorario",this.listaHorario);
+        modelo.addAttribute("horarioElegido", true);
+        modelo.addAttribute("listadoHorarioAsignados", this.listaHorarioAsignacion);
+        return "asignacion/asignacionCursos2";
+    }
+//  _____________________________________________________________________________
+    @RequestMapping(value="realizarAsignacion.htm",method = RequestMethod.GET)
+    public void realizarAsignacion(Model modelo,
+                                     HttpServletRequest request) {
+        
+        this.servicioAsignacionImpl.realizarAsignacionCursos(this.asignacionEstudianteCarrera, listaHorario);
+    }
+//  _____________________________________________________________________________
     @RequestMapping(value="getHorario.htm", method=RequestMethod.GET)
     public @ResponseBody @JsonIgnore List<Horario> getHorario(@RequestParam Short idCurso) {
         Curso curso = this.servicioGeneralImpl.cargarEntidadPorID(Curso.class, idCurso);
         return this.servicioHorarioImpl.getHorario(curso, this.semestre);
     }
-
-
-    private void setModelo(Model modelo){
-        //Agregando listados para combos
-        List<AsignacionEstudianteCarrera> listaAEC = this.servicioAsignacionEstudianteCarreraImpl
-                                                            .getAsignacionEstudianteCarreraPorEstudiante(estudiante);
-
-        List<Curso> listaCurso = this.servicioCursoImpl.getCursoXCarrera(
-                                                listaAEC.get(0).getCarrera());
-
-        modelo.addAttribute("listaAEC", listaAEC);
-        modelo.addAttribute("listaCurso", listaCurso);
-        modelo.addAttribute("listaHorario",this.servicioHorarioImpl.getHorario(
-                                                    listaCurso.get(0), semestre));
-    }
-
 }

@@ -1,7 +1,0 @@
-<%@ page pageEncoding="UTF-8" %>
-
-<div id="divCampos">
-    <form:label for="nombre" path="nombre"><fmt:message key="agregarCurso.nombre"/>: *</form:label>
-    <form:input path="nombre" cssStyle="width: 250px;" />
-    <form:errors path="nombre" cssClass="claseError" />
-</div>

@@ -49,6 +49,6 @@ public interface ServicioCurso extends ServicioGeneral {
      * @return Curso
      * @throws DataAccessException Si ocurrio un error de acceso a datos
      */
-    List<Curso> getCursoXCarrera(Carrera carrera)
+    List<Curso> getCurso(Carrera carrera)
             throws DataAccessException;
 }
