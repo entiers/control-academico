@@ -67,7 +67,7 @@ public class ServicioCursoImpl extends ServicioGeneralImpl implements ServicioCu
     }
 
     @Override
-    public List<Curso> getCursoXCarrera(Carrera carrera) throws DataAccessException {
+    public List<Curso> getCurso(Carrera carrera) throws DataAccessException {
         StringBuilder builder = new StringBuilder();
 
         builder.append("select acp.curso from AsignacionCursoPensum acp ")

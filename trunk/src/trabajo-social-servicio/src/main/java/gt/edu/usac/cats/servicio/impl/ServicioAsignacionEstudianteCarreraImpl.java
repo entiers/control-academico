@@ -11,7 +11,6 @@ import gt.edu.usac.cats.dominio.Estudiante;
 import gt.edu.usac.cats.servicio.ServicioAsignacionEstudianteCarrera;
 import java.util.Calendar;
 import java.util.List;
-import org.eclipse.persistence.internal.oxm.schema.model.Restriction;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.criterion.DetachedCriteria;
@@ -45,9 +44,14 @@ public class ServicioAsignacionEstudianteCarreraImpl extends ServicioGeneralImpl
 //______________________________________________________________________________
     @Override
     public List<AsignacionEstudianteCarrera> getAsignacionEstudianteCarreraPorEstudiante(Estudiante estudiante){
-        DetachedCriteria criteria = DetachedCriteria.forClass(AsignacionEstudianteCarrera.class);
-        criteria.add(Restrictions.eq("estudiante", estudiante));
-        
-        return this.daoGeneralImpl.find(criteria);
+        StringBuilder builder = new StringBuilder();
+        builder.append(" select aec from AsignacionEstudianteCarrera aec ")
+               .append(" where aec.estudiante =:estudiante ")
+               .append(" and exists elements(")
+               .append("    aec.carrera.pensums.asignacionCursoPensums )");
+        Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
+        query.setParameter("estudiante", estudiante);
+
+        return query.list();
     }
 }
