@@ -19,7 +19,7 @@
     </head>
     <body>
         <h1><fmt:message key="miscursos.asignacionCursos.titulo"/></h1>
-        <form:form method="post" modelAttribute="datosBusquedaCarrera" action="agregarHorario.htm">
+        <form:form method="post" modelAttribute="datosBusquedaCarrera" action="agregarHorarioAsignacion.htm">
             <fieldset>
                 <legend><fmt:message key="miscursos.asignacionCursos.horarios"/></legend>
                 <div id="divCampos">

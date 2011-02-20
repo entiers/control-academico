@@ -158,7 +158,7 @@ public class ControladorAsignacionCursos {
         return "asignacion/asignacionCursos2";
     }
 //  _____________________________________________________________________________
-    @RequestMapping(value="agregarHorario.htm",method = RequestMethod.POST)
+    @RequestMapping(value="agregarHorarioAsignacion.htm",method = RequestMethod.POST)
     public String agregarHorario(@Valid DatosBusquedaCarrera datosBusquedaCarrera,
                                         BindingResult bindingResult,
                                         Model modelo,
