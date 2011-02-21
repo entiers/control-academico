@@ -19,7 +19,7 @@ import org.springframework.dao.DataAccessException;
 
 public interface ServicioSemestre extends ServicioGeneral {
 
-
+//______________________________________________________________________________
     /**
      * Este metodo retorna todos los semestres cuyo anyo sea mayor o igual
      * al anyo actual.  Se debe de utilizar para la creacion de calendario de actividades.
@@ -31,7 +31,7 @@ public interface ServicioSemestre extends ServicioGeneral {
      */
     List <Semestre> listarSemestresNoVencidos() throws DataAccessException;
 
-
+//______________________________________________________________________________
     /**
      * Este metodo retorna el listado de semestres ordenados por anyo y mes descendentemente.
      * Es de utilizar para la busqueda y modificaciones de calendario de actividades.
@@ -41,6 +41,8 @@ public interface ServicioSemestre extends ServicioGeneral {
      * @throws DataAccessException Si ocurrio un error de acceso a datos     
      */
 
+
+//______________________________________________________________________________
     List <Semestre> listarSemestresParaBusqueda() throws DataAccessException;
 
     /**
@@ -52,5 +54,17 @@ public interface ServicioSemestre extends ServicioGeneral {
      * @throws DataAccessException Si ocurrio un error de acceso a datos
      */
 
+
     List <Semestre> listarSemestres(Short anio, char numero) throws DataAccessException;
+
+//______________________________________________________________________________
+    /**
+     * Este metodo retorna el semestre activo del sistema.
+     *
+     * @return Pojo del tipo {@link Semestre}
+     *
+     * @throws DataAccessExceptionSi ocurrio un error de acceso a datos
+     */
+    Semestre getSemestreActivo() throws DataAccessException;
+
 }
