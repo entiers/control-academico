@@ -27,7 +27,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ServicioSemestreImpl extends ServicioGeneralImpl implements ServicioSemestre{
 
-
+//______________________________________________________________________________
     /**
      * Este metodo retorna todos los semestres cuyo anyo sea mayor o igual
      * al anyo actual.  Se debe de utilizar para la creacion de calendario de actividades.
@@ -47,7 +47,7 @@ public class ServicioSemestreImpl extends ServicioGeneralImpl implements Servici
         return this.daoGeneralImpl.find(criteria);
     }
 
-
+//______________________________________________________________________________
 
     /**
      * Este metodo retorna el listado de semestres ordenados por anyo y mes descendentemente.
@@ -67,6 +67,16 @@ public class ServicioSemestreImpl extends ServicioGeneralImpl implements Servici
         return this.daoGeneralImpl.find(criteria);
     }
 
+//______________________________________________________________________________
+    /**
+     * Este metodo retorna el listado de semestres ordenados por anyo y mes descendentemente.
+     * Es de utilizar para la busqueda y modificaciones de calendario de actividades.
+     *
+     * @return Listado de semestres que fueron encontrados.
+     *
+     * @throws DataAccessException Si ocurrio un error de acceso a datos
+     */
+
     @Override
     public List<Semestre> listarSemestres(Short anio, char numero) throws DataAccessException {
         DetachedCriteria criteria = DetachedCriteria.forClass(Semestre.class);
@@ -75,6 +85,22 @@ public class ServicioSemestreImpl extends ServicioGeneralImpl implements Servici
         criteria.add(Restrictions.eq("numero",numero));
         
         return this.daoGeneralImpl.find(criteria);
+    }
+//______________________________________________________________________________
+    /**
+     * Este metodo retorna el semestre activo del sistema.
+     *
+     * @return Pojo del tipo {@link Semestre}
+     *
+     * @throws DataAccessExceptionSi ocurrio un error de acceso a datos
+     */
+    @Override
+    public Semestre getSemestreActivo() throws DataAccessException {
+        DetachedCriteria criteria = DetachedCriteria.forClass(Semestre.class);
+        criteria.add(Restrictions.eq("activo", true));
+
+        return this.daoGeneralImpl.uniqueResult(criteria);
+
     }
 
 }

@@ -157,23 +157,12 @@
                         <sec:authorize access="hasRole('ROLE_AGREGAR_SEMESTRE')">
                             <li><a href="agregarSemestre.htm"><fmt:message key="agregarSemestre.titulo"/></a></li>
                         </sec:authorize>
+                        <sec:authorize access="hasRole('ROLE_BUSCAR_SEMESTRE')">
+                            <li><a href="buscarSemestre.htm"><fmt:message key="buscarSemestre.titulo"/></a></li>
+                        </sec:authorize>
                     </ul>
                 </li>
             </sec:authorize>            
-
-            <%--Catálogo de tipo de asignación--%>
-            <sec:authorize access="hasAnyRole('ROLE_AGREGAR_TIPO_ASIGN','ROLE_BUSCAR_TIPO_ASIGN')">
-                <li><a href="#"><fmt:message key="tipoAsignacion.menu"/></a>
-                  <ul>
-                        <sec:authorize access="hasRole('ROLE_AGREGAR_TIPO_ASIGN')">
-                            <li><a href="agregarTipoAsignacion.htm"><fmt:message key="agregarTipoAsignacion.titulo"/></a></li>
-                        </sec:authorize>
-                        <sec:authorize access="hasRole('ROLE_BUSCAR_TIPO_ASIGN')">
-                            <li><a href="buscarTipoAsignacion.htm"><fmt:message key="buscarTipoAsignacion.titulo"/></a></li>
-                        </sec:authorize>
-                    </ul>
-                </li>
-            </sec:authorize>
 
             <%--Catálogo de usuarios--%>
             <sec:authorize access="hasAnyRole('ROLE_BUSCAR_USUARIO')">

@@ -56,10 +56,8 @@
         <intercept-url pattern="/editarSalon.htm" access="hasRole('ROLE_EDITAR_SALON')"/>
 
         <intercept-url pattern="/agregarSemestre.htm" access="hasRole('ROLE_AGREGAR_SEMESTRE')"/>
-
-        <intercept-url pattern="/agregarTipoAsignacion.htm" access="hasRole('ROLE_AGREGAR_TIPO_ASIGN')"/>
-        <intercept-url pattern="/buscarTipoAsignacion.htm" access="hasRole('ROLE_BUSCAR_TIPO_ASIGN')"/>
-        <intercept-url pattern="/editarTipoAsignacion.htm" access="hasRole('ROLE_EDITAR_TIPO_ASIGN')"/>
+        <intercept-url pattern="/buscarSemestre.htm" access="hasRole('ROLE_BUSCAR_SEMESTRE')"/>
+        <intercept-url pattern="/editarSemestre.htm" access="hasRole('ROLE_EDITAR_SEMESTRE')"/>
 
         <intercept-url pattern="/buscarUsuario.htm" access="hasRole('ROLE_BUSCAR_USUARIO')"/>
         <intercept-url pattern="/asignarPerfilUsuario.htm" access="hasRole('ROLE_ASIGNAR_PERFIL_USUARIO')"/>

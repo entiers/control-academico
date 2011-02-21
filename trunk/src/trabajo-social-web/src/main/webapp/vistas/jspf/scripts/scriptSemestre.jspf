@@ -2,6 +2,9 @@
 <%@ page import="gt.edu.usac.cats.util.RequestUtil" %>
 <%@ page import="gt.edu.usac.cats.dominio.wrapper.WrapperSemestre" %>
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 <script type="text/javascript">
     $(function(){
         // se crea y configura el panel popup que muestra los
@@ -15,11 +18,15 @@
             modal: true,
             buttons: {
                 '<fmt:message key="btnAceptar"/>': function() {
-                    if(<%= RequestUtil.getValorBoolean(request, "limpiarCampos") %>) {
-                        $("#anio").val("<%= wrapperSemestre.getAnio() %>");
-                        $("#numero").val("<%= wrapperSemestre.getNumero() %>");
-                    }
-                    $(this).dialog('close');
+                    <%if( request.getAttribute("url") != null ) {%>
+                            location.href = "<%= request.getAttribute("url")%>";
+                    <%}else{%>
+                        if(<%= RequestUtil.getValorBoolean(request, "limpiarCampos") %>) {
+                            $("#anio").val("<%= wrapperSemestre.getAnio() %>");
+                            $("#numero").val("<%= wrapperSemestre.getNumero() %>");
+                        }
+                        $(this).dialog('close');
+                    <%}%>
                 }
             }
         });

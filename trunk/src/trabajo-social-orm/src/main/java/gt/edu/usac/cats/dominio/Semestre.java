@@ -46,6 +46,7 @@ public class Semestre implements java.io.Serializable {
      private short anio;
      private char numero;
      private String observacion;
+     private boolean activo;
      private Set<CalendarioActividades> calendarioActividadeses = new HashSet<CalendarioActividades>(0);
      private Set<HistorialAsignacionEstudianteCarrera> historialAsignacionEstudianteCarreras = new HashSet<HistorialAsignacionEstudianteCarrera>(0);
      private Set<Horario> horarios = new HashSet<Horario>(0);
@@ -99,7 +100,8 @@ public class Semestre implements java.io.Serializable {
 //______________________________________________________________________________    
     @Column(
         name = "observacion",        
-        length = 1000
+        length = 1000,
+        nullable= true
     )
 
     public String getObservacion() {
@@ -149,6 +151,21 @@ public class Semestre implements java.io.Serializable {
     @Transient
     public String getAnyoNumero(){
         return this.anio + " - " + this.numero;
+    }
+
+
+//______________________________________________________________________________
+    @Column(
+        columnDefinition="default true",
+        name="activo",
+        nullable=false
+    )
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 
 }

@@ -11,7 +11,6 @@ import gt.edu.usac.cats.dominio.wrapper.WrapperSemestre;
 import gt.edu.usac.cats.servicio.ServicioSemestre;
 import gt.edu.usac.cats.util.RequestUtil;
 import gt.edu.usac.cats.util.Mensajes;
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
@@ -32,7 +31,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller("controladorAgregarSemestre")
 @RequestMapping(value = "agregarSemestre.htm")
-public class ControladorAgregarSemestre {
+public class ControladorAgregarSemestre extends ControladorAbstractoSemestre {
 
     /**
      * <p>Lleva el nombre del titulo para el mensaje en la pagina.<p>
@@ -43,15 +42,7 @@ public class ControladorAgregarSemestre {
      * <p>Matiene una bitacora de lo realizado por esta clase.</p>
      */
     private static Logger log = Logger.getLogger(ControladorAgregarSemestre.class);
-//______________________________________________________________________________
-    /**
-     * <p>Contiene metodos que permiten el manejo de la informacion relacionada
-     * con el semestre en la base de datos. Este objeto se encuentra registrado
-     * como un bean de servicio en Spring, por lo que este es el encargado de
-     * inyectar la dependencia.</p>
-     */
-    @Resource
-    protected ServicioSemestre servicioSemestreImpl;
+
     
 //______________________________________________________________________________
     /**
