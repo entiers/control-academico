@@ -16,6 +16,21 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
         <title><fmt:message key="miscursos.asignacionCursos.titulo"/></title>
+        <script type="text/javascript">
+            $(function() {
+                // se crea y configura el panel popup que muestra los
+                // mensajes de resultados de las operaciones
+                $("#popupMensaje").dialog({
+                    autoOpen: <%= RequestUtil.getValorBoolean(request, "mostrarPopupMensaje") %>,
+                    modal: true,
+                    buttons: {
+                        '<fmt:message key="btnAceptar"/>': function() {
+                            $(this).dialog('close');
+                        }
+                    }
+                });
+             });
+        </script>
     </head>
     <body>
         <h1><fmt:message key="miscursos.asignacionCursos.titulo"/></h1>
@@ -100,11 +115,11 @@
 
                 //Llamada asignacion de cursos
                 $('#btnRealizarAsignacion').click(function(){
-                    alert('HOLA')
                     $.ajax({
                       url: "realizarAsignacion.htm",
                       success: function(){
                         alert("done");
+                        window.location.href = 'asignacionCursos3.htm';
                       }
                     });
                 });
@@ -120,5 +135,8 @@
                 });
             }
         </script>
+
+        <%-- fragmento que muestra como mensaje popup el resultado de las operaciones --%>
+        <%@include file="../../jspf/plantilla/popupMensaje.jspf" %>
     </body>
 </html>

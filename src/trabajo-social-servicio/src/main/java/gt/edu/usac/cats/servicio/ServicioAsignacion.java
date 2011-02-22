@@ -8,6 +8,7 @@ package gt.edu.usac.cats.servicio;
 
 import gt.edu.usac.cats.dominio.Asignacion;
 import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
+import gt.edu.usac.cats.dominio.DetalleAsignacion;
 import gt.edu.usac.cats.dominio.Estudiante;
 import gt.edu.usac.cats.dominio.Horario;
 import gt.edu.usac.cats.enums.TipoAsignacion;
@@ -49,7 +50,7 @@ public interface ServicioAsignacion extends ServicioGeneral {
      * @param listaHorario lista de pojos del tipo {@link Horario}
      * @throws DataAccessException Si ocurrio un error de acceso a datos
      */
-    void realizarAsignacionCursos(AsignacionEstudianteCarrera asignacionEstudianteCarrera,
-                                  List<Horario> listaHorario)
+    List<DetalleAsignacion> realizarAsignacionCursos(AsignacionEstudianteCarrera asignacionEstudianteCarrera,
+                                                        List<Horario> listaHorario)
             throws DataAccessException;
 }

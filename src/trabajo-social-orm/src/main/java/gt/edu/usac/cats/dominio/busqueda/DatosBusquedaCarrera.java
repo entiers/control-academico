@@ -6,8 +6,6 @@
 
 package gt.edu.usac.cats.dominio.busqueda;
 
-import gt.edu.usac.cats.dominio.Carrera;
-
 /**
  *
  * @author Carlos Solorzano

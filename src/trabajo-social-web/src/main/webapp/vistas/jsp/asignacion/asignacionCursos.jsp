@@ -44,6 +44,9 @@
             <c:when test="${periodoInvalido}">
                 <label><fmt:message key="asignacionPrimerIngreso.fueraPeriodo"/></label>
             </c:when>
+            <c:when test="${cursoComputacion}">
+                <label><fmt:message key="miscursos.asignacionCursos.cursoCompuNoAprobado"/></label>
+            </c:when>
             <c:otherwise>
                 <form:form method="post" modelAttribute="datosBusquedaCarrera">
                     <fieldset>
