@@ -1,24 +1,23 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Sistema de Control Academico
+ * Escuela de Trabajo Social
+ * Universidad de San Carlos de Guatemala
  */
 
 package gt.edu.usac.cats.servicio.impl;
 
 import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
 import gt.edu.usac.cats.dominio.Curso;
-import gt.edu.usac.cats.dominio.CursoAprobado;
 import gt.edu.usac.cats.servicio.ServicioCursoAprobado;
 import java.util.List;
 import org.hibernate.Query;
-import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 /**
  *
- * @author Carlos Sol�rzano
+ * @author Carlos Solorzano
+ * @version 1.0
  */
 @Service("servicioCursoAprobadoImpl")
 public class ServicioCursoAprobadoImpl extends ServicioGeneralImpl implements ServicioCursoAprobado{
@@ -45,12 +44,12 @@ public class ServicioCursoAprobadoImpl extends ServicioGeneralImpl implements Se
                .append("inner join acp.asignacionCursoPensumsForIdCursoPensumPrerequisito pre ")
                .append("left join pre.curso.cursoAprobados curAp ")
                .append("where acp.curso = :curso " )
-               .append("and acp.pensum.carrera = :carrera ")
+               .append("and acp.pensum = :pensum ")
                .append("and curAp is null");
 
         Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
         query.setParameter("curso", curso);
-        query.setParameter("carrera", asignacionEstudianteCarrera.getCarrera());
+        query.setParameter("pensum", asignacionEstudianteCarrera.getEstudiante().getPensum());
 
         return query.list();
     }

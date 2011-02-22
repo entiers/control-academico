@@ -6,8 +6,11 @@
 
 package gt.edu.usac.cats.servicio;
 
+import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
+import gt.edu.usac.cats.dominio.Curso;
 import gt.edu.usac.cats.dominio.DetalleAsignacion;
 import gt.edu.usac.cats.dominio.Horario;
+import gt.edu.usac.cats.dominio.Semestre;
 import java.util.List;
 import org.hibernate.HibernateException;
 
@@ -55,5 +58,17 @@ public interface ServicioDetalleAsignacion extends ServicioGeneral{
     public void cambioCierreSeccion(Horario horario,
                                     List lstIdDetalleAsignacion)
             throws HibernateException;
+//______________________________________________________________________________
+    /**
+     * <p>Listado de DetalleAsignacion.</p>
+     *
+     * @param curso Contiene el pojo del tipo (@link Curso) para filtrar los resultados
+     * @param semestre Contiene el pojo del tipo (@link Semestre) para filtrar los resultados
+     * @param asignacionEstudianteCarrera Contiene el pojo del tipo (@link AsignacionEstudianteCarrera) para filtrar los resultados
+     * @throws HibernateException Si ocurrio un error de acceso a datos
+     */
+     List<DetalleAsignacion> getListadoDetalleAsignacion(Curso curso, Semestre semestre, AsignacionEstudianteCarrera asignacionEstudianteCarrera)
+             throws HibernateException;
+
 
 }

@@ -13,6 +13,7 @@ import gt.edu.usac.cats.dominio.Estudiante;
 import gt.edu.usac.cats.dominio.Horario;
 import gt.edu.usac.cats.enums.TipoAsignacion;
 import gt.edu.usac.cats.servicio.ServicioAsignacion;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import org.hibernate.Query;
@@ -70,7 +71,9 @@ public class ServicioAsignacionImpl extends ServicioGeneralImpl implements Servi
     }
 
     @Override
-    public void realizarAsignacionCursos(AsignacionEstudianteCarrera asignacionEstudianteCarrera, List<Horario> listaHorario) throws DataAccessException {
+    public List<DetalleAsignacion> realizarAsignacionCursos(AsignacionEstudianteCarrera asignacionEstudianteCarrera, List<Horario> listaHorario) throws DataAccessException {
+
+        List<DetalleAsignacion> listaDetAsign = new ArrayList<DetalleAsignacion>();
         Asignacion asignacion = new Asignacion();
         asignacion.setTransaccion(this.getUUID());
         asignacion.setAsignacionEstudianteCarrera(asignacionEstudianteCarrera);
@@ -82,7 +85,9 @@ public class ServicioAsignacionImpl extends ServicioGeneralImpl implements Servi
             detAsign.setAsignacion(asignacion);
             detAsign.setHorario(horario);
             this.agregar(detAsign);
+            listaDetAsign.add(detAsign);
         }
+        return listaDetAsign;
     }
 
     //______________________________________________________________________________
