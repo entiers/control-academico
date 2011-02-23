@@ -117,11 +117,9 @@ public class ControladorRecordarUsuario {
                 "Nombre de usuario: " + usuario.getNombreUsuario();
 
         try {
-            this.emailSender.setDestinatario(email);
-            this.emailSender.setSubject(subject);
-            this.emailSender.setMensaje(mensaje);
+            
             // se trata de enviar el correo
-            this.emailSender.enviarCorreo2();
+            this.emailSender.enviarCorreo(subject, email, mensaje);
 
         } catch (MessagingException ex) {
             log.error(Mensajes.MESSAGING_EXCEPTION, ex);

@@ -185,23 +185,21 @@ public class ServicioAsignacionPrimerIngresoImpl extends ServicioGeneralImpl imp
                                 int totalAsignados,
                                 int totalNoAsignados){
         String mensaje = "Estimado usuario, \n\n"+
-                         "El proceso de asignación de cursos a estudiantes de primer ingreso, ha finalizado. A continuación se le presenta un resumen con el resultado del mismo: \n\n" +
+                         "El proceso de asignacion de cursos a estudiantes de primer ingreso, ha finalizado. A continuacion se le presenta un resumen con el resultado del mismo: \n\n" +
                          "  - Fecha inicio: " + asignacionPrimerIngreso.getFechaInicio() + "\n" +
                          "  - Fecha fin: " + asignacionPrimerIngreso.getFechaFin() + "\n" +
                          "  - Total estudiantes asignados: " + totalAsignados + "\n" +
                          "  - Total estudiantes no asignados: " + totalNoAsignados + "\n\n" +
-                         "Sistema de control académico\nEscuela de trabajo social";
+                         "Sistema de control academico\nEscuela de trabajo social";
 
         String correo = this.servicioUsuarioImpl.getCorreoPorUsuario(asignacionPrimerIngreso.getUsuario());
 
         if(!correo.isEmpty()){
-            try {
-                this.emailSender.setDestinatario(correo);
-                this.emailSender.setSubject("Proceso de asignacion de primer ingreso");
-                this.emailSender.setMensaje(mensaje);
+            try {                
                     try {
+
                         // se trata de enviar el correo
-                        this.emailSender.enviarCorreo2();
+                        this.emailSender.enviarCorreo("Proceso de asignacion de primer ingreso", correo, mensaje);
                     } catch (IOException ex) {
                         Logger.getLogger(ServicioAsignacionPrimerIngresoImpl.class.getName()).log(Level.SEVERE, null, ex);
                     } catch (MailException ex) {

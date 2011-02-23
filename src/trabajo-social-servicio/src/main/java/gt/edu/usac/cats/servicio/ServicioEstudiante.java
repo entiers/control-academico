@@ -16,7 +16,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 
 /**
- * <p></p>
+* <p>Contiene los metodos que permiten el manejo de la informacion relacionada
+ * con el estudiante en la base de datos.</p>
  *
  * @author Daniel Castillo
  * @version 1.0

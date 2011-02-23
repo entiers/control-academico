@@ -13,6 +13,7 @@ import gt.edu.usac.cats.servicio.ServicioCatedratico;
 import gt.edu.usac.cats.util.EmailSender;
 import gt.edu.usac.cats.util.RequestUtil;
 import gt.edu.usac.cats.util.Mensajes;
+import java.io.IOException;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.mail.MessagingException;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.dao.DataAccessException;
+import org.springframework.mail.MailException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -203,11 +205,17 @@ public class ControladorAgregarCatedratico {
                 "\n\nUSUARIO:  " + catedratico.getCodigo() +
                 "\nPASSWORD: " + catedratico.getPassword();
 
-        String[] datosCorreo = {subject, catedratico.getEmail(), mensaje};
+        //String[] datosCorreo = {subject, catedratico.getEmail(), mensaje};
 
         try {
-            // se trata de enviar el correo
-            this.emailSender.enviarCorreo(datosCorreo);
+            try {
+                // se trata de enviar el correo
+                this.emailSender.enviarCorreo(subject, catedratico.getEmail(), mensaje);
+            } catch (IOException ex) {
+                log.error(Mensajes.MESSAGING_EXCEPTION, ex);
+            } catch (MailException ex) {
+                log.error(Mensajes.MESSAGING_EXCEPTION, ex);
+            }
 
         } catch (MessagingException ex) {
             log.error(Mensajes.MESSAGING_EXCEPTION, ex);

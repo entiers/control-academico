@@ -38,6 +38,7 @@
                 <value>/idiomas/textosETL</value>
                 <value>/idiomas/textosAsignacion</value>
                 <value>/idiomas/textosReportes</value>
+                <value>/idiomas/textosPersona</value>
             </list>
         </property>
 	<property name="cacheSeconds" value="0" />
@@ -54,11 +55,11 @@
         <property name="jndiName" value="java:comp/env/mail/Session" />
     </bean>-->
 
-    <bean id="javaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-        <!--<property name="session" ref="javaMailSession" />-->
-        <property name="username" value="adaniel.castillo@gmail.com" />
-        <property name="host" value="smtp.gmail.com "/>
-    </bean>
+    <!--<bean id="javaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="session" ref="javaMailSession" />
+        
+
+    </bean>-->
 
 
     <!--

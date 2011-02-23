@@ -1,0 +1,68 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
+
+<div id="divCampos">
+    <form:label for="nombre" path="nombre"><fmt:message key="agregarPersona.nombre"/>: *</form:label>
+    <form:input path="nombre" cssStyle="width:250px;" />
+    <form:errors path="nombre" cssClass="claseError" />
+</div>
+
+<div id="divCampos">
+    <form:label for="registroPersonal" path="registroPersonal"><fmt:message key="agregarPersona.registroPersonal"/>:</form:label>
+    <form:input path="registroPersonal" cssStyle="width: 250px;" />
+    <form:errors path="registroPersonal" cssClass="claseError" />
+</div>
+
+
+<div id="divCampos">
+    <form:label for="direccion" path="direccion"><fmt:message key="agregarPersona.direccion"/>: *</form:label>
+    <form:input path="direccion" cssStyle="width: 250px;" />
+    <form:errors path="direccion" cssClass="claseError" />
+</div>
+
+<div id="divCampos">
+    <form:label for="telefono" path="telefono"><fmt:message key="agregarPersona.telefono"/>: *</form:label>
+    <form:input path="telefono" cssStyle="width: 250px;" />
+    <form:errors path="telefono" cssClass="claseError" />
+</div>
+
+
+<div id="divCampos">
+    <form:label for="celular" path="celular"><fmt:message key="agregarPersona.celular"/>:</form:label>
+    <form:input path="celular" cssStyle="width: 250px;" />
+    <form:errors path="celular" cssClass="claseError" />
+</div>
+
+
+<div id="divCampos">
+    <form:label for="email" path="email"><fmt:message key="agregarPersona.email"/>: *</form:label>
+    <form:input path="email" cssStyle="width: 250px;" />
+    <form:errors path="email" cssClass="claseError" />
+</div>
+
+<div id="divCampos">
+    <form:label for="sexo" path="sexo"><fmt:message key="agregarPersona.sexo"/>: *</form:label>
+
+    <div style="float: left; font-weight: bold; font-size: small;">
+        <form:radiobutton path="sexo" value="M" label="Masculino" cssStyle="width: 60px;"/> <br/>
+        <form:radiobutton path="sexo" value="F" label="Femenino" cssStyle="width: 60px;"/>
+    </div>
+    <form:errors path="sexo" cssClass="claseError" />
+</div>
+
+<br/><br/>
+<div id="divCampos">
+    <form:label for="nombreUsuario" path="nombreUsuario"><fmt:message key="usuario.nombreUsuario"/>: *</form:label>
+    <form:input path="nombreUsuario" cssStyle="width: 250px;" />
+    <form:errors path="nombreUsuario" cssClass="claseError" />
+</div>
+<%/*
+<div id="divCampos">
+    <form:label for="usuario.password" path="usuario.password"><fmt:message key="usuario.password"/>: *</form:label>
+    <form:password path="usuario.password" cssStyle="width: 250px;" showPassword="true" />
+    <form:errors path="usuario.password" cssClass="claseError" />
+</div>*/%>

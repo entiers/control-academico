@@ -6,7 +6,6 @@
 
 package gt.edu.usac.cats.servicio;
 
-import gt.edu.usac.cats.dominio.Carrera;
 import gt.edu.usac.cats.dominio.Curso;
 import gt.edu.usac.cats.dominio.Horario;
 import gt.edu.usac.cats.dominio.Salon;

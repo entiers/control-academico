@@ -6,23 +6,21 @@
 
 package gt.edu.usac.cats.controlador.estudiante;
 
-import gt.edu.usac.cats.dominio.Carrera;
+
 import gt.edu.usac.cats.dominio.Estudiante;
-import gt.edu.usac.cats.dominio.LugarNacimiento;
-import gt.edu.usac.cats.dominio.Nacionalidad;
 import gt.edu.usac.cats.dominio.wrapper.WrapperEstudiante;
 import gt.edu.usac.cats.servicio.ServicioEstudiante;
-import gt.edu.usac.cats.servicio.ServicioGeneral;
 import gt.edu.usac.cats.util.EmailSender;
 import gt.edu.usac.cats.util.RequestUtil;
 import gt.edu.usac.cats.util.Mensajes;
-import java.util.List;
+import java.io.IOException;
 import javax.annotation.Resource;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.dao.DataAccessException;
+import org.springframework.mail.MailException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -178,11 +176,17 @@ public class ControladorAgregarEstudiante extends ControladorEstudianteAbstracto
                 "\n\nUSUARIO:  " + estudiante.getCarne() +
                 "\nPASSWORD: " + estudiante.getPassword();
 
-        String[] datosCorreo = {subject, estudiante.getEmail(), mensaje};
+        
 
         try {
-            // se trata de enviar el correo
-            this.emailSender.enviarCorreo(datosCorreo);
+            try {
+                // se trata de enviar el correo
+                this.emailSender.enviarCorreo(subject, estudiante.getEmail(), mensaje);
+            } catch (IOException ex) {
+               log.error(Mensajes.MESSAGING_EXCEPTION, ex);
+            } catch (MailException ex) {
+               log.error(Mensajes.MESSAGING_EXCEPTION, ex);
+            }
 
         } catch (MessagingException ex) {
             log.error(Mensajes.MESSAGING_EXCEPTION, ex);
