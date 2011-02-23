@@ -43,6 +43,7 @@
     <mapping class="gt.edu.usac.cats.dominio.Nacionalidad"/>
     <mapping class="gt.edu.usac.cats.dominio.AsignacionPrimerIngreso"/>
     <mapping class="gt.edu.usac.cats.dominio.DetalleAsignacionPrimerIngreso"/>
+    <mapping class="gt.edu.usac.cats.dominio.Persona"/>
     <mapping class="gt.edu.usac.cats.dominio.conf.Reporte"/>
   </session-factory>
 </hibernate-configuration>

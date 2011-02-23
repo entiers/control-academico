@@ -16,7 +16,8 @@ import java.util.List;
 import org.springframework.dao.DataAccessException;
 
 /**
- * <p></p>
+ * <p>Contiene los metodos que permiten el manejo de la informacion relacionada
+ * con la asignacion en la base de datos.</p>
  *
  * @author Mario Batres
  * @version 1.0

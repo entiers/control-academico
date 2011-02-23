@@ -9,10 +9,12 @@ import gt.edu.usac.cats.dominio.Usuario;
 import gt.edu.usac.cats.dominio.wrapper.WrapperRecordarContrasenia;
 import gt.edu.usac.cats.servicio.ServicioUsuario;
 import gt.edu.usac.cats.util.EmailSender;
+import gt.edu.usac.cats.util.ManejadorSitioPropiedades;
 import gt.edu.usac.cats.util.Mensajes;
 import gt.edu.usac.cats.util.RequestUtil;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Properties;
 import javax.annotation.Resource;
 import javax.mail.MessagingException;
@@ -72,7 +74,7 @@ public class ControladorRecordarContrasenia {
      */
     @RequestMapping(method = RequestMethod.POST)
     public String recordarContrasenia(@Valid WrapperRecordarContrasenia wrapperRecordarContrasenia, BindingResult bindingResult,
-                        Model modelo, HttpServletRequest request) throws MessagingException {
+                        Model modelo, HttpServletRequest request) throws MessagingException, URISyntaxException {
 
         //Obtener captcha generado
         Captcha captcha = (Captcha) request.getSession().getAttribute(Captcha.NAME);
@@ -124,9 +126,9 @@ public class ControladorRecordarContrasenia {
      * @param usuario   Usuario que solicita el recordatorio de nombre de usuario
      * @param email     Direccion de correo hacia donde se enviara el correo
      */
-    private void enviarEmail(Usuario usuario, String email) throws IOException {
+    private void enviarEmail(Usuario usuario, String email) throws IOException, URISyntaxException {
         //Se carga la configuracion para el url del sitio
-        Properties properties = this.leerArchivoProperties();
+        Properties properties = ManejadorSitioPropiedades.leer();
         
         String subject = "Reinicio de contraseña (Escuela de Trabajo Social)";
         String mensaje = "Estimado usuario, \n\n"+
@@ -135,43 +137,16 @@ public class ControladorRecordarContrasenia {
                 "Ingrese a este enlace: " + properties.getProperty("urlHTTPS") + "reiCont.htm?idUsuario=" + this.usuario.getIdUsuario() + "\n" +
                 "Código de validación: " + usuario.getCodigoValidacion();
         try {
-            this.emailSender.setDestinatario(email);
-            this.emailSender.setSubject(subject);
-            this.emailSender.setMensaje(mensaje);
+            
             // se trata de enviar el correo
-            this.emailSender.enviarCorreo2();
+            this.emailSender.enviarCorreo(subject, email, mensaje);
 
         } catch (MessagingException ex) {
             log.error(Mensajes.MESSAGING_EXCEPTION, ex);
 
         }
     }
-//______________________________________________________________________________
-    /**
-     * <p>Este metodo se encarga de leer el archivo de propiedades que contiene
-     * la configuracion de JavaMail para el envio de correos electronicos.</p>
-     *
-     * @param request Obejto HttpServletRequest
-     * @return Properties Contiene la configuracion para JavaMail
-     * @throws IOException Si no se pudo leer el archivo de propiedades
-     */
-    private Properties leerArchivoProperties() throws IOException {
-        // se obtiene el contexto de Spring
-        WebApplicationContext applicationContext = ContextLoader.getCurrentWebApplicationContext();
 
-        // se obtiene la path absoluto del archivo de propiedades
-        String nombreArchivo = applicationContext.getServletContext().getRealPath("/WEB-INF/sitio.properties");
-
-        // se crea el desencriptador
-        StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
-        encryptor.setPassword("APP_ENCRYPTION_PASSWORD");
-
-        // se crea el archivo de propiedades
-        Properties properties = new EncryptableProperties(encryptor);
-        properties.load(new FileInputStream(nombreArchivo));
-
-        return properties;
-    }
 
 
 }

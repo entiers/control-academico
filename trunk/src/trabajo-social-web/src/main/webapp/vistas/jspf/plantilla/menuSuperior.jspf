@@ -29,7 +29,8 @@
                                     'ROLE_AGREGAR_CATEDRATICO','ROLE_EDITAR_CATEDRATICO','ROLE_BUSCAR_CATEDRATICO',
                                     'ROLE_AGREGAR_PERFIL','ROLE_BUSCAR_PERFIL','ROLE_BUSCAR_ROL','ROLE_AGREGAR_CURSO',
                                     'ROLE_EDITAR_CURSO','ROLE_AGREGAR_SALON','ROLE_EDITAR_SALON','ROLE_AGREGAR_SEMESTRE',
-                                    'ROLE_AGREGAR_HORARIO','ROLE_BUSCAR_HORARIO','ROLE_AGREGAR_TIPO_ASIGN','ROLE_BUSCAR_TIPO_ASIGN')">
+                                    'ROLE_AGREGAR_HORARIO','ROLE_BUSCAR_HORARIO','ROLE_AGREGAR_TIPO_ASIGN','ROLE_BUSCAR_TIPO_ASIGN'
+                                    , 'ROLE_AGREGAR_PERSONA', 'ROLE_BUSCAR_CALENDARIO', 'ROLE_BUSCAR_SEMESTRE')">
     <li><a href="#">
             <span class="l"></span><span class="r"></span><span class="t">
             <fmt:message key="menu.catalogo"/></span></a>
@@ -111,6 +112,19 @@
                 </li>
             </sec:authorize>
 
+            <sec:authorize access="hasAnyRole('ROLE_AGREGAR_PERSONA','ROLE_BUSCAR_PERSONA')">
+                <li><a href="#"><fmt:message key="persona.menu"/></a>
+                    <ul>
+                        <sec:authorize access="hasRole('ROLE_AGREGAR_HORARIO')">
+                            <li><a href="agregarPersona.htm"><fmt:message key="agregarPersona.titulo"/></a></li>
+                        </sec:authorize>
+                        <sec:authorize access="hasRole('ROLE_BUSCAR_HORARIO')">
+                            <li><a href="buscarPersona.htm"><fmt:message key="buscarPersona.titulo"/></a></li>
+                        </sec:authorize>
+                    </ul>
+                </li>
+            </sec:authorize>
+
             <%--Catálogo de perfiles--%>
              <sec:authorize access="hasAnyRole('ROLE_AGREGAR_PERFIL','ROLE_BUSCAR_PERFIL')">
                 <li><a href="#"><fmt:message key="perfil.menu"/></a>
@@ -151,7 +165,7 @@
             </sec:authorize>
 
             <%--Catálogo de semestre--%>
-            <sec:authorize access="hasAnyRole('ROLE_AGREGAR_SEMESTRE')">
+            <sec:authorize access="hasAnyRole('ROLE_AGREGAR_SEMESTRE', 'ROLE_BUSCAR_SEMESTRE')">
                 <li><a href="#"><fmt:message key="semestre.menu" /></a>
                     <ul>
                         <sec:authorize access="hasRole('ROLE_AGREGAR_SEMESTRE')">
