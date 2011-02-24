@@ -11,7 +11,6 @@ import gt.edu.usac.cats.util.Mensajes;
 import gt.edu.usac.cats.util.RequestUtil;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.logging.Level;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -72,7 +71,7 @@ public class ControladorAgregarPersona extends ControladorAbstractoPersona {
 
             this.servicioPersonaImpl.agregarPersona(persona);
 
-            log.info("Agregar persona, id: " + persona.getIdPersona());
+            log.info(Mensajes.EXITO_AGREGAR+ "Persona, Id: " + persona.getIdPersona());
 
             RequestUtil.crearMensajeRespuesta(request,
                         TITULO_MENSAJE, "agregarPersona.exito", true);

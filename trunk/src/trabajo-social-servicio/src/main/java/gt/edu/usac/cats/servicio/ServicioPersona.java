@@ -64,4 +64,17 @@ public interface ServicioPersona extends ServicioGeneral {
 
     List <Persona> getListadoPersonas(DatosBusquedaPersona datosBusquedaPersona)
             throws DataAccessException;
+
+
+//______________________________________________________________________________
+    /**
+     * <p>Este metodo se encarga de actualizar la información de la persona como su nombre de usuario</>
+     *
+     * @param persona Objeto de tipo {@link Persona}
+     *
+     * @throws DataIntegrityViolationException Se efectua la excepcion si hay un nombre de usuario igual en la base de datos.
+     * @throws DataAccessException Se efectua si se puede acceder a la base de datos.
+     * 
+     */
+    void modificarPersona(Persona persona) throws DataIntegrityViolationException, DataAccessException;
 }
