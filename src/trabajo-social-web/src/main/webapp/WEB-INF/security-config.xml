@@ -75,6 +75,9 @@
         <intercept-url pattern="/rptProcesoAsignacionPrimerIngreso.htm" access="hasRole('ROLE_REPORTE_ASIGNACION_PRIMER_INGRESO')" />
 
         <intercept-url pattern="/asignacionCursos.htm" access="hasRole('ROLE_ASIGNACION_CURSOS')" />
+        <intercept-url pattern="/asignacionCursos2.htm" access="hasRole('ROLE_ASIGNACION_CURSOS')" />
+        <intercept-url pattern="/getHorario.htm" access="hasRole('ROLE_ASIGNACION_CURSOS')" />
+        <intercept-url pattern="/asignacionExitosa.htm" access="hasRole('ROLE_ASIGNACION_CURSOS')" />
 
         <intercept-url pattern="/agregarPersona.htm" access="hasRole('ROLE_AGREGAR_PERSONA')" />
         <intercept-url pattern="/buscarPersona.htm" access="hasRole('ROLE_BUSCAR_PERSONA')" />

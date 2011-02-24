@@ -75,7 +75,7 @@ public class AsignacionEstudianteCarrera implements java.io.Serializable {
         this.idAsignacionEstudianteCarrera = idAsignacionEstudianteCarrera;
     }
 //______________________________________________________________________________
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(
         name = "id_estudiante",
         nullable = false

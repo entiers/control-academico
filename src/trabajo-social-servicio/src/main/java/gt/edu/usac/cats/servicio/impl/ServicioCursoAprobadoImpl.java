@@ -57,7 +57,7 @@ public class ServicioCursoAprobadoImpl extends ServicioGeneralImpl implements Se
     @Override
     public int getCreditosAprobados(AsignacionEstudianteCarrera asignacionEstudianteCarrera){
         StringBuilder builder = new StringBuilder();
-        builder.append("select sum(acp.creditosPracticos) + sum(acp.creditosTeoricos) total")
+        builder.append("select (sum(acp.creditosPracticos) + sum(acp.creditosTeoricos)) as total ")
                .append("from AsignacionCursoPensum acp ")
                .append("inner join acp.curso.cursoAprobados curAp ")
                .append("where curAp.asignacion.asignacionEstudianteCarrera = :aec");
@@ -67,6 +67,8 @@ public class ServicioCursoAprobadoImpl extends ServicioGeneralImpl implements Se
 
         List result = query.list();
         if(result.isEmpty())
+            return 0;
+        else if(result.get(0) == null)
             return 0;
         else
             return Integer.parseInt(result.get(0).toString());

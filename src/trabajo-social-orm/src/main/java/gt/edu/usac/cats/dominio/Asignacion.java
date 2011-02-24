@@ -168,7 +168,7 @@ public class Asignacion implements java.io.Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
         name = "id_asignacion_primer_ingreso",
-        nullable = false
+        nullable = true
     )
     public AsignacionPrimerIngreso getAsignacionPrimerIngreso() {
         return asignacionPrimerIngreso;

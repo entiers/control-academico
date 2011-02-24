@@ -29,7 +29,7 @@ public class ManejadorSitioPropiedades {
      * @param request Obejto HttpServletRequest
      * @return Properties Contiene la configuracion para JavaMail
      * @throws IOException Si no se pudo leer el archivo de propiedades
-     * @throws URISyntaxException Se efectua si existe un problema en la lectura del path del archivo de configuración.
+     * @throws URISyntaxException Se efectua si existe un problema en la lectura del path del archivo de configuracion.
      */
     public static Properties leer() throws IOException, URISyntaxException {
         

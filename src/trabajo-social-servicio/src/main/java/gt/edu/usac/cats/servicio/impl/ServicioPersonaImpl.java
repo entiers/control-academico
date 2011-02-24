@@ -37,26 +37,26 @@ public class ServicioPersonaImpl extends ServicioGeneralImpl implements Servicio
 
     /**
      * <p>Agrega una persona al sistema, tiene una funcionalidad diferente por eso no
-     * se utiliza el método del {link @ServicioGeneral}.</p>
+     * se utiliza el metodo del {link @ServicioGeneral}.</p>
      *
      * <p>La funcionalidad es la siguiente:
      * <ul>
      *  <li>Se agrega el usuario, la restricciones de unicidad en la base de datos puede
-     * causar una restricción de nombre de usuario duplicado.</li>   
+     * causar una restriccion de nombre de usuario duplicado.</li>
      *  <li>Se agrega la persona</li>
-     *  <li>Se envía el correo al usuario indicandole que ha sido registrado en el sistema
+     *  <li>Se envia el correo al usuario indicandole que ha sido registrado en el sistema
      * indicandole su usuario y password para poder acceder al sistema.</li>     * 
      * </ul>
      * </p>
      *
      * @param persona Objeto de tipo {@link Persona}
      *
-     * @throws DataIntegrityViolationException Se efectua la excepción si hay un nombre de usuario igual en la base de datos.
+     * @throws DataIntegrityViolationException Se efectua la excepcion si hay un nombre de usuario igual en la base de datos.
      * @throws DataAccessException Se efectua si se puede acceder a la base de datos.
-     * @throws IOException Se efectua si hay un problema en acceder al archivo de configuración del STMP para envía el correo.
+     * @throws IOException Se efectua si hay un problema en acceder al archivo de configuracion del STMP para envia el correo.
      * @throws MailException Se efectua si no se ha podido enviar el email.
-     * @throws MessagingException Se efectua si hay algún problema en el mensaje del email.
-     * @throws URISyntaxException Se efectua si existe un problema en la lectura del path del archivo de configuración en el objeto {@link ManejadorSitioPropiedades}
+     * @throws MessagingException Se efectua si hay algun problema en el mensaje del email.
+     * @throws URISyntaxException Se efectua si existe un problema en la lectura del path del archivo de configuracion en el objeto {@link ManejadorSitioPropiedades}
      */
     @Override
     public void agregarPersona(Persona persona) throws DataIntegrityViolationException, DataAccessException, IOException, MailException, MessagingException, URISyntaxException {
@@ -72,15 +72,15 @@ public class ServicioPersonaImpl extends ServicioGeneralImpl implements Servicio
 
 
     /**
-     * Envía el correo al usuario indicandole su nombre de usuario y password a
+     * Envï¿½a el correo al usuario indicandole su nombre de usuario y password a
      * donde puede acceder.
      *
      * @param persona Objeto de tipo {@link Persona}
      *
-     * @throws IOException Se efectua si hay un problema en acceder al archivo de configuración del STMP para envía el correo.
+     * @throws IOException Se efectua si hay un problema en acceder al archivo de configuraciï¿½n del STMP para envï¿½a el correo.
      * @throws MailException Se efectua si no se ha podido enviar el email.
-     * @throws MessagingException Se efectua si hay algún problema en el mensaje del email.
-     * @throws URISyntaxException Se efectua si existe un problema en la lectura del path del archivo de configuración en el objeto {@link ManejadorSitioPropiedades}
+     * @throws MessagingException Se efectua si hay algï¿½n problema en el mensaje del email.
+     * @throws URISyntaxException Se efectua si existe un problema en la lectura del path del archivo de configuraciï¿½n en el objeto {@link ManejadorSitioPropiedades}
      *
      */
     private void enviarCorreo(Persona persona) throws IOException, MailException, MessagingException, URISyntaxException{
@@ -89,7 +89,7 @@ public class ServicioPersonaImpl extends ServicioGeneralImpl implements Servicio
         String asunto = "ESCUELA DE TRABAJO SOCIAL - NUEVO USUARIO";
         StringBuilder mensaje = new StringBuilder();
 
-        mensaje.append("<p>Se ha añadido al sistema de la Escuela de Trabajo Social.  Las credenciales son las siguientes:</p> ");
+        mensaje.append("<p>Se ha aï¿½adido al sistema de la Escuela de Trabajo Social.  Las credenciales son las siguientes:</p> ");
 
         mensaje.append("<p><ul><li>Nombre de usuario: <b>").append(persona.getUsuario().getNombreUsuario());
         mensaje.append("</b></li><li>Password: <b>").append(persona.getUsuario().getPassword()).append("</b></li></ul></p>");
@@ -98,7 +98,7 @@ public class ServicioPersonaImpl extends ServicioGeneralImpl implements Servicio
 
         mensaje.append("<p>Para ir al acceder al sistema ");
         mensaje.append("<a href=\"").append(properties.getProperty("url")).append("\">");
-        mensaje.append("Pulse aquí</a></p>");
+        mensaje.append("Pulse aquï¿½</a></p>");
 
         this.emailSender.enviarCorreo(asunto, persona.getEmail(), mensaje.toString());
     }
