@@ -34,6 +34,7 @@ public class Persona  implements java.io.Serializable {
      private String celular;
      private String email;
      private char sexo;
+     private boolean habilitado;
 
     public Persona() {
     }
@@ -121,6 +122,16 @@ public class Persona  implements java.io.Serializable {
 
     public void setSexo(char sexo) {
         this.sexo = sexo;
+    }
+
+    @Column(name="habilitado")
+    public boolean isHabilitado() {
+        return habilitado;
+    }
+
+    
+    public void setHabilitado(boolean habilitado) {
+        this.habilitado = habilitado;
     }
 
 

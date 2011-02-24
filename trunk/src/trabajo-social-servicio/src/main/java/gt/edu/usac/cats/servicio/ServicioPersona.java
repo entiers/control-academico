@@ -6,8 +6,10 @@
 package gt.edu.usac.cats.servicio;
 
 import gt.edu.usac.cats.dominio.Persona;
+import gt.edu.usac.cats.dominio.busqueda.DatosBusquedaPersona;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.List;
 import javax.mail.MessagingException;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -48,4 +50,18 @@ public interface ServicioPersona extends ServicioGeneral {
 
     void agregarPersona(Persona persona) throws DataIntegrityViolationException, DataAccessException,
             IOException, MailException, MessagingException, URISyntaxException;
+
+//______________________________________________________________________________
+    /**
+     * <p>Metodo que se encarga de buscar a una persona por la expresion regular de su registro de personal</p>
+     *
+     * @param datosBusquedaPersona Objeto de tipo {@link DatosBusquedaPersona}
+     *     
+     * @throws DataAccessException Se efectua si se puede acceder a la base de datos.
+     *
+     * @return Listado de elementso de tipo {@link Persona}
+     */
+
+    List <Persona> getListadoPersonas(DatosBusquedaPersona datosBusquedaPersona)
+            throws DataAccessException;
 }
