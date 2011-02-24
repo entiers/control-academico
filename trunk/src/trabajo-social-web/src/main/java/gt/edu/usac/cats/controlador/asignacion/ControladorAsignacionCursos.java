@@ -12,6 +12,7 @@ import gt.edu.usac.cats.dominio.Curso;
 import gt.edu.usac.cats.dominio.DetalleAsignacion;
 import gt.edu.usac.cats.dominio.Estudiante;
 import gt.edu.usac.cats.dominio.Horario;
+import gt.edu.usac.cats.dominio.Pensum;
 import gt.edu.usac.cats.dominio.Semestre;
 import gt.edu.usac.cats.dominio.Usuario;
 import gt.edu.usac.cats.dominio.busqueda.DatosBusquedaCarrera;
@@ -279,9 +280,12 @@ public class ControladorAsignacionCursos {
      *        seran usados en la pagina
      * @return String Contiene el nombre de la vista a mostrar
      */
-    @RequestMapping(value="realizarAsignacion.htm",method = RequestMethod.GET)
-    public @ResponseBody String realizarAsignacion( Model modelo,
-                                                    HttpServletRequest request) throws IOException {
+    @RequestMapping(value="realizarAsignacion.htm",method = RequestMethod.POST)
+    public String realizarAsignacion( @Valid DatosBusquedaCarrera datosBusquedaCarrera,
+                                      BindingResult bindingResult,
+                                      Model modelo,
+                                      HttpServletRequest request) throws IOException {
+
         modelo.addAttribute("listaCurso", this.listaCurso);
         modelo.addAttribute("listaHorario",this.listaHorario);
         modelo.addAttribute("horarioElegido", true);
@@ -295,49 +299,52 @@ public class ControladorAsignacionCursos {
                 return "asignacion/asignacionCursos2";
             }
             else{
-           /*     for(Horario horario: listaHorarioAsignacion){
-                    System.out.println("Curso: " + horario.getCurso().getNombre());
-                    System.out.println("Seccion: " + horario.getSeccion());
+                for(Horario horario: listaHorarioAsignacion){
                     //Validando prerrequisitos por curso
-                    acp = servicioAsignacionCursoPensumImpl.getListadoAsignacionCursoPensum(horario.getCurso(),asignacionEstudianteCarrera.getEstudiante().getPensum()).get(0);
-                    if(servicioCursoAprobadoImpl.getCursoPrerrequisitoPendiente(asignacionEstudianteCarrera, horario.getCurso()).isEmpty()
-                       & servicioCursoAprobadoImpl.getCreditosAprobados(asignacionEstudianteCarrera)>=acp.getCreditosPrerrequisito()){
-                        System.out.println("Error en prerrequisito de cursos");
-                        RequestUtil.crearMensajeRespuesta(request, null, "miscursos.asignacionCursos.prerrequisitoPendiente", false);
+                    if(asignacionEstudianteCarrera.getEstudiante().getPensum()!=null){
+                        acp = (AsignacionCursoPensum) servicioAsignacionCursoPensumImpl.getListadoAsignacionCursoPensum(horario.getCurso(),(Pensum) asignacionEstudianteCarrera.getEstudiante().getPensum()).get(0);
+                        
+                        if(servicioCursoAprobadoImpl.getCursoPrerrequisitoPendiente(asignacionEstudianteCarrera, horario.getCurso()).isEmpty()
+                           & servicioCursoAprobadoImpl.getCreditosAprobados(asignacionEstudianteCarrera)<acp.getCreditosPrerrequisito()){
+                            RequestUtil.crearMensajeRespuesta(request, null, "miscursos.asignacionCursos.prerrequisitoPendiente", false);
+                            return "asignacion/asignacionCursos2";
+                        }
+                        //Validando asignaciones en semestre actual
+                        if(!servicioDetalleAsignacionImpl.getListadoDetalleAsignacion(horario.getCurso(), semestre, asignacionEstudianteCarrera).isEmpty()){
+                            RequestUtil.crearMensajeRespuesta(request, null, "miscursos.asignacionCursos.cursoYaAsignado", false);
+                            return "asignacion/asignacionCursos2";
+                        }
+                    }
+                    else{
+                        RequestUtil.crearMensajeRespuesta(request, null, "miscursos.asignacionCursos.estudianteSinPensum", false);
                         return "asignacion/asignacionCursos2";
                     }
-                    //Validando asignaciones en semestre actual
-                    if(!servicioDetalleAsignacionImpl.getListadoDetalleAsignacion(horario.getCurso(), semestre, asignacionEstudianteCarrera).isEmpty()){
-                        System.out.println("Error en asignaciòn de semestre actual");
-                        RequestUtil.crearMensajeRespuesta(request, null, "miscursos.asignacionCursos.cursoYaAsignado", false);
-                        return "asignacion/asignacionCursos2";
-                    }
-                }*/
+                    
+                }
                 listaAsignacion = this.servicioAsignacionImpl.realizarAsignacionCursos
                                             (this.asignacionEstudianteCarrera, listaHorarioAsignacion);
                 if (!listaAsignacion.isEmpty()){
-                    RequestUtil.crearMensajeRespuesta(request, null, "dataAccessException", false);
                     this.enviarEmail(listaAsignacion);
+                    listaHorarioAsignacion.clear();
+                    return "redirect:asignacionExitosa.htm";
                 }
                 else{
-                    RequestUtil.crearMensajeRespuesta(request, null, "dataAccessException", false);
-                    System.out.println("Error en realizar asigancion");
+                    RequestUtil.crearMensajeRespuesta(request, null, "dataAccessException", false);                    
                 }
             }
         }catch (Exception e) {
             // error de acceso a datos
-            System.out.println("Error acceso a datos");
             RequestUtil.crearMensajeRespuesta(request, null, "dataAccessException", false);
             log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
         }
-        return "asignacion/asignacionCurso3";
+        return "asignacion/asignacionCursos2";
     }
 //  _____________________________________________________________________________
-    @RequestMapping(value="asignacionCursos3.htm",method = RequestMethod.GET)
+    @RequestMapping(value="asignacionExitosa.htm",method = RequestMethod.GET)
     public String mostrarAsignacion( Model modelo,HttpServletRequest request){
         modelo.addAttribute("asignacion",listaAsignacion.get(0).getAsignacion());
         modelo.addAttribute("listaAsignacion",listaAsignacion);
-        return "asignacion/asignacionCursos3";
+        return "asignacion/asignacionExitosa";
     }
 //  _____________________________________________________________________________
     @RequestMapping(value="getHorario.htm", method=RequestMethod.GET)
@@ -355,22 +362,19 @@ public class ControladorAsignacionCursos {
 //  _____________________________________________________________________________
     private void enviarEmail(List<DetalleAsignacion> listaAsignacion) throws IOException{
 
-       /* String mensaje = "Estimado/a " + asignacionEstudianteCarrera.getEstudiante().getNombre() + ", \n\n"+
-                         "La asignaci�n de cursos se ha realizado exit�samente: \n\n" +
-                         "  - Estudiante: " + asignacionEstudianteCarrera.getEstudiante().getNombre() + "\n" +
-                         "  - Carn�: " + asignacionEstudianteCarrera.getEstudiante().getCarne() + "\n" +
-                         "  - Fecha: " + listaAsignacion.get(0).getAsignacion().getFecha() + "\n" +
-                         "  - Transacci�n: " + listaAsignacion.get(0).getAsignacion().getTransaccion() + "\n\n" +
-                         "";
+        String mensaje = "Estimado/a " + asignacionEstudianteCarrera.getEstudiante().getNombre() + ", <br/><br/>"+
+                         "La asignacion de cursos se ha realizado exitosamente: <br/><br/>" +
+                         "  - Estudiante: " + asignacionEstudianteCarrera.getEstudiante().getNombre() + "<br/>" +
+                         "  - Carne: " + asignacionEstudianteCarrera.getEstudiante().getCarne() + "<br/>" +
+                         "  - Fecha: " + listaAsignacion.get(0).getAsignacion().getFecha() + "<br/>" +
+                         "  - Transaccion: " + listaAsignacion.get(0).getAsignacion().getTransaccion() + "<br/><br/>" +
+                         "Control Academico<br/>Escuela de Trabajo Social";
         try {
-            this.emailSender.setDestinatario(this.estudiante.getEmail());
-            this.emailSender.setSubject("Boleta de Asignaci�n");
-            this.emailSender.setMensaje(mensaje);
             // se trata de enviar el correo
-            this.emailSender.enviarCorreo2();
+            this.emailSender.enviarCorreo("Boleta de Asignación",this.estudiante.getEmail(),mensaje);
 
         } catch (MessagingException ex) {            
             log.error(Mensajes.MESSAGING_EXCEPTION, ex);
-        }*/
+        }
     }
 }

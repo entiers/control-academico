@@ -67,7 +67,7 @@
         <c:if test="${horarioElegido}" >
             <fieldset>
                 <legend><fmt:message key="buscarHorario.tituloListado"/></legend>
-                <table id="tablaHorarios" class="ui-widget ui-widget-content">
+                <table id="tablaHorarios" class="ui-widget ui-widget-content" align="center">
                     <thead>
                         <tr class="ui-widget-header ">
                             <th><fmt:message key="agregarHorario.curso"/></th>
@@ -75,9 +75,6 @@
                             <th><fmt:message key="agregarHorario.horaInicio"/></th>
                             <th><fmt:message key="agregarHorario.horaFin"/></th>
                             <th><fmt:message key="agregarHorario.seccion"/></th>
-                            <sec:authorize access="hasAnyRole('ROLE_EDITAR_HORARIO')">
-                                <th><fmt:message key="acciones"/></th>
-                            </sec:authorize>
                         </tr>
                     </thead>
                     <tbody>
@@ -92,17 +89,15 @@
                                     <fmt:formatDate pattern="hh:mm" value="${horario.horaFin}" />
                                 </td>
                                 <td align="center"><c:out value="${horario.seccion}" /></td>
-                                <td>
-                                    <a href="quitarHorario.htm?idHorario=${horario.idHorario}">
-                                        <fmt:message key="miscursos.asignacionCursos.quitarHorario"/>
-                                    </a>
-                                </td>
                             </tr>
                         </c:forEach>
                     </tbody>
                 </table>
                 <br/>
-                <input type="button" id="btnRealizarAsignacion" value='<fmt:message key="miscursos.asignacionCursos.realizar" />' />
+                <form:form method="POST" action="realizarAsignacion.htm">
+                    <input type="submit" id="btnRealizarAsignacion" value='<fmt:message key="miscursos.asignacionCursos.realizar" />' />
+                </form:form>
+                
             </fieldset>
         </c:if>
 
@@ -112,17 +107,7 @@
                 $('#slcCurso').change(function() {
                     getHorarios($(this).val());
                 });
-
-                //Llamada asignacion de cursos
-                $('#btnRealizarAsignacion').click(function(){
-                    $.ajax({
-                      url: "realizarAsignacion.htm",
-                      success: function(){
-                        alert("done");
-                        window.location.href = 'asignacionCursos3.htm';
-                      }
-                    });
-                });
+                
             });
 
             function getHorarios(value) {

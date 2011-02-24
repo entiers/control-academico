@@ -34,9 +34,9 @@
     </head>
     <body>
         <h1><fmt:message key="miscursos.asignacionCursos.titulo"/></h1>
-        <p><fmt:message key="miscursos.asignacionCursos.exito"/></p>
+        <h2><fmt:message key="miscursos.asignacionCursos.exito"/></h2>
         <fieldset>
-            <legend><fmt:message key="miscursos.asignacionCursos.cursosAsignados"/></legend>
+            <legend><fmt:message key="modificarDatosPersonales.DatosFijos"/></legend>
             <table align="center">
                 <tbody>
                     <tr>
@@ -49,7 +49,7 @@
                     </tr>
                     <tr>
                         <td><fmt:message key="asignacion.fecha"/></td>
-                        <td><c:out value="${asignacion.fecha}" /></td>
+                        <td><fmt:formatDate pattern="dd/MM/yyyy hh:mm"  value="${asignacion.fecha}" /></td>
                     </tr>
                     <tr>
                         <td><fmt:message key="asignacion.transaccion"/></td>
@@ -61,7 +61,7 @@
         <br/>
         <fieldset>
             <legend><fmt:message key="miscursos.asignacionCursos.cursosAsignados"/></legend>
-            <table id="tablaHorarios" class="ui-widget ui-widget-content">
+            <table id="tablaHorarios" class="ui-widget ui-widget-content" align="center">
                 <thead>
                     <tr class="ui-widget-header ">
                         <th><fmt:message key="agregarHorario.curso"/></th>
@@ -72,17 +72,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <c:forEach items="${listaAsignacion}" var="horario">
+                    <c:forEach items="${listaAsignacion}" var="asignacion">
                         <tr>
-                            <td><c:out value="${horario.curso.nombre}" /></td>
-                            <td><c:out value="${horario.dia}" /></td>
+                            <td><c:out value="${asignacion.horario.curso.nombre}" /></td>
+                            <td><c:out value="${asignacion.horario.dia}" /></td>
                             <td align="center">
-                                <fmt:formatDate pattern="hh:mm" value="${horario.horaInicio}" />
+                                <fmt:formatDate pattern="hh:mm" value="${asignacion.horario.horaInicio}" />
                             </td>
                             <td align="center">
-                                <fmt:formatDate pattern="hh:mm" value="${horario.horaFin}" />
+                                <fmt:formatDate pattern="hh:mm" value="${asignacion.horario.horaFin}" />
                             </td>
-                            <td align="center"><c:out value="${horario.seccion}" /></td>                            
+                            <td align="center"><c:out value="${asignacion.horario.seccion}" /></td>
                         </tr>
                     </c:forEach>
                 </tbody>
