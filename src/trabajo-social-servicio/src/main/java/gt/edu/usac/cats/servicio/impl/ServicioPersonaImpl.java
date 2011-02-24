@@ -146,6 +146,25 @@ public class ServicioPersonaImpl extends ServicioGeneralImpl implements Servicio
         }
         return null;
     }
+//______________________________________________________________________________
 
-   
+    /**
+     * <p>Este metodo se encarga de actualizar la información de la persona como su nombre de usuario</>
+     *
+     * @param persona Objeto de tipo {@link Persona}
+     *
+     * @throws DataIntegrityViolationException Se efectua la excepcion si hay un nombre de usuario igual en la base de datos.
+     * @throws DataAccessException Se efectua si se puede acceder a la base de datos.
+     *
+     */
+    @Override
+    public void modificarPersona(Persona persona) throws DataIntegrityViolationException, DataAccessException {
+
+
+        this.daoGeneralImpl.update(persona.getUsuario());
+
+        this.daoGeneralImpl.update(persona);
+
+
+    }
 }
