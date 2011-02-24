@@ -51,6 +51,8 @@ public class WrapperPersona {
      @NotEmpty(message="{validacion.campoObligatorio}")
      private String nombreUsuario;
 
+     private boolean habilitado;
+
     public WrapperPersona() {
         this.nombre = "";
         this.registroPersonal = "";
@@ -60,6 +62,7 @@ public class WrapperPersona {
         this.email = "";
         this.sexo = 'M';
         this.nombreUsuario = "";
+        this.habilitado = true;
     }
 
 
@@ -79,7 +82,7 @@ public class WrapperPersona {
         this.setEmail(persona.getEmail());
         this.setSexo(persona.getSexo());
         this.setNombreUsuario(persona.getUsuario().getNombreUsuario());
-
+        this.setHabilitado(persona.isHabilitado());
     }
 
 //______________________________________________________________________________
@@ -96,6 +99,7 @@ public class WrapperPersona {
         persona.setCelular(this.getCelular());
         persona.setEmail(this.getEmail());
         persona.setSexo(this.getSexo());
+        persona.setHabilitado(this.isHabilitado());
         if(persona.getUsuario() == null){
             Usuario usuario = new Usuario();
             usuario.setNombreUsuario(this.getNombreUsuario());
@@ -217,6 +221,20 @@ public class WrapperPersona {
      */
     public void setNombreUsuario(String nombreUsuario) {
         this.nombreUsuario = nombreUsuario;
+    }
+
+    /**
+     * @return the habilitado
+     */
+    public boolean isHabilitado() {
+        return habilitado;
+    }
+
+    /**
+     * @param habilitado the habilitado to set
+     */
+    public void setHabilitado(boolean habilitado) {
+        this.habilitado = habilitado;
     }
 
 }

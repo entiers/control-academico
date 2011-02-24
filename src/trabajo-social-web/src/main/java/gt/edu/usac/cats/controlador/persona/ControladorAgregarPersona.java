@@ -40,7 +40,7 @@ public class ControladorAgregarPersona extends ControladorAbstractoPersona {
      * Lleva el nombre del titulo para el mensaje en la pagina
      * <p>
      */
-    private static final String TITULO_MENSAJE = "agregarCalendarioActividades.titulo";
+    private static final String TITULO_MENSAJE = "agregarPersona.titulo";
 //______________________________________________________________________________
     /**
      * <p>Matiene una bitacora de lo realizado por esta clase.</p>
@@ -79,19 +79,19 @@ public class ControladorAgregarPersona extends ControladorAbstractoPersona {
 
             this.agregarAtributosDefault(modelo);
         } catch (URISyntaxException e) {
-            RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "persona.uriSyntaxException", true);
+            RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "uriSyntaxException", true);
             log.warn(e.getMessage(), e);
 
         } catch (IOException e) {            
-            RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "persona.ioException", true);
+            RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "ioException", true);
             log.warn(Mensajes.IO_EXCEPTION, e);
 
         } catch (MailException e) {            
-            RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "persona.mailException", true);
+            RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "mailException", true);
             log.warn(Mensajes.MAIL_EXCEPTION, e);
 
         } catch (MessagingException e) {            
-            RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "persona.messaginException", true);
+            RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "messaginException", true);
             log.warn(Mensajes.MESSAGING_EXCEPTION, e);
 
         } catch (DataIntegrityViolationException e) {

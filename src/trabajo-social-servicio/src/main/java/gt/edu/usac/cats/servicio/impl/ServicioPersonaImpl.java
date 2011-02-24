@@ -2,20 +2,25 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package gt.edu.usac.cats.servicio.impl;
 
 import gt.edu.usac.cats.dominio.Persona;
 import gt.edu.usac.cats.dominio.Usuario;
+import gt.edu.usac.cats.dominio.busqueda.DatosBusquedaPersona;
 import gt.edu.usac.cats.servicio.ServicioPersona;
 import gt.edu.usac.cats.util.EmailSender;
 import gt.edu.usac.cats.util.GeneradorPassword;
 import gt.edu.usac.cats.util.ManejadorSitioPropiedades;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.List;
 import java.util.Properties;
 import javax.annotation.Resource;
 import javax.mail.MessagingException;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.mail.MailException;
@@ -30,7 +35,7 @@ import org.springframework.stereotype.Service;
  * @version 1.0
  */
 @Service
-public class ServicioPersonaImpl extends ServicioGeneralImpl implements ServicioPersona{
+public class ServicioPersonaImpl extends ServicioGeneralImpl implements ServicioPersona {
 
     @Resource
     private EmailSender emailSender;
@@ -70,7 +75,6 @@ public class ServicioPersonaImpl extends ServicioGeneralImpl implements Servicio
         this.enviarCorreo(persona);
     }
 
-
     /**
      * Env�a el correo al usuario indicandole su nombre de usuario y password a
      * donde puede acceder.
@@ -83,7 +87,7 @@ public class ServicioPersonaImpl extends ServicioGeneralImpl implements Servicio
      * @throws URISyntaxException Se efectua si existe un problema en la lectura del path del archivo de configuraci�n en el objeto {@link ManejadorSitioPropiedades}
      *
      */
-    private void enviarCorreo(Persona persona) throws IOException, MailException, MessagingException, URISyntaxException{
+    private void enviarCorreo(Persona persona) throws IOException, MailException, MessagingException, URISyntaxException {
 
 
         String asunto = "ESCUELA DE TRABAJO SOCIAL - NUEVO USUARIO";
@@ -103,4 +107,45 @@ public class ServicioPersonaImpl extends ServicioGeneralImpl implements Servicio
         this.emailSender.enviarCorreo(asunto, persona.getEmail(), mensaje.toString());
     }
 
+//______________________________________________________________________________
+    /**
+     * <p>Metodo que se encarga de buscar a una persona por la expresion regular de su registro de personal</p>
+     *
+     * @param datosBusquedaPersona Objeto de tipo {@link DatosBusquedaPersona}
+     *
+     * @throws DataAccessException Se efectua si se puede acceder a la base de datos.
+     *
+     * @return Listado de elementso de tipo {@link Persona}
+     */
+    @Override
+    public List<Persona> getListadoPersonas(DatosBusquedaPersona datosBusquedaPersona) throws DataAccessException {
+
+        if (datosBusquedaPersona.esValido()) {
+            DetachedCriteria criteria = DetachedCriteria.forClass(Persona.class);
+
+            String registroPersonal = datosBusquedaPersona.getRegistroPersonal();
+            String nombre = datosBusquedaPersona.getNombre();
+
+            if (!registroPersonal.isEmpty() && nombre.isEmpty()) {
+                criteria.add(Restrictions.ilike("registroPersonal", registroPersonal, MatchMode.ANYWHERE));
+            } else {
+                if (registroPersonal.isEmpty() && !nombre.isEmpty()) {
+                    criteria.add(Restrictions.ilike("nombre", nombre, MatchMode.ANYWHERE));
+                } else {
+                    if (!registroPersonal.isEmpty() && !nombre.isEmpty()) {
+                        criteria.add(Restrictions.ilike("registroPersonal", registroPersonal, MatchMode.ANYWHERE));
+                        criteria.add(Restrictions.ilike("nombre", nombre, MatchMode.ANYWHERE));
+                    }
+                }
+            }
+
+            criteria.add(Restrictions.eq("habilitado", datosBusquedaPersona.isHabilitado()));
+            criteria.addOrder(Order.asc("nombre"));
+
+            return this.daoGeneralImpl.find(criteria);
+        }
+        return null;
+    }
+
+   
 }
