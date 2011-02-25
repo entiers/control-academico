@@ -34,9 +34,8 @@
                         </div>
                         <div id="divCampos">
                             <form:label for="tipoAsignacion" path="tipoAsignacion"><fmt:message key="tipoAsignacion.menu"/>: </form:label>
-                            <form:select path="tipoAsignacion.idTipoAsignacion"
-                                         itemValue="idTipoAsignacion"
-                                         itemLabel="nombre"
+                            <form:select path="tipoAsignacion"
+                                         itemLabel="descripcion"
                                          items="${listadoTipoAsignacion}" />
                             <form:errors path="tipoAsignacion" cssClass="claseError" />
                         </div>

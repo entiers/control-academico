@@ -299,28 +299,28 @@ public class ControladorAsignacionCursos {
                 return "asignacion/asignacionCursos2";
             }
             else{
-                for(Horario horario: listaHorarioAsignacion){
-                    //Validando prerrequisitos por curso
-                    if(asignacionEstudianteCarrera.getEstudiante().getPensum()!=null){
-                        acp = (AsignacionCursoPensum) servicioAsignacionCursoPensumImpl.getListadoAsignacionCursoPensum(horario.getCurso(),(Pensum) asignacionEstudianteCarrera.getEstudiante().getPensum()).get(0);
-                        
-                        if(servicioCursoAprobadoImpl.getCursoPrerrequisitoPendiente(asignacionEstudianteCarrera, horario.getCurso()).isEmpty()
-                           & servicioCursoAprobadoImpl.getCreditosAprobados(asignacionEstudianteCarrera)<acp.getCreditosPrerrequisito()){
-                            RequestUtil.crearMensajeRespuesta(request, null, "miscursos.asignacionCursos.prerrequisitoPendiente", false);
-                            return "asignacion/asignacionCursos2";
-                        }
-                        //Validando asignaciones en semestre actual
-                        if(!servicioDetalleAsignacionImpl.getListadoDetalleAsignacion(horario.getCurso(), semestre, asignacionEstudianteCarrera).isEmpty()){
-                            RequestUtil.crearMensajeRespuesta(request, null, "miscursos.asignacionCursos.cursoYaAsignado", false);
-                            return "asignacion/asignacionCursos2";
-                        }
-                    }
-                    else{
-                        RequestUtil.crearMensajeRespuesta(request, null, "miscursos.asignacionCursos.estudianteSinPensum", false);
-                        return "asignacion/asignacionCursos2";
-                    }
-                    
-                }
+                
+                //Validando prerrequisitos por curso
+				if(asignacionEstudianteCarrera.getEstudiante().getPensum()!=null){
+					for(Horario horario: listaHorarioAsignacion){
+						acp = (AsignacionCursoPensum) servicioAsignacionCursoPensumImpl.getListadoAsignacionCursoPensum(horario.getCurso(),(Pensum) asignacionEstudianteCarrera.getEstudiante().getPensum()).get(0);
+						
+						if(servicioCursoAprobadoImpl.getCursoPrerrequisitoPendiente(asignacionEstudianteCarrera, horario.getCurso()).isEmpty()
+						   & servicioCursoAprobadoImpl.getCreditosAprobados(asignacionEstudianteCarrera)<acp.getCreditosPrerrequisito()){
+							RequestUtil.crearMensajeRespuesta(request, null, "miscursos.asignacionCursos.prerrequisitoPendiente", false);
+							return "asignacion/asignacionCursos2";
+						}
+						//Validando asignaciones en semestre actual
+						if(!servicioDetalleAsignacionImpl.getListadoDetalleAsignacion(horario.getCurso(), semestre, asignacionEstudianteCarrera).isEmpty()){
+							RequestUtil.crearMensajeRespuesta(request, null, "miscursos.asignacionCursos.cursoYaAsignado", false);
+							return "asignacion/asignacionCursos2";
+						}
+					}
+				}
+				else{
+					RequestUtil.crearMensajeRespuesta(request, null, "miscursos.asignacionCursos.estudianteSinPensum", false);
+					return "asignacion/asignacionCursos2";
+				}
                 listaAsignacion = this.servicioAsignacionImpl.realizarAsignacionCursos
                                             (this.asignacionEstudianteCarrera, listaHorarioAsignacion);
                 if (!listaAsignacion.isEmpty()){
