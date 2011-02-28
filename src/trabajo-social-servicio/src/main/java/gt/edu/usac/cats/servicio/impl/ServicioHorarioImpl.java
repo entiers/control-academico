@@ -6,18 +6,22 @@
 
 package gt.edu.usac.cats.servicio.impl;
 
-import gt.edu.usac.cats.dominio.Carrera;
 import gt.edu.usac.cats.dominio.Curso;
 import gt.edu.usac.cats.dominio.Horario;
+import gt.edu.usac.cats.dominio.HorarioDia;
 import gt.edu.usac.cats.dominio.Salon;
 import gt.edu.usac.cats.dominio.Semestre;
 import gt.edu.usac.cats.servicio.ServicioHorario;
 import java.util.Calendar;
 import java.util.List;
 import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 /**
@@ -77,6 +81,10 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
                 Restrictions.eq("salon", salon),
                 Restrictions.eq("semestre", semestre))
                 );
+
+        criteria.addOrder(Order.asc("horaInicio"));
+        criteria.addOrder(Order.asc("horaFin"));
+        criteria.addOrder(Order.asc("seccion"));
 
         return this.daoGeneralImpl.find(criteria);
     }
@@ -167,6 +175,65 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
             }
         }
         return false;
+    }
+
+
+//______________________________________________________________________________
+    /**
+     * Este metodo se encarga de actualizar un horario a la base de datos.  El proceso es el siguiente
+     *
+     * <ul>
+     *  <li> Se actualiza el horario </li>
+     *  <li> Se eliminan los días relacionados con el horario</li>
+     *  <li> Se ingresan los nuevos dias relacionados al horario</li>
+     * </ul>
+     * @param horario El nuevo horario a agregar.
+     * @param horarioDiasWrapper Array de cadena de los días.
+     *
+     * @throws DataIntegrityViolationException Se efectua la excepcion si hay un nombre de usuario igual en la base de datos.
+     * @throws DataAccessException Se efectua si se puede acceder a la base de datos.
+     */
+    @Override
+    public void actualizarHorario(Horario horario, String[] horarioDiasWrapper) throws DataIntegrityViolationException,  DataAccessException{
+        Session sesion = this.daoGeneralImpl.getSesion();
+
+
+        horario.setHorarioDias(null);
+        this.actualizar(horario);
+
+        Query query = sesion.createQuery("delete from HorarioDia where horario = :horario");
+        query.setParameter("horario", horario);
+        query.executeUpdate();
+        
+        for (String numeroDia : horarioDiasWrapper) {
+            this.agregar(new HorarioDia(horario, Integer.parseInt(numeroDia)));
+        }
+    }
+
+
+//______________________________________________________________________________
+    /**
+     * Este metodo se encarga de agregar un nuevo horario a la base de datos.  El proceso es el siguiente
+     *
+     * <ul>
+     *  <li> Se ingresa el horario </li>
+     *  <li> Se ingresan los dias relacionados al horario</li>
+     * </ul>
+     * @param horario El nuevo horario a agregar.
+     * @param horarioDiasWrapper Array de cadena de los días.
+     *
+     * @throws DataIntegrityViolationException Se efectua la excepcion si hay un nombre de usuario igual en la base de datos.
+     * @throws DataAccessException Se efectua si se puede acceder a la base de datos.
+     */
+
+    @Override
+    public void agregarHorario(Horario horario, String [] horarioDiasWrapper) throws DataIntegrityViolationException,  DataAccessException {
+        this.agregar(horario);
+
+        for (String numeroDia : horarioDiasWrapper) {
+            this.agregar(new HorarioDia(horario, Integer.parseInt(numeroDia)));
+        }
+
     }
 
 

@@ -3,18 +3,15 @@
  * Escuela de Trabajo Social
  * Universidad de San Carlos de Guatemala
  */
-
 package gt.edu.usac.cats.controlador.horario;
 
 import gt.edu.usac.cats.dominio.Horario;
 import gt.edu.usac.cats.dominio.Salon;
 import gt.edu.usac.cats.dominio.Semestre;
 import gt.edu.usac.cats.dominio.busqueda.DatosBusquedaHorario;
-import gt.edu.usac.cats.servicio.ServicioHorario;
 import gt.edu.usac.cats.util.RequestUtil;
 import gt.edu.usac.cats.util.Mensajes;
 import java.util.List;
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
@@ -32,10 +29,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @author Mario Batres
  * @version 1.0
  */
-
 @Controller("controladorBuscarHorario")
-@RequestMapping(value="buscarHorario.htm")
-public class ControladorBuscarHorario {
+@RequestMapping(value = "buscarHorario.htm")
+public class ControladorBuscarHorario extends ControladorAbstractoHorario {
 
     /**
      * <p>Lleva el nombre del titulo para el mensaje en la pagina.</p>
@@ -48,29 +44,11 @@ public class ControladorBuscarHorario {
     private static Logger log = Logger.getLogger(ControladorBuscarHorario.class);
 //______________________________________________________________________________
     /**
-     * <p>Listado de todas las cursos disponibles.</p>
-     */
-    protected List <Semestre> listadoSemestres;
-//______________________________________________________________________________
-    /**
-     * <p>Listado de todas las salones disponibles.</p>
-     */
-    protected List <Salon> listadoSalones;
-//______________________________________________________________________________
-    /**
      * <p>Listado de todas las horarios disponibles.</p>
      */
-    protected List <Horario> listadoHorarios;
+    protected List<Horario> listadoHorarios;
 //______________________________________________________________________________
-    /**
-     * <p>Contiene metodos que permiten el manejo de la informacion relacionada
-     * con el horario en la base de datos. Este objeto se encuentra registrado
-     * como un bean de servicio en Spring, por lo que este es el encargado de
-     * inyectar la dependencia.</p>
-     */
-    @Resource
-    protected ServicioHorario servicioHorarioImpl;
-//______________________________________________________________________________
+
     /**
      * <p>Este metodo se ejecuta cada vez que se realiza una solicitud del tipo
      * GET de la pagina <code>buscarHorario.htm</code>. El metodo se encarga
@@ -79,16 +57,10 @@ public class ControladorBuscarHorario {
      * @param modelo Objeto {@link Model} que contiene todos los objetos que
      *        seran usados en la pagina
      * @return String Contiene el nombre de la vista a mostrar
-     */    
+     */
     @RequestMapping(method = RequestMethod.GET)
-    public String crearFormulario(Model modelo) {        
-        this.listadoSalones = this.servicioHorarioImpl.listarEntidad(Salon.class);
-        this.listadoSemestres = this.servicioHorarioImpl.listarEntidad(Semestre.class);
-
-        modelo.addAttribute("salones", this.listadoSalones);
-        modelo.addAttribute("semestres", this.listadoSemestres);
-
-        modelo.addAttribute("datosBusquedaHorario", new DatosBusquedaHorario());
+    public String crearFormulario(Model modelo) {
+        this.agregarAtributosDefaultBusqueda(modelo, new DatosBusquedaHorario());
         return "horario/buscarHorario";
     }
 
@@ -116,28 +88,25 @@ public class ControladorBuscarHorario {
     public String buscar(@Valid DatosBusquedaHorario datosBusquedaHorario, BindingResult bindingResult,
             Model modelo, HttpServletRequest request) {
 
-        modelo.addAttribute("salones", this.listadoSalones);
-        modelo.addAttribute("semestres", this.listadoSemestres);
+        if (!bindingResult.hasErrors()) {
+            try {
+                Salon salon = datosBusquedaHorario.getSalon();
+                Semestre semestre = datosBusquedaHorario.getSemestre();
 
-        if(bindingResult.hasErrors())
-            return "horario/buscarHorario";
+                this.listadoHorarios = this.servicioHorarioImpl.buscarHorarioPorSalonYSemestre(salon, semestre);
 
-        try{
-            Salon salon = datosBusquedaHorario.getSalon();
-            Semestre semestre = datosBusquedaHorario.getSemestre();
-
-            this.listadoHorarios = this.servicioHorarioImpl.buscarHorarioPorSalonYSemestre(salon, semestre);
-
-            if(listadoHorarios == null || listadoHorarios.size() == 0) {
-                RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "buscarHorario.sinResultados", true);
+                if (listadoHorarios == null || listadoHorarios.isEmpty()) {
+                    RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "buscarHorario.sinResultados", true);
+                }
+                modelo.addAttribute("listadoHorarios", listadoHorarios);
+            } catch (DataAccessException e) {
+                // error de acceso a datos
+                RequestUtil.crearMensajeRespuesta(request, null, "dataAccessException", false);
+                log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
             }
-            modelo.addAttribute("horarios", listadoHorarios);
-        } catch (DataAccessException e) {
-            // error de acceso a datos
-            RequestUtil.crearMensajeRespuesta(request, null, "dataAccessException", false);
-            log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
         }
+
+        this.agregarAtributosDefaultBusqueda(modelo, datosBusquedaHorario);
         return "horario/buscarHorario";
     }
-
 }

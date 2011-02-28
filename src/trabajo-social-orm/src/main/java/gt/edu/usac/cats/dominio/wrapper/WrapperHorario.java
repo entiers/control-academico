@@ -24,12 +24,9 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @version 1.0
  */
 public class WrapperHorario {
+    
 //______________________________________________________________________________
-    @NotEmpty(message = "{validacion.campoObligatorio}")
-    @Size(max = 10, message = "{validacion.caracteresMaximos}")
-    private String dia;
-//______________________________________________________________________________
-    private boolean estado;
+    private boolean habilitado;
 //______________________________________________________________________________
     @DateTimeFormat(pattern = "HH:mm")
     private Date horaFin;
@@ -39,11 +36,7 @@ public class WrapperHorario {
 //______________________________________________________________________________
     @NotEmpty(message = "{validacion.campoObligatorio}")
     @Size(max = 2, message = "{validacion.caracteresMaximos}")
-    private String seccion;
-//______________________________________________________________________________
-    @NotEmpty(message = "{validacion.campoObligatorio}")
-    @Size(max = 20, message = "{validacion.caracteresMaximos}")
-    private String tipo;
+    private String seccion;    
 //______________________________________________________________________________
     
     private Curso curso;
@@ -52,16 +45,17 @@ public class WrapperHorario {
 //______________________________________________________________________________
     private Semestre semestre;
 //______________________________________________________________________________
+
+    private String [] horarioDiasWrapper;
+
      /**
      * Constructor del wrapper, se inicializan los atributos a mostrar en las
      * paginas de <code>agregarHorario.htm</code> y <code>editarHorario.htm</code>.
      */
-    public WrapperHorario() {
-        this.dia = "";
-        this.estado = false;
+    public WrapperHorario() {        
+        this.habilitado = true;
         this.horaFin = new Date();
-        this.horaInicio = new Date();
-        this.tipo = "";
+        this.horaInicio = new Date();        
     }
 
 //______________________________________________________________________________
@@ -70,16 +64,15 @@ public class WrapperHorario {
      *
      * @param horario Pojo de tipo {@link Horario}
      */
-    public void agregarWrapper(Horario horario){
-        this.dia = horario.getDia();
+    public void agregarWrapper(Horario horario){        
         this.curso = horario.getCurso();
-        this.estado = horario.isEstado();
+        this.habilitado = horario.isHabilitado();
         this.horaFin = horario.getHoraFin();
         this.horaInicio = horario.getHoraInicio();
         this.salon = horario.getSalon();
         this.seccion = horario.getSeccion();
-        this.semestre = horario.getSemestre();
-        this.tipo = horario.getTipo();
+        this.semestre = horario.getSemestre();        
+        this.horarioDiasWrapper = horario.getHorarioDiasNumeroAsArrayString();
     }
 //______________________________________________________________________________
     /**
@@ -88,43 +81,28 @@ public class WrapperHorario {
      * @param horario Pojo de tipo {@link Horario}
      */
     public void quitarWrapper(Horario horario){
-        horario.setDia(this.dia);
         horario.setCurso(this.curso);
-        horario.setEstado(this.estado);
+        horario.setHabilitado(this.habilitado);
         horario.setHoraFin(this.horaFin);
         horario.setHoraInicio(this.horaInicio);
         horario.setSalon(this.salon);
         horario.setSeccion(this.seccion);
-        horario.setSemestre(this.semestre);
-        horario.setTipo(this.tipo);
-    }
-//______________________________________________________________________________
-    /**
-     * @return El dia que sera impartido el curso
-     */
-    public String getDia() {
-        return dia;
-    }
-
-    /**
-     * @param dia El dia que sera impartido el curso
-     */
-    public void setDia(String dia) {
-        this.dia = dia;
+        horario.setSemestre(this.semestre);        
+        //horario.setHorarioDias(this.horarioDias);
     }
 //______________________________________________________________________________
     /**
      * @return El estado del horario
      */
-    public boolean isEstado() {
-        return estado;
+    public boolean isHabilitado() {
+        return habilitado;
     }
 
     /**
      * @param estado El estado del horario
      */
-    public void setEstado(boolean estado) {
-        this.estado = estado;
+    public void setHabilitado(boolean habilitado) {
+        this.habilitado = habilitado;
     }
 //______________________________________________________________________________
     /**
@@ -170,20 +148,6 @@ public class WrapperHorario {
     }
 //______________________________________________________________________________
     /**
-     * @return El tipo de horario
-     */
-    public String getTipo() {
-        return tipo;
-    }
-
-    /**
-     * @param tipo El tipo de horario
-     */
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
-//______________________________________________________________________________
-    /**
      * @return pojo de tipo {@link Curso}
      */
     public Curso getCurso() {
@@ -223,6 +187,20 @@ public class WrapperHorario {
      */
     public void setSemestre(Semestre semestre) {
         this.semestre = semestre;
+    }
+
+    /**
+     * @return the horarioDias
+     */
+    public String [] getHorarioDiasWrapper() {
+        return horarioDiasWrapper;
+    }
+
+    /**
+     * @param horarioDias the horarioDias to set
+     */
+    public void setHorarioDiasWrapper(String [] horarioDiasWrapper) {
+        this.horarioDiasWrapper = horarioDiasWrapper;
     }
 
 }

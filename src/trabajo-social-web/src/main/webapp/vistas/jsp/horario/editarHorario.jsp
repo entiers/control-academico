@@ -26,7 +26,7 @@
 
                 <%-- botones --%>
                 <input type="submit" value='<fmt:message key="btnEditar"/>' />
-                <a  href="buscarHorario.htm"><fmt:message key="editarHorario.regresarABusqueda"/></a>
+                <a  href="javascript:history.back();"><fmt:message key="editarHorario.regresarABusqueda"/></a>
             </fieldset>
         </form:form>
 

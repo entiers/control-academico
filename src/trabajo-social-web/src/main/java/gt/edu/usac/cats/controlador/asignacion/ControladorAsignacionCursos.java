@@ -3,7 +3,6 @@
  * Escuela de Trabajo Social
  * Universidad de San Carlos de Guatemala
  */
-
 package gt.edu.usac.cats.controlador.asignacion;
 
 import gt.edu.usac.cats.dominio.AsignacionCursoPensum;
@@ -51,6 +50,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 /**
  * Esta clase es el controlador que se encarga de la llamada al proceso de asignacion
  * de cursos de semestre de estudiante de reingreso
@@ -61,6 +61,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller("controladorAsignacionCursos")
 public class ControladorAsignacionCursos {
 //______________________________________________________________________________
+
     private static Logger log = Logger.getLogger(ControladorAsignacionPrimerIngreso.class);
 //_____________________________________________________________________________
     private static final String TITULO_MENSAJE = "miscursos.asignacionCursos.titulo";
@@ -121,6 +122,7 @@ public class ControladorAsignacionCursos {
     @Resource
     private EmailSender emailSender;
 //_____________________________________________________________________________
+
     /**
      * <p>Este metodo se ejecuta cada vez que se realiza una solicitud del tipo
      * GET de la pagina <code>asignacionCursos.htm</code>. El metodo se encarga
@@ -138,9 +140,9 @@ public class ControladorAsignacionCursos {
      *        seran usados en la pagina
      * @return String Contiene el nombre de la vista a mostrar
      */
-    @RequestMapping(value="asignacionCursos.htm",method = RequestMethod.GET)
-    public String getAsignacionCursos(Model modelo, HttpServletRequest request){
-        try{
+    @RequestMapping(value = "asignacionCursos.htm", method = RequestMethod.GET)
+    public String getAsignacionCursos(Model modelo, HttpServletRequest request) {
+        try {
             //Obteniendo curso de computacion
             //this.cursoComputacion = this.servicioGeneralImpl.cargarEntidadPorID(Curso.class, 38);
 
@@ -152,38 +154,37 @@ public class ControladorAsignacionCursos {
             this.usuario = this.servicioUsuarioImpl.cargarUsuarioPorNombre(auth.getName().toString());
 
             //Validando que el usuario se haya encontrado y sea un estudiante
-            if(this.usuario!=null & this.usuario.getEstudiantes().toArray().length>0)
+            if (this.usuario != null & this.usuario.getEstudiantes().toArray().length > 0) {
                 this.estudiante = (Estudiante) this.usuario.getEstudiantes().toArray()[0];
-            else{
+            } else {
                 modelo.addAttribute("errorEntidad", true);
                 return "asignacion/asignacionCursos";
             }
 
             //Validando que el estudiante se encuentre inscrito
-            if(!this.estudiante.isInscrito()){
-                modelo.addAttribute("estudianteNoInscrito",true);
+            if (!this.estudiante.isInscrito()) {
+                modelo.addAttribute("estudianteNoInscrito", true);
                 return "asignacion/asignacionCursos";
             }
 
             //Validar periodo de asignacion de cursos de semestre
-            if(!this.servicioCalendarioActividadesImpl.esFechaActividadValida
-                                    (TipoActividad.ASIGNACION_SEMESTRE,
-                                        semestre,
-                                        new java.util.Date())){
-                modelo.addAttribute("periodoInvalido",true);
+            if (!this.servicioCalendarioActividadesImpl.esFechaActividadValida(TipoActividad.ASIGNACION_SEMESTRE,
+                    semestre,
+                    new java.util.Date())) {
+                modelo.addAttribute("periodoInvalido", true);
                 return "asignacion/asignacionCursos";
             }
 
             //Validar curso de computaci�n aprobado
           /*  if(!servicioCursoAprobadoImpl.esCursoAprobado(asignacionEstudianteCarrera, cursoComputacion)){
-                modelo.addAttribute("cursoComputacion",true);
-                return "asignacion/asignacionCursos";
+            modelo.addAttribute("cursoComputacion",true);
+            return "asignacion/asignacionCursos";
             }*/
 
 
             this.listaAEC = this.servicioAsignacionEstudianteCarreraImpl.getAsignacionEstudianteCarreraPorEstudiante(estudiante);
             modelo.addAttribute("listaAEC", this.listaAEC);
-            modelo.addAttribute("datosBusquedaCarrera",  new DatosBusquedaCarrera());
+            modelo.addAttribute("datosBusquedaCarrera", new DatosBusquedaCarrera());
         } catch (Exception e) {
             // error de acceso a datos
             RequestUtil.crearMensajeRespuesta(request, null, "dataAccessException", false);
@@ -192,7 +193,8 @@ public class ControladorAsignacionCursos {
         return "asignacion/asignacionCursos";
     }
 //  _____________________________________________________________________________
-     /**
+
+    /**
      * <p>Este metodo se ejecuta cada vez que se realiza una solicitud del tipo
      * POST de la pagina <code>asignacionCursos.htm</code>. El metodo se encarga
      * de inicializar las listas de cursos y horarios disponibles para la carrera
@@ -202,13 +204,17 @@ public class ControladorAsignacionCursos {
      *        seran usados en la pagina
      * @return String Contiene el nombre de la vista a mostrar
      */
-    @RequestMapping(value="asignacionCursos.htm",method = RequestMethod.POST)
+    @RequestMapping(value = "asignacionCursos.htm", method = RequestMethod.POST)
     public String postAsignacionCursos(@Valid DatosBusquedaCarrera datosBusquedaCarrera,
-                                        BindingResult bindingResult,
-                                        Model modelo,
-                                        HttpServletRequest request) {
-        try{
-            this.asignacionEstudianteCarrera = this.servicioGeneralImpl.cargarEntidadPorID(AsignacionEstudianteCarrera.class, datosBusquedaCarrera.getIdAsignacionEstudianteCarrera());
+            BindingResult bindingResult,
+            Model modelo,
+            HttpServletRequest request) {
+        try {
+            this.asignacionEstudianteCarrera = this.servicioAsignacionEstudianteCarreraImpl.cargarEntidadPorID(AsignacionEstudianteCarrera.class, datosBusquedaCarrera.getIdAsignacionEstudianteCarrera());
+
+            //para que no de error de lazy despues
+            asignacionEstudianteCarrera.getEstudiante().getPensum();
+
             this.listaCurso = this.servicioCursoImpl.getCurso(this.asignacionEstudianteCarrera.getCarrera());
             this.listaHorario = this.servicioHorarioImpl.getHorario(this.listaCurso.get(0), semestre);
             this.listaHorarioAsignacion = new ArrayList<Horario>();
@@ -216,14 +222,15 @@ public class ControladorAsignacionCursos {
             // error de acceso a datos
             RequestUtil.crearMensajeRespuesta(request, null, "dataAccessException", false);
             log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
-        }        
-        modelo.addAttribute("datosBusquedaCarrera",  new DatosBusquedaCarrera());
+        }
+        modelo.addAttribute("datosBusquedaCarrera", new DatosBusquedaCarrera());
         modelo.addAttribute("listaCurso", this.listaCurso);
-        modelo.addAttribute("listaHorario",this.listaHorario);
+        modelo.addAttribute("listaHorario", this.listaHorario);
         return "asignacion/asignacionCursos2";
     }
 //  _____________________________________________________________________________
-     /**
+
+    /**
      * <p>Este metodo se ejecuta cada vez que se realiza una solicitud del tipo
      * POST de la pagina <code>asignacionCursos2.htm</code>. El metodo se encarga
      * de cargar la lista de Horarios seleccionados para asignacion, asi como de
@@ -233,24 +240,26 @@ public class ControladorAsignacionCursos {
      *        seran usados en la pagina
      * @return String Contiene el nombre de la vista a mostrar
      */
-    @RequestMapping(value="agregarHorarioAsignacion.htm",method = RequestMethod.POST)
+    @RequestMapping(value = "agregarHorarioAsignacion.htm", method = RequestMethod.POST)
     public String agregarHorario(@Valid DatosBusquedaCarrera datosBusquedaCarrera,
-                                        BindingResult bindingResult,
-                                        Model modelo,
-                                        HttpServletRequest request) {
-        try{
-            if(!listaCurso.isEmpty()){
+            BindingResult bindingResult,
+            Model modelo,
+            HttpServletRequest request) {
+        try {
+            if (!listaCurso.isEmpty()) {
                 Curso curso = this.servicioGeneralImpl.cargarEntidadPorID(Curso.class, Short.parseShort(String.valueOf(datosBusquedaCarrera.getIdCurso())));
                 Horario horario = this.servicioGeneralImpl.cargarEntidadPorID(Horario.class, datosBusquedaCarrera.getIdHorario());
                 this.listaHorarioAsignacion.add(horario);
-                for(int i=0;i<listaCurso.size();i++){
-                    if(curso.getIdCurso() == listaCurso.get(i).getIdCurso())
+                for (int i = 0; i < listaCurso.size(); i++) {
+                    if (curso.getIdCurso() == listaCurso.get(i).getIdCurso()) {
                         listaCurso.remove(i);
+                    }
                 }
-                if(!listaCurso.isEmpty())
+                if (!listaCurso.isEmpty()) {
                     this.listaHorario = this.servicioHorarioImpl.getHorario(this.listaCurso.get(0), semestre);
-                else
+                } else {
                     this.listaHorario.clear();
+                }
             }
         } catch (DataAccessException e) {
             // error de acceso a datos
@@ -258,12 +267,13 @@ public class ControladorAsignacionCursos {
             log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
         }
         modelo.addAttribute("listaCurso", this.listaCurso);
-        modelo.addAttribute("listaHorario",this.listaHorario);
+        modelo.addAttribute("listaHorario", this.listaHorario);
         modelo.addAttribute("horarioElegido", true);
         modelo.addAttribute("listadoHorarioAsignados", this.listaHorarioAsignacion);
         return "asignacion/asignacionCursos2";
     }
 //  _____________________________________________________________________________
+
     /**
      * <p>Este metodo se ejecuta cada vez que se realiza una solicitud del tipo
      * GET de la pagina <code>asignacionCursos2.htm</code> por medio de AJAX.
@@ -280,59 +290,55 @@ public class ControladorAsignacionCursos {
      *        seran usados en la pagina
      * @return String Contiene el nombre de la vista a mostrar
      */
-    @RequestMapping(value="realizarAsignacion.htm",method = RequestMethod.POST)
-    public String realizarAsignacion( @Valid DatosBusquedaCarrera datosBusquedaCarrera,
-                                      BindingResult bindingResult,
-                                      Model modelo,
-                                      HttpServletRequest request) throws IOException {
+    @RequestMapping(value = "realizarAsignacion.htm", method = RequestMethod.POST)
+    public String realizarAsignacion(@Valid DatosBusquedaCarrera datosBusquedaCarrera,
+            BindingResult bindingResult,
+            Model modelo,
+            HttpServletRequest request) throws IOException {
 
         modelo.addAttribute("listaCurso", this.listaCurso);
-        modelo.addAttribute("listaHorario",this.listaHorario);
+        modelo.addAttribute("listaHorario", this.listaHorario);
         modelo.addAttribute("horarioElegido", true);
         modelo.addAttribute("listadoHorarioAsignados", this.listaHorarioAsignacion);
         AsignacionCursoPensum acp;
         //Validando traslape de cursos
-        try{
-            if(this.servicioHorarioImpl.existeTraslape(listaHorarioAsignacion)){
-                System.out.println("Error en traslape de cursos");
+        try {
+            if (this.servicioHorarioImpl.existeTraslape(listaHorarioAsignacion)) {
+                //System.out.println("Error en traslape de cursos");
                 RequestUtil.crearMensajeRespuesta(request, null, "miscursos.asignacionCursos.existeTraslape", false);
                 return "asignacion/asignacionCursos2";
-            }
-            else{
-                
-                //Validando prerrequisitos por curso
-				if(asignacionEstudianteCarrera.getEstudiante().getPensum()!=null){
-					for(Horario horario: listaHorarioAsignacion){
-						acp = (AsignacionCursoPensum) servicioAsignacionCursoPensumImpl.getListadoAsignacionCursoPensum(horario.getCurso(),(Pensum) asignacionEstudianteCarrera.getEstudiante().getPensum()).get(0);
-						
-						if(servicioCursoAprobadoImpl.getCursoPrerrequisitoPendiente(asignacionEstudianteCarrera, horario.getCurso()).isEmpty()
-						   & servicioCursoAprobadoImpl.getCreditosAprobados(asignacionEstudianteCarrera)<acp.getCreditosPrerrequisito()){
-							RequestUtil.crearMensajeRespuesta(request, null, "miscursos.asignacionCursos.prerrequisitoPendiente", false);
-							return "asignacion/asignacionCursos2";
-						}
-						//Validando asignaciones en semestre actual
-						if(!servicioDetalleAsignacionImpl.getListadoDetalleAsignacion(horario.getCurso(), semestre, asignacionEstudianteCarrera).isEmpty()){
-							RequestUtil.crearMensajeRespuesta(request, null, "miscursos.asignacionCursos.cursoYaAsignado", false);
-							return "asignacion/asignacionCursos2";
-						}
-					}
-				}
-				else{
-					RequestUtil.crearMensajeRespuesta(request, null, "miscursos.asignacionCursos.estudianteSinPensum", false);
-					return "asignacion/asignacionCursos2";
-				}
-                listaAsignacion = this.servicioAsignacionImpl.realizarAsignacionCursos
-                                            (this.asignacionEstudianteCarrera, listaHorarioAsignacion);
-                if (!listaAsignacion.isEmpty()){
+            } else {
+                Pensum pensum = asignacionEstudianteCarrera.getEstudiante().getPensum();
+                if (pensum != null) {
+                    for (Horario horario : listaHorarioAsignacion) {
+                        //Validando prerrequisitos por curso
+                        acp = (AsignacionCursoPensum) servicioAsignacionCursoPensumImpl.getListadoAsignacionCursoPensum(horario.getCurso(), pensum).get(0);
+
+                        if (servicioCursoAprobadoImpl.getCursoPrerrequisitoPendiente(asignacionEstudianteCarrera, horario.getCurso()).isEmpty()
+                                & servicioCursoAprobadoImpl.getCreditosAprobados(asignacionEstudianteCarrera) < acp.getCreditosPrerrequisito()) {
+                            RequestUtil.crearMensajeRespuesta(request, null, "miscursos.asignacionCursos.prerrequisitoPendiente", false);
+                            return "asignacion/asignacionCursos2";
+                        }
+                        //Validando asignaciones en semestre actual
+                        if (!servicioDetalleAsignacionImpl.getListadoDetalleAsignacion(horario.getCurso(), semestre, asignacionEstudianteCarrera).isEmpty()) {
+                            RequestUtil.crearMensajeRespuesta(request, null, "miscursos.asignacionCursos.cursoYaAsignado", false);
+                            return "asignacion/asignacionCursos2";
+                        }
+                    }
+                } else {
+                    RequestUtil.crearMensajeRespuesta(request, null, "miscursos.asignacionCursos.estudianteSinPensum", false);
+                    return "asignacion/asignacionCursos2";
+                }
+                listaAsignacion = this.servicioAsignacionImpl.realizarAsignacionCursos(this.asignacionEstudianteCarrera, listaHorarioAsignacion);
+                if (!listaAsignacion.isEmpty()) {
                     this.enviarEmail(listaAsignacion);
                     listaHorarioAsignacion.clear();
                     return "redirect:asignacionExitosa.htm";
-                }
-                else{
-                    RequestUtil.crearMensajeRespuesta(request, null, "dataAccessException", false);                    
+                } else {
+                    RequestUtil.crearMensajeRespuesta(request, null, "dataAccessException", false);
                 }
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             // error de acceso a datos
             RequestUtil.crearMensajeRespuesta(request, null, "dataAccessException", false);
             log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
@@ -340,17 +346,22 @@ public class ControladorAsignacionCursos {
         return "asignacion/asignacionCursos2";
     }
 //  _____________________________________________________________________________
-    @RequestMapping(value="asignacionExitosa.htm",method = RequestMethod.GET)
-    public String mostrarAsignacion( Model modelo,HttpServletRequest request){
-        modelo.addAttribute("asignacion",listaAsignacion.get(0).getAsignacion());
-        modelo.addAttribute("listaAsignacion",listaAsignacion);
+
+    @RequestMapping(value = "asignacionExitosa.htm", method = RequestMethod.GET)
+    public String mostrarAsignacion(Model modelo, HttpServletRequest request) {
+        modelo.addAttribute("asignacion", listaAsignacion.get(0).getAsignacion());
+        modelo.addAttribute("listaAsignacion", listaAsignacion);
         return "asignacion/asignacionExitosa";
     }
 //  _____________________________________________________________________________
-    @RequestMapping(value="getHorario.htm", method=RequestMethod.GET)
-    public @ResponseBody @JsonIgnore List<Horario> getHorario(@RequestParam Short idCurso,HttpServletRequest request) {
+
+    @RequestMapping(value = "getHorario.htm", method = RequestMethod.GET)
+    public 
+    @ResponseBody
+    @JsonIgnore
+    List<Horario> getHorario(@RequestParam Short idCurso, HttpServletRequest request) {
         Curso curso = null;
-        try{
+        try {
             curso = this.servicioGeneralImpl.cargarEntidadPorID(Curso.class, idCurso);
         } catch (DataAccessException e) {
             // error de acceso a datos
@@ -360,20 +371,21 @@ public class ControladorAsignacionCursos {
         return this.servicioHorarioImpl.getHorario(curso, this.semestre);
     }
 //  _____________________________________________________________________________
-    private void enviarEmail(List<DetalleAsignacion> listaAsignacion) throws IOException{
 
-        String mensaje = "Estimado/a " + asignacionEstudianteCarrera.getEstudiante().getNombre() + ", <br/><br/>"+
-                         "La asignacion de cursos se ha realizado exitosamente: <br/><br/>" +
-                         "  - Estudiante: " + asignacionEstudianteCarrera.getEstudiante().getNombre() + "<br/>" +
-                         "  - Carne: " + asignacionEstudianteCarrera.getEstudiante().getCarne() + "<br/>" +
-                         "  - Fecha: " + listaAsignacion.get(0).getAsignacion().getFecha() + "<br/>" +
-                         "  - Transaccion: " + listaAsignacion.get(0).getAsignacion().getTransaccion() + "<br/><br/>" +
-                         "Control Academico<br/>Escuela de Trabajo Social";
+    private void enviarEmail(List<DetalleAsignacion> listaAsignacion) throws IOException {
+
+        String mensaje = "Estimado/a " + asignacionEstudianteCarrera.getEstudiante().getNombre() + ", <br/><br/>"
+                + "La asignacion de cursos se ha realizado exitosamente: <br/><br/>"
+                + "  - Estudiante: " + asignacionEstudianteCarrera.getEstudiante().getNombre() + "<br/>"
+                + "  - Carne: " + asignacionEstudianteCarrera.getEstudiante().getCarne() + "<br/>"
+                + "  - Fecha: " + listaAsignacion.get(0).getAsignacion().getFecha() + "<br/>"
+                + "  - Transaccion: " + listaAsignacion.get(0).getAsignacion().getTransaccion() + "<br/><br/>"
+                + "Control Academico<br/>Escuela de Trabajo Social";
         try {
             // se trata de enviar el correo
-            this.emailSender.enviarCorreo("Boleta de Asignación",this.estudiante.getEmail(),mensaje);
+            this.emailSender.enviarCorreo("Boleta de Asignación", this.estudiante.getEmail(), mensaje);
 
-        } catch (MessagingException ex) {            
+        } catch (MessagingException ex) {
             log.error(Mensajes.MESSAGING_EXCEPTION, ex);
         }
     }
