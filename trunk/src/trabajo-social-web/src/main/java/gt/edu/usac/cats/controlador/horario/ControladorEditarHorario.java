@@ -3,19 +3,13 @@
  * Escuela de Trabajo Social
  * Universidad de San Carlos de Guatemala
  */
-
 package gt.edu.usac.cats.controlador.horario;
 
-import gt.edu.usac.cats.dominio.Curso;
+
 import gt.edu.usac.cats.dominio.Horario;
-import gt.edu.usac.cats.dominio.Salon;
-import gt.edu.usac.cats.dominio.Semestre;
 import gt.edu.usac.cats.dominio.wrapper.WrapperHorario;
-import gt.edu.usac.cats.servicio.ServicioHorario;
 import gt.edu.usac.cats.util.RequestUtil;
 import gt.edu.usac.cats.util.Mensajes;
-import java.util.List;
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
@@ -33,14 +27,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @author Mario Batres
  * @version 1.0
  */
-
 @Controller("controladorEditarHorario")
-@RequestMapping(value="editarHorario.htm")
-public class ControladorEditarHorario {
-
-    protected static final String [] LISTADO_DIAS =
-    {"Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"};
+@RequestMapping(value = "editarHorario.htm")
+public class ControladorEditarHorario extends ControladorAbstractoHorario {
 //_____________________________________________________________________________
+
     /**
      * <p>Lleva el nombre del titulo para el mensaje en la pagina.</p>
      */
@@ -52,28 +43,7 @@ public class ControladorEditarHorario {
     private static Logger log = Logger.getLogger(ControladorEditarHorario.class);
 //______________________________________________________________________________
     /**
-     * <p>Listado de todas las cursos disponibles.</p>
-     */
-    protected List <Semestre> listadoSemestres;
-//______________________________________________________________________________
-    /**
-     * <p>Listado de todas las salones disponibles.</p>
-     */
-    protected List <Salon> listadoSalones;
-//______________________________________________________________________________
-    /**
-     * <p>Listado de todas las cursos disponibles.</p>
-     */
-    protected List <Curso> listadoCursos;
-//______________________________________________________________________________    
-    /**
-     * <p>Contiene metodos que permiten el manejo de la informacion relacionada
-     * con el salon en la base de datos. Este objeto se encuentra registrado
-     * como un bean de servicio en Spring, por lo que este es el encargado de
-     * inyectar la dependencia.</p>
-     */
-    @Resource
-    protected ServicioHorario servicioHorarioImpl;
+     * <p>Listado de todas las cursos disponibles.</p>    */
 //______________________________________________________________________________
     /**
      * <p>Se utiliza para mantener todos los datos del horario que se
@@ -81,6 +51,7 @@ public class ControladorEditarHorario {
      */
     private Horario horario;
 //______________________________________________________________________________
+
     /**
      * <p>Este metodo se ejecuta cada vez que se realiza una solicitud del tipo
      * GET de la pagina <code>editarHorario.htm</code>. El metodo se encarga
@@ -91,27 +62,23 @@ public class ControladorEditarHorario {
      * @return String Contiene el nombre de la vista a mostrar
      */
     @RequestMapping(method = RequestMethod.GET)
-    public String crearFormularioEditar(Model modelo, int idHorario, HttpServletRequest request){
+    public String crearFormularioEditar(Model modelo, Integer idHorario, HttpServletRequest request) {
+
+        if (idHorario == null) {
+            return "redirect:buscarHorario.htm";
+        }
 
         this.horario = this.servicioHorarioImpl.cargarEntidadPorID(Horario.class, idHorario);
 
-        if(this.horario == null){
-            RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "buscarCalendarioActividades.sinResultados", false);
-            return "horario/buscarHorario";
+        if (this.horario == null) {
+            return "redirect:buscarHorario.htm";
         }
 
         WrapperHorario wrapperHorario = new WrapperHorario();
         wrapperHorario.agregarWrapper(this.horario);
-
-        this.listadoSalones = this.servicioHorarioImpl.listarEntidad(Salon.class);
-        this.listadoSemestres = this.servicioHorarioImpl.listarEntidad(Semestre.class);
-        this.listadoCursos = this.servicioHorarioImpl.listarEntidad(Curso.class);
-
-        modelo.addAttribute("salones", this.listadoSalones);
-        modelo.addAttribute("semestres", this.listadoSemestres);
-        modelo.addAttribute("cursos", listadoCursos);
-        modelo.addAttribute("dias", LISTADO_DIAS);
         modelo.addAttribute("wrapperHorario", wrapperHorario);
+
+        this.agregarAtributosDefault(modelo, wrapperHorario);
         return "horario/editarHorario";
     }
 
@@ -131,39 +98,40 @@ public class ControladorEditarHorario {
      * @param request Objeto {@link HttpServletRequest}
      * @return String
      */
-
     @RequestMapping(method = RequestMethod.POST)
-    public String editar(@Valid WrapperHorario wrapperHorario, BindingResult bindingResult,
-            Model modelo, HttpServletRequest request){
+    public String editar(Model modelo, @Valid WrapperHorario wrapperHorario, BindingResult bindingResult,
+            HttpServletRequest request) {
+// se validan los campos ingresados en el formulario, si existen errores
+        // se regresa al formulario para que se muestren los mensajes correspondientes
+        if (!bindingResult.hasErrors()) {
+            try {
+                wrapperHorario.quitarWrapper(this.horario);
 
-        modelo.addAttribute("salones", this.listadoSalones);
-        modelo.addAttribute("semestres", this.listadoSemestres);
-        modelo.addAttribute("cursos", this.listadoCursos);
-        modelo.addAttribute("dias", LISTADO_DIAS);
+                this.servicioHorarioImpl.actualizarHorario(horario, wrapperHorario.getHorarioDiasWrapper());
 
+                /*this.servicioHorarioImpl.actualizar(this.horario);
+                this.servicioHorarioImpl.borrar(this);
 
-        if(bindingResult.hasErrors()){
-            return "horario/editarHorario";
+                for (String numeroDia : wrapperHorario.getHorarioDiasWrapper()) {
+                    this.servicioHorarioImpl.agregar(new HorarioDia(horario, Integer.parseInt(numeroDia)));
+                }*/
+                
+                RequestUtil.agregarRedirect(request, "buscarHorario.htm");
+                // se registra el evento
+                RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "editarHorario.exito", true);
+                log.info(Mensajes.EXITO_ACTUALIZACION + "Horario, id " + horario.getIdHorario());
+
+            } catch (DataAccessException e) {
+                // error de acceso a datos
+                RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "dataAccessException", false);
+                log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
+            } catch (NullPointerException e) {
+                RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "agregarHorario.noDias", false);
+                log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
+            }
         }
 
-        try {
-            // se quita el envoltorio y se trata de actualizar al horario
-            wrapperHorario.quitarWrapper(this.horario);
-            this.servicioHorarioImpl.actualizar(this.horario);
-
-            // se registra el evento
-            RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "editarHorario.exito", true);
-            String msg = Mensajes.EXITO_ACTUALIZACION + "Catedratico, codigo " + this.horario.getIdHorario();
-            log.info(msg);
-
-            modelo.addAttribute("wrapperHorario", wrapperHorario);
-
-        } catch (DataAccessException e) {
-            // error de acceso a datos
-            RequestUtil.crearMensajeRespuesta(request, null, "dataAccessException", false);
-            log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
-        }
-
+        this.agregarAtributosDefault(modelo, wrapperHorario);
         return "horario/editarHorario";
     }
 }

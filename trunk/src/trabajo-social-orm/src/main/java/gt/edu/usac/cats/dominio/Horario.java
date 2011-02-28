@@ -15,8 +15,12 @@ package gt.edu.usac.cats.dominio;
 
 //~--- JDK imports ------------------------------------------------------------
 
+import gt.edu.usac.cats.enums.Dia;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -32,6 +36,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
@@ -43,53 +48,20 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     schema = "control"
 )
 public class Horario implements java.io.Serializable {
-    private Set<AsignacionCatedraticoHorario> asignacionCatedraticoHorarios =
-        new HashSet<AsignacionCatedraticoHorario>(0);
-    private Set<DetalleAsignacion> detalleAsignacions = new HashSet<DetalleAsignacion>(0);
-    private Curso curso;
-    private String dia;
-    private boolean estado;
-    private Date horaFin;
-    private Date horaInicio;
     private int idHorario;
-    private Salon salon;
-    private String seccion;
-    private Semestre semestre;
-    private String tipo;
+     private Semestre semestre;
+     private Curso curso;
+     private Salon salon;
+     private Date horaInicio;
+     private Date horaFin;     
+     private String seccion;     
+     private boolean habilitado;
+     private Set<AsignacionCatedraticoHorario> asignacionCatedraticoHorarios = new HashSet<AsignacionCatedraticoHorario>(0);
+     private Set<HorarioDia> horarioDias = new HashSet<HorarioDia>(0);
+     private Set<DetalleAsignacion> detalleAsignacions = new HashSet<DetalleAsignacion>(0);
 
     public Horario() {}
 
-    public Horario(int idHorario, Semestre semestre, Curso curso, Salon salon, Date horaInicio, Date horaFin,
-                   String dia, String seccion, String tipo, boolean estado) {
-        this.idHorario = idHorario;
-        this.semestre = semestre;
-        this.curso = curso;
-        this.salon = salon;
-        this.horaInicio = horaInicio;
-        this.horaFin = horaFin;
-        this.dia = dia;
-        this.seccion = seccion;
-        this.tipo = tipo;
-        this.estado = estado;
-    }
-
-    public Horario(int idHorario, Semestre semestre, Curso curso, Salon salon, Date horaInicio, Date horaFin,
-                   String dia, String seccion, String tipo, boolean estado,
-                   Set<AsignacionCatedraticoHorario> asignacionCatedraticoHorarios,
-                   Set<DetalleAsignacion> detalleAsignacions) {
-        this.idHorario = idHorario;
-        this.semestre = semestre;
-        this.curso = curso;
-        this.salon = salon;
-        this.horaInicio = horaInicio;
-        this.horaFin = horaFin;
-        this.dia = dia;
-        this.seccion = seccion;
-        this.tipo = tipo;
-        this.estado = estado;
-        this.asignacionCatedraticoHorarios = asignacionCatedraticoHorarios;
-        this.detalleAsignacions = detalleAsignacions;
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -120,7 +92,7 @@ public class Horario implements java.io.Serializable {
         this.semestre = semestre;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
         name = "id_curso",
         nullable = false
@@ -177,19 +149,6 @@ public class Horario implements java.io.Serializable {
     }
 
     @Column(
-        name = "dia",
-        nullable = false,
-        length = 10
-    )
-    public String getDia() {
-        return this.dia;
-    }
-
-    public void setDia(String dia) {
-        this.dia = dia;
-    }
-
-    @Column(
         name = "seccion",
         nullable = false,
         length = 2
@@ -203,28 +162,15 @@ public class Horario implements java.io.Serializable {
     }
 
     @Column(
-        name = "tipo",
-        nullable = false,
-        length = 20
-    )
-    public String getTipo() {
-        return this.tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
-
-    @Column(
-        name = "estado",
+        name = "habilitado",
         nullable = false
     )
-    public boolean isEstado() {
-        return this.estado;
+    public boolean isHabilitado() {
+        return this.habilitado;
     }
 
-    public void setEstado(boolean estado) {
-        this.estado = estado;
+    public void setHabilitado(boolean habilitado) {
+        this.habilitado = habilitado;
     }
 
     @OneToMany(
@@ -253,6 +199,83 @@ public class Horario implements java.io.Serializable {
 
     public void setDetalleAsignacions(Set<DetalleAsignacion> detalleAsignacions) {
         this.detalleAsignacions = detalleAsignacions;
+    }
+
+@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="horario")
+    public Set<HorarioDia> getHorarioDias() {
+        return this.horarioDias;
+    }
+
+    public void setHorarioDias(Set<HorarioDia> horarioDias) {
+        this.horarioDias = horarioDias;
+    }
+
+
+
+    /**
+     * Este metodo se encarga de concatenar los nombres de los dias que tiene asignado el horario
+     * para poder visualizarse en la pagina.  Este propiedad es accedida en la pagina @code buscarHorario.htm.
+     *
+     * @return La cadena que tiene concatenado los días.
+     */
+    @Transient
+    public String getHorarioDiasAsString(){
+        StringBuilder builder = new StringBuilder();
+
+        String [] nombreDias = new String [7];
+
+        if(!this.horarioDias.isEmpty()){
+            for(Iterator <HorarioDia> it = this.horarioDias.iterator(); it.hasNext();){
+                HorarioDia horarioDia = it.next();
+
+                //Se ingresar al primero al array para ordenarlo alfabeticamente.
+                //Suponiendo que los numeros de los dias no cambiaran en el enum "Dia" (1-7) no habra ningun problema
+                Dia d = Dia.fromInt(horarioDia.getNumeroDia());
+                nombreDias[d.getNumeroDia() - 1] = d.getNombreDia();                
+            }
+
+            //Ahora si se concatena.
+            for(String nombreDia : nombreDias){
+                if(nombreDia != null && !nombreDia.isEmpty()){
+                    builder.append(nombreDia).append(" - ");
+                }
+            }
+
+        }else{
+            return "";
+        }
+        String asString = builder.toString();
+
+        return asString.substring(0, asString.length() - 3);
+    }
+
+
+    /**
+     * Esta propiedad se encarga de retornar un arreglo de cadena que tienen los numeros de dias
+     * que tiene relacionado el horario.  Este metodo es util para la visualizacion de los dias
+     * seleccionaes en la pagina @code editarHorario.
+     *
+     * @return Arreglo de cadenas donde se tienen almacenado el numero de los dias.
+     */
+    @Transient
+    public String [] getHorarioDiasNumeroAsArrayString(){
+        if(!this.horarioDias.isEmpty()){
+
+
+            List <String> horarioDiasWrapper = new ArrayList();
+
+            
+            for(Iterator <HorarioDia> it = this.horarioDias.iterator(); it.hasNext();){
+                HorarioDia horarioDia = it.next();
+                horarioDiasWrapper.add(String.valueOf(horarioDia.getNumeroDia()));
+            }
+            
+            String [] a = new String[horarioDiasWrapper.size()];
+            horarioDiasWrapper.toArray(a);
+
+            return a;
+        }
+        return null;
     }
 }
 

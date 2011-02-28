@@ -12,12 +12,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="display" uri="http://displaytag.sf.net"%>
 
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title><fmt:message key="buscarHorario.titulo"/></title>
-        <%@include file="../../jspf/scripts/scriptHorario.jspf" %>
+        <%@include file="../../jspf/plantilla/scriptPopupMensajeDefault.jspf" %>
     </head>
     <body>
         <h1><fmt:message key="buscarHorario.titulo"/></h1>
@@ -31,12 +32,8 @@
                     </form:label>
 
                     <form:select path="salon.idSalon" cssStyle="width: 250px;">
-                        <form:option  value="0" label="Seleccionar un valor" />
-                        <c:forEach items="${salones}" var="salon">
-                            <form:option value="${salon.idSalon}" >
-                                ${salon.numero}  (${salon.edificio})
-                            </form:option>
-                        </c:forEach>
+                        <form:option  value="" label="Seleccionar un valor" />
+                        <form:options items="${listadoSalones}" itemValue="idSalon" itemLabel="numeroEdificio" />
                     </form:select>
                     <form:errors path="salon.idSalon" cssClass="claseError" />
                 </div>
@@ -47,12 +44,8 @@
                     </form:label>
 
                     <form:select path="semestre.idSemestre" cssStyle="width: 250px;">
-                        <form:option  value="0" label="Seleccionar un valor" />
-                        <c:forEach items="${semestres}" var="semestre">
-                            <form:option value="${semestre.idSemestre}" >
-                                ${semestre.numero} - ${semestre.anio}
-                            </form:option>
-                        </c:forEach>
+                        <form:option  value="" label="Seleccionar un valor" />
+                        <form:options items="${listadoSemestres}" itemLabel="anyoNumero" itemValue="idSemestre" />
                     </form:select>
                     <form:errors path="semestre.idSemestre" cssClass="claseError" />
                 </div>
@@ -63,44 +56,32 @@
 
         <fieldset>
                 <legend><fmt:message key="buscarHorario.tituloListado"/></legend>
-                <table id="tablaHorarios" class="ui-widget ui-widget-content">
-                    <thead>
-                        <tr class="ui-widget-header ">
-                            <th><fmt:message key="agregarHorario.curso"/></th>
-                            <th><fmt:message key="agregarHorario.dia"/></th>
-                            <th><fmt:message key="agregarHorario.horaInicio"/></th>
-                            <th><fmt:message key="agregarHorario.horaFin"/></th>
-                            <th><fmt:message key="agregarHorario.seccion"/></th>
-                            <th><fmt:message key="agregarHorario.estado"/></th>
-                            <sec:authorize access="hasAnyRole('ROLE_EDITAR_HORARIO')">
-                                <th><fmt:message key="acciones"/></th>
-                            </sec:authorize>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <c:forEach items="${horarios}" var="horario">
-                            <tr>
-                                <td><c:out value="${horario.curso.nombre}" /></td>
-                                <td><c:out value="${horario.dia}" /></td>
-                                <td>
-                                    <fmt:formatDate pattern="hh:mm" value="${horario.horaInicio}" />
-                                </td>
-                                <td>
-                                    <fmt:formatDate pattern="hh:mm" value="${horario.horaFin}" />
-                                </td>
-                                <td><c:out value="${horario.seccion}" /></td>
-                                <td><c:out value="${horario.estado}" /></td>
-                                <sec:authorize access="hasRole('ROLE_EDITAR_HORARIO')">
-                                    <td>
-                                        <a href="editarHorario.htm?idHorario=${horario.idHorario}">
-                                            <fmt:message key="editarHorario.editar"/>
-                                        </a>
-                                    </td>
-                                </sec:authorize>
-                            </tr>
-                        </c:forEach>
-                    </tbody>
-                </table>
+
+                <display:table class="ui-widget ui-widget-content" name="listadoHorarios" id="horario" requestURI="buscarHorario.htm" pagesize="10" >
+                <display:column property="curso.nombre" titleKey="agregarHorario.curso" />
+                <display:column property="horarioDiasAsString" titleKey="agregarHorario.dia" />
+                <display:column property="seccion" titleKey="agregarHorario.seccion" />
+                <display:column titleKey="agregarHorario.horaInicio" >
+                    <fmt:formatDate pattern="hh:mm" value="${horario.horaInicio}" />
+                </display:column>
+                <display:column titleKey="agregarHorario.horaFin">
+                    <fmt:formatDate pattern="hh:mm" value="${horario.horaFin}" />
+                </display:column>
+                <display:column titleKey="agregarHorario.habilitado">
+                    <c:choose>
+                        <c:when test="${horario.habilitado}">SI</c:when>
+                        <c:otherwise>NO</c:otherwise>
+                    </c:choose>                    
+                </display:column>
+
+                <sec:authorize access="hasAnyRole('ROLE_EDITAR_HORARIO')">
+                    <display:column titleKey="acciones" style="text-align:center;">
+                        <a href="editarHorario.htm?idHorario=${horario.idHorario}">
+                            <fmt:message key="editarPersona.editar"/>
+                        </a>
+                    </display:column>
+                </sec:authorize>
+            </display:table>
         </fieldset>
 
         <%-- fragmento que muestra como mensaje popup el resultado de las operaciones --%>

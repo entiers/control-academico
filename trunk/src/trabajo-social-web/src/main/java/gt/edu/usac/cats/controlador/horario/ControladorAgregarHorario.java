@@ -3,19 +3,14 @@
  * Escuela de Trabajo Social
  * Universidad de San Carlos de Guatemala
  */
-
 package gt.edu.usac.cats.controlador.horario;
 
-import gt.edu.usac.cats.dominio.Curso;
 import gt.edu.usac.cats.dominio.Horario;
-import gt.edu.usac.cats.dominio.Salon;
-import gt.edu.usac.cats.dominio.Semestre;
+import gt.edu.usac.cats.dominio.HorarioDia;
 import gt.edu.usac.cats.dominio.wrapper.WrapperHorario;
 import gt.edu.usac.cats.servicio.ServicioHorario;
 import gt.edu.usac.cats.util.RequestUtil;
 import gt.edu.usac.cats.util.Mensajes;
-import java.util.List;
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
@@ -33,14 +28,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @author Mario Batres
  * @version 1.0
  */
-
 @Controller("controladorAgregarHorario")
 @RequestMapping(value = "agregarHorario.htm")
-public class ControladorAgregarHorario{
-//_____________________________________________________________________________
-    protected static final String [] LISTADO_DIAS =
-    {"Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"};
+public class ControladorAgregarHorario extends ControladorAbstractoHorario {
 //______________________________________________________________________________
+
     /**
      * <p>Lleva el nombre del titulo para el mensaje en la pagina.<p>
      */
@@ -51,30 +43,7 @@ public class ControladorAgregarHorario{
      */
     private static Logger log = Logger.getLogger(ControladorAgregarHorario.class);
 //______________________________________________________________________________
-    /**
-     * <p>Listado de todas las cursos disponibles.</p>
-     */
-    protected List <Semestre> listadoSemestres;
-//______________________________________________________________________________
-    /**
-     * <p>Listado de todas las salones disponibles.</p>
-     */
-    protected List <Salon> listadoSalones;
-//______________________________________________________________________________
-    /**
-     * <p>Listado de todas las cursos disponibles.</p>
-     */
-    protected List <Curso> listadoCursos;
-//______________________________________________________________________________
-    /**
-     * <p>Contiene metodos que permiten el manejo de la informacion relacionada
-     * con el salon en la base de datos. Este objeto se encuentra registrado
-     * como un bean de servicio en Spring, por lo que este es el encargado de
-     * inyectar la dependencia.</p>
-     */
-    @Resource
-    protected ServicioHorario servicioHorarioImpl;
-//______________________________________________________________________________
+
     /**
      * <p>Este metodo se ejecuta cada vez que se realiza una solicitud del tipo
      * GET de la pagina <code>agregarHorario.htm</code>. El metodo se encarga
@@ -86,22 +55,11 @@ public class ControladorAgregarHorario{
      */
     @RequestMapping(method = RequestMethod.GET)
     public String crearFormulario(Model modelo) {
-
-        // se agregan los objetos que se usaran en la pagina
-        modelo.addAttribute("wrapperHorario", new WrapperHorario());
-
-        this.listadoSalones = this.servicioHorarioImpl.listarEntidad(Salon.class);
-        this.listadoSemestres = this.servicioHorarioImpl.listarEntidad(Semestre.class);
-        this.listadoCursos = this.servicioHorarioImpl.listarEntidad(Curso.class);
-
-        modelo.addAttribute("cursos", this.listadoCursos);
-        modelo.addAttribute("salones", this.listadoSalones);
-        modelo.addAttribute("semestres", this.listadoSemestres);
-        modelo.addAttribute("dias", LISTADO_DIAS);
-
+        this.agregarAtributosDefault(modelo, new WrapperHorario());
         return "horario/agregarHorario";
     }
 //______________________________________________________________________________
+
     /**
      * <p>Este metodo es llamado cuando se realiza un SUBMIT desde la pagina de
      * agregar horario <code>agregarHorario.htm</code>. El metodo se encarga de
@@ -128,40 +86,34 @@ public class ControladorAgregarHorario{
      * @return String Con la url de la pagina a mostrar
      */
     @RequestMapping(method = RequestMethod.POST)
-    public String submit(@Valid WrapperHorario wrapperHorario, BindingResult bindingResult,
-            Model modelo, HttpServletRequest request) {
-
-        modelo.addAttribute("cursos", this.listadoCursos);
-        modelo.addAttribute("salones", this.listadoSalones);
-        modelo.addAttribute("semestres", this.listadoSemestres);
-        modelo.addAttribute("dias", LISTADO_DIAS);
+    public String submit(Model modelo, @Valid WrapperHorario wrapperHorario, BindingResult bindingResult,
+            HttpServletRequest request) {
 
         // se validan los campos ingresados en el formulario, si existen errores
         // se regresa al formulario para que se muestren los mensajes correspondientes
-        if(bindingResult.hasErrors())
-            return "horario/agregarHorario";
+        if (!bindingResult.hasErrors()) {
+            try {
+                Horario horario = new Horario();
+                wrapperHorario.quitarWrapper(horario);
+                
+                this.servicioHorarioImpl.agregarHorario(horario, wrapperHorario.getHorarioDiasWrapper());
 
-        try {
-            // se obtiene la carrera seleccionada            
+                
+                wrapperHorario = new WrapperHorario();
+                // se registra el evento
+                RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "agregarHorario.exito", true);                
+                log.info(Mensajes.EXITO_AGREGAR + "Horario, id " + horario.getIdHorario());
 
-            // se quita el envoltorio y se trata de agregar el horario
-            Horario horario = new Horario();
-            wrapperHorario.quitarWrapper(horario);
-            this.servicioHorarioImpl.agregar(horario);
-
-            modelo.addAttribute("wrapperHorario", new WrapperHorario());
-
-            // se registra el evento
-            RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "agregarHorario.exito", true);
-            String msg = Mensajes.EXITO_AGREGAR + "Horario, id " + horario.getIdHorario();
-            log.info(msg);
-
-        } catch (DataAccessException e) {
-            // error de acceso a datos
-            RequestUtil.crearMensajeRespuesta(request, null, "dataAccessException", false);
-            log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
+            } catch (DataAccessException e) {
+                // error de acceso a datos
+                RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "dataAccessException", false);
+                log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
+            } catch (NullPointerException e) {
+                RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "agregarHorario.noDias", false);
+                log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
+            }
         }
-
+        this.agregarAtributosDefault(modelo, wrapperHorario);
         return "horario/agregarHorario";
     }
 }

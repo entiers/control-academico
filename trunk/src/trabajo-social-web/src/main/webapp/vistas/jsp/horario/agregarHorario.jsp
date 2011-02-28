@@ -24,6 +24,8 @@
         <%-- formulario para ingresar los datos del horario --%>
         <form:form modelAttribute="wrapperHorario" method="post">
             <fieldset>
+
+                <c:set var="agregar" value="true" target="request" />
                 <%-- se importan los demas campos --%>
                 <%@include file="../../jspf/formularios/formularioHorario.jspf" %>
 

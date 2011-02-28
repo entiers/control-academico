@@ -8,8 +8,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
    "http://www.w3.org/TR/html4/loose.dtd">
 
-<%@ page import="gt.edu.usac.cats.util.RequestUtil" %>
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
@@ -19,19 +17,7 @@
 <html>
     <head>        
         <title><fmt:message key="buscarPersona.titulo"/></title>
-        <script type="text/javascript">
-            $(function() {
-                $("#popupMensaje").dialog({
-                    autoOpen: <%= RequestUtil.getValorBoolean(request, "mostrarPopupMensaje")%>,
-                    modal: true,
-                    buttons: {
-                        '<fmt:message key="btnAceptar"/>': function() {
-                            $(this).dialog('close');
-                        }
-                    }
-                });
-            });
-        </script>
+        <%@include file="../../jspf/plantilla/scriptPopupMensajeDefault.jspf" %>
     </head>
     <body>
         <h1><fmt:message key="buscarPersona.titulo"/></h1>

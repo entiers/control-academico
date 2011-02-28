@@ -12,18 +12,20 @@
             modal: true,
             buttons: {
                 '<fmt:message key="btnAceptar"/>': function() {
-                    if(<%= RequestUtil.getValorBoolean(request, "limpiarCampos") %>) {
-                        $("#dia").val("0");
-                        $("#estado").val("${wrapperHorario.dia}");
-                        $("#horaFin").val("<fmt:formatDate value="${wrapperHorario.horaFin}"  pattern="HH:mm"/>");
-                        $("#horaInicio").val("<fmt:formatDate value="${wrapperHorario.horaInicio}"  pattern="HH:mm"/>");
-                        $("#seccion").val("${wrapperHorario.seccion}");
-                        $("#tipo").val("${wrapperHorario.tipo}");
-                        $("#curso.idCurso").val("${wrapperHorario.curso.idCurso}");
-                        $("#salon.idSalon").val("${wrapperHorario.salon.idSalon}");
-                        $("#semestre.idSemestre").val("${wrapperHorario.semestre.idSemestre}");
-                    }
-                    $(this).dialog('close');
+                    <%if( request.getAttribute("url") != null ) {%>
+                        location.href = "<%= request.getAttribute("url")%>";
+                    <%}else{%>
+                        if(<%= RequestUtil.getValorBoolean(request, "limpiarCampos") %>) {
+                            $("#horaFin").val("<fmt:formatDate value="${wrapperHorario.horaFin}"  pattern="HH:mm"/>");
+                            $("#horaInicio").val("<fmt:formatDate value="${wrapperHorario.horaInicio}"  pattern="HH:mm"/>");
+                            $("#seccion").val("${wrapperHorario.seccion}");
+                            $("#curso.idCurso").val("${wrapperHorario.curso.idCurso}");
+                            $("#salon.idSalon").val("${wrapperHorario.salon.idSalon}");
+                            $("#semestre.idSemestre").val("${wrapperHorario.semestre.idSemestre}");
+                            $("#habilitado").val("${wrapperHorario.habilitado}");
+                        }
+                        $(this).dialog('close');
+                    <%}%>
                 }
             }
         });
