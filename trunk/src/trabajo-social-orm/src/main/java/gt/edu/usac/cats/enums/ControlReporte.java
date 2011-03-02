@@ -14,7 +14,8 @@ public enum ControlReporte {
 
     CALENDARIO_ACTIVIDADES(1),
     DETALLE_ASIGNACION_PRIMER_INGRESO(2),
-    DETALLE_ASIGNACION(3);
+    DETALLE_ASIGNACION(3),
+    HORARIO(4);
 
     private int id;
 
