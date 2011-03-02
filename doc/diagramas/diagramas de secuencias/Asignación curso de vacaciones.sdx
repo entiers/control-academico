@@ -1,37 +1,40 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram>
-<source><![CDATA[ase:ase : "asignacionSemestre.htm"
-cas:cas : "ControladorAsignacionSemestre"
+<source><![CDATA[ase:ase : "asignacionVacaciones.htm"
+cas:cas : "ControladorAsignacionVacaciones"
 sca:sca : "ServicioCalendarioActividades"
-scua:scua : "ServicioCursoAprobado"
 saes:saes : "ServicioAsignacionEstudianteCarrera"
+ssem:ssem : "ServicioSemestre"
 sho:sho : "ServicioHorario"
+spa:spa : "ServicioPagosBanco"
 sas:sas : "ServicioAsignacion"
 sdas:sdas : "ServicioDetalleAsignacion"
 sem:sem : "ServicioEmail"
 
-ase:peridoValido=cas.asignacionSemestre(Estudiante)
-cas:peridoValido=sca.esActividadVigente(TipoActividad=AsignacionSemestre)
-cas:prerrequisitoCompu=scua.tieneCursoAprobado(CursoComputacion)
-[c:Si Estudiante.inscrito Y esPeríodoVálidoAsignación Y cursoComputacionAprobado]
+ase:peridoValido=cas.asignacionVacaciones(estudiante)
+cas:peridoValido=sca.esActividadVigente(TipoActividad=AsignacionVacaciones)
+
+[c:Si Estudiante.inscrito Y esPeríodoVálidoAsignaciónVaciones ]
 	ase:modelo=cas.crearModelo()
-	cas:listaAsignacionCarreraEstudiante=saes.obtenerCarreras(Estudiante)
-	cas:listaHorarios=sho.obtenerHorarios(Carrera)
+	cas:listaAsignacionCarreraEstudiante=saes.obtenerCarreras(estudiante)
+	cas:semestre=ssem.obtenerSemestreActivo()
+	cas:listaHorarios=sho.obtenerHorarios(Carrera,tipoVacaciones,semestre)
 	ase:mensaje=cas.realizarAsignacion(listadoHorario)
 	cas:traslapeHorario=sho.existeTraslape(List<Horario>)
 	[c:Para cada Horario en listadoHorario]
-		cas:cursosPrerrequisitoPendientes=scua.getCursosPrerrequisitosPendientes(AsignacionEstudianteCarrera,Horario.getCurso())
-		cas:totalAsignacion=sdas.getTotalAsignacion(Horario.getCurso,estudiante,tipoSemestre)
+		cas:cursosPagados=spa.esCursoPagado(Horario.getCurso(),estudiante,semestre)
+		cas:zonasMinimas=sdas.tieneZonaMínima(Horario.getCurso(),asignacionEstudianteCarrera)
+		cas:totalAsignacion=sdas.getTotalAsignacion(Horario.getCurso,estudiante,tipoVacaciones)
 	[/c]
-	[c:Si No cursosPrerrequisitoPendientes Y No traslapeHorario Y totalAsignacion<3]
+	[c:Si cursosPagados Y no traslapeHorario Y zonasMinimas Y totalAsignacion<3]
 		cas:asignacion=sas.agregarAsignacion(AsignacionEstudianteCarrera)
 		cas:sdas.agregarDetalleAsignacion(asignacion,horario)
 		cas:sem.enviarCorreo(mensajeDetalleAsignacion)
 	-- de lo contrario
-		cas:Mostrar mensaje "No se puede realizar la asignación Falta prerrequisito o Existe traslape de horario"
+		cas:Mostrar mensaje "No se puede realizar la asignación No ha pagado el curso o Existe traslape de horario o No tiene zona mínima"
 	[/c]
 -- de lo contrario
-cas:Mostrar mensaje "Estudiante no inscrito ó Período inválido de asignación ó No ha aprobado Curso Computación"
+cas:Mostrar mensaje "Estudiante no inscrito ó Período inválido de asignación"
 [/c]]]></source>
 <configuration>
 <property name="actorWidth" value="25"/>
