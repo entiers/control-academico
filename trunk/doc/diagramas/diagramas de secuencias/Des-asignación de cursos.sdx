@@ -1,37 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram>
-<source><![CDATA[ase:ase : "asignacionSemestre.htm"
-cas:cas : "ControladorAsignacionSemestre"
+<source><![CDATA[ase:ase : "desAsignacionCursos.htm"
+cas:cas : "ControladorDesAsignacionCursos"
 sca:sca : "ServicioCalendarioActividades"
-scua:scua : "ServicioCursoAprobado"
 saes:saes : "ServicioAsignacionEstudianteCarrera"
-sho:sho : "ServicioHorario"
-sas:sas : "ServicioAsignacion"
+ssem:ssem : "ServicioSemestre"
 sdas:sdas : "ServicioDetalleAsignacion"
+sdesas:sdesas : "ServicioDesAsignacion"
 sem:sem : "ServicioEmail"
 
-ase:peridoValido=cas.asignacionSemestre(Estudiante)
-cas:peridoValido=sca.esActividadVigente(TipoActividad=AsignacionSemestre)
-cas:prerrequisitoCompu=scua.tieneCursoAprobado(CursoComputacion)
-[c:Si Estudiante.inscrito Y esPeríodoVálidoAsignación Y cursoComputacionAprobado]
+ase:peridoValido=cas.desAsignacionCursos(estudiante)
+cas:peridoValido=sca.esActividadVigente(TipoActividad=DesAsignacionCursos)
+
+[c:Si esPeríodoVálidoDesAsignacionCursos ]
 	ase:modelo=cas.crearModelo()
-	cas:listaAsignacionCarreraEstudiante=saes.obtenerCarreras(Estudiante)
-	cas:listaHorarios=sho.obtenerHorarios(Carrera)
-	ase:mensaje=cas.realizarAsignacion(listadoHorario)
-	cas:traslapeHorario=sho.existeTraslape(List<Horario>)
-	[c:Para cada Horario en listadoHorario]
-		cas:cursosPrerrequisitoPendientes=scua.getCursosPrerrequisitosPendientes(AsignacionEstudianteCarrera,Horario.getCurso())
-		cas:totalAsignacion=sdas.getTotalAsignacion(Horario.getCurso,estudiante,tipoSemestre)
+	cas:listaAsignacionCarreraEstudiante=saes.obtenerCarreras(estudiante)
+	cas:semestre=ssem.obtenerSemestreActivo()
+	cas:listaDetalleAsignacion=sdas.getDetalleAsignacion(estudiante,semestre)
+	ase:mensaje=cas.realizarDesAsignacion(listadoDetalleAsignacion)
+	[c:Para Cada detalleAsignacion en listadoDetalleAsignacion]
+		cas:sdesas.agregarDesAsignacion(asignacion,detalleAsignacion)
 	[/c]
-	[c:Si No cursosPrerrequisitoPendientes Y No traslapeHorario Y totalAsignacion<3]
-		cas:asignacion=sas.agregarAsignacion(AsignacionEstudianteCarrera)
-		cas:sdas.agregarDetalleAsignacion(asignacion,horario)
-		cas:sem.enviarCorreo(mensajeDetalleAsignacion)
-	-- de lo contrario
-		cas:Mostrar mensaje "No se puede realizar la asignación Falta prerrequisito o Existe traslape de horario"
-	[/c]
+	cas:sem.enviarCorreo(mensajeDetalleDesAsignacion)	
 -- de lo contrario
-cas:Mostrar mensaje "Estudiante no inscrito ó Período inválido de asignación ó No ha aprobado Curso Computación"
+cas:Mostrar mensaje "Período inválido de des-asignación"
 [/c]]]></source>
 <configuration>
 <property name="actorWidth" value="25"/>
