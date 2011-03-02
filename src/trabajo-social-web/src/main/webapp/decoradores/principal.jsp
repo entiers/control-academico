@@ -57,7 +57,7 @@
                     "class":"art-article"
             });
 
-            $("input:submit, input:button").attr({
+            $("input:submit, input:button, button").attr({
                 "class": "art-button"
             });
         });

@@ -6,7 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-   "http://www.w3.org/TR/html4/loose.dtd">
+    "http://www.w3.org/TR/html4/loose.dtd">
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
@@ -19,13 +19,54 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title><fmt:message key="buscarHorario.titulo"/></title>
         <%@include file="../../jspf/plantilla/scriptPopupMensajeDefault.jspf" %>
+        <%@include file="../../jspf/scripts/scriptPopupReportes.jspf" %>
+
+        <script type="text/javascript">
+             var validar = function(){
+                if($("#valorParametro").attr("value") != ""){
+                    return true;
+                }
+                
+                $("#errorFormulario").dialog("open");
+                return false;
+            }
+        </script>
     </head>
     <body>
         <h1><fmt:message key="buscarHorario.titulo"/></h1>
 
+        <div class="contenedor-reporte-arriba">
+            <div id="errorFormulario" title="Error"><fmt:message key="horario.errorFormulario" /></div>
+
+            <div id="verReporte" title="<fmt:message key="horario.verReporte" />">
+                <form:form action="generarReporte.htm" method="POST" target="_BLANK" onsubmit="return validar();">
+                    <input type="hidden" name="nombreControlReporte" value="${nombreControlReporte}" />
+
+                    <div id="divCampos">
+                        <input type="hidden" name="nombreParametro" value="ID_SEMESTRE" />
+
+                        <label><fmt:message key="agregarHorario.semestre"/>: *</label>
+                        <select name="valorParametro" id="valorParametro">
+                            <option value="">Seleccionar un valor</option>
+                            <c:forEach items="${listadoSemestres}" var="semestre">
+                                <option value="${semestre.idSemestre}">${semestre.anyoNumero}</option>>
+                            </c:forEach>
+                        </select>
+                        <input type="hidden" name="tipoParametro" value="integer" />
+                    </div>
+
+                    <input type="submit" value="Imprimir"/>
+                </form:form>
+            </div>
+            <button id="botonVerReporte"> <fmt:message key="horario.verReporte" /></button>
+        </div>
+
+
+
         <%-- formulario para ingresar los datos del horario --%>
         <form:form modelAttribute="datosBusquedaHorario" method="post">
             <fieldset>
+                <legend><fmt:message key="legendaFormularioBusqueda" /></legend>
                 <div id="divCampos">
                     <form:label for="salon.idSalon" path="salon.idSalon">
                         <fmt:message key="agregarHorario.salon"/>: *
@@ -55,9 +96,9 @@
         </form:form>
 
         <fieldset>
-                <legend><fmt:message key="buscarHorario.tituloListado"/></legend>
+            <legend><fmt:message key="buscarHorario.tituloListado"/></legend>
 
-                <display:table class="ui-widget ui-widget-content" name="listadoHorarios" id="horario" requestURI="buscarHorario.htm" pagesize="10" >
+            <display:table class="ui-widget ui-widget-content" name="listadoHorarios" id="horario" requestURI="buscarHorario.htm" pagesize="10" >
                 <display:column property="curso.nombre" titleKey="agregarHorario.curso" />
                 <display:column property="horarioDiasAsString" titleKey="agregarHorario.dia" />
                 <display:column property="seccion" titleKey="agregarHorario.seccion" />

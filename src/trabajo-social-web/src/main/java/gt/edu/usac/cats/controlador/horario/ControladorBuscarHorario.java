@@ -9,6 +9,7 @@ import gt.edu.usac.cats.dominio.Horario;
 import gt.edu.usac.cats.dominio.Salon;
 import gt.edu.usac.cats.dominio.Semestre;
 import gt.edu.usac.cats.dominio.busqueda.DatosBusquedaHorario;
+import gt.edu.usac.cats.enums.ControlReporte;
 import gt.edu.usac.cats.util.RequestUtil;
 import gt.edu.usac.cats.util.Mensajes;
 import java.util.List;
@@ -61,6 +62,10 @@ public class ControladorBuscarHorario extends ControladorAbstractoHorario {
     @RequestMapping(method = RequestMethod.GET)
     public String crearFormulario(Model modelo) {
         this.agregarAtributosDefaultBusqueda(modelo, new DatosBusquedaHorario());
+
+        //para visualizar el reporte
+        modelo.addAttribute("nombreControlReporte", ControlReporte.HORARIO);        
+        
         return "horario/buscarHorario";
     }
 
