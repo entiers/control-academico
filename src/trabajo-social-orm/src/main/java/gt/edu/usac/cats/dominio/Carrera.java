@@ -29,6 +29,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 /**
@@ -160,6 +161,12 @@ public class Carrera implements java.io.Serializable {
 
     public void setAsignacionEstudianteCarreras(Set<AsignacionEstudianteCarrera> asignacionEstudianteCarreras) {
         this.asignacionEstudianteCarreras = asignacionEstudianteCarreras;
+    }
+
+
+    @Transient
+    public String getCodigoNombre(){
+        return this.codigo + " - " + this.nombre;
     }
 }
 

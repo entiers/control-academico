@@ -145,7 +145,7 @@ public class ControladorControlPensum {
         }
 
         // se obtiene la carrera seleccionada
-        Carrera carrera = this.getCarreraSeleccionada(wrapperPensum.getIdCarrera());
+        Carrera carrera = null;//this.getCarreraSeleccionada(wrapperPensum.getIdCarrera());
 
         // se quita el envoltorio y se trata de agregar el pensum
         Pensum pensum = new Pensum();
