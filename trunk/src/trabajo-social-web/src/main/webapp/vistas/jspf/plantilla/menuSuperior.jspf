@@ -111,7 +111,21 @@
                     </ul>
                 </li>
             </sec:authorize>
+            <%--Catalogos de personas--%>
+            <sec:authorize access="hasAnyRole('ROLE_AGREGAR_PENSUM','ROLE_BUSCAR_PENSUM')">
+                <li><a href="#"><fmt:message key="pensum.menu"/></a>
+                    <ul>
+                        <sec:authorize access="hasRole('ROLE_AGREGAR_PENSUM')">
+                            <li><a href="agregarPensum.htm"><fmt:message key="agregarPensum.titulo"/></a></li>
+                        </sec:authorize>
+                        <sec:authorize access="hasRole('ROLE_BUSCAR_PENSUM')">
+                            <li><a href="buscarPensum.htm"><fmt:message key="buscarPensum.titulo"/></a></li>
+                        </sec:authorize>
+                    </ul>
+                </li>
+            </sec:authorize>
 
+            <%--Catalogos de personas--%>
             <sec:authorize access="hasAnyRole('ROLE_AGREGAR_PERSONA','ROLE_BUSCAR_PERSONA')">
                 <li><a href="#"><fmt:message key="persona.menu"/></a>
                     <ul>

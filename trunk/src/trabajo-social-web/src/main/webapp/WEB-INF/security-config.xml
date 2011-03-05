@@ -43,6 +43,9 @@
         <intercept-url pattern="/editarHorario.htm" access="hasRole('ROLE_EDITAR_HORARIO')" />
 
         <intercept-url pattern="/controlPensum.htm" access="hasRole('ROLE_CONTROL_PENSUM')"/>
+        <intercept-url pattern="/agregarPensum.htm" access="hasRole('ROLE_AGREGAR_PENSUM')"/>
+        <intercept-url pattern="/buscarPensum.htm" access="hasRole('ROLE_BUSCAR_PENSUM')"/>
+        <intercept-url pattern="/editarPensum.htm" access="hasRole('ROLE_EDITAR_PENSUM')"/>
 
         <intercept-url pattern="/agregarPerfil.htm" access="hasRole('ROLE_AGREGAR_PERFIL')" />
         <intercept-url pattern="/buscarPerfil.htm" access="hasRole('ROLE_BUSCAR_PERFIL')" />

@@ -1,0 +1,35 @@
+<%@ page pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
+<div id="divCampos">
+    <form:label for="codigo" path="codigo"><fmt:message key="agregarPensum.codigo"/>: *</form:label>
+    <form:input path="codigo" cssStyle="width: 250px;" />
+    <form:errors path="codigo" cssClass="claseError" />
+</div>
+
+
+<div id="divCampos">
+    <form:label for="fechaInicio" path="fechaInicio"><fmt:message key="agregarPensum.fechaInicio"/>: *</form:label>
+    <form:input path="fechaInicio" cssStyle="width: 250px;" cssClass="datepicker" />
+    <form:errors path="fechaInicio" cssClass="claseError" />
+</div>
+
+<div id="divCampos">
+    <form:label for="fechaFin" path="fechaFin"><fmt:message key="agregarPensum.fechaFin"/>: *</form:label>
+    <form:input path="fechaFin" cssStyle="width: 250px;" cssClass="datepicker" />
+    <form:errors path="fechaFin" cssClass="claseError" />
+</div>
+
+<div id="divCampos">
+    <form:label for="carrera.idCarrera" path="carrera.idCarrera">
+        <fmt:message key="agregarPensum.carrera"/>: *
+    </form:label>
+
+    <form:select path="carrera.idCarrera" cssStyle="width: 250px;">
+        <form:option  value="" label="Seleccionar un valor" />
+        <form:options items="${listadoCarreras}" itemValue="idCarrera" itemLabel="codigoNombre" />
+    </form:select>
+    <form:errors path="carrera.idCarrera" cssClass="claseError" />
+</div>
