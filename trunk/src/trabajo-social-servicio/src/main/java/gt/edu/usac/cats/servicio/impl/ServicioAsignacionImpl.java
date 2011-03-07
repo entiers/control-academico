@@ -71,13 +71,15 @@ public class ServicioAsignacionImpl extends ServicioGeneralImpl implements Servi
     }
 
     @Override
-    public List<DetalleAsignacion> realizarAsignacionCursos(AsignacionEstudianteCarrera asignacionEstudianteCarrera, List<Horario> listaHorario) throws DataAccessException {
+    public List<DetalleAsignacion> realizarAsignacionCursos(AsignacionEstudianteCarrera asignacionEstudianteCarrera, 
+                                                             List<Horario> listaHorario,
+                                                             TipoAsignacion tipoAsignacion) throws DataAccessException {
 
         List<DetalleAsignacion> listaDetAsign = new ArrayList<DetalleAsignacion>();
         Asignacion asignacion = new Asignacion();
         asignacion.setTransaccion(this.getUUID());
         asignacion.setAsignacionEstudianteCarrera(asignacionEstudianteCarrera);
-        asignacion.setTipoAsignacion(TipoAsignacion.ASIGNACION_CURSOS_SEMESTRE);
+        asignacion.setTipoAsignacion(tipoAsignacion);
         this.agregar(asignacion);
 
         for(Horario horario : listaHorario){

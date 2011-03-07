@@ -65,7 +65,6 @@ public class Estudiante implements java.io.Serializable {
     private char sexo;
     private boolean inscrito;
     private Set<CuentaCorriente> cuentaCorrientes = new HashSet<CuentaCorriente>(0);
-    private Set<Desasignacion> desasignacions = new HashSet<Desasignacion>(0);
     private Set<AsignacionDocumento> asignacionDocumentos = new HashSet<AsignacionDocumento>(0);
     private Set<CursoExtra> cursoExtras = new HashSet<CursoExtra>(0);
     private Set<AsignacionEstudianteCarrera> asignacionEstudianteCarreras = new HashSet<AsignacionEstudianteCarrera>(0);
@@ -230,14 +229,6 @@ public class Estudiante implements java.io.Serializable {
 
     public void setCuentaCorrientes(Set<CuentaCorriente> cuentaCorrientes) {
         this.cuentaCorrientes = cuentaCorrientes;
-    }
-@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="estudiante")
-    public Set<Desasignacion> getDesasignacions() {
-        return this.desasignacions;
-    }
-
-    public void setDesasignacions(Set<Desasignacion> desasignacions) {
-        this.desasignacions = desasignacions;
     }
 @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="estudiante")
     public Set<AsignacionDocumento> getAsignacionDocumentos() {

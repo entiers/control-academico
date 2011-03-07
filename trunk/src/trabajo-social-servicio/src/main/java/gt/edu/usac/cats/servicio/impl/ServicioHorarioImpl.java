@@ -11,12 +11,12 @@ import gt.edu.usac.cats.dominio.Horario;
 import gt.edu.usac.cats.dominio.HorarioDia;
 import gt.edu.usac.cats.dominio.Salon;
 import gt.edu.usac.cats.dominio.Semestre;
+import gt.edu.usac.cats.enums.TipoHorario;
 import gt.edu.usac.cats.servicio.ServicioHorario;
 import java.util.Calendar;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
@@ -99,6 +99,7 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
         builder.append(" select horario.idHorario from Horario as horario ")
                .append(" left join horario.detalleAsignacions as det ")
                .append(" where horario.curso = :curso ")
+               .append(" and horario.tipo = :tipo")
                .append(" and horario.semestre.numero='1' ")
                .append(" and horario.semestre.anio= ")
                .append( String.valueOf(fecha.get(Calendar.YEAR)))
@@ -111,6 +112,7 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
 
         Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
         query.setParameter("curso", curso);
+//        query.setParameter("tipo", TipoHorario.SEMESTRE);
 
         List list = query.list();
         if (!list.isEmpty())
@@ -184,11 +186,11 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
      *
      * <ul>
      *  <li> Se actualiza el horario </li>
-     *  <li> Se eliminan los días relacionados con el horario</li>
+     *  <li> Se eliminan los dias relacionados con el horario</li>
      *  <li> Se ingresan los nuevos dias relacionados al horario</li>
      * </ul>
      * @param horario El nuevo horario a agregar.
-     * @param horarioDiasWrapper Array de cadena de los días.
+     * @param horarioDiasWrapper Array de cadena de los dias.
      *
      * @throws DataIntegrityViolationException Se efectua la excepcion si hay un nombre de usuario igual en la base de datos.
      * @throws DataAccessException Se efectua si se puede acceder a la base de datos.
@@ -220,7 +222,7 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
      *  <li> Se ingresan los dias relacionados al horario</li>
      * </ul>
      * @param horario El nuevo horario a agregar.
-     * @param horarioDiasWrapper Array de cadena de los días.
+     * @param horarioDiasWrapper Array de cadena de los dias.
      *
      * @throws DataIntegrityViolationException Se efectua la excepcion si hay un nombre de usuario igual en la base de datos.
      * @throws DataAccessException Se efectua si se puede acceder a la base de datos.
@@ -234,6 +236,32 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
             this.agregar(new HorarioDia(horario, Integer.parseInt(numeroDia)));
         }
 
+    }
+
+    //______________________________________________________________________________
+    /**
+     * <p>Este metodo se encarga de devolver los horarios disponibles en el
+     * semestre indicado, de una carrera especifica y del tipoHorario especificado.</p>
+     *
+     * @param curso Pojo del tipo {@link Curso}
+     * @param semestre Pojo del tipo {@link Semestre}
+     * @param tipoHorario Pojo del tipo {@link TipoHorario}
+     * @throws DataAccessException Si ocurrio un error de acceso a datos
+     * @return List
+     */
+    @Override
+    public List<Horario> getHorario(Curso curso, Semestre semestre, TipoHorario tipoHorario) throws DataAccessException {
+        DetachedCriteria criteria = DetachedCriteria.forClass(Horario.class);
+
+        criteria.add(Restrictions.and(Restrictions.eq("tipo", tipoHorario),
+                        Restrictions.and(
+                            Restrictions.eq("curso", curso),
+                            Restrictions.eq("semestre", semestre)
+                        )
+                      )
+                    );
+
+        return this.daoGeneralImpl.find(criteria);
     }
 
 

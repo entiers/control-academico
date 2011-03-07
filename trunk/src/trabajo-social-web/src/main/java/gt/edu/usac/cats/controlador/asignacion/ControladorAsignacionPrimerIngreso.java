@@ -65,8 +65,7 @@ public class ControladorAsignacionPrimerIngreso {
     public String validarPeriodoValidoAsignacion(Model modelo, HttpServletRequest request) {
         
         Calendar calendar = Calendar.getInstance();
-        Semestre semestre = (Semestre) this.servicioSemestreImpl.
-                                        listarSemestres(Short.valueOf(String.valueOf(calendar.get(Calendar.YEAR))) , '1').get(0);
+        Semestre semestre = (Semestre) this.servicioSemestreImpl.getSemestreActivo();
 
         modelo.addAttribute("procesoEjecutado","false");
         //Validar perido de asignacion primer ingreso

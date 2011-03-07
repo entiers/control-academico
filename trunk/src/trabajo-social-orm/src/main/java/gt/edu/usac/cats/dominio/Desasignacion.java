@@ -38,25 +38,22 @@ import javax.persistence.TemporalType;
     schema = "control"
 )
 public class Desasignacion implements java.io.Serializable {
-    private Curso curso;
-    private Estudiante estudiante;
+    private DetalleAsignacion detalleAsignacion;
     private Date fecha;
     private int idDesasignacion;
     private String observacion;
 
     public Desasignacion() {}
 
-    public Desasignacion(int idDesasignacion, Estudiante estudiante, Curso curso, Date fecha) {
+    public Desasignacion(int idDesasignacion, DetalleAsignacion detalleAsignacion, Date fecha) {
         this.idDesasignacion = idDesasignacion;
-        this.estudiante = estudiante;
-        this.curso = curso;
+        this.detalleAsignacion = detalleAsignacion;
         this.fecha = fecha;
     }
 
-    public Desasignacion(int idDesasignacion, Estudiante estudiante, Curso curso, Date fecha, String observacion) {
+    public Desasignacion(int idDesasignacion, DetalleAsignacion detalleAsignacion, Date fecha, String observacion) {
         this.idDesasignacion = idDesasignacion;
-        this.estudiante = estudiante;
-        this.curso = curso;
+        this.detalleAsignacion = detalleAsignacion;
         this.fecha = fecha;
         this.observacion = observacion;
     }
@@ -78,28 +75,15 @@ public class Desasignacion implements java.io.Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
-        name = "id_estudiante",
+        name = "id_detalle_asignacion",
         nullable = false
     )
-    public Estudiante getEstudiante() {
-        return this.estudiante;
+    public DetalleAsignacion getDetalleAsignacion() {
+        return this.detalleAsignacion;
     }
 
-    public void setEstudiante(Estudiante estudiante) {
-        this.estudiante = estudiante;
-    }
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(
-        name = "id_curso",
-        nullable = false
-    )
-    public Curso getCurso() {
-        return this.curso;
-    }
-
-    public void setCurso(Curso curso) {
-        this.curso = curso;
+    public void setDetalleAsignacion(DetalleAsignacion detalleAsignacion) {
+        this.detalleAsignacion = detalleAsignacion;
     }
 
     @Temporal(TemporalType.DATE)

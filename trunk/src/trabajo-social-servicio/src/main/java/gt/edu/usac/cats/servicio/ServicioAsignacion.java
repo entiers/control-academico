@@ -52,6 +52,7 @@ public interface ServicioAsignacion extends ServicioGeneral {
      * @throws DataAccessException Si ocurrio un error de acceso a datos
      */
     List<DetalleAsignacion> realizarAsignacionCursos(AsignacionEstudianteCarrera asignacionEstudianteCarrera,
-                                                        List<Horario> listaHorario)
+                                                        List<Horario> listaHorario,
+                                                        TipoAsignacion tipoAsignacion)
             throws DataAccessException;
 }
