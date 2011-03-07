@@ -22,10 +22,12 @@
  * @version 1.0
  */
 public enum TipoAsignacion {
-    DEFAULT(1, "Default"),
-    ASIGNACION_PRIMER_INGRESO(2,"Asignación de cursos de primer ingreso"),
-    ASIGNACION_CURSOS_SEMESTRE(3,"Asignación de cursos en semestre")
-            ;
+    ASIGNACION_PRIMER_INGRESO(1,"Asignación primer ingreso"),
+    ASIGNACION_CURSOS_SEMESTRE(2,"Asignación semestre"),
+    ASIGNACION_CURSOS_VACACIONES(3,"Asignación vacaciones"),
+    ASIGNACION_PRIMERA_RETRASADA(4,"Asignación primera retrasada"),
+    ASIGNACION_SEGUNDA_RETRASADA(5,"Asignación segunda retrasada")
+    ;
 
     private int id;
     private String descripcion;
@@ -63,12 +65,12 @@ public enum TipoAsignacion {
      * @param id Valor de tipo int que representa el id del tipo de asignacion.
      * Cuyo id es almacenado en la BD.
      */
-    public static TipoActividad fromInt(int id){
-        TipoActividad [] tipoActividades = TipoActividad.values();
+    public static TipoAsignacion fromInt(int id){
+        TipoAsignacion [] tipoAsignaciones = TipoAsignacion.values();
 
-        for(TipoActividad tipoActividad : tipoActividades){
-            if(tipoActividad.toInt() == id){
-                return tipoActividad;
+        for(TipoAsignacion tipoAsignacion : tipoAsignaciones){
+            if(tipoAsignacion.toInt() == id){
+                return tipoAsignacion;
             }
         }
 

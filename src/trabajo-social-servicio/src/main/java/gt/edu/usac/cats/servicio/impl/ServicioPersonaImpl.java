@@ -149,7 +149,7 @@ public class ServicioPersonaImpl extends ServicioGeneralImpl implements Servicio
 //______________________________________________________________________________
 
     /**
-     * <p>Este metodo se encarga de actualizar la información de la persona como su nombre de usuario</>
+     * <p>Este metodo se encarga de actualizar la informacion de la persona como su nombre de usuario</>
      *
      * @param persona Objeto de tipo {@link Persona}
      *

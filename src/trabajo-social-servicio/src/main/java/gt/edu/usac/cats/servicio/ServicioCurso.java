@@ -8,6 +8,8 @@ package gt.edu.usac.cats.servicio;
 
 import gt.edu.usac.cats.dominio.Carrera;
 import gt.edu.usac.cats.dominio.Curso;
+import gt.edu.usac.cats.dominio.Semestre;
+import gt.edu.usac.cats.enums.TipoHorario;
 import java.util.List;
 import org.springframework.dao.DataAccessException;
 
@@ -51,4 +53,19 @@ public interface ServicioCurso extends ServicioGeneral {
      */
     List<Curso> getCurso(Carrera carrera)
             throws DataAccessException;
+    
+    /**
+     * <p>Este metodo permite la busqueda de los cursos de una
+     * carrera en especifico, que tenga horario para el tipoHorario 
+     * especificado.</p>
+     *
+     * @param carrera pojo del tipo {@link Carrrera}
+     * @param tipoHorario pojo del tipo {@link TipoHorario}
+     * @return Curso
+     * @throws DataAccessException Si ocurrio un error de acceso a datos
+     */
+    List<Curso> getCursoAsignacion(Carrera carrera,Semestre semestre, TipoHorario tipoHorario)
+            throws DataAccessException;
+
+
 }

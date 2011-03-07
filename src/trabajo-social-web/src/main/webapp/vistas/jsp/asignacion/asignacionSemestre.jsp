@@ -34,7 +34,7 @@
     </head>
     <body>
         <h1><fmt:message key="miscursos.asignacionCursos.titulo"/></h1>
-        <form:form method="post" modelAttribute="datosBusquedaCarrera" action="agregarHorarioAsignacion.htm">
+        <form:form method="post" modelAttribute="datosAsignacion" action="agregarHorarioAsignacionSemestre.htm">
             <fieldset>
                 <legend><fmt:message key="miscursos.asignacionCursos.horarios"/></legend>
                 <div id="divCampos">
@@ -59,46 +59,54 @@
                                  itemValue="idHorario"/>
                     <form:errors path="idHorario" cssClass="claseError" />
                 </div>
+                <form:hidden path="tipoAsignacion" />
+                <form:hidden path="idAsignacionEstudianteCarrera" />
+                <form:hidden path="totalCursos" />
                 <br/>
                 <input type="submit" value='<fmt:message key="miscursos.asignacionCursos.agregarCurso" />' />
             </fieldset>
         </form:form>
 
         <c:if test="${horarioElegido}" >
-            <fieldset>
-                <legend><fmt:message key="buscarHorario.tituloListado"/></legend>
-                <table id="tablaHorarios" class="ui-widget ui-widget-content" align="center">
-                    <thead>
-                        <tr class="ui-widget-header ">
-                            <th><fmt:message key="agregarHorario.curso"/></th>
-                            <th><fmt:message key="agregarHorario.dia"/></th>
-                            <th><fmt:message key="agregarHorario.horaInicio"/></th>
-                            <th><fmt:message key="agregarHorario.horaFin"/></th>
-                            <th><fmt:message key="agregarHorario.seccion"/></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <c:forEach items="${listadoHorarioAsignados}" var="horario">
-                            <tr>
-                                <td><c:out value="${horario.curso.nombre}" /></td>
-                                <td><c:out value="${horario.dia}" /></td>
-                                <td align="center">
-                                    <fmt:formatDate pattern="hh:mm" value="${horario.horaInicio}" />
-                                </td>
-                                <td align="center">
-                                    <fmt:formatDate pattern="hh:mm" value="${horario.horaFin}" />
-                                </td>
-                                <td align="center"><c:out value="${horario.seccion}" /></td>
+            <form:form method="POST" modelAttribute="datosAsignacion" action="realizarAsignacionSemestre.htm">
+                <fieldset>
+                    <legend><fmt:message key="buscarHorario.tituloListado"/></legend>
+                    <table id="tablaHorarios" class="ui-widget ui-widget-content" align="center">
+                        <thead>
+                            <tr class="ui-widget-header ">
+                                <th><fmt:message key="agregarHorario.curso"/></th>
+                                <th><fmt:message key="agregarHorario.seccion"/></th>
+                                <th><fmt:message key="agregarHorario.salon"/></th>
+                                <th><fmt:message key="agregarHorario.horaInicio"/></th>
+                                <th><fmt:message key="agregarHorario.horaFin"/></th>
+                                <th><fmt:message key="agregarHorario.dia"/></th>
                             </tr>
-                        </c:forEach>
-                    </tbody>
-                </table>
-                <br/>
-                <form:form method="POST" action="realizarAsignacion.htm">
+                        </thead>
+                        <tbody>
+                            <c:forEach items="${listadoHorarioAsignados}" var="horario">
+                                <tr>
+                                    <td><c:out value="${horario.curso.nombre}" /></td>
+                                    <td align="center"><c:out value="${horario.seccion}" /></td>
+                                    <td align="center">
+                                        <c:out value="${horario.salon.edificio}" />-<c:out value="${horario.salon.numero}" />
+                                    </td>
+                                    <td align="center">
+                                        <fmt:formatDate pattern="hh:mm" value="${horario.horaInicio}" />
+                                    </td>
+                                    <td align="center">
+                                        <fmt:formatDate pattern="hh:mm" value="${horario.horaFin}" />
+                                    </td>
+                                    <td><c:out value="${horario.horarioDiasAsString}" /></td>
+                                </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+                    <form:hidden path="idAsignacionEstudianteCarrera" />
+                    <form:hidden path="tipoAsignacion" />
+                    <br/>
                     <input type="submit" id="btnRealizarAsignacion" value='<fmt:message key="miscursos.asignacionCursos.realizar" />' />
-                </form:form>
-                
-            </fieldset>
+                </fieldset>
+            </form:form>
         </c:if>
 
         <script type="text/javascript">
@@ -111,7 +119,7 @@
             });
 
             function getHorarios(value) {
-                $.getJSON("getHorario.htm", { idCurso: value }, function(lstHorario) {
+                $.getJSON("getHorarioAsignacionSemestre.htm", { idCurso: value }, function(lstHorario) {
                     var options = '';
                     $.each(lstHorario, function (index,value) {
                         options += "<option value='" + value.idHorario + "'>" + value.seccion + "</option>";

@@ -9,6 +9,7 @@ import gt.edu.usac.cats.dominio.Curso;
 import gt.edu.usac.cats.dominio.Horario;
 import gt.edu.usac.cats.dominio.Salon;
 import gt.edu.usac.cats.dominio.Semestre;
+import gt.edu.usac.cats.enums.TipoHorario;
 import java.util.List;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -61,14 +62,30 @@ public interface ServicioHorario extends ServicioGeneral {
 //______________________________________________________________________________
     /**
      * <p>Este metodo se encarga de devolver los horarios disponibles en el
-     * primer semestres de una carrera especifica.</p>
+     * semestre indicado, de una carrera especifica.</p>
      *
      * @param curso Pojo del tipo {@link Curso}
+     * @param semestre Pojo del tipo {@link Semestre}
      * @throws DataAccessException Si ocurrio un error de acceso a datos
      * @return List
      */
     List<Horario> getHorario(Curso curso, Semestre semestre)
             throws DataAccessException;
+
+//______________________________________________________________________________
+    /**
+     * <p>Este metodo se encarga de devolver los horarios disponibles en el
+     * semestre indicado, de una carrera especifica y del tipoHorario especificado.</p>
+     *
+     * @param curso Pojo del tipo {@link Curso}
+     * @param semestre Pojo del tipo {@link Semestre}
+     * @param tipoHorario Pojo del tipo {@link TipoHorario}
+     * @throws DataAccessException Si ocurrio un error de acceso a datos
+     * @return List
+     */
+    List<Horario> getHorario(Curso curso, Semestre semestre, TipoHorario tipoHorario)
+            throws DataAccessException;
+
 
 //______________________________________________________________________________
     /**
@@ -114,11 +131,11 @@ public interface ServicioHorario extends ServicioGeneral {
      *
      * <ul>
      *  <li> Se actualiza el horario </li>
-     *  <li> Se eliminan los días relacionados con el horario</li>
+     *  <li> Se eliminan los dias relacionados con el horario</li>
      *  <li> Se ingresan los nuevos dias relacionados al horario</li>
      * </ul>
      * @param horario El nuevo horario a agregar.
-     * @param horarioDiasWrapper Array de cadena de los días.
+     * @param horarioDiasWrapper Array de cadena de los dias.
      *
      * @throws DataIntegrityViolationException Se efectua la excepcion si hay un nombre de usuario igual en la base de datos.
      * @throws DataAccessException Se efectua si se puede acceder a la base de datos.
@@ -135,7 +152,7 @@ public interface ServicioHorario extends ServicioGeneral {
      *  <li> Se ingresan los dias relacionados al horario</li>
      * </ul>
      * @param horario El nuevo horario a agregar.
-     * @param horarioDiasWrapper Array de cadena de los días.
+     * @param horarioDiasWrapper Array de cadena de los dias.
      *
      * @throws DataIntegrityViolationException Se efectua la excepcion si hay un nombre de usuario igual en la base de datos.
      * @throws DataAccessException Se efectua si se puede acceder a la base de datos.

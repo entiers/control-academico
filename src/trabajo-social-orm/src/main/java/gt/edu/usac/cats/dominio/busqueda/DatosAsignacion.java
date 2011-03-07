@@ -6,15 +6,19 @@
 
 package gt.edu.usac.cats.dominio.busqueda;
 
+import gt.edu.usac.cats.enums.TipoAsignacion;
+
 /**
  *
  * @author Carlos Solorzano
  * @version 1.0
  */
-public class DatosBusquedaCarrera {
+public class DatosAsignacion {
+    private TipoAsignacion tipoAsignacion;
     private int idAsignacionEstudianteCarrera;
     private int idHorario;
     private int idCurso;
+    private int totalCursos;
 
     public int getIdAsignacionEstudianteCarrera() {
         return idAsignacionEstudianteCarrera;
@@ -39,4 +43,25 @@ public class DatosBusquedaCarrera {
     public void setIdHorario(int idHorario) {
         this.idHorario = idHorario;
     }
+
+    public TipoAsignacion getTipoAsignacion() {
+        return tipoAsignacion;
+    }
+
+    public void setTipoAsignacion(TipoAsignacion tipoAsignacion) {
+        this.tipoAsignacion = tipoAsignacion;
+    }
+
+    public int getTotalCursos() {
+        return totalCursos;
+    }
+
+    public void setTotalCursos(int totalCursos){
+        this.totalCursos =  totalCursos;
+    }
+
+    public void incrementarTotalCursos() {
+        this.totalCursos++;
+    }
+
 }

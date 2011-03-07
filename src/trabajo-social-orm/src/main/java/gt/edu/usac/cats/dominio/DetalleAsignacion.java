@@ -40,6 +40,7 @@ import javax.persistence.Table;
 )
 public class DetalleAsignacion implements java.io.Serializable {
     private Set<NotaIndicador> notaIndicadors = new HashSet<NotaIndicador>(0);
+    private Set<Desasignacion> desasignacions = new HashSet<Desasignacion>(0);
     private Asignacion asignacion;
     private short examenFinal;
     private Horario horario;
@@ -163,6 +164,20 @@ public class DetalleAsignacion implements java.io.Serializable {
     public void setNotaIndicadors(Set<NotaIndicador> notaIndicadors) {
         this.notaIndicadors = notaIndicadors;
     }
+
+    @OneToMany(
+        cascade=CascadeType.ALL,
+        fetch=FetchType.LAZY,
+        mappedBy="detalleAsignacion"
+    )
+    public Set<Desasignacion> getDesasignacions() {
+        return this.desasignacions;
+    }
+
+    public void setDesasignacions(Set<Desasignacion> desasignacions) {
+        this.desasignacions = desasignacions;
+    }
+
 }
 
 

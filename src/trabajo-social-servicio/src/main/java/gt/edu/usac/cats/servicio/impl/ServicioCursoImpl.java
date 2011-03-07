@@ -8,6 +8,8 @@ package gt.edu.usac.cats.servicio.impl;
 
 import gt.edu.usac.cats.dominio.Carrera;
 import gt.edu.usac.cats.dominio.Curso;
+import gt.edu.usac.cats.dominio.Semestre;
+import gt.edu.usac.cats.enums.TipoHorario;
 import gt.edu.usac.cats.servicio.ServicioCurso;
 import java.util.List;
 import org.hibernate.Query;
@@ -75,6 +77,25 @@ public class ServicioCursoImpl extends ServicioGeneralImpl implements ServicioCu
 
         Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
         query.setParameter("carrera", carrera);
+
+        return query.list();
+    }
+
+    @Override
+    public List<Curso> getCursoAsignacion(Carrera carrera, Semestre semestre, TipoHorario tipoHorario ) throws DataAccessException {
+         StringBuilder builder = new StringBuilder();
+
+        builder.append("select acp.curso from AsignacionCursoPensum acp ")
+               .append("where acp.pensum.carrera = :carrera ")
+               .append("and exists (from Horario hor where hor.tipo = :tipoHorario ")
+               .append("and hor.semestre = :semestre ")
+               .append("and hor.curso=acp.curso)");
+
+        Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
+        query.setParameter("carrera", carrera);
+        query.setParameter("tipoHorario", tipoHorario);
+        query.setParameter("semestre", semestre);
+
 
         return query.list();
     }

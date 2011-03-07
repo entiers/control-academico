@@ -48,7 +48,7 @@
                 <label><fmt:message key="miscursos.asignacionCursos.cursoCompuNoAprobado"/></label>
             </c:when>
             <c:otherwise>
-                <form:form method="post" modelAttribute="datosBusquedaCarrera">
+                <form:form method="post" modelAttribute="datosAsignacion">
                     <fieldset>
                         <legend><fmt:message key="agregarEstudiante.carrera"/></legend>
                         <div id="divCampos">
@@ -57,6 +57,7 @@
                                          itemLabel="carrera.nombre"
                                          itemValue="idAsignacionEstudianteCarrera"/>
                             <form:errors path="idAsignacionEstudianteCarrera" cssClass="claseError" />
+                            <form:hidden path="tipoAsignacion" />
                         </div>
                         <br/>
                         <input type="submit" value='<fmt:message key="miscursos.asignacionCursos.carrera" />' />
