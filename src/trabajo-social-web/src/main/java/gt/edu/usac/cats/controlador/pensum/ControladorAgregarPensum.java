@@ -81,16 +81,16 @@ public class ControladorAgregarPensum extends ControladorAbstractoPensum {
         // se regresa al formulario para que se muestren los mensajes correspondientes
         if (!bindingResult.hasErrors()) {
             try {
-                Pensum pensum = new Pensum();
-                wrapperPensum.quitarWrapper(pensum);
+                
+                wrapperPensum.quitarWrapper(this.pensum);
 
-                this.servicioPensumImpl.agregar(pensum);
+                this.servicioPensumImpl.agregar(this.pensum);
 
 
                 wrapperPensum = new WrapperPensum();
                 // se registra el evento
                 RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "agregarPensum.exito", true);
-                log.info(Mensajes.EXITO_AGREGAR + "Pensum, id " + pensum.getIdPensum());
+                log.info(Mensajes.EXITO_AGREGAR + "Pensum, id " + this.pensum.getIdPensum());
 
 
             } catch (DataIntegrityViolationException e) {

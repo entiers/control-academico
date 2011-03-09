@@ -40,15 +40,7 @@ public class ControladorEditarPensum extends ControladorAbstractoPensum{
      * <p>Matiene una bitacora de lo realizado por esta clase.</p>
      */
     private static Logger log = Logger.getLogger(ControladorEditarPensum.class);
-//______________________________________________________________________________
-    /**
-     * <p>Listado de todas las cursos disponibles.</p>    */
-//______________________________________________________________________________
-    /**
-     * <p>Se utiliza para mantener todos los datos del pensum que se
-     * encontro en la busqueda.</p>
-     */
-    private Pensum pensum;
+
 //______________________________________________________________________________
 
     /**
@@ -58,22 +50,20 @@ public class ControladorEditarPensum extends ControladorAbstractoPensum{
      *
      * @param modelo Objeto {@link Model} que contiene todos los objetos que
      *        seran usados en la pagina
+     * @param idPensum id del pensum a editar
+     * @param request {@link HttpServletRequest}
      * @return String Contiene el nombre de la vista a mostrar
      */
     @RequestMapping(method = RequestMethod.GET)
     public String crearFormularioEditar(Model modelo, Short idPensum, HttpServletRequest request) {
 
-        if (idPensum == null) {
+        if (!this.validarPensum(idPensum)) {
             return "redirect:buscarPensum.htm";
-        }
-
-        this.pensum = this.servicioPensumImpl.cargarEntidadPorID(Pensum.class, idPensum);
-
-        if (this.pensum == null) {
-            return "redirect:buscarPensum.htm";
-        }
+        }        
 
         WrapperPensum wrapperPensum = new WrapperPensum();
+
+        //el pensum ha sido agregado con la funcion validar
         wrapperPensum.agregarWrapper(this.pensum);
         
         this.agregarAtributosDefault(modelo, wrapperPensum);
