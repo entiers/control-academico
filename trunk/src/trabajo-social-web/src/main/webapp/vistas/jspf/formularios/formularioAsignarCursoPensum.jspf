@@ -1,0 +1,52 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
+
+<div id="divCampos">
+    <form:label for="creditosPracticos" path="creditosPracticos">
+        <fmt:message key="asignarCursoPensum.creditosPracticos"/>: *
+    </form:label>
+
+    <form:input path="creditosPracticos" cssStyle="width: 250px;" />
+    <form:errors path="creditosPracticos" cssClass="claseError" />
+</div>
+
+<div id="divCampos">
+    <form:label for="creditosPrerrequisito" path="creditosPrerrequisito">
+        <fmt:message key="asignarCursoPensum.creditosPrerrequisito"/>: *
+    </form:label>
+
+    <form:input path="creditosPrerrequisito" cssStyle="width: 250px;" />
+    <form:errors path="creditosPrerrequisito" cssClass="claseError" />
+</div>
+
+<div id="divCampos">
+    <form:label for="creditosTeoricos" path="creditosTeoricos">
+        <fmt:message key="asignarCursoPensum.creditosTeoricos"/>: *
+    </form:label>
+
+    <form:input path="creditosTeoricos" cssStyle="width: 250px;" />
+    <form:errors path="creditosTeoricos" cssClass="claseError" />
+</div>
+
+<div id="divCampos">
+    <form:label for="numeroSemestre" path="numeroSemestre">
+        <fmt:message key="asignarCursoPensum.numeroSemestre"/>: *
+    </form:label>
+
+    <form:input path="numeroSemestre" cssStyle="width: 250px;" />
+    <form:errors path="numeroSemestre" cssClass="claseError" />
+</div>
+
+<div id="divCampos">
+    <form:label for="obligatorio" path="obligatorio">
+        <fmt:message key="asignarCursoPensum.obligatorio"/>: *
+    </form:label>
+
+    <form:checkbox path="obligatorio" cssStyle="width: 250px;" />
+    <form:errors path="obligatorio" cssClass="claseError" />
+</div>
+

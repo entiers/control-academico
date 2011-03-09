@@ -28,7 +28,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedNativeQueries;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -111,6 +113,7 @@ public class Pensum implements java.io.Serializable {
         this.estado = estado;
     }
 @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="pensum")
+@OrderBy("numeroSemestre")
     public Set<AsignacionCursoPensum> getAsignacionCursoPensums() {
         return this.asignacionCursoPensums;
     }

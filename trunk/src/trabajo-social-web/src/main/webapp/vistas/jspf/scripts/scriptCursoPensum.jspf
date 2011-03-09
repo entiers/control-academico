@@ -1,0 +1,33 @@
+<%@ page pageEncoding="UTF-8" %>
+<%@ page import="gt.edu.usac.cats.util.RequestUtil" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
+<script type="text/javascript">
+    $(function() {
+
+
+        // configuracion del panel popup que muestra los resultados de las operaciones
+         $("#popupMensaje").dialog({
+            autoOpen: <%= RequestUtil.getValorBoolean(request, "mostrarPopupMensaje") %>,
+            modal: true,
+            buttons: {
+                '<fmt:message key="btnAceptar"/>': function() {
+                    <%if( request.getAttribute("url") != null ) {%>
+                        location.href = "<%= request.getAttribute("url")%>";
+                    <%}else{%>
+                        if(<%= RequestUtil.getValorBoolean(request, "limpiarCampos") %>) {
+                            $("#curso").val("");
+                            $("#obligatorio").val("${wrapperAsignacionCursoPensum.obligatorio}");
+                            $("#creditosPracticos").val("${wrapperAsignacionCursoPensum.creditosPracticos}");;
+                            $("#creditosPrerrequisito").val("${wrapperAsignacionCursoPensum.creditosPrerrequisito}");;
+                            $("#creditosTeoricos").val("${wrapperAsignacionCursoPensum.creditosTeoricos}");;
+                            $("#numeroSemestre").val("${wrapperAsignacionCursoPensum.numeroSemestre}");;
+                        }
+                        $(this).dialog('close');
+                    <%}%>
+                }
+            }
+        });
+
+    });
+</script>

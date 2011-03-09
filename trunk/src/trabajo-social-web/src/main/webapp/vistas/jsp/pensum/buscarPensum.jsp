@@ -22,13 +22,13 @@
     </head>
     <body>
         <h1><fmt:message key="buscarPensum.titulo"/></h1>
-        
+
         <fieldset>
             <legend><fmt:message key="buscarPensum.tituloListado"/></legend>
 
             <display:table class="ui-widget ui-widget-content" name="listadoPensums" id="pensum" requestURI="buscarPensum.htm" pagesize="10" >
                 <display:column property="codigo" titleKey="agregarPensum.codigo" style="text-align: center;" />
-                
+
                 <display:column titleKey="agregarPensum.fechaInicio" style="text-align: center;" >
                     <fmt:formatDate pattern="dd-MM-yyyy" value="${pensum.fechaInicio}" />
                 </display:column>
@@ -37,13 +37,22 @@
                 </display:column>
 
                 <display:column property="carrera.codigoNombre" titleKey="buscarPensum.carrera" />
-                
+
 
                 <sec:authorize access="hasAnyRole('ROLE_EDITAR_PENSUM')">
                     <display:column titleKey="acciones" style="text-align:center;">
-                        <a href="editarPensum.htm?idPensum=${pensum.idPensum}">
-                            <fmt:message key="editarPersona.editar"/>
-                        </a>
+
+                        <sec:authorize access="hasRole('ROLE_EDITAR_PENSUM')">
+                            <a href="editarPensum.htm?idPensum=${pensum.idPensum}">
+                                <fmt:message key="editarPersona.editar"/>
+                            </a>
+                        </sec:authorize>
+
+                        <sec:authorize access="hasRole('ROLE_ASIGNAR_CURSO_PENSUM')">
+                            <br/><a href="asignarCursoPensum.htm?idPensum=${pensum.idPensum}">
+                                <fmt:message key="pensum.accion.asignarCursos"/>
+                            </a>
+                        </sec:authorize>
                     </display:column>
                 </sec:authorize>
             </display:table>

@@ -45,7 +45,11 @@
         <intercept-url pattern="/controlPensum.htm" access="hasRole('ROLE_CONTROL_PENSUM')"/>
         <intercept-url pattern="/agregarPensum.htm" access="hasRole('ROLE_AGREGAR_PENSUM')"/>
         <intercept-url pattern="/buscarPensum.htm" access="hasRole('ROLE_BUSCAR_PENSUM')"/>
-        <intercept-url pattern="/editarPensum.htm" access="hasRole('ROLE_EDITAR_PENSUM')"/>
+        <intercept-url pattern="/agregarCursoAPensum.htm" access="hasRole('ROLE_AGREGAR_CURSO_A_PENSUM')"/>
+        <intercept-url pattern="/editarCursoDePensum.htm" access="hasRole('ROLE_EDITAR_ASIGNACION_CURSO_PENSUM')"/>
+        <intercept-url pattern="/administrarPrerrequisitos.htm" access="hasRole('ROLE_ADMINISTRAR_PRERREQUISITOS')"/>
+        <intercept-url pattern="/eliminarCursoDePensum.htm" access="hasRole('ROLE_ELIMINAR_ASIGNACION_CURSO_PENSUM')"/>
+
 
         <intercept-url pattern="/agregarPerfil.htm" access="hasRole('ROLE_AGREGAR_PERFIL')" />
         <intercept-url pattern="/buscarPerfil.htm" access="hasRole('ROLE_BUSCAR_PERFIL')" />
@@ -85,6 +89,8 @@
         <intercept-url pattern="/agregarPersona.htm" access="hasRole('ROLE_AGREGAR_PERSONA')" />
         <intercept-url pattern="/buscarPersona.htm" access="hasRole('ROLE_BUSCAR_PERSONA')" />
         <intercept-url pattern="/editarPersona.htm" access="hasRole('ROLE_EDITAR_PERSONA')" />
+
+
 
         <!-- se especifica que pagina contiene el formulario de login -->
         <form-login login-page='/login.htm' default-target-url='/index.htm' always-use-default-target='true'/>
