@@ -15,7 +15,8 @@ public enum ControlReporte {
     CALENDARIO_ACTIVIDADES(1),
     DETALLE_ASIGNACION_PRIMER_INGRESO(2),
     DETALLE_ASIGNACION(3),
-    HORARIO(4);
+    HORARIO(4),
+    PENSUM_ESTUDIO(5);
 
     private int id;
 

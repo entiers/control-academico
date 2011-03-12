@@ -37,7 +37,9 @@
         <fmt:message key="asignarCursoPensum.numeroSemestre"/>: *
     </form:label>
 
+
     <form:input path="numeroSemestre" cssStyle="width: 250px;" />
+    <span style="font-size: small;"><fmt:message key="asignarCursoAPensum.mensaje.numeroSemestre"/></span>
     <form:errors path="numeroSemestre" cssClass="claseError" />
 </div>
 

@@ -6,6 +6,7 @@
 package gt.edu.usac.cats.controlador.pensum;
 
 import gt.edu.usac.cats.dominio.Pensum;
+import gt.edu.usac.cats.enums.ControlReporte;
 import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,6 +39,7 @@ public class ControladorBuscarPensum extends ControladorAbstractoPensum {
     public String crearFormulario(Model modelo) {
         List<Pensum> listadoPensums = this.servicioPensumImpl.listarEntidad(Pensum.class, true, "codigo");
         modelo.addAttribute("listadoPensums", listadoPensums);
+        modelo.addAttribute("nombreControlReporte", ControlReporte.PENSUM_ESTUDIO);
         return "pensum/buscarPensum";
     }
 
