@@ -55,7 +55,7 @@
                         <input type="hidden" name="tipoParametro" value="integer" />
                     </div>
 
-                    <input type="submit" value="Imprimir"/>
+                    <input type="submit" value="<fmt:message key="btnImprimir"/>"/>
                 </form:form>
             </div>
             <button id="botonVerReporte"> <fmt:message key="horario.verReporte" /></button>

@@ -27,15 +27,29 @@
         <sec:authorize access="hasRole('ROLE_AGREGAR_CURSO_A_PENSUM')">
             <button onclick="location.href='agregarCursoAPensum.htm'"><fmt:message key="agregarCursoAPensum.titulo" /></button>
         </sec:authorize>
-
-
         <%@include file="../../jspf/formularios/informacion/formularioInformacionPensum.jspf" %>
+
+        <div class="contenedor-reporte-arriba">
+            <fieldset>
+                <legend><fmt:message key="asignarCursoPensum.texto.imprimir" /></legend>
+                <form:form action="generarReporte.htm" method="POST" target="_BLANK">
+                    <input type="hidden" name="nombreControlReporte" value="${nombreControlReporte}" />
+                    <input type="hidden" name="nombreParametro" value="ID_PENSUM" />
+                    <input type="hidden" name="valorParametro" value="${pensum.idPensum}" />
+                    <input type="hidden" name="tipoParametro" value="integer" />
+                    <input type="submit" value="<fmt:message key="btnImprimir"/>"/>
+                </form:form>
+            </fieldset>
+        </div>
+
+
+
 
 
         <fieldset>
             <legend><fmt:message key="asignarCursoPensum.legend.listadoAsigancionCursoPensum" /></legend>
             <display:table class="ui-widget ui-widget-content" name="pensum.asignacionCursoPensums" id="asignacionCursoPensum"
-                           requestURI="asignarCurso.htm" pagesize="15" >
+                           requestURI="asignarCursoPensum.htm" pagesize="15" >
                 <display:column titleKey="asignarCursoPensum.obligatorio" style="text-align:center;">
                     <input type="checkbox" checked="${asignacionCursoPensum.obligatorio}" disabled="true"/>
                 </display:column>
@@ -67,7 +81,7 @@
                     </display:column>
                 </sec:authorize>
             </display:table>
-        </fieldset>        
+        </fieldset>
 
         <%-- fragmento que muestra como mensaje popup el resultado de las operaciones --%>
         <%@include file="../../jspf/plantilla/popupMensaje.jspf" %>

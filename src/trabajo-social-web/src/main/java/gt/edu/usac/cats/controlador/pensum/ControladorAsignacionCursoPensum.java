@@ -23,6 +23,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import gt.edu.usac.cats.enums.ControlReporte;
 
 /**
  * <p>
@@ -71,6 +72,7 @@ public class ControladorAsignacionCursoPensum extends ControladorAbstractoPensum
 
         //El pensum es asigando el metodo anterior
         modelo.addAttribute("pensum", this.pensum);
+        modelo.addAttribute("nombreControlReporte", ControlReporte.PENSUM_ESTUDIO);
         return "pensum/asignarCursoPensum";
     }
 

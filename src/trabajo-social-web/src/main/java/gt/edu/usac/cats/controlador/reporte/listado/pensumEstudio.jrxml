@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="612" pageHeight="792" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="0.8264462809917356"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<subDataset name="prerrequisitoDataSet">
+		<parameter name="ID_CURSO_PENSUM" class="java.lang.Integer">
+			<defaultValueExpression><![CDATA[95]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[select p.* from reporte.prerrequisito_vw p
+where p.id_curso_pensum = $P{ID_CURSO_PENSUM}
+order by p.codigo_curso_prerrequisito]]>
+		</queryString>
+		<field name="id_curso_pensum" class="java.lang.Integer"/>
+		<field name="id_curso_pensum_prerequisito" class="java.lang.Integer"/>
+		<field name="codigo_curso_prerrequisito" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="ID_PENSUM" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select * from reporte.pensum_estudio_vw
+where id_pensum = $P{ID_PENSUM}
+order by numero_semestre, codigo_curso]]>
+	</queryString>
+	<field name="id_asignacion_curso_pensum" class="java.lang.Integer"/>
+	<field name="obligatorio" class="java.lang.Boolean"/>
+	<field name="id_curso" class="java.lang.Integer"/>
+	<field name="id_pensum" class="java.lang.Integer"/>
+	<field name="creditos_practicos" class="java.lang.Integer"/>
+	<field name="creditos_prerrequisito" class="java.lang.Integer"/>
+	<field name="creditos_teoricos" class="java.lang.Integer"/>
+	<field name="numero_semestre" class="java.lang.Integer"/>
+	<field name="codigo_pensum" class="java.lang.String"/>
+	<field name="fecha_inicio_pensum" class="java.sql.Date"/>
+	<field name="fecha_fin_pensum" class="java.sql.Date"/>
+	<field name="id_carrera" class="java.lang.Integer"/>
+	<field name="nombre_carrera" class="java.lang.String"/>
+	<field name="codigo_curso" class="java.lang.String"/>
+	<field name="nombre_curso" class="java.lang.String"/>
+	<variable name="creditos_teoricos_1" class="java.lang.Integer" resetType="Group" resetGroup="numeroSemestreGroup" calculation="Sum">
+		<variableExpression><![CDATA[$F{creditos_teoricos}]]></variableExpression>
+	</variable>
+	<variable name="creditos_practicos_1" class="java.lang.Integer" resetType="Group" resetGroup="numeroSemestreGroup" calculation="Sum">
+		<variableExpression><![CDATA[$F{creditos_practicos}]]></variableExpression>
+	</variable>
+	<variable name="creditosTotales" class="java.lang.Integer">
+		<variableExpression><![CDATA[$F{creditos_practicos}+$F{creditos_teoricos}]]></variableExpression>
+	</variable>
+	<variable name="creditosTotales_1" class="java.lang.Integer">
+		<variableExpression><![CDATA[$V{creditos_teoricos_1}+$V{creditos_practicos_1}]]></variableExpression>
+	</variable>
+	<group name="numeroSemestreGroup" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{numero_semestre}]]></groupExpression>
+		<groupHeader>
+			<band height="24">
+				<rectangle>
+					<reportElement x="0" y="0" width="569" height="23" backcolor="#000000"/>
+				</rectangle>
+				<textField>
+					<reportElement x="0" y="0" width="569" height="23" forecolor="#FFFFFF" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[($F{numero_semestre} == 0) ? "CURSOS EXTRA CURRICULARES"
+    : ($F{numero_semestre} == 1) ? "PRIMER SEMESTRE"
+    : ($F{numero_semestre} == 2) ? "SEGUNDO SEMESTRE"
+    : ($F{numero_semestre} == 3) ? "TERCER SEMESTRE"
+    : ($F{numero_semestre} == 4) ? "CUARTO SEMESTRE"
+    : ($F{numero_semestre} == 5) ? "QUINTO SEMESTRE"
+    : ($F{numero_semestre} == 6) ? "SEXTO SEMESTRE"
+    : ($F{numero_semestre} == 7) ? "SEPTIMO SEMESTRE"
+    : ($F{numero_semestre} == 8) ? "OCTAVO SEMESTRE"
+    : ($F{numero_semestre} == 9) ? "NOVENO SEMESTRE"
+    : ($F{numero_semestre} == 10) ? "DECIMO SEMESTRE" : ""]]></textFieldExpression>
+				</textField>
+			</band>
+			<band height="22">
+				<rectangle>
+					<reportElement x="0" y="0" width="569" height="20" backcolor="#CCCCCC"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="47" y="0" width="300" height="20"/>
+					<box>
+						<topPen lineWidth="0.0"/>
+						<bottomPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[CURSO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="347" y="0" width="105" height="20"/>
+					<box>
+						<topPen lineWidth="0.0"/>
+						<bottomPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[PRERREQUISITOS]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="452" y="1" width="39" height="19"/>
+					<box>
+						<topPen lineWidth="0.0"/>
+						<bottomPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[T]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="491" y="0" width="39" height="20"/>
+					<box>
+						<topPen lineWidth="0.0"/>
+						<bottomPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[P]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="530" y="1" width="39" height="19"/>
+					<box>
+						<topPen lineWidth="0.0"/>
+						<bottomPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[TC]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="0" width="47" height="20"/>
+					<box>
+						<topPen lineWidth="0.0"/>
+						<bottomPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[CÓDIGO]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="22">
+				<rectangle>
+					<reportElement x="0" y="0" width="569" height="20" backcolor="#CCCCCC"/>
+				</rectangle>
+				<textField>
+					<reportElement x="530" y="0" width="39" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.Integer"><![CDATA[$V{creditosTotales_1}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="0" width="452" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[TOTAL DE CRÉDITOS]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="452" y="0" width="39" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.Integer"><![CDATA[$V{creditos_teoricos_1}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="491" y="0" width="39" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.Integer"><![CDATA[$V{creditos_practicos_1}]]></textFieldExpression>
+				</textField>
+			</band>
+			<band height="26"/>
+		</groupFooter>
+	</group>
+	<pageHeader>
+		<band height="142" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="-3" y="0" width="572" height="112" backcolor="#006699"/>
+				<staticText>
+					<reportElement x="24" y="18" width="400" height="20" forecolor="#FFFFFF"/>
+					<textElement>
+						<font size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[UNIVERSIDAD DE SAN CARLOS DE GUATEMALA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="24" y="38" width="378" height="17" forecolor="#FFFFFF"/>
+					<textElement>
+						<font size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[ESCUELA DE TRABAJO SOCIAL]]></text>
+				</staticText>
+			</frame>
+			<textField>
+				<reportElement x="21" y="75" width="548" height="20" forecolor="#FFFFFF"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nombre_carrera}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="21" y="58" width="378" height="17" forecolor="#FFFFFF"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["PENSUM " + $F{codigo_pensum}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="112" width="463" height="14"/>
+				<textElement/>
+				<text><![CDATA[TC = T + P]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="126" width="463" height="14"/>
+				<textElement/>
+				<text><![CDATA[TOTAL CREDITOS = CREDITOS TEORICOS + CREDITOS PRÁCTICOS]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="2" width="47" height="18"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{codigo_curso}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="347" y="2" width="31" height="18" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$F{creditos_prerrequisito} > 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{creditos_prerrequisito} + "CR"]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="378" y="2" width="74" height="18" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="prerrequisitoDataSet">
+						<datasetParameter name="ID_CURSO_PENSUM">
+							<datasetParameterExpression><![CDATA[$F{id_asignacion_curso_pensum}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:listContents height="18" width="74">
+						<textField>
+							<reportElement x="11" y="0" width="63" height="18" isRemoveLineWhenBlank="true"/>
+							<textElement textAlignment="Left" verticalAlignment="Middle"/>
+							<textFieldExpression class="java.lang.String"><![CDATA[$F{codigo_curso_prerrequisito}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<textField>
+				<reportElement x="452" y="2" width="39" height="18"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{creditos_teoricos}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="530" y="2" width="39" height="18"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{creditosTotales}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="47" y="2" width="300" height="18"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nombre_curso}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="491" y="2" width="39" height="18"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{creditos_practicos}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="5">
+			<line>
+				<reportElement x="0" y="3" width="569" height="1"/>
+			</line>
+		</band>
+	</detail>
+</jasperReport>
