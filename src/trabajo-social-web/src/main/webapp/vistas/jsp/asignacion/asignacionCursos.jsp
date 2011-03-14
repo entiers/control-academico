@@ -47,6 +47,9 @@
             <c:when test="${cursoComputacion}">
                 <label><fmt:message key="miscursos.asignacionCursos.cursoCompuNoAprobado"/></label>
             </c:when>
+            <c:when test="${noExisteHorario}">
+                <label><fmt:message key="miscursos.asignacionCursos.noExisteHorario"/></label>
+            </c:when>
             <c:otherwise>
                 <form:form method="post" modelAttribute="datosAsignacion">
                     <fieldset>
@@ -58,6 +61,7 @@
                                          itemValue="idAsignacionEstudianteCarrera"/>
                             <form:errors path="idAsignacionEstudianteCarrera" cssClass="claseError" />
                             <form:hidden path="tipoAsignacion" />
+                            <form:hidden path="tipoHorario" />
                         </div>
                         <br/>
                         <input type="submit" value='<fmt:message key="miscursos.asignacionCursos.carrera" />' />

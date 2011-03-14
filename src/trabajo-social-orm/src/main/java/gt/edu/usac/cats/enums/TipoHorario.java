@@ -21,10 +21,10 @@ package gt.edu.usac.cats.enums;
  * @version 1.0
  */
 public enum TipoHorario {
-    SEMESTRE(1,"SEMESTRE"),
-    VACACIONES(2,"VACACIONES"),
-    PRIMERA_RETRASADA(3,"PRIMERA RETRASADA"),
-    SEGUNDA_RETRASADA(4,"SEGUNDA RETRASADA")
+    SEMESTRE(1,"Semestre"),
+    VACACIONES(2,"Vacaciones"),
+    PRIMERA_RETRASADA(3,"Primera retrasada"),
+    SEGUNDA_RETRASADA(4,"Segunda retrasada")
     ;
 
     private int id;
@@ -70,10 +70,5 @@ public enum TipoHorario {
             }
         }
         return null;
-    }
-
-    @Override
-    public String toString() {
-        return "(" + this.id + ", " + this.descripcion + ")";
     }
 }

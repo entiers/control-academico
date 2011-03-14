@@ -155,7 +155,7 @@ public class AsignacionCursoPensum implements java.io.Serializable {
     
     /**
      * Concatena la informaci&oacute;n del curso con el n&uacute;mero del semestre.  Es de utilizada para la visualizaci&oacute;n
-     * en las vistas.  Este átributo <b>NO</b> pertenece a la BD.
+     * en las vistas.  Este atributo <b>NO</b> pertenece a la BD.
      *
      * @return Cadena de car&aacute;cteres con la concatenaci&oacute;n de la informaci&oacute;n del curso y el n&uacute;mero del semestre.
      */

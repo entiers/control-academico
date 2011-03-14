@@ -1,0 +1,32 @@
+<%@ page pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
+<div id="divCampos">
+    <form:label path="idCurso" for="idCurso">
+        <fmt:message key="curso.menu" /> :
+    </form:label>
+    <form:select id="slcCurso"
+                 path="idCurso"
+                 items="${listaCurso}"
+                 itemLabel="nombre"
+                 itemValue="idCurso"/>
+    <form:errors path="idCurso" cssClass="claseError" />
+</div>
+<div id="divCampos">
+    <form:label path="idHorario" for="idHorario">
+        <fmt:message key="agregarHorario.seccion" /> :
+    </form:label>
+    <form:select id="slcHorario"
+                 path="idHorario"
+                 items="${listaHorario}"
+                 itemLabel="seccion"
+                 itemValue="idHorario"/>
+    <form:errors path="idHorario" cssClass="claseError" />
+</div>
+<form:hidden path="tipoAsignacion" />
+<form:hidden path="tipoHorario" id="tipoHorario" />
+<form:hidden path="idAsignacionEstudianteCarrera" />
+<form:hidden path="totalCursos" />
+<br/>

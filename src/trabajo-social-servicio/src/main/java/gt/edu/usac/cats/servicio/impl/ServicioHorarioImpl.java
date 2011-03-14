@@ -251,17 +251,23 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
      */
     @Override
     public List<Horario> getHorario(Curso curso, Semestre semestre, TipoHorario tipoHorario) throws DataAccessException {
-        DetachedCriteria criteria = DetachedCriteria.forClass(Horario.class);
+        StringBuilder builder = new StringBuilder();
 
-        criteria.add(Restrictions.and(Restrictions.eq("tipo", tipoHorario),
-                        Restrictions.and(
-                            Restrictions.eq("curso", curso),
-                            Restrictions.eq("semestre", semestre)
-                        )
-                      )
-                    );
+        builder.append(" select horario from Horario as horario ")
+               .append(" where horario.curso = :curso ")
+               .append(" and horario.semestre = :semestre")
+               .append(" and horario.tipo = :tipoHorario")
+               .append(" and horario.salon.capacidad > (")
+               .append("    select count(*) from DetalleAsignacion det")
+               .append("    where det.horario = horario")
+               .append(" )");
 
-        return this.daoGeneralImpl.find(criteria);
+        Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
+        query.setParameter("curso", curso);
+        query.setParameter("semestre", semestre);
+        query.setParameter("tipoHorario", tipoHorario);
+
+        return query.list();
     }
 
 

@@ -14,10 +14,67 @@
 
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+        <title><fmt:message key="miscursos.asignacionCursos.vacaciones.titulo"/></title>
+        <script type="text/javascript">
+            $(function() {
+                // se crea y configura el panel popup que muestra los
+                // mensajes de resultados de las operaciones
+                $("#popupMensaje").dialog({
+                    autoOpen: <%= RequestUtil.getValorBoolean(request, "mostrarPopupMensaje") %>,
+                    modal: true,
+                    buttons: {
+                        '<fmt:message key="btnAceptar"/>': function() {
+                            $(this).dialog('close');
+                        }
+                    }
+                });
+             });
+        </script>
     </head>
     <body>
-        <h1>Curso de vacaciones</h1>
+        <h1><fmt:message key="miscursos.asignacionCursos.vacaciones.titulo"/></h1>
+        <form:form method="post" modelAttribute="datosAsignacion" action="agregarHorarioAsignacionVacaciones.htm">
+            <fieldset>
+                <legend><fmt:message key="miscursos.asignacionCursos.horarios"/></legend>
+                <%-- se importan los campos --%>
+                <%@include file="../../jspf/formularios/formularioAsignacionHorario.jspf" %>
+                <input type="submit" value='<fmt:message key="miscursos.asignacionCursos.agregarCurso" />' />
+            </fieldset>
+        </form:form>
+
+        <c:if test="${horarioElegido}" >
+            <form:form method="POST" modelAttribute="datosAsignacion" action="realizarAsignacionVacaciones.htm">
+                <fieldset>
+                    <legend><fmt:message key="buscarHorario.tituloListado"/></legend>
+                    <%-- se importan los campos --%>
+                    <%@include file="../../jspf/formularios/formularioAsignacionHorarioElegido.jspf" %>
+                    <input type="submit" id="btnRealizarAsignacion" value='<fmt:message key="miscursos.asignacionCursos.realizar" />' />
+                </fieldset>
+            </form:form>
+        </c:if>
+
+        <script type="text/javascript">
+            $(document).ready(function() {
+                //Cambio combo curso
+                $('#slcCurso').change(function() {
+                    getHorarios($(this).val(),$('#tipoHorario').val());
+                });
+
+            });
+
+            function getHorarios(valueCurso,valueHorario) {
+                $.getJSON("getHorarioAsignacion.htm", { idCurso: valueCurso, idTipoHorario: valueHorario}, function(lstHorario) {
+                    var options = '';
+                    $.each(lstHorario, function (index,value) {
+                        options += "<option value='" + value.idHorario + "'>" + value.seccion + "</option>";
+                    });
+                    $('#slcHorario').html(options);
+                });
+            }
+        </script>
+
+        <%-- fragmento que muestra como mensaje popup el resultado de las operaciones --%>
+        <%@include file="../../jspf/plantilla/popupMensaje.jspf" %>
     </body>
 </html>

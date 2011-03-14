@@ -12,6 +12,7 @@ import gt.edu.usac.cats.dominio.DetalleAsignacion;
 import gt.edu.usac.cats.dominio.Horario;
 import gt.edu.usac.cats.dominio.Pensum;
 import gt.edu.usac.cats.dominio.busqueda.DatosAsignacion;
+import gt.edu.usac.cats.enums.TipoAsignacion;
 import gt.edu.usac.cats.enums.TipoHorario;
 import gt.edu.usac.cats.util.Mensajes;
 import gt.edu.usac.cats.util.RequestUtil;
@@ -19,19 +20,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.apache.log4j.Logger;
-import org.codehaus.jackson.annotate.JsonIgnore;
 import org.springframework.dao.DataAccessException;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * Esta clase es el controlador que se encarga de la llamada al proceso de asignacion
@@ -48,13 +45,13 @@ public class ControladorAsignacionSemestre extends ControladorAbstractoAsignacio
     private static final String TITULO_MENSAJE = "miscursos.asignacionCursos.titulo";
 //_______________________________________________________________________________
     private List<DetalleAsignacion> listaAsignacion;
-//_____________________________________________________________________________
+//_______________________________________________________________________________
     private List<Horario> listaHorarioAsignacion;
-//  _____________________________________________________________________________
+//_______________________________________________________________________________
     /**
      * <p>Este metodo se ejecuta cada vez que se realiza una solicitud del tipo
-     * POST de la pagina <code>asignacionSemestre.htm</code>. El metodo se encarga
-     * de cargar la lista de Horarios seleccionados para asignacion, asi como de
+     * POST de la pagina <code>agregarHorarioAsignacionSemestre.htm</code>. El metodo
+     * se encarga de cargar la lista de Horarios seleccionados para asignacion, asi como de
      * eliminar el curso y el horario seleccionados de la lista disponible.
      *
      * @param modelo Objeto {@link Model} que contiene todos los objetos que
@@ -74,6 +71,7 @@ public class ControladorAsignacionSemestre extends ControladorAbstractoAsignacio
             //Validar que sea el primer curso a asignar
             if(datosAsignacion.getTotalCursos()==0){
                 this.listaHorarioAsignacion =  new ArrayList<Horario>();
+                listaHorario = new ArrayList<Horario>();
                 listaCurso = servicioCursoImpl.getCursoAsignacion(asignacionEstudianteCarrera.getCarrera(),
                                                                     semestre,TipoHorario.SEMESTRE);
             }
@@ -100,14 +98,10 @@ public class ControladorAsignacionSemestre extends ControladorAbstractoAsignacio
             RequestUtil.crearMensajeRespuesta(request,TITULO_MENSAJE, "dataAccessException", false);
             log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
         }
-        modelo.addAttribute("listaCurso", listaCurso);
-        modelo.addAttribute("listaHorario", listaHorario);
-        modelo.addAttribute("horarioElegido", true);
-        modelo.addAttribute("listadoHorarioAsignados", this.listaHorarioAsignacion);
+        this.cargarModelo(modelo);
         return "asignacion/asignacionSemestre";
     }
-//  _____________________________________________________________________________
-
+//_______________________________________________________________________________
     /**
      * <p>Este metodo se ejecuta cada vez que se realiza una solicitud del tipo
      * GET de la pagina <code>asignacionSemestre.htm</code> por medio de AJAX.
@@ -130,10 +124,7 @@ public class ControladorAsignacionSemestre extends ControladorAbstractoAsignacio
                                     Model modelo,
                                     HttpServletRequest request) throws IOException {
 
-        modelo.addAttribute("listaCurso", listaCurso);
-        modelo.addAttribute("listaHorario", listaHorario);
-        modelo.addAttribute("horarioElegido", true);
-        modelo.addAttribute("listadoHorarioAsignados", this.listaHorarioAsignacion);
+        this.cargarModelo(modelo);
         AsignacionCursoPensum acp;
         //Validando traslape de cursos
         try {
@@ -154,10 +145,18 @@ public class ControladorAsignacionSemestre extends ControladorAbstractoAsignacio
                             return "asignacion/asignacionSemestre";
                         }
                         //Validando asignaciones en semestre actual
-                        if (!servicioDetalleAsignacionImpl.getListadoDetalleAsignacion(horario.getCurso(), semestre, asignacionEstudianteCarrera).isEmpty()) {
+                        if (!servicioDetalleAsignacionImpl.getListadoDetalleAsignacion(horario.getCurso(), semestre, asignacionEstudianteCarrera,TipoAsignacion.ASIGNACION_CURSOS_SEMESTRE).isEmpty()) {
                             RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.cursoYaAsignado", false);
                             return "asignacion/asignacionSemestre";
                         }
+
+                        //Validando total de asignaciones por curso
+                        if(servicioDetalleAsignacionImpl.getTotalAsignaciones(horario.getCurso(),
+                                   asignacionEstudianteCarrera, TipoAsignacion.ASIGNACION_CURSOS_SEMESTRE)>=3){
+                            RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.totalAsignacionesExcedidas", false);
+                            return "asignacion/asignacionSemestre";
+                        }
+
                     }
                 } else {
                     RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.estudianteSinPensum", false);
@@ -167,7 +166,7 @@ public class ControladorAsignacionSemestre extends ControladorAbstractoAsignacio
                 if (!this.listaAsignacion.isEmpty()) {
                     this.enviarEmail(this.listaAsignacion);
                     listaHorarioAsignacion.clear();
-                    return "redirect:asignacionExitosa.htm";
+                    return "redirect:asignacionExitosa.htm?iascsvr=" + this.listaAsignacion.get(0).getAsignacion().getIdAsignacion();
                 } 
             }
         } catch (Exception e) {
@@ -177,50 +176,12 @@ public class ControladorAsignacionSemestre extends ControladorAbstractoAsignacio
         }
         return "asignacion/asignacionSemestre";
     }
+
 //  _____________________________________________________________________________
-
-    @RequestMapping(value = "asignacionExitosa.htm", method = RequestMethod.GET)
-    public String mostrarAsignacion(Model modelo, HttpServletRequest request) {
-        modelo.addAttribute("asignacion", this.listaAsignacion.get(0).getAsignacion());
-        modelo.addAttribute("listaAsignacion", this.listaAsignacion);
-        return "asignacion/asignacionExitosa";
+    private void cargarModelo(Model modelo){
+        modelo.addAttribute("listaCurso", listaCurso);
+        modelo.addAttribute("listaHorario", listaHorario);
+        modelo.addAttribute("horarioElegido", true);
+        modelo.addAttribute("listadoHorarioAsignados", this.listaHorarioAsignacion);
     }
-//  _____________________________________________________________________________
-
-    @RequestMapping(value = "getHorarioAsignacionSemestre.htm", method = RequestMethod.GET)
-    public 
-    @ResponseBody
-    @JsonIgnore
-    List<Horario> getHorario(@RequestParam Short idCurso, HttpServletRequest request) {
-        Curso curso = null;
-        semestre = servicioSemestreImpl.getSemestreActivo();
-        try {
-            curso = servicioGeneralImpl.cargarEntidadPorID(Curso.class, idCurso);
-        } catch (DataAccessException e) {
-            // error de acceso a datos
-            RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "dataAccessException", false);
-            log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
-        }
-        return servicioHorarioImpl.getHorario(curso, semestre, TipoHorario.SEMESTRE);
-    }
-//_____________________________________________________________________________
-     private void enviarEmail(List<DetalleAsignacion> listaAsignacion) throws IOException {
-
-        String mensaje = "Estimado/a " + asignacionEstudianteCarrera.getEstudiante().getNombre() + ", <br/><br/>"
-                + "La asignacion de cursos se ha realizado exitosamente: <br/><br/>"
-                + "  - Estudiante: " + asignacionEstudianteCarrera.getEstudiante().getNombre() + "<br/>"
-                + "  - Carne: " + asignacionEstudianteCarrera.getEstudiante().getCarne() + "<br/>"
-                + "  - Fecha: " + listaAsignacion.get(0).getAsignacion().getFecha() + "<br/>"
-                + "  - Transaccion: " + listaAsignacion.get(0).getAsignacion().getTransaccion() + "<br/><br/>"
-                + "Control Academico<br/>Escuela de Trabajo Social";
-        try {
-            // se trata de enviar el correo
-            emailSender.enviarCorreo("Boleta de Asignación", asignacionEstudianteCarrera.getEstudiante().getEmail(), mensaje);
-
-        } catch (MessagingException ex) {
-            log.error(Mensajes.MESSAGING_EXCEPTION, ex);
-        }
-    }
-
-   
 }

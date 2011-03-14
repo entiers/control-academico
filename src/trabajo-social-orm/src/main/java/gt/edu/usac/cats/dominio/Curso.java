@@ -119,7 +119,7 @@ public class Curso implements java.io.Serializable {
 
     /**
      * Concatena el codigo con el nombre.  Es de utilizada para la visualizaci&oacute;n
-     * en las vistas.  Este átributo <b>NO</b> pertenece a la BD.
+     * en las vistas.  Este atributo <b>NO</b> pertenece a la BD.
      *
      * @return Cadena de car&aacute;cteres con la concatenaci&oacute;n del codigo y el nombre.
      */

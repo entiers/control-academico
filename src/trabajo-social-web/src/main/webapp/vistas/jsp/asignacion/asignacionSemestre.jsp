@@ -33,36 +33,12 @@
         </script>
     </head>
     <body>
-        <h1><fmt:message key="miscursos.asignacionCursos.titulo"/></h1>
+        <h1><fmt:message key="miscursos.asignacionCursos.semestre.titulo"/></h1>
         <form:form method="post" modelAttribute="datosAsignacion" action="agregarHorarioAsignacionSemestre.htm">
             <fieldset>
                 <legend><fmt:message key="miscursos.asignacionCursos.horarios"/></legend>
-                <div id="divCampos">
-                    <form:label path="idCurso" for="idCurso">
-                        <fmt:message key="curso.menu" /> : 
-                    </form:label>
-                    <form:select id="slcCurso"
-                                 path="idCurso"
-                                 items="${listaCurso}"
-                                 itemLabel="nombre"
-                                 itemValue="idCurso"/>
-                    <form:errors path="idCurso" cssClass="claseError" />
-                </div>
-                <div id="divCampos">
-                    <form:label path="idHorario" for="idHorario">
-                        <fmt:message key="agregarHorario.seccion" /> :
-                    </form:label>
-                    <form:select id="slcHorario"
-                                 path="idHorario"
-                                 items="${listaHorario}"
-                                 itemLabel="seccion"
-                                 itemValue="idHorario"/>
-                    <form:errors path="idHorario" cssClass="claseError" />
-                </div>
-                <form:hidden path="tipoAsignacion" />
-                <form:hidden path="idAsignacionEstudianteCarrera" />
-                <form:hidden path="totalCursos" />
-                <br/>
+                <%-- se importan los campos --%>
+                <%@include file="../../jspf/formularios/formularioAsignacionHorario.jspf" %>
                 <input type="submit" value='<fmt:message key="miscursos.asignacionCursos.agregarCurso" />' />
             </fieldset>
         </form:form>
@@ -71,39 +47,8 @@
             <form:form method="POST" modelAttribute="datosAsignacion" action="realizarAsignacionSemestre.htm">
                 <fieldset>
                     <legend><fmt:message key="buscarHorario.tituloListado"/></legend>
-                    <table id="tablaHorarios" class="ui-widget ui-widget-content" align="center">
-                        <thead>
-                            <tr class="ui-widget-header ">
-                                <th><fmt:message key="agregarHorario.curso"/></th>
-                                <th><fmt:message key="agregarHorario.seccion"/></th>
-                                <th><fmt:message key="agregarHorario.salon"/></th>
-                                <th><fmt:message key="agregarHorario.horaInicio"/></th>
-                                <th><fmt:message key="agregarHorario.horaFin"/></th>
-                                <th><fmt:message key="agregarHorario.dia"/></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <c:forEach items="${listadoHorarioAsignados}" var="horario">
-                                <tr>
-                                    <td><c:out value="${horario.curso.nombre}" /></td>
-                                    <td align="center"><c:out value="${horario.seccion}" /></td>
-                                    <td align="center">
-                                        <c:out value="${horario.salon.edificio}" />-<c:out value="${horario.salon.numero}" />
-                                    </td>
-                                    <td align="center">
-                                        <fmt:formatDate pattern="hh:mm" value="${horario.horaInicio}" />
-                                    </td>
-                                    <td align="center">
-                                        <fmt:formatDate pattern="hh:mm" value="${horario.horaFin}" />
-                                    </td>
-                                    <td><c:out value="${horario.horarioDiasAsString}" /></td>
-                                </tr>
-                            </c:forEach>
-                        </tbody>
-                    </table>
-                    <form:hidden path="idAsignacionEstudianteCarrera" />
-                    <form:hidden path="tipoAsignacion" />
-                    <br/>
+                    <%-- se importan los campos --%>
+                    <%@include file="../../jspf/formularios/formularioAsignacionHorarioElegido.jspf" %>
                     <input type="submit" id="btnRealizarAsignacion" value='<fmt:message key="miscursos.asignacionCursos.realizar" />' />
                 </fieldset>
             </form:form>
@@ -113,13 +58,13 @@
             $(document).ready(function() {
                 //Cambio combo curso
                 $('#slcCurso').change(function() {
-                    getHorarios($(this).val());
+                    getHorarios($(this).val(),$('#tipoHorario').val());
                 });
-                
+
             });
 
-            function getHorarios(value) {
-                $.getJSON("getHorarioAsignacionSemestre.htm", { idCurso: value }, function(lstHorario) {
+            function getHorarios(valueCurso,valueHorario) {
+                $.getJSON("getHorarioAsignacion.htm", { idCurso: valueCurso, idTipoHorario: valueHorario}, function(lstHorario) {
                     var options = '';
                     $.each(lstHorario, function (index,value) {
                         options += "<option value='" + value.idHorario + "'>" + value.seccion + "</option>";
