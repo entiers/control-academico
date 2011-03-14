@@ -87,9 +87,16 @@ public class ServicioCursoImpl extends ServicioGeneralImpl implements ServicioCu
 
         builder.append("select acp.curso from AsignacionCursoPensum acp ")
                .append("where acp.pensum.carrera = :carrera ")
-               .append("and exists (from Horario hor where hor.tipo = :tipoHorario ")
-               .append("and hor.semestre = :semestre ")
-               .append("and hor.curso=acp.curso)");
+               .append("and exists (")
+               .append("    select horario from Horario as horario ")
+               .append("    where horario.semestre = :semestre")
+               .append("    and horario.tipo = :tipoHorario")
+               .append("    and horario.curso=acp.curso")
+               .append("    and horario.salon.capacidad > (")
+               .append("        select count(*) from DetalleAsignacion det")
+               .append("        where det.horario = horario")
+               .append("    )")
+               .append(")");
 
         Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
         query.setParameter("carrera", carrera);

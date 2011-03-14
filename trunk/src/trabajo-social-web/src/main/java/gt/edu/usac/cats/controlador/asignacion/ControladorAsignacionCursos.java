@@ -5,8 +5,12 @@
 
 package gt.edu.usac.cats.controlador.asignacion;
 
+import gt.edu.usac.cats.dominio.Asignacion;
 import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
+import gt.edu.usac.cats.dominio.Curso;
+import gt.edu.usac.cats.dominio.DetalleAsignacion;
 import gt.edu.usac.cats.dominio.Estudiante;
+import gt.edu.usac.cats.dominio.Horario;
 import gt.edu.usac.cats.dominio.Semestre;
 import gt.edu.usac.cats.dominio.busqueda.DatosAsignacion;
 import gt.edu.usac.cats.enums.TipoActividad;
@@ -14,9 +18,11 @@ import gt.edu.usac.cats.enums.TipoAsignacion;
 import gt.edu.usac.cats.enums.TipoHorario;
 import gt.edu.usac.cats.util.Mensajes;
 import gt.edu.usac.cats.util.RequestUtil;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,15 +31,16 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  *
- * @author cats
+ * @author Carlos Solorzano
+ * @version 1.0
  */
 @Controller("controladorAsignacionCursos")
-@RequestMapping(value="asignacionCursos.htm")
 public class ControladorAsignacionCursos extends ControladorAbstractoAsignacion{
-
 //______________________________________________________________________________
     private static Logger log = Logger.getLogger(ControladorAsignacionCursos.class);
 //_____________________________________________________________________________
@@ -56,7 +63,7 @@ public class ControladorAsignacionCursos extends ControladorAbstractoAsignacion{
      *        seran usados en la pagina
      * @return String Contiene el nombre de la vista a mostrar
      */
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value="asignacionCursos.htm", method = RequestMethod.GET)
     public String getAsignacionCursos(Model modelo, HttpServletRequest request) {
         try {
             DatosAsignacion datosAsignacion = new DatosAsignacion();
@@ -94,23 +101,31 @@ public class ControladorAsignacionCursos extends ControladorAbstractoAsignacion{
             //Validar periodo de asignacion de cursos de semestre
             if (this.servicioCalendarioActividadesImpl.esFechaActividadValida(TipoActividad.ASIGNACION_SEMESTRE,
                                                                     this.semestre,
-                                                                    new java.util.Date()))
+                                                                    new java.util.Date())){
                 datosAsignacion.setTipoAsignacion(TipoAsignacion.ASIGNACION_CURSOS_SEMESTRE);
+                datosAsignacion.setTipoHorario(TipoHorario.SEMESTRE);
+            }
             //Validar periodo de asignacion de cursos de vacaciones
             else if(this.servicioCalendarioActividadesImpl.esFechaActividadValida(TipoActividad.ASIGNACION_VACACIONES,
                                                                     semestre,
-                                                                    new java.util.Date()))
+                                                                    new java.util.Date())){
                 datosAsignacion.setTipoAsignacion(TipoAsignacion.ASIGNACION_CURSOS_VACACIONES);
+                datosAsignacion.setTipoHorario(TipoHorario.VACACIONES);
+            }
             //Validar periodo de asignacion de cursos de primera retrasada
             else if(this.servicioCalendarioActividadesImpl.esFechaActividadValida(TipoActividad.ASIGNACION_PRIMERA_RESTRASADA,
                                                                     semestre,
-                                                                    new java.util.Date()))
+                                                                    new java.util.Date())){
                 datosAsignacion.setTipoAsignacion(TipoAsignacion.ASIGNACION_PRIMERA_RETRASADA);
+                datosAsignacion.setTipoHorario(TipoHorario.PRIMERA_RETRASADA);
+            }
             //Validar periodo de asignacion de cursos de segunda retrasada
             else if(this.servicioCalendarioActividadesImpl.esFechaActividadValida(TipoActividad.ASIGNACION_SEGUNDA_RETRASADA,
                                                                     semestre,
-                                                                    new java.util.Date()))
+                                                                    new java.util.Date())){
                 datosAsignacion.setTipoAsignacion(TipoAsignacion.ASIGNACION_SEGUNDA_RETRASADA);
+                datosAsignacion.setTipoHorario(TipoHorario.SEGUNDA_RETRASADA);
+            }
             else {
                 modelo.addAttribute("periodoInvalido", true);
                 return "asignacion/asignacionCursos";
@@ -119,6 +134,7 @@ public class ControladorAsignacionCursos extends ControladorAbstractoAsignacion{
             this.listaAEC = this.servicioAsignacionEstudianteCarreraImpl.getAsignacionEstudianteCarreraPorEstudiante(estudiante);
             modelo.addAttribute("listaAEC", this.listaAEC);
             modelo.addAttribute("datosAsignacion", datosAsignacion);
+            
         } catch (Exception e) {
             // error de acceso a datos
             RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "dataAccessException", false);
@@ -126,7 +142,7 @@ public class ControladorAsignacionCursos extends ControladorAbstractoAsignacion{
         }
         return "asignacion/asignacionCursos";
     }
-
+//  _____________________________________________________________________________
     /**
      * <p>Este metodo se ejecuta cada vez que se realiza una solicitud del tipo
      * POST de la pagina <code>asignacionCursos.htm</code>. El metodo se encarga
@@ -145,34 +161,37 @@ public class ControladorAsignacionCursos extends ControladorAbstractoAsignacion{
         String retorno = "redirect:index.htm";
         try {
             this.asignacionEstudianteCarrera = this.servicioAsignacionEstudianteCarreraImpl.cargarEntidadPorID(AsignacionEstudianteCarrera.class, datosAsignacion.getIdAsignacionEstudianteCarrera());
-
-            if(datosAsignacion.getTipoAsignacion()==TipoAsignacion.ASIGNACION_CURSOS_SEMESTRE){
-                this.listaCurso = this.servicioCursoImpl.getCursoAsignacion(this.asignacionEstudianteCarrera.getCarrera(),
-                                                                            this.semestre,TipoHorario.SEMESTRE);
-                this.listaHorario = this.servicioHorarioImpl.getHorario(this.listaCurso.get(0), this.semestre, TipoHorario.SEMESTRE);
-                retorno = "asignacion/asignacionSemestre";
-            }
-            else if(datosAsignacion.getTipoAsignacion() == TipoAsignacion.ASIGNACION_CURSOS_VACACIONES){
-                this.listaCurso = this.servicioCursoImpl.getCursoAsignacion(this.asignacionEstudianteCarrera.getCarrera(),
-                                                                            this.semestre,TipoHorario.VACACIONES);
-                this.listaHorario = this.servicioHorarioImpl.getHorario(this.listaCurso.get(0), this.semestre, TipoHorario.VACACIONES);
-                retorno = "asignacion/asignacionVacaciones";
-            }
-            else if(datosAsignacion.getTipoAsignacion() == TipoAsignacion.ASIGNACION_PRIMERA_RETRASADA){
-                this.listaCurso = this.servicioCursoImpl.getCursoAsignacion(this.asignacionEstudianteCarrera.getCarrera(),
-                                                                            this.semestre,TipoHorario.PRIMERA_RETRASADA);
-                this.listaHorario = this.servicioHorarioImpl.getHorario(this.listaCurso.get(0), this.semestre, TipoHorario.PRIMERA_RETRASADA);
-                retorno = "asignacion/asignacionRetrasadas";
-            }
-            else if(datosAsignacion.getTipoAsignacion() == TipoAsignacion.ASIGNACION_SEGUNDA_RETRASADA){
-                this.listaCurso = this.servicioCursoImpl.getCursoAsignacion(this.asignacionEstudianteCarrera.getCarrera(),
-                                                                            this.semestre,TipoHorario.SEGUNDA_RETRASADA);
-                this.listaHorario = this.servicioHorarioImpl.getHorario(this.listaCurso.get(0), this.semestre, TipoHorario.SEGUNDA_RETRASADA);
-                retorno = "asignacion/asignacionRetrasadas";
-            }
-
-            datosAsignacion.setTotalCursos(0);
             
+            this.listaCurso = this.servicioCursoImpl.getCursoAsignacion(this.asignacionEstudianteCarrera.getCarrera(),
+                                                                            this.semestre,datosAsignacion.getTipoHorario());
+
+            if(!this.listaCurso.isEmpty())
+                this.listaHorario = this.servicioHorarioImpl.getHorario(this.listaCurso.get(0), this.semestre, datosAsignacion.getTipoHorario());
+            else{
+                modelo.addAttribute("noExisteHorario", true);
+                return "asignacion/asignacionCursos";
+            }
+
+            if(datosAsignacion.getTipoAsignacion()==TipoAsignacion.ASIGNACION_CURSOS_SEMESTRE)
+                retorno = "asignacion/asignacionSemestre";
+            else if(datosAsignacion.getTipoAsignacion()==TipoAsignacion.ASIGNACION_CURSOS_VACACIONES)
+                retorno = "asignacion/asignacionVacaciones";
+            else if(datosAsignacion.getTipoAsignacion()==TipoAsignacion.ASIGNACION_PRIMERA_RETRASADA |
+                    datosAsignacion.getTipoAsignacion()==TipoAsignacion.ASIGNACION_SEGUNDA_RETRASADA){
+
+                List<DetalleAsignacion> listaDetalleAsignacion = servicioDetalleAsignacionImpl
+                                                                    .getListadoDetalleAsignacion(semestre,
+                                                                        asignacionEstudianteCarrera,
+                                                                        TipoAsignacion.ASIGNACION_CURSOS_SEMESTRE
+                                                                    );
+                modelo.addAttribute("datosAsignacion", datosAsignacion);
+                modelo.addAttribute("totalAsignaciones", listaDetalleAsignacion.size());
+                modelo.addAttribute("listadoDetalleAsignacion", listaDetalleAsignacion);
+                return "asignacion/asignacionRetrasada";
+            }
+            
+            datosAsignacion.setTotalCursos(0);
+
             modelo.addAttribute("datosAsignacion", datosAsignacion);
             modelo.addAttribute("listaCurso", this.listaCurso);
             modelo.addAttribute("listaHorario", this.listaHorario);
@@ -182,6 +201,56 @@ public class ControladorAsignacionCursos extends ControladorAbstractoAsignacion{
             log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
         }
         return retorno;
-    }   
+    }
+//  _____________________________________________________________________________
+    /**
+     * <p>Este metodo se ejecuta cada vez que se realiza una solicitud del tipo
+     * GET de la pagina <code>asignacionExitosa.htm</code>. El metodo se encarga
+     * de inicializar las listas de detalleAsignacion y Asignacion en base al
+     * parametro que contiene el id de la asignacion a enviar.
+     *
+     * @param modelo Objeto {@link Model} que contiene todos los objetos que
+     *        seran usados en la pagina
+     * @return String Contiene el nombre de la vista a mostrar
+     */
+    @RequestMapping(value = "asignacionExitosa.htm", method = RequestMethod.GET)
+    public String mostrarAsignacion(@RequestParam Integer iascsvr,
+                                    Model modelo,
+                                    HttpServletRequest request) {
+        Asignacion asignacion = this.servicioGeneralImpl.cargarEntidadPorID(Asignacion.class, iascsvr);
+        List<DetalleAsignacion> listaDetalleAsignacion = this.servicioDetalleAsignacionImpl.getListadoDetalleAsignacion(asignacion);
+
+        modelo.addAttribute("asignacion", asignacion);
+        modelo.addAttribute("listaAsignacion", listaDetalleAsignacion);
+        return "asignacion/asignacionExitosa";
+    }
+
+//  _____________________________________________________________________________
+    /**
+     * <p>Este metodo se ejecuta cada vez que se realiza una solicitud del tipo
+     * GET de la pagina <code>asignacionExitosa.htm</code>. El metodo se encarga
+     * de inicializar las listas de detalleAsignacion y Asignacion en base al
+     * parametro que contiene el id de la asignacion a enviar.
+     *
+     * @param modelo Objeto {@link Model} que contiene todos los objetos que
+     *        seran usados en la pagina
+     * @return String Contiene el nombre de la vista a mostrar
+     */
+    @RequestMapping(value = "getHorarioAsignacion.htm", method = RequestMethod.GET)
+    public @ResponseBody @JsonIgnore List<Horario> getHorario(@RequestParam Short idCurso,
+                                                            @RequestParam String idTipoHorario,
+                                                            HttpServletRequest request) {
+        Curso curso = null;
+        semestre = servicioSemestreImpl.getSemestreActivo();
+        try {
+            curso = servicioGeneralImpl.cargarEntidadPorID(Curso.class, idCurso);
+        } catch (DataAccessException e) {
+            // error de acceso a datos
+            RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "dataAccessException", false);
+            log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
+        }
+        TipoHorario tipoHorario = TipoHorario.valueOf(idTipoHorario);
+        return servicioHorarioImpl.getHorario(curso, semestre, tipoHorario);
+    }
 
 }

@@ -6,11 +6,14 @@
 
 package gt.edu.usac.cats.servicio;
 
+import gt.edu.usac.cats.dominio.Asignacion;
 import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
 import gt.edu.usac.cats.dominio.Curso;
 import gt.edu.usac.cats.dominio.DetalleAsignacion;
 import gt.edu.usac.cats.dominio.Horario;
 import gt.edu.usac.cats.dominio.Semestre;
+import gt.edu.usac.cats.enums.TipoAsignacion;
+import java.io.IOException;
 import java.util.List;
 import org.hibernate.HibernateException;
 
@@ -62,13 +65,71 @@ public interface ServicioDetalleAsignacion extends ServicioGeneral{
     /**
      * <p>Listado de DetalleAsignacion.</p>
      *
-     * @param curso Contiene el pojo del tipo (@link Curso) para filtrar los resultados
-     * @param semestre Contiene el pojo del tipo (@link Semestre) para filtrar los resultados
-     * @param asignacionEstudianteCarrera Contiene el pojo del tipo (@link AsignacionEstudianteCarrera) para filtrar los resultados
+     * @param curso Contiene el pojo del tipo {@link Curso} para filtrar los resultados
+     * @param semestre Contiene el pojo del tipo {@link Semestre} para filtrar los resultados
+     * @param asignacionEstudianteCarrera Contiene el pojo del tipo {@link AsignacionEstudianteCarrera} para filtrar los resultados
+     * @param tipoAsignacion Contiene el pojo del tipo {@link TipoAsignacion} para filtrar los resultados
      * @throws HibernateException Si ocurrio un error de acceso a datos
      */
-     List<DetalleAsignacion> getListadoDetalleAsignacion(Curso curso, Semestre semestre, AsignacionEstudianteCarrera asignacionEstudianteCarrera)
+     List<DetalleAsignacion> getListadoDetalleAsignacion(Curso curso, Semestre semestre, AsignacionEstudianteCarrera asignacionEstudianteCarrera, TipoAsignacion tipoAsignacion)
              throws HibernateException;
 
+//______________________________________________________________________________
+    /**
+     * <p>Listado de DetalleAsignacion.</p>
+     *
+     * @param semestre Contiene el pojo del tipo {@link Semestre} para filtrar los resultados
+     * @param asignacionEstudianteCarrera Contiene el pojo del tipo {@link AsignacionEstudianteCarrera} para filtrar los resultados
+     * @param tipoAsignacion Contiene el pojo del tipo {@link TipoAsignacion} para filtrar los resultados
+     * @throws HibernateException Si ocurrio un error de acceso a datos
+     */
+     List<DetalleAsignacion> getListadoDetalleAsignacion(Semestre semestre, AsignacionEstudianteCarrera asignacionEstudianteCarrera, TipoAsignacion tipoAsignacion)
+             throws HibernateException;
+
+//______________________________________________________________________________
+    /**
+     * <p>Listado de DetalleAsignacion.</p>
+     *
+     * @param Asignacion Contiene el pojo del tipo {@link Asignacion} para filtrar los resultados
+     * @throws HibernateException Si ocurrio un error de acceso a datos
+     */
+     List<DetalleAsignacion> getListadoDetalleAsignacion(Asignacion asignacion)
+             throws HibernateException;
+
+
+//______________________________________________________________________________
+    /**
+     * <p>Total de veces en que un curso ha sido asignado a un estudiante en un
+     * tipo de asignacion.</p>
+     *
+     * @param curso Contiene el pojo del tipo (@link Curso) para filtrar los resultados
+     * @param asignacionEstudianteCarrera Contiene el pojo del tipo (@link AsignacionEstudianteCarrera) para filtrar los resultados
+     * @param tipoAsignacion Contiene el pojo del tipo (@link TipoAsignacion) para filtrar los resultados
+     * @throws HibernateException Si ocurrio un error de acceso a datos
+     */
+     int getTotalAsignaciones(Curso curso, AsignacionEstudianteCarrera asignacionEstudianteCarrera, TipoAsignacion tipoAsignacion)
+             throws HibernateException;
+
+ //______________________________________________________________________________
+    /**
+     * <p>Determina si un estudiante posee zona minima para un curso en particular.</p>
+     *
+     * @param curso Contiene el pojo del tipo {@link Curso} para filtrar los resultados
+     * @param asignacionEstudianteCarrera Contiene el pojo del tipo {@link AsignacionEstudianteCarrera} para filtrar los resultados
+     * @throws HibernateException Si ocurrio un error de acceso a datos
+     */
+     boolean tieneZonaMinima(Curso curso, AsignacionEstudianteCarrera asignacionEstudianteCarrera)
+             throws HibernateException, IOException;
+ //______________________________________________________________________________
+    /**
+     * <p>Determina si un estudiante posee zona minima para un curso en particular.</p>
+     *
+     * @param curso Contiene el pojo del tipo {@link Curso} para filtrar los resultados
+     * @param asignacionEstudianteCarrera Contiene el pojo del tipo {@link AsignacionEstudianteCarrera} para filtrar los resultados
+     * @param semestre Contiene el pojo del tipo {@link Semestre} para filtrar los resultados
+     * @throws HibernateException Si ocurrio un error de acceso a datos
+     */
+     boolean tieneZonaMinima(Curso curso, AsignacionEstudianteCarrera asignacionEstudianteCarrera, Semestre semestre)
+             throws HibernateException, IOException;
 
 }
