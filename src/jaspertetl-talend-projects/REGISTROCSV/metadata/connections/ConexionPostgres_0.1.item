@@ -30,7 +30,6 @@
     <columns label="sexo" sourceType="BPCHAR" talendType="id_String" nullable="false" length="1" precision="0" originalField="sexo"/>
     <columns label="id_lugar_nacimiento" sourceType="INT2" talendType="id_Short" nullable="false" length="2" precision="0" originalField="id_lugar_nacimiento"/>
     <columns label="id_nacionalidad" sourceType="INT2" talendType="id_Short" nullable="false" length="2" precision="0" originalField="id_nacionalidad"/>
-    <columns label="id_pensum" sourceType="INT2" talendType="id_Short" length="2" precision="0" originalField="id_pensum"/>
     <columns label="inscrito" sourceType="BOOL" talendType="id_Boolean" nullable="false" length="1" precision="0" originalField="inscrito"/>
   </tables>
   <tables id="_BVaCkPLMEd-Kxr2kCO7ilg" label="asignacion_estudiante_carrera" sourceName="asignacion_estudiante_carrera" tableType="TABLE">
