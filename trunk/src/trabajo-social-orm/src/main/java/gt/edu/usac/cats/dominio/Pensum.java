@@ -53,7 +53,7 @@ public class Pensum implements java.io.Serializable {
      private Date fechaFin;
      private Short estado;
      private Set<AsignacionCursoPensum> asignacionCursoPensums = new HashSet<AsignacionCursoPensum>(0);
-     private Set<Estudiante> estudiantes = new HashSet<Estudiante>(0);
+     private Set<PensumEstudianteCarrera> pensumEstudianteCarreras = new HashSet<PensumEstudianteCarrera>(0);
 
     public Pensum() {}
 
@@ -121,16 +121,14 @@ public class Pensum implements java.io.Serializable {
     public void setAsignacionCursoPensums(Set<AsignacionCursoPensum> asignacionCursoPensums) {
         this.asignacionCursoPensums = asignacionCursoPensums;
     }
-@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="pensum")
-    public Set<Estudiante> getEstudiantes() {
-        return this.estudiantes;
+    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="pensum")
+    public Set<PensumEstudianteCarrera> getPensumEstudianteCarreras() {
+        return this.pensumEstudianteCarreras;
     }
 
-    public void setEstudiantes(Set<Estudiante> estudiantes) {
-        this.estudiantes = estudiantes;
+    public void setPensumEstudianteCarreras(Set<PensumEstudianteCarrera> pensumEstudianteCarreras) {
+        this.pensumEstudianteCarreras = pensumEstudianteCarreras;
     }
-
-
 
 }
 

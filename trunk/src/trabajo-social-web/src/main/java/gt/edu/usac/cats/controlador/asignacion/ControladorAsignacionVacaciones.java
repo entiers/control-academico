@@ -140,7 +140,8 @@ public class ControladorAsignacionVacaciones extends ControladorAbstractoAsignac
                 return "asignacion/asignacionVacaciones";
             } else {
                 asignacionEstudianteCarrera = servicioGeneralImpl.cargarEntidadPorID(AsignacionEstudianteCarrera.class, datosAsignacion.getIdAsignacionEstudianteCarrera());
-                Pensum pensum = asignacionEstudianteCarrera.getEstudiante().getPensum();
+                Pensum pensum = this.servicioPensumEstudianteCarrera.getPensumEstudianteCarreraValido(
+                    asignacionEstudianteCarrera.getEstudiante()).getPensum();
                 if (pensum != null) {
                     //Validando que no tenga asignaciones previas y no exceda las permitidas
                     List<DetalleAsignacion> listaDetAsigVacaciones = servicioDetalleAsignacionImpl.getListadoDetalleAsignacion(semestre, asignacionEstudianteCarrera, TipoAsignacion.ASIGNACION_CURSOS_VACACIONES);

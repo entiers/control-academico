@@ -23,6 +23,7 @@ import gt.edu.usac.cats.servicio.ServicioCursoAprobado;
 import gt.edu.usac.cats.servicio.ServicioDetalleAsignacion;
 import gt.edu.usac.cats.servicio.ServicioGeneral;
 import gt.edu.usac.cats.servicio.ServicioHorario;
+import gt.edu.usac.cats.servicio.ServicioPensumEstudianteCarrera;
 import gt.edu.usac.cats.servicio.ServicioSemestre;
 import gt.edu.usac.cats.servicio.ServicioUsuario;
 import gt.edu.usac.cats.util.EmailSender;
@@ -91,6 +92,9 @@ public abstract class ControladorAbstractoAsignacion {
 //_____________________________________________________________________________
     @Resource
     protected ServicioDetalleAsignacion servicioDetalleAsignacionImpl;
+//_____________________________________________________________________________
+    @Resource
+    protected ServicioPensumEstudianteCarrera servicioPensumEstudianteCarrera;
 //_____________________________________________________________________________
     @Resource
     protected EmailSender emailSender;

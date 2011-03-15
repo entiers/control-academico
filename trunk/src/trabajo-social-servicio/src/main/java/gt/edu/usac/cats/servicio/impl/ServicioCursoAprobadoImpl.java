@@ -9,7 +9,9 @@ package gt.edu.usac.cats.servicio.impl;
 import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
 import gt.edu.usac.cats.dominio.Curso;
 import gt.edu.usac.cats.servicio.ServicioCursoAprobado;
+import gt.edu.usac.cats.servicio.ServicioPensumEstudianteCarrera;
 import java.util.List;
+import javax.annotation.Resource;
 import org.hibernate.Query;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,10 @@ import org.springframework.stereotype.Service;
  */
 @Service("servicioCursoAprobadoImpl")
 public class ServicioCursoAprobadoImpl extends ServicioGeneralImpl implements ServicioCursoAprobado{
+
+    @Resource
+    private ServicioPensumEstudianteCarrera servicioPensumEstudianteCarreraImpl;
+
 //______________________________________________________________________________
     @Override
     public boolean esCursoAprobado(AsignacionEstudianteCarrera asignacionEstudianteCarrera, Curso curso) throws DataAccessException {
@@ -49,7 +55,9 @@ public class ServicioCursoAprobadoImpl extends ServicioGeneralImpl implements Se
 
         Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
         query.setParameter("curso", curso);
-        query.setParameter("pensum", asignacionEstudianteCarrera.getEstudiante().getPensum());
+        query.setParameter("pensum", servicioPensumEstudianteCarreraImpl.
+                getPensumEstudianteCarreraValido(asignacionEstudianteCarrera.getEstudiante())
+                .getPensum());
 
         return query.list();
     }
