@@ -48,13 +48,12 @@ import javax.persistence.UniqueConstraint;
 
 public class AsignacionEstudianteCarrera implements java.io.Serializable {
     private int idAsignacionEstudianteCarrera;
-    
-    private Estudiante estudiante;
-    private Carrera carrera;    
-    private Date fechaCierre;
-    private Set<Asignacion> asignacions = new HashSet<Asignacion>(0);
-    private Set <HistorialAsignacionEstudianteCarrera> historialAsignacionEstudianteCarreras
-            = new HashSet<HistorialAsignacionEstudianteCarrera>(0);
+     private Estudiante estudiante;
+     private Carrera carrera;
+     private Date fechaCierre;
+     private Set<PensumEstudianteCarrera> pensumEstudianteCarreras = new HashSet<PensumEstudianteCarrera>(0);
+     private Set<Asignacion> asignacions = new HashSet<Asignacion>(0);
+     private Set<HistorialAsignacionEstudianteCarrera> historialAsignacionEstudianteCarreras = new HashSet<HistorialAsignacionEstudianteCarrera>(0);
 
 
 
@@ -141,6 +140,14 @@ public class AsignacionEstudianteCarrera implements java.io.Serializable {
         this.historialAsignacionEstudianteCarreras = historialAsignacionEstudianteCarreras;
     }
 //______________________________________________________________________________
+    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="asignacionEstudianteCarrera")
+    public Set<PensumEstudianteCarrera> getPensumEstudianteCarreras() {
+        return this.pensumEstudianteCarreras;
+    }
+
+    public void setPensumEstudianteCarreras(Set<PensumEstudianteCarrera> pensumEstudianteCarreras) {
+        this.pensumEstudianteCarreras = pensumEstudianteCarreras;
+    }
 
 }
 

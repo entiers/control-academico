@@ -133,7 +133,8 @@ public class ControladorAsignacionSemestre extends ControladorAbstractoAsignacio
                 return "asignacion/asignacionSemestre";
             } else {
                 asignacionEstudianteCarrera = servicioGeneralImpl.cargarEntidadPorID(AsignacionEstudianteCarrera.class, datosAsignacion.getIdAsignacionEstudianteCarrera());
-                Pensum pensum = asignacionEstudianteCarrera.getEstudiante().getPensum();
+                Pensum pensum = this.servicioPensumEstudianteCarrera.getPensumEstudianteCarreraValido(
+                    asignacionEstudianteCarrera.getEstudiante()).getPensum();
                 if (pensum != null) {
                     for (Horario horario : this.listaHorarioAsignacion) {
                        //Validando prerrequisitos por curso

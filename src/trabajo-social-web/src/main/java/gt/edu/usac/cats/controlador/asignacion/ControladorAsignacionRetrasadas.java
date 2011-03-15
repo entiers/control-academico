@@ -80,7 +80,8 @@ public class ControladorAsignacionRetrasadas extends ControladorAbstractoAsignac
             modelo.addAttribute("listadoDetalleAsignacion", listaDetalleAsignacion);
 
             List<Horario> listaHorarioAsignacion = new ArrayList<Horario>();
-            Pensum pensum = asignacionEstudianteCarrera.getEstudiante().getPensum();
+            Pensum pensum = this.servicioPensumEstudianteCarrera.getPensumEstudianteCarreraValido(
+                    asignacionEstudianteCarrera.getEstudiante()).getPensum();
 
             if (pensum != null) {
                 if (datosAsignacion.getDetalleAsignacion()!=null){
