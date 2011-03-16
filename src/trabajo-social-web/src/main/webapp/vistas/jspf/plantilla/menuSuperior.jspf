@@ -279,6 +279,10 @@
                 <sec:authorize access="hasRole('ROLE_ASIGNACION_CURSOS')">
                     <li><a href="asignacionCursos.htm"><fmt:message key="miscursos.asignacionCursos.titulo"/></a></li>
                 </sec:authorize>
+                <%--Desasignacion de cursos--%>
+                <sec:authorize access="hasRole('ROLE_ASIGNACION_CURSOS')">
+                    <li><a href="desAsignacionCursos.htm"><fmt:message key="miscursos.desAsignacionCursos.titulo"/></a></li>
+                </sec:authorize>
             </ul>
         </li>
     </sec:authorize>

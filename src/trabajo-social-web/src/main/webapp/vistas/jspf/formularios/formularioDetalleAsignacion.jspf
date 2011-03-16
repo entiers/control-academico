@@ -31,8 +31,3 @@
     </tbody>
 </table>
 </fieldset>
-<br/>
-<form:hidden path="idAsignacionEstudianteCarrera" />
-<form:hidden path="tipoAsignacion" />
-<form:hidden path="tipoHorario" id="tipoHorario" />
-<input type="submit" id="btnRealizarAsignacion" value='<fmt:message key="miscursos.asignacionCursos.realizar" />' />

@@ -9,6 +9,7 @@ package gt.edu.usac.cats.servicio.impl;
 import gt.edu.usac.cats.dominio.Asignacion;
 import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
 import gt.edu.usac.cats.dominio.Curso;
+import gt.edu.usac.cats.dominio.Estudiante;
 import gt.edu.usac.cats.dominio.Horario;
 import gt.edu.usac.cats.dominio.DetalleAsignacion;
 import gt.edu.usac.cats.dominio.Semestre;
@@ -31,7 +32,7 @@ import org.springframework.stereotype.Service;
  */
 @Service("servicioDetalleAsignacionImpl")
 public class ServicioDetalleAsignacionImpl extends ServicioGeneralImpl implements ServicioDetalleAsignacion{
-
+//______________________________________________________________________________
     @Override
     public Integer getCountDetalleAsignacionXHorario(Horario horario) throws HibernateException {
         StringBuilder builder = new StringBuilder();
@@ -43,7 +44,7 @@ public class ServicioDetalleAsignacionImpl extends ServicioGeneralImpl implement
         
         return Integer.valueOf(query.list().get(0).toString());
     }
-
+//______________________________________________________________________________
     @Override
     public List<DetalleAsignacion> getListadoDetalleAsignacion(Integer idHorario) throws HibernateException {
         StringBuilder builder = new StringBuilder();
@@ -56,7 +57,7 @@ public class ServicioDetalleAsignacionImpl extends ServicioGeneralImpl implement
 
         return query.list();
     }
-    
+//______________________________________________________________________________
     @Override
     public void cambioCierreSeccion(Horario horario,
                                     List lstIdDetalleAsignacion) throws HibernateException{
@@ -67,7 +68,7 @@ public class ServicioDetalleAsignacionImpl extends ServicioGeneralImpl implement
             this.actualizar(detAsign);
         }
     }
-
+//______________________________________________________________________________
     @Override
     public List<DetalleAsignacion> getListadoDetalleAsignacion(Curso curso, Semestre semestre, AsignacionEstudianteCarrera asignacionEstudianteCarrera, TipoAsignacion tipoAsignacion) throws HibernateException {
         StringBuilder builder = new StringBuilder();
@@ -86,7 +87,7 @@ public class ServicioDetalleAsignacionImpl extends ServicioGeneralImpl implement
 
         return query.list();
     }
-
+//______________________________________________________________________________
     @Override
     public int getTotalAsignaciones(Curso curso, AsignacionEstudianteCarrera asignacionEstudianteCarrera, TipoAsignacion tipoAsignacion) throws HibernateException {
         StringBuilder builder = new StringBuilder();
@@ -110,7 +111,7 @@ public class ServicioDetalleAsignacionImpl extends ServicioGeneralImpl implement
         else
             return Integer.parseInt(result.get(0).toString());
     }
-
+//______________________________________________________________________________
     @Override
     public List<DetalleAsignacion> getListadoDetalleAsignacion(Asignacion asignacion) throws HibernateException {
         StringBuilder builder = new StringBuilder();
@@ -123,7 +124,7 @@ public class ServicioDetalleAsignacionImpl extends ServicioGeneralImpl implement
 
         return query.list();
     }
-
+//______________________________________________________________________________
     @Override
     public List<DetalleAsignacion> getListadoDetalleAsignacion(Semestre semestre, AsignacionEstudianteCarrera asignacionEstudianteCarrera, TipoAsignacion tipoAsignacion) throws HibernateException {
         StringBuilder builder = new StringBuilder();
@@ -140,7 +141,24 @@ public class ServicioDetalleAsignacionImpl extends ServicioGeneralImpl implement
 
         return query.list();
     }
+//______________________________________________________________________________
+    @Override
+    public List<DetalleAsignacion> getListadoDetalleAsignacion(Semestre semestre, Estudiante estudiante, TipoAsignacion tipoAsignacion) throws HibernateException {
+        StringBuilder builder = new StringBuilder();
+        builder.append("select det from DetalleAsignacion det ")
+               .append("where det.horario.semestre= :semestre ")
+               .append("and det.asignacion.asignacionEstudianteCarrera.estudiante = :estudiante ")
+               .append("and det.asignacion.tipoAsignacion = :tipoAsignacion ")
+               .append("and not exists (select 'x' from Desasignacion des where des.detalleAsignacion=det)");
 
+        Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
+        query.setParameter("semestre", semestre);
+        query.setParameter("estudiante", estudiante);
+        query.setParameter("tipoAsignacion", tipoAsignacion);
+
+        return query.list();
+    }
+//______________________________________________________________________________
     @Override
     public boolean tieneZonaMinima(Curso curso, AsignacionEstudianteCarrera asignacionEstudianteCarrera) throws HibernateException, IOException {
         // se carga la configuracion
@@ -165,7 +183,7 @@ public class ServicioDetalleAsignacionImpl extends ServicioGeneralImpl implement
         else
             return Integer.valueOf(result.get(0).toString()) >= zonaMinima;
     }
-
+//______________________________________________________________________________
     @Override
     public boolean tieneZonaMinima(Curso curso, AsignacionEstudianteCarrera asignacionEstudianteCarrera, Semestre semestre) throws HibernateException, IOException {
         // se carga la configuracion
@@ -192,8 +210,7 @@ public class ServicioDetalleAsignacionImpl extends ServicioGeneralImpl implement
         else
             return Integer.valueOf(result.get(0).toString()) >= zonaMinima;
     }
-
-    //______________________________________________________________________________
+//______________________________________________________________________________
     /**
      * <p>Este metodo se encarga de leer el archivo de propiedades que contiene
      * la configuracion de JavaMail para el envio de correos electronicos.</p>

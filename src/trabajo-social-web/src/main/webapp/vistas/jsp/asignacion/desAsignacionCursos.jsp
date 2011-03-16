@@ -1,7 +1,7 @@
 <%-- 
-    Document   : asignacionRetrasadas
-    Created on : 5/03/2011, 11:40:55 PM
-    Author     : Carlos Solorzano
+    Document   : desAsignacionCursos
+    Created on : 15/03/2011, 11:01:29 PM
+    Author     : cats
 --%>
 
 <%@page contentType="text/html" pageEncoding="ISO-8859-1"%>
@@ -15,7 +15,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
-        <title><fmt:message key="miscursos.asignacionCursos.retrasada.titulo"/></title>
+        <title><fmt:message key="miscursos.desAsignacionCursos.titulo"/></title>
         <script type="text/javascript">
             $(function() {
                 // se crea y configura el panel popup que muestra los
@@ -33,22 +33,25 @@
         </script>
     </head>
     <body>
-        <h1><fmt:message key="miscursos.asignacionCursos.retrasada.titulo"/></h1>
-        <form:form method="post" modelAttribute="datosAsignacion" action="realizarAsignacionRetrasada.htm">
+        <h1><fmt:message key="miscursos.desAsignacionCursos.titulo"/></h1>
+        <form:form method="post" modelAttribute="datosAsignacion">
             <c:choose>
                 <c:when test="totalAsignaciones==0">
                     <div id="campos">
                         <fmt:message key="miscursos.asignacionCursos.retrasada.sinAsignaciones"/>
                     </div>
                 </c:when>
+                <c:when test="${errorEntidad}">
+                    <label><fmt:message key="miscursos.asignacionCursos.noEstudiante"/></label>
+                </c:when>
+                <c:when test="${periodoInvalido}">
+                    <label><fmt:message key="miscursos.desAsignacionCursos.fueraPeriodo"/></label>
+                </c:when>
                 <c:otherwise>
                     <%-- se importan los campos --%>
                     <%@include file="../../jspf/formularios/formularioDetalleAsignacion.jspf" %>
                     <br/>
-                    <input type="submit" id="btnRealizarAsignacion" value='<fmt:message key="miscursos.asignacionCursos.realizar" />' />
-                    <form:hidden path="idAsignacionEstudianteCarrera" />
-                    <form:hidden path="tipoAsignacion" />
-                    <form:hidden path="tipoHorario" id="tipoHorario" />
+                    <input type="submit" value='<fmt:message key="miscursos.desasignacionCursos.realizar" />' />
                 </c:otherwise>
             </c:choose>
         </form:form>
@@ -56,4 +59,3 @@
         <%@include file="../../jspf/plantilla/popupMensaje.jspf" %>
     </body>
 </html>
-

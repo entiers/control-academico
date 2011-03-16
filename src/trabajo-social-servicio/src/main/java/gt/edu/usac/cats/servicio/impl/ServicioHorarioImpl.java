@@ -14,6 +14,7 @@ import gt.edu.usac.cats.dominio.Semestre;
 import gt.edu.usac.cats.enums.TipoHorario;
 import gt.edu.usac.cats.servicio.ServicioHorario;
 import java.util.Calendar;
+import java.util.Iterator;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -166,13 +167,25 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
 
     @Override
     public boolean existeTraslape(List<Horario> listadoHorario) throws DataAccessException {
+
+        //Validando que traslape de horario
         for(Horario h1 : listadoHorario){
             for(Horario h2 : listadoHorario){
                 if(h1.getIdHorario()!=h2.getIdHorario()){
                     if((h2.getHoraFin().compareTo(h1.getHoraInicio()) > 0 & h2.getHoraFin().compareTo(h1.getHoraFin()) <= 0)
                         | (h2.getHoraInicio().compareTo(h1.getHoraFin()) < 0 & h2.getHoraInicio().compareTo(h1.getHoraInicio()) >= 0)
                         | (h2.getHoraInicio().compareTo(h1.getHoraInicio()) <= 0 & h2.getHoraFin().compareTo(h1.getHoraFin()) >= 0  ))
-                        return true;
+
+                        //Validando traslape de dias
+                        for(Iterator <HorarioDia> it1 = h1.getHorarioDias().iterator(); it1.hasNext();){
+                            HorarioDia horarioDia1 = it1.next();
+                            for(Iterator <HorarioDia> it2 = h2.getHorarioDias().iterator(); it2.hasNext();){
+                               HorarioDia horarioDia2 = it2.next();
+                                    if(horarioDia1.getNumeroDia()==horarioDia2.getNumeroDia())
+                                        return true;
+                            }
+                        }
+                    
                 }
             }
         }
