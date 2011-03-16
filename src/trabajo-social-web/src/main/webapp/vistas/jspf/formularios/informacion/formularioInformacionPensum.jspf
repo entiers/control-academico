@@ -2,10 +2,22 @@
 <%@ page pageEncoding="UTF-8" %>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <div id="informacionPensum" style="margin: 20px 0 20px 0;">
     <fieldset>
-        <legend><fmt:message key="pensum.informacion"/></legend>
+        <legend>
+            <c:choose>
+                <c:when test="${empty legendPensum}">
+                    <fmt:message key="pensum.informacion"/>
+                </c:when>
+
+                <c:otherwise>
+                    <fmt:message key="${legendPensum}"/>
+                </c:otherwise>
+            </c:choose>
+
+        </legend>
         <div id="divCampos">
             <label><fmt:message key="agregarPensum.codigo"/>:</label> <span>${pensum.codigo}</span>
         </div>

@@ -26,10 +26,7 @@ import javax.persistence.UniqueConstraint;
 @Entity
 @Table(name="pensum_estudiante_carrera"
     ,schema="control"
-    , uniqueConstraints={
-        @UniqueConstraint(name="pensum_estudiante_carrera_uk",
-        columnNames={"asignacionEstudianteCarrera", "pensum"})
-    }
+    , uniqueConstraints = @UniqueConstraint(name="pensum_estudiante_carrera_uk", columnNames={"id_asignacion_estudiante_carrera", "id_pensum"})
 )
 public class PensumEstudianteCarrera  implements java.io.Serializable {
 
