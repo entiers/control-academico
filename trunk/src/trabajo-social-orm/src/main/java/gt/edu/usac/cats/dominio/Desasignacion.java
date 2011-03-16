@@ -43,7 +43,9 @@ public class Desasignacion implements java.io.Serializable {
     private int idDesasignacion;
     private String observacion;
 
-    public Desasignacion() {}
+    public Desasignacion() {
+        this.fecha = new Date();
+    }
 
     public Desasignacion(int idDesasignacion, DetalleAsignacion detalleAsignacion, Date fecha) {
         this.idDesasignacion = idDesasignacion;

@@ -10,6 +10,7 @@ import gt.edu.usac.cats.dominio.Asignacion;
 import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
 import gt.edu.usac.cats.dominio.Curso;
 import gt.edu.usac.cats.dominio.DetalleAsignacion;
+import gt.edu.usac.cats.dominio.Estudiante;
 import gt.edu.usac.cats.dominio.Horario;
 import gt.edu.usac.cats.dominio.Semestre;
 import gt.edu.usac.cats.enums.TipoAsignacion;
@@ -86,6 +87,18 @@ public interface ServicioDetalleAsignacion extends ServicioGeneral{
      List<DetalleAsignacion> getListadoDetalleAsignacion(Semestre semestre, AsignacionEstudianteCarrera asignacionEstudianteCarrera, TipoAsignacion tipoAsignacion)
              throws HibernateException;
 
+//______________________________________________________________________________
+    /**
+     * <p>Listado de DetalleAsignacion de todas las carreras en que se encuentra
+     * asignado el estudiante.</p>
+     *
+     * @param semestre Contiene el pojo del tipo {@link Semestre} para filtrar los resultados
+     * @param estudiante Contiene el pojo del tipo {@link Estudiante} para filtrar los resultados
+     * @param tipoAsignacion Contiene el pojo del tipo {@link TipoAsignacion} para filtrar los resultados
+     * @throws HibernateException Si ocurrio un error de acceso a datos
+     */
+     List<DetalleAsignacion> getListadoDetalleAsignacion(Semestre semestre, Estudiante estudiante, TipoAsignacion tipoAsignacion)
+             throws HibernateException;
 //______________________________________________________________________________
     /**
      * <p>Listado de DetalleAsignacion.</p>

@@ -51,7 +51,7 @@ public class ServicioPensumEstudianteCarreraImpl extends ServicioGeneralImpl imp
 
     @Override
     public PensumEstudianteCarrera getPensumEstudianteCarreraValido(Estudiante estudiante) throws DataAccessException {
-        //Se tiene el conocimiento que siempre habrá un registro valido = true en la BD
+        //Se tiene el conocimiento que siempre habrï¿½ un registro valido = true en la BD
         return this.daoGeneralImpl.uniqueResult(this.crearCriteriaPorEstudianteYValido(true, estudiante));
     }
 
