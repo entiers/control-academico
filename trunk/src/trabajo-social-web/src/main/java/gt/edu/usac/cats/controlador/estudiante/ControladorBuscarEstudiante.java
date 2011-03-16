@@ -3,7 +3,6 @@
  * Escuela de Trabajo Social
  * Universidad de San Carlos de Guatemala
  */
-
 package gt.edu.usac.cats.controlador.estudiante;
 
 import gt.edu.usac.cats.dominio.Estudiante;
@@ -17,7 +16,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
-import org.hibernate.HibernateException;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -89,11 +88,14 @@ public class ControladorBuscarEstudiante {
      */
     private int rowCount;
 //______________________________________________________________________________
+
     /**
      * <p>Constructor de la clase, no realiza ninguna accion.</p>
      */
-    public ControladorBuscarEstudiante() {}
+    public ControladorBuscarEstudiante() {
+    }
 //______________________________________________________________________________
+
     /**
      * <p>Este metodo se ejecuta cada vez que se realiza una solicitud del tipo
      * GET de la pagina <code>buscarEstudiante.htm</code>. El metodo se encarga
@@ -115,6 +117,7 @@ public class ControladorBuscarEstudiante {
         return "estudiante/buscarEstudiante";
     }
 //______________________________________________________________________________
+
     /**
      * <p>Este metodo se ejecuta cuando se solicita una busqueda desde la pagina
      * de buscar estudiante. Las busquedas solo se realizan por el numero de
@@ -134,122 +137,30 @@ public class ControladorBuscarEstudiante {
      * @param request Peticion HTTP
      * @return String Contiene el nombre de la vista a mostrar
      */
-    @RequestMapping(value = "buscarBuscarEstudiante.htm", method = RequestMethod.POST)
+    @RequestMapping(value = "buscarEstudiante.htm", method = RequestMethod.POST)
     public String buscarEstudiantes(@Valid DatosBusquedaEstudiante datosBusquedaEstudiante,
             BindingResult bindingResult, Model modelo, HttpServletRequest request) {
 
         // se almacenan los parametros de busqueda ingresados en la pagina
-        this.datosBusquedaEstudiante = datosBusquedaEstudiante;
-
-        // no se enviaron parametros de busqueda
-        if(this.datosBusquedaEstudiante.isEmpty())
-            return "estudiante/buscarEstudiante";
+        this.datosBusquedaEstudiante = datosBusquedaEstudiante;        
 
         // los parametros de busqueda no cumplen las reglas de validacion
-        if(bindingResult.hasErrors())
-            return "estudiante/buscarEstudiante";
-
-        this.datosBusquedaEstudiante.inicializarPrimerRegistro();
-        return this.realizarBusqueda(modelo, request, true);
-    }
-//______________________________________________________________________________
-    /**
-     * <p>Este metodo se llama cada vez que se quiere paginar los resultados
-     * de la busqueda hacia adelante. Primero se incrementa el primer resultado
-     * a mostrar (numero de pagina a mostrar) y luego se llama al metodo
-     * <code>realizarBusqueda</code> para que realice la busqueda.</p>
-     *
-     * @param modelo Objeto {@link Model} que contiene todos los objetos que
-     *        seran usados en la pagina
-     * @param request Peticion HTTP
-     * @return String Contiene el nombre de la vista a mostrar
-     */
-    @RequestMapping(value = "paginarAdelanteBuscarEstudiante.htm", method = RequestMethod.POST)
-    public String paginarAdelante(Model modelo, HttpServletRequest request) {
-
-        // se aumenta la paginacion
-        this.datosBusquedaEstudiante.aumentarPrimerRegistro();
-
-        // se mantienen los parametros de busqueda
-        modelo.addAttribute("datosBusquedaEstudiante", this.datosBusquedaEstudiante);
-
-        return this.realizarBusqueda(modelo, request, false);
-    }
-//______________________________________________________________________________
-    /**
-     * <p>Este metodo se llama cada vez que se quiere paginar los resultados
-     * de la busqueda hacia atras. Primero se disminuye el primer resultado
-     * a mostrar (numero de pagina a mostrar) y luego se llama al metodo
-     * <code>realizarBusqueda</code> para que realice la busqueda.</p>
-     *
-     * @param modelo Objeto {@link Model} que contiene todos los objetos que
-     *        seran usados en la pagina
-     * @param request Peticion HTTP
-     * @return String Contiene el nombre de la vista a mostrar
-     */
-    @RequestMapping(value = "paginarAtrasBuscarEstudiante.htm", method = RequestMethod.POST)
-    public String paginarAtras(Model modelo, HttpServletRequest request) {
-
-        // se disminuye la paginacion
-        this.datosBusquedaEstudiante.disminuirPrimerRegistro();
-
-        // se mantienen los parametros de busqueda
-        modelo.addAttribute("datosBusquedaEstudiante", this.datosBusquedaEstudiante);
-
-        return this.realizarBusqueda(modelo, request, false);
-    }
-//______________________________________________________________________________
-    /**
-     * <p>Este metodo se encarga de realizar la busqueda de estudiantes segun
-     * los parametros de busqueda enviados. El procedimiento para realizar la
-     * busqueda es el siguiente:
-     * <ul>
-     * <li>La busqueda se delegaga a {@link ServicioEstudiante}, se le envia
-     * el objeto {@link DatosBusquedaEstudiante} el cual contiene los parametros
-     * de busqueda ingresados por el usuario</li>
-     * <li>Si la busqueda no produce resultados se muestra un mensaje popup
-     * indicando que no hay resultados que mostrar</li>
-     * <li>Si ocurre un error de acceso a la base de datos se muestra un mensaje
-     * popup indicando del error</li>
-     * </ul>
-     * </p>
-     *
-     * @param modelo Objeto {@link Model} que contiene todos los objetos que
-     *        seran usados en la pagina
-     * @param request Peticion HTTP
-     * @param obtenerRowCount Indica si se debe de realizar un rowCount
-     * @return String Contiene el nombre de la vista a mostrar
-     */
-    private String realizarBusqueda(Model modelo, HttpServletRequest request, boolean obtenerRowCount) {
-
-        // se limpia el resultado anterior
-        this.listadoEstudiantes.clear();
-        modelo.addAttribute("listadoEstudiantes", this.listadoEstudiantes);
-
-        try {
-            // se trata de obtener el total de registros de la consulta
-            if(obtenerRowCount)
-                this.rowCount = this.servicioEstudianteImpl.rowCount(datosBusquedaEstudiante);
-
-            // se trata de hacer la busqueda
-            List<Estudiante> listado = this.servicioEstudianteImpl.getListadoEstudiantes(this.datosBusquedaEstudiante);
-            if(listado.isEmpty())
-                RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "buscarEstudiante.sinResultados", true);
-            else
-                this.listadoEstudiantes.addAll(listado);
-
-            // se configuran los botones de la paginacion
-            RequestUtil.configurarPaginacion(request, this.datosBusquedaEstudiante.getPrimerRegistro(), this.rowCount);
-
-        } catch (HibernateException e) {
-            // error de acceso a datos
-            this.datosBusquedaEstudiante.inicializarPrimerRegistro();
-
-            RequestUtil.crearMensajeRespuesta(request, null, "dataAccessException", false);
-            log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
+        if (!this.datosBusquedaEstudiante.isEmpty() && !bindingResult.hasErrors()) {
+            try {
+                this.listadoEstudiantes = this.servicioEstudianteImpl.getListadoEstudiantes(this.datosBusquedaEstudiante);
+                if (this.listadoEstudiantes.isEmpty()) {
+                    RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "buscarEstudiante.sinResultados", true);
+                }
+            } catch (DataAccessException e) {
+                RequestUtil.crearMensajeRespuesta(request, null, "dataAccessException", false);
+                log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
+            }
         }
 
-        // siempre se retorna la pagina de busquedas
+        modelo.addAttribute("listadoEstudiantes", this.listadoEstudiantes);
+        modelo.addAttribute("datosBusquedaEstudiante", this.datosBusquedaEstudiante);
+        //this.datosBusquedaEstudiante.inicializarPrimerRegistro();
         return "estudiante/buscarEstudiante";
     }
+
 }

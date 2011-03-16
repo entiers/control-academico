@@ -39,6 +39,9 @@
                 <value>/idiomas/textosAsignacion</value>
                 <value>/idiomas/textosReportes</value>
                 <value>/idiomas/textosPersona</value>
+                <value>/idiomas/textosPensumEstudianteCarrera</value>
+                <value>/idiomas/textosAsignacionEstudianteCarrera</value>
+                <value>/idiomas/textosCarrera</value>
             </list>
         </property>
 	<property name="cacheSeconds" value="0" />
