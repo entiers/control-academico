@@ -1081,8 +1081,6 @@
   </relationships>
  </target-database>
  <ddl-generator type="ca.sqlpower.architect.ddl.PostgresDDLGenerator" allow-connection="true" target-schema="control"> </ddl-generator>
- <compare-dm-settings  ddlGenerator="ca.sqlpower.architect.ddl.PostgresDDLGenerator"  outputFormatAsString="SQL" >
-  <source-stuff   datastoreTypeAsString="DATABASE"   connectName="athena-postgres-control"   filePath=""  />  <target-stuff   datastoreTypeAsString="PROJECT"   filePath=""  /> </compare-dm-settings>
  <create-kettle-job-settings filePath="" jobName="" schemaName="" kettleJoinType="0" savingToFile="true" />
  <play-pen zoom="0.8408964152537234" viewportX="369" viewportY="0" relationship-style="rectilinear" names-displayLogicalNames="true" showPrimaryTag="true" showForeignTag="true" showAlternateTag="true" columnVisibility="ALL" relationshipLabelVisibility="true">
   <table-pane table-ref="TAB335" x="1679" y="1347" bgColor="0xf0f0f0" fgColor="0x000000" rounded="false" dashed="false"/>
@@ -1121,7 +1119,7 @@
   <table-pane table-ref="TAB295" x="2012" y="1023" bgColor="0xf0f0f0" fgColor="0x000000" rounded="true" dashed="false"/>
   <table-pane table-ref="TAB302" x="1762" y="543" bgColor="0xf0f0f0" fgColor="0x000000" rounded="true" dashed="false"/>
   <table-pane table-ref="TAB309" x="2143" y="552" bgColor="0xf0f0f0" fgColor="0x000000" rounded="true" dashed="false"/>
-  <table-pane table-ref="TAB318" x="496" y="1107" bgColor="0xf0f0f0" fgColor="0x000000" rounded="false" dashed="false"/>
+  <table-pane table-ref="TAB318" x="625" y="1088" bgColor="0xf0f0f0" fgColor="0x000000" rounded="false" dashed="false"/>
   <table-pane table-ref="TAB327" x="569" y="805" bgColor="0xf0f0f0" fgColor="0x000000" rounded="false" dashed="false"/>
   <table-pane table-ref="TAB341" x="1562" y="162" bgColor="0xf0f0f0" fgColor="0x000000" rounded="false" dashed="false"/>
   <table-pane table-ref="TAB349" x="1677" y="260" bgColor="0xf0f0f0" fgColor="0x000000" rounded="false" dashed="false"/>
