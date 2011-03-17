@@ -320,20 +320,20 @@ div.art-Header-jpeg
 	position: absolute;
 	z-index: -1;
 	top: 0;
-	height: 31px;
+	height: 62px;
 	background-image: url('images/nav.png');
 }
 
 .art-nav .l
 {
 	left: 0;
-	right:0px;
+	right:0px;                
 }
 
 .art-nav .r
 {
 	right: 0;
-	width: 880px;
+	width: 880px;        
 	clip: rect(auto, auto, auto, 880px);
 }
 

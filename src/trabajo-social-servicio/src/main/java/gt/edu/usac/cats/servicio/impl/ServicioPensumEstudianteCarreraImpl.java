@@ -6,9 +6,11 @@ package gt.edu.usac.cats.servicio.impl;
 
 import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
 import gt.edu.usac.cats.dominio.Estudiante;
+import gt.edu.usac.cats.dominio.Pensum;
 import gt.edu.usac.cats.dominio.PensumEstudianteCarrera;
 import gt.edu.usac.cats.servicio.ServicioPensumEstudianteCarrera;
 import java.util.List;
+import org.hibernate.Query;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.DataAccessException;
@@ -68,5 +70,22 @@ public class ServicioPensumEstudianteCarreraImpl extends ServicioGeneralImpl imp
     @Override
     public List<PensumEstudianteCarrera> getListadoPensumEstudianteCarreraNoValidos(AsignacionEstudianteCarrera asignacionEstudianteCarrera) throws DataAccessException {
         return this.daoGeneralImpl.find(this.crearCriteriaPorAsignacionEstudianteCarreraYValido(false, asignacionEstudianteCarrera));
+    }
+
+    @Override
+    public List<Pensum> getPensumsNoAsignadosAEstudianteCarrera(AsignacionEstudianteCarrera asignacionEstudianteCarrera) throws DataAccessException {
+        StringBuilder builder = new StringBuilder();
+
+        builder.append(" select p from Pensum p");
+        builder.append(" where p.idPensum not in (select pec.pensum.idPensum from PensumEstudianteCarrera pec");
+        builder.append(" where pec.asignacionEstudianteCarrera = :asignacionEstudianteCarrera)");
+        builder.append(" and p.carrera = :carrera");
+
+
+        Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
+        query.setParameter("carrera", asignacionEstudianteCarrera.getCarrera());
+        query.setParameter("asignacionEstudianteCarrera", asignacionEstudianteCarrera);
+
+        return query.list();
     }
 }
