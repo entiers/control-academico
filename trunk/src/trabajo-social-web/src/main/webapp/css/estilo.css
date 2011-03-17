@@ -36,7 +36,7 @@
 }
 
 .claseError {
-    
+
 }
 
 #divErrorLogin {
@@ -44,10 +44,34 @@
 }
 
 .loginError {
-    
+
 }
 
 
 .contenedor-reporte-arriba{
     margin-bottom:20px;
+}
+
+
+legend{
+    height: 30px;
+    color: #000000;
+    font-family:"Century Gothic",Arial, Helvetica, Sans-Serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: bold;
+    white-space : nowrap;
+    padding: 0 6px;
+    line-height: 30px;
+    background-position:left top;
+	background-image: url('images/BlockHeaderIcon.png');
+        padding:0 0 0 24px;
+	background-repeat: no-repeat;
+	min-height: 14px;
+	margin: 0 0 0 5px
+}
+
+.claseError{
+    font-weight: bold;
+    color: darkred;
 }

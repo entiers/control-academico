@@ -7,6 +7,7 @@ package gt.edu.usac.cats.servicio;
 
 import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
 import gt.edu.usac.cats.dominio.Estudiante;
+import gt.edu.usac.cats.dominio.Pensum;
 import gt.edu.usac.cats.dominio.PensumEstudianteCarrera;
 import java.util.List;
 import org.springframework.dao.DataAccessException;
@@ -29,6 +30,10 @@ public interface ServicioPensumEstudianteCarrera extends ServicioGeneral {
             throws DataAccessException;
 
     List <PensumEstudianteCarrera> getListadoPensumEstudianteCarreraNoValidos(AsignacionEstudianteCarrera asignacionEstudianteCarrera)
+            throws DataAccessException;
+
+
+    List <Pensum> getPensumsNoAsignadosAEstudianteCarrera(AsignacionEstudianteCarrera asignacionEstudianteCarrera)
             throws DataAccessException;
 
 }

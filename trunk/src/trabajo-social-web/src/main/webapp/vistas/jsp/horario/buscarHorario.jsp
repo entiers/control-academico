@@ -39,7 +39,7 @@
             <div id="errorFormulario" title="Error"><fmt:message key="horario.errorFormulario" /></div>
 
             <div id="verReporte" title="<fmt:message key="horario.verReporte" />">
-                <form:form action="generarReporte.htm" method="POST" target="_BLANK" onsubmit="return validar();">
+                <form:form  id="formVerReporte" action="generarReporte.htm" method="POST" target="_BLANK">
                     <input type="hidden" name="nombreControlReporte" value="${nombreControlReporte}" />
 
                     <div id="divCampos">
@@ -51,11 +51,11 @@
                             <c:forEach items="${listadoSemestres}" var="semestre">
                                 <option value="${semestre.idSemestre}">${semestre.anyoNumero}</option>>
                             </c:forEach>
-                        </select>
+                        </select>                        
                         <input type="hidden" name="tipoParametro" value="integer" />
                     </div>
 
-                    <input type="submit" value="<fmt:message key="btnImprimir"/>"/>
+                    
                 </form:form>
             </div>
             <button id="botonVerReporte"> <fmt:message key="horario.verReporte" /></button>
