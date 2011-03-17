@@ -11,7 +11,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="display" uri="http://displaytag.sf.net"%>
 
 <html>
@@ -46,16 +46,18 @@
 
         <fieldset>
             <legend><fmt:message key="buscarEstudiante.tituloListado"/></legend>
-            
+
             <display:table class="ui-widget ui-widget-content" name="listadoEstudiantes"
                            id="estudiante" requestURI="buscarEstudiante.htm" pagesize="15" >
                 <display:column property="carne" titleKey="agregarEstudiante.carne"  />
                 <display:column property="nombre" titleKey="agregarEstudiante.nombre"  />
-                <display:column titleKey="acciones" style="text-align: center;" >
-                    <a href="mostrarAsignacionEstudianteCarrera.htm?idEstudiante=${estudiante.idEstudiante}">
-                    <fmt:message key="mostrarAsignacionEstudianteCarrera.link"/>
-                </a>
-                </display:column>
+                <sec:authorize access="hasRole('ROLE_MOSTRAR_ASIGNACION_ESTUDIANTE_CARRERA')">
+                    <display:column titleKey="acciones" style="text-align: center;" >
+                        <a href="mostrarAsignacionEstudianteCarrera.htm?idEstudiante=${estudiante.idEstudiante}">
+                            <fmt:message key="mostrarAsignacionEstudianteCarrera.link"/>
+                        </a>
+                    </display:column>
+                </sec:authorize>
             </display:table>
         </fieldset>
 

@@ -30,11 +30,20 @@
                 <display:table class="ui-widget ui-widget-content" name="listadoAsignacionEstudianteCarrera" id="asignacionEstudianteCarrera">
                     <display:column property="carrera.codigo" titleKey="agregarCarrera.codigo" style="text-align: center;"  />
                     <display:column property="carrera.nombre" titleKey="agregarCarrera.nombre"  />
-                    <display:column titleKey="acciones" style="text-align:center;">
-                        <a href="mostrarPensumEstudianteCarrera.htm?idAsignacionEstudianteCarrera=${asignacionEstudianteCarrera.idAsignacionEstudianteCarrera}">
-                            <fmt:message key="mostrarPensumEstudianteCarrera.link"/>
-                        </a>
+
+                    <display:column titleKey="asignacionEstudianteCarrera.fechaCierre"  style="text-align:center;">
+                        <fmt:formatDate value="${asignacionEstudianteCarrera.fechaCierre}" pattern="dd-MM-yyyy" />
                     </display:column>
+
+                    <sec:authorize access="hasRole('ROLE_MOSTRAR_PENSUM_ESTUDIANTE_CARRERA')">
+                        <display:column titleKey="acciones" style="text-align:center;">
+                            <a href="mostrarPensumEstudianteCarrera.htm?idAsignacionEstudianteCarrera=${asignacionEstudianteCarrera.idAsignacionEstudianteCarrera}">
+                                <fmt:message key="mostrarPensumEstudianteCarrera.link"/>
+                            </a>
+                        </display:column>
+                    </sec:authorize>
+
+
                 </display:table>
             </fieldset>
         </center>
