@@ -53,27 +53,39 @@
             <%@include file="../../jspf/formularios/informacion/formularioInformacionPensum.jspf" %>
         </c:if>
 
-        <div id="formularioAsignarPensum" title="<fmt:message key='asignarPensumEstudianteCarrera.titulo' />" >
-            <form:form modelAttribute="pensumEstudianteCarrera" method="post" action="asignarPensumEstudianteCarrera.htm">
-                <div id="divCampos">
-                    <form:label for="pensum.idPensum" path="pensum.idPensum">
-                        <fmt:message key="pensumEstudianteCarrera.pensum"/>: *
-                    </form:label>
-                    <form:select path="pensum.idPensum" cssStyle="width: 250px;">
-                        <form:option  value="" label="Seleccionar un valor" />
-                        <form:options items="${listadoPensumsNoAsignadosAEsutudianteCarrera}" itemValue="idPensum" itemLabel="codigo" />
-                    </form:select>
-                    <form:errors path="pensum.idPensum" cssClass="claseError" />
-                </div>                
-            </form:form>
+
+        <div style="text-align:center; margin-bottom: 20px; ">
+            <sec:authorize access="hasRole('ROLE_AGREGAR_PENSUM_ESTUDIANTE_CARRERA')">
+                <c:if test="${not empty listadoPensumsNoAsignadosAEsutudianteCarrera}">
+                    <c:if test="${not empty pensumEstudianteCarrera}">
+                        <div id="formularioAsignarPensum" title="<fmt:message key='asignarPensumEstudianteCarrera.titulo' />" >
+                            <form:form modelAttribute="pensumEstudianteCarrera" method="post" action="asignarPensumEstudianteCarrera.htm">
+                                <div id="divCampos">
+                                    <form:label for="pensum.idPensum" path="pensum.idPensum">
+                                        <fmt:message key="pensumEstudianteCarrera.pensum"/>: *
+                                    </form:label>
+                                    <form:select path="pensum.idPensum" cssStyle="width: 250px;">
+                                        <form:option  value="" label="Seleccionar un valor" />
+                                        <form:options items="${listadoPensumsNoAsignadosAEsutudianteCarrera}" itemValue="idPensum" itemLabel="codigo" />
+                                    </form:select>
+                                    <form:errors path="pensum.idPensum" cssClass="claseError" />
+                                </div>
+                            </form:form>
+                        </div>
+                    </c:if>
+                    <button id="botonAsignarPensum"><fmt:message key="mostrarPensumEstudianteCarrera.boton.asignarPensum" /></button>
+                </c:if>
+            </sec:authorize>
+
+            <c:if test="${not empty pensum}">
+                <sec:authorize access="hasRole('ROLE_ELIMINAR_PENSUM_ESTUDIANTE_CARRERA')">
+                    <button onclick="location.href='eliminarPensumEstudianteCarrera.htm?idPensumEstudianteCarrera=${idPensumEstudianteCarreraValido}'">
+                        <fmt:message key="mostrarPensumEstudianteCarrera.boton.eliminarPensum" />
+                    </button>
+                </sec:authorize>
+            </c:if>
         </div>
 
-
-        <c:if test="${not empty listadoPensumsNoAsignadosAEsutudianteCarrera}">
-            <div style="text-align:center; margin-bottom: 20px; ">
-                <button id="botonAsignarPensum"><fmt:message key="mostrarPensumEstudianteCarrera.boton.asignarPensum" /></button>
-            </div>
-        </c:if>
 
 
         <center>
@@ -84,6 +96,13 @@
                     <display:column titleKey="pensumEstudianteCarrera.fechaFin" style="text-align:center;">
                         <fmt:formatDate value="${pensumEstudianteCarrera.fechaFin}" pattern="dd-MM-yyyy" />
                     </display:column>
+                    <sec:authorize access="hasRole('ROLE_ELIMINAR_PENSUM_ESTUDIANTE_CARRERA')">
+                        <display:column titleKey="acciones" style="text-align:center;">
+                            <a href="eliminarPensumEstudianteCarrera.htm?idPensumEstudianteCarrera=${pensumEstudianteCarrera.idPensumEstudianteCarrera}">
+                                <fmt:message key="mostrarPensumEstudianteCarrera.link.eliminar"/>
+                            </a>
+                        </display:column>
+                    </sec:authorize>
                 </display:table>
             </fieldset>
         </center>
