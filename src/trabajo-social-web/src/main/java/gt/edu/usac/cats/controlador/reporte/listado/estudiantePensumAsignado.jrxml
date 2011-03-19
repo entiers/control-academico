@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="792" pageHeight="612" orientation="Landscape" whenNoDataType="BlankPage" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="42" bottomMargin="42">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#EFF7FF"/>
+		</conditionalStyle>
+	</style>
+	<subDataset name="estudiantePensumAsignado">
+		<parameter name="ID_PENSUM" class="java.lang.Integer">
+			<parameterDescription><![CDATA[1]]></parameterDescription>
+		</parameter>
+		<queryString>
+			<![CDATA[select * from reporte.estudiante_pensum_asignado_vw
+where id_pensum = $P{ID_PENSUM}
+order by carne]]>
+		</queryString>
+		<field name="id_estudiante" class="java.lang.Integer"/>
+		<field name="carne" class="java.lang.String"/>
+		<field name="nombre" class="java.lang.String"/>
+		<field name="direccion" class="java.lang.String"/>
+		<field name="telefono" class="java.lang.String"/>
+		<field name="celular" class="java.lang.String"/>
+		<field name="email" class="java.lang.String"/>
+		<field name="fecha_nacimiento" class="java.sql.Date"/>
+		<field name="requisitos" class="java.lang.Boolean"/>
+		<field name="id_usuario" class="java.lang.Integer"/>
+		<field name="carne_modificado" class="java.lang.String"/>
+		<field name="nov" class="java.lang.String"/>
+		<field name="sexo" class="java.lang.String"/>
+		<field name="id_lugar_nacimiento" class="java.lang.Integer"/>
+		<field name="id_nacionalidad" class="java.lang.Integer"/>
+		<field name="inscrito" class="java.lang.Boolean"/>
+		<field name="id_pensum" class="java.lang.Integer"/>
+	</subDataset>
+	<parameter name="ID_PENSUM" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select * from reporte.pensum_vw
+where id_pensum = $P{ID_PENSUM}]]>
+	</queryString>
+	<field name="id_pensum" class="java.lang.Integer"/>
+	<field name="codigo" class="java.lang.String"/>
+	<field name="fecha_inicio" class="java.sql.Date"/>
+	<field name="fecha_fin" class="java.sql.Date"/>
+	<field name="id_carrera" class="java.lang.Integer"/>
+	<field name="estado" class="java.lang.Integer"/>
+	<field name="nombre_carrera" class="java.lang.String"/>
+	<variable name="FECHA_ACTUAL" class="java.util.Date">
+		<variableExpression><![CDATA[new java.util.Date()]]></variableExpression>
+		<initialValueExpression><![CDATA[new java.util.Date()]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="156">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="752" height="150" backcolor="#006699"/>
+				<staticText>
+					<reportElement x="24" y="18" width="692" height="20" forecolor="#FFFFFF"/>
+					<textElement>
+						<font size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[UNIVERSIDAD DE SAN CARLOS DE GUATEMALA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="24" y="38" width="692" height="17" forecolor="#FFFFFF"/>
+					<textElement>
+						<font size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[ESCUELA DE TRABAJO SOCIAL]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="24" y="75" width="692" height="20" forecolor="#FFFFFF"/>
+					<textElement verticalAlignment="Middle">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA["PENSUM " + $F{codigo}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="24" y="55" width="692" height="20" forecolor="#FFFFFF"/>
+					<textElement verticalAlignment="Middle">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[LISTADO DE ESTUDIANTES ASIGNADOS A PENSUM POR CARRERA]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="24" y="115" width="692" height="20" forecolor="#FFFFFF"/>
+					<textElement verticalAlignment="Middle">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{nombre_carrera}]]></textFieldExpression>
+				</textField>
+				<textField pattern="dd/MM/yyyy">
+					<reportElement x="54" y="95" width="100" height="20" forecolor="#FFFFFF"/>
+					<textElement verticalAlignment="Middle">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.util.Date"><![CDATA[$F{fecha_inicio}]]></textFieldExpression>
+				</textField>
+				<textField pattern="dd/MM/yyyy">
+					<reportElement x="184" y="95" width="100" height="20" forecolor="#FFFFFF"/>
+					<textElement verticalAlignment="Middle">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.util.Date"><![CDATA[$F{fecha_fin}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="24" y="95" width="30" height="20" forecolor="#FFFFFF"/>
+					<textElement verticalAlignment="Middle">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[DEL]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="154" y="95" width="30" height="20" forecolor="#FFFFFF"/>
+					<textElement verticalAlignment="Middle">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[AL]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="22">
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="0" y="0" width="752" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[$V{FECHA_ACTUAL}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="59" splitType="Stretch">
+			<componentElement>
+				<reportElement key="table" style="table" x="0" y="1" width="752" height="58"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="estudiantePensumAsignado">
+						<datasetParameter name="ID_PENSUM">
+							<datasetParameterExpression><![CDATA[$P{ID_PENSUM}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:columnGroup width="751">
+						<jr:tableFooter style="table_TH" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="751" height="30"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<textFieldExpression class="java.lang.String"><![CDATA["TOTAL DE ESTUDIANTES ASIGNADOS:  " + $V{REPORT_COUNT}]]></textFieldExpression>
+							</textField>
+						</jr:tableFooter>
+						<jr:columnGroup width="751">
+							<jr:tableHeader style="table_TH" height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="751" height="30"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font size="12" isBold="true"/>
+									</textElement>
+									<text><![CDATA[LISTADO DE ESTUDIANTES ASIGNADOS (INSCRITOS Y NO INSCRITOS)]]></text>
+								</staticText>
+							</jr:tableHeader>
+							<jr:column width="57">
+								<jr:columnHeader style="table_CH" height="32" rowSpan="1">
+									<staticText>
+										<reportElement x="0" y="0" width="57" height="32"/>
+										<textElement textAlignment="Center" verticalAlignment="Middle">
+											<font isBold="true"/>
+										</textElement>
+										<text><![CDATA[Carné]]></text>
+									</staticText>
+								</jr:columnHeader>
+								<jr:detailCell style="table_TD" height="26" rowSpan="1">
+									<textField>
+										<reportElement x="0" y="0" width="57" height="26"/>
+										<box leftPadding="1" rightPadding="1"/>
+										<textElement textAlignment="Center" verticalAlignment="Middle">
+											<font size="8"/>
+										</textElement>
+										<textFieldExpression class="java.lang.String"><![CDATA[$F{carne}]]></textFieldExpression>
+									</textField>
+								</jr:detailCell>
+							</jr:column>
+							<jr:column width="25">
+								<jr:columnHeader style="table_CH" height="32" rowSpan="1">
+									<staticText>
+										<reportElement x="0" y="0" width="25" height="32"/>
+										<textElement textAlignment="Center" verticalAlignment="Middle">
+											<font isBold="true"/>
+										</textElement>
+										<text><![CDATA[Ins.]]></text>
+									</staticText>
+								</jr:columnHeader>
+								<jr:detailCell style="table_TD" height="26" rowSpan="1">
+									<textField isStretchWithOverflow="true">
+										<reportElement x="0" y="0" width="25" height="26"/>
+										<box leftPadding="5" rightPadding="5"/>
+										<textElement textAlignment="Center" verticalAlignment="Middle">
+											<font size="8"/>
+										</textElement>
+										<textFieldExpression class="java.lang.String"><![CDATA[($F{inscrito} ? "SI" : "NO")]]></textFieldExpression>
+									</textField>
+								</jr:detailCell>
+							</jr:column>
+							<jr:column width="147">
+								<jr:columnHeader style="table_CH" height="32" rowSpan="1">
+									<staticText>
+										<reportElement x="0" y="0" width="147" height="30"/>
+										<textElement textAlignment="Center" verticalAlignment="Middle">
+											<font size="10" isBold="true"/>
+										</textElement>
+										<text><![CDATA[Nombre]]></text>
+									</staticText>
+								</jr:columnHeader>
+								<jr:detailCell style="table_TD" height="26" rowSpan="1">
+									<textField isStretchWithOverflow="true">
+										<reportElement x="0" y="0" width="147" height="26"/>
+										<box leftPadding="5" rightPadding="5"/>
+										<textElement verticalAlignment="Middle">
+											<font size="8"/>
+										</textElement>
+										<textFieldExpression class="java.lang.String"><![CDATA[$F{nombre}]]></textFieldExpression>
+									</textField>
+								</jr:detailCell>
+							</jr:column>
+							<jr:column width="146">
+								<jr:columnHeader style="table_CH" height="32" rowSpan="1">
+									<staticText>
+										<reportElement x="0" y="0" width="146" height="30"/>
+										<textElement textAlignment="Center" verticalAlignment="Middle">
+											<font size="10" isBold="true"/>
+										</textElement>
+										<text><![CDATA[Dirección]]></text>
+									</staticText>
+								</jr:columnHeader>
+								<jr:detailCell style="table_TD" height="26" rowSpan="1">
+									<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+										<reportElement x="0" y="0" width="146" height="26"/>
+										<box leftPadding="1" rightPadding="1"/>
+										<textElement verticalAlignment="Middle">
+											<font size="8"/>
+										</textElement>
+										<textFieldExpression class="java.lang.String"><![CDATA[$F{direccion}]]></textFieldExpression>
+									</textField>
+								</jr:detailCell>
+							</jr:column>
+							<jr:column width="90">
+								<jr:columnHeader style="table_CH" height="32" rowSpan="1">
+									<staticText>
+										<reportElement x="0" y="0" width="90" height="30"/>
+										<textElement textAlignment="Center" verticalAlignment="Middle">
+											<font size="10" isBold="true"/>
+										</textElement>
+										<text><![CDATA[Teléfono]]></text>
+									</staticText>
+								</jr:columnHeader>
+								<jr:detailCell style="table_TD" height="26" rowSpan="1">
+									<textField>
+										<reportElement x="0" y="0" width="90" height="26"/>
+										<box leftPadding="1" rightPadding="1"/>
+										<textElement textAlignment="Center" verticalAlignment="Middle">
+											<font size="8"/>
+										</textElement>
+										<textFieldExpression class="java.lang.String"><![CDATA[$F{telefono}]]></textFieldExpression>
+									</textField>
+								</jr:detailCell>
+							</jr:column>
+							<jr:column width="90">
+								<jr:columnHeader style="table_CH" height="32" rowSpan="1">
+									<staticText>
+										<reportElement x="0" y="0" width="90" height="30"/>
+										<textElement textAlignment="Center" verticalAlignment="Middle">
+											<font size="10" isBold="true"/>
+										</textElement>
+										<text><![CDATA[Celular]]></text>
+									</staticText>
+								</jr:columnHeader>
+								<jr:detailCell style="table_TD" height="26" rowSpan="1">
+									<textField>
+										<reportElement x="0" y="0" width="90" height="26"/>
+										<box leftPadding="1" rightPadding="1"/>
+										<textElement textAlignment="Center" verticalAlignment="Middle">
+											<font size="8"/>
+										</textElement>
+										<textFieldExpression class="java.lang.String"><![CDATA[$F{celular}]]></textFieldExpression>
+									</textField>
+								</jr:detailCell>
+							</jr:column>
+							<jr:column width="106">
+								<jr:columnHeader style="table_CH" height="32" rowSpan="1">
+									<staticText>
+										<reportElement x="0" y="0" width="106" height="30"/>
+										<textElement textAlignment="Center" verticalAlignment="Middle">
+											<font size="10" isBold="true"/>
+										</textElement>
+										<text><![CDATA[Email]]></text>
+									</staticText>
+								</jr:columnHeader>
+								<jr:detailCell style="table_TD" height="26" rowSpan="1">
+									<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+										<reportElement x="0" y="0" width="106" height="26"/>
+										<box leftPadding="5" rightPadding="5"/>
+										<textElement verticalAlignment="Middle">
+											<font size="8"/>
+										</textElement>
+										<textFieldExpression class="java.lang.String"><![CDATA[$F{email}]]></textFieldExpression>
+									</textField>
+								</jr:detailCell>
+							</jr:column>
+							<jr:column width="90">
+								<jr:columnHeader style="table_CH" height="32" rowSpan="1">
+									<staticText>
+										<reportElement x="0" y="0" width="90" height="30"/>
+										<textElement textAlignment="Center" verticalAlignment="Middle">
+											<font size="10" isBold="true"/>
+										</textElement>
+										<text><![CDATA[Fecha de Nacimiento]]></text>
+									</staticText>
+								</jr:columnHeader>
+								<jr:detailCell style="table_TD" height="26" rowSpan="1">
+									<textField pattern="dd/MM/yyyy">
+										<reportElement x="0" y="0" width="90" height="26"/>
+										<box leftPadding="1" rightPadding="1"/>
+										<textElement textAlignment="Center" verticalAlignment="Middle">
+											<font size="8"/>
+										</textElement>
+										<textFieldExpression class="java.util.Date"><![CDATA[$F{fecha_nacimiento}]]></textFieldExpression>
+									</textField>
+								</jr:detailCell>
+							</jr:column>
+						</jr:columnGroup>
+					</jr:columnGroup>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="23">
+			<textField>
+				<reportElement x="0" y="0" width="752" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

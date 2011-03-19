@@ -3,19 +3,21 @@
 <source><![CDATA[usuario:Actor
 bE:bE "buscarEstudiante.htm"
 maec:maec "mostrarAsignacionEstudianteCarrera.htm"
-cpec:cpec "ControladorPensumEstudianteCarrera"
-sp:sp "ServicioPensumEstudianteCarrera"
+mpec:mpec "mostrarPensumEstudianteCarrera.htm"
+cmpec:cmpec "ControladorMostrarPensumEstudianteCarrera"
+spec:spec "ServicioPensumEstudianteCarrera"
+saec:saec "ServicioAsignacionEstudianteCarrera"
 
 usuario:bE.buscar
-bE:maec.mostrar(idEstudiante)
-maec:estudiante=sp.cargarPorId(idEstudiante)
-maec:respuesta=cpec.agregar(idPensum)
-cpec:pensum=sp.cargarPorId(idPensum)
-cpec:pensumEstudianteCarrera=sp.getUltimoPensumEstudianteCarrera(estudiante)
-cpec:pensumEstudianteCarrera=cpec.invalidarPensumEstudianteCarrera(pensumEstudianteCarrera) &
-cpec:sp.actualizar(pensumEstudianteCarrera)
-cpec:estudiantePensumCarreraNuevo=cpec.agregarNuevoPensumEstudianteCarrera(pensum, estudiante) &
-cpec:sp.agregar(estudiantePensumCarreraNuevo)]]></source>
+bE:maec.mostrarAsignacionEstudianteCarrera(idEstudiante)
+maec:estudiante=saec.cargarEntidadPorId(idEstudiante)
+maec:listadoAsignacionEstudianteCarrera=saec.getAsignacionEstudianteCarrera(estudiante)
+maec:mpec.mostrar(idAsignacionEstudianteCarrera)
+mpec:asignacionEstudianteCarrera=spec.cargarPorId(idAsignacionEstudianteCarrera)
+mpec:pensumEstudianteCarreraValido=spec.getPensumEstudianteCarreraValido(asignacionEstudianteCarrera)
+mpec:mpec.agregarAtributosDefault(modelo, new PensumEstudianteCarrera, false) &
+mpec:cmpec.asignar(pensumEstudianteCarrera)
+cmpec:spec.agregar(pensumEstudianteCarrera)]]></source>
 <configuration>
 <property name="actorWidth" value="25"/>
 <property name="allowMessageProperties" value="false"/>

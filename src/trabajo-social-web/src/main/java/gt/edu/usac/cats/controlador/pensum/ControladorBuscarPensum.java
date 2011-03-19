@@ -39,7 +39,8 @@ public class ControladorBuscarPensum extends ControladorAbstractoPensum {
     public String crearFormulario(Model modelo) {
         List<Pensum> listadoPensums = this.servicioPensumImpl.listarEntidad(Pensum.class, true, "codigo");
         modelo.addAttribute("listadoPensums", listadoPensums);
-        modelo.addAttribute("nombreControlReporte", ControlReporte.PENSUM_ESTUDIO);
+        modelo.addAttribute("nombreControlReportePensumEstudio", ControlReporte.PENSUM_ESTUDIO);
+        modelo.addAttribute("nombreControlReporteEstudiantePensumAsignado", ControlReporte.LISTADO_ESTUDIANTE_PENSUM_ASIGNADO);
         return "pensum/buscarPensum";
     }
 

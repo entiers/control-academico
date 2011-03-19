@@ -53,14 +53,26 @@
                                 <fmt:message key="pensum.accion.asignarCursos"/>
                             </a>
                         </sec:authorize>
-                        <br/>
-                        <form:form action="generarReporte.htm" method="POST" target="_BLANK">
-                            <input type="hidden" name="nombreControlReporte" value="${nombreControlReporte}" />
-                            <input type="hidden" name="nombreParametro" value="ID_PENSUM" />
-                            <input type="hidden" name="valorParametro" value="${pensum.idPensum}" />
-                            <input type="hidden" name="tipoParametro" value="integer" />
-                            <input type="submit" value="<fmt:message key="btnImprimir"/>"/>
-                        </form:form>
+
+                        <sec:authorize access="hasRole('ROLE_REPORTE_PENSUM_ESTUDIO')">
+                            <br/><form:form action="generarReporte.htm" method="POST" target="_BLANK">
+                                <input type="hidden" name="nombreControlReporte" value="${nombreControlReportePensumEstudio}" />
+                                <input type="hidden" name="nombreParametro" value="ID_PENSUM" />
+                                <input type="hidden" name="valorParametro" value="${pensum.idPensum}" />
+                                <input type="hidden" name="tipoParametro" value="integer" />
+                                <input type="submit" value="<fmt:message key="pensum.boton.reporte.pensumEstudio"/>"/>
+                            </form:form>
+                        </sec:authorize>
+
+                        <sec:authorize access="hasRole('ROLE_REPORTE_ESTUDIANTE_PENSUM_ASIGNADO')">
+                            <form:form action="generarReporte.htm" method="POST" target="_BLANK">
+                                <input type="hidden" name="nombreControlReporte" value="${nombreControlReporteEstudiantePensumAsignado}" />
+                                <input type="hidden" name="nombreParametro" value="ID_PENSUM" />
+                                <input type="hidden" name="valorParametro" value="${pensum.idPensum}" />
+                                <input type="hidden" name="tipoParametro" value="integer" />
+                                <input type="submit" value="<fmt:message key="pensumEstudianteCarrera.boton.reporte.listadoPensumEstudianteAsignado"/>"/>
+                            </form:form>
+                        </sec:authorize>
                     </display:column>
                 </sec:authorize>
             </display:table>
