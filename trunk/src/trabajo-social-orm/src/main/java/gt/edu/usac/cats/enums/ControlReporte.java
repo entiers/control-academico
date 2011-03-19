@@ -16,7 +16,8 @@ public enum ControlReporte {
     DETALLE_ASIGNACION_PRIMER_INGRESO(2),
     DETALLE_ASIGNACION(3),
     HORARIO(4),
-    PENSUM_ESTUDIO(5);
+    PENSUM_ESTUDIO(5),
+    LISTADO_ESTUDIANTE_PENSUM_ASIGNADO(6);
 
     private int id;
 

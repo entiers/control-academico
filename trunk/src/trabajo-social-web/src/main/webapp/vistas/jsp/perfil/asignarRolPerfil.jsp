@@ -6,7 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-   "http://www.w3.org/TR/html4/loose.dtd">
+    "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
@@ -28,12 +28,14 @@
                     <span>${perfil.nombre}</span>
                 </div>
 
-                <div id="divCampos">
-                    <label for="rol"><fmt:message key="asignarRolPerfil.rol"/>: </label>
-                    <form:select path="rol.idRol" itemLabel="nombre" itemValue="idRol"
-                                 items="${listadoRolNoAsignado}" />
+                <c:if test="${not empty listadoRolNoAsignado}">
+                    <div id="divCampos">
+                        <label for="rol"><fmt:message key="asignarRolPerfil.rol"/>: </label>
+                        <form:select path="rol.idRol" itemLabel="nombre" itemValue="idRol"
+                                     items="${listadoRolNoAsignado}" />
+                    </div>
                     <input type="submit" value='<fmt:message key="btnAgregar"/>' />
-                </div>
+                </c:if>
             </fieldset>
         </form:form>
 
@@ -60,7 +62,7 @@
                 </tbody>
             </table>
         </fieldset>
-                    
+
         <%-- fragmento que muestra como mensaje popup el resultado de las operaciones --%>
         <%@include file="../../jspf/plantilla/popupMensaje.jspf" %>
     </body>
