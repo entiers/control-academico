@@ -99,6 +99,10 @@
         <intercept-url pattern="/eliminarPensumEstudianteCarrera.htm" access="hasRole('ROLE_ELIMINAR_PENSUM_ESTUDIANTE_CARRERA')" />
         <intercept-url pattern="/asignarPensumEstudianteCarrera.htm" access="hasRole('ROLE_AGREGAR_PENSUM_ESTUDIANTE_CARRERA')" />
 
+        <intercept-url pattern="/agregarDocumento.htm" access="hasRole('ROLE_AGREGAR_DOCUMENTO')" />
+        <intercept-url pattern="/buscarDocumento.htm" access="hasRole('ROLE_BUSCAR_DOCUMENTO')" />
+        <intercept-url pattern="/editarDocumento.htm" access="hasRole('ROLE_EDITAR_DOCUMENTO')" />
+
         <!-- se especifica que pagina contiene el formulario de login -->
         <form-login login-page='/login.htm' default-target-url='/index.htm' always-use-default-target='true'/>
         
