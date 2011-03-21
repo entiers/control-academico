@@ -40,7 +40,7 @@ public class ControladorMostrarPensumEstudianteCarrera extends ControladorAbstra
             return "redirect:buscarEstudiante.htm";
         }
 
-        //Se obtiene la asignación del estudiante con la carrera
+        //Se obtiene la asignacion del estudiante con la carrera
         this.asignacionEstudianteCarrera= this.servicioPensumEstudianteCarreraImpl
                 .cargarEntidadPorID(
                     AsignacionEstudianteCarrera.class
@@ -55,7 +55,7 @@ public class ControladorMostrarPensumEstudianteCarrera extends ControladorAbstra
                 asignacionEstudianteCarrera);
 
         this.pensum = null;
-        //Se obtiene las relaciones con el pensum válido
+        //Se obtiene las relaciones con el pensum valido
         if(pensumEstudianteCarreraValido != null){
             this.pensum = pensumEstudianteCarreraValido.getPensum();
             modelo.addAttribute("idPensumEstudianteCarreraValido", pensumEstudianteCarreraValido.getIdPensumEstudianteCarrera());

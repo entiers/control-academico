@@ -81,6 +81,20 @@
                 </li>
             </sec:authorize>
 
+            <%--Catálogo de documentos--%>
+            <sec:authorize access="hasAnyRole('ROLE_AGREGAR_DOCUMENTO','ROLE_BUSCAR_DOCUMENTO')">
+                <li><a href="#"><fmt:message key="documento.menu"/></a>
+                    <ul>
+                        <sec:authorize access="hasRole('ROLE_AGREGAR_DOCUMENTO')">
+                            <li><a href="agregarDocumento.htm"><fmt:message key="agregarDocumento.titulo"/></a></li>
+                        </sec:authorize>
+                        <sec:authorize access="hasRole('ROLE_BUSCAR_DOCUMENTO')">
+                            <li><a href="buscarDocumento.htm"><fmt:message key="buscarDocumento.titulo"/></a></li>
+                        </sec:authorize>
+                    </ul>
+                </li>
+            </sec:authorize>
+
             <%-- catalogo de estudiantes --%>
             <sec:authorize access="hasAnyRole('ROLE_AGREGAR_ESTUDIANTE','ROLE_EDITAR_ESTUDIANTE','ROLE_BUSCAR_ESTUDIANTE')">
                 <li><a href="#"><fmt:message key="estudiante.menu"/></a>

@@ -29,7 +29,7 @@ public abstract class ControladorAbstractoPensumEstudianteCarrera {
     protected void agregarAtributosDefault(Model modelo, PensumEstudianteCarrera pensumEstudianteCarrera
             , boolean autoOpenDialogAsignar){
 
-        //Se obtiene los no válidos
+        //Se obtiene los no validos
         List <PensumEstudianteCarrera> listadoPensumEstudianteCarreraNoValidos
                 = this.servicioPensumEstudianteCarreraImpl.getListadoPensumEstudianteCarreraNoValidos(asignacionEstudianteCarrera);
 
