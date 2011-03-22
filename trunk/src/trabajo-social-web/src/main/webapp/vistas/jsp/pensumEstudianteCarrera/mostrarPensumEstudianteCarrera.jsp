@@ -17,31 +17,7 @@
     <head>
         <title><fmt:message key="mostrarPensumEstudianteCarrera.titulo"/></title>
         <%@include file="../../jspf/plantilla/scriptPopupMensajeDefault.jspf" %>
-
-        <script type="text/javascript">
-            $(function (){
-                $("#formularioAsignarPensum").dialog({
-                    autoOpen: ${autoOpenDialogAsignar},
-                    modal: true,
-                    width: 550,
-
-                    buttons: {
-                        "<fmt:message key="btnSalir" />" : function() {
-                            $(this).dialog('close');
-                        },
-                        "<fmt:message key="btnAceptar" />" : function() {
-                            $("form").submit();
-                        }                        
-                    }
-                });
-
-                $("#botonAsignarPensum").click( function(){
-                    $("#formularioAsignarPensum").dialog("open");
-                });
-
-            });
-        </script>
-
+        <%@include file="../../jspf/plantilla/scriptFormularioPopup.jspf" %>
     </head>
     <body>
         <h1><fmt:message key="mostrarPensumEstudianteCarrera.titulo"/></h1>
@@ -58,7 +34,7 @@
             <sec:authorize access="hasRole('ROLE_AGREGAR_PENSUM_ESTUDIANTE_CARRERA')">
                 <c:if test="${not empty listadoPensumsNoAsignadosAEsutudianteCarrera}">
                     <c:if test="${not empty pensumEstudianteCarrera}">
-                        <div id="formularioAsignarPensum" title="<fmt:message key='asignarPensumEstudianteCarrera.titulo' />" >
+                        <div id="divFormularioPopup" title="<fmt:message key='asignarPensumEstudianteCarrera.titulo' />" >
                             <form:form modelAttribute="pensumEstudianteCarrera" method="post" action="asignarPensumEstudianteCarrera.htm">
                                 <div id="divCampos">
                                     <form:label for="pensum.idPensum" path="pensum.idPensum">
@@ -72,8 +48,8 @@
                                 </div>
                             </form:form>
                         </div>
+                        <button id="botonHabilitarFormularioPopup"><fmt:message key="mostrarPensumEstudianteCarrera.boton.asignarPensum" /></button>
                     </c:if>
-                    <button id="botonAsignarPensum"><fmt:message key="mostrarPensumEstudianteCarrera.boton.asignarPensum" /></button>
                 </c:if>
             </sec:authorize>
 

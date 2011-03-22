@@ -3,20 +3,22 @@
  * Escuela de Trabajo Social
  * Universidad de San Carlos de Guatemala
  */
-
 package gt.edu.usac.cats.servicio.impl;
 
 import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
 import gt.edu.usac.cats.dominio.Carrera;
 import gt.edu.usac.cats.dominio.Estudiante;
+import gt.edu.usac.cats.dominio.HistorialAsignacionEstudianteCarrera;
 import gt.edu.usac.cats.servicio.ServicioAsignacionEstudianteCarrera;
 import java.util.Calendar;
 import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 /**
@@ -40,7 +42,7 @@ public class ServicioAsignacionEstudianteCarreraImpl extends ServicioGeneralImpl
 
         Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
         query.setParameter("carrera", carrera);
-        
+
         return query.list();
     }
 //______________________________________________________________________________
@@ -62,5 +64,31 @@ public class ServicioAsignacionEstudianteCarreraImpl extends ServicioGeneralImpl
         DetachedCriteria criteria = DetachedCriteria.forClass(AsignacionEstudianteCarrera.class);
         criteria.add(Restrictions.eq("estudiante", estudiante));
         return this.daoGeneralImpl.find(criteria);
+    }
+
+    @Override
+    public List<Carrera> getListadoCarrerasNoAsignadasPorEstudiante(Estudiante estudiante) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(" select c from Carrera c ")
+                .append(" where c.idCarrera not in ( ")
+                .append(" select acp.carrera.idCarrera from AsignacionEstudianteCarrera acp ")
+                .append(" where acp.estudiante = :estudiante) ");
+
+        Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
+        query.setParameter("estudiante", estudiante);
+
+        return query.list();
+    }
+
+    @Override
+    public void agregarAsignacionEstudianteCarrera(AsignacionEstudianteCarrera asignacionEstudianteCarrera
+            , HistorialAsignacionEstudianteCarrera historialAsignacionEstudianteCarrera)
+        throws DataIntegrityViolationException, DataAccessException {
+      
+      
+        this.daoGeneralImpl.save(asignacionEstudianteCarrera);
+
+        historialAsignacionEstudianteCarrera.setAsignacionEstudianteCarrera(asignacionEstudianteCarrera);
+        this.daoGeneralImpl.save(historialAsignacionEstudianteCarrera);
     }
 }

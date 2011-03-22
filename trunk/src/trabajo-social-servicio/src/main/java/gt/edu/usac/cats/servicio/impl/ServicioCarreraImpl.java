@@ -6,7 +6,6 @@
 
 package gt.edu.usac.cats.servicio.impl;
 
-import gt.edu.usac.cats.dominio.AsignacionCursoPensum;
 import gt.edu.usac.cats.dominio.Carrera;
 import gt.edu.usac.cats.dominio.Curso;
 import gt.edu.usac.cats.dominio.Pensum;

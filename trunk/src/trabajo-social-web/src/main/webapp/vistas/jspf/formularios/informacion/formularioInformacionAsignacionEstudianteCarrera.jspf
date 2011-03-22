@@ -1,0 +1,14 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<fieldset>
+    <legend><fmt:message key="asignacionEstudianteCarrera.informacion"/></legend>
+    <div id="divCampos">
+        <label><fmt:message key="asignacionEstudianteCarrera.carrera"/>:</label>
+        <span>${asignacionEstudianteCarrera.carrera.codigoNombre}</span>
+    </div>
+
+    <div id="divCampos">
+        <label><fmt:message key="asignacionEstudianteCarrera.fechaCierre"/>:</label>
+        <span><fmt:formatDate value="${asignacionEstudianteCarrera.fechaCierre}" pattern="dd-MM-yyyy" /></span>
+    </div>
+</fieldset>

@@ -20,6 +20,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 /**
@@ -110,4 +111,23 @@ public class Situacion implements java.io.Serializable {
         this.historialAsignacionEstudianteCarreras = historialAsignacionEstudianteCarreras;
     }
 //______________________________________________________________________________
+
+    @Transient
+    public String getCodigoNombre(){
+        return this.codigo + " - " + this.getNombre();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Situacion (codigo=").append(this.codigo)
+                .append(", nombre=").append(this.nombre)
+                .append(", descripcion=").append(this.descripcion)
+                .append(")");
+
+        return builder.toString();
+    }
+
+
+
 }
