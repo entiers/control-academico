@@ -11,8 +11,10 @@ import java.util.List;
 import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
 import gt.edu.usac.cats.dominio.Carrera;
 import gt.edu.usac.cats.dominio.Estudiante;
+import gt.edu.usac.cats.dominio.HistorialAsignacionEstudianteCarrera;
 import org.hibernate.HibernateException;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
 
 /**
  * <p></p>
@@ -48,4 +50,12 @@ public interface ServicioAsignacionEstudianteCarrera extends ServicioGeneral{
 
     List <AsignacionEstudianteCarrera> getAsignacionEstudianteCarrera(Estudiante estudiante)
             throws DataAccessException;
+
+
+    List <Carrera> getListadoCarrerasNoAsignadasPorEstudiante(Estudiante estudiante);
+
+
+    void agregarAsignacionEstudianteCarrera(AsignacionEstudianteCarrera asignacionEstudianteCarrera
+            , HistorialAsignacionEstudianteCarrera historialAsignacionEstudianteCarrera)
+            throws DataIntegrityViolationException, DataAccessException;
 }

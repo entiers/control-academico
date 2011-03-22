@@ -148,13 +148,6 @@ public class Semestre implements java.io.Serializable {
     }
 
 //______________________________________________________________________________
-    @Transient
-    public String getAnyoNumero(){
-        return this.anio + " - " + this.numero;
-    }
-
-
-//______________________________________________________________________________
     @Column(
         columnDefinition="default true",
         name="activo",
@@ -167,6 +160,27 @@ public class Semestre implements java.io.Serializable {
     public void setActivo(boolean activo) {
         this.activo = activo;
     }
+
+    //______________________________________________________________________________
+    @Transient
+    public String getAnyoNumero(){
+        return this.anio + " - " + this.numero;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Semestre (idSemestre = ").append(this.idSemestre)
+                .append(", anio = ").append(this.anio)
+                .append(", numero = ").append(this.numero)
+                .append(", activo = ").append(this.activo)
+                .append(")");
+
+        return super.toString();
+    }
+
+
+
 
 }
 

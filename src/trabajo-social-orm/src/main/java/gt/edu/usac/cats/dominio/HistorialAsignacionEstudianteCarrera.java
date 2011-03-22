@@ -112,5 +112,15 @@ public class HistorialAsignacionEstudianteCarrera implements java.io.Serializabl
 
     public void setSituacion(Situacion situacion) {
         this.situacion = situacion;
-    }    
+    }
+
+
+     @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("HistorialAsignacionEstudianteCarrera (idHistorialAsignacionEstudianteCarrera = ")
+                .append(this.idHistorialAsignacionEstudianteCarrera).append(")");
+
+        return builder.toString();
+    }
 }

@@ -45,7 +45,7 @@ public abstract class ControladorAbstractoPensumEstudianteCarrera {
         modelo.addAttribute("listadoPensumEstudianteCarreraNoValidos", listadoPensumEstudianteCarreraNoValidos);
         modelo.addAttribute("pensumEstudianteCarrera", new PensumEstudianteCarrera());
         modelo.addAttribute("listadoPensumsNoAsignadosAEsutudianteCarrera", listadoPensumsNoAsignadosAEsutudianteCarrera);
-        modelo.addAttribute("autoOpenDialogAsignar", autoOpenDialogAsignar);
+        modelo.addAttribute("autoOpenDialog", autoOpenDialogAsignar);
     }
 
 }

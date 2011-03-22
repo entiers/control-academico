@@ -4,7 +4,7 @@
     Author     : Mario Batres
 --%>
 
-<%@page contentType="text/html" pageEncoding="ISO-8859-1"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 
@@ -17,6 +17,7 @@
     <head>
         <title><fmt:message key="mostrarAsignacionEstudianteCarrera.titulo"/></title>
         <%@include file="../../jspf/plantilla/scriptPopupMensajeDefault.jspf" %>
+        <%@include file="../../jspf/plantilla/scriptFormularioPopup.jspf" %>
     </head>
     <body>
         <h1><fmt:message key="mostrarAsignacionEstudianteCarrera.titulo"/></h1>
@@ -35,10 +36,16 @@
                         <fmt:formatDate value="${asignacionEstudianteCarrera.fechaCierre}" pattern="dd-MM-yyyy" />
                     </display:column>
 
-                    <sec:authorize access="hasRole('ROLE_MOSTRAR_PENSUM_ESTUDIANTE_CARRERA')">
+                    <sec:authorize access="hasAnyRole('ROLE_MOSTRAR_PENSUM_ESTUDIANTE_CARRERA')">
                         <display:column titleKey="acciones" style="text-align:center;">
-                            <a href="mostrarPensumEstudianteCarrera.htm?idAsignacionEstudianteCarrera=${asignacionEstudianteCarrera.idAsignacionEstudianteCarrera}">
-                                <fmt:message key="mostrarPensumEstudianteCarrera.link"/>
+                            <sec:authorize access="hasRole('ROLE_MOSTRAR_PENSUM_ESTUDIANTE_CARRERA')">
+                                <a href="mostrarPensumEstudianteCarrera.htm?idAsignacionEstudianteCarrera=${asignacionEstudianteCarrera.idAsignacionEstudianteCarrera}">
+                                    <fmt:message key="mostrarPensumEstudianteCarrera.link"/>
+                                </a>
+                            </sec:authorize>
+                            <br/>
+                            <a href="mostrarHistorialAsignacionEstudianteCarrera.htm?idAsignacionEstudianteCarrera=${asignacionEstudianteCarrera.idAsignacionEstudianteCarrera}">
+                                <fmt:message key="mostrarHistorialAsignacionEstudianteCarrera.link"/>
                             </a>
                         </display:column>
                     </sec:authorize>
@@ -48,8 +55,29 @@
             </fieldset>
         </center>
 
-        <div style="margin: 20px 0 0 0; cursor: pointer;">
-            <a onclick="javascript:history.back()"><fmt:message key="mostrarAsignacionEstudianteCarrera.regresar"/></a>
+
+        <c:if test="${habilitarFormulario}">
+            <div id="divFormularioPopup" title="<fmt:message key='agregarAsignacionEstudianteCarrera.titulo' />">
+                <form:form id="form"
+                           modelAttribute="wrapperAgregarAsignacionEstudianteCarrera" method="POST"
+                           action="agregarAsignacionEstudianteCarrera.htm">
+
+                    <%@include file="../../jspf/formularios/formularioAsignacionEstudianteCarrera.jspf" %>
+                </form:form>
+            </div>
+            <center style="margin-top: 20px;">
+                <button id="botonHabilitarFormularioPopup"><fmt:message key="asignacionEstudianteCarrera.boton.agregarCarrera" /></button>
+            </center>
+        </c:if>
+
+
+
+
+        <div style="margin: 20px 0 0 0; ">
+            <a href="buscarEstudiante.htm"><fmt:message key="mostrarAsignacionEstudianteCarrera.regresar"/></a>
         </div>
+
+        <%-- fragmento que muestra como mensaje popup el resultado de las operaciones --%>
+        <%@include file="../../jspf/plantilla/popupMensaje.jspf" %>
     </body>
 </html>

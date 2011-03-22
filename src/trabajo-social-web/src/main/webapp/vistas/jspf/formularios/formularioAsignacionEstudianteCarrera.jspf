@@ -1,0 +1,49 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
+<div id="divCampos">
+    <form:label for="carrera.idCarrera" path="carrera.idCarrera">
+        <fmt:message key="asignacionEstudianteCarrera.carrera"/>: *
+    </form:label>
+    <form:select path="carrera.idCarrera" cssStyle="width: 250px;">
+        <form:option  value="" label="Seleccionar un valor" />
+        <form:options items="${listadoCarrerasNoAsignadas}" itemValue="idCarrera" itemLabel="codigoNombre" />
+    </form:select>
+    <form:errors path="carrera.idCarrera" cssClass="claseError" />
+
+</div>
+
+
+<div id="divCampos">
+    <form:label for="wrapperHistorialAsignacionEstudianteCarrera.fechaInscripcion" path="wrapperHistorialAsignacionEstudianteCarrera.fechaInscripcion">
+        <fmt:message key="historialAsignacionEstudianteCarrera.fechaInscripcion"/>:
+    </form:label>
+    <form:input path="wrapperHistorialAsignacionEstudianteCarrera.fechaInscripcion" cssStyle="width: 250px;" cssClass="datepicker"/>
+    <form:errors path="wrapperHistorialAsignacionEstudianteCarrera.fechaInscripcion" cssClass="claseError" />
+</div>
+
+<div id="divCampos">
+    <form:label for="wrapperHistorialAsignacionEstudianteCarrera.situacion.idSituacion" path="wrapperHistorialAsignacionEstudianteCarrera.situacion.idSituacion">
+        <fmt:message key="historialAsignacionEstudianteCarrera.situacion"/>: *
+    </form:label>
+    <form:select path="wrapperHistorialAsignacionEstudianteCarrera.situacion.idSituacion" cssStyle="width: 250px;">
+        <form:option  value="" label="Seleccionar un valor" />
+        <form:options items="${listadoSituaciones}" itemValue="idSituacion" itemLabel="codigoNombre" />
+    </form:select>
+    <form:errors path="wrapperHistorialAsignacionEstudianteCarrera.situacion.idSituacion" cssClass="claseError" />
+</div>
+
+<div id="divCampos">
+    <form:label for="wrapperHistorialAsignacionEstudianteCarrera.semestre.idSemestre" path="wrapperHistorialAsignacionEstudianteCarrera.semestre.idSemestre">
+        <fmt:message key="historialAsignacionEstudianteCarrera.semestre"/>: *
+    </form:label>
+    <form:select path="wrapperHistorialAsignacionEstudianteCarrera.semestre.idSemestre" cssStyle="width: 250px;">
+        <form:option  value="" label="Seleccionar un valor" />
+        <form:options items="${listadoSemestres}" itemValue="idSemestre" itemLabel="anyoNumero" />
+    </form:select>
+    <form:errors path="wrapperHistorialAsignacionEstudianteCarrera.semestre.idSemestre" cssClass="claseError" />
+</div>
+

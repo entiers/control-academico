@@ -71,7 +71,6 @@ public class ControladorMostrarPensumEstudianteCarrera extends ControladorAbstra
     public String asignar(Model modelo, @Valid PensumEstudianteCarrera pensumEstudianteCarrera
             , BindingResult bindingResult, HttpServletRequest request){
 
-        boolean autoOpenDialogAsignar = false;
         if(!bindingResult.hasErrors()){
             try{
                 
@@ -87,13 +86,15 @@ public class ControladorMostrarPensumEstudianteCarrera extends ControladorAbstra
             }catch(DataIntegrityViolationException e){
                 RequestUtil.crearMensajeRespuesta(request, "asignarPensumEstudianteCarrera.titulo", "dataIntegrityViolatioException", false);
                 log.error(Mensajes.DATA_INTEGRITY_VIOLATION_EXCEPTION, e);
+                this.agregarAtributosDefault(modelo, pensumEstudianteCarrera, false);
             }catch(DataAccessException e){
                 RequestUtil.crearMensajeRespuesta(request, "asignarPensumEstudianteCarrera.titulo", "dataAccessException", false);
                 log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
+                this.agregarAtributosDefault(modelo, pensumEstudianteCarrera, false);
             }
         }else{
-            autoOpenDialogAsignar = true;
-            this.agregarAtributosDefault(modelo, pensumEstudianteCarrera, autoOpenDialogAsignar);
+            
+            this.agregarAtributosDefault(modelo, pensumEstudianteCarrera, false);
         }
         
         return "pensumEstudianteCarrera/mostrarPensumEstudianteCarrera";
