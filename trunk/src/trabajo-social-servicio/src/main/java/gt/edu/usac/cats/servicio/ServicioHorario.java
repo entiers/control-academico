@@ -31,6 +31,7 @@ public interface ServicioHorario extends ServicioGeneral {
      * @param edificio Nombre del edificio
      * @throws DataAccessException Si ocurrio un error de acceso a datos
      */
+
     Salon buscarSalonPorNumeroYEdificio(short numero, String edificio)
             throws DataAccessException;
 //______________________________________________________________________________
@@ -44,6 +45,7 @@ public interface ServicioHorario extends ServicioGeneral {
      * @throws DataAccessException Si ocurrio un error de acceso a datos
      * @return List
      */
+
     List<Horario> buscarHorarioPorSalonYSemestre(Salon salon, Semestre semestre)
             throws DataAccessException;
 //______________________________________________________________________________
@@ -56,6 +58,7 @@ public interface ServicioHorario extends ServicioGeneral {
      * @throws DataAccessException Si ocurrio un error de acceso a datos
      * @return List
      */
+
     Horario getHorarioPorCursoPrimerIngreso(Curso curso)
             throws DataAccessException;
 
@@ -69,6 +72,7 @@ public interface ServicioHorario extends ServicioGeneral {
      * @throws DataAccessException Si ocurrio un error de acceso a datos
      * @return List
      */
+
     List<Horario> getHorario(Curso curso, Semestre semestre)
             throws DataAccessException;
 
@@ -83,6 +87,7 @@ public interface ServicioHorario extends ServicioGeneral {
      * @throws DataAccessException Si ocurrio un error de acceso a datos
      * @return List
      */
+
     List<Horario> getHorario(Curso curso, Semestre semestre, TipoHorario tipoHorario)
             throws DataAccessException;
 
@@ -97,6 +102,7 @@ public interface ServicioHorario extends ServicioGeneral {
      * @throws DataAccessException Si ocurrio un error de acceso a datos
      * @return List
      */
+
     List<Horario> getHorarioCambioSeccion(Horario horario)
             throws DataAccessException;
 
@@ -157,6 +163,7 @@ public interface ServicioHorario extends ServicioGeneral {
      * @throws DataIntegrityViolationException Se efectua la excepcion si hay un nombre de usuario igual en la base de datos.
      * @throws DataAccessException Se efectua si se puede acceder a la base de datos.
      */
+    
     public void agregarHorario(Horario horario, String[] horarioDiasWrapper)
             throws DataIntegrityViolationException, DataAccessException;
 

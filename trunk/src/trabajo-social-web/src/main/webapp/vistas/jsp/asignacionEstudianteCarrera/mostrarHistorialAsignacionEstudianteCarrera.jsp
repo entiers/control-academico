@@ -19,6 +19,18 @@
         <title><fmt:message key="mostrarHistorialAsignacionEstudianteCarrera.titulo"/></title>
         <%@include file="../../jspf/plantilla/scriptPopupMensajeDefault.jspf" %>
         <%@include file="../../jspf/plantilla/scriptFormularioPopup.jspf" %>
+        <%@include file="../../jspf/plantilla/scriptFormularioModificarPopup.jspf" %>
+
+        <script type="text/javascript">
+            var modificar = function(idHistorialAsignacionEstudianteCarrera, fechaInscripcion, idSituacion, idSemestre){                
+                $("#formModificar #idHistorialAsignacionEstudianteCarrera").val(idHistorialAsignacionEstudianteCarrera);
+                $("#formModificar #fechaInscripcion").val(fechaInscripcion);
+                $("#formModificar #situacion").val(idSituacion);
+                $("#formModificar #semestre").val(idSemestre);
+
+                $("#divFormularioModificarPopup").dialog("open");
+            }
+        </script>
     </head>
     <body>
         <h1><fmt:message key="mostrarHistorialAsignacionEstudianteCarrera.titulo"/></h1>
@@ -33,54 +45,49 @@
                 <display:table class="ui-widget ui-widget-content" name="asignacionEstudianteCarrera.historialAsignacionEstudianteCarreras"
                                id="historialAsignacionEstudianteCarrera">
                     <display:column titleKey="historialAsignacionEstudianteCarrera.fechaInscripcion"  style="text-align:center;">
-                        <fmt:formatDate value="${historialAsignacionEstudianteCarrera.fechaInscripcion}" pattern="dd-MM-yyyy" />
+                        <fmt:formatDate value="${historialAsignacionEstudianteCarrera.fechaInscripcion}" pattern="dd-MM-yyyy" var="fechaInscripcion" />
+                        ${fechaInscripcion}
                     </display:column>
                     <display:column property="situacion.codigoNombre" titleKey="historialAsignacionEstudianteCarrera.situacion" style="text-align:center;"/>
                     <display:column property="semestre.anyoNumero" titleKey="historialAsignacionEstudianteCarrera.semestre" style="text-align:center;" />
+                    <display:column titleKey="acciones" style="text-align:center;" >
+                        <a class="a-acciones"onclick="modificar(${historialAsignacionEstudianteCarrera.idHistorialAsignacionEstudianteCarrera}, '${fechaInscripcion}', ${historialAsignacionEstudianteCarrera.situacion.idSituacion}, ${historialAsignacionEstudianteCarrera.semestre.idSemestre})">
+                            <fmt:message key="historialAsignacionEstudianteCarrera.boton.modificar" />
+                        </a>
+                    </display:column>
                 </display:table>
             </fieldset>
         </center>
 
-        <div id="divFormularioPopup" title="<fmt:message key='agregarHistorialAsignacionEstudianteCarrera.titulo' />">
-            <form:form id="form"
-                       modelAttribute="wrapperHistorialAsignacionEstudianteCarrera" method="POST"
-                       action="agregarHistorialAsignacionEstudianteCarrera.htm">
+        <c:if test="${not empty wrapperHistorialAsignacionEstudianteCarrera}">
+            <div id="divFormularioPopup" title="<fmt:message key='agregarHistorialAsignacionEstudianteCarrera.titulo' />">
+                <form:form id="form"
+                           modelAttribute="wrapperHistorialAsignacionEstudianteCarrera" method="POST"
+                           action="agregarHistorialAsignacionEstudianteCarrera.htm">
+
+                    <%@include file="../../jspf/formularios/formularioHistorialAsignacionEstudianteCarrera.jspf" %>
+                </form:form>
+            </div>
+            <center style="margin-top: 20px;">
+                <button id="botonHabilitarFormularioPopup"><fmt:message key="historialAsignacionEstudianteCarrera.boton.agregar" /></button>
+            </center>
+        </c:if>
+                
+        <c:if test="${not empty wrapperHistorialAsignacionEstudianteCarrera}">
+            <div id="divFormularioModificarPopup" title="<fmt:message key='modificarHistorialAsignacionEstudianteCarrera.titulo' />">
+                <form:form id="formModificar"
+                           modelAttribute="wrapperModificarHistorialAsignacionEstudianteCarrera" method="POST"
+                           action="modificarHistorialAsignacionEstudianteCarrera.htm">
+
+                    <input type="hidden" name="idHistorialAsignacionEstudianteCarrera" id="idHistorialAsignacionEstudianteCarrera"
+                           value="${idHistorialAsignacionEstudianteCarrera}"/>
+
+                    <%@include file="../../jspf/formularios/formularioHistorialAsignacionEstudianteCarrera.jspf" %>
 
 
-                <div id="divCampos">
-                    <form:label for="fechaInscripcion" path="fechaInscripcion">
-                        <fmt:message key="historialAsignacionEstudianteCarrera.fechaInscripcion"/>:
-                    </form:label>
-                    <form:input path="fechaInscripcion" cssStyle="width: 250px;" cssClass="datepicker"/>
-                    <form:errors path="fechaInscripcion" cssClass="claseError" />
-                </div>
-
-                <div id="divCampos">
-                    <form:label for="situacion.idSituacion" path="situacion.idSituacion">
-                        <fmt:message key="historialAsignacionEstudianteCarrera.situacion"/>: *
-                    </form:label>
-                    <form:select path="situacion.idSituacion" cssStyle="width: 250px;">
-                        <form:option  value="" label="Seleccionar un valor" />
-                        <form:options items="${listadoSituaciones}" itemValue="idSituacion" itemLabel="codigoNombre" />
-                    </form:select>
-                    <form:errors path="situacion.idSituacion" cssClass="claseError" />
-                </div>
-
-                <div id="divCampos">
-                    <form:label for="semestre.idSemestre" path="semestre.idSemestre">
-                        <fmt:message key="historialAsignacionEstudianteCarrera.semestre"/>: *
-                    </form:label>
-                    <form:select path="semestre.idSemestre" cssStyle="width: 250px;">
-                        <form:option  value="" label="Seleccionar un valor" />
-                        <form:options items="${listadoSemestres}" itemValue="idSemestre" itemLabel="anyoNumero" />
-                    </form:select>
-                    <form:errors path="semestre.idSemestre" cssClass="claseError" />
-                </div>
-            </form:form>
-        </div>
-        <center style="margin-top: 20px;">
-            <button id="botonHabilitarFormularioPopup"><fmt:message key="historialAsignacionEstudianteCarrera.boton.agregar" /></button>
-        </center>
+                </form:form>
+            </div>
+        </c:if>
 
 
         <div style="margin: 20px 0 0 0; ">

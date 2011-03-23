@@ -18,6 +18,17 @@
         <title><fmt:message key="mostrarAsignacionEstudianteCarrera.titulo"/></title>
         <%@include file="../../jspf/plantilla/scriptPopupMensajeDefault.jspf" %>
         <%@include file="../../jspf/plantilla/scriptFormularioPopup.jspf" %>
+        <%@include file="../../jspf/plantilla/scriptFormularioModificarPopup.jspf" %>
+
+        <script type="text/javascript">
+
+            var modificar = function(idAsignacionEstudianteCarrera, fechaCierre){                
+                $("#formModificar #inputIdAsignacionEstudianteCarrera").val(idAsignacionEstudianteCarrera);
+                $("#formModificar #inputFechaCierre").val(fechaCierre);
+
+                $("#divFormularioModificarPopup").dialog("open");                
+            }
+        </script>
     </head>
     <body>
         <h1><fmt:message key="mostrarAsignacionEstudianteCarrera.titulo"/></h1>
@@ -33,11 +44,12 @@
                     <display:column property="carrera.nombre" titleKey="agregarCarrera.nombre"  />
 
                     <display:column titleKey="asignacionEstudianteCarrera.fechaCierre"  style="text-align:center;">
-                        <fmt:formatDate value="${asignacionEstudianteCarrera.fechaCierre}" pattern="dd-MM-yyyy" />
+                        <fmt:formatDate value="${asignacionEstudianteCarrera.fechaCierre}" pattern="dd-MM-yyyy" var="fechaCierre" />
+                        ${fechaCierre}
                     </display:column>
 
                     <sec:authorize access="hasAnyRole('ROLE_MOSTRAR_PENSUM_ESTUDIANTE_CARRERA')">
-                        <display:column titleKey="acciones" style="text-align:center;">
+                        <display:column titleKey="acciones" style="text-align:center;" >
                             <sec:authorize access="hasRole('ROLE_MOSTRAR_PENSUM_ESTUDIANTE_CARRERA')">
                                 <a href="mostrarPensumEstudianteCarrera.htm?idAsignacionEstudianteCarrera=${asignacionEstudianteCarrera.idAsignacionEstudianteCarrera}">
                                     <fmt:message key="mostrarPensumEstudianteCarrera.link"/>
@@ -47,6 +59,11 @@
                             <a href="mostrarHistorialAsignacionEstudianteCarrera.htm?idAsignacionEstudianteCarrera=${asignacionEstudianteCarrera.idAsignacionEstudianteCarrera}">
                                 <fmt:message key="mostrarHistorialAsignacionEstudianteCarrera.link"/>
                             </a>
+
+                            <br/>
+                            <a class="a-acciones" onclick="modificar(${asignacionEstudianteCarrera.idAsignacionEstudianteCarrera}, '${fechaCierre}')">
+                                <fmt:message key="asignacionEstudianteCarrera.boton.modificar"/>
+                            </a>
                         </display:column>
                     </sec:authorize>
 
@@ -54,6 +71,7 @@
                 </display:table>
             </fieldset>
         </center>
+
 
 
         <c:if test="${habilitarFormulario}">
@@ -70,7 +88,25 @@
             </center>
         </c:if>
 
+        <c:if test="${ not empty wrapperModificarAsignacionEstudianteCarrera}">
+            <div id="divFormularioModificarPopup" title="<fmt:message key='modificarAsignacionEstudianteCarrera.titulo'/>" >
+                <form:form id="formModificar"
+                           modelAttribute="wrapperModificarAsignacionEstudianteCarrera" method="POST"
+                           action="modificarAsignacionEstudianteCarrera.htm">
+                    <form:hidden id="inputIdAsignacionEstudianteCarrera"
+                                 path="idAsignacionEstudianteCarrera" />
+                    <form:errors path="idAsignacionEstudianteCarrera" cssClass="claseError claseErrorModificar" />
 
+                    <div id="divCampos">
+                        <form:label for="fechaCierre" path="fechaCierre">
+                            <fmt:message key="asignacionEstudianteCarrera.fechaCierre"/>:
+                        </form:label>
+                        <form:input id="inputFechaCierre" path="fechaCierre" cssStyle="width: 250px;" cssClass="datepicker"/>
+                        <form:errors path="fechaCierre" cssClass="claseError" />
+                    </div>                    
+                </form:form>
+            </div>
+        </c:if>
 
 
         <div style="margin: 20px 0 0 0; ">

@@ -4,23 +4,24 @@
 
 <script type="text/javascript">
     $(function (){
-            $("#divFormularioPopup").dialog({
-            autoOpen: ${autoOpenDialog},
+        $("#divFormularioModificarPopup").dialog({
+            autoOpen: ${autoOpenDialogModificar},
             modal: true,
             width: 550,
 
             buttons: {
-                "<fmt:message key="btnSalir" />" : function() {
+                "<fmt:message key="btnSalir" />" : function() {                    
                     $(this).dialog('close');
                 },
                 "<fmt:message key="btnAceptar" />" : function() {
-                    $("#form").submit();
-                }
-            }
-        });
 
-        $("#botonHabilitarFormularioPopup").click( function(){
-            $("#divFormularioPopup").dialog("open");
+                    $("#formModificar").submit();
+
+                }
+            },
+            close : function(){
+                $("#formModificar .claseError").css({"display":"none"})
+            }
         });
     });
 </script>
