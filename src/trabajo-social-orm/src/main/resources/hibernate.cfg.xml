@@ -47,5 +47,6 @@
     <mapping class="gt.edu.usac.cats.dominio.HorarioDia"/>
     <mapping class="gt.edu.usac.cats.dominio.PensumEstudianteCarrera"/>
     <mapping class="gt.edu.usac.cats.dominio.conf.Reporte"/>
+    <mapping class="gt.edu.usac.cats.dominio.BoletaBanco"/>
   </session-factory>
 </hibernate-configuration>

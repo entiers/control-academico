@@ -8,6 +8,7 @@ package gt.edu.usac.cats.dominio.busqueda;
 
 import gt.edu.usac.cats.enums.TipoAsignacion;
 import gt.edu.usac.cats.enums.TipoHorario;
+import gt.edu.usac.cats.enums.TipoRubro;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +20,7 @@ import java.util.List;
 public class DatosAsignacion {
     private TipoAsignacion tipoAsignacion;
     private TipoHorario tipoHorario;
+    private TipoRubro tipoRubro;
     private int idAsignacionEstudianteCarrera;
     private int idHorario;
     private int idCurso;
@@ -87,5 +89,13 @@ public class DatosAsignacion {
 
     public void setDetalleAsignacion(List detalleAsignacion) {
         this.detalleAsignacion = detalleAsignacion;
+    }
+
+    public TipoRubro getTipoRubro() {
+        return tipoRubro;
+    }
+
+    public void setTipoRubro(TipoRubro tipoRubro) {
+        this.tipoRubro = tipoRubro;
     }
 }

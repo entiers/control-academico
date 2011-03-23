@@ -17,6 +17,7 @@ import gt.edu.usac.cats.dominio.Usuario;
 import gt.edu.usac.cats.servicio.ServicioAsignacion;
 import gt.edu.usac.cats.servicio.ServicioAsignacionCursoPensum;
 import gt.edu.usac.cats.servicio.ServicioAsignacionEstudianteCarrera;
+import gt.edu.usac.cats.servicio.ServicioBoletaBanco;
 import gt.edu.usac.cats.servicio.ServicioCalendarioActividades;
 import gt.edu.usac.cats.servicio.ServicioCurso;
 import gt.edu.usac.cats.servicio.ServicioCursoAprobado;
@@ -97,8 +98,10 @@ public abstract class ControladorAbstractoAsignacion {
     protected ServicioPensumEstudianteCarrera servicioPensumEstudianteCarrera;
 //_____________________________________________________________________________
     @Resource
+    protected ServicioBoletaBanco servicioBoletaBancoImpl;
+//_____________________________________________________________________________
+    @Resource
     protected EmailSender emailSender;
-
 //_____________________________________________________________________________
     protected void enviarEmail(List<DetalleAsignacion> listaAsignacion) throws IOException {
 

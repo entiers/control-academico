@@ -18,6 +18,7 @@ import gt.edu.usac.cats.dominio.busqueda.DatosAsignacion;
 import gt.edu.usac.cats.enums.TipoActividad;
 import gt.edu.usac.cats.enums.TipoAsignacion;
 import gt.edu.usac.cats.enums.TipoHorario;
+import gt.edu.usac.cats.enums.TipoRubro;
 import gt.edu.usac.cats.util.Mensajes;
 import gt.edu.usac.cats.util.RequestUtil;
 import java.util.List;
@@ -113,6 +114,7 @@ public class ControladorAsignacionCursos extends ControladorAbstractoAsignacion{
                                                                     new java.util.Date())){
                 datosAsignacion.setTipoAsignacion(TipoAsignacion.ASIGNACION_CURSOS_VACACIONES);
                 datosAsignacion.setTipoHorario(TipoHorario.VACACIONES);
+                datosAsignacion.setTipoRubro(TipoRubro.VACACIONES);
             }
             //Validar periodo de asignacion de cursos de primera retrasada
             else if(this.servicioCalendarioActividadesImpl.esFechaActividadValida(TipoActividad.ASIGNACION_PRIMERA_RESTRASADA,
@@ -120,6 +122,7 @@ public class ControladorAsignacionCursos extends ControladorAbstractoAsignacion{
                                                                     new java.util.Date())){
                 datosAsignacion.setTipoAsignacion(TipoAsignacion.ASIGNACION_PRIMERA_RETRASADA);
                 datosAsignacion.setTipoHorario(TipoHorario.PRIMERA_RETRASADA);
+                datosAsignacion.setTipoRubro(TipoRubro.PRIMERA_RETRASADA);
             }
             //Validar periodo de asignacion de cursos de segunda retrasada
             else if(this.servicioCalendarioActividadesImpl.esFechaActividadValida(TipoActividad.ASIGNACION_SEGUNDA_RETRASADA,
@@ -127,6 +130,7 @@ public class ControladorAsignacionCursos extends ControladorAbstractoAsignacion{
                                                                     new java.util.Date())){
                 datosAsignacion.setTipoAsignacion(TipoAsignacion.ASIGNACION_SEGUNDA_RETRASADA);
                 datosAsignacion.setTipoHorario(TipoHorario.SEGUNDA_RETRASADA);
+                datosAsignacion.setTipoRubro(TipoRubro.SEGUNDA_RETRASADA);
             }
             else {
                 modelo.addAttribute("periodoInvalido", true);

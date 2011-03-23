@@ -7,13 +7,11 @@
 package gt.edu.usac.cats.controlador.asignacion;
 
 import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
-import gt.edu.usac.cats.dominio.Curso;
 import gt.edu.usac.cats.dominio.DetalleAsignacion;
 import gt.edu.usac.cats.dominio.Horario;
 import gt.edu.usac.cats.dominio.Pensum;
 import gt.edu.usac.cats.dominio.busqueda.DatosAsignacion;
 import gt.edu.usac.cats.enums.TipoAsignacion;
-import gt.edu.usac.cats.enums.TipoHorario;
 import gt.edu.usac.cats.util.Mensajes;
 import gt.edu.usac.cats.util.RequestUtil;
 import java.io.IOException;
@@ -22,7 +20,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -106,6 +103,14 @@ public class ControladorAsignacionRetrasadas extends ControladorAbstractoAsignac
                             RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.cursoYaAsignado", false);
                             return "asignacion/asignacionRetrasada";
                         }
+
+                        //Validando que el curso este pagado
+                        if(servicioBoletaBancoImpl.listadoBoletaBanco(asignacionEstudianteCarrera.getEstudiante(),
+                                                                    horario.getCurso(), semestre, datosAsignacion.getTipoRubro()).isEmpty()){
+                            RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.cursoNoCancelado", false);
+                            return "asignacion/asignacionRetrasada";
+                        }
+
                         listaHorarioAsignacion.add(horario);
                     }
                 }
