@@ -39,6 +39,7 @@
 
         <%@include file="../../jspf/formularios/informacion/formularioInformacionAsignacionEstudianteCarrera.jspf" %>        
 
+        <%--  Listado --%>
         <center>
             <fieldset>
                 <legend><fmt:message key="mostrarHistorialAsignacionEstudianteCarrera.listado" /></legend>
@@ -54,11 +55,17 @@
                         <a class="a-acciones"onclick="modificar(${historialAsignacionEstudianteCarrera.idHistorialAsignacionEstudianteCarrera}, '${fechaInscripcion}', ${historialAsignacionEstudianteCarrera.situacion.idSituacion}, ${historialAsignacionEstudianteCarrera.semestre.idSemestre})">
                             <fmt:message key="historialAsignacionEstudianteCarrera.boton.modificar" />
                         </a>
+
+                        <br/>
+                        <a href="eliminarHistorialAsignacionEstudianteCarrera.htm?idHistorialAsignacionEstudianteCarrera=${historialAsignacionEstudianteCarrera.idHistorialAsignacionEstudianteCarrera}&idAsignacionEstudianteCarrera=${asignacionEstudianteCarrera.idAsignacionEstudianteCarrera}">
+                            <fmt:message key="btnBorrar" />
+                        </a>
                     </display:column>
                 </display:table>
             </fieldset>
         </center>
 
+        <%--  Formulario para agregar  --%>
         <c:if test="${not empty wrapperHistorialAsignacionEstudianteCarrera}">
             <div id="divFormularioPopup" title="<fmt:message key='agregarHistorialAsignacionEstudianteCarrera.titulo' />">
                 <form:form id="form"
@@ -72,8 +79,9 @@
                 <button id="botonHabilitarFormularioPopup"><fmt:message key="historialAsignacionEstudianteCarrera.boton.agregar" /></button>
             </center>
         </c:if>
-                
-        <c:if test="${not empty wrapperHistorialAsignacionEstudianteCarrera}">
+
+        <%--  Formulario para modificar --%>
+        <c:if test="${not empty wrapperModificarHistorialAsignacionEstudianteCarrera}">
             <div id="divFormularioModificarPopup" title="<fmt:message key='modificarHistorialAsignacionEstudianteCarrera.titulo' />">
                 <form:form id="formModificar"
                            modelAttribute="wrapperModificarHistorialAsignacionEstudianteCarrera" method="POST"
