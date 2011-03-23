@@ -25,7 +25,11 @@
                     modal: true,
                     buttons: {
                         '<fmt:message key="btnAceptar"/>': function() {
-                            $(this).dialog('close');
+                            <%if( request.getAttribute("url") != null ) {%>
+                                location.href = "<%= request.getAttribute("url")%>";
+                            <%}else{%>
+                                $(this).dialog('close');
+                            <%}%>
                         }
                     }
                 });

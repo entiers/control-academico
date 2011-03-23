@@ -170,12 +170,10 @@ public class ControladorDesAsignacionCursos {
                 //Enviar correo de confirmacion
                 this.enviarEmail(listaDesasignacion);
                 RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.desAsignacionCursos.exito", true);
-                return "index";
-
+                RequestUtil.agregarRedirect(request, "index.htm");
             }
             else {
                 RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.desAsignacionCursos.sinHorarioSeleccionado", false);
-                return "asignacion/desAsignacionCursos";
             }
         }
         catch (Exception e) {
