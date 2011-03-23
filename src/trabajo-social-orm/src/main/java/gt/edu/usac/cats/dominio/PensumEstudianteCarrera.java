@@ -85,4 +85,16 @@ public class PensumEstudianteCarrera implements java.io.Serializable {
     public void setFechaFin(Date fechaFin) {
         this.fechaFin = fechaFin;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("PensumEstudianteCarrera (idPensumEstudianteCarrera=").append(this.idPensumEstudianteCarrera)
+                .append(", valido=").append(this.valido).append(")");
+
+        return builder.toString();
+    }
+
+
+
 }

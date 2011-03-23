@@ -17,7 +17,7 @@ import org.springframework.dao.DataAccessException;
 /**
  * <p></p>
  *
- * @author Carlos Solórzano
+ * @author Carlos Solorzano
  * @version 1.0
  */
 public interface ServicioUsuario extends ServicioGeneral {

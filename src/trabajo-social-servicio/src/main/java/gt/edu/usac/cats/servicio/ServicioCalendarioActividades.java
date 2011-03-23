@@ -32,6 +32,7 @@ public interface ServicioCalendarioActividades extends ServicioGeneral {
      *
      * @return Listado de calendario de actividades que fueron econtrador.
      **/
+
     List <CalendarioActividades> getCalendarioActividadesPorSemestre(Semestre semestre)
             throws DataAccessException;
 
@@ -55,6 +56,7 @@ public interface ServicioCalendarioActividades extends ServicioGeneral {
      *      </ul>
      * </p>
      */
+    
     boolean existeTipoActividadPorSemestre(TipoActividad tipoActividad, Semestre semestre)
             throws DataAccessException;
 
@@ -77,5 +79,6 @@ public interface ServicioCalendarioActividades extends ServicioGeneral {
      *
      * @exception DataAccessException
      */
+
     boolean esFechaActividadValida(TipoActividad tipoActividad, Semestre semestre, Date fecha) throws DataAccessException;
 }

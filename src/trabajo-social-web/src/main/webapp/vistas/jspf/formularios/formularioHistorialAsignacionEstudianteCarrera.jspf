@@ -1,0 +1,33 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ page pageEncoding="UTF-8" %>
+<div id="divCampos">
+    <form:label for="fechaInscripcion" path="fechaInscripcion">
+        <fmt:message key="historialAsignacionEstudianteCarrera.fechaInscripcion"/>: *
+    </form:label>
+    <form:input path="fechaInscripcion" cssStyle="width: 250px;" cssClass="datepicker"/>
+    <form:errors path="fechaInscripcion" cssClass="claseError" />
+</div>
+
+<div id="divCampos">
+    <form:label for="situacion.idSituacion" path="situacion.idSituacion">
+        <fmt:message key="historialAsignacionEstudianteCarrera.situacion"/>: *
+    </form:label>
+    <form:select path="situacion.idSituacion" cssStyle="width: 250px;" id="situacion">
+        <form:option  value="" label="Seleccionar un valor" />
+        <form:options items="${listadoSituaciones}" itemValue="idSituacion" itemLabel="codigoNombre" />
+    </form:select>
+    <form:errors path="situacion.idSituacion" cssClass="claseError"  />
+</div>
+
+<div id="divCampos">
+    <form:label for="semestre.idSemestre" path="semestre.idSemestre">
+        <fmt:message key="historialAsignacionEstudianteCarrera.semestre"/>: *
+    </form:label>
+    <form:select path="semestre.idSemestre" cssStyle="width: 250px;" id="semestre">
+        <form:option  value="" label="Seleccionar un valor" />
+        <form:options items="${listadoSemestres}" itemValue="idSemestre" itemLabel="anyoNumero" />
+    </form:select>
+    <form:errors path="semestre.idSemestre" cssClass="claseError" />
+</div>

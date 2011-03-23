@@ -64,14 +64,21 @@ legend{
     padding: 0 6px;
     line-height: 30px;
     background-position:left top;
-	background-image: url('images/BlockHeaderIcon.png');
-        padding:0 0 0 24px;
-	background-repeat: no-repeat;
-	min-height: 14px;
-	margin: 0 0 0 5px
+    background-image: url('images/BlockHeaderIcon.png');
+    padding:0 0 0 24px;
+    background-repeat: no-repeat;
+    min-height: 14px;
+    margin: 0 0 0 5px
 }
 
 .claseError{
-    font-weight: bold;
-    color: darkred;
+    height: 30px;
+    font-family:"Century Gothic",Arial, Helvetica, Sans-Serif;
+    font-size: 10px;
+    font-weight: bold;    
+    color: darkred;    
+}
+
+a-acciones{
+    cursor: pointer;
 }

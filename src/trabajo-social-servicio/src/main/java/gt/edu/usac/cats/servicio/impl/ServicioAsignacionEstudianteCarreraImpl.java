@@ -14,7 +14,6 @@ import java.util.Calendar;
 import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
-import org.hibernate.Transaction;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.DataAccessException;
@@ -59,6 +58,7 @@ public class ServicioAsignacionEstudianteCarreraImpl extends ServicioGeneralImpl
         return query.list();
     }
 
+//______________________________________________________________________________
     @Override
     public List<AsignacionEstudianteCarrera> getAsignacionEstudianteCarrera(Estudiante estudiante) throws DataAccessException {
         DetachedCriteria criteria = DetachedCriteria.forClass(AsignacionEstudianteCarrera.class);
@@ -66,6 +66,7 @@ public class ServicioAsignacionEstudianteCarreraImpl extends ServicioGeneralImpl
         return this.daoGeneralImpl.find(criteria);
     }
 
+//______________________________________________________________________________
     @Override
     public List<Carrera> getListadoCarrerasNoAsignadasPorEstudiante(Estudiante estudiante) {
         StringBuilder builder = new StringBuilder();
@@ -80,6 +81,7 @@ public class ServicioAsignacionEstudianteCarreraImpl extends ServicioGeneralImpl
         return query.list();
     }
 
+//______________________________________________________________________________
     @Override
     public void agregarAsignacionEstudianteCarrera(AsignacionEstudianteCarrera asignacionEstudianteCarrera
             , HistorialAsignacionEstudianteCarrera historialAsignacionEstudianteCarrera)

@@ -8,7 +8,6 @@ package gt.edu.usac.cats.servicio;
 
 import gt.edu.usac.cats.dominio.Carrera;
 import gt.edu.usac.cats.dominio.Curso;
-import gt.edu.usac.cats.dominio.Estudiante;
 import gt.edu.usac.cats.dominio.Pensum;
 import java.util.List;
 import org.springframework.dao.DataAccessException;
@@ -86,16 +85,5 @@ public interface ServicioCarrera extends ServicioGeneral {
      */
     List<Curso> buscarCursosNoAsignados(Pensum pensum)
             throws DataAccessException;
-//______________________________________________________________________________
-    /*
-     * <p>Este metodo permite asignar el {@link Curso} enviado como parametro
-     * al {@link Pensum} que tambien se envia como parametro.</p>
-     *
-     * @param pensum {@link Pensum} al que se la va a realizar la asignacion
-     * @param curso {@link Curso} que se debe de asignar
-     * @param obligatorio <code>true</code> si el {@link Curso} es obligatorio
-     * @throws DataAccessException Si ocurrio un error de acceso a datos
-     */
-    /*void agregarCursoPensum(Pensum pensum, Curso curso, boolean obligatorio)
-            throws DataAccessException;*/
+
 }

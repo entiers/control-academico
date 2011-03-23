@@ -23,8 +23,7 @@ import org.springframework.dao.DataIntegrityViolationException;
  * @version 1.0
  */
 public interface ServicioEstudiante extends ServicioGeneral {
-
-
+//______________________________________________________________________________
     /**
      * <p>Este metodo permite agregar la informacion de un estudiante a la base
      * de datos, el metodo ademas realiza la asignacion de carrera al
@@ -36,6 +35,7 @@ public interface ServicioEstudiante extends ServicioGeneral {
      * @throws DataIntegrityViolationException Si ocurrio una violacion de
      *         de integridad de datos
      */
+
     void agregarEstudiante(Estudiante estudiante)
             throws DataIntegrityViolationException, DataAccessException;
 //______________________________________________________________________________

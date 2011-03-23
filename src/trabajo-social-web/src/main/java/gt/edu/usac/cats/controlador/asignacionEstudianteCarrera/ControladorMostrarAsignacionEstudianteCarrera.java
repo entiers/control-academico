@@ -20,6 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import gt.edu.usac.cats.dominio.wrapper.WrapperModificarAsignacionEstudianteCarrera;
 
 /**
  *
@@ -34,7 +35,8 @@ public class ControladorMostrarAsignacionEstudianteCarrera extends ControladorAb
      */
     private static Logger log = Logger.getLogger(ControladorMostrarAsignacionEstudianteCarrera.class);
 
-    private static String TITULO_MENSAJE = "agregarAsignacionEstudianteCarrera.titulo";
+    private static String TITULO_MENSAJE_AGREGAR = "agregarAsignacionEstudianteCarrera.titulo";
+    private static String TITULO_MENSAJE_MODIFICAR = "modificarAsignacionEstudianteCarrera.titulo";
 
 
     @RequestMapping(value = "mostrarAsignacionEstudianteCarrera.htm", method = RequestMethod.GET)
@@ -49,7 +51,8 @@ public class ControladorMostrarAsignacionEstudianteCarrera extends ControladorAb
             return "redirect:buscarEstudiante.htm";
         }
 
-        this.agregarAtributosDefault(modelo, new WrapperAgregarAsignacionEstudianteCarrera(), false, true);
+        this.agregarAtributosDefault(modelo, new WrapperAgregarAsignacionEstudianteCarrera(), false, 
+                new WrapperModificarAsignacionEstudianteCarrera(), false, true);
 
 
 
@@ -79,24 +82,70 @@ public class ControladorMostrarAsignacionEstudianteCarrera extends ControladorAb
                         + this.estudiante.getIdEstudiante());
 
 
-                RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "agregarAsignacionEstudianteCarrera.exito", true);
+                RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE_AGREGAR, "agregarAsignacionEstudianteCarrera.exito", true);
                 log.info(Mensajes.EXITO_AGREGAR + asignacionEstudianteCarrera.toString());
 
 
             } catch (DataIntegrityViolationException e) {
-                RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "dataIntegrityViolatioException", false);
+                RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE_AGREGAR, "dataIntegrityViolationException", false);
                 log.error(Mensajes.DATA_INTEGRITY_VIOLATION_EXCEPTION, e);
 
-                this.agregarAtributosDefault(modelo, wrapperAgregarAsignacionEstudianteCarrera, true, false);
+                this.agregarAtributosDefault(modelo, wrapperAgregarAsignacionEstudianteCarrera,
+                        true, new WrapperModificarAsignacionEstudianteCarrera(),  false, false);
             } catch (DataAccessException e) {
-                RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "dataAccessException", false);
+                RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE_AGREGAR, "dataAccessException", false);
                 log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
 
-                this.agregarAtributosDefault(modelo, wrapperAgregarAsignacionEstudianteCarrera, true, false);
+                this.agregarAtributosDefault(modelo, wrapperAgregarAsignacionEstudianteCarrera,
+                        true, new WrapperModificarAsignacionEstudianteCarrera(),  false, false);
             }
         } else {
-            this.agregarAtributosDefault(modelo, wrapperAgregarAsignacionEstudianteCarrera, true, false);
+            this.agregarAtributosDefault(modelo, wrapperAgregarAsignacionEstudianteCarrera,
+                        true, new WrapperModificarAsignacionEstudianteCarrera(),  false, false);
         }
         return "asignacionEstudianteCarrera/mostrarAsignacionEstudianteCarrera";
+    }
+
+    @RequestMapping(value = "modificarAsignacionEstudianteCarrera.htm", method = RequestMethod.POST)
+    public String modificar(Model modelo, @Valid WrapperModificarAsignacionEstudianteCarrera wrapperModificarAsignacionEstudianteCarrera
+            , BindingResult bindingResult, HttpServletRequest request){
+
+            if (!bindingResult.hasErrors()) {
+            try {
+                this.asignacionEstudianteCarrera = this.servicioAsignacionEstudianteCarreraImpl
+                        .cargarEntidadPorID(AsignacionEstudianteCarrera.class, wrapperModificarAsignacionEstudianteCarrera.getIdAsignacionEstudianteCarrera());
+
+                wrapperModificarAsignacionEstudianteCarrera.quitarWrapper(asignacionEstudianteCarrera);
+
+                this.servicioAsignacionEstudianteCarreraImpl.actualizar(asignacionEstudianteCarrera);
+
+
+                RequestUtil.agregarRedirect(request, "mostrarAsignacionEstudianteCarrera.htm?idEstudiante="
+                        + this.estudiante.getIdEstudiante());
+
+
+                RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE_MODIFICAR, "modificarAsignacionEstudianteCarrera.exito", true);
+                log.info(Mensajes.EXITO_ACTUALIZACION + asignacionEstudianteCarrera.toString());
+
+
+            } catch (DataIntegrityViolationException e) {
+                RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE_MODIFICAR, "dataIntegrityViolationException", false);
+                log.error(Mensajes.DATA_INTEGRITY_VIOLATION_EXCEPTION, e);
+
+                this.agregarAtributosDefault(modelo, new WrapperAgregarAsignacionEstudianteCarrera(),
+                        false, wrapperModificarAsignacionEstudianteCarrera,  true, false);
+            } catch (DataAccessException e) {
+                RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE_MODIFICAR, "dataAccessException", false);
+                log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
+
+                this.agregarAtributosDefault(modelo, new WrapperAgregarAsignacionEstudianteCarrera(),
+                        false, wrapperModificarAsignacionEstudianteCarrera,  true, false);
+            }
+        } else {
+            this.agregarAtributosDefault(modelo, new WrapperAgregarAsignacionEstudianteCarrera(),
+                        false, wrapperModificarAsignacionEstudianteCarrera,  true, false);
+        }
+        return "asignacionEstudianteCarrera/mostrarAsignacionEstudianteCarrera";
+
     }
 }

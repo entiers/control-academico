@@ -13,6 +13,7 @@ import gt.edu.usac.cats.dominio.wrapper.WrapperAgregarAsignacionEstudianteCarrer
 import gt.edu.usac.cats.dominio.wrapper.WrapperHistorialAsignacionEstudianteCarrera;
 import gt.edu.usac.cats.servicio.ServicioAsignacionEstudianteCarrera;
 import gt.edu.usac.cats.servicio.ServicioSemestre;
+import gt.edu.usac.cats.dominio.wrapper.WrapperModificarAsignacionEstudianteCarrera;
 import java.util.List;
 import javax.annotation.Resource;
 import org.springframework.ui.Model;
@@ -48,9 +49,14 @@ public abstract class ControladorAbstractoAsignacionEstudianteCarrera {
     }
 //______________________________________________________________________________
 
+
+    
+
     protected void agregarAtributosDefault(Model modelo,
             WrapperAgregarAsignacionEstudianteCarrera wrapperAgregarAsignacionEstudianteCarrera,
-            boolean autoOpenDialog, boolean realizarBusqueda) {
+            boolean autoOpenDialog,
+            WrapperModificarAsignacionEstudianteCarrera wrapperModificarAsignacionEstudianteCarrera,
+            boolean autoOpenDialogModificar, boolean realizarBusqueda) {
 
         if (realizarBusqueda) {
             this.listadoCarrerasNoAsignadas =
@@ -70,21 +76,28 @@ public abstract class ControladorAbstractoAsignacionEstudianteCarrera {
 
 
         modelo.addAttribute("autoOpenDialog", autoOpenDialog);
+        modelo.addAttribute("autoOpenDialogModificar", autoOpenDialogModificar);
         modelo.addAttribute("estudiante", this.estudiante);
         modelo.addAttribute("listadoAsignacionEstudianteCarrera", this.listadoAsignacionEstudianteCarrera);
 
-        if (this.listadoAsignacionEstudianteCarrera != null && this.listadoAsignacionEstudianteCarrera.size() < 2) {
+        if (this.listadoAsignacionEstudianteCarrera == null || this.listadoAsignacionEstudianteCarrera.size() < 2) {
             modelo.addAttribute("wrapperAgregarAsignacionEstudianteCarrera", wrapperAgregarAsignacionEstudianteCarrera);
             modelo.addAttribute("listadoCarrerasNoAsignadas", this.listadoCarrerasNoAsignadas);
             modelo.addAttribute("listadoSituaciones", this.listadoSituaciones);
             modelo.addAttribute("listadoSemestres", this.listadoSemestres);
             modelo.addAttribute("habilitarFormulario", true);
         }
+        
+        modelo.addAttribute("wrapperModificarAsignacionEstudianteCarrera", wrapperModificarAsignacionEstudianteCarrera);
+
+
     }
 
-    protected void agregarAtributosDefaultHistorial(Model modelo,
+    protected void agregarAtributosDefaultHistorial(Model modelo, Integer idHistorialAsignacionEstudianteCarrera, 
             WrapperHistorialAsignacionEstudianteCarrera wrapperHistorialAsignacionEstudianteCarrera,
-            boolean autoOpenDialog, boolean realizarBusqueda) {
+            boolean autoOpenDialog,
+            WrapperHistorialAsignacionEstudianteCarrera wrapperModificarHistorialAsignacionEstudianteCarrera,
+            boolean autoOpenDialogModificar, boolean realizarBusqueda) {
 
         if (realizarBusqueda) {
             this.agregarAtributosDeHistorial();
@@ -95,6 +108,9 @@ public abstract class ControladorAbstractoAsignacionEstudianteCarrera {
         modelo.addAttribute("estudiante", this.estudiante);
         modelo.addAttribute("asignacionEstudianteCarrera", this.asignacionEstudianteCarrera);
         modelo.addAttribute("wrapperHistorialAsignacionEstudianteCarrera", wrapperHistorialAsignacionEstudianteCarrera);
+        modelo.addAttribute("wrapperModificarHistorialAsignacionEstudianteCarrera", wrapperModificarHistorialAsignacionEstudianteCarrera);
         modelo.addAttribute("autoOpenDialog", autoOpenDialog);
+        modelo.addAttribute("autoOpenDialogModificar", autoOpenDialogModificar);
+        modelo.addAttribute("idHistorialAsignacionEstudianteCarrera", idHistorialAsignacionEstudianteCarrera);
     }
 }
