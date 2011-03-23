@@ -14,6 +14,7 @@ import gt.edu.usac.cats.dominio.Pensum;
 import gt.edu.usac.cats.dominio.busqueda.DatosAsignacion;
 import gt.edu.usac.cats.enums.TipoAsignacion;
 import gt.edu.usac.cats.enums.TipoHorario;
+import gt.edu.usac.cats.enums.TipoRubro;
 import gt.edu.usac.cats.util.Mensajes;
 import gt.edu.usac.cats.util.RequestUtil;
 import java.io.IOException;

@@ -169,9 +169,15 @@ public class ControladorAsignacionVacaciones extends ControladorAbstractoAsignac
                         if(servicioDetalleAsignacionImpl.getTotalAsignaciones(horario.getCurso(),
                                    asignacionEstudianteCarrera, TipoAsignacion.ASIGNACION_CURSOS_VACACIONES)>=3){
                             RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.totalAsignacionesExcedidas", false);
-                            return "asignacion/asignacionSemestre";
+                            return "asignacion/asignacionVacaciones";
                         }
 
+                        //Validando que el curso este pagado
+                        if(servicioBoletaBancoImpl.listadoBoletaBanco(asignacionEstudianteCarrera.getEstudiante(),
+                                                                    horario.getCurso(), semestre, datosAsignacion.getTipoRubro()).isEmpty()){
+                            RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.cursoNoCancelado", false);
+                            return "asignacion/asignacionVacaciones";
+                        }
                     }
                 } else {
                     RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.estudianteSinPensum", false);

@@ -49,6 +49,7 @@
                     <form:hidden path="idAsignacionEstudianteCarrera" />
                     <form:hidden path="tipoAsignacion" />
                     <form:hidden path="tipoHorario" id="tipoHorario" />
+                    <form:hidden path="tipoRubro" />
                 </c:otherwise>
             </c:choose>
         </form:form>
