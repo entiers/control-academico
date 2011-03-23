@@ -16,12 +16,12 @@
                     <%if( request.getAttribute("url") != null ) {%>
                         location.href = "<%= request.getAttribute("url")%>";
                     <%}else{%>
-                    if(<%= RequestUtil.getValorBoolean(request, "limpiarCampos") %>) {
-                        $("#nombre").val("<%= wrapperDocumento.getNombre() %>");
-                        $("#descripcion").val("<%= wrapperDocumento.getDescripcion() %>");
-                    }
+                        if(<%= RequestUtil.getValorBoolean(request, "limpiarCampos") %>) {
+                            $("#nombre").val("<%= wrapperDocumento.getNombre() %>");
+                            $("#descripcion").val("<%= wrapperDocumento.getDescripcion() %>");
+                        }
 
-                    $(this).dialog('close');
+                        $(this).dialog('close');
                     <%}%>
                 }
             }
