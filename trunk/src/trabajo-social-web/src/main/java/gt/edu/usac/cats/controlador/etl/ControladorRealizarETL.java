@@ -65,7 +65,7 @@ public class ControladorRealizarETL {
 
         properties.load(inputStream);
         String pathArchivo = properties.getProperty(key);
-
+        System.out.println(pathArchivo);
         byte [] bytes = file.getBytes();
         
         OutputStream outputStream = new FileOutputStream(
@@ -135,7 +135,8 @@ public class ControladorRealizarETL {
             
         try {
             if(!archivoCSV.isEmpty()){
-                if(archivoCSV.getContentType().equalsIgnoreCase("text/csv")){
+                System.out.println(archivoCSV.getContentType());
+                //if(archivoCSV.getContentType().equalsIgnoreCase("text/csv")){
 
                     this.guardarArchivoEnDisco(archivoCSV
                             , "ArchivoCSV_File"
@@ -147,7 +148,7 @@ public class ControladorRealizarETL {
                         RequestUtil.crearMensajeRespuesta(request, "etl.ingresarRegistroCSV.titulo",
                             "etl.ingresarRegistroCSV.exito", true);
 
-                        log.info("Se realiz� el ETL del archivo CSV de Registro y Estad�stica satisfactoriamente");
+                        log.info("Se realizo el ETL del archivo CSV de Registro y Estadistica satisfactoriamente");
                     }else{
 
                         RequestUtil.crearMensajeRespuesta(request, "etl.ingresarRegistroCSV.titulo", "etl.archivoCSV.error",
@@ -155,21 +156,21 @@ public class ControladorRealizarETL {
 
                         log.error("Hubo problemas en la carga del archivo CSV");
                     }
-                }else{
+                /*}else{
                     RequestUtil.crearMensajeRespuesta(request, "etl.ingresarRegistroCSV.titulo", "etl.archivoCSV.contentTypeInvalido",
                         false);
 
-                    log.error("El archivo CSV a cargar no es un archivo csv v�lido");
-                }
+                    log.error("El archivo CSV a cargar no es un archivo csv valido");
+                }*/
             }else{
                 RequestUtil.crearMensajeRespuesta(request, "etl.ingresarRegistroCSV.titulo", "etl.archivoCSV.obligatorio",
                         false);
-                log.error("No se carg� ning�n archivo CSV");
+                log.error("No se cargo ningun archivo CSV");
             }
 
         } catch (IOException e) {
             RequestUtil.crearMensajeRespuesta(request, "etl.ingresarRegistroCSV.titulo", "etl.ioException", false);
-            log.error("Ocurri� un problema en la lectura/escritura de un archivo", e);
+            log.error("Ocurrio un problema en la lectura/escritura de un archivo", e);
         } catch( Exception e){
             RequestUtil.crearMensajeRespuesta(request, "etl.ingresarRegistroCSV.titulo", "etl.exception", false);
             log.error("Error no identificado", e);
