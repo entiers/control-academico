@@ -25,33 +25,48 @@ import org.springframework.ui.Model;
  */
 public abstract class ControladorAbstractoAsignacionEstudianteCarrera {
 //______________________________________________________________________________
-
+    /***/
     @Resource
     protected ServicioAsignacionEstudianteCarrera servicioAsignacionEstudianteCarreraImpl;
 //______________________________________________________________________________
+    /***/
     @Resource
     protected ServicioSemestre servicioSemestreImpl;
 //______________________________________________________________________________
+    /***/
     protected Estudiante estudiante;
 //______________________________________________________________________________
+    /***/
     protected AsignacionEstudianteCarrera asignacionEstudianteCarrera;
+//______________________________________________________________________________
+    /***/
     private List<Carrera> listadoCarrerasNoAsignadas;
 //______________________________________________________________________________
+    /***/
     private List<AsignacionEstudianteCarrera> listadoAsignacionEstudianteCarrera;
 //______________________________________________________________________________
+    /***/
     private List<Situacion> listadoSituaciones;
 //______________________________________________________________________________
+    /***/
     private List<Semestre> listadoSemestres;
-
+//______________________________________________________________________________
+    /***/
     private void agregarAtributosDeHistorial() {
         this.listadoSituaciones = this.servicioAsignacionEstudianteCarreraImpl.cargarEntidades(Situacion.class);
         this.listadoSemestres = this.servicioSemestreImpl.listarSemestresParaBusqueda();
     }
 //______________________________________________________________________________
 
-
-    
-
+/**
+ *
+ * @param modelo
+ * @param wrapperAgregarAsignacionEstudianteCarrera
+ * @param autoOpenDialog
+ * @param wrapperModificarAsignacionEstudianteCarrera
+ * @param autoOpenDialogModificar
+ * @param realizarBusqueda
+ */
     protected void agregarAtributosDefault(Model modelo,
             WrapperAgregarAsignacionEstudianteCarrera wrapperAgregarAsignacionEstudianteCarrera,
             boolean autoOpenDialog,
@@ -63,17 +78,15 @@ public abstract class ControladorAbstractoAsignacionEstudianteCarrera {
                     this.servicioAsignacionEstudianteCarreraImpl.getListadoCarrerasNoAsignadasPorEstudiante(this.estudiante);
 
             this.listadoAsignacionEstudianteCarrera =
-                    this.servicioAsignacionEstudianteCarreraImpl.getAsignacionEstudianteCarrera(estudiante);
+                    this.servicioAsignacionEstudianteCarreraImpl
+                    .getAsignacionEstudianteCarrera(estudiante, true);
 
 
             this.agregarAtributosDeHistorial();
 
             Semestre semestreActivo = this.servicioSemestreImpl.getSemestreActivo();
             wrapperAgregarAsignacionEstudianteCarrera.getWrapperHistorialAsignacionEstudianteCarrera().setSemestre(semestreActivo);
-
-
         }
-
 
         modelo.addAttribute("autoOpenDialog", autoOpenDialog);
         modelo.addAttribute("autoOpenDialogModificar", autoOpenDialogModificar);
@@ -90,9 +103,30 @@ public abstract class ControladorAbstractoAsignacionEstudianteCarrera {
         
         modelo.addAttribute("wrapperModificarAsignacionEstudianteCarrera", wrapperModificarAsignacionEstudianteCarrera);
 
+    }
+
+    protected void agregarAtributosDefaultCambiarAsignacion(Model modelo,
+            WrapperAgregarAsignacionEstudianteCarrera wrapperAgregarAsignacionEstudianteCarrera,
+            boolean realizarBusqueda){
+
+        modelo.addAttribute("asignacionEstudianteCarrera", this.asignacionEstudianteCarrera);
+
+        this.estudiante = this.asignacionEstudianteCarrera.getEstudiante();
+        this.agregarAtributosDefault(modelo, wrapperAgregarAsignacionEstudianteCarrera,
+                false, null, false, realizarBusqueda);
 
     }
 
+
+    /**
+     * @param modelo
+     * @param idHistorialAsignacionEstudianteCarrera
+     * @param wrapperHistorialAsignacionEstudianteCarrera
+     * @param autoOpenDialog
+     * @param wrapperModificarHistorialAsignacionEstudianteCarrera
+     * @param autoOpenDialogModificar
+     * @param realizarBusqueda
+     */
     protected void agregarAtributosDefaultHistorial(Model modelo, Integer idHistorialAsignacionEstudianteCarrera, 
             WrapperHistorialAsignacionEstudianteCarrera wrapperHistorialAsignacionEstudianteCarrera,
             boolean autoOpenDialog,

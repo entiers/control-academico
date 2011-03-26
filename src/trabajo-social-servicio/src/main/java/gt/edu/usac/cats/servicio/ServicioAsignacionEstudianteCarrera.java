@@ -40,7 +40,7 @@ public interface ServicioAsignacionEstudianteCarrera extends ServicioGeneral{
      * <p>Crear un listado de AsignacionEstudianteCarrera, el listado
      * se filtra en base al estudiante</p>
      *
-     * @param estudiante pojo del tipo  {@linl Estudiante}
+     * @param estudiante pojo del tipo  {@link Estudiante}
      * @return List Listado de AsignacionEstudianteCarrera
      * @throws HibernateException Si ocurrio un error de acceso a datos
      */
@@ -48,14 +48,22 @@ public interface ServicioAsignacionEstudianteCarrera extends ServicioGeneral{
             throws HibernateException;
 
 
-    List <AsignacionEstudianteCarrera> getAsignacionEstudianteCarrera(Estudiante estudiante)
+    List <AsignacionEstudianteCarrera> getAsignacionEstudianteCarrera(Estudiante estudiante
+            , boolean estado) throws DataAccessException;
+
+
+    List <Carrera> getListadoCarrerasNoAsignadasPorEstudiante(Estudiante estudiante)
             throws DataAccessException;
 
 
-    List <Carrera> getListadoCarrerasNoAsignadasPorEstudiante(Estudiante estudiante);
-
-
     void agregarAsignacionEstudianteCarrera(AsignacionEstudianteCarrera asignacionEstudianteCarrera
+            , HistorialAsignacionEstudianteCarrera historialAsignacionEstudianteCarrera)
+            throws DataIntegrityViolationException, DataAccessException;
+
+
+    void realizarCambioAsignacionEstudianteCarrera(
+            AsignacionEstudianteCarrera asignacionEstudianteCarreraOriginal
+            , AsignacionEstudianteCarrera asignacionEstudianteCarreraNueva
             , HistorialAsignacionEstudianteCarrera historialAsignacionEstudianteCarrera)
             throws DataIntegrityViolationException, DataAccessException;
 }
