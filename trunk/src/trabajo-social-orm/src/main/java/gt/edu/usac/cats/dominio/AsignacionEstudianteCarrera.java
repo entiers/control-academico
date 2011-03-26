@@ -55,10 +55,12 @@ public class AsignacionEstudianteCarrera implements java.io.Serializable {
      private Set<PensumEstudianteCarrera> pensumEstudianteCarreras = new HashSet<PensumEstudianteCarrera>(0);
      private Set<Asignacion> asignacions = new HashSet<Asignacion>(0);
      private Set<HistorialAsignacionEstudianteCarrera> historialAsignacionEstudianteCarreras = new HashSet<HistorialAsignacionEstudianteCarrera>(0);
+     private boolean estado;
 
 
-
-    public AsignacionEstudianteCarrera() {}    
+    public AsignacionEstudianteCarrera() {
+        this.estado = true;
+    }
 //______________________________________________________________________________
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -150,13 +152,26 @@ public class AsignacionEstudianteCarrera implements java.io.Serializable {
     public void setPensumEstudianteCarreras(Set<PensumEstudianteCarrera> pensumEstudianteCarreras) {
         this.pensumEstudianteCarreras = pensumEstudianteCarreras;
     }
+//______________________________________________________________________________
+    @Column(
+        name = "estado",
+        nullable = false
+    )
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
 
 //______________________________________________________________________________
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("AsignacionEstudianteCarrera (idAsignacionEstudianteCarrera = ")
-                .append(this.idAsignacionEstudianteCarrera).append(")");
+                .append(this.idAsignacionEstudianteCarrera)
+                .append(", estado = ").append(this.estado).append(")");
 
         return builder.toString();
     }

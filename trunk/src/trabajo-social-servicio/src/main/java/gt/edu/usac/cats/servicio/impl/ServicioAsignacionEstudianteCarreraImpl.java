@@ -60,8 +60,10 @@ public class ServicioAsignacionEstudianteCarreraImpl extends ServicioGeneralImpl
 
 //______________________________________________________________________________
     @Override
-    public List<AsignacionEstudianteCarrera> getAsignacionEstudianteCarrera(Estudiante estudiante) throws DataAccessException {
+    public List<AsignacionEstudianteCarrera> getAsignacionEstudianteCarrera(Estudiante estudiante
+            , boolean estado) throws DataAccessException {
         DetachedCriteria criteria = DetachedCriteria.forClass(AsignacionEstudianteCarrera.class);
+        criteria.add(Restrictions.eq("estado", estado));
         criteria.add(Restrictions.eq("estudiante", estudiante));
         return this.daoGeneralImpl.find(criteria);
     }
@@ -92,5 +94,20 @@ public class ServicioAsignacionEstudianteCarreraImpl extends ServicioGeneralImpl
 
         historialAsignacionEstudianteCarrera.setAsignacionEstudianteCarrera(asignacionEstudianteCarrera);
         this.daoGeneralImpl.save(historialAsignacionEstudianteCarrera);
+    }
+
+    @Override
+    public void realizarCambioAsignacionEstudianteCarrera(AsignacionEstudianteCarrera asignacionEstudianteCarreraOriginal,
+            AsignacionEstudianteCarrera asignacionEstudianteCarreraNueva
+            , HistorialAsignacionEstudianteCarrera historialAsignacionEstudianteCarrera) throws DataIntegrityViolationException, DataAccessException {
+
+        asignacionEstudianteCarreraOriginal.setEstado(false);
+
+        asignacionEstudianteCarreraNueva.setEstudiante(asignacionEstudianteCarreraOriginal.getEstudiante());
+
+        this.agregarAsignacionEstudianteCarrera(asignacionEstudianteCarreraNueva, historialAsignacionEstudianteCarrera);
+
+        this.daoGeneralImpl.save(asignacionEstudianteCarreraOriginal);
+
     }
 }

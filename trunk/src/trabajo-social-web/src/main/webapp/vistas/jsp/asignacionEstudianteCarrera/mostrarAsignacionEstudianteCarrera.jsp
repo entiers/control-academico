@@ -64,6 +64,11 @@
                             <a class="a-acciones" onclick="modificar(${asignacionEstudianteCarrera.idAsignacionEstudianteCarrera}, '${fechaCierre}')">
                                 <fmt:message key="asignacionEstudianteCarrera.boton.modificar"/>
                             </a>
+
+                            <br/>
+                            <a href="cambiarAsignacionEstudianteCarrera.htm?idAsignacionEstudianteCarrera=${asignacionEstudianteCarrera.idAsignacionEstudianteCarrera}">
+                                <fmt:message key="cambiarAsignacionEstudianteCarrera.link"/>
+                            </a>
                         </display:column>
                     </sec:authorize>
 
