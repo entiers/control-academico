@@ -1,3 +1,8 @@
+// ============================================================================
+//
+// %GENERATED_LICENSE%
+//
+// ============================================================================
 package routines;
 
 import java.util.Random;
@@ -80,7 +85,7 @@ public class TalendString {
     }
 
     /**
-     * talendTrim: return the trimed String according the padding char and align of the content.
+     * talendTrim: Returns a copy of the string, with leading and trailing specified char omitted.
      * 
      * 
      * {talendTypes} String
@@ -98,55 +103,21 @@ public class TalendString {
      * {example} talendTrim("$$talend open studio$$$$", '$', 0) # talend open studio
      */
     public static String talendTrim(String origin, char padding_char, int align) {
-        if (origin.length() < 1) {
-            return ""; //$NON-NLS-1$
-        }
-        if (origin == null) {
+        if (null == origin) {
             return null;
         }
-        if (align > 0) { // Align right, to trim left
-            int start = 0;
-            char temp = origin.charAt(start);
-            while (temp == padding_char) {
-                start++;
-                if (start == origin.length()) {
-                    break;
-                }
-                temp = origin.charAt(start);
-            }
-            return origin.substring(start);
+        String sPaddingChar = java.util.regex.Matcher.quoteReplacement(Character.toString(padding_char));
+
+        if (align < 0) {
+            origin = origin.replaceAll("^" + sPaddingChar + "+", "");
         } else if (align == 0) {
-            int start = 0;
-            char temp = origin.charAt(start);
-            while (temp == padding_char) {
-                start++;
-                if (start == origin.length()) {
-                    break;
-                }
-                temp = origin.charAt(start);
-            }
-            int end = origin.length();
-            temp = origin.charAt(end - 1);
-            while (temp == padding_char) {
-                if (end == start) {
-                    break;
-                }
-                end--;
-                temp = origin.charAt(end - 1);
-            }
-            return origin.substring(start, end);
-        } else { // align left, to trim right
-            int end = origin.length();
-            char temp = origin.charAt(end - 1);
-            while (temp == padding_char) {
-                end--;
-                if (end == 0) {
-                    break;
-                }
-                temp = origin.charAt(end - 1);
-            }
-            return origin.substring(0, end);
+            origin = origin.replaceAll("^" + sPaddingChar + "+", "");
+            origin = origin.replaceAll(sPaddingChar + "+$", "");
+        } else if (align > 0) {
+            origin = origin.replaceAll(sPaddingChar + "+$", "");
         }
+
+        return origin;
     }
 
     /**

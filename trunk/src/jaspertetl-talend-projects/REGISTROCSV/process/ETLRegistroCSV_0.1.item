@@ -82,6 +82,14 @@
     <elementParameter field="CHECK" name="CATCH_USER_ERRORS" value="true" contextMode="false"/>
     <elementParameter field="CHECK" name="CATCH_USER_WARNING" value="true" contextMode="false"/>
     <elementParameter field="CHECK" name="CATCH_REALTIME_STATS" value="false" contextMode="false"/>
+    <routinesParameter id="_BW4CIE3lEeCJRIZogkCrUQ" name="DataOperation"/>
+    <routinesParameter id="_BW7FcE3lEeCJRIZogkCrUQ" name="Mathematical"/>
+    <routinesParameter id="_BW5QQE3lEeCJRIZogkCrUQ" name="Numeric"/>
+    <routinesParameter id="_BW20AE3lEeCJRIZogkCrUQ" name="Relational"/>
+    <routinesParameter id="_BW9hsE3lEeCJRIZogkCrUQ" name="StringHandling"/>
+    <routinesParameter id="_BUOWwE3lEeCJRIZogkCrUQ" name="TalendDataGenerator"/>
+    <routinesParameter id="_BW8TkE3lEeCJRIZogkCrUQ" name="TalendDate"/>
+    <routinesParameter id="_BWx7gE3lEeCJRIZogkCrUQ" name="TalendString"/>
   </parameters>
   <node componentName="tRunJob" componentVersion="0.101" offsetLabelX="0" offsetLabelY="0" posX="64" posY="64">
     <elementParameter field="TEXT" name="UNIQUE_NAME" value="tRunJob_1" contextMode="false"/>
@@ -98,6 +106,7 @@
     <elementParameter field="TEXT" name="CONNECTION_FORMAT" value="row" contextMode="false"/>
     <elementParameter field="CHECK" name="INFORMATION" value="false" contextMode="false"/>
     <elementParameter field="MEMO" name="COMMENT" value="" contextMode="false"/>
+    <elementParameter field="CHECK" name="TRANSMIT_ORIGINAL_CONTEXT" value="false"/>
     <metadata connector="FLOW" name="tRunJob_1"/>
   </node>
   <node componentName="tRunJob" componentVersion="0.101" offsetLabelX="0" offsetLabelY="0" posX="64" posY="192">
@@ -114,6 +123,7 @@
     <elementParameter field="TEXT" name="CONNECTION_FORMAT" value="row" contextMode="false"/>
     <elementParameter field="CHECK" name="INFORMATION" value="false" contextMode="false"/>
     <elementParameter field="MEMO" name="COMMENT" value="" contextMode="false"/>
+    <elementParameter field="CHECK" name="TRANSMIT_ORIGINAL_CONTEXT" value="false"/>
     <metadata connector="FLOW" name="tRunJob_8"/>
   </node>
   <node componentName="tRunJob" componentVersion="0.101" offsetLabelX="0" offsetLabelY="0" posX="224" posY="192">
@@ -130,6 +140,7 @@
     <elementParameter field="TEXT" name="CONNECTION_FORMAT" value="row" contextMode="false"/>
     <elementParameter field="CHECK" name="INFORMATION" value="false" contextMode="false"/>
     <elementParameter field="MEMO" name="COMMENT" value="" contextMode="false"/>
+    <elementParameter field="CHECK" name="TRANSMIT_ORIGINAL_CONTEXT" value="false"/>
     <metadata connector="FLOW" name="tRunJob_2"/>
   </node>
   <node componentName="tRunJob" componentVersion="0.101" offsetLabelX="0" offsetLabelY="0" posX="224" posY="64">
@@ -146,6 +157,7 @@
     <elementParameter field="TEXT" name="CONNECTION_FORMAT" value="row" contextMode="false"/>
     <elementParameter field="CHECK" name="INFORMATION" value="false" contextMode="false"/>
     <elementParameter field="MEMO" name="COMMENT" value="" contextMode="false"/>
+    <elementParameter field="CHECK" name="TRANSMIT_ORIGINAL_CONTEXT" value="false"/>
     <metadata connector="FLOW" name="tRunJob_3"/>
   </node>
   <node componentName="tRunJob" componentVersion="0.101" offsetLabelX="0" offsetLabelY="0" posX="384" posY="64">
@@ -162,6 +174,7 @@
     <elementParameter field="TEXT" name="CONNECTION_FORMAT" value="row" contextMode="false"/>
     <elementParameter field="CHECK" name="INFORMATION" value="false" contextMode="false"/>
     <elementParameter field="MEMO" name="COMMENT" value="" contextMode="false"/>
+    <elementParameter field="CHECK" name="TRANSMIT_ORIGINAL_CONTEXT" value="false"/>
     <metadata connector="FLOW" name="tRunJob_6"/>
   </node>
   <node componentName="tRunJob" componentVersion="0.101" offsetLabelX="12" offsetLabelY="0" posX="384" posY="192">
@@ -178,6 +191,7 @@
     <elementParameter field="TEXT" name="CONNECTION_FORMAT" value="row" contextMode="false"/>
     <elementParameter field="CHECK" name="INFORMATION" value="false" contextMode="false"/>
     <elementParameter field="MEMO" name="COMMENT" value="" contextMode="false"/>
+    <elementParameter field="CHECK" name="TRANSMIT_ORIGINAL_CONTEXT" value="false"/>
     <metadata connector="FLOW" name="tRunJob_4"/>
   </node>
   <node componentName="tRunJob" componentVersion="0.101" offsetLabelX="0" offsetLabelY="0" posX="576" posY="192">
@@ -194,6 +208,7 @@
     <elementParameter field="TEXT" name="CONNECTION_FORMAT" value="row" contextMode="false"/>
     <elementParameter field="CHECK" name="INFORMATION" value="false" contextMode="false"/>
     <elementParameter field="MEMO" name="COMMENT" value="" contextMode="false"/>
+    <elementParameter field="CHECK" name="TRANSMIT_ORIGINAL_CONTEXT" value="false"/>
     <metadata connector="FLOW" name="tRunJob_5"/>
   </node>
   <connection connectorName="FLOW" label="row1" lineStyle="0" metaname="tRunJob_1" offsetLabelX="0" offsetLabelY="0" source="tRunJob_1" target="tRunJob_8">
@@ -206,6 +221,7 @@
     <elementParameter field="CONNECTION_LIST" name="CONNECTIONS" value="" contextMode="false"/>
     <elementParameter field="TABLE" name="THRESHLODS" contextMode="false"/>
     <elementParameter field="CHECK" name="ACTIVATE" value="true" contextMode="false"/>
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="row1" contextMode="false"/>
   </connection>
   <connection connectorName="FLOW" label="row6" lineStyle="0" metaname="tRunJob_8" offsetLabelX="0" offsetLabelY="0" source="tRunJob_8" target="tRunJob_2">
     <elementParameter field="CHECK" name="TRACES_CONNECTION_ENABLE" value="true" contextMode="false"/>
@@ -217,6 +233,7 @@
     <elementParameter field="CONNECTION_LIST" name="CONNECTIONS" value="" contextMode="false"/>
     <elementParameter field="TABLE" name="THRESHLODS" contextMode="false"/>
     <elementParameter field="CHECK" name="ACTIVATE" value="true" contextMode="false"/>
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="row6" contextMode="false"/>
   </connection>
   <connection connectorName="FLOW" label="row2" lineStyle="0" metaname="tRunJob_2" offsetLabelX="0" offsetLabelY="0" source="tRunJob_2" target="tRunJob_3">
     <elementParameter field="CHECK" name="TRACES_CONNECTION_ENABLE" value="true" contextMode="false"/>
@@ -228,6 +245,7 @@
     <elementParameter field="CONNECTION_LIST" name="CONNECTIONS" value="" contextMode="false"/>
     <elementParameter field="TABLE" name="THRESHLODS" contextMode="false"/>
     <elementParameter field="CHECK" name="ACTIVATE" value="true" contextMode="false"/>
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="row2" contextMode="false"/>
   </connection>
   <connection connectorName="FLOW" label="row3" lineStyle="0" metaname="tRunJob_3" offsetLabelX="0" offsetLabelY="0" source="tRunJob_3" target="tRunJob_6">
     <elementParameter field="CHECK" name="TRACES_CONNECTION_ENABLE" value="true" contextMode="false"/>
@@ -239,6 +257,7 @@
     <elementParameter field="CONNECTION_LIST" name="CONNECTIONS" value="" contextMode="false"/>
     <elementParameter field="TABLE" name="THRESHLODS" contextMode="false"/>
     <elementParameter field="CHECK" name="ACTIVATE" value="true" contextMode="false"/>
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="row3" contextMode="false"/>
   </connection>
   <connection connectorName="FLOW" label="row5" lineStyle="0" metaname="tRunJob_6" offsetLabelX="0" offsetLabelY="0" source="tRunJob_6" target="tRunJob_4">
     <elementParameter field="CHECK" name="TRACES_CONNECTION_ENABLE" value="true" contextMode="false"/>
@@ -250,6 +269,7 @@
     <elementParameter field="CONNECTION_LIST" name="CONNECTIONS" value="" contextMode="false"/>
     <elementParameter field="TABLE" name="THRESHLODS" contextMode="false"/>
     <elementParameter field="CHECK" name="ACTIVATE" value="true" contextMode="false"/>
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="row5" contextMode="false"/>
   </connection>
   <connection connectorName="FLOW" label="row4" lineStyle="0" metaname="tRunJob_4" offsetLabelX="0" offsetLabelY="3" source="tRunJob_4" target="tRunJob_5">
     <elementParameter field="CHECK" name="TRACES_CONNECTION_ENABLE" value="true" contextMode="false"/>
@@ -261,6 +281,7 @@
     <elementParameter field="CONNECTION_LIST" name="CONNECTIONS" value="" contextMode="false"/>
     <elementParameter field="TABLE" name="THRESHLODS" contextMode="false"/>
     <elementParameter field="CHECK" name="ACTIVATE" value="true" contextMode="false"/>
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="row4" contextMode="false"/>
   </connection>
   <subjob>
     <elementParameter field="TEXT" name="UNIQUE_NAME" value="tRunJob_1" contextMode="false"/>
