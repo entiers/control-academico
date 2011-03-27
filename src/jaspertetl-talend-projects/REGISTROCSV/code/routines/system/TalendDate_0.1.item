@@ -1,3 +1,8 @@
+// ============================================================================
+//
+// %GENERATED_LICENSE%
+//
+// ============================================================================
 package routines;
 
 import java.text.FieldPosition;
@@ -11,6 +16,80 @@ import routines.system.FastDateParser;
 import routines.system.LocaleProvider;
 
 public class TalendDate {
+
+    /**
+     * get part of date. like YEAR, MONTH, HOUR, or DAY_OF_WEEK, WEEK_OF_MONTH, WEEK_OF_YEAR, TIMEZONE and so on
+     * 
+     * @param partName which part to get.
+     * @param date the date value.
+     * @return the specified part value.
+     * 
+     * {talendTypes} Integer
+     * 
+     * {Category} TalendDate
+     * 
+     * {param} string("DAY_OF_WEEK") partName : which part to get
+     * 
+     * {param} date(TalendDate.parseDate("yyyy-MM-dd", "2010-12-26")) date : the date value
+     * 
+     * {example} getPartOfDate("DAY_OF_WEEK", TalendDate.parseDate("yyyy-MM-dd", "2010-12-26")) #
+     */
+    public static int getPartOfDate(String partName, Date date) {
+
+        if (partName == null || date == null)
+            return 0;
+        int ret = 0;
+        String[] fieldsName = { "YEAR", "MONTH", "HOUR", "MINUTE", "SECOND", "DAY_OF_WEEK", "DAY_OF_MONTH", "DAY_OF_YEAR",
+                "WEEK_OF_MONTH", "DAY_OF_WEEK_IN_MONTH", "WEEK_OF_YEAR", "TIMEZONE" };
+        java.util.List<String> filedsList = java.util.Arrays.asList(fieldsName);
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+
+        switch (filedsList.indexOf(partName)) {
+        case 0:
+            ret = c.get(Calendar.YEAR);
+            break;
+        case 1:
+            ret = c.get(Calendar.MONTH);
+            break;
+        case 2:
+            ret = c.get(Calendar.HOUR);
+            break;
+        case 3:
+            ret = c.get(Calendar.MINUTE);
+            break;
+        case 4:
+            ret = c.get(Calendar.SECOND);
+            break;
+        case 5:
+            ret = c.get(Calendar.DAY_OF_WEEK);
+            break;
+        case 6:
+            ret = c.get(Calendar.DAY_OF_MONTH);
+            break;
+        case 7:
+            ret = c.get(Calendar.DAY_OF_YEAR);
+            break;
+        case 8:
+            // the ordinal number of current week in a month (it means a 'week' may be not contain 7 days)
+            ret = c.get(Calendar.WEEK_OF_MONTH);
+            break;
+        case 9:
+            // 1-7 correspond to 1, 8-14 correspond to 2,...
+            ret = c.get(Calendar.DAY_OF_WEEK_IN_MONTH);
+            break;
+        case 10:
+            ret = c.get(Calendar.WEEK_OF_YEAR);
+            break;
+        case 11:
+            ret = (c.get(Calendar.ZONE_OFFSET)) / (1000 * 60 * 60);
+            break;
+        default:
+            break;
+
+        }
+        return ret;
+    }
 
     /**
      * Formats a Date into a date/time string.
@@ -75,7 +154,7 @@ public class TalendDate {
             return false;
         }
 
-        if (!sdf.format(testDate).equals(stringDate)) {
+        if (!sdf.format(testDate).equalsIgnoreCase(stringDate)) {
             return false;
         }
 
@@ -121,7 +200,7 @@ public class TalendDate {
         if (pattern != null) {
             SimpleDateFormat sdf = new SimpleDateFormat(pattern);
             String part1 = sdf.format(date1), part2 = sdf.format(date2);
-            return part1.compareTo(part2);
+            return (part1.compareTo(part2) >= 1 ? 1 : (part1.compareTo(part2) <= -1 ? -1 : 0));
         } else {
             long time1 = date1.getTime(), time2 = date2.getTime();
             return (time1 < time2 ? -1 : (time1 == time2 ? 0 : 1));
@@ -636,9 +715,11 @@ public class TalendDate {
      */
     public static void main(String[] args) {
 
-        test_formatDate();
-        test_isDate();
-        test_getRandomDate();
+        // test_formatDate();
+        // test_isDate();
+        // test_getRandomDate();
+        System.out.println(getPartOfDate("DAY_OF_WEEK_IN_MONTH", parseDate("yyyy-MM-dd", "2010-12-26")));
+        System.out.println(getPartOfDate("WEEK_OF_MONTH", parseDate("yyyy-MM-dd", "2010-12-26")));
 
     }
 

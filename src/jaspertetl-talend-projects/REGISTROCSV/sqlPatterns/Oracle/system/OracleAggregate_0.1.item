@@ -9,7 +9,11 @@
 	 }else{
 	  flag=true;
 	 }
-	 operation += (__OPERATION_FUNCTION__[i] + "(" + __OPERATION_INPUT_COLUMN__[i] + ")");
+	 if (__OPERATION_FUNCTION__[i]!= null && __OPERATION_FUNCTION__[i].indexOf("@COLUMN") != -1) {
+		operation += __OPERATION_FUNCTION__[i].replaceAll("@COLUMN", __OPERATION_INPUT_COLUMN__[i]);
+	} else {
+	 	operation += (__OPERATION_FUNCTION__[i] + "(" + __OPERATION_INPUT_COLUMN__[i] + ")");
+	}
 	}
 	
 %>

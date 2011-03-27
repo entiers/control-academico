@@ -1,3 +1,8 @@
+// ============================================================================
+//
+// %GENERATED_LICENSE%
+//
+// ============================================================================
 package routines;
 
 import java.math.BigDecimal;
@@ -31,6 +36,40 @@ public class Numeric {
         } else {
             seq_Hash.put(seqName, startValue);
             return startValue;
+        }
+    }
+
+    /**
+     * create a sequence if not exists and put a new startValue
+     * 
+     * {Category} Numeric
+     * 
+     * {param} string("s1") sequence identifier
+     * 
+     * {param} int(1) start value
+     * 
+     * {example} sequence("s1", 1)
+     * 
+     */
+
+    public static void resetSequence(String seqName, int startValue) {
+        seq_Hash.put(seqName, startValue);
+    }
+
+    /**
+     * remove a sequence
+     * 
+     * {Category} Numeric
+     * 
+     * {param} string("s1") sequence identifier
+     * 
+     * {example} sequence("s1")
+     * 
+     */
+
+    public static void removeSequence(String seqName) {
+        if (seq_Hash.containsKey(seqName)) {
+            seq_Hash.remove(seqName);
         }
     }
 
