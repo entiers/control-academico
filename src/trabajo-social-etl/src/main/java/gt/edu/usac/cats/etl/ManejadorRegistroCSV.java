@@ -9,8 +9,8 @@ import registrocsv.etlregistrocsv_0_1.ETLRegistroCSV;
 
 /**
  * Clase que hereda el comportamiento de {@link ManejadorETL}, esta clase lleva
- * el control del llamado el módulo {@link ETLRegistroCSV} que realiza el ETL
- * del archivo CSV que proporciona Registro y Estadística con el control de los
+ * el control del llamado el mï¿½dulo {@link ETLRegistroCSV} que realiza el ETL
+ * del archivo CSV que proporciona Registro y Estadï¿½stica con el control de los
  * estudiantes incritos (nuevos y de reingreso).
  *
  * @author Mario Batres
@@ -20,11 +20,11 @@ import registrocsv.etlregistrocsv_0_1.ETLRegistroCSV;
 public class ManejadorRegistroCSV extends ManejadorETL {
 
     /**
-     * Método que se debe de sobreescribir para indicar qué módulo de ETL se
-     * estará usando.
+     * Metodo que se debe de sobreescribir para indicar que modulo de ETL se
+     * estara usando.
      *
      * @return Arreglo bidimensional de cadenas que retornan lo ocurrido en la
-     * realización del proceso.
+     * realizacion del proceso.
      * 
      * @throws IOException
      */

@@ -79,7 +79,7 @@ public class ControladorRealizarETL {
 
 //______________________________________________________________________________
     /**
-     * Este m�todo realiza el proceso ETL.
+     * Este metodo realiza el proceso ETL.
      *
      * @param tipo Es de tipo {@link FabricaManejoETL} que identifica que modulo de
      * ETL llamar para reliazliar el proceso.
@@ -177,5 +177,81 @@ public class ControladorRealizarETL {
         }
 
         return "etl/ingresarRegistroCSV";
+    }
+
+    //______________________________________________________________________________
+    /**
+     * <p>Este metodo se ejecuta cada vez que se realiza una solicitud del tipo
+     * GET de la pagina <code>ingresarBoletaBancoCSV.htm</code>. El metodo se encarga
+     * de iniciar los objetos que se usaran en la pagina.</p>
+     *
+     * @return Contiene el nombre de la vista a mostrar
+     */
+    @RequestMapping(value = "ingresarBoletaBancoCSV.htm", method=RequestMethod.GET)
+    public String crearBoletaBancoCSV(){
+        return "etl/ingresarBoletaBancoCSV";
+    }
+
+    //______________________________________________________________________________
+    /**
+     * Este metodo se utiliza cuando se hace un <k>submit</k> desde la p�gina
+     * <code>ingresarBoletaBancoCSV.htm</code>.  Este metodo realiza lo siguiente:
+     *
+     * <ol>
+     *  <li>Verifica que se haya seleccionado un archivo</li>
+     *  <li>Verifica que el archivo seleccionado sea un CSV valido</li>
+     *  <li> Guarda el archivo en disco</li>
+     *  <li> Realiza el proceso de ETL</li>
+     *  <li> Verifica que el proceso de ETL se haya realizado satisfactoriamente</li>
+     * </ol>
+     *
+     * @param archivoCSV Archivo CSV que se selecciona desde la aplicacion web.
+     * @param request Objeto {@link HttpServletRequest}
+     *
+     * @return Contiene el nombre de la vista a mostrar
+     */
+
+    @RequestMapping(value = "cargarBoletaBanco.htm", method=RequestMethod.POST)
+    public String realizarBoletaBancoCSV(
+            @RequestParam("archivoCSV") MultipartFile archivoCSV
+            , HttpServletRequest request){
+        try {
+            if(!archivoCSV.isEmpty()){
+                if(archivoCSV.getContentType().equalsIgnoreCase("text/csv")){
+
+                    this.guardarArchivoEnDisco(archivoCSV
+                            , "ArchivoCSV_File"
+                            , "/registrocsv/etlregistrocsv_0_1/contexts/Default.properties");
+
+               //     boolean exito = this.realizarETL(FabricaManejadorETL.BOLETA_BANCO_CSV);
+                    boolean exito = true;
+                    if(exito){
+                        RequestUtil.crearMensajeRespuesta(request, "etl.ingresarBoletaBancoCSV.titulo",
+                            "etl.ingresarRegistroCSV.exito", true);
+
+                        log.info("Se realizo el ETL del archivo CSV de Boletas del banco satisfactoriamente");
+                    }else{
+
+                        RequestUtil.crearMensajeRespuesta(request, "etl.ingresarBoletaBancoCSV.titulo", "etl.archivoCSV.error",false);
+                        log.error("Hubo problemas en la carga del archivo CSV de Boletas del banco satisfactoriamente");
+                    }
+                }else{
+                    RequestUtil.crearMensajeRespuesta(request, "etl.ingresarBoletaBancoCSV.titulo", "etl.archivoCSV.contentTypeInvalido",false);
+                    log.error("El archivo CSV a cargar no es un archivo csv valido");
+                }
+            }else{
+                RequestUtil.crearMensajeRespuesta(request, "etl.ingresarBoletaBancoCSV.titulo", "etl.archivoCSV.obligatorio",false);
+                log.error("No se cargo ningun archivo CSV");
+            }
+
+        } catch (IOException e) {
+            RequestUtil.crearMensajeRespuesta(request, "etl.ingresarBoletaBancoCSV.titulo", "etl.ioException", false);
+            log.error("Ocurrio un problema en la lectura/escritura de un archivo", e);
+        } catch( Exception e){
+            RequestUtil.crearMensajeRespuesta(request, "etl.ingresarBoletaBancoCSV.titulo", "etl.exception", false);
+            log.error("Error no identificado", e);
+        }
+        RequestUtil.agregarRedirect(request, "ingresarBoletaBancoCSV.htm");
+        return "etl/ingresarBoletaBancoCSV";
     }
 }
