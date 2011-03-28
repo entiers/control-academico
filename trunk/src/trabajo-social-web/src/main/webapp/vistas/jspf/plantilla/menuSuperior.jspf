@@ -246,7 +246,7 @@
     </sec:authorize>
 
     <%-- Menú de carga de etl --%>
-    <sec:authorize access="hasAnyRole('ROLE_CARGAR_ARCHIVO_REGISTRO_ESTADISTICA')">
+    <sec:authorize access="hasAnyRole('ROLE_CARGAR_ARCHIVO_REGISTRO_ESTADISTICA','ROLE_CARGA_BOLETA_BANCO')">
         <li>
             <a href="#">
                 <span class="l"></span><span class="r"></span><span class="t">
@@ -256,6 +256,11 @@
                 <%--ETL del archivo de registro y estadística--%>
                 <sec:authorize access="hasRole('ROLE_CARGAR_ARCHIVO_REGISTRO_ESTADISTICA')">
                     <li><a href="ingresarRegistroCSV.htm"><fmt:message key="etl.ingresarRegistroCSV.titulo"/></a></li>
+                </sec:authorize>
+
+                <%--ETL del archivo de boletas del banco --%>
+                <sec:authorize access="hasRole('ROLE_CARGA_BOLETA_BANCO')">
+                    <li><a href="ingresarBoletaBancoCSV.htm"><fmt:message key="etl.ingresarBoletaBancoCSV.titulo"/></a></li>
                 </sec:authorize>
             </ul>
         </li>

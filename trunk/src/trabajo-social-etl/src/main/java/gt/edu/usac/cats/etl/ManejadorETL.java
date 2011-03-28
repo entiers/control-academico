@@ -22,23 +22,23 @@ public abstract class ManejadorETL {
 
 //______________________________________________________________________________
     /**
-     * Método abstracto que obliga a implementarlo en las clases hijas.  Su función
+     * Metodo abstracto que obliga a implementarlo en las clases hijas.  Su funcion
      * prinicipal es llamar a las clases de los diferentes procesos ETL que existen.
      *
      * @return Arreglo bidimensional de cadenas que retornan lo ocurrido en la
-     * realización del proceso.
+     * realizacion del proceso.
      * 
      * @throws IOException
      */
     protected abstract String [][] realizarETL();
 //______________________________________________________________________________
     /**
-     * Método que se encarga de la apertura del socket para realizar el ETL Y se
-     * hace el llamado al método <b>realizarETL</b> que es implementado en las clases
+     * Mï¿½todo que se encarga de la apertura del socket para realizar el ETL Y se
+     * hace el llamado al mï¿½todo <b>realizarETL</b> que es implementado en las clases
      * hijas.
      *
      * @return De tipo <b>String [][]</b>. Arreglo bidimensional de cadenas que
-     * retornan lo ocurrido en la realización del proceso.
+     * retornan lo ocurrido en la realizaciï¿½n del proceso.
      *
      * @throws IOException
      */

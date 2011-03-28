@@ -70,6 +70,7 @@
         <intercept-url pattern="/asignarPerfilUsuario.htm" access="hasRole('ROLE_ASIGNAR_PERFIL_USUARIO')"/>
 
         <intercept-url pattern="/ingresarRegistroCSV.htm" access="hasRole('ROLE_CARGAR_ARCHIVO_REGISTRO_ESTADISTICA')"/>
+        <intercept-url pattern="/ingresarBoletaBancoCSV.htm" access="hasRole('ROLE_CARGA_BOLETA_BANCO')"/>
 
         <intercept-url pattern="/modificarDatosPersonales.htm" access="hasRole('ROLE_USUARIO_REGISTRADO')"/>
         <intercept-url pattern="/modificarContrasenia.htm" access="hasRole('ROLE_USUARIO_REGISTRADO')"/>

@@ -23,7 +23,7 @@ package gt.edu.usac.cats.enums;
 public enum TipoRubro {
     VACACIONES(1,"Escuela de vacaciones"),
     PRIMERA_RETRASADA(2,"Primera retrasada"),
-    SEGUNDA_RETRASADA(5,"Segunda retrasada");
+    SEGUNDA_RETRASADA(3,"Segunda retrasada");
 //______________________________________________________________________________
     private int id;
     private String descripcion;
