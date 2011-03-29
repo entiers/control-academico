@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping(value = "cambiarAsignacionEstudianteCarrera.htm")
 public class ControladorCambiarAsignacionEstudianteCarrera extends ControladorAbstractoAsignacionEstudianteCarrera {
     /***/
-    public static String TITULO_MENSAJE = "cambiarAsignacionEstudianteCarrera.htm";
+    public static String TITULO_MENSAJE = "cambiarAsignacionEstudianteCarrera.titulo";
 
     /***/
     private static Logger log = Logger.getLogger(ControladorCambiarAsignacionEstudianteCarrera.class);
@@ -111,7 +111,7 @@ public class ControladorCambiarAsignacionEstudianteCarrera extends ControladorAb
             }
         } else {
             this.agregarAtributosDefaultCambiarAsignacion(modelo,
-                    new WrapperAgregarAsignacionEstudianteCarrera(),
+                    wrapperAgregarAsignacionEstudianteCarrera,
                     false);
         }
         return "asignacionEstudianteCarrera/cambiarAsignacionEstudianteCarrera";

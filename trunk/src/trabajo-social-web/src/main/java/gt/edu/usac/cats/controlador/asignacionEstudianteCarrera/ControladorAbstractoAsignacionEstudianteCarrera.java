@@ -46,6 +46,9 @@ public abstract class ControladorAbstractoAsignacionEstudianteCarrera {
     private List<AsignacionEstudianteCarrera> listadoAsignacionEstudianteCarrera;
 //______________________________________________________________________________
     /***/
+    private List<AsignacionEstudianteCarrera> listadoAsignacionEstudianteCarreraNoAsignadas;
+//______________________________________________________________________________
+    /***/
     private List<Situacion> listadoSituaciones;
 //______________________________________________________________________________
     /***/
@@ -81,6 +84,9 @@ public abstract class ControladorAbstractoAsignacionEstudianteCarrera {
                     this.servicioAsignacionEstudianteCarreraImpl
                     .getAsignacionEstudianteCarrera(estudiante, true);
 
+            this.listadoAsignacionEstudianteCarreraNoAsignadas =
+                    this.servicioAsignacionEstudianteCarreraImpl
+                    .getAsignacionEstudianteCarrera(estudiante, false);
 
             this.agregarAtributosDeHistorial();
 
@@ -92,12 +98,12 @@ public abstract class ControladorAbstractoAsignacionEstudianteCarrera {
         modelo.addAttribute("autoOpenDialogModificar", autoOpenDialogModificar);
         modelo.addAttribute("estudiante", this.estudiante);
         modelo.addAttribute("listadoAsignacionEstudianteCarrera", this.listadoAsignacionEstudianteCarrera);
-
+        modelo.addAttribute("listadoAsignacionEstudianteCarreraNoAsignadas", this.listadoAsignacionEstudianteCarreraNoAsignadas);
+        modelo.addAttribute("wrapperAgregarAsignacionEstudianteCarrera", wrapperAgregarAsignacionEstudianteCarrera);
+        modelo.addAttribute("listadoCarrerasNoAsignadas", this.listadoCarrerasNoAsignadas);
+        modelo.addAttribute("listadoSituaciones", this.listadoSituaciones);
+        modelo.addAttribute("listadoSemestres", this.listadoSemestres);
         if (this.listadoAsignacionEstudianteCarrera == null || this.listadoAsignacionEstudianteCarrera.size() < 2) {
-            modelo.addAttribute("wrapperAgregarAsignacionEstudianteCarrera", wrapperAgregarAsignacionEstudianteCarrera);
-            modelo.addAttribute("listadoCarrerasNoAsignadas", this.listadoCarrerasNoAsignadas);
-            modelo.addAttribute("listadoSituaciones", this.listadoSituaciones);
-            modelo.addAttribute("listadoSemestres", this.listadoSemestres);
             modelo.addAttribute("habilitarFormulario", true);
         }
         
