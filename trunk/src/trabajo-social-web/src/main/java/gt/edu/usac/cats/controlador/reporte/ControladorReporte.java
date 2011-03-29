@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package gt.edu.usac.cats.controlador.reporte;
 
 import gt.edu.usac.cats.dominio.conf.Reporte;
@@ -34,7 +33,6 @@ import org.springframework.web.context.WebApplicationContext;
  * @author Mario Batres
  * @version 1.0
  */
-
 @Controller
 public class ControladorReporte {
 
@@ -42,13 +40,13 @@ public class ControladorReporte {
     @Resource
     private ServicioGeneral servicioGeneralImpl;
 //______________________________________________________________________________
-    private void crearReporte(ControlReporte controlReporte, Map parametros
-            , HttpServletResponse response  ) throws JRException, SQLException, IOException, URISyntaxException{
+
+    private void crearReporte(ControlReporte controlReporte, Map parametros, HttpServletResponse response) throws JRException, SQLException, IOException, URISyntaxException {
 
         Reporte reporte = this.servicioGeneralImpl.cargarEntidadPorID(Reporte.class, controlReporte);
 
         String jrxml = this.getClass().getResource("listado/" + reporte.getArchivoJrxml() + ".jrxml").toURI().getPath();
-        
+
         parametros.put("SUBREPORT_DIR", this.getClass().getResource("listado").toURI().getPath());
 
         JasperReport jasperReport = JasperCompileManager.compileReport(jrxml);
@@ -56,43 +54,43 @@ public class ControladorReporte {
         DriverManagerDataSource dataSource = (DriverManagerDataSource) applicationContext.getBean("dataSource");
 
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parametros, dataSource.getConnection());
-        
+
         ByteArrayOutputStream output = new ByteArrayOutputStream();
         JasperExportManager.exportReportToPdfStream(jasperPrint, output);
 
-        response.setHeader("Content-Disposition", "filename=\"" + reporte.getNombrePdf() +  ".pdf\"");
+        response.setHeader("Content-Disposition", "filename=\"" + reporte.getNombrePdf() + ".pdf\"");
         response.setContentType("application/pdf");
         output.writeTo(response.getOutputStream());
         response.getOutputStream().flush();
     }
 
-
-    @RequestMapping(value="generarReporte.htm", method=RequestMethod.POST)
+    @RequestMapping(value = "generarReporte.htm", method = RequestMethod.POST)
     public void generarReporte(String nombreControlReporte,
-            String [] nombreParametro, String [] valorParametro, String [] tipoParametro,
+            String[] nombreParametro, String[] valorParametro, String[] tipoParametro,
             HttpServletResponse response)
-     throws JRException, SQLException, IOException, ClassNotFoundException, URISyntaxException{
+            throws JRException, SQLException, IOException, ClassNotFoundException, URISyntaxException {
 
         Map parametros = this.obtenerParametrosPorDefault();
 
-        for(int i = 0; i < nombreParametro.length; i++){
-            if(tipoParametro[i].equalsIgnoreCase("integer")){
-                parametros.put(nombreParametro[i], new Integer (Integer.parseInt(valorParametro[i].toString())) );
-            }else{
-                if(valorParametro[i].equalsIgnoreCase("boolean")){
-                    parametros.put(nombreParametro[i], Boolean.parseBoolean(valorParametro[i].toString()));
-                }else{
-                    parametros.put(nombreParametro[i], valorParametro[i].toString());
+        if (nombreParametro != null) {
+            for (int i = 0; i < nombreParametro.length; i++) {
+                if (tipoParametro[i].equalsIgnoreCase("integer")) {
+                    parametros.put(nombreParametro[i], new Integer(Integer.parseInt(valorParametro[i].toString())));
+                } else {
+                    if (valorParametro[i].equalsIgnoreCase("boolean")) {
+                        parametros.put(nombreParametro[i], Boolean.parseBoolean(valorParametro[i].toString()));
+                    } else {
+                        parametros.put(nombreParametro[i], valorParametro[i].toString());
+                    }
                 }
             }
-        }                
+        }
         ControlReporte controlReporte = ControlReporte.valueOf(nombreControlReporte);
-        
+
         this.crearReporte(controlReporte, parametros, response);
     }
 
-
-    private Map obtenerParametrosPorDefault(){
+    private Map obtenerParametrosPorDefault() {
         return new HashMap();
     }
 }
