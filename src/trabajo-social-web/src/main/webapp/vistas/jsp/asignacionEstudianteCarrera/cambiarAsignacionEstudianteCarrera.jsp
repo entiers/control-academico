@@ -23,16 +23,24 @@
 
         <%@include file="../../jspf/formularios/informacion/formularioInformacionEstudiante.jspf" %>
 
-        
+        <fieldset>
+            <legend></legend>
+            <div id="divCampos">
+            <label>Carrera Antigua:</label> <span>${asignacionEstudianteCarrera.carrera.codigoNombre}</span>
+        </div>
+        </fieldset>
 
-        <form:form id="form"
-                   modelAttribute="wrapperAgregarAsignacionEstudianteCarrera" method="POST"
-                   action="agregarAsignacionEstudianteCarrera.htm">
+        <fieldset>
+            <legend></legend>
+            <form:form id="form"
+                       modelAttribute="wrapperAgregarAsignacionEstudianteCarrera" method="POST"
+                       action="cambiarAsignacionEstudianteCarrera.htm">
 
-            <%@include file="../../jspf/formularios/formularioAsignacionEstudianteCarrera.jspf" %>
+                <%@include file="../../jspf/formularios/formularioAsignacionEstudianteCarrera.jspf" %>
 
-            <input type="submit" value="<fmt:message key="btnAceptar"/>" />
-        </form:form>
+                <input type="submit" value="<fmt:message key="btnAceptar"/>" />
+            </form:form>
+        </fieldset>
 
         <%-- fragmento que muestra como mensaje popup el resultado de las operaciones --%>
         <%@include file="../../jspf/plantilla/popupMensaje.jspf" %>

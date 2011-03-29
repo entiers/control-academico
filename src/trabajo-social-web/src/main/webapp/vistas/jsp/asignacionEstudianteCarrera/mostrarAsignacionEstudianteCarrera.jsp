@@ -113,6 +113,20 @@
             </div>
         </c:if>
 
+        <center>
+            <fieldset>
+                <legend><fmt:message key="mostrarAsignacionEstudianteCarrera.listadoCarrerasNoAsignadas" /></legend>
+                <display:table class="ui-widget ui-widget-content" name="listadoAsignacionEstudianteCarreraNoAsignadas" id="asignacionEstudianteCarrera">
+                    <display:column property="carrera.codigo" titleKey="agregarCarrera.codigo" style="text-align: center;"  />
+                    <display:column property="carrera.nombre" titleKey="agregarCarrera.nombre"  />
+
+                    <display:column titleKey="asignacionEstudianteCarrera.fechaCierre"  style="text-align:center;">
+                        <fmt:formatDate value="${asignacionEstudianteCarrera.fechaCierre}" pattern="dd-MM-yyyy" var="fechaCierre" />
+                        ${fechaCierre}
+                    </display:column>
+                </display:table>
+            </fieldset>
+        </center>
 
         <div style="margin: 20px 0 0 0; ">
             <a href="buscarEstudiante.htm"><fmt:message key="mostrarAsignacionEstudianteCarrera.regresar"/></a>

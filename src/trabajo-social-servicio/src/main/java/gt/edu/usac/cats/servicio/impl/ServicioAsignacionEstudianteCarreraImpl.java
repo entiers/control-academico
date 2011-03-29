@@ -107,7 +107,7 @@ public class ServicioAsignacionEstudianteCarreraImpl extends ServicioGeneralImpl
 
         this.agregarAsignacionEstudianteCarrera(asignacionEstudianteCarreraNueva, historialAsignacionEstudianteCarrera);
 
-        this.daoGeneralImpl.save(asignacionEstudianteCarreraOriginal);
+        this.daoGeneralImpl.update(asignacionEstudianteCarreraOriginal);
 
     }
 }
