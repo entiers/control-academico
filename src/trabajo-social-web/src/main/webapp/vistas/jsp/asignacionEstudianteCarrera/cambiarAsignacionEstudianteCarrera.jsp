@@ -26,8 +26,9 @@
         <fieldset>
             <legend></legend>
             <div id="divCampos">
-            <label>Carrera Antigua:</label> <span>${asignacionEstudianteCarrera.carrera.codigoNombre}</span>
-        </div>
+                <label><fmt:message key="mostrarAsignacionEstudianteCarrera.carreraActual"/>:</label>
+                <span>${asignacionEstudianteCarrera.carrera.codigoNombre}</span>
+            </div>
         </fieldset>
 
         <fieldset>

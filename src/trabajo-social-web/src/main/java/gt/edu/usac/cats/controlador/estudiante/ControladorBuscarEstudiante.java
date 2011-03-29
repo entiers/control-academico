@@ -7,6 +7,7 @@ package gt.edu.usac.cats.controlador.estudiante;
 
 import gt.edu.usac.cats.dominio.Estudiante;
 import gt.edu.usac.cats.dominio.busqueda.DatosBusquedaEstudiante;
+import gt.edu.usac.cats.enums.ControlReporte;
 import gt.edu.usac.cats.servicio.ServicioEstudiante;
 import gt.edu.usac.cats.util.RequestUtil;
 import gt.edu.usac.cats.util.Mensajes;
@@ -114,6 +115,7 @@ public class ControladorBuscarEstudiante {
         modelo.addAttribute("listadoEstudiantes", this.listadoEstudiantes);
         modelo.addAttribute("datosBusquedaEstudiante", this.datosBusquedaEstudiante);
 
+        modelo.addAttribute("reporteListadoCarreraSimultaneas",  ControlReporte.LISTADO_CARRERAS_SIMULTANEAS);
         return "estudiante/buscarEstudiante";
     }
 //______________________________________________________________________________
@@ -159,6 +161,7 @@ public class ControladorBuscarEstudiante {
 
         modelo.addAttribute("listadoEstudiantes", this.listadoEstudiantes);
         modelo.addAttribute("datosBusquedaEstudiante", this.datosBusquedaEstudiante);
+        modelo.addAttribute("reporteListadoCarreraSimultaneas",  ControlReporte.LISTADO_CARRERAS_SIMULTANEAS);
         //this.datosBusquedaEstudiante.inicializarPrimerRegistro();
         return "estudiante/buscarEstudiante";
     }

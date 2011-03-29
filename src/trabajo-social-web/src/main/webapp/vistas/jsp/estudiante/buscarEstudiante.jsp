@@ -23,6 +23,19 @@
     <body>
         <h1><fmt:message key="buscarEstudiante.titulo"/></h1>
 
+        <div class="contenedor-reporte-arriba">
+            <fieldset>
+                <legend></legend>
+                <div>
+                    <form:form  id="formVerReporte" action="generarReporte.htm" method="POST" target="_BLANK">
+                        <input type="hidden" name="nombreControlReporte" value="${reporteListadoCarreraSimultaneas}" />
+
+                        <input type="submit" value="<fmt:message key="estudiante.imprimir.simultaneas" />" />
+                    </form:form>
+                </div>
+            </fieldset>
+        </div>
+
         <%-- formulario para realizar busquedas --%>
         <form:form modelAttribute="datosBusquedaEstudiante" method="post" action="buscarEstudiante.htm">
             <fieldset>
