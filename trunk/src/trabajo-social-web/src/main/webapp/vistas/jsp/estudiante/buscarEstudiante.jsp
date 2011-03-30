@@ -18,21 +18,59 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title><fmt:message key="buscarEstudiante.titulo"/></title>
-        <%@include file="../../jspf/scripts/scriptEstudiante.jspf" %>        
+        <%@include file="../../jspf/scripts/scriptEstudiante.jspf" %>
+        <%@include file="../../jspf/scripts/scriptPopupReportes.jspf" %>
+        <script type="text/javascript">
+            var validar = function(){
+                if($("#valorParametro").attr("value") != ""){
+                    return true;
+                }
+
+                $("#errorFormulario").dialog("open");
+                return false;
+            }
+        </script>
     </head>
     <body>
         <h1><fmt:message key="buscarEstudiante.titulo"/></h1>
 
         <div class="contenedor-reporte-arriba">
             <fieldset>
-                <legend></legend>
-                <div>
-                    <form:form  id="formVerReporte" action="generarReporte.htm" method="POST" target="_BLANK">
+                <legend><fmt:message key="legend.reportes" /></legend>
+                <div style="float:left;">
+                    <form:form action="generarReporte.htm" method="POST" target="_BLANK">
                         <input type="hidden" name="nombreControlReporte" value="${reporteListadoCarreraSimultaneas}" />
 
                         <input type="submit" value="<fmt:message key="estudiante.imprimir.simultaneas" />" />
                     </form:form>
                 </div>
+
+                <div style="float:left;">
+                    <div id="verReporte" title="<fmt:message key="estudiante.reporte.asignacionPorCarrera.title" />">
+                        <div id="errorFormulario" title="Error">
+                            <fmt:message key="estudiante.reporte.asignacionPorCarrera.error" />
+                        </div>
+
+                        <form:form id="formVerReporte" action="generarReporte.htm" method="POST" target="_BLANK">
+                            <input type="hidden" name="nombreControlReporte" value="${reporteAsignacionPorCarrera}" />
+                            <div id="divCampos">
+                                <input type="hidden" name="nombreParametro" value="ID_CARRERA" />
+
+                                <label><fmt:message key="asignacionEstudianteCarrera.carrera"/>: *</label>
+                                <select name="valorParametro" id="valorParametro" style="width: 250px;" >
+                                    <option value="">Seleccionar un valor</option>
+                                    <c:forEach items="${listadoCarreras}" var="carrera">
+                                        <option value="${carrera.idCarrera}">${carrera.codigoNombre}</option>>
+                                    </c:forEach>
+                                </select>
+                                <input type="hidden" name="tipoParametro" value="integer" />
+                            </div>
+                        </form:form>
+                    </div>
+                    <button id="botonVerReporte"> <fmt:message key="estudiante.imprimir.asignacionPorCarrera" /></button>
+                </div>
+
+
             </fieldset>
         </div>
 
