@@ -48,27 +48,33 @@
                         ${fechaCierre}
                     </display:column>
 
-                    <sec:authorize access="hasAnyRole('ROLE_MOSTRAR_PENSUM_ESTUDIANTE_CARRERA')">
+                    <sec:authorize access="hasAnyRole('ROLE_MOSTRAR_PENSUM_ESTUDIANTE_CARRERA', 'ROLE_MOSTRAR_HISTORIAL_ASIGNACION_ESTUDIANTE_CARRERA', 'ROLE_MODIFICAR_ASIGNACION_ESTUDIANTE_CARRERA', 'ROLE_CAMBIAR_ASIGNACION_ESTUDIANTE_CARRERA')">
                         <display:column titleKey="acciones" style="text-align:center;" >
                             <sec:authorize access="hasRole('ROLE_MOSTRAR_PENSUM_ESTUDIANTE_CARRERA')">
                                 <a href="mostrarPensumEstudianteCarrera.htm?idAsignacionEstudianteCarrera=${asignacionEstudianteCarrera.idAsignacionEstudianteCarrera}">
                                     <fmt:message key="mostrarPensumEstudianteCarrera.link"/>
                                 </a>
                             </sec:authorize>
-                            <br/>
-                            <a href="mostrarHistorialAsignacionEstudianteCarrera.htm?idAsignacionEstudianteCarrera=${asignacionEstudianteCarrera.idAsignacionEstudianteCarrera}">
-                                <fmt:message key="mostrarHistorialAsignacionEstudianteCarrera.link"/>
-                            </a>
+                            <sec:authorize access="hasRole('ROLE_MOSTRAR_HISTORIAL_ASIGNACION_ESTUDIANTE_CARRERA')">
+                                <br/>
+                                <a href="mostrarHistorialAsignacionEstudianteCarrera.htm?idAsignacionEstudianteCarrera=${asignacionEstudianteCarrera.idAsignacionEstudianteCarrera}">
+                                    <fmt:message key="mostrarHistorialAsignacionEstudianteCarrera.link"/>
+                                </a>
+                            </sec:authorize>
 
-                            <br/>
-                            <a class="a-acciones" onclick="modificar(${asignacionEstudianteCarrera.idAsignacionEstudianteCarrera}, '${fechaCierre}')">
-                                <fmt:message key="asignacionEstudianteCarrera.boton.modificar"/>
-                            </a>
+                            <sec:authorize access="hasRole('ROLE_MODIFICAR_ASIGNACION_ESTUDIANTE_CARRERA')">
+                                <br/>
+                                <a class="a-acciones" onclick="modificar(${asignacionEstudianteCarrera.idAsignacionEstudianteCarrera}, '${fechaCierre}')">
+                                    <fmt:message key="asignacionEstudianteCarrera.boton.modificar"/>
+                                </a>
+                            </sec:authorize>
 
-                            <br/>
-                            <a href="cambiarAsignacionEstudianteCarrera.htm?idAsignacionEstudianteCarrera=${asignacionEstudianteCarrera.idAsignacionEstudianteCarrera}">
-                                <fmt:message key="cambiarAsignacionEstudianteCarrera.link"/>
-                            </a>
+                            <sec:authorize access="hasRole('ROLE_CAMBIAR_ASIGNACION_ESTUDIANTE_CARRERA')">
+                                <br/>
+                                <a href="cambiarAsignacionEstudianteCarrera.htm?idAsignacionEstudianteCarrera=${asignacionEstudianteCarrera.idAsignacionEstudianteCarrera}">
+                                    <fmt:message key="cambiarAsignacionEstudianteCarrera.link"/>
+                                </a>
+                            </sec:authorize>
                         </display:column>
                     </sec:authorize>
 
@@ -78,41 +84,44 @@
         </center>
 
 
+        <sec:authorize access="hasRole('ROLE_AGREGAR_ASIGNACION_ESTUDIANTE_CARRERA')">
+            <c:if test="${habilitarFormulario}">
+                <div id="divFormularioPopup" title="<fmt:message key='agregarAsignacionEstudianteCarrera.titulo' />">
+                    <form:form id="form"
+                               modelAttribute="wrapperAgregarAsignacionEstudianteCarrera" method="POST"
+                               action="agregarAsignacionEstudianteCarrera.htm">
 
-        <c:if test="${habilitarFormulario}">
-            <div id="divFormularioPopup" title="<fmt:message key='agregarAsignacionEstudianteCarrera.titulo' />">
-                <form:form id="form"
-                           modelAttribute="wrapperAgregarAsignacionEstudianteCarrera" method="POST"
-                           action="agregarAsignacionEstudianteCarrera.htm">
+                        <%@include file="../../jspf/formularios/formularioAsignacionEstudianteCarrera.jspf" %>
+                    </form:form>
+                </div>
+                <center style="margin-top: 20px;">
+                    <button id="botonHabilitarFormularioPopup"><fmt:message key="asignacionEstudianteCarrera.boton.agregarCarrera" /></button>
+                </center>
+            </c:if>
+        </sec:authorize>
 
-                    <%@include file="../../jspf/formularios/formularioAsignacionEstudianteCarrera.jspf" %>
-                </form:form>
-            </div>
-            <center style="margin-top: 20px;">
-                <button id="botonHabilitarFormularioPopup"><fmt:message key="asignacionEstudianteCarrera.boton.agregarCarrera" /></button>
-            </center>
-        </c:if>
+        <sec:authorize access="hasRole('ROLE_MODIFICAR_ASIGNACION_ESTUDIANTE_CARRERA')">
+            <c:if test="${ not empty wrapperModificarAsignacionEstudianteCarrera}">
+                <div id="divFormularioModificarPopup" title="<fmt:message key='modificarAsignacionEstudianteCarrera.titulo'/>" >
+                    <form:form id="formModificar"
+                               modelAttribute="wrapperModificarAsignacionEstudianteCarrera" method="POST"
+                               action="modificarAsignacionEstudianteCarrera.htm">
+                        <form:hidden id="inputIdAsignacionEstudianteCarrera"
+                                     path="idAsignacionEstudianteCarrera" />
+                        <form:errors path="idAsignacionEstudianteCarrera" cssClass="claseError claseErrorModificar" />
 
-        <c:if test="${ not empty wrapperModificarAsignacionEstudianteCarrera}">
-            <div id="divFormularioModificarPopup" title="<fmt:message key='modificarAsignacionEstudianteCarrera.titulo'/>" >
-                <form:form id="formModificar"
-                           modelAttribute="wrapperModificarAsignacionEstudianteCarrera" method="POST"
-                           action="modificarAsignacionEstudianteCarrera.htm">
-                    <form:hidden id="inputIdAsignacionEstudianteCarrera"
-                                 path="idAsignacionEstudianteCarrera" />
-                    <form:errors path="idAsignacionEstudianteCarrera" cssClass="claseError claseErrorModificar" />
-
-                    <div id="divCampos">
-                        <form:label for="fechaCierre" path="fechaCierre">
-                            <fmt:message key="asignacionEstudianteCarrera.fechaCierre"/>:
-                        </form:label>
-                        <form:input id="inputFechaCierre" path="fechaCierre" cssStyle="width: 250px;" cssClass="datepicker"/>
-                        <form:errors path="fechaCierre" cssClass="claseError" />
-                    </div>                    
-                </form:form>
-            </div>
-        </c:if>
-
+                        <div id="divCampos">
+                            <form:label for="fechaCierre" path="fechaCierre">
+                                <fmt:message key="asignacionEstudianteCarrera.fechaCierre"/>:
+                            </form:label>
+                            <form:input id="inputFechaCierre" path="fechaCierre" cssStyle="width: 250px;" cssClass="datepicker"/>
+                            <form:errors path="fechaCierre" cssClass="claseError" />
+                        </div>
+                    </form:form>
+                </div>
+            </c:if>
+        </sec:authorize>
+                
         <center>
             <fieldset>
                 <legend><fmt:message key="mostrarAsignacionEstudianteCarrera.listadoCarrerasNoAsignadas" /></legend>

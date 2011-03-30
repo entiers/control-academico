@@ -104,6 +104,15 @@
         <intercept-url pattern="/buscarDocumento.htm" access="hasRole('ROLE_BUSCAR_DOCUMENTO')" />
         <intercept-url pattern="/editarDocumento.htm" access="hasRole('ROLE_EDITAR_DOCUMENTO')" />
 
+        <intercept-url pattern="/mostrarAsignacionEstudianteCarrera.htm" access="hasRole('ROLE_MOSTRAR_ASIGNACION_ESTUDIANTE_CARRERA')" />
+        <intercept-url pattern="/mostrarHistorialAsignacionEstudianteCarrera.htm" access="hasRole('ROLE_MOSTRAR_HISTORIAL_ASIGNACION_ESTUDIANTE_CARRERA')" />
+        <intercept-url pattern="/modificarAsignacionEstudianteCarrera.htm" access="hasRole('ROLE_MODIFICAR_ASIGNACION_ESTUDIANTE_CARRERA')" />
+        <intercept-url pattern="/cambiarAsignacionEstudianteCarrera.htm" access="hasRole('ROLE_CAMBIAR_ASIGNACION_ESTUDIANTE_CARRERA')" />
+        <intercept-url pattern="/agregarAsignacionEstudianteCarrera.htm" access="hasRole('ROLE_AGREGAR_ASIGNACION_ESTUDIANTE_CARRERA')" />
+        <intercept-url pattern="/agregarHistorialAsignacionEstudianteCarrera.htm" access="hasRole('ROLE_AGREGAR_HISTORIAL_ASIGNACION_ESTUDIANTE_CARRERA')" />
+        <intercept-url pattern="/modificarHistorialAsignacionEstudianteCarrera.htm" access="hasRole('ROLE_MODIFICAR_HISTORIAL_ASIGNACION_ESTUDIANTE_CARRERA')" />
+        <intercept-url pattern="/eliminarHistorialAsignacionEstudianteCarrera.htm" access="hasRole('ROLE_ELIMINAR_HISTORIAL_ASIGNACION_ESTUDIANTE_CARRERA')" />
+
         <!-- se especifica que pagina contiene el formulario de login -->
         <form-login login-page='/login.htm' default-target-url='/index.htm' always-use-default-target='true'/>
         

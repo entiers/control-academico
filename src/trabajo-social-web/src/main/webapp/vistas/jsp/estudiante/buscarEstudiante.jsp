@@ -1,7 +1,7 @@
 <%--
     Document   : buscarEstudiante
     Created on : 3/05/2010, 11:34:08 AM
-    Author     : Daniel Castillo
+    Author     : Daniel Castillo, Mario Batres
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -34,45 +34,49 @@
     <body>
         <h1><fmt:message key="buscarEstudiante.titulo"/></h1>
 
-        <div class="contenedor-reporte-arriba">
-            <fieldset>
-                <legend><fmt:message key="legend.reportes" /></legend>
-                <div style="float:left;">
-                    <form:form action="generarReporte.htm" method="POST" target="_BLANK">
-                        <input type="hidden" name="nombreControlReporte" value="${reporteListadoCarreraSimultaneas}" />
+        <sec:authorize access="hasAnyRole('ROLE_REPORTE_LISTADO_CARRERA_SIMULTANEAS', 'ROLE_REPORTE_LISTADO_ASIGNACION_ESTUDIANTE_POR_CARRERA')">
+            <div class="contenedor-reporte-arriba">
+                <fieldset>
+                    <legend><fmt:message key="legend.reportes" /></legend>
+                    <sec:authorize access="hasRole('ROLE_REPORTE_LISTADO_CARRERA_SIMULTANEAS')">
+                        <div style="float:left;">
+                            <form:form action="generarReporte.htm" method="POST" target="_BLANK">
+                                <input type="hidden" name="nombreControlReporte" value="${reporteListadoCarreraSimultaneas}" />
 
-                        <input type="submit" value="<fmt:message key="estudiante.imprimir.simultaneas" />" />
-                    </form:form>
-                </div>
-
-                <div style="float:left;">
-                    <div id="verReporte" title="<fmt:message key="estudiante.reporte.asignacionPorCarrera.title" />">
-                        <div id="errorFormulario" title="Error">
-                            <fmt:message key="estudiante.reporte.asignacionPorCarrera.error" />
+                                <input type="submit" value="<fmt:message key="estudiante.imprimir.simultaneas" />" />
+                            </form:form>
                         </div>
+                    </sec:authorize>
 
-                        <form:form id="formVerReporte" action="generarReporte.htm" method="POST" target="_BLANK">
-                            <input type="hidden" name="nombreControlReporte" value="${reporteAsignacionPorCarrera}" />
-                            <div id="divCampos">
-                                <input type="hidden" name="nombreParametro" value="ID_CARRERA" />
+                    <sec:authorize access="hasRole('ROLE_REPORTE_LISTADO_ASIGNACION_ESTUDIANTE_POR_CARRERA')">
+                        <div style="float:left;">
+                            <div id="verReporte" title="<fmt:message key="estudiante.reporte.asignacionPorCarrera.title" />">
+                                <div id="errorFormulario" title="Error">
+                                    <fmt:message key="estudiante.reporte.asignacionPorCarrera.error" />
+                                </div>
 
-                                <label><fmt:message key="asignacionEstudianteCarrera.carrera"/>: *</label>
-                                <select name="valorParametro" id="valorParametro" style="width: 250px;" >
-                                    <option value="">Seleccionar un valor</option>
-                                    <c:forEach items="${listadoCarreras}" var="carrera">
-                                        <option value="${carrera.idCarrera}">${carrera.codigoNombre}</option>>
-                                    </c:forEach>
-                                </select>
-                                <input type="hidden" name="tipoParametro" value="integer" />
+                                <form:form id="formVerReporte" action="generarReporte.htm" method="POST" target="_BLANK">
+                                    <input type="hidden" name="nombreControlReporte" value="${reporteAsignacionPorCarrera}" />
+                                    <div id="divCampos">
+                                        <input type="hidden" name="nombreParametro" value="ID_CARRERA" />
+
+                                        <label><fmt:message key="asignacionEstudianteCarrera.carrera"/>: *</label>
+                                        <select name="valorParametro" id="valorParametro" style="width: 250px;" >
+                                            <option value="">Seleccionar un valor</option>
+                                            <c:forEach items="${listadoCarreras}" var="carrera">
+                                                <option value="${carrera.idCarrera}">${carrera.codigoNombre}</option>>
+                                            </c:forEach>
+                                        </select>
+                                        <input type="hidden" name="tipoParametro" value="integer" />
+                                    </div>
+                                </form:form>
                             </div>
-                        </form:form>
-                    </div>
-                    <button id="botonVerReporte"> <fmt:message key="estudiante.imprimir.asignacionPorCarrera" /></button>
-                </div>
-
-
-            </fieldset>
-        </div>
+                            <button id="botonVerReporte"> <fmt:message key="estudiante.imprimir.asignacionPorCarrera" /></button>
+                        </div>
+                    </sec:authorize>
+                </fieldset>
+            </div>
+        </sec:authorize>
 
         <%-- formulario para realizar busquedas --%>
         <form:form modelAttribute="datosBusquedaEstudiante" method="post" action="buscarEstudiante.htm">
