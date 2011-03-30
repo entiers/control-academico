@@ -46,7 +46,7 @@
                         <input type="hidden" name="nombreParametro" value="ID_SEMESTRE" />
 
                         <label><fmt:message key="agregarHorario.semestre"/>: *</label>
-                        <select name="valorParametro" id="valorParametro">
+                        <select name="valorParametro" id="valorParametro" style="width: 250px;">
                             <option value="">Seleccionar un valor</option>
                             <c:forEach items="${listadoSemestres}" var="semestre">
                                 <option value="${semestre.idSemestre}">${semestre.anyoNumero}</option>>

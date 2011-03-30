@@ -5,6 +5,7 @@
  */
 package gt.edu.usac.cats.controlador.estudiante;
 
+import gt.edu.usac.cats.dominio.Carrera;
 import gt.edu.usac.cats.dominio.Estudiante;
 import gt.edu.usac.cats.dominio.busqueda.DatosBusquedaEstudiante;
 import gt.edu.usac.cats.enums.ControlReporte;
@@ -84,16 +85,26 @@ public class ControladorBuscarEstudiante {
      */
     private DatosBusquedaEstudiante datosBusquedaEstudiante;
 //______________________________________________________________________________
-    /**
-     * <p>Mantiene el total de registros que retorna la busqueda.</p>
-     */
-    private int rowCount;
+
+    private List <Carrera> listadoCarreras;
 //______________________________________________________________________________
 
     /**
      * <p>Constructor de la clase, no realiza ninguna accion.</p>
      */
     public ControladorBuscarEstudiante() {
+    }
+//______________________________________________________________________________
+
+    private void agregarAtributosReportes(Model modelo, boolean realizarBusqueda){
+        modelo.addAttribute("reporteListadoCarreraSimultaneas",  ControlReporte.LISTADO_CARRERAS_SIMULTANEAS);
+        modelo.addAttribute("reporteAsignacionPorCarrera",  ControlReporte.LISTADO_ASIGNACION_POR_CARRERA);
+
+        if(realizarBusqueda){
+            this.listadoCarreras = this.servicioEstudianteImpl.listarEntidad(Carrera.class, true, "codigo");
+        }
+
+        modelo.addAttribute("listadoCarreras", this.listadoCarreras);
     }
 //______________________________________________________________________________
 
@@ -115,7 +126,7 @@ public class ControladorBuscarEstudiante {
         modelo.addAttribute("listadoEstudiantes", this.listadoEstudiantes);
         modelo.addAttribute("datosBusquedaEstudiante", this.datosBusquedaEstudiante);
 
-        modelo.addAttribute("reporteListadoCarreraSimultaneas",  ControlReporte.LISTADO_CARRERAS_SIMULTANEAS);
+        this.agregarAtributosReportes(modelo, true);
         return "estudiante/buscarEstudiante";
     }
 //______________________________________________________________________________
@@ -161,7 +172,7 @@ public class ControladorBuscarEstudiante {
 
         modelo.addAttribute("listadoEstudiantes", this.listadoEstudiantes);
         modelo.addAttribute("datosBusquedaEstudiante", this.datosBusquedaEstudiante);
-        modelo.addAttribute("reporteListadoCarreraSimultaneas",  ControlReporte.LISTADO_CARRERAS_SIMULTANEAS);
+        this.agregarAtributosReportes(modelo, false);
         //this.datosBusquedaEstudiante.inicializarPrimerRegistro();
         return "estudiante/buscarEstudiante";
     }
