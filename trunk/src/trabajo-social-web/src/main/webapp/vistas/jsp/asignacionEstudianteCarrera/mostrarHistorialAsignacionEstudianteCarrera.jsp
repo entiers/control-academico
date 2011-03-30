@@ -51,52 +51,60 @@
                     </display:column>
                     <display:column property="situacion.codigoNombre" titleKey="historialAsignacionEstudianteCarrera.situacion" style="text-align:center;"/>
                     <display:column property="semestre.anyoNumero" titleKey="historialAsignacionEstudianteCarrera.semestre" style="text-align:center;" />
-                    <display:column titleKey="acciones" style="text-align:center;" >
-                        <a class="a-acciones"onclick="modificar(${historialAsignacionEstudianteCarrera.idHistorialAsignacionEstudianteCarrera}, '${fechaInscripcion}', ${historialAsignacionEstudianteCarrera.situacion.idSituacion}, ${historialAsignacionEstudianteCarrera.semestre.idSemestre})">
-                            <fmt:message key="historialAsignacionEstudianteCarrera.boton.modificar" />
-                        </a>
-
-                        <br/>
-                        <a href="eliminarHistorialAsignacionEstudianteCarrera.htm?idHistorialAsignacionEstudianteCarrera=${historialAsignacionEstudianteCarrera.idHistorialAsignacionEstudianteCarrera}&idAsignacionEstudianteCarrera=${asignacionEstudianteCarrera.idAsignacionEstudianteCarrera}">
-                            <fmt:message key="btnBorrar" />
-                        </a>
-                    </display:column>
+                    <sec:authorize access="hasAnyRole('ROLE_MODIFICAR_HISTORIAL_ASIGNACION_ESTUDIANTE_CARRERA', 'ROLE_ELIMINAR_HISTORIAL_ASIGNACION_ESTUDIANTE_CARRERA')">
+                        <display:column titleKey="acciones" style="text-align:center;" >
+                            <sec:authorize access="hasRole('ROLE_MODIFICAR_HISTORIAL_ASIGNACION_ESTUDIANTE_CARRERA')">
+                                <a class="a-acciones"onclick="modificar(${historialAsignacionEstudianteCarrera.idHistorialAsignacionEstudianteCarrera}, '${fechaInscripcion}', ${historialAsignacionEstudianteCarrera.situacion.idSituacion}, ${historialAsignacionEstudianteCarrera.semestre.idSemestre})">
+                                    <fmt:message key="historialAsignacionEstudianteCarrera.boton.modificar" />
+                                </a>
+                            </sec:authorize>
+                            <sec:authorize access="hasRole('ROLE_ELIMINAR_HISTORIAL_ASIGNACION_ESTUDIANTE_CARRERA')">
+                                <br/>
+                                <a href="eliminarHistorialAsignacionEstudianteCarrera.htm?idHistorialAsignacionEstudianteCarrera=${historialAsignacionEstudianteCarrera.idHistorialAsignacionEstudianteCarrera}&idAsignacionEstudianteCarrera=${asignacionEstudianteCarrera.idAsignacionEstudianteCarrera}">
+                                    <fmt:message key="btnBorrar" />
+                                </a>
+                            </sec:authorize>
+                        </display:column>
+                    </sec:authorize>
                 </display:table>
             </fieldset>
         </center>
 
         <%--  Formulario para agregar  --%>
-        <c:if test="${not empty wrapperHistorialAsignacionEstudianteCarrera}">
-            <div id="divFormularioPopup" title="<fmt:message key='agregarHistorialAsignacionEstudianteCarrera.titulo' />">
-                <form:form id="form"
-                           modelAttribute="wrapperHistorialAsignacionEstudianteCarrera" method="POST"
-                           action="agregarHistorialAsignacionEstudianteCarrera.htm">
+        <sec:authorize access="hasRole('ROLE_AGREGAR_HISTORIAL_ASIGNACION_ESTUDIANTE_CARRERA')">
+            <c:if test="${not empty wrapperHistorialAsignacionEstudianteCarrera}">
+                <div id="divFormularioPopup" title="<fmt:message key='agregarHistorialAsignacionEstudianteCarrera.titulo' />">
+                    <form:form id="form"
+                               modelAttribute="wrapperHistorialAsignacionEstudianteCarrera" method="POST"
+                               action="agregarHistorialAsignacionEstudianteCarrera.htm">
 
-                    <%@include file="../../jspf/formularios/formularioHistorialAsignacionEstudianteCarrera.jspf" %>
-                </form:form>
-            </div>
-            <center style="margin-top: 20px;">
-                <button id="botonHabilitarFormularioPopup"><fmt:message key="historialAsignacionEstudianteCarrera.boton.agregar" /></button>
-            </center>
-        </c:if>
+                        <%@include file="../../jspf/formularios/formularioHistorialAsignacionEstudianteCarrera.jspf" %>
+                    </form:form>
+                </div>
+                <center style="margin-top: 20px;">
+                    <button id="botonHabilitarFormularioPopup"><fmt:message key="historialAsignacionEstudianteCarrera.boton.agregar" /></button>
+                </center>
+            </c:if>
+        </sec:authorize>
 
         <%--  Formulario para modificar --%>
-        <c:if test="${not empty wrapperModificarHistorialAsignacionEstudianteCarrera}">
-            <div id="divFormularioModificarPopup" title="<fmt:message key='modificarHistorialAsignacionEstudianteCarrera.titulo' />">
-                <form:form id="formModificar"
-                           modelAttribute="wrapperModificarHistorialAsignacionEstudianteCarrera" method="POST"
-                           action="modificarHistorialAsignacionEstudianteCarrera.htm">
+        <sec:authorize access="hasRole('ROLE_MODIFICAR_HISTORIAL_ASIGNACION_ESTUDIANTE_CARRERA')">
+            <c:if test="${not empty wrapperModificarHistorialAsignacionEstudianteCarrera}">
+                <div id="divFormularioModificarPopup" title="<fmt:message key='modificarHistorialAsignacionEstudianteCarrera.titulo' />">
+                    <form:form id="formModificar"
+                               modelAttribute="wrapperModificarHistorialAsignacionEstudianteCarrera" method="POST"
+                               action="modificarHistorialAsignacionEstudianteCarrera.htm">
 
-                    <input type="hidden" name="idHistorialAsignacionEstudianteCarrera" id="idHistorialAsignacionEstudianteCarrera"
-                           value="${idHistorialAsignacionEstudianteCarrera}"/>
+                        <input type="hidden" name="idHistorialAsignacionEstudianteCarrera" id="idHistorialAsignacionEstudianteCarrera"
+                               value="${idHistorialAsignacionEstudianteCarrera}"/>
 
-                    <%@include file="../../jspf/formularios/formularioHistorialAsignacionEstudianteCarrera.jspf" %>
+                        <%@include file="../../jspf/formularios/formularioHistorialAsignacionEstudianteCarrera.jspf" %>
 
 
-                </form:form>
-            </div>
-        </c:if>
-
+                    </form:form>
+                </div>
+            </c:if>
+        </sec:authorize>
 
         <div style="margin: 20px 0 0 0; ">
             <a href="mostrarAsignacionEstudianteCarrera.htm?idEstudiante=${estudiante.idEstudiante}">
