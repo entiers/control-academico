@@ -1,6 +1,7 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Sistema de Control Academico
+ * Escuela de Trabajo Social
+ * Universidad de San Carlos de Guatemala
  */
 
 package gt.edu.usac.cats.dominio.wrapper;
@@ -10,6 +11,8 @@ import java.util.Date;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
+ * Contiene los atributos y validaciones para modificar un objeto de tipo {@link AsignacionEstudianteCarrera}
+ * desde las vistas y controladores.
  *
  * @author Mario Batres
  * @version 1.0
@@ -22,10 +25,16 @@ public class WrapperModificarAsignacionEstudianteCarrera {
     private Date fechaCierre;
 //______________________________________________________________________________
 
+
     public WrapperModificarAsignacionEstudianteCarrera() {
         this.fechaCierre = new Date();
     }
 //______________________________________________________________________________
+    /**
+     * Otorga los atributos de este objeto al objeto de tipo {@link AsignacionEstudianteCarrera}
+     *
+     * @param asignacionEstudianteCarrera Objeto de tipo {@link AsignacionEstudianteCarrera}
+     */
     public void quitarWrapper(AsignacionEstudianteCarrera asignacionEstudianteCarrera){
         asignacionEstudianteCarrera.setFechaCierre(getFechaCierre());
     }

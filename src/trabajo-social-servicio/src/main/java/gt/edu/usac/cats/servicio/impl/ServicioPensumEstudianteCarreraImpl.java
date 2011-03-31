@@ -17,13 +17,25 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 /**
+ * <p>Contiene la implementaci&oacute;n de los m&eacute;todos que permiten el manejo de la
+ * informaci&oacute;n relacionada con la asignaci&oacute;n de pensum a un estudiante
+ * de una carrera en la base de datos.</p>
  *
  * @author Mario Batres
  * @version 1.0
  */
 @Service
 public class ServicioPensumEstudianteCarreraImpl extends ServicioGeneralImpl implements ServicioPensumEstudianteCarrera {
-
+//______________________________________________________________________________
+    /**
+     * Crea un criteria para la b&uacute;squeda de asignaciones de pensums por estudiante y carrera.
+     * La b&uacute;squeda se realiza por estudiante.
+     *
+     * @param valido Param&eacute;tro de tipo boolean
+     * @param estudiante Objeto de tipo {@link Estudiante}
+     *
+     * @return Objeto de tipo {@link DetachedCriteria}
+     */
     private DetachedCriteria crearCriteriaPorEstudianteYValido(boolean valido, Estudiante estudiante) {
         DetachedCriteria criteria = DetachedCriteria.forClass(PensumEstudianteCarrera.class);
         criteria.createAlias("asignacionEstudianteCarrera", "aec");
@@ -36,7 +48,16 @@ public class ServicioPensumEstudianteCarreraImpl extends ServicioGeneralImpl imp
 
         return criteria;
     }
-
+//______________________________________________________________________________
+    /**
+     * Crea un criteria para la b&uacute;squeda de asignaciones de pensums por estudiante y carrera.
+     * La b&uacute;squeda se realiza por la asignación de un estudiante con la carrera.
+     *
+     * @param valido Param&eacute;tro de tipo boolean
+     * @param asignacionEstudianteCarrera Objeto de tipo {@link AsignacionEstudianteCarrera}
+     *
+     * @return Objeto de tipo {@link DetachedCriteria}
+     */
     private DetachedCriteria crearCriteriaPorAsignacionEstudianteCarreraYValido(boolean valido,
             AsignacionEstudianteCarrera asignacionEstudianteCarrera) {
 
@@ -50,28 +71,75 @@ public class ServicioPensumEstudianteCarreraImpl extends ServicioGeneralImpl imp
 
         return criteria;
     }
-
+//______________________________________________________________________________
+     /**
+     * Obitene el pensum v&aacute;lido que tiene un estudiante seg&uacute;n la carrera que tenga asignada.
+     *
+     * @param asignacionEstudianteCarrera Objeto de tipo {@link AsignacionEstudianteCarrera}
+     *
+     * @throws DataAccessException Si ocurri&oacute; un error de acceso a datos
+     *
+     * @return Objeto de tipo {@link PensumEstudianteCarrera}
+     */
     @Override
     public PensumEstudianteCarrera getPensumEstudianteCarreraValido(Estudiante estudiante) throws DataAccessException {
-        //Se tiene el conocimiento que siempre habrï¿½ un registro valido = true en la BD
+        //Se tiene el conocimiento que siempre habr'a un registro valido = true en la BD
         return this.daoGeneralImpl.uniqueResult(this.crearCriteriaPorEstudianteYValido(true, estudiante));
     }
-
+//______________________________________________________________________________
+    /**
+     * Obtiene los pensums asignados no v&aacute;lidos de un estudiante.
+     *
+     * @param estudiante Objeto de tipo {@link Estudiante}
+     *
+     * @throws DataAccessException Si ocurri&oacute; un error de acceso a datos
+     *
+     * @return Lista de objetos de tipo {@link PensumEstudianteCarrera}
+     */
     @Override
     public List<PensumEstudianteCarrera> getListadoPensumEstudianteCarreraNoValidos(Estudiante estudiante) throws DataAccessException {
         return this.daoGeneralImpl.find(this.crearCriteriaPorEstudianteYValido(false, estudiante));
     }
 
+//______________________________________________________________________________
+     /**
+     * Obtiene los pensums asignados no v&aacute;lidos de un estudiante.
+     *
+     * @param estudiante Objeto de tipo {@link Estudiante}
+     *
+     * @throws DataAccessException Si ocurri&oacute; un error de acceso a datos
+     *
+     * @return Lista de objetos de tipo {@link PensumEstudianteCarrera}
+     */
     @Override
     public PensumEstudianteCarrera getPensumEstudianteCarreraValido(AsignacionEstudianteCarrera asignacionEstudianteCarrera) throws DataAccessException {
         return this.daoGeneralImpl.uniqueResult(this.crearCriteriaPorAsignacionEstudianteCarreraYValido(true, asignacionEstudianteCarrera));
     }
+
+//______________________________________________________________________________    
+    /**
+     * Obtiene los pensums asignados no v&aacute;lidos de un estudiante seg&uacute;n la carrera que tenga asignada.
+     *
+     * @param asignacionEstudianteCarrera Objeto de tipo {@link AsignacionEstudianteCarrera}
+     *
+     * @throws DataAccessException Si ocurri&oacute; un error de acceso a datos
+     *
+     * @return Lista de objetos de tipo {@link PensumEstudianteCarrera}
+     */
 
     @Override
     public List<PensumEstudianteCarrera> getListadoPensumEstudianteCarreraNoValidos(AsignacionEstudianteCarrera asignacionEstudianteCarrera) throws DataAccessException {
         return this.daoGeneralImpl.find(this.crearCriteriaPorAsignacionEstudianteCarreraYValido(false, asignacionEstudianteCarrera));
     }
 
+//______________________________________________________________________________    
+     /**
+     * Obtiene los pensusm no asignados de un estudiante por la carrera que tenga asignada.
+     *
+     * @param asignacionEstudianteCarrera Objeto de tipo {@link AsignacionEstudianteCarrera}
+     *
+     * @throws DataAccessException Si ocurri&oacute; un error de acceso a datos
+     */
     @Override
     public List<Pensum> getPensumsNoAsignadosAEstudianteCarrera(AsignacionEstudianteCarrera asignacionEstudianteCarrera) throws DataAccessException {
         StringBuilder builder = new StringBuilder();

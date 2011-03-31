@@ -1,7 +1,9 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Sistema de Control Academico
+ * Escuela de Trabajo Social
+ * Universidad de San Carlos de Guatemala
  */
+
 package gt.edu.usac.cats.controlador.asignacionEstudianteCarrera;
 
 import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
@@ -22,6 +24,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
+ * <p>Este controlador lleva el manejo de las vistas <code>mostrarHistorialAsignacionEstudianteCarrera.htm</code>
+ * , <code>agregarHistorialAsignacionEstudianteCarrera.htm</code> y <code>modificarHistorialAsignacionEstudianteCarrera.htm</code>
+ * , las dos &uacute;ltimas no tiene una vista física
+ * solamente es una llamada l&oacute;gica y redirecciona a la primera vista.</p>
+ *
+ * <p>Se manejan todas estas vistas en este controlador porque hay datos que se almacenan
+ * en los atributos que están declarados en la clase padre.  Si se hacen en diferentes controladores
+ * se pierden dichos datos.</p>
  *
  * @author Mario Batres
  * @version 1.0
@@ -30,18 +40,33 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class ControladorMostrarHistorialAsignacionEstudianteCarrera
         extends ControladorAbstractoAsignacionEstudianteCarrera {
 //______________________________________________________________________________
+    /**
+     * <p>Matiene una bitacora de lo realizado por esta clase.</p>
+     */
     private static Logger log = Logger.getLogger(ControladorMostrarHistorialAsignacionEstudianteCarrera.class);
 
 //______________________________________________________________________________
-    private static String TITULO_MENSAJE = "agregarHistorialAsignacionEstudianteCarrera.titulo";
+    /**
+     * <p>Lleva el nombre del titulo para el mensaje en la pagina <code>agregarHistorialAsignacionEstudianteCarrera.htm</code></p>
+     */
+    private static String TITULO_MENSAJE_AGREGAR = "agregarHistorialAsignacionEstudianteCarrera.titulo";
 
 //______________________________________________________________________________
+    /**
+     * <p>Lleva el nombre del titulo para el mensaje en la pagina <code>modificarHistorialAsignacionEstudianteCarrera.htm</code></p>
+     */
     private static String TITULO_MENSAJE_MODIFICAR = "modificarHistorialAsignacionEstudianteCarrera.titulo";
 
 //______________________________________________________________________________
     /**
-     * @param modelo
-     * @param idAsignacionEstudianteCarrera 
+     * Se ejecuta cuando se hace llamada de tipo <b>GET</b> a la
+     * p&aacute;gina <code>mostrarHistorialAsignacionEstudianteCarrera.htm</code>.
+     * Crea y busca los atributos para mostrar en dicha p&aacute;gina de acuerdo
+     * con el id del objeto de tipo {@link AsignacionEstudianteCarrera} en la base de datos.
+     *
+     * @param modelo Objeto de tipo {@link model}
+     * @param idAsignacionEstudianteCarrera Objeto de tipo {@link Integer} que contiene el id del
+     * objeto de tipo {@link AsignacionEstudianteCarrera} para buscar su historial deasignaciones.
      */
     @RequestMapping(value = "mostrarHistorialAsignacionEstudianteCarrera.htm", method = RequestMethod.GET)
     public String mostrar(Model modelo, Integer idAsignacionEstudianteCarrera) {
@@ -69,9 +94,14 @@ public class ControladorMostrarHistorialAsignacionEstudianteCarrera
 
 //______________________________________________________________________________
     /**
-     * @param modelo
-     * @param wrapperHistorialAsignacionEstudianteCarrera
-     * @param bindingResult
+     * Este m&eacute;todo se ejecuta cuando se hace una llamada de tipo <b>POST</b>
+     * a la p&aacute;gina <code>agregarHistorialAsignacionEstudianteCarrera.htm</code>.
+     * Se encarga de agregar un nuevo historial de asignaci&oacute;n de carrera a
+     * a la asignaci&oacute;n del estudiante que ha sido seleccionado previamente.
+     *
+     * @param modelo Objeto de tipo {@link Model}
+     * @param wrapperHistorialAsignacionEstudianteCarrera Objeto de tipo {@link WrapperHistorialAsignacionEstudianteCarrera}
+     * @param bindingResult Objeto de tipo {@link BindingResult}
      * @param request
      *
      * @retrun
@@ -95,18 +125,18 @@ public class ControladorMostrarHistorialAsignacionEstudianteCarrera
                 RequestUtil.agregarRedirect(request, "mostrarHistorialAsignacionEstudianteCarrera.htm?idAsignacionEstudianteCarrera="
                         + this.asignacionEstudianteCarrera.getIdAsignacionEstudianteCarrera());
 
-                RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE,
+                RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE_AGREGAR,
                         "agregarHistorialAsignacionEstudianteCarrera.exito", true);
 
                 log.info(Mensajes.EXITO_AGREGAR + asignacionEstudianteCarrera.toString());
             } catch (DataIntegrityViolationException e) {
-                RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "dataIntegrityViolatioException", false);
+                RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE_AGREGAR, "dataIntegrityViolatioException", false);
                 log.error(Mensajes.DATA_INTEGRITY_VIOLATION_EXCEPTION, e);
 
                 this.agregarAtributosDefaultHistorial(modelo, null, wrapperHistorialAsignacionEstudianteCarrera, true,
                         new WrapperModificarHistorialAsignacionEstudianteCarrera(), false, false);
             } catch (DataAccessException e) {
-                RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "dataAccessException", false);
+                RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE_AGREGAR, "dataAccessException", false);
                 log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
 
                 this.agregarAtributosDefaultHistorial(modelo, null, wrapperHistorialAsignacionEstudianteCarrera, true,
@@ -121,11 +151,16 @@ public class ControladorMostrarHistorialAsignacionEstudianteCarrera
     }
 
     /**
-     * @param modelo
-     * @param wrapperModificarHistorialAsignacionEstudianteCarrera
-     * @param bindingResult
+     * Este m&eacute;todo se ejecuta cuando se hace una llamada de tipo <b>POST</b>
+     * a la p&aacute;gina <code>modificarHistorialAsignacionEstudianteCarrera.htm</code>.
+     * Se encarga de modificar un historial de asignaci&oacute;n de carrera a
+     * a la asignaci&oacute;n del estudiante que ha sido seleccionado previamente.
+     *
+     * @param modelo Objeto de tipo {@link model}
+     * @param wrapperModificarHistorialAsignacionEstudianteCarrera Objeto de tipo {@link WrapperModificarHistorialAsignacionEstudianteCarrera}
+     * @param bindingResult Objeto de tipo {@link BindingResult}
      * @param idHistorialAsignacionEstudianteCarrera
-     * @param request
+     * @param request Objeto de tipo {@link HttpServletRequest}
      *
      * @return
      */
