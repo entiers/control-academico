@@ -1,7 +1,9 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Sistema de Control Academico
+ * Escuela de Trabajo Social
+ * Universidad de San Carlos de Guatemala
  */
+
 package gt.edu.usac.cats.controlador.asignacionEstudianteCarrera;
 
 import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
@@ -21,6 +23,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
+ * <p>Este controlador lleva el manejo de la vista<code>cambiarAsignacionEstudianteCarrera.htm</code>
+ * que se encarga de realizar el cambio de carrera de un estudiante.
+ * </p>
  *
  * @author Mario Batres
  * @version 1.0
@@ -28,15 +33,27 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping(value = "cambiarAsignacionEstudianteCarrera.htm")
 public class ControladorCambiarAsignacionEstudianteCarrera extends ControladorAbstractoAsignacionEstudianteCarrera {
-    /***/
-    public static String TITULO_MENSAJE = "cambiarAsignacionEstudianteCarrera.titulo";
-
-    /***/
-    private static Logger log = Logger.getLogger(ControladorCambiarAsignacionEstudianteCarrera.class);
-
+//______________________________________________________________________________
     /**
-     * @param modelo
-     * @param idAsignacionEstudianteCarrera 
+     * <p>Lleva el nombre del titulo para el mensaje en la pagina </p>
+     */
+    public static String TITULO_MENSAJE = "cambiarAsignacionEstudianteCarrera.titulo";
+//______________________________________________________________________________
+    /**
+     * <p>Matiene una bitacora de lo realizado por esta clase.</p>
+     */
+    private static Logger log = Logger.getLogger(ControladorCambiarAsignacionEstudianteCarrera.class);
+//______________________________________________________________________________
+    /**
+    * Se ejecuta cuando se hace llamada de tipo <b>GET</b> a la
+     * p&aacute;gina <code>cambiarAsignacionEstudianteCarrera.htm</code>.
+     * Crea y busca los atributos para mostrar en dicha p&aacute;gina de acuerdo
+     * con el id del objeto de tipo {@link AsignacionEstudianteCarrera} en la base de datos.
+     *
+     * @param modelo Objeto de tipo {@link Model}
+     * @param idAsignacionEstudianteCarrera Objeto de tipo {@link Integer} que recibe
+     * el id del objeto de tipo {@link AsignacionEstudianteCarrera} que est&aacute; en la base
+     * de datos.
      */
     @RequestMapping(method = RequestMethod.GET)
     public String crearFormulario(Model modelo, Integer idAsignacionEstudianteCarrera) {
@@ -54,12 +71,17 @@ public class ControladorCambiarAsignacionEstudianteCarrera extends ControladorAb
         this.agregarAtributosDefaultCambiarAsignacion(modelo, new WrapperAgregarAsignacionEstudianteCarrera(), true);
         return "asignacionEstudianteCarrera/cambiarAsignacionEstudianteCarrera";
     }
-
+//______________________________________________________________________________
     /**
-     * @param modelo
-     * @param wrapperAgregarAsignacionEstudianteCarrera
-     * @param bindingResult
-     * @param request
+     * Este m&eacute;todo se ejecuta cuando se hace una llamada de tipo <b>POST</b>
+     * a la p&aacute;gina <code>cambiarAsignacionEstudianteCarrera.htm</code>.
+     * Se encarga de ejecutar el proceso para el cambio de carrera de un estudiante que 
+     * ha sido seleccionado previamente.
+     *
+     * @param modelo Objeto de tipo {@link Model}
+     * @param wrapperAgregarAsignacionEstudianteCarrera Objeto de tipo {@link WrapperAgregarAsignacionEstudianteCarrera}
+     * @param bindingResult Objeto de tipo {@link BindingResult}
+     * @param request Objeto de tipo {@link HttpServletRequest}
      *
      * @return
      */
