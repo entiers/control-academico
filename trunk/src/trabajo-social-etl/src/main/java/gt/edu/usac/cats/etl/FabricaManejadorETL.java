@@ -29,7 +29,7 @@ public enum FabricaManejadorETL{
             case REGISTRO_CSV:
                 return new ManejadorRegistroCSV();
             case BOLETA_BANCO_CSV:
-                return null;
+                return new ManejadorBoletaBancoCSV();
         }
         return null;
     }

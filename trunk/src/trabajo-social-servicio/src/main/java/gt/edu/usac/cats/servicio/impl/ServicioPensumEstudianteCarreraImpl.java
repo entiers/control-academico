@@ -51,7 +51,7 @@ public class ServicioPensumEstudianteCarreraImpl extends ServicioGeneralImpl imp
 //______________________________________________________________________________
     /**
      * Crea un criteria para la b&uacute;squeda de asignaciones de pensums por estudiante y carrera.
-     * La b&uacute;squeda se realiza por la asignación de un estudiante con la carrera.
+     * La b&uacute;squeda se realiza por la asignacion de un estudiante con la carrera.
      *
      * @param valido Param&eacute;tro de tipo boolean
      * @param asignacionEstudianteCarrera Objeto de tipo {@link AsignacionEstudianteCarrera}

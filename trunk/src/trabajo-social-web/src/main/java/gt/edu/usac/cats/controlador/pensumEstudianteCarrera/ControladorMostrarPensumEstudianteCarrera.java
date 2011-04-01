@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * Este controlador lleva el manejo de las vistas <code>mostrarPensumEstudianteCarrera.htm</code>
- * y <code>agregarPensumEstudianteCarrera.htm</code>, esta &uacute;ltima no tiene una vista física
+ * y <code>agregarPensumEstudianteCarrera.htm</code>, esta &uacute;ltima no tiene una vista fisica
  * solamente es una llamada l&oacute;gica y redirecciona a la primera vista.
  *
  * @author Mario Batres
@@ -41,7 +41,7 @@ public class ControladorMostrarPensumEstudianteCarrera extends ControladorAbstra
     /**
      * Crea todo los atributos necesarios para mostrar en la vista <code>mostrarPensumEstudianteCarrera.htm</code>
      * cuando se hace una llamada de tipo <b>GET</b>.
-     * Valida que el id de la asignación del estudiante con la carrera sea válido y exista en la base de datos.
+     * Valida que el id de la asignacion del estudiante con la carrera sea valido y exista en la base de datos.
      *
      * @param modelo Objeto de tipo {@link Model}
      * @param idAsignacionEstudianteCarrera Objeto de tipo {@link Integer}.  Recibe el id del
