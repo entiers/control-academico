@@ -71,6 +71,12 @@
       <version>1.1.1</version>
       <scope>compile</scope>
     </dependency>
+       <dependency>
+      <groupId>gt.edu.usac.cats.etl</groupId>
+      <artifactId>boletabanco-csv</artifactId>
+      <version>1.0</version>
+      <scope>compile</scope>
+    </dependency>
 
     <dependency>
       <groupId>junit</groupId>

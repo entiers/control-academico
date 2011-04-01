@@ -514,6 +514,14 @@
                 </includes>
             </resource>
             <resource>
+                <targetPath>registrocsv/etlboletabanco_0_1/contexts</targetPath>
+                <filtering>false</filtering>
+                <directory>${basedir}/src/main/java/registrocsv/etlboletabanco_0_1/contexts</directory>
+                <includes>
+                    <include>*.properties</include>
+                </includes>
+            </resource>
+            <resource>
                 <targetPath>gt/edu/usac/cats/controlador/reporte/listado</targetPath>
                 <filtering>false</filtering>
                 <directory>${basedir}/src/main/java/gt/edu/usac/cats/controlador/reporte/listado</directory>
