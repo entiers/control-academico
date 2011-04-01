@@ -27,11 +27,11 @@ import gt.edu.usac.cats.dominio.wrapper.WrapperModificarAsignacionEstudianteCarr
 /**
  * <p>Este controlador lleva el manejo de las vistas <code>mostrarAsignacionEstudianteCarrera.htm</code>
  * , <code>agregarAsignacionEstudianteCarrera.htm</code> y <code>modificarAsignacionEstudianteCarrera.htm</code>
- * , las dos  &uacute;ltimas no tiene una vista física
+ * , las dos  &uacute;ltimas no tiene una vista fisica
  * solamente es una llamada l&oacute;gica y redirecciona a la primera vista.</p>
  *
  * <p>Se manejan todas estas vistas en este controlador porque hay datos que se almacenan
- * en los atributos que están declarados en la clase padre.  Si se hacen en diferentes controladores
+ * en los atributos que estan declarados en la clase padre.  Si se hacen en diferentes controladores
  * se pierden dichos datos.</p>
  *
  * @author Mario Batres

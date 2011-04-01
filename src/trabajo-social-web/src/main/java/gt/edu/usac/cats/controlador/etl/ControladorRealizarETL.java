@@ -223,8 +223,8 @@ public class ControladorRealizarETL {
                             , "ArchivoCSV_File"
                             , "/registrocsv/etlregistrocsv_0_1/contexts/Default.properties");
 
-               //     boolean exito = this.realizarETL(FabricaManejadorETL.BOLETA_BANCO_CSV);
-                    boolean exito = true;
+                    boolean exito = this.realizarETL(FabricaManejadorETL.BOLETA_BANCO_CSV);
+
                     if(exito){
                         RequestUtil.crearMensajeRespuesta(request, "etl.ingresarBoletaBancoCSV.titulo",
                             "etl.ingresarRegistroCSV.exito", true);
