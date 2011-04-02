@@ -75,7 +75,7 @@ public class ControladorRecordarContrasenia {
     @RequestMapping(method = RequestMethod.POST)
     public String recordarContrasenia(@Valid WrapperRecordarContrasenia wrapperRecordarContrasenia, BindingResult bindingResult,
                         Model modelo, HttpServletRequest request) throws MessagingException, URISyntaxException {
-
+       
         //Obtener captcha generado
         Captcha captcha = (Captcha) request.getSession().getAttribute(Captcha.NAME);
 
@@ -96,7 +96,7 @@ public class ControladorRecordarContrasenia {
             //Si el correo no esta registrado en el sistema
             if (this.usuario==null){
                 RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "recordarUsuario.emailNoExiste",false);
-                return "usuario/recordarUsuario";
+                return "usuario/recordarContrasenia";
             }
             try {
                 //Se crea el codigo de validacion para el reinicio de contrasenia
