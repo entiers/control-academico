@@ -35,7 +35,7 @@
                 <c:if test="${not empty listadoPensumsNoAsignadosAEsutudianteCarrera}">
                     <c:if test="${not empty pensumEstudianteCarrera}">
                         <div id="divFormularioPopup" title="<fmt:message key='asignarPensumEstudianteCarrera.titulo' />" >
-                            <form:form modelAttribute="pensumEstudianteCarrera" method="post" action="asignarPensumEstudianteCarrera.htm">
+                            <form:form id="form" modelAttribute="pensumEstudianteCarrera" method="post" action="asignarPensumEstudianteCarrera.htm">
                                 <div id="divCampos">
                                     <form:label for="pensum.idPensum" path="pensum.idPensum">
                                         <fmt:message key="pensumEstudianteCarrera.pensum"/>: *
