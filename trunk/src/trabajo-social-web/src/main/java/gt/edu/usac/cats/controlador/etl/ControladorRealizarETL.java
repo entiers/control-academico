@@ -3,7 +3,6 @@
  * Escuela de Trabajo Social
  * Universidad de San Carlos de Guatemala
  */
-
 package gt.edu.usac.cats.controlador.etl;
 
 import gt.edu.usac.cats.etl.FabricaManejadorETL;
@@ -23,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-
 /**
  * Esta clase es el controlador que se encarga del procesamiento de los archivos
  * para realizar ETL en la base de datos.
@@ -31,10 +29,10 @@ import org.springframework.web.multipart.MultipartFile;
  * @author Mario Batres
  * @version 1.0
  */
-
-@Controller ("controladorRealizarETL")
+@Controller("controladorRealizarETL")
 public class ControladorRealizarETL {
 //______________________________________________________________________________
+
     /** <p>Lleva el nombre del titulo para el mensaje en la pagina<p>*/
     private static Logger log = Logger.getLogger(ControladorRealizarETL.class);
 
@@ -52,22 +50,20 @@ public class ControladorRealizarETL {
      *
      * @throws IOException
      */
-    private void guardarArchivoEnDisco(MultipartFile file, 
-            String key, String pathArchivoPropiedades) throws IOException{
+    private void guardarArchivoEnDisco(MultipartFile file,
+            String key, String pathArchivoPropiedades) throws IOException {
 
 
         Properties properties = new Properties();
 
-        InputStream inputStream = ControladorRealizarETL.class
-                                .getClassLoader()
-                                .getResourceAsStream(
-                                    pathArchivoPropiedades);
+        InputStream inputStream = ControladorRealizarETL.class.getClassLoader().getResourceAsStream(
+                pathArchivoPropiedades);
 
         properties.load(inputStream);
         String pathArchivo = properties.getProperty(key);
         System.out.println(pathArchivo);
-        byte [] bytes = file.getBytes();
-        
+        byte[] bytes = file.getBytes();
+
         OutputStream outputStream = new FileOutputStream(
                 new File(pathArchivo));
 
@@ -89,10 +85,15 @@ public class ControladorRealizarETL {
      *
      * @throws IOException
      **/
-    private boolean realizarETL(FabricaManejadorETL tipo) throws IOException{
-        ManejadorETL manejadorETL = tipo.crear();
-        int ret  = manejadorETL.realizar().length;
-        return ret == 1;
+    private boolean realizarETL(FabricaManejadorETL tipo) throws IOException, Exception {
+        try {
+            ManejadorETL manejadorETL = tipo.crear();
+            int ret = manejadorETL.realizar().length;
+            return ret == 1;
+        } catch (Exception e) {
+            throw e;
+        }
+
     }
 
 //______________________________________________________________________________
@@ -103,11 +104,10 @@ public class ControladorRealizarETL {
      *
      * @return Contiene el nombre de la vista a mostrar
      */
-    @RequestMapping(value = "ingresarRegistroCSV.htm", method=RequestMethod.GET)
-    public String crearRegistroCSV(){
+    @RequestMapping(value = "ingresarRegistroCSV.htm", method = RequestMethod.GET)
+    public String crearRegistroCSV() {
         return "etl/ingresarRegistroCSV";
     }
-
 
 //______________________________________________________________________________
     /**
@@ -127,42 +127,38 @@ public class ControladorRealizarETL {
      *
      * @return Contiene el nombre de la vista a mostrar
      */
-
-    @RequestMapping(value = "ingresarRegistroCSV.htm", method=RequestMethod.POST)
+    @RequestMapping(value = "ingresarRegistroCSV.htm", method = RequestMethod.POST)
     public String realizarRegistroCSV(
-            @RequestParam("archivoCSV") MultipartFile archivoCSV
-            , HttpServletRequest request){
-            
+            @RequestParam("archivoCSV") MultipartFile archivoCSV, HttpServletRequest request) {
+
         try {
-            if(!archivoCSV.isEmpty()){
+            if (!archivoCSV.isEmpty()) {
                 System.out.println(archivoCSV.getContentType());
                 //if(archivoCSV.getContentType().equalsIgnoreCase("text/csv")){
 
-                    this.guardarArchivoEnDisco(archivoCSV
-                            , "ArchivoCSV_File"
-                            , "/registrocsv/etlregistrocsv_0_1/contexts/Default.properties");
+                this.guardarArchivoEnDisco(archivoCSV, "ArchivoCSV_File", "/registrocsv/etlregistrocsv_0_1/contexts/Default.properties");
 
-                    boolean exito = this.realizarETL(FabricaManejadorETL.REGISTRO_CSV);
+                boolean exito = this.realizarETL(FabricaManejadorETL.REGISTRO_CSV);
 
-                    if(exito){
-                        RequestUtil.crearMensajeRespuesta(request, "etl.ingresarRegistroCSV.titulo",
+                if (exito) {
+                    RequestUtil.crearMensajeRespuesta(request, "etl.ingresarRegistroCSV.titulo",
                             "etl.ingresarRegistroCSV.exito", true);
 
-                        log.info("Se realizo el ETL del archivo CSV de Registro y Estadistica satisfactoriamente");
-                    }else{
+                    log.info("Se realizo el ETL del archivo CSV de Registro y Estadistica satisfactoriamente");
+                } else {
 
-                        RequestUtil.crearMensajeRespuesta(request, "etl.ingresarRegistroCSV.titulo", "etl.archivoCSV.error",
-                        false);
+                    RequestUtil.crearMensajeRespuesta(request, "etl.ingresarRegistroCSV.titulo", "etl.archivoCSV.error",
+                            false);
 
-                        log.error("Hubo problemas en la carga del archivo CSV");
-                    }
+                    log.error("Hubo problemas en la carga del archivo CSV");
+                }
                 /*}else{
-                    RequestUtil.crearMensajeRespuesta(request, "etl.ingresarRegistroCSV.titulo", "etl.archivoCSV.contentTypeInvalido",
-                        false);
+                RequestUtil.crearMensajeRespuesta(request, "etl.ingresarRegistroCSV.titulo", "etl.archivoCSV.contentTypeInvalido",
+                false);
 
-                    log.error("El archivo CSV a cargar no es un archivo csv valido");
+                log.error("El archivo CSV a cargar no es un archivo csv valido");
                 }*/
-            }else{
+            } else {
                 RequestUtil.crearMensajeRespuesta(request, "etl.ingresarRegistroCSV.titulo", "etl.archivoCSV.obligatorio",
                         false);
                 log.error("No se cargo ningun archivo CSV");
@@ -171,7 +167,7 @@ public class ControladorRealizarETL {
         } catch (IOException e) {
             RequestUtil.crearMensajeRespuesta(request, "etl.ingresarRegistroCSV.titulo", "etl.ioException", false);
             log.error("Ocurrio un problema en la lectura/escritura de un archivo", e);
-        } catch( Exception e){
+        } catch (Exception e) {
             RequestUtil.crearMensajeRespuesta(request, "etl.ingresarRegistroCSV.titulo", "etl.exception", false);
             log.error("Error no identificado", e);
         }
@@ -187,8 +183,8 @@ public class ControladorRealizarETL {
      *
      * @return Contiene el nombre de la vista a mostrar
      */
-    @RequestMapping(value = "ingresarBoletaBancoCSV.htm", method=RequestMethod.GET)
-    public String crearBoletaBancoCSV(){
+    @RequestMapping(value = "ingresarBoletaBancoCSV.htm", method = RequestMethod.GET)
+    public String crearBoletaBancoCSV() {
         return "etl/ingresarBoletaBancoCSV";
     }
 
@@ -210,44 +206,41 @@ public class ControladorRealizarETL {
      *
      * @return Contiene el nombre de la vista a mostrar
      */
-
-    @RequestMapping(value = "cargarBoletaBanco.htm", method=RequestMethod.POST)
+    @RequestMapping(value = "cargarBoletaBanco.htm", method = RequestMethod.POST)
     public String realizarBoletaBancoCSV(
-            @RequestParam("archivoCSV") MultipartFile archivoCSV
-            , HttpServletRequest request){
+            @RequestParam("archivoCSV") MultipartFile archivoCSV, HttpServletRequest request) {
         try {
-            if(!archivoCSV.isEmpty()){
-                if(archivoCSV.getContentType().equalsIgnoreCase("text/csv")){
+            if (!archivoCSV.isEmpty()) {
+                //if (archivoCSV.getContentType().equalsIgnoreCase("text/csv")) {
 
-                    this.guardarArchivoEnDisco(archivoCSV
-                            , "ArchivoCSV_File"
-                            , "/registrocsv/etlregistrocsv_0_1/contexts/Default.properties");
+                    this.guardarArchivoEnDisco(archivoCSV, "ArchivoCSVBoletaBanco_File",
+                            "/registrocsv/etlboletabanco_0_1/contexts/Default.properties");
 
                     boolean exito = this.realizarETL(FabricaManejadorETL.BOLETA_BANCO_CSV);
 
-                    if(exito){
+                    if (exito) {
                         RequestUtil.crearMensajeRespuesta(request, "etl.ingresarBoletaBancoCSV.titulo",
-                            "etl.ingresarRegistroCSV.exito", true);
+                                "etl.ingresarRegistroCSV.exito", true);
 
                         log.info("Se realizo el ETL del archivo CSV de Boletas del banco satisfactoriamente");
-                    }else{
+                    } else {
 
-                        RequestUtil.crearMensajeRespuesta(request, "etl.ingresarBoletaBancoCSV.titulo", "etl.archivoCSV.error",false);
+                        RequestUtil.crearMensajeRespuesta(request, "etl.ingresarBoletaBancoCSV.titulo", "etl.archivoCSV.error", false);
                         log.error("Hubo problemas en la carga del archivo CSV de Boletas del banco satisfactoriamente");
                     }
-                }else{
-                    RequestUtil.crearMensajeRespuesta(request, "etl.ingresarBoletaBancoCSV.titulo", "etl.archivoCSV.contentTypeInvalido",false);
+                } else {
+                    RequestUtil.crearMensajeRespuesta(request, "etl.ingresarBoletaBancoCSV.titulo", "etl.archivoCSV.contentTypeInvalido", false);
                     log.error("El archivo CSV a cargar no es un archivo csv valido");
                 }
-            }else{
-                RequestUtil.crearMensajeRespuesta(request, "etl.ingresarBoletaBancoCSV.titulo", "etl.archivoCSV.obligatorio",false);
+            /*} else {
+                RequestUtil.crearMensajeRespuesta(request, "etl.ingresarBoletaBancoCSV.titulo", "etl.archivoCSV.obligatorio", false);
                 log.error("No se cargo ningun archivo CSV");
-            }
+            }*/
 
         } catch (IOException e) {
             RequestUtil.crearMensajeRespuesta(request, "etl.ingresarBoletaBancoCSV.titulo", "etl.ioException", false);
             log.error("Ocurrio un problema en la lectura/escritura de un archivo", e);
-        } catch( Exception e){
+        } catch (Exception e) {
             RequestUtil.crearMensajeRespuesta(request, "etl.ingresarBoletaBancoCSV.titulo", "etl.exception", false);
             log.error("Error no identificado", e);
         }

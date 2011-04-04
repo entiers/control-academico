@@ -40,7 +40,7 @@ public class FabricaManejadorETLTest extends TestCase {
 
         System.out.println("-- Realizar ETL --");
         System.out.println("-- Registro CSV --");        
-        ManejadorETL instance = FabricaManejadorETL.REGISTRO_CSV.crear();
+        ManejadorETL instance = FabricaManejadorETL.BOLETA_BANCO_CSV.crear();
         int length = -1;
 
         try{
