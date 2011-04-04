@@ -129,6 +129,19 @@ public class Pensum implements java.io.Serializable {
         this.pensumEstudianteCarreras = pensumEstudianteCarreras;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Pensum (idPensum=").append(this.idPensum)
+                .append(", codigo=").append(this.codigo)
+                .append(", estado=").append(this.estado)
+                .append(", fechaInicio=").append(this.fechaInicio)
+                .append(", fechaFin=").append(this.fechaFin)
+                .append(")");
+        return builder.toString();
+    }
+
+
 }
 
 

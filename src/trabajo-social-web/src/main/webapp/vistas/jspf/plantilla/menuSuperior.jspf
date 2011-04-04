@@ -230,9 +230,9 @@
             </a>
             <%--Control de pensum--%>
             <ul>
-                <sec:authorize access="hasRole('ROLE_CONTROL_PENSUM')">
+                <%--<sec:authorize access="hasRole('ROLE_CONTROL_PENSUM')">
                     <li><a href="controlPensum.htm"><fmt:message key="controlPensum.titulo"/></a></li>
-                </sec:authorize>
+                </sec:authorize>--%>
                  <%--Proceso asignacion primer ingreso--%>
                 <sec:authorize access="hasRole('ROLE_ASIGNACION_PRIMER_INGRESO')">
                     <li><a href="asignacionPrimerIngreso.htm"><fmt:message key="asignacionPrimerIngreso.titulo"/></a></li>

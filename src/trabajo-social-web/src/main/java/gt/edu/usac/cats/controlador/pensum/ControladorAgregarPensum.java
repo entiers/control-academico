@@ -90,7 +90,7 @@ public class ControladorAgregarPensum extends ControladorAbstractoPensum {
                 wrapperPensum = new WrapperPensum();
                 // se registra el evento
                 RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "agregarPensum.exito", true);
-                log.info(Mensajes.EXITO_AGREGAR + "Pensum, id " + this.pensum.getIdPensum());
+                log.info(Mensajes.EXITO_AGREGAR + this.pensum.toString());
 
 
             } catch (DataIntegrityViolationException e) {

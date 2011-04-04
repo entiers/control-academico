@@ -141,6 +141,8 @@ public class ControladorAgregarEstudiante extends ControladorEstudianteAbstracto
             // se quita el envoltorio y se trata de agregar al estudiante
             Estudiante estudiante = new Estudiante();
             wrapperEstudiante.quitarWrapper(estudiante);
+
+            this.servicioEstudianteImpl.agregarEstudiante(estudiante);
             //this.servicioEstudianteImpl.agregarEstudiante(estudiante, carrera, semestre, situacion);
 
             // se envia correo electronico de confirmacion

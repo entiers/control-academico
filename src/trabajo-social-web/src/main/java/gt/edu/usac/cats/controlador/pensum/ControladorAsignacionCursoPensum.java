@@ -126,7 +126,7 @@ public class ControladorAsignacionCursoPensum extends ControladorAbstractoPensum
                 wrapperAsignacionCursoPensum = new WrapperAsignacionCursoPensum();
                 // se registra el evento
                 RequestUtil.crearMensajeRespuesta(request, "agregarCursoAPensum.titulo", "asignarCursoPensum.exito", true);
-                log.info(Mensajes.EXITO_AGREGAR + "Asignacion Curso Pensum, id " + asignacionCursoPensum.getIdAsignacionCursoPensum());
+                log.info(Mensajes.EXITO_AGREGAR + asignacionCursoPensum.toString());
 
 
             } catch (DataIntegrityViolationException e) {
@@ -172,7 +172,7 @@ public class ControladorAsignacionCursoPensum extends ControladorAbstractoPensum
             RequestUtil.agregarRedirect(request, "asignarCursoPensum.htm?idPensum=" + this.pensum.getIdPensum());
             RequestUtil.crearMensajeRespuesta(request, "eliminarCursoDePensum.titulo", "asignarCursoPensum.exito", true);
 
-            log.info(Mensajes.EXITO_BORRAR + " Asignacion Curso Pensum, id = " + idAsignacionCursoPensum);
+            log.info(Mensajes.EXITO_BORRAR + this.asignacionCursoPensum.toString());
         } catch (DataIntegrityViolationException e) {
             RequestUtil.crearMensajeRespuesta(request, "eliminarCursoDePensum.titulo", "dataIntegrityException", false);
             log.error(Mensajes.DATA_INTEGRITY_VIOLATION_EXCEPTION, e);
@@ -234,7 +234,7 @@ public class ControladorAsignacionCursoPensum extends ControladorAbstractoPensum
                 wrapperAsignacionCursoPensum.agregarWrapper(this.asignacionCursoPensum);
                 // se registra el evento
                 RequestUtil.crearMensajeRespuesta(request, "editarCursoDePensum.titulo", "editarCursoDePensum.exito", true);
-                log.info(Mensajes.EXITO_ACTUALIZACION + "Asignacion Curso Pensum, id " + asignacionCursoPensum.getIdAsignacionCursoPensum());
+                log.info(Mensajes.EXITO_ACTUALIZACION + this.asignacionCursoPensum.toString());
 
 
             } catch (DataIntegrityViolationException e) {
@@ -302,8 +302,7 @@ public class ControladorAsignacionCursoPensum extends ControladorAbstractoPensum
             this.servicioPensumImpl.actualizar(this.asignacionCursoPensum);
 
             RequestUtil.crearMensajeRespuesta(request, "administrarPrerrequisitos.titulo", "administrarPrerrequisitos.exito", true);
-            log.info(Mensajes.EXITO_ACTUALIZACION + "Administrar Prerrequisitos, Asignacion Curso Pensum, id "
-                    + asignacionCursoPensum.getIdAsignacionCursoPensum());
+            log.info(Mensajes.EXITO_ACTUALIZACION + " Administrar Prerrequisitos: " + asignacionCursoPensum.toString());
 
         } catch (DataAccessException e) {
             // error de acceso a datos
