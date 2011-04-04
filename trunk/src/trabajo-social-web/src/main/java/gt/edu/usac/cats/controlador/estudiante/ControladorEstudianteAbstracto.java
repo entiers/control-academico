@@ -7,6 +7,7 @@ package gt.edu.usac.cats.controlador.estudiante;
 
 import gt.edu.usac.cats.dominio.LugarNacimiento;
 import gt.edu.usac.cats.dominio.Nacionalidad;
+import gt.edu.usac.cats.servicio.ServicioEstudiante;
 import gt.edu.usac.cats.servicio.ServicioLugarNacimiento;
 import gt.edu.usac.cats.servicio.ServicioNacionalidad;
 import java.util.List;
@@ -28,6 +29,11 @@ public abstract class ControladorEstudianteAbstracto {
     @Resource
     private ServicioLugarNacimiento servicioLugarNacimientoImpl;
 
+//______________________________________________________________________________
+
+    @Resource
+    protected ServicioEstudiante servicioEstudianteImpl;
+    
 //______________________________________________________________________________
 
     protected List <Nacionalidad> listadoNacionalidades;

@@ -100,7 +100,7 @@ public class ControladorEditarPensum extends ControladorAbstractoPensum{
                 RequestUtil.agregarRedirect(request, "buscarPensum.htm");
                 // se registra el evento
                 RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "editarPensum.exito", true);
-                log.info(Mensajes.EXITO_ACTUALIZACION + "Pensum, id " + pensum.getIdPensum());
+                log.info(Mensajes.EXITO_ACTUALIZACION + pensum.toString());
 
             } catch (DataIntegrityViolationException e) {
                 RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "dataIntegrityException", false);

@@ -163,6 +163,20 @@ public class AsignacionCursoPensum implements java.io.Serializable {
     public String getCursoNumeroSemestre(){
         return this.curso.getCodigoNombre() + " [" + this.numeroSemestre + "]";
     }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("AsignacionCursoPensum (idAsignacionCursoPensum=")
+                .append(this.idAsignacionCursoPensum)
+                .append(", numeroSemestre=").append(this.numeroSemestre)
+                .append(", obligatorio=").append(this.obligatorio)
+                .append(")");
+
+        return builder.toString();
+    }
+
+
     
 }
 
