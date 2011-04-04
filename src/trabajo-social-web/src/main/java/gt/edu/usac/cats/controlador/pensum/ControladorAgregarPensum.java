@@ -81,7 +81,7 @@ public class ControladorAgregarPensum extends ControladorAbstractoPensum {
         // se regresa al formulario para que se muestren los mensajes correspondientes
         if (!bindingResult.hasErrors()) {
             try {
-                
+                this.pensum = new Pensum();
                 wrapperPensum.quitarWrapper(this.pensum);
 
                 this.servicioPensumImpl.agregar(this.pensum);
