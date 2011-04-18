@@ -13,7 +13,7 @@
     <contextParameter comment="" name="ArchivoCSV_RowSeparator" prompt="ArchivoCSV_RowSeparator?" promptNeeded="false" repositoryContextId="_81yukPLJEd-Kxr2kCO7ilg" type="id_String" value="&quot;\n&quot;"/>
     <contextParameter comment="" name="ArchivoCSVBoletaBanco_FieldSeparator" prompt="ArchivoCSVBoletaBanco_FieldSeparator?" promptNeeded="false" repositoryContextId="_d2KjgFd4EeCzG4VxnF0SaA" type="id_String" value="&quot;,&quot;"/>
     <contextParameter comment="" name="ArchivoCSVBoletaBanco_Encoding" prompt="ArchivoCSVBoletaBanco_Encoding?" promptNeeded="false" repositoryContextId="_d2KjgFd4EeCzG4VxnF0SaA" type="id_String" value="UTF-8"/>
-    <contextParameter comment="" name="ArchivoCSVBoletaBanco_File" prompt="ArchivoCSVBoletaBanco_File?" promptNeeded="false" repositoryContextId="_d2KjgFd4EeCzG4VxnF0SaA" type="id_File" value="/home/shakamca/Trabajo Social/Data/02_03_2011.csv"/>
+    <contextParameter comment="" name="ArchivoCSVBoletaBanco_File" prompt="ArchivoCSVBoletaBanco_File?" promptNeeded="false" repositoryContextId="_d2KjgFd4EeCzG4VxnF0SaA" type="id_File" value="/tmp/boletabanco-kmca.csv"/>
     <contextParameter comment="" name="ArchivoCSVBoletaBanco_Header" prompt="ArchivoCSVBoletaBanco_Header?" promptNeeded="false" repositoryContextId="_d2KjgFd4EeCzG4VxnF0SaA" type="id_Integer" value="1"/>
     <contextParameter comment="" name="ArchivoCSVBoletaBanco_RowSeparator" prompt="ArchivoCSVBoletaBanco_RowSeparator?" promptNeeded="false" repositoryContextId="_d2KjgFd4EeCzG4VxnF0SaA" type="id_String" value="&quot;\n&quot;"/>
   </context>
