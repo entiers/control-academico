@@ -114,4 +114,31 @@ public interface ServicioAsignacionEstudianteCarrera extends ServicioGeneral{
             , AsignacionEstudianteCarrera asignacionEstudianteCarreraNueva
             , HistorialAsignacionEstudianteCarrera historialAsignacionEstudianteCarrera)
             throws DataIntegrityViolationException, DataAccessException;
+
+//______________________________________________________________________________
+
+    /**
+     * Verifica la inscripci&oacute;n de un estudiante en la carrera que es enviada
+     * como par&aacute;metro.
+     *
+     * @param estudiante Objeto de tipo {@link Estudiante}
+     * @param carrera Objeto de tipo {@link Carrera}
+     *
+     * @throws DataAccessException Si ocurri&oacute; un error de acceso a datos
+     */
+
+    boolean estaEstudianteInscrito(Estudiante estudiante, Carrera carrera)
+            throws DataAccessException;
+
+//______________________________________________________________________________
+    /**
+     * Verifica si el estudiante est&aacute; asignado en al menos una carrera
+     *
+     * @param estudiante Objeto de tipo {@link Estudiante}
+     *
+     * @throws DataAccessException Si ocurri&oacute; un error de acceso a datos
+     */
+
+    boolean estaEstudianteInscrito(Estudiante estudiante)
+            throws DataAccessException;
 }

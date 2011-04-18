@@ -22,9 +22,10 @@
 
         <script type="text/javascript">
 
-            var modificar = function(idAsignacionEstudianteCarrera, fechaCierre){                
+            var modificar = function(idAsignacionEstudianteCarrera, fechaCierre, inscrito){
                 $("#formModificar #inputIdAsignacionEstudianteCarrera").val(idAsignacionEstudianteCarrera);
                 $("#formModificar #inputFechaCierre").val(fechaCierre);
+                $("#formModificar #checkboxInscrito").attr({"checked" : inscrito == true ? "checked" : ""});
 
                 $("#divFormularioModificarPopup").dialog("open");                
             }
@@ -36,9 +37,10 @@
         <%@include file="../../jspf/formularios/informacion/formularioInformacionEstudiante.jspf" %>        
 
 
-        <center>
-            <fieldset>
-                <legend><fmt:message key="mostrarAsignacionEstudianteCarrera.listadoCarrerasAsignadas" /></legend>
+
+        <fieldset>
+            <legend><fmt:message key="mostrarAsignacionEstudianteCarrera.listadoCarrerasAsignadas" /></legend>
+            <center>
                 <display:table class="ui-widget ui-widget-content" name="listadoAsignacionEstudianteCarrera" id="asignacionEstudianteCarrera">
                     <display:column property="carrera.codigo" titleKey="agregarCarrera.codigo" style="text-align: center;"  />
                     <display:column property="carrera.nombre" titleKey="agregarCarrera.nombre"  />
@@ -64,7 +66,8 @@
 
                             <sec:authorize access="hasRole('ROLE_MODIFICAR_ASIGNACION_ESTUDIANTE_CARRERA')">
                                 <br/>
-                                <a class="a-acciones" onclick="modificar(${asignacionEstudianteCarrera.idAsignacionEstudianteCarrera}, '${fechaCierre}')">
+                                <a style="cursor: pointer;"
+                                    class="a-acciones" onclick="modificar(${asignacionEstudianteCarrera.idAsignacionEstudianteCarrera}, '${fechaCierre}', ${asignacionEstudianteCarrera.inscrito})">
                                     <fmt:message key="asignacionEstudianteCarrera.boton.modificar"/>
                                 </a>
                             </sec:authorize>
@@ -80,8 +83,9 @@
 
 
                 </display:table>
-            </fieldset>
-        </center>
+            </center>
+        </fieldset>
+
 
 
         <sec:authorize access="hasRole('ROLE_AGREGAR_ASIGNACION_ESTUDIANTE_CARRERA')">
@@ -111,6 +115,14 @@
                         <form:errors path="idAsignacionEstudianteCarrera" cssClass="claseError claseErrorModificar" />
 
                         <div id="divCampos">
+                            <form:label for="inscrito" path="inscrito">
+                                <fmt:message key="asignacionEstudianteCarrera.inscrito"/>: *
+                            </form:label>
+                            <form:checkbox id="checkboxInscrito" path="inscrito" />
+                            <form:errors path="inscrito" cssClass="claseError" />
+                        </div>
+
+                        <div id="divCampos">
                             <form:label for="fechaCierre" path="fechaCierre">
                                 <fmt:message key="asignacionEstudianteCarrera.fechaCierre"/>:
                             </form:label>
@@ -121,10 +133,11 @@
                 </div>
             </c:if>
         </sec:authorize>
-                
-        <center>
-            <fieldset>
-                <legend><fmt:message key="mostrarAsignacionEstudianteCarrera.listadoCarrerasNoAsignadas" /></legend>
+
+
+        <fieldset>
+            <legend><fmt:message key="mostrarAsignacionEstudianteCarrera.listadoCarrerasNoAsignadas" /></legend>
+            <center>
                 <display:table class="ui-widget ui-widget-content" name="listadoAsignacionEstudianteCarreraNoAsignadas" id="asignacionEstudianteCarrera">
                     <display:column property="carrera.codigo" titleKey="agregarCarrera.codigo" style="text-align: center;"  />
                     <display:column property="carrera.nombre" titleKey="agregarCarrera.nombre"  />
@@ -134,8 +147,9 @@
                         ${fechaCierre}
                     </display:column>
                 </display:table>
-            </fieldset>
-        </center>
+            </center>
+        </fieldset>
+
 
         <div style="margin: 20px 0 0 0; ">
             <a href="buscarEstudiante.htm"><fmt:message key="mostrarAsignacionEstudianteCarrera.regresar"/></a>

@@ -61,8 +61,7 @@ public class Estudiante implements java.io.Serializable {
      private Boolean requisitos;
      private String carneModificado;
      private String nov;
-     private char sexo;
-     private boolean inscrito;
+     private char sexo;     
      private Set<CuentaCorriente> cuentaCorrientes = new HashSet<CuentaCorriente>(0);
      private Set<AsignacionDocumento> asignacionDocumentos = new HashSet<AsignacionDocumento>(0);
      private Set<DetalleAsignacionPrimerIngreso> detalleAsignacionPrimerIngresos = new HashSet<DetalleAsignacionPrimerIngreso>(0);
@@ -273,15 +272,15 @@ public class Estudiante implements java.io.Serializable {
         this.detalleAsignacionPrimerIngresos = detalleAsignacionPrimerIngresos;
     }
 
-//______________________________________________________________________________
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Estudiante (id = ").append(this.idEstudiante);
+        builder.append(", carne = ").append(this.carne);
+        builder.append(", nombre ").append(this.nombre);
+        builder.append(", sexo = ").append(this.sexo).append(")");
 
-    @Column(name="inscrito")
-    public boolean isInscrito() {
-        return inscrito;
-    }
-
-    public void setInscrito(boolean inscrito) {
-        this.inscrito = inscrito;
+        return builder.toString();
     }
 
 }
