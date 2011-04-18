@@ -1,196 +1,241 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:TalendMetadata="http://www.talend.org/metadata/connection/2010" xmlns:orgomg.cwm.resource.relational="http:///orgomg/cwm/resource/relational.ecore" xmlns:relational="http://www.talend.org/cwm/resource/relational/2010">
-  <TalendMetadata:DatabaseConnection xmi:id="_kZ3w5FajEeCjNc_Z8PFiPQ" name="ConexionPostgres" dataPackage="_kbNNoFajEeCjNc_Z8PFiPQ" ContextMode="true" ContextId="_p-6IIPLJEd-Kxr2kCO7ilg" DatabaseType="PostgreSQL" URL="jdbc:postgresql://localhost:5432/control_academico" Port="context.ConexionPostgres_Port" Username="context.ConexionPostgres_Login" Password="context.ConexionPostgres_Password" ServerName="context.ConexionPostgres_Server" SID="context.ConexionPostgres_Database" SqlSynthax="SQL Syntax" DbmsId="postgres_id" ProductId="POSTGRESQL" StandardSQL="true" SQLMode="true" UiSchema="context.ConexionPostgres_Schema"/>
-  <orgomg.cwm.resource.relational:Catalog xmi:id="_kbNNoFajEeCjNc_Z8PFiPQ" name="context.ConexionPostgres_Database" dataManager="_kZ3w5FajEeCjNc_Z8PFiPQ">
-    <ownedElement xsi:type="orgomg.cwm.resource.relational:Schema" xmi:id="_kZ3w5VajEeCjNc_Z8PFiPQ" name="context.ConexionPostgres_Schema">
-      <ownedElement xsi:type="relational:TdTable" xmi:id="_kZ1UoFajEeCjNc_Z8PFiPQ" name="escuela" id="__-GRYPLLEd-Kxr2kCO7ilg" label="escuela" tableType="TABLE">
-        <feature xsi:type="relational:TdColumn" xmi:id="_kZpHYFajEeCjNc_Z8PFiPQ" name="id_escuela" label="id_escuela" length="2" sourceType="INT2" talendType="id_Short" key="true" nullable="false">
-          <initialValue xmi:id="_kZpHYVajEeCjNc_Z8PFiPQ" body="&quot;nextval('control.escuela_id_escuela_seq'::regclass)&quot;"/>
+  <TalendMetadata:DatabaseConnection xmi:id="_kZ3w5FajEeCjNc_Z8PFiPQ" name="ConexionPostgres" dataPackage="_C-yAUGoOEeCQG_cxIDShhw" ContextMode="true" ContextId="_p-6IIPLJEd-Kxr2kCO7ilg" DatabaseType="PostgreSQL" URL="jdbc:postgresql://localhost:5432/control_academico" Port="context.ConexionPostgres_Port" Username="context.ConexionPostgres_Login" Password="context.ConexionPostgres_Password" ServerName="context.ConexionPostgres_Server" SID="context.ConexionPostgres_Database" SqlSynthax="SQL Syntax" DbmsId="postgres_id" ProductId="POSTGRESQL" StandardSQL="true" SQLMode="true" UiSchema="context.ConexionPostgres_Schema"/>
+  <orgomg.cwm.resource.relational:Catalog xmi:id="_C-yAUGoOEeCQG_cxIDShhw" name="context.ConexionPostgres_Database" dataManager="_kZ3w5FajEeCjNc_Z8PFiPQ">
+    <ownedElement xsi:type="orgomg.cwm.resource.relational:Schema" xmi:id="_C-ynYGoOEeCQG_cxIDShhw" name="context.ConexionPostgres_Schema">
+      <ownedElement xsi:type="relational:TdTable" xmi:id="_C-ynYWoOEeCQG_cxIDShhw" name="escuela" id="__-GRYPLLEd-Kxr2kCO7ilg" label="escuela" tableType="TABLE">
+        <feature xsi:type="relational:TdColumn" xmi:id="_C-ynYmoOEeCQG_cxIDShhw" name="id_escuela" label="id_escuela" length="2" sourceType="INT2" talendType="id_Short" key="true" nullable="false">
+          <initialValue xmi:id="_C-ynY2oOEeCQG_cxIDShhw" body="&quot;nextval('control.escuela_id_escuela_seq'::regclass)&quot;"/>
         </feature>
-        <feature xsi:type="relational:TdColumn" xmi:id="_kZpHYlajEeCjNc_Z8PFiPQ" name="nombre" label="nombre" length="100" sourceType="VARCHAR" talendType="id_String" nullable="false">
-          <initialValue xmi:id="_kZpHY1ajEeCjNc_Z8PFiPQ" body=""/>
+        <feature xsi:type="relational:TdColumn" xmi:id="_C-ynZGoOEeCQG_cxIDShhw" name="nombre" label="nombre" length="100" sourceType="VARCHAR" talendType="id_String" nullable="false">
+          <initialValue xmi:id="_C-ynZWoOEeCQG_cxIDShhw" body=""/>
         </feature>
-        <feature xsi:type="relational:TdColumn" xmi:id="_kZqVgFajEeCjNc_Z8PFiPQ" name="descripcion" label="descripcion" length="-1" sourceType="TEXT" talendType="id_String">
-          <initialValue xmi:id="_kZqVgVajEeCjNc_Z8PFiPQ" body=""/>
+        <feature xsi:type="relational:TdColumn" xmi:id="_C-ynZmoOEeCQG_cxIDShhw" name="descripcion" label="descripcion" length="-1" sourceType="TEXT" talendType="id_String">
+          <initialValue xmi:id="_C-ynZ2oOEeCQG_cxIDShhw" body=""/>
         </feature>
-        <feature xsi:type="relational:TdColumn" xmi:id="_kZqVglajEeCjNc_Z8PFiPQ" name="codigo" label="codigo" length="2" sourceType="INT2" talendType="id_Short">
-          <initialValue xmi:id="_kZq8kFajEeCjNc_Z8PFiPQ" body=""/>
-        </feature>
-      </ownedElement>
-      <ownedElement xsi:type="relational:TdTable" xmi:id="_kZ17sFajEeCjNc_Z8PFiPQ" name="carrera" id="_AXbXYPLMEd-Kxr2kCO7ilg" label="carrera" tableType="TABLE">
-        <feature xsi:type="relational:TdColumn" xmi:id="_kZq8kVajEeCjNc_Z8PFiPQ" name="id_carrera" label="id_carrera" length="5" sourceType="int2" talendType="id_String" nullable="false" pattern="&quot;dd-MM-yyyy&quot;">
-          <initialValue xmi:id="_kZq8klajEeCjNc_Z8PFiPQ" body=""/>
-        </feature>
-        <feature xsi:type="relational:TdColumn" xmi:id="_kZq8k1ajEeCjNc_Z8PFiPQ" name="nombre" label="nombre" length="100" sourceType="varchar" talendType="id_String" nullable="false" pattern="&quot;dd-MM-yyyy&quot;">
-          <initialValue xmi:id="_kZq8lFajEeCjNc_Z8PFiPQ" body=""/>
-        </feature>
-        <feature xsi:type="relational:TdColumn" xmi:id="_kZq8lVajEeCjNc_Z8PFiPQ" name="descripcion" label="descripcion" sourceType="text" talendType="id_String" pattern="&quot;dd-MM-yyyy&quot;">
-          <initialValue xmi:id="_kZq8llajEeCjNc_Z8PFiPQ" body=""/>
-        </feature>
-        <feature xsi:type="relational:TdColumn" xmi:id="_kZq8l1ajEeCjNc_Z8PFiPQ" name="id_escuela" label="id_escuela" length="5" sourceType="int2" talendType="id_String" nullable="false" pattern="&quot;dd-MM-yyyy&quot;">
-          <initialValue xmi:id="_kZq8mFajEeCjNc_Z8PFiPQ" body=""/>
-        </feature>
-        <feature xsi:type="relational:TdColumn" xmi:id="_kZq8mVajEeCjNc_Z8PFiPQ" name="codigo" label="codigo" length="5" sourceType="int2" talendType="id_String" pattern="&quot;dd-MM-yyyy&quot;">
-          <initialValue xmi:id="_kZq8mlajEeCjNc_Z8PFiPQ" body=""/>
-        </feature>
-        <feature xsi:type="relational:TdColumn" xmi:id="_kZq8m1ajEeCjNc_Z8PFiPQ" name="nivel" label="nivel" length="5" sourceType="int2" talendType="id_String" nullable="false" pattern="&quot;dd-MM-yyyy&quot;">
-          <initialValue xmi:id="_kZq8nFajEeCjNc_Z8PFiPQ" body=""/>
+        <feature xsi:type="relational:TdColumn" xmi:id="_C-ynaGoOEeCQG_cxIDShhw" name="codigo" label="codigo" length="2" sourceType="INT2" talendType="id_Short">
+          <initialValue xmi:id="_C-ynaWoOEeCQG_cxIDShhw" body=""/>
         </feature>
       </ownedElement>
-      <ownedElement xsi:type="relational:TdTable" xmi:id="_kZ17sVajEeCjNc_Z8PFiPQ" name="estudiante" id="_AwCrsPLMEd-Kxr2kCO7ilg" label="estudiante" tableType="TABLE">
-        <feature xsi:type="relational:TdColumn" xmi:id="_kZrjoFajEeCjNc_Z8PFiPQ" name="id_estudiante" label="id_estudiante" length="4" sourceType="SERIAL" talendType="id_Integer" key="true" nullable="false">
-          <initialValue xmi:id="_kZrjoVajEeCjNc_Z8PFiPQ" body="&quot;nextval('estudiante_id_estudiante_seq'::regclass)&quot;"/>
+      <ownedElement xsi:type="relational:TdTable" xmi:id="_C-ynamoOEeCQG_cxIDShhw" name="carrera" id="_AXbXYPLMEd-Kxr2kCO7ilg" label="carrera" tableType="TABLE">
+        <feature xsi:type="relational:TdColumn" xmi:id="_C-yna2oOEeCQG_cxIDShhw" name="id_carrera" label="id_carrera" length="5" sourceType="int2" talendType="id_String" nullable="false" pattern="&quot;dd-MM-yyyy&quot;">
+          <initialValue xmi:id="_C-ynbGoOEeCQG_cxIDShhw" body=""/>
         </feature>
-        <feature xsi:type="relational:TdColumn" xmi:id="_kZrjolajEeCjNc_Z8PFiPQ" name="carne" label="carne" length="10" sourceType="VARCHAR" talendType="id_String" nullable="false">
-          <initialValue xmi:id="_kZrjo1ajEeCjNc_Z8PFiPQ" body=""/>
+        <feature xsi:type="relational:TdColumn" xmi:id="_C-ynbWoOEeCQG_cxIDShhw" name="nombre" label="nombre" length="100" sourceType="varchar" talendType="id_String" nullable="false" pattern="&quot;dd-MM-yyyy&quot;">
+          <initialValue xmi:id="_C-ynbmoOEeCQG_cxIDShhw" body=""/>
         </feature>
-        <feature xsi:type="relational:TdColumn" xmi:id="_kZrjpFajEeCjNc_Z8PFiPQ" name="nombre" label="nombre" length="50" sourceType="VARCHAR" talendType="id_String" nullable="false">
-          <initialValue xmi:id="_kZrjpVajEeCjNc_Z8PFiPQ" body=""/>
+        <feature xsi:type="relational:TdColumn" xmi:id="_C-ynb2oOEeCQG_cxIDShhw" name="descripcion" label="descripcion" sourceType="text" talendType="id_String" pattern="&quot;dd-MM-yyyy&quot;">
+          <initialValue xmi:id="_C-yncGoOEeCQG_cxIDShhw" body=""/>
         </feature>
-        <feature xsi:type="relational:TdColumn" xmi:id="_kZrjplajEeCjNc_Z8PFiPQ" name="direccion" label="direccion" length="200" sourceType="VARCHAR" talendType="id_String">
-          <initialValue xmi:id="_kZrjp1ajEeCjNc_Z8PFiPQ" body=""/>
+        <feature xsi:type="relational:TdColumn" xmi:id="_C-yncWoOEeCQG_cxIDShhw" name="id_escuela" label="id_escuela" length="5" sourceType="int2" talendType="id_String" nullable="false" pattern="&quot;dd-MM-yyyy&quot;">
+          <initialValue xmi:id="_C-yncmoOEeCQG_cxIDShhw" body=""/>
         </feature>
-        <feature xsi:type="relational:TdColumn" xmi:id="_kZrjqFajEeCjNc_Z8PFiPQ" name="telefono" label="telefono" length="10" sourceType="VARCHAR" talendType="id_String">
-          <initialValue xmi:id="_kZrjqVajEeCjNc_Z8PFiPQ" body=""/>
+        <feature xsi:type="relational:TdColumn" xmi:id="_C-ync2oOEeCQG_cxIDShhw" name="codigo" label="codigo" length="5" sourceType="int2" talendType="id_String" pattern="&quot;dd-MM-yyyy&quot;">
+          <initialValue xmi:id="_C-yndGoOEeCQG_cxIDShhw" body=""/>
         </feature>
-        <feature xsi:type="relational:TdColumn" xmi:id="_kZsxwFajEeCjNc_Z8PFiPQ" name="celular" label="celular" length="10" sourceType="VARCHAR" talendType="id_String">
-          <initialValue xmi:id="_kZsxwVajEeCjNc_Z8PFiPQ" body=""/>
-        </feature>
-        <feature xsi:type="relational:TdColumn" xmi:id="_kZsxwlajEeCjNc_Z8PFiPQ" name="email" label="email" length="100" sourceType="VARCHAR" talendType="id_String">
-          <initialValue xmi:id="_kZsxw1ajEeCjNc_Z8PFiPQ" body=""/>
-        </feature>
-        <feature xsi:type="relational:TdColumn" xmi:id="_kZsxxFajEeCjNc_Z8PFiPQ" name="fecha_nacimiento" label="fecha_nacimiento" length="4" sourceType="DATE" talendType="id_Date" nullable="false" pattern="&quot;dd-MM-yyyy&quot;">
-          <initialValue xmi:id="_kZsxxVajEeCjNc_Z8PFiPQ" body=""/>
-        </feature>
-        <feature xsi:type="relational:TdColumn" xmi:id="_kZsxxlajEeCjNc_Z8PFiPQ" name="requisitos" label="requisitos" length="1" sourceType="BOOL" talendType="id_Boolean">
-          <initialValue xmi:id="_kZsxx1ajEeCjNc_Z8PFiPQ" body="&quot;false&quot;"/>
-        </feature>
-        <feature xsi:type="relational:TdColumn" xmi:id="_kZtY0FajEeCjNc_Z8PFiPQ" name="id_usuario" label="id_usuario" length="4" sourceType="INT4" talendType="id_Integer" nullable="false">
-          <initialValue xmi:id="_kZtY0VajEeCjNc_Z8PFiPQ" body=""/>
-        </feature>
-        <feature xsi:type="relational:TdColumn" xmi:id="_kZtY0lajEeCjNc_Z8PFiPQ" name="carne_modificado" label="carne_modificado" length="10" sourceType="VARCHAR" talendType="id_String">
-          <initialValue xmi:id="_kZtY01ajEeCjNc_Z8PFiPQ" body=""/>
-        </feature>
-        <feature xsi:type="relational:TdColumn" xmi:id="_kZtY1FajEeCjNc_Z8PFiPQ" name="nov" label="nov" length="12" sourceType="VARCHAR" talendType="id_String">
-          <initialValue xmi:id="_kZtY1VajEeCjNc_Z8PFiPQ" body=""/>
-        </feature>
-        <feature xsi:type="relational:TdColumn" xmi:id="_kZtY1lajEeCjNc_Z8PFiPQ" name="sexo" label="sexo" length="1" sourceType="BPCHAR" talendType="id_String" nullable="false">
-          <initialValue xmi:id="_kZtY11ajEeCjNc_Z8PFiPQ" body=""/>
-        </feature>
-        <feature xsi:type="relational:TdColumn" xmi:id="_kZtY2FajEeCjNc_Z8PFiPQ" name="id_lugar_nacimiento" label="id_lugar_nacimiento" length="2" sourceType="INT2" talendType="id_Short" nullable="false">
-          <initialValue xmi:id="_kZt_4FajEeCjNc_Z8PFiPQ" body=""/>
-        </feature>
-        <feature xsi:type="relational:TdColumn" xmi:id="_kZt_4VajEeCjNc_Z8PFiPQ" name="id_nacionalidad" label="id_nacionalidad" length="2" sourceType="INT2" talendType="id_Short" nullable="false">
-          <initialValue xmi:id="_kZum8FajEeCjNc_Z8PFiPQ" body=""/>
-        </feature>
-        <feature xsi:type="relational:TdColumn" xmi:id="_kZum8VajEeCjNc_Z8PFiPQ" name="inscrito" label="inscrito" length="1" sourceType="BOOL" talendType="id_Boolean" nullable="false">
-          <initialValue xmi:id="_kZum8lajEeCjNc_Z8PFiPQ" body=""/>
+        <feature xsi:type="relational:TdColumn" xmi:id="_C-yndWoOEeCQG_cxIDShhw" name="nivel" label="nivel" length="5" sourceType="int2" talendType="id_String" nullable="false" pattern="&quot;dd-MM-yyyy&quot;">
+          <initialValue xmi:id="_C-yndmoOEeCQG_cxIDShhw" body=""/>
         </feature>
       </ownedElement>
-      <ownedElement xsi:type="relational:TdTable" xmi:id="_kZ17slajEeCjNc_Z8PFiPQ" name="asignacion_estudiante_carrera" id="_BVaCkPLMEd-Kxr2kCO7ilg" label="asignacion_estudiante_carrera" tableType="TABLE">
-        <feature xsi:type="relational:TdColumn" xmi:id="_kZum81ajEeCjNc_Z8PFiPQ" name="id_asignacion_estudiante_carrera" label="id_asignacion_estudiante_carrera" length="4" sourceType="SERIAL" talendType="id_Integer" key="true" nullable="false">
-          <initialValue xmi:id="_kZum9FajEeCjNc_Z8PFiPQ" body="&quot;nextval('control.asignacion_estudiante_carrera_id_asignacion_estudiante_carre995'::regclass)&quot;"/>
+      <ownedElement xsi:type="relational:TdTable" xmi:id="_C-ynd2oOEeCQG_cxIDShhw" name="estudiante" id="_AwCrsPLMEd-Kxr2kCO7ilg" label="estudiante" tableType="TABLE">
+        <feature xsi:type="relational:TdColumn" xmi:id="_C-yneGoOEeCQG_cxIDShhw" name="id_estudiante" label="id_estudiante" length="10" sourceType="SERIAL" talendType="id_Integer" key="true" nullable="false">
+          <taggedValue xmi:id="_C-yneWoOEeCQG_cxIDShhw" tag="Comment" value=""/>
+          <initialValue xsi:type="relational:TdExpression" xmi:id="_C-ynemoOEeCQG_cxIDShhw" body="&quot;nextval('estudiante_id_estudiante_seq'::regclass)&quot;" language="COLUMN_DEF"/>
+          <sqlDataType xmi:id="_C-yne2oOEeCQG_cxIDShhw" name="SERIAL" numericPrecisionRadix="10" javaDataType="4"/>
         </feature>
-        <feature xsi:type="relational:TdColumn" xmi:id="_kZum9VajEeCjNc_Z8PFiPQ" name="id_estudiante" label="id_estudiante" length="4" sourceType="INT4" talendType="id_Integer" nullable="false">
-          <initialValue xmi:id="_kZum9lajEeCjNc_Z8PFiPQ" body=""/>
+        <feature xsi:type="relational:TdColumn" xmi:id="_C-ynfGoOEeCQG_cxIDShhw" name="carne" label="carne" length="10" sourceType="VARCHAR" talendType="id_String" nullable="false">
+          <taggedValue xmi:id="_C-ynfWoOEeCQG_cxIDShhw" tag="Comment" value=""/>
+          <initialValue xsi:type="relational:TdExpression" xmi:id="_C-ynfmoOEeCQG_cxIDShhw" language="COLUMN_DEF"/>
+          <sqlDataType xmi:id="_C-ynf2oOEeCQG_cxIDShhw" name="VARCHAR" numericPrecisionRadix="10" javaDataType="12"/>
         </feature>
-        <feature xsi:type="relational:TdColumn" xmi:id="_kZum91ajEeCjNc_Z8PFiPQ" name="id_carrera" label="id_carrera" length="2" sourceType="INT2" talendType="id_Short" nullable="false">
-          <initialValue xmi:id="_kZum-FajEeCjNc_Z8PFiPQ" body=""/>
+        <feature xsi:type="relational:TdColumn" xmi:id="_C-yngGoOEeCQG_cxIDShhw" name="nombre" label="nombre" length="50" sourceType="VARCHAR" talendType="id_String" nullable="false">
+          <taggedValue xmi:id="_C-yngWoOEeCQG_cxIDShhw" tag="Comment" value=""/>
+          <initialValue xsi:type="relational:TdExpression" xmi:id="_C-yngmoOEeCQG_cxIDShhw" language="COLUMN_DEF"/>
+          <sqlDataType xmi:id="_C-yng2oOEeCQG_cxIDShhw" name="VARCHAR" numericPrecisionRadix="10" javaDataType="12"/>
         </feature>
-        <feature xsi:type="relational:TdColumn" xmi:id="_kZum-VajEeCjNc_Z8PFiPQ" name="fecha_cierre" label="fecha_cierre" length="4" sourceType="DATE" talendType="id_Date" pattern="&quot;dd-MM-yyyy&quot;">
-          <initialValue xmi:id="_kZum-lajEeCjNc_Z8PFiPQ" body=""/>
+        <feature xsi:type="relational:TdColumn" xmi:id="_C-ynhGoOEeCQG_cxIDShhw" name="direccion" label="direccion" length="200" sourceType="VARCHAR" talendType="id_String">
+          <taggedValue xmi:id="_C-ynhWoOEeCQG_cxIDShhw" tag="Comment" value=""/>
+          <initialValue xsi:type="relational:TdExpression" xmi:id="_C-ynhmoOEeCQG_cxIDShhw" language="COLUMN_DEF"/>
+          <sqlDataType xmi:id="_C-ynh2oOEeCQG_cxIDShhw" name="VARCHAR" numericPrecisionRadix="10" javaDataType="12" nullable="columnNullable"/>
         </feature>
-      </ownedElement>
-      <ownedElement xsi:type="relational:TdTable" xmi:id="_kZ3J0FajEeCjNc_Z8PFiPQ" name="semestre" id="_B3y98PLMEd-Kxr2kCO7ilg" label="semestre" tableType="TABLE">
-        <feature xsi:type="relational:TdColumn" xmi:id="_kZum-1ajEeCjNc_Z8PFiPQ" name="id_semestre" label="id_semestre" length="2" sourceType="INT2" talendType="id_Short" key="true" nullable="false">
-          <initialValue xmi:id="_kZum_FajEeCjNc_Z8PFiPQ" body="&quot;nextval('control.semestre_id_semestre_seq'::regclass)&quot;"/>
+        <feature xsi:type="relational:TdColumn" xmi:id="_C-yniGoOEeCQG_cxIDShhw" name="telefono" label="telefono" length="10" sourceType="VARCHAR" talendType="id_String">
+          <taggedValue xmi:id="_C-yniWoOEeCQG_cxIDShhw" tag="Comment" value=""/>
+          <initialValue xsi:type="relational:TdExpression" xmi:id="_C-ynimoOEeCQG_cxIDShhw" language="COLUMN_DEF"/>
+          <sqlDataType xmi:id="_C-yni2oOEeCQG_cxIDShhw" name="VARCHAR" numericPrecisionRadix="10" javaDataType="12" nullable="columnNullable"/>
         </feature>
-        <feature xsi:type="relational:TdColumn" xmi:id="_kZum_VajEeCjNc_Z8PFiPQ" name="anio" label="anio" length="2" sourceType="INT2" talendType="id_Short" nullable="false">
-          <initialValue xmi:id="_kZum_lajEeCjNc_Z8PFiPQ" body=""/>
+        <feature xsi:type="relational:TdColumn" xmi:id="_C-ynjGoOEeCQG_cxIDShhw" name="celular" label="celular" length="10" sourceType="VARCHAR" talendType="id_String">
+          <taggedValue xmi:id="_C-ynjWoOEeCQG_cxIDShhw" tag="Comment" value=""/>
+          <initialValue xsi:type="relational:TdExpression" xmi:id="_C-ynjmoOEeCQG_cxIDShhw" language="COLUMN_DEF"/>
+          <sqlDataType xmi:id="_C-ynj2oOEeCQG_cxIDShhw" name="VARCHAR" numericPrecisionRadix="10" javaDataType="12" nullable="columnNullable"/>
         </feature>
-        <feature xsi:type="relational:TdColumn" xmi:id="_kZvOAFajEeCjNc_Z8PFiPQ" name="numero" label="numero" length="1" sourceType="BPCHAR" talendType="id_String" nullable="false">
-          <initialValue xmi:id="_kZvOAVajEeCjNc_Z8PFiPQ" body=""/>
+        <feature xsi:type="relational:TdColumn" xmi:id="_C-ynkGoOEeCQG_cxIDShhw" name="email" label="email" length="100" sourceType="VARCHAR" talendType="id_String">
+          <taggedValue xmi:id="_C-ynkWoOEeCQG_cxIDShhw" tag="Comment" value=""/>
+          <initialValue xsi:type="relational:TdExpression" xmi:id="_C-ynkmoOEeCQG_cxIDShhw" language="COLUMN_DEF"/>
+          <sqlDataType xmi:id="_C-ynk2oOEeCQG_cxIDShhw" name="VARCHAR" numericPrecisionRadix="10" javaDataType="12" nullable="columnNullable"/>
         </feature>
-        <feature xsi:type="relational:TdColumn" xmi:id="_kZvOAlajEeCjNc_Z8PFiPQ" name="observacion" label="observacion" length="1000" sourceType="VARCHAR" talendType="id_String">
-          <initialValue xmi:id="_kZvOA1ajEeCjNc_Z8PFiPQ" body=""/>
+        <feature xsi:type="relational:TdColumn" xmi:id="_C-ynlGoOEeCQG_cxIDShhw" name="fecha_nacimiento" label="fecha_nacimiento" length="13" sourceType="DATE" talendType="id_Date" nullable="false" pattern="&quot;dd-MM-yyyy&quot;">
+          <taggedValue xmi:id="_C-ynlWoOEeCQG_cxIDShhw" tag="Comment" value=""/>
+          <initialValue xsi:type="relational:TdExpression" xmi:id="_C-ynlmoOEeCQG_cxIDShhw" language="COLUMN_DEF"/>
+          <sqlDataType xmi:id="_C-ynl2oOEeCQG_cxIDShhw" name="DATE" numericPrecisionRadix="10" javaDataType="91"/>
         </feature>
-      </ownedElement>
-      <ownedElement xsi:type="relational:TdTable" xmi:id="_kZ3J0VajEeCjNc_Z8PFiPQ" name="usuario" id="_sv11EPXyEd-jqPAqU5kN8g" label="usuario" tableType="TABLE">
-        <feature xsi:type="relational:TdColumn" xmi:id="_kZvOBFajEeCjNc_Z8PFiPQ" name="id_usuario" label="id_usuario" length="4" sourceType="SERIAL" talendType="id_Integer" key="true" nullable="false">
-          <initialValue xmi:id="_kZvOBVajEeCjNc_Z8PFiPQ" body="&quot;nextval('control.usuario_id_usuario_seq'::regclass)&quot;"/>
+        <feature xsi:type="relational:TdColumn" xmi:id="_C-ynmGoOEeCQG_cxIDShhw" name="requisitos" label="requisitos" length="1" sourceType="BOOL" talendType="id_Boolean">
+          <taggedValue xmi:id="_C-ynmWoOEeCQG_cxIDShhw" tag="Comment" value=""/>
+          <initialValue xsi:type="relational:TdExpression" xmi:id="_C-ynmmoOEeCQG_cxIDShhw" body="&quot;false&quot;" language="COLUMN_DEF"/>
+          <sqlDataType xmi:id="_C-ynm2oOEeCQG_cxIDShhw" name="BOOL" numericPrecisionRadix="10" javaDataType="-7" nullable="columnNullable"/>
         </feature>
-        <feature xsi:type="relational:TdColumn" xmi:id="_kZv1EFajEeCjNc_Z8PFiPQ" name="nombre_usuario" label="nombre_usuario" length="256" sourceType="VARCHAR" talendType="id_String" nullable="false">
-          <initialValue xmi:id="_kZv1EVajEeCjNc_Z8PFiPQ" body=""/>
+        <feature xsi:type="relational:TdColumn" xmi:id="_C-ynnGoOEeCQG_cxIDShhw" name="id_usuario" label="id_usuario" length="10" sourceType="INT4" talendType="id_Integer">
+          <taggedValue xmi:id="_C-ynnWoOEeCQG_cxIDShhw" tag="Comment" value=""/>
+          <initialValue xsi:type="relational:TdExpression" xmi:id="_C-ynnmoOEeCQG_cxIDShhw" language="COLUMN_DEF"/>
+          <sqlDataType xmi:id="_C-ynn2oOEeCQG_cxIDShhw" name="INT4" numericPrecisionRadix="10" javaDataType="4" nullable="columnNullable"/>
         </feature>
-        <feature xsi:type="relational:TdColumn" xmi:id="_kZv1ElajEeCjNc_Z8PFiPQ" name="password" label="password" length="256" sourceType="VARCHAR" talendType="id_String" nullable="false">
-          <initialValue xmi:id="_kZv1E1ajEeCjNc_Z8PFiPQ" body=""/>
+        <feature xsi:type="relational:TdColumn" xmi:id="_C-ynoGoOEeCQG_cxIDShhw" name="carne_modificado" label="carne_modificado" length="10" sourceType="VARCHAR" talendType="id_String">
+          <taggedValue xmi:id="_C-ynoWoOEeCQG_cxIDShhw" tag="Comment" value=""/>
+          <initialValue xsi:type="relational:TdExpression" xmi:id="_C-ynomoOEeCQG_cxIDShhw" language="COLUMN_DEF"/>
+          <sqlDataType xmi:id="_C-yno2oOEeCQG_cxIDShhw" name="VARCHAR" numericPrecisionRadix="10" javaDataType="12" nullable="columnNullable"/>
         </feature>
-        <feature xsi:type="relational:TdColumn" xmi:id="_kZv1FFajEeCjNc_Z8PFiPQ" name="habilitado" label="habilitado" length="1" sourceType="BOOL" talendType="id_Boolean" nullable="false">
-          <initialValue xmi:id="_kZv1FVajEeCjNc_Z8PFiPQ" body=""/>
+        <feature xsi:type="relational:TdColumn" xmi:id="_C-ynpGoOEeCQG_cxIDShhw" name="nov" label="nov" length="12" sourceType="VARCHAR" talendType="id_String">
+          <taggedValue xmi:id="_C-ynpWoOEeCQG_cxIDShhw" tag="Comment" value=""/>
+          <initialValue xsi:type="relational:TdExpression" xmi:id="_C-ynpmoOEeCQG_cxIDShhw" language="COLUMN_DEF"/>
+          <sqlDataType xmi:id="_C-ynp2oOEeCQG_cxIDShhw" name="VARCHAR" numericPrecisionRadix="10" javaDataType="12" nullable="columnNullable"/>
         </feature>
-      </ownedElement>
-      <ownedElement xsi:type="relational:TdTable" xmi:id="_kZ3J0lajEeCjNc_Z8PFiPQ" name="asignacion_usuario_perfil" id="_lFy8sPYBEd-hsIxifyr6YA" label="asignacion_usuario_perfil" tableType="TABLE">
-        <feature xsi:type="relational:TdColumn" xmi:id="_kZwcIFajEeCjNc_Z8PFiPQ" name="id_asignacion_usuario_perfil" label="id_asignacion_usuario_perfil" length="4" sourceType="SERIAL" talendType="id_Integer" key="true" nullable="false">
-          <initialValue xmi:id="_kZwcIVajEeCjNc_Z8PFiPQ" body="&quot;nextval('control.asignacion_usuario_perfil_id_asignacion_usuario_perfil_seq'::regclass)&quot;"/>
+        <feature xsi:type="relational:TdColumn" xmi:id="_C-ynqGoOEeCQG_cxIDShhw" name="sexo" label="sexo" length="1" sourceType="BPCHAR" talendType="id_String" nullable="false">
+          <taggedValue xmi:id="_C-ynqWoOEeCQG_cxIDShhw" tag="Comment" value=""/>
+          <initialValue xsi:type="relational:TdExpression" xmi:id="_C-ynqmoOEeCQG_cxIDShhw" language="COLUMN_DEF"/>
+          <sqlDataType xmi:id="_C-ynq2oOEeCQG_cxIDShhw" name="BPCHAR" numericPrecisionRadix="10" javaDataType="1"/>
         </feature>
-        <feature xsi:type="relational:TdColumn" xmi:id="_kZwcIlajEeCjNc_Z8PFiPQ" name="id_usuario" label="id_usuario" length="4" sourceType="INT4" talendType="id_Integer" nullable="false">
-          <initialValue xmi:id="_kZwcI1ajEeCjNc_Z8PFiPQ" body=""/>
+        <feature xsi:type="relational:TdColumn" xmi:id="_C-ynrGoOEeCQG_cxIDShhw" name="id_lugar_nacimiento" label="id_lugar_nacimiento" length="5" sourceType="INT2" talendType="id_Short" nullable="false">
+          <taggedValue xmi:id="_C-ynrWoOEeCQG_cxIDShhw" tag="Comment" value=""/>
+          <initialValue xsi:type="relational:TdExpression" xmi:id="_C-ynrmoOEeCQG_cxIDShhw" language="COLUMN_DEF"/>
+          <sqlDataType xmi:id="_C-ynr2oOEeCQG_cxIDShhw" name="INT2" numericPrecisionRadix="10" javaDataType="5"/>
         </feature>
-        <feature xsi:type="relational:TdColumn" xmi:id="_kZwcJFajEeCjNc_Z8PFiPQ" name="id_perfil" label="id_perfil" length="2" sourceType="INT2" talendType="id_Short" nullable="false">
-          <initialValue xmi:id="_kZwcJVajEeCjNc_Z8PFiPQ" body=""/>
-        </feature>
-      </ownedElement>
-      <ownedElement xsi:type="relational:TdTable" xmi:id="_kZ3w4FajEeCjNc_Z8PFiPQ" name="situacion" id="_4-ELAPsMEd-s-M1MMuN_xw" label="situacion" tableType="TABLE">
-        <feature xsi:type="relational:TdColumn" xmi:id="_kZxDMFajEeCjNc_Z8PFiPQ" name="id_situacion" label="id_situacion" length="2" sourceType="INT2" talendType="id_Short" key="true" nullable="false">
-          <initialValue xmi:id="_kZxDMVajEeCjNc_Z8PFiPQ" body="&quot;nextval('control.situacion_id_situacion_seq'::regclass)&quot;"/>
-        </feature>
-        <feature xsi:type="relational:TdColumn" xmi:id="_kZxDMlajEeCjNc_Z8PFiPQ" name="codigo" label="codigo" length="2" sourceType="INT2" talendType="id_Short" nullable="false">
-          <initialValue xmi:id="_kZxDM1ajEeCjNc_Z8PFiPQ" body=""/>
-        </feature>
-        <feature xsi:type="relational:TdColumn" xmi:id="_kZxDNFajEeCjNc_Z8PFiPQ" name="nombre" label="nombre" length="50" sourceType="VARCHAR" talendType="id_String" nullable="false">
-          <initialValue xmi:id="_kZxDNVajEeCjNc_Z8PFiPQ" body=""/>
-        </feature>
-        <feature xsi:type="relational:TdColumn" xmi:id="_kZxDNlajEeCjNc_Z8PFiPQ" name="descripcion" label="descripcion" length="250" sourceType="VARCHAR" talendType="id_String">
-          <initialValue xmi:id="_kZxDN1ajEeCjNc_Z8PFiPQ" body=""/>
-        </feature>
-      </ownedElement>
-      <ownedElement xsi:type="relational:TdTable" xmi:id="_kZ3w4VajEeCjNc_Z8PFiPQ" name="historial_asignacion_estudiante_carrera" id="_YdsBgP2oEd-UKtvoddfbLw" label="historial_asignacion_estudiante_carrera" tableType="TABLE">
-        <feature xsi:type="relational:TdColumn" xmi:id="_kZxqQFajEeCjNc_Z8PFiPQ" name="id_historial_asignacion_estudiante_carrera" label="id_historial_asignacion_estudiante_carrera" length="4" sourceType="SERIAL" talendType="id_Integer" key="true" nullable="false">
-          <initialValue xmi:id="_kZxqQVajEeCjNc_Z8PFiPQ" body="&quot;nextval('control.historial_asignacion_estudiante_carrera_id_historial_asignac355'::regclass)&quot;"/>
-        </feature>
-        <feature xsi:type="relational:TdColumn" xmi:id="_kZxqQlajEeCjNc_Z8PFiPQ" name="id_asignacion_estudiante_carrera" label="id_asignacion_estudiante_carrera" length="4" sourceType="INT4" talendType="id_Integer" nullable="false">
-          <initialValue xmi:id="_kZxqQ1ajEeCjNc_Z8PFiPQ" body=""/>
-        </feature>
-        <feature xsi:type="relational:TdColumn" xmi:id="_kZxqRFajEeCjNc_Z8PFiPQ" name="fecha_inscripcion" label="fecha_inscripcion" length="4" sourceType="DATE" talendType="id_Date" nullable="false" pattern="&quot;dd-MM-yyyy&quot;">
-          <initialValue xmi:id="_kZxqRVajEeCjNc_Z8PFiPQ" body=""/>
-        </feature>
-        <feature xsi:type="relational:TdColumn" xmi:id="_kZxqRlajEeCjNc_Z8PFiPQ" name="id_situacion" label="id_situacion" length="2" sourceType="INT2" talendType="id_Short" nullable="false">
-          <initialValue xmi:id="_kZxqR1ajEeCjNc_Z8PFiPQ" body=""/>
-        </feature>
-        <feature xsi:type="relational:TdColumn" xmi:id="_kZxqSFajEeCjNc_Z8PFiPQ" name="id_semestre" label="id_semestre" length="2" sourceType="INT2" talendType="id_Short" nullable="false">
-          <initialValue xmi:id="_kZxqSVajEeCjNc_Z8PFiPQ" body=""/>
+        <feature xsi:type="relational:TdColumn" xmi:id="_C-ynsGoOEeCQG_cxIDShhw" name="id_nacionalidad" label="id_nacionalidad" length="5" sourceType="INT2" talendType="id_Short" nullable="false">
+          <taggedValue xmi:id="_C-ynsWoOEeCQG_cxIDShhw" tag="Comment" value=""/>
+          <initialValue xsi:type="relational:TdExpression" xmi:id="_C-ynsmoOEeCQG_cxIDShhw" language="COLUMN_DEF"/>
+          <sqlDataType xmi:id="_C-yns2oOEeCQG_cxIDShhw" name="INT2" numericPrecisionRadix="10" javaDataType="5"/>
         </feature>
       </ownedElement>
-      <ownedElement xsi:type="relational:TdTable" xmi:id="_kZ3w4lajEeCjNc_Z8PFiPQ" name="nacionalidad" id="_WRqHUAGkEeCHKIlBZrh8nA" label="nacionalidad" tableType="TABLE">
-        <feature xsi:type="relational:TdColumn" xmi:id="_kZyRUFajEeCjNc_Z8PFiPQ" name="id_nacionalidad" label="id_nacionalidad" length="2" sourceType="INT2" talendType="id_Short" key="true" nullable="false">
-          <initialValue xmi:id="_kZyRUVajEeCjNc_Z8PFiPQ" body="&quot;nextval('control.nacionalidad_id_nacionalidad_seq'::regclass)&quot;"/>
+      <ownedElement xsi:type="relational:TdTable" xmi:id="_C-yntGoOEeCQG_cxIDShhw" name="asignacion_estudiante_carrera" id="_BVaCkPLMEd-Kxr2kCO7ilg" label="asignacion_estudiante_carrera" tableType="TABLE">
+        <feature xsi:type="relational:TdColumn" xmi:id="_C-yntWoOEeCQG_cxIDShhw" name="id_asignacion_estudiante_carrera" label="id_asignacion_estudiante_carrera" length="10" sourceType="SERIAL" talendType="id_Integer" key="true" nullable="false">
+          <taggedValue xmi:id="_C-yntmoOEeCQG_cxIDShhw" tag="Comment" value=""/>
+          <initialValue xsi:type="relational:TdExpression" xmi:id="_C-ynt2oOEeCQG_cxIDShhw" body="&quot;nextval('asignacion_estudiante_carrera_id_asignacion_estudiante_carre995'::regclass)&quot;" language="COLUMN_DEF"/>
+          <sqlDataType xmi:id="_C-ynuGoOEeCQG_cxIDShhw" name="SERIAL" numericPrecisionRadix="10" javaDataType="4"/>
         </feature>
-        <feature xsi:type="relational:TdColumn" xmi:id="_kZy4YFajEeCjNc_Z8PFiPQ" name="codigo" label="codigo" length="2" sourceType="INT2" talendType="id_Short" nullable="false">
-          <initialValue xmi:id="_kZy4YVajEeCjNc_Z8PFiPQ" body=""/>
+        <feature xsi:type="relational:TdColumn" xmi:id="_C-ynuWoOEeCQG_cxIDShhw" name="id_estudiante" label="id_estudiante" length="10" sourceType="INT4" talendType="id_Integer" nullable="false">
+          <taggedValue xmi:id="_C-ynumoOEeCQG_cxIDShhw" tag="Comment" value=""/>
+          <initialValue xsi:type="relational:TdExpression" xmi:id="_C-ynu2oOEeCQG_cxIDShhw" language="COLUMN_DEF"/>
+          <sqlDataType xmi:id="_C-ynvGoOEeCQG_cxIDShhw" name="INT4" numericPrecisionRadix="10" javaDataType="4"/>
         </feature>
-        <feature xsi:type="relational:TdColumn" xmi:id="_kZy4YlajEeCjNc_Z8PFiPQ" name="nombre" label="nombre" length="100" sourceType="VARCHAR" talendType="id_String">
-          <initialValue xmi:id="_kZy4Y1ajEeCjNc_Z8PFiPQ" body=""/>
+        <feature xsi:type="relational:TdColumn" xmi:id="_C-ynvWoOEeCQG_cxIDShhw" name="id_carrera" label="id_carrera" length="5" sourceType="INT2" talendType="id_Short" nullable="false">
+          <taggedValue xmi:id="_C-ynvmoOEeCQG_cxIDShhw" tag="Comment" value=""/>
+          <initialValue xsi:type="relational:TdExpression" xmi:id="_C-ynv2oOEeCQG_cxIDShhw" language="COLUMN_DEF"/>
+          <sqlDataType xmi:id="_C-ynwGoOEeCQG_cxIDShhw" name="INT2" numericPrecisionRadix="10" javaDataType="5"/>
+        </feature>
+        <feature xsi:type="relational:TdColumn" xmi:id="_C-ynwWoOEeCQG_cxIDShhw" name="fecha_cierre" label="fecha_cierre" length="13" sourceType="DATE" talendType="id_Date" pattern="&quot;dd-MM-yyyy&quot;">
+          <taggedValue xmi:id="_C-ynwmoOEeCQG_cxIDShhw" tag="Comment" value=""/>
+          <initialValue xsi:type="relational:TdExpression" xmi:id="_C-ynw2oOEeCQG_cxIDShhw" language="COLUMN_DEF"/>
+          <sqlDataType xmi:id="_C-ynxGoOEeCQG_cxIDShhw" name="DATE" numericPrecisionRadix="10" javaDataType="91" nullable="columnNullable"/>
+        </feature>
+        <feature xsi:type="relational:TdColumn" xmi:id="_C-ynxWoOEeCQG_cxIDShhw" name="estado" label="estado" length="1" sourceType="BOOL" talendType="id_Boolean" nullable="false">
+          <taggedValue xmi:id="_C-ynxmoOEeCQG_cxIDShhw" tag="Comment" value=""/>
+          <initialValue xsi:type="relational:TdExpression" xmi:id="_C-ynx2oOEeCQG_cxIDShhw" body="&quot;true&quot;" language="COLUMN_DEF"/>
+          <sqlDataType xmi:id="_C-ynyGoOEeCQG_cxIDShhw" name="BOOL" numericPrecisionRadix="10" javaDataType="-7"/>
+        </feature>
+        <feature xsi:type="relational:TdColumn" xmi:id="_C-ynyWoOEeCQG_cxIDShhw" name="inscrito" label="inscrito" length="1" sourceType="BOOL" talendType="id_Boolean" nullable="false">
+          <taggedValue xmi:id="_C-ynymoOEeCQG_cxIDShhw" tag="Comment" value=""/>
+          <initialValue xsi:type="relational:TdExpression" xmi:id="_C-yny2oOEeCQG_cxIDShhw" language="COLUMN_DEF"/>
+          <sqlDataType xmi:id="_C-ynzGoOEeCQG_cxIDShhw" name="BOOL" numericPrecisionRadix="10" javaDataType="-7"/>
         </feature>
       </ownedElement>
-      <ownedElement xsi:type="relational:TdTable" xmi:id="_kZ3w41ajEeCjNc_Z8PFiPQ" name="lugar_nacimiento" id="_ZspAcAGkEeCHKIlBZrh8nA" label="lugar_nacimiento" tableType="TABLE">
-        <feature xsi:type="relational:TdColumn" xmi:id="_kZy4ZFajEeCjNc_Z8PFiPQ" name="id_lugar_nacimiento" label="id_lugar_nacimiento" length="2" sourceType="INT2" talendType="id_Short" key="true" nullable="false">
-          <initialValue xmi:id="_kZy4ZVajEeCjNc_Z8PFiPQ" body="&quot;nextval('control.lugar_nacimiento_id_lugar_nacimiento_seq'::regclass)&quot;"/>
+      <ownedElement xsi:type="relational:TdTable" xmi:id="_C-ynzWoOEeCQG_cxIDShhw" name="semestre" id="_B3y98PLMEd-Kxr2kCO7ilg" label="semestre" tableType="TABLE">
+        <feature xsi:type="relational:TdColumn" xmi:id="_C-ynzmoOEeCQG_cxIDShhw" name="id_semestre" label="id_semestre" length="2" sourceType="INT2" talendType="id_Short" key="true" nullable="false">
+          <initialValue xmi:id="_C-ynz2oOEeCQG_cxIDShhw" body="&quot;nextval('control.semestre_id_semestre_seq'::regclass)&quot;"/>
         </feature>
-        <feature xsi:type="relational:TdColumn" xmi:id="_kZy4ZlajEeCjNc_Z8PFiPQ" name="codigo" label="codigo" length="2" sourceType="INT2" talendType="id_Short" nullable="false">
-          <initialValue xmi:id="_kZy4Z1ajEeCjNc_Z8PFiPQ" body=""/>
+        <feature xsi:type="relational:TdColumn" xmi:id="_C-yn0GoOEeCQG_cxIDShhw" name="anio" label="anio" length="2" sourceType="INT2" talendType="id_Short" nullable="false">
+          <initialValue xmi:id="_C-yn0WoOEeCQG_cxIDShhw" body=""/>
         </feature>
-        <feature xsi:type="relational:TdColumn" xmi:id="_kZy4aFajEeCjNc_Z8PFiPQ" name="nombre" label="nombre" length="50" sourceType="VARCHAR" talendType="id_String">
-          <initialValue xmi:id="_kZy4aVajEeCjNc_Z8PFiPQ" body=""/>
+        <feature xsi:type="relational:TdColumn" xmi:id="_C-yn0moOEeCQG_cxIDShhw" name="numero" label="numero" length="1" sourceType="BPCHAR" talendType="id_String" nullable="false">
+          <initialValue xmi:id="_C-yn02oOEeCQG_cxIDShhw" body=""/>
+        </feature>
+        <feature xsi:type="relational:TdColumn" xmi:id="_C-yn1GoOEeCQG_cxIDShhw" name="observacion" label="observacion" length="1000" sourceType="VARCHAR" talendType="id_String">
+          <initialValue xmi:id="_C-yn1WoOEeCQG_cxIDShhw" body=""/>
+        </feature>
+      </ownedElement>
+      <ownedElement xsi:type="relational:TdTable" xmi:id="_C-yn1moOEeCQG_cxIDShhw" name="usuario" id="_sv11EPXyEd-jqPAqU5kN8g" label="usuario" tableType="TABLE">
+        <feature xsi:type="relational:TdColumn" xmi:id="_C-yn12oOEeCQG_cxIDShhw" name="id_usuario" label="id_usuario" length="4" sourceType="SERIAL" talendType="id_Integer" key="true" nullable="false">
+          <initialValue xmi:id="_C-yn2GoOEeCQG_cxIDShhw" body="&quot;nextval('control.usuario_id_usuario_seq'::regclass)&quot;"/>
+        </feature>
+        <feature xsi:type="relational:TdColumn" xmi:id="_C-yn2WoOEeCQG_cxIDShhw" name="nombre_usuario" label="nombre_usuario" length="256" sourceType="VARCHAR" talendType="id_String" nullable="false">
+          <initialValue xmi:id="_C-yn2moOEeCQG_cxIDShhw" body=""/>
+        </feature>
+        <feature xsi:type="relational:TdColumn" xmi:id="_C-yn22oOEeCQG_cxIDShhw" name="password" label="password" length="256" sourceType="VARCHAR" talendType="id_String" nullable="false">
+          <initialValue xmi:id="_C-yn3GoOEeCQG_cxIDShhw" body=""/>
+        </feature>
+        <feature xsi:type="relational:TdColumn" xmi:id="_C-zOcGoOEeCQG_cxIDShhw" name="habilitado" label="habilitado" length="1" sourceType="BOOL" talendType="id_Boolean" nullable="false">
+          <initialValue xmi:id="_C-zOcWoOEeCQG_cxIDShhw" body=""/>
+        </feature>
+      </ownedElement>
+      <ownedElement xsi:type="relational:TdTable" xmi:id="_C-zOcmoOEeCQG_cxIDShhw" name="asignacion_usuario_perfil" id="_lFy8sPYBEd-hsIxifyr6YA" label="asignacion_usuario_perfil" tableType="TABLE">
+        <feature xsi:type="relational:TdColumn" xmi:id="_C-zOc2oOEeCQG_cxIDShhw" name="id_asignacion_usuario_perfil" label="id_asignacion_usuario_perfil" length="4" sourceType="SERIAL" talendType="id_Integer" key="true" nullable="false">
+          <initialValue xmi:id="_C-zOdGoOEeCQG_cxIDShhw" body="&quot;nextval('control.asignacion_usuario_perfil_id_asignacion_usuario_perfil_seq'::regclass)&quot;"/>
+        </feature>
+        <feature xsi:type="relational:TdColumn" xmi:id="_C-zOdWoOEeCQG_cxIDShhw" name="id_usuario" label="id_usuario" length="4" sourceType="INT4" talendType="id_Integer" nullable="false">
+          <initialValue xmi:id="_C-zOdmoOEeCQG_cxIDShhw" body=""/>
+        </feature>
+        <feature xsi:type="relational:TdColumn" xmi:id="_C-zOd2oOEeCQG_cxIDShhw" name="id_perfil" label="id_perfil" length="2" sourceType="INT2" talendType="id_Short" nullable="false">
+          <initialValue xmi:id="_C-zOeGoOEeCQG_cxIDShhw" body=""/>
+        </feature>
+      </ownedElement>
+      <ownedElement xsi:type="relational:TdTable" xmi:id="_C-zOeWoOEeCQG_cxIDShhw" name="situacion" id="_4-ELAPsMEd-s-M1MMuN_xw" label="situacion" tableType="TABLE">
+        <feature xsi:type="relational:TdColumn" xmi:id="_C-zOemoOEeCQG_cxIDShhw" name="id_situacion" label="id_situacion" length="2" sourceType="INT2" talendType="id_Short" key="true" nullable="false">
+          <initialValue xmi:id="_C-zOe2oOEeCQG_cxIDShhw" body="&quot;nextval('control.situacion_id_situacion_seq'::regclass)&quot;"/>
+        </feature>
+        <feature xsi:type="relational:TdColumn" xmi:id="_C-zOfGoOEeCQG_cxIDShhw" name="codigo" label="codigo" length="2" sourceType="INT2" talendType="id_Short" nullable="false">
+          <initialValue xmi:id="_C-zOfWoOEeCQG_cxIDShhw" body=""/>
+        </feature>
+        <feature xsi:type="relational:TdColumn" xmi:id="_C-zOfmoOEeCQG_cxIDShhw" name="nombre" label="nombre" length="50" sourceType="VARCHAR" talendType="id_String" nullable="false">
+          <initialValue xmi:id="_C-zOf2oOEeCQG_cxIDShhw" body=""/>
+        </feature>
+        <feature xsi:type="relational:TdColumn" xmi:id="_C-zOgGoOEeCQG_cxIDShhw" name="descripcion" label="descripcion" length="250" sourceType="VARCHAR" talendType="id_String">
+          <initialValue xmi:id="_C-zOgWoOEeCQG_cxIDShhw" body=""/>
+        </feature>
+      </ownedElement>
+      <ownedElement xsi:type="relational:TdTable" xmi:id="_C-zOgmoOEeCQG_cxIDShhw" name="historial_asignacion_estudiante_carrera" id="_YdsBgP2oEd-UKtvoddfbLw" label="historial_asignacion_estudiante_carrera" tableType="TABLE">
+        <feature xsi:type="relational:TdColumn" xmi:id="_C-zOg2oOEeCQG_cxIDShhw" name="id_historial_asignacion_estudiante_carrera" label="id_historial_asignacion_estudiante_carrera" length="4" sourceType="SERIAL" talendType="id_Integer" key="true" nullable="false">
+          <initialValue xmi:id="_C-zOhGoOEeCQG_cxIDShhw" body="&quot;nextval('control.historial_asignacion_estudiante_carrera_id_historial_asignac355'::regclass)&quot;"/>
+        </feature>
+        <feature xsi:type="relational:TdColumn" xmi:id="_C-zOhWoOEeCQG_cxIDShhw" name="id_asignacion_estudiante_carrera" label="id_asignacion_estudiante_carrera" length="4" sourceType="INT4" talendType="id_Integer" nullable="false">
+          <initialValue xmi:id="_C-zOhmoOEeCQG_cxIDShhw" body=""/>
+        </feature>
+        <feature xsi:type="relational:TdColumn" xmi:id="_C-zOh2oOEeCQG_cxIDShhw" name="fecha_inscripcion" label="fecha_inscripcion" length="4" sourceType="DATE" talendType="id_Date" nullable="false" pattern="&quot;dd-MM-yyyy&quot;">
+          <initialValue xmi:id="_C-zOiGoOEeCQG_cxIDShhw" body=""/>
+        </feature>
+        <feature xsi:type="relational:TdColumn" xmi:id="_C-zOiWoOEeCQG_cxIDShhw" name="id_situacion" label="id_situacion" length="2" sourceType="INT2" talendType="id_Short" nullable="false">
+          <initialValue xmi:id="_C-zOimoOEeCQG_cxIDShhw" body=""/>
+        </feature>
+        <feature xsi:type="relational:TdColumn" xmi:id="_C-zOi2oOEeCQG_cxIDShhw" name="id_semestre" label="id_semestre" length="2" sourceType="INT2" talendType="id_Short" nullable="false">
+          <initialValue xmi:id="_C-zOjGoOEeCQG_cxIDShhw" body=""/>
+        </feature>
+      </ownedElement>
+      <ownedElement xsi:type="relational:TdTable" xmi:id="_C-zOjWoOEeCQG_cxIDShhw" name="nacionalidad" id="_WRqHUAGkEeCHKIlBZrh8nA" label="nacionalidad" tableType="TABLE">
+        <feature xsi:type="relational:TdColumn" xmi:id="_C-zOjmoOEeCQG_cxIDShhw" name="id_nacionalidad" label="id_nacionalidad" length="2" sourceType="INT2" talendType="id_Short" key="true" nullable="false">
+          <initialValue xmi:id="_C-zOj2oOEeCQG_cxIDShhw" body="&quot;nextval('control.nacionalidad_id_nacionalidad_seq'::regclass)&quot;"/>
+        </feature>
+        <feature xsi:type="relational:TdColumn" xmi:id="_C-zOkGoOEeCQG_cxIDShhw" name="codigo" label="codigo" length="2" sourceType="INT2" talendType="id_Short" nullable="false">
+          <initialValue xmi:id="_C-zOkWoOEeCQG_cxIDShhw" body=""/>
+        </feature>
+        <feature xsi:type="relational:TdColumn" xmi:id="_C-zOkmoOEeCQG_cxIDShhw" name="nombre" label="nombre" length="100" sourceType="VARCHAR" talendType="id_String">
+          <initialValue xmi:id="_C-zOk2oOEeCQG_cxIDShhw" body=""/>
+        </feature>
+      </ownedElement>
+      <ownedElement xsi:type="relational:TdTable" xmi:id="_C-zOlGoOEeCQG_cxIDShhw" name="lugar_nacimiento" id="_ZspAcAGkEeCHKIlBZrh8nA" label="lugar_nacimiento" tableType="TABLE">
+        <feature xsi:type="relational:TdColumn" xmi:id="_C-zOlWoOEeCQG_cxIDShhw" name="id_lugar_nacimiento" label="id_lugar_nacimiento" length="2" sourceType="INT2" talendType="id_Short" key="true" nullable="false">
+          <initialValue xmi:id="_C-zOlmoOEeCQG_cxIDShhw" body="&quot;nextval('control.lugar_nacimiento_id_lugar_nacimiento_seq'::regclass)&quot;"/>
+        </feature>
+        <feature xsi:type="relational:TdColumn" xmi:id="_C-zOl2oOEeCQG_cxIDShhw" name="codigo" label="codigo" length="2" sourceType="INT2" talendType="id_Short" nullable="false">
+          <initialValue xmi:id="_C-zOmGoOEeCQG_cxIDShhw" body=""/>
+        </feature>
+        <feature xsi:type="relational:TdColumn" xmi:id="_C-zOmWoOEeCQG_cxIDShhw" name="nombre" label="nombre" length="50" sourceType="VARCHAR" talendType="id_String">
+          <initialValue xmi:id="_C-zOmmoOEeCQG_cxIDShhw" body=""/>
         </feature>
       </ownedElement>
     </ownedElement>
