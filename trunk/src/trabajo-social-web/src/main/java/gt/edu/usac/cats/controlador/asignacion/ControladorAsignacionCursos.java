@@ -89,8 +89,10 @@ public class ControladorAsignacionCursos extends ControladorAbstractoAsignacion{
                 return "asignacion/asignacionCursos";
             }
 
+            boolean inscrito =
+                    this.servicioAsignacionEstudianteCarreraImpl.estaEstudianteInscrito(estudiante);
             //Validando que el estudiante se encuentre inscrito
-            if (!this.estudiante.isInscrito()) {
+            if (!inscrito) {
                 modelo.addAttribute("estudianteNoInscrito", true);
                 return "asignacion/asignacionCursos";
             }

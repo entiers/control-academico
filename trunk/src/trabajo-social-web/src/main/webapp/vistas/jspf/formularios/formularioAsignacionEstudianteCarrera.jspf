@@ -16,6 +16,13 @@
 
 </div>
 
+<div id="divCampos">
+    <form:label for="inscrito" path="inscrito">
+        <fmt:message key="asignacionEstudianteCarrera.inscrito"/>: *
+    </form:label>
+    <form:checkbox path="inscrito" />
+    <form:errors path="inscrito" cssClass="claseError" />
+</div>
 
 <div id="divCampos">
     <form:label for="wrapperHistorialAsignacionEstudianteCarrera.fechaInscripcion" path="wrapperHistorialAsignacionEstudianteCarrera.fechaInscripcion">

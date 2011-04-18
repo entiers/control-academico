@@ -25,12 +25,16 @@ public class WrapperAgregarAsignacionEstudianteCarrera {
     private Carrera carrera;
 
 //______________________________________________________________________________
+    private boolean inscrito;
+
+//______________________________________________________________________________
     @Valid
     private WrapperHistorialAsignacionEstudianteCarrera wrapperHistorialAsignacionEstudianteCarrera;
 
 //______________________________________________________________________________
     public WrapperAgregarAsignacionEstudianteCarrera() {
-        wrapperHistorialAsignacionEstudianteCarrera = new  WrapperHistorialAsignacionEstudianteCarrera();        
+        wrapperHistorialAsignacionEstudianteCarrera = new  WrapperHistorialAsignacionEstudianteCarrera();
+        this.inscrito = false;
     }
 
 //______________________________________________________________________________
@@ -44,7 +48,7 @@ public class WrapperAgregarAsignacionEstudianteCarrera {
     public void quitarWrapper(AsignacionEstudianteCarrera asignacionEstudianteCarrera
             , HistorialAsignacionEstudianteCarrera historialAsigancionEstudianteCarrera){
         asignacionEstudianteCarrera.setCarrera(this.getCarrera());
-     
+        asignacionEstudianteCarrera.setInscrito(this.inscrito);
         wrapperHistorialAsignacionEstudianteCarrera.quitarWrapper(historialAsigancionEstudianteCarrera);
 
     }
@@ -83,6 +87,19 @@ public class WrapperAgregarAsignacionEstudianteCarrera {
     public void setWrapperHistorialAsignacionEstudianteCarrera(WrapperHistorialAsignacionEstudianteCarrera wrapperHistorialAsignacionEstudianteCarrera) {
         this.wrapperHistorialAsignacionEstudianteCarrera = wrapperHistorialAsignacionEstudianteCarrera;
     }
+//______________________________________________________________________________
+    /**
+     *
+     */
+    public boolean isInscrito() {
+        return inscrito;
+    }
 
+    /**
+     *
+     */
+    public void setInscrito(boolean inscrito) {
+        this.inscrito = inscrito;
+    }
 
 }

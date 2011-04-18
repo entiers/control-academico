@@ -56,7 +56,7 @@ public class AsignacionEstudianteCarrera implements java.io.Serializable {
      private Set<Asignacion> asignacions = new HashSet<Asignacion>(0);
      private Set<HistorialAsignacionEstudianteCarrera> historialAsignacionEstudianteCarreras = new HashSet<HistorialAsignacionEstudianteCarrera>(0);
      private boolean estado;
-
+     private boolean inscrito;
 
     public AsignacionEstudianteCarrera() {
         this.estado = true;
@@ -165,6 +165,14 @@ public class AsignacionEstudianteCarrera implements java.io.Serializable {
         this.estado = estado;
     }
 
+    @Column(name="inscrito")
+    public boolean isInscrito() {
+        return inscrito;
+    }
+
+    public void setInscrito(boolean inscrito) {
+        this.inscrito = inscrito;
+    }
 //______________________________________________________________________________
     @Override
     public String toString() {

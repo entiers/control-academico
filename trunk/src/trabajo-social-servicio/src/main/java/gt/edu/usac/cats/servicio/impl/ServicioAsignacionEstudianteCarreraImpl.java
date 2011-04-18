@@ -15,6 +15,7 @@ import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -178,4 +179,49 @@ public class ServicioAsignacionEstudianteCarreraImpl extends ServicioGeneralImpl
         this.daoGeneralImpl.update(asignacionEstudianteCarreraOriginal);
 
     }
+
+//______________________________________________________________________________
+
+    /**
+     * Verifica la inscripci&oacute;n de un estudiante en la carrera que es enviada
+     * como par&aacute;metro.
+     *
+     * @param estudiante Objeto de tipo {@link Estudiante}
+     * @param carrera Objeto de tipo {@link Carrera}
+     *
+     * @throws DataAccessException Si ocurri&oacute; un error de acceso a datos
+     */
+
+    @Override
+    public boolean estaEstudianteInscrito(Estudiante estudiante, Carrera carrera) throws DataAccessException {
+        DetachedCriteria criteria = DetachedCriteria.forClass(AsignacionEstudianteCarrera.class);
+        criteria.add(Restrictions.eq("carrera", carrera));
+        criteria.add(Restrictions.eq("estudiante", estudiante));
+
+        AsignacionEstudianteCarrera aec = (AsignacionEstudianteCarrera) this.daoGeneralImpl.uniqueResult(criteria);
+
+        return aec.isInscrito();
+    }
+
+//______________________________________________________________________________
+    /**
+     * Verifica si el estudiante est&aacute; asignado en al menos una carrera
+     *
+     * @param estudiante Objeto de tipo {@link Estudiante}
+     *
+     * @throws DataAccessException Si ocurri&oacute; un error de acceso a datos
+     */
+    @Override
+    public boolean estaEstudianteInscrito(Estudiante estudiante) throws DataAccessException {
+        DetachedCriteria criteria = DetachedCriteria.forClass(AsignacionEstudianteCarrera.class);
+        criteria.setProjection(Projections.rowCount());
+        criteria.add(Restrictions.eq("inscrito", true));
+        criteria.add(Restrictions.eq("estudiante", estudiante));
+
+        Integer count = (Integer) this.daoGeneralImpl.uniqueResult(criteria);
+
+        return count.intValue() > 0;
+    }
+
+    
 }

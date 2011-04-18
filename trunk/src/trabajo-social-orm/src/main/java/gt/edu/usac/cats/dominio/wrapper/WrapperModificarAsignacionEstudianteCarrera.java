@@ -25,9 +25,14 @@ public class WrapperModificarAsignacionEstudianteCarrera {
     private Date fechaCierre;
 //______________________________________________________________________________
 
+    private boolean inscrito;
 
+//______________________________________________________________________________
+
+    
     public WrapperModificarAsignacionEstudianteCarrera() {
         this.fechaCierre = new Date();
+        this.inscrito = true;
     }
 //______________________________________________________________________________
     /**
@@ -37,6 +42,7 @@ public class WrapperModificarAsignacionEstudianteCarrera {
      */
     public void quitarWrapper(AsignacionEstudianteCarrera asignacionEstudianteCarrera){
         asignacionEstudianteCarrera.setFechaCierre(getFechaCierre());
+        asignacionEstudianteCarrera.setInscrito(this.inscrito);
     }
 //______________________________________________________________________________
     /**
@@ -67,6 +73,13 @@ public class WrapperModificarAsignacionEstudianteCarrera {
         this.fechaCierre = fechaCierre;
     }
 
-    
+//______________________________________________________________________________
+    public boolean isInscrito() {
+        return inscrito;
+    }
+
+    public void setInscrito(boolean inscrito) {
+        this.inscrito = inscrito;
+    }
 
 }
