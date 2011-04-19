@@ -45,6 +45,7 @@ order by laec.carne]]>
 		<field name="nombre" class="java.lang.String"/>
 		<field name="sexo" class="java.lang.String"/>
 		<field name="ultima_fecha_inscripcion" class="java.sql.Date"/>
+		<field name="inscrito" class="java.lang.Boolean"/>
 	</subDataset>
 	<parameter name="ID_CARRERA" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[21]]></defaultValueExpression>
@@ -111,7 +112,7 @@ where c.id_carrera = $P{ID_CARRERA}]]>
 						</datasetParameter>
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
-					<jr:columnGroup width="553">
+					<jr:columnGroup width="554">
 						<jr:column width="90">
 							<jr:columnHeader style="table_CH" height="30" rowSpan="1">
 								<staticText>
@@ -133,10 +134,10 @@ where c.id_carrera = $P{ID_CARRERA}]]>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
-						<jr:column width="240">
+						<jr:column width="197">
 							<jr:columnHeader style="table_CH" height="30" rowSpan="1">
 								<staticText>
-									<reportElement x="0" y="0" width="240" height="30"/>
+									<reportElement x="0" y="0" width="197" height="30"/>
 									<textElement textAlignment="Center" verticalAlignment="Middle">
 										<font isBold="true"/>
 									</textElement>
@@ -145,12 +146,32 @@ where c.id_carrera = $P{ID_CARRERA}]]>
 							</jr:columnHeader>
 							<jr:detailCell style="table_TD" height="20" rowSpan="1">
 								<textField isStretchWithOverflow="true">
-									<reportElement x="0" y="0" width="240" height="20"/>
+									<reportElement x="0" y="0" width="197" height="20"/>
 									<box topPadding="0" leftPadding="5" rightPadding="5"/>
 									<textElement textAlignment="Left" verticalAlignment="Middle">
 										<font size="8"/>
 									</textElement>
 									<textFieldExpression class="java.lang.String"><![CDATA[$F{nombre}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="44">
+							<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="43" height="30"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font isBold="true"/>
+									</textElement>
+									<text><![CDATA[Inscrito]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="table_TD" height="20" rowSpan="1">
+								<textField>
+									<reportElement x="0" y="0" width="43" height="20"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{inscrito} ? "SI" : "NO"]]></textFieldExpression>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
@@ -226,13 +247,24 @@ where c.id_carrera = $P{ID_CARRERA}]]>
 		<band height="27" splitType="Stretch">
 			<textField>
 				<reportElement x="435" y="5" width="80" height="20"/>
-				<textElement textAlignment="Right"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
 				<reportElement x="515" y="5" width="40" height="20"/>
-				<textElement/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="&apos;Guatemala, &apos; dd/MM/yyyy">
+				<reportElement x="0" y="5" width="328" height="20"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>
