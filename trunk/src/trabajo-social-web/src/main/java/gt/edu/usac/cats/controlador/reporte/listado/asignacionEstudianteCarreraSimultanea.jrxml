@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="0.9090909090909091"/>
+	<property name="ireport.zoom" value="0.7513148009015777"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Heading 1" fontSize="16" isBold="true"/>
@@ -125,7 +125,7 @@ order by carne_estudiante, codigo_carrera, fecha_inscripcion desc]]>
 						</datasetParameter>
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
-					<jr:columnGroup width="751">
+					<jr:columnGroup width="748">
 						<jr:column width="69">
 							<jr:columnHeader style="table 1_CH" height="30" rowSpan="1">
 								<staticText>
@@ -168,10 +168,10 @@ order by carne_estudiante, codigo_carrera, fecha_inscripcion desc]]>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
-						<jr:column width="90">
+						<jr:column width="64">
 							<jr:columnHeader style="table 1_CH" height="30" rowSpan="1">
 								<staticText>
-									<reportElement x="0" y="0" width="90" height="30"/>
+									<reportElement x="0" y="0" width="64" height="30"/>
 									<textElement textAlignment="Center" verticalAlignment="Middle">
 										<font isBold="true"/>
 									</textElement>
@@ -180,7 +180,7 @@ order by carne_estudiante, codigo_carrera, fecha_inscripcion desc]]>
 							</jr:columnHeader>
 							<jr:detailCell style="table 1_TD" height="20" rowSpan="1">
 								<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
-									<reportElement isPrintRepeatedValues="false" x="0" y="0" width="90" height="20"/>
+									<reportElement x="0" y="0" width="64" height="20"/>
 									<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5"/>
 									<textElement textAlignment="Center" verticalAlignment="Middle">
 										<font size="8"/>
@@ -189,10 +189,10 @@ order by carne_estudiante, codigo_carrera, fecha_inscripcion desc]]>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
-						<jr:column width="221">
+						<jr:column width="207">
 							<jr:columnHeader style="table 1_CH" height="30" rowSpan="1">
 								<staticText>
-									<reportElement x="0" y="0" width="221" height="30"/>
+									<reportElement x="0" y="0" width="207" height="30"/>
 									<textElement textAlignment="Center" verticalAlignment="Middle">
 										<font isBold="true"/>
 									</textElement>
@@ -201,7 +201,7 @@ order by carne_estudiante, codigo_carrera, fecha_inscripcion desc]]>
 							</jr:columnHeader>
 							<jr:detailCell style="table 1_TD" height="20" rowSpan="1">
 								<textField isStretchWithOverflow="true">
-									<reportElement isPrintRepeatedValues="false" x="0" y="0" width="221" height="20"/>
+									<reportElement x="0" y="0" width="207" height="20"/>
 									<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5"/>
 									<textElement verticalAlignment="Middle">
 										<font size="8"/>
@@ -210,10 +210,10 @@ order by carne_estudiante, codigo_carrera, fecha_inscripcion desc]]>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
-						<jr:column width="91">
+						<jr:column width="71">
 							<jr:columnHeader style="table 1_CH" height="30" rowSpan="1">
 								<staticText>
-									<reportElement x="0" y="0" width="90" height="30"/>
+									<reportElement x="0" y="0" width="71" height="30"/>
 									<textElement textAlignment="Center" verticalAlignment="Middle">
 										<font isBold="true"/>
 									</textElement>
@@ -222,7 +222,7 @@ order by carne_estudiante, codigo_carrera, fecha_inscripcion desc]]>
 							</jr:columnHeader>
 							<jr:detailCell style="table 1_TD" height="20" rowSpan="1">
 								<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy">
-									<reportElement x="0" y="0" width="90" height="20"/>
+									<reportElement x="0" y="0" width="71" height="20"/>
 									<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5"/>
 									<textElement textAlignment="Center" verticalAlignment="Middle">
 										<font size="8"/>
@@ -231,10 +231,10 @@ order by carne_estudiante, codigo_carrera, fecha_inscripcion desc]]>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
-						<jr:column width="76">
+						<jr:column width="63">
 							<jr:columnHeader style="table 1_CH" height="30" rowSpan="1">
 								<staticText>
-									<reportElement x="0" y="0" width="76" height="30"/>
+									<reportElement x="0" y="0" width="63" height="30"/>
 									<textElement textAlignment="Center" verticalAlignment="Middle">
 										<font isBold="true"/>
 									</textElement>
@@ -243,7 +243,7 @@ order by carne_estudiante, codigo_carrera, fecha_inscripcion desc]]>
 							</jr:columnHeader>
 							<jr:detailCell style="table 1_TD" height="20" rowSpan="1">
 								<textField isStretchWithOverflow="true">
-									<reportElement x="0" y="0" width="76" height="20"/>
+									<reportElement x="0" y="0" width="63" height="20"/>
 									<textElement textAlignment="Center" verticalAlignment="Middle">
 										<font size="8"/>
 									</textElement>
@@ -272,6 +272,26 @@ order by carne_estudiante, codigo_carrera, fecha_inscripcion desc]]>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
+						<jr:column width="70">
+							<jr:columnHeader style="table 1_CH" height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="70" height="30"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font isBold="true"/>
+									</textElement>
+									<text><![CDATA[Actualmente Inscrito ]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="table 1_TD" height="20" rowSpan="1">
+								<textField>
+									<reportElement x="0" y="0" width="70" height="20"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{inscrito_estudiante} ? "SI" : "NO"]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
 					</jr:columnGroup>
 				</jr:table>
 			</componentElement>
@@ -281,13 +301,24 @@ order by carne_estudiante, codigo_carrera, fecha_inscripcion desc]]>
 		<band height="27">
 			<textField>
 				<reportElement x="632" y="0" width="80" height="20"/>
-				<textElement textAlignment="Right"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
 				<reportElement x="712" y="0" width="40" height="20"/>
-				<textElement/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="&apos;Guatemala, &apos; dd/MM/yyyy">
+				<reportElement x="0" y="0" width="424" height="20"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>
