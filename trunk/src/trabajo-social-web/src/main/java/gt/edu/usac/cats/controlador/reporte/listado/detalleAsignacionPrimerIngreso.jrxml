@@ -7,8 +7,8 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select api.id_asignacion_primer_ingreso, usu.nombre_usuario, api.fecha_inicio,
-api.fecha_fin, asig.transaccion, est.carne, est.nombre nombreEstudiante, case when dapi.asignado=true then 'SI' else 'NO' end asignado
+		<![CDATA[select asig.id_asignacion,api.id_asignacion_primer_ingreso, usu.nombre_usuario, api.fecha_inicio,
+api.fecha_fin, asig.transaccion, est.carne, est.nombre nombreEstudiante, dapi.asignado
 from control.estudiante est
 inner join control.asignacion_estudiante_carrera aec on est.id_estudiante = aec.id_estudiante
 inner join control.asignacion asig on aec.id_asignacion_estudiante_carrera = asig.id_asignacion_estudiante_carrera
@@ -18,6 +18,7 @@ inner join control.detalle_asignacion_primer_ingreso dapi on api.id_asignacion_p
     and est.id_estudiante = dapi.id_estudiante
 inner join control.usuario usu on api.id_usuario = usu.id_usuario]]>
 	</queryString>
+	<field name="id_asignacion" class="java.lang.Integer"/>
 	<field name="id_asignacion_primer_ingreso" class="java.lang.Integer"/>
 	<field name="nombre_usuario" class="java.lang.String"/>
 	<field name="fecha_inicio" class="java.sql.Timestamp"/>
@@ -25,7 +26,7 @@ inner join control.usuario usu on api.id_usuario = usu.id_usuario]]>
 	<field name="transaccion" class="java.lang.String"/>
 	<field name="carne" class="java.lang.String"/>
 	<field name="nombreestudiante" class="java.lang.String"/>
-	<field name="asignado" class="java.lang.String"/>
+	<field name="asignado" class="java.lang.Boolean"/>
 	<background>
 		<band/>
 	</background>
@@ -75,12 +76,12 @@ inner join control.usuario usu on api.id_usuario = usu.id_usuario]]>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{nombre_usuario}]]></textFieldExpression>
 			</textField>
-			<textField pattern="dd/MM/yyyy">
+			<textField pattern="dd/MM/yyyy h.mm a">
 				<reportElement x="95" y="44" width="301" height="20"/>
 				<textElement/>
 				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{fecha_inicio}]]></textFieldExpression>
 			</textField>
-			<textField pattern="dd/MM/yyyy">
+			<textField pattern="dd/MM/yyyy h.mm a">
 				<reportElement x="95" y="64" width="301" height="20"/>
 				<textElement/>
 				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{fecha_fin}]]></textFieldExpression>
@@ -124,32 +125,39 @@ inner join control.usuario usu on api.id_usuario = usu.id_usuario]]>
 				<reportElement x="2" y="23" width="551" height="1" forecolor="#666666"/>
 			</line>
 			<staticText>
-				<reportElement x="0" y="1" width="225" height="20"/>
+				<reportElement x="68" y="1" width="211" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Transacción]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="225" y="1" width="71" height="20"/>
+				<reportElement x="279" y="1" width="71" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Carné]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="296" y="1" width="140" height="20"/>
+				<reportElement x="350" y="1" width="140" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Nombre estudiante]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="436" y="0" width="63" height="20"/>
+				<reportElement x="492" y="0" width="63" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Asignado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="2" width="66" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Asignación]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -159,24 +167,29 @@ inner join control.usuario usu on api.id_usuario = usu.id_usuario]]>
 				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1"/>
 			</line>
 			<textField>
-				<reportElement x="0" y="0" width="225" height="20"/>
+				<reportElement x="56" y="0" width="244" height="20"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{transaccion}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="225" y="0" width="71" height="20"/>
+				<reportElement x="291" y="0" width="71" height="20"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{carne}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="296" y="0" width="140" height="20"/>
+				<reportElement x="364" y="0" width="140" height="20"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{nombreestudiante}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="436" y="0" width="63" height="20"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.Boolean"><![CDATA[$F{asignado}]]></textFieldExpression>
+				<reportElement x="0" y="0" width="47" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{id_asignacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="518" y="0" width="29" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{asignado} ? "SI" : "NO"]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

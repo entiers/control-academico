@@ -113,7 +113,7 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
 
         Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
         query.setParameter("curso", curso);
-//        query.setParameter("tipo", TipoHorario.SEMESTRE);
+        query.setParameter("tipo", TipoHorario.SEMESTRE);
 
         List list = query.list();
         if (!list.isEmpty())

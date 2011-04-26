@@ -142,6 +142,8 @@ public class ServicioAsignacionPrimerIngresoImpl extends ServicioGeneralImpl imp
     public List<AsignacionPrimerIngreso> getAsignacionPrimerIngreso(String nombreUsuario,
                                               Date fechaInicio,
                                               Date fechaFin) throws DataAccessException {
+        fechaInicio = new Date(fechaInicio.getYear(), fechaInicio.getMonth(), fechaInicio.getDate(), 0,0,0);
+        fechaFin = new Date(fechaFin.getYear(), fechaFin.getMonth(), fechaFin.getDate(), 23,59,59);
         StringBuilder builder = new StringBuilder();
         builder.append("select api from AsignacionPrimerIngreso as api")
                .append(" where api.usuario.nombreUsuario like :nombreUsuario")
