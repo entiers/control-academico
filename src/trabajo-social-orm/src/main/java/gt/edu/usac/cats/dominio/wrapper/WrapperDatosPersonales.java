@@ -7,6 +7,7 @@ package gt.edu.usac.cats.dominio.wrapper;
 
 import gt.edu.usac.cats.dominio.Catedratico;
 import gt.edu.usac.cats.dominio.Estudiante;
+import gt.edu.usac.cats.dominio.Persona;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
@@ -60,6 +61,13 @@ public class WrapperDatosPersonales {
         this.setProfesion(catedratico.getProfesion());
     }
 
+    public void agregarWrapper(Persona persona){
+        this.setDireccion(persona.getDireccion());
+        this.setTelefono(persona.getTelefono());
+        this.setCelular(persona.getCelular());
+        this.setEmail(persona.getEmail());
+    }
+
     public void quitarWrapper(Estudiante estudiante){
         estudiante.setDireccion(this.getDireccion());
         estudiante.setTelefono(this.getTelefono());
@@ -73,6 +81,13 @@ public class WrapperDatosPersonales {
         catedratico.setCelular(this.getCelular());
         catedratico.setEmail(this.getEmail());
         catedratico.setProfesion(this.getProfesion());
+    }
+
+    public void quitarWrapper(Persona persona){
+        persona.setDireccion(this.getDireccion());
+        persona.setTelefono(this.getTelefono());
+        persona.setCelular(this.getCelular());
+        persona.setEmail(this.getEmail());
     }
 
     public String getCelular() {

@@ -129,22 +129,33 @@ public class ServicioUsuarioImpl extends ServicioGeneralImpl implements Servicio
     public Usuario getUsuarioPorEmail(String email) throws HibernateException {
         Usuario usuario = null;
         List lista;
-        StringBuilder builderEst = new StringBuilder();
-        StringBuilder builderCat = new StringBuilder();
+        StringBuilder builder = new StringBuilder();
         Query query;
 
-        builderEst.append(" Select est.usuario from Estudiante as est")
+        builder.append(" Select est.usuario from Estudiante as est")
                   .append(" where est.email = :email ");
-        query = this.daoGeneralImpl.getSesion().createQuery(builderEst.toString());
+        query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
         query.setParameter("email", email);
         lista = query.list();
+
         if(lista.isEmpty()){
-            builderCat.append(" Select cat.usuario from Catedratico as cat")
+            builder.setLength(0);
+            builder.append(" Select cat.usuario from Catedratico as cat")
                       .append(" where cat.email = :email ");
-            query = this.daoGeneralImpl.getSesion().createQuery(builderCat.toString());
+            query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
             query.setParameter("email", email);
             lista = query.list();
         }
+
+        if(lista.isEmpty()){
+            builder.setLength(0);
+            builder.append(" Select per.usuario from Persona as per")
+                      .append(" where per.email = :email ");
+            query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
+            query.setParameter("email", email);
+            lista = query.list();
+        }
+
         if(!lista.isEmpty())
             usuario = (Usuario) lista.get(0);
         return usuario;
