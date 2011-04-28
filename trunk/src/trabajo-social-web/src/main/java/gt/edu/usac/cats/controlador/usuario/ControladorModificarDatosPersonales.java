@@ -11,9 +11,9 @@ import gt.edu.usac.cats.dominio.Catedratico;
 import org.springframework.stereotype.Controller;
 import gt.edu.usac.cats.dominio.wrapper.WrapperDatosPersonales;
 import gt.edu.usac.cats.dominio.Estudiante;
+import gt.edu.usac.cats.dominio.Persona;
 import gt.edu.usac.cats.dominio.Usuario;
-import gt.edu.usac.cats.servicio.ServicioCatedratico;
-import gt.edu.usac.cats.servicio.ServicioEstudiante;
+import gt.edu.usac.cats.servicio.ServicioGeneral;
 import gt.edu.usac.cats.servicio.ServicioUsuario;
 import gt.edu.usac.cats.util.Mensajes;
 import gt.edu.usac.cats.util.RequestUtil;
@@ -43,16 +43,15 @@ public class ControladorModificarDatosPersonales {
     private Estudiante estudiante;
 //______________________________________________________________________________
     private Catedratico catedratico;
+//______________________________________________________________________________
+    private Persona persona;
 //_____________________________________________________________________________
     private Usuario usuario;
 //_____________________________________________________________________________
     private String tipoEntidad;
 //_____________________________________________________________________________
     @Resource
-    private ServicioCatedratico servicioCatedraticoImpl;
-//_____________________________________________________________________________
-    @Resource
-    private ServicioEstudiante servicioEstudianteImpl;
+    private ServicioGeneral servicioGeneralImpl;
 //_____________________________________________________________________________
     @Resource
     private ServicioUsuario servicioUsuarioImpl;
@@ -91,6 +90,12 @@ public class ControladorModificarDatosPersonales {
             this.catedratico = (Catedratico) this.usuario.getCatedraticos().toArray()[0];
             wrapperDatosPersonales.agregarWrapper(catedratico);
         }
+        //Validando que el usuario sea una persona
+        else if(this.usuario.getPersona()!=null){
+            tipoEntidad = "persona";
+            this.persona = this.usuario.getPersona();
+            wrapperDatosPersonales.agregarWrapper(persona);
+        }
         else{
             RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "editarDatosPersonales.usuarioSinDatos", true);
             error = true;
@@ -103,6 +108,8 @@ public class ControladorModificarDatosPersonales {
             modelo.addAttribute("wrapperDatosPersonales", wrapperDatosPersonales);
             if(this.tipoEntidad.equals("estudiante"))
                 modelo.addAttribute("estudiante", this.estudiante);
+            else if(this.tipoEntidad.equals("persona"))
+                modelo.addAttribute("persona", this.persona);
             else
                 modelo.addAttribute("catedratico", this.catedratico);
         }
@@ -117,22 +124,35 @@ public class ControladorModificarDatosPersonales {
         modelo.addAttribute("tipoEntidad", this.tipoEntidad);
         if(this.tipoEntidad.equals("estudiante"))
             modelo.addAttribute("estudiante", this.estudiante);
+        else if(this.tipoEntidad.equals("persona"))
+            modelo.addAttribute("persona", this.persona);
         else
             modelo.addAttribute("catedratico", this.catedratico);
 
         if(bindingResult.hasErrors())            
             return "usuario/modificarDatosPersonales";
+
+        /*if(this.servicioUsuarioImpl.getUsuarioPorEmail(wrapperDatosPersonales.getEmail()).getIdUsuario()!=
+                this.usuario.getIdUsuario()){
+            RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "usuario.correoYaExiste", false);
+            return "usuario/modificarDatosPersonales";
+        }*/
         
         try {
             if(this.tipoEntidad.equals("estudiante")){
                 // se actualizan los datos del estudiante
                 wrapperDatosPersonales.quitarWrapper(estudiante);
-                this.servicioEstudianteImpl.actualizar(this.estudiante);
+                this.servicioGeneralImpl.actualizar(this.estudiante);
+            }
+            else if(this.tipoEntidad.equals("persona")) {
+                // se actualizan los datos de la persona
+                wrapperDatosPersonales.quitarWrapper(persona);
+                this.servicioGeneralImpl.actualizar(this.persona);
             }
             else{
                 // se actualizan los datos del catedratico
                 wrapperDatosPersonales.quitarWrapper(catedratico);            
-                this.servicioCatedraticoImpl.actualizar(this.catedratico);
+                this.servicioGeneralImpl.actualizar(this.catedratico);
             }
 
             // se registra el evento

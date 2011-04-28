@@ -35,6 +35,16 @@
                     </thead>
                     <tbody>
                         <c:choose>
+                            <c:when test="${tipoEntidad=='persona'}">
+                                <tr>
+                                    <td><fmt:message key="agregarPersona.nombre"/></td>
+                                    <td><c:out value="${persona.nombre}" /></td>
+                                </tr>
+                                <tr>
+                                    <td><fmt:message key="agregarPersona.registroPersonal"/></td>
+                                    <td><c:out value="${persona.registroPersonal}" /></td>
+                                </tr>
+                            </c:when>
                             <c:when test="${tipoEntidad=='estudiante'}">
                                 <tr>
                                     <td><fmt:message key="agregarEstudiante.carne"/></td>
