@@ -10,6 +10,7 @@ package gt.edu.usac.cats.controlador.estudiante;
 import gt.edu.usac.cats.dominio.Estudiante;
 import gt.edu.usac.cats.dominio.wrapper.WrapperEstudiante;
 import gt.edu.usac.cats.servicio.ServicioEstudiante;
+import gt.edu.usac.cats.servicio.ServicioUsuario;
 import gt.edu.usac.cats.util.EmailSender;
 import gt.edu.usac.cats.util.RequestUtil;
 import gt.edu.usac.cats.util.Mensajes;
@@ -69,6 +70,12 @@ public class ControladorAgregarEstudiante extends ControladorEstudianteAbstracto
      */
     @Resource
     private EmailSender emailSender;
+//______________________________________________________________________________
+    /**
+     * <p>Bean de servicio para validad email unico</p>
+     */
+    @Resource
+    private ServicioUsuario servicioUsuarioImpl;
 //______________________________________________________________________________
     /**
      * <p>Constructor de la clase, no realiza ninguna accion.</p>
@@ -133,6 +140,11 @@ public class ControladorAgregarEstudiante extends ControladorEstudianteAbstracto
             return "estudiante/agregarEstudiante";
 
         try {
+            //Validar email unico
+            if(this.servicioUsuarioImpl.getUsuarioPorEmail(wrapperEstudiante.getEmail())!=null){
+                RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "usuario.correoYaExiste", false);
+                return "estudiante/agregarEstudiante";
+            }
             // se obtiene la carrera seleccionada
             //Carrera carrera = this.getCarreraSeleccionada(wrapperEstudiante.getIdCarrera());
             //Semestre semestre = this.servicioGeneralImpl.cargarEntidadPorID(Semestre.class, idSemestre);

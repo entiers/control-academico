@@ -10,6 +10,7 @@ import gt.edu.usac.cats.dominio.Estudiante;
 import gt.edu.usac.cats.dominio.busqueda.DatosBusquedaEstudiante;
 import gt.edu.usac.cats.dominio.wrapper.WrapperEstudiante;
 import gt.edu.usac.cats.servicio.ServicioEstudiante;
+import gt.edu.usac.cats.servicio.ServicioUsuario;
 import gt.edu.usac.cats.util.RequestUtil;
 import gt.edu.usac.cats.util.Mensajes;
 import javax.annotation.Resource;
@@ -78,6 +79,12 @@ public class ControladorEditarEstudiante extends ControladorEstudianteAbstracto 
      * encontro en la busqueda.</p>
      */
     private Estudiante estudiante;
+//______________________________________________________________________________
+    /**
+     * <p>Bean de servicio para validad email unico</p>
+     */
+    @Resource
+    private ServicioUsuario servicioUsuarioImpl;
 //______________________________________________________________________________
     /**
      * <p>Constructor de la clase, no realiza ninguna accion.</p>
@@ -198,6 +205,14 @@ public class ControladorEditarEstudiante extends ControladorEstudianteAbstracto 
             return "estudiante/editarEstudiante";
 
         try {
+            //Validando correo unico por usuario
+            if(!this.estudiante.getEmail().equals(wrapperEstudiante.getEmail())){
+                if(this.servicioUsuarioImpl.getUsuarioPorEmail(wrapperEstudiante.getEmail())!=null){
+                    RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "usuario.correoYaExiste", false);
+                    return "estudiante/editarEstudiante";
+                }
+            }
+            
             // se quita el envoltorio y se trata de actualizar al estudiante
             wrapperEstudiante.quitarWrapper(this.estudiante);
             this.servicioEstudianteImpl.actualizar(this.estudiante);
