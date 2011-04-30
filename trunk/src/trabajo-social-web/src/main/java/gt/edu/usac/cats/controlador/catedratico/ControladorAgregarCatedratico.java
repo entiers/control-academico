@@ -10,6 +10,7 @@ import gt.edu.usac.cats.dominio.Catedratico;
 import gt.edu.usac.cats.dominio.Escuela;
 import gt.edu.usac.cats.dominio.wrapper.WrapperCatedratico;
 import gt.edu.usac.cats.servicio.ServicioCatedratico;
+import gt.edu.usac.cats.servicio.ServicioUsuario;
 import gt.edu.usac.cats.util.EmailSender;
 import gt.edu.usac.cats.util.RequestUtil;
 import gt.edu.usac.cats.util.Mensajes;
@@ -80,6 +81,12 @@ public class ControladorAgregarCatedratico {
     private EmailSender emailSender;
 //______________________________________________________________________________
     /**
+     * <p>Bean de servicio para validad email unico</p>
+     */
+    @Resource
+    private ServicioUsuario servicioUsuarioImpl;
+//______________________________________________________________________________
+    /**
      * <p>Listado de todas las escuelas disponibles.</p>
      */
     private List<Escuela> listadoEscuelas;
@@ -146,6 +153,12 @@ public class ControladorAgregarCatedratico {
             return "catedratico/agregarCatedratico";
 
         try {
+            //Validar email unico
+            if(this.servicioUsuarioImpl.getUsuarioPorEmail(wrapperCatedratico.getEmail())!=null){
+                RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "usuario.correoYaExiste", false);
+                return "catedratico/editarCatedratico";
+            }
+
             // se obtiene la carrera seleccionada
             Escuela escuela = this.getEscuelaSeleccionada(wrapperCatedratico.getIdEscuela());
 

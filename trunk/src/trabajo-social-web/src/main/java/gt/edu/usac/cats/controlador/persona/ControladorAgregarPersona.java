@@ -64,6 +64,12 @@ public class ControladorAgregarPersona extends ControladorAbstractoPersona {
             if (bindingResult.hasErrors()) {
                 return "persona/agregarPersona";
             }
+            
+            //Validar email unico
+            if(super.servicioUsuarioImpl.getUsuarioPorEmail(wrapperPersona.getEmail())!=null){
+                RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "usuario.correoYaExiste", false);
+                return "persona/agregarPersona";
+            }
 
             Persona persona = new Persona();
             persona.setUsuario(new Usuario());

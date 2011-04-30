@@ -10,6 +10,7 @@ import gt.edu.usac.cats.dominio.Catedratico;
 import gt.edu.usac.cats.dominio.busqueda.DatosBusquedaCatedratico;
 import gt.edu.usac.cats.dominio.wrapper.WrapperCatedratico;
 import gt.edu.usac.cats.servicio.ServicioCatedratico;
+import gt.edu.usac.cats.servicio.ServicioUsuario;
 import gt.edu.usac.cats.util.RequestUtil;
 import gt.edu.usac.cats.util.Mensajes;
 import javax.annotation.Resource;
@@ -72,6 +73,12 @@ public class ControladorEditarCatedratico {
      */
     @Resource
     protected ServicioCatedratico servicioCatedraticoImpl;
+//______________________________________________________________________________
+    /**
+     * <p>Bean de servicio para validad email unico</p>
+     */
+    @Resource
+    private ServicioUsuario servicioUsuarioImpl;
 //______________________________________________________________________________
     /**
      * <p>Se utiliza para mantener todos los datos del catedratico que se
@@ -194,6 +201,15 @@ public class ControladorEditarCatedratico {
             return "catedratico/editarCatedratico";
 
         try {
+            
+            //Validando correo unico por usuario
+            if(!this.catedratico.getEmail().equals(wrapperCatedratico.getEmail())){
+                if(this.servicioUsuarioImpl.getUsuarioPorEmail(wrapperCatedratico.getEmail())!=null){
+                    RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "usuario.correoYaExiste", false);
+                    return "catedratico/editarCatedratico";
+                }
+            }
+            
             // se quita el envoltorio y se trata de actualizar al catedratico
             wrapperCatedratico.quitarWrapper(this.catedratico);
             this.servicioCatedraticoImpl.actualizar(this.catedratico);

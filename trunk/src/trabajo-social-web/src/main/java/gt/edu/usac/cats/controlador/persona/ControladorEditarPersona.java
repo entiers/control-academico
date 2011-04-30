@@ -104,6 +104,15 @@ public class ControladorEditarPersona extends ControladorAbstractoPersona {
         }
 
         try {
+
+            //Validando correo unico por usuario
+            if(!this.persona.getEmail().equals(wrapperPersona.getEmail())){
+                if(this.servicioUsuarioImpl.getUsuarioPorEmail(wrapperPersona.getEmail())!=null){
+                    RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "usuario.correoYaExiste", false);
+                    return "persona/editarPersona";
+                }
+            }
+
             wrapperPersona.quitarWrapper(this.persona);
 
             this.servicioPersonaImpl.modificarPersona(persona);

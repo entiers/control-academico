@@ -120,7 +120,6 @@ public class ControladorModificarDatosPersonales {
     @RequestMapping(value="modificarDatosPersonales.htm",method = RequestMethod.POST)
     public String modificarDatos(@Valid WrapperDatosPersonales wrapperDatosPersonales, BindingResult bindingResult,
                         Model modelo, HttpServletRequest request) {
-        
         modelo.addAttribute("tipoEntidad", this.tipoEntidad);
         if(this.tipoEntidad.equals("estudiante"))
             modelo.addAttribute("estudiante", this.estudiante);
@@ -132,27 +131,36 @@ public class ControladorModificarDatosPersonales {
         if(bindingResult.hasErrors())            
             return "usuario/modificarDatosPersonales";
 
-        /*if(this.servicioUsuarioImpl.getUsuarioPorEmail(wrapperDatosPersonales.getEmail()).getIdUsuario()!=
-                this.usuario.getIdUsuario()){
-            RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "usuario.correoYaExiste", false);
-            return "usuario/modificarDatosPersonales";
-        }*/
-        
         try {
             if(this.tipoEntidad.equals("estudiante")){
-                // se actualizan los datos del estudiante
-                wrapperDatosPersonales.quitarWrapper(estudiante);
-                this.servicioGeneralImpl.actualizar(this.estudiante);
+                if(correoValido(this.estudiante.getEmail(),wrapperDatosPersonales.getEmail())){
+                    wrapperDatosPersonales.quitarWrapper(this.estudiante);
+                    this.servicioGeneralImpl.actualizar(this.estudiante);
+                }
+                else{
+                    RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "usuario.correoYaExiste", false);
+                    return "usuario/modificarDatosPersonales";
+                }
             }
             else if(this.tipoEntidad.equals("persona")) {
-                // se actualizan los datos de la persona
-                wrapperDatosPersonales.quitarWrapper(persona);
-                this.servicioGeneralImpl.actualizar(this.persona);
+                if(correoValido(this.persona.getEmail(),wrapperDatosPersonales.getEmail())){
+                    wrapperDatosPersonales.quitarWrapper(this.persona);
+                    this.servicioGeneralImpl.actualizar(this.persona);
+                }
+                else{
+                    RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "usuario.correoYaExiste", false);
+                    return "usuario/modificarDatosPersonales";
+                }
             }
             else{
-                // se actualizan los datos del catedratico
-                wrapperDatosPersonales.quitarWrapper(catedratico);            
-                this.servicioGeneralImpl.actualizar(this.catedratico);
+                if(correoValido(this.catedratico.getEmail(),wrapperDatosPersonales.getEmail())){
+                    wrapperDatosPersonales.quitarWrapper(this.catedratico);
+                    this.servicioGeneralImpl.actualizar(this.catedratico);
+                }
+                else{
+                    RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "usuario.correoYaExiste", false);
+                    return "usuario/modificarDatosPersonales";
+                }
             }
 
             // se registra el evento
@@ -167,6 +175,14 @@ public class ControladorModificarDatosPersonales {
         }
 
         return "usuario/modificarDatosPersonales";
+    }
+
+    private boolean correoValido(String correoAnterior, String correoNuevo){
+        if(!correoAnterior.equals(correoNuevo)){
+            if(this.servicioUsuarioImpl.getUsuarioPorEmail(correoNuevo)!=null)
+                return false;
+        }
+        return true;
     }
 
 
