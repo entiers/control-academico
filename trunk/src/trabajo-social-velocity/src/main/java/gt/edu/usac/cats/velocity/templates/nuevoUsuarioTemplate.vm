@@ -1,0 +1,24 @@
+#include( "encabezado.vm" )
+<h2>Informe de Registro</h2>
+<br/>
+
+#if (!$nuevoUsuario.getCarnet())
+    <h3>$nuevoUsuario.getNombre():</h3>
+#else
+    <h3>$nuevoUsuario.getCarnet() - $nuevoUsuario.getNombre():</h3>
+#end
+
+<p>
+    Su registro en el sitio de la Escuela de Trabajo Social se ha realizado con &eacute;xito
+</p>
+
+<p>
+    Para acceder, utilice los siguientes datos:
+
+    <ul>
+        <li><b>Usuario:</b>&nbsp;&nbsp;&nbsp;$nuevoUsuario.getNombreUsuario()</li>
+        <li><b>Password:</b>&nbsp;&nbsp;&nbsp;$nuevoUsuario.getPassword()</li>
+    </ul>
+
+    Pulsar <a href="$url">AQU&Iacute;</a> para acceder al sitio
+</p>
