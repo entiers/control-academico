@@ -1,0 +1,14 @@
+#include( "encabezado.vm" )
+<h2>Informe de Desasignaci&oacute;n de Cursos</h2>
+<br/>
+
+<h3>$informacionAsignacionEstudiante.getCarnet() - $informacionAsignacionEstudiante.getNombre(): </h3>
+
+<p>
+    La asignacion de cursos se ha realizado exitosamente:
+    
+    <ul>
+        <li><b>Fecha:</b>&nbsp;&nbsp; $informacionAsignacionEstudiante.getFechaFormat()</li>
+        <li><b>Transaccion:</b>&nbsp;&nbsp; $informacionAsignacionEstudiante.getTransaccion()</li>
+    </ul>
+</p>

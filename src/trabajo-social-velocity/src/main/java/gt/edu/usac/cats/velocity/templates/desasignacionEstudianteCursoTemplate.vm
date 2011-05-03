@@ -1,0 +1,37 @@
+#include( "encabezado.vm" )
+<h2>Informe de Desasignaci&oacute;n de Cursos</h2>
+<br/>
+
+
+<h3>$desasignacionEstudianteCurso.getCarnet() - $desasignacionEstudianteCurso.getNombre():</h3>
+
+
+<p>
+    La desasignaci&oacute;n de cursos se ha realizado exitosamente con
+    fecha $desasignacionEstudianteCurso.getFechaActualFormat().
+</p>
+
+<p>
+    <h4>Cursos desasignados:</h4>
+
+
+
+    <table align="center" width="50%">
+        <thead>
+            <tr>
+                <th width="25%"><b>C&oacute;digo</b></th>
+                <th width="50%"><b>Curso</b></th>
+                <th width="25%"><b>Secci&oacute;n</b></th>
+            </tr>
+        </thead>
+        <tbody>
+            #foreach($horarioCurso in $desasignacionEstudianteCurso.getListadoHorarioCursos())
+                <tr>
+                    <td>$horarioCurso.getCodigo()</td>
+                    <td>$horarioCurso.getNombre()</td>
+                    <td>$horarioCurso.getSeccion()</td>
+                </tr>
+            #end
+        </tbody>
+    </table>
+</p>
