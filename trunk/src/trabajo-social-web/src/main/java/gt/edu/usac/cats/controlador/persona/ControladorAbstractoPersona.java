@@ -7,7 +7,6 @@ package gt.edu.usac.cats.controlador.persona;
 
 import gt.edu.usac.cats.servicio.ServicioPersona;
 import gt.edu.usac.cats.servicio.ServicioUsuario;
-import gt.edu.usac.cats.util.EmailSender;
 import javax.annotation.Resource;
 
 /**
@@ -21,9 +20,7 @@ public abstract class ControladorAbstractoPersona {
     @Resource
     protected ServicioPersona servicioPersonaImpl;
 
-//______________________________________________________________________________
-    @Resource
-    protected EmailSender emailSender;
+    
 //______________________________________________________________________________
         /**
      * <p>Bean de servicio para validad email unico</p>

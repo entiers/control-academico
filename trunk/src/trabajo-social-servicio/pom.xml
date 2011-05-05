@@ -92,12 +92,26 @@
             <version>${project.version}</version>
             <scope>compile</scope>
         </dependency>
+        <!-- ······· proyecto que contiene la implementación de velocity ······· -->
+        <dependency>
+            <groupId>gt.edu.usac</groupId>
+            <artifactId>trabajo-social-velocity</artifactId>
+            <version>${project.version}</version>
+            <scope>compile</scope>
+        </dependency>
 
         <!-- ············· dependencias necesarias para JUNIT ·············· -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.8.1</version>
+            <scope>test</scope>
+        </dependency>
+
+       <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.4</version>
             <scope>test</scope>
         </dependency>
 

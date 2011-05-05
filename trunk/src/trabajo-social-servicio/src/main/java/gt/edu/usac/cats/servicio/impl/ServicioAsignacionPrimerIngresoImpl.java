@@ -7,14 +7,11 @@
 package gt.edu.usac.cats.servicio.impl;
 
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.Properties;
 import java.util.UUID;
 import java.util.List;
-
 import gt.edu.usac.cats.dominio.Asignacion;
 import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
 import gt.edu.usac.cats.dominio.AsignacionPrimerIngreso;
@@ -31,7 +28,9 @@ import gt.edu.usac.cats.servicio.ServicioEstudiante;
 import gt.edu.usac.cats.servicio.ServicioGeneral;
 import gt.edu.usac.cats.servicio.ServicioHorario;
 import gt.edu.usac.cats.servicio.ServicioUsuario;
-import gt.edu.usac.cats.util.EmailSender;
+import gt.edu.usac.cats.util.EmailSenderVelocity;
+import gt.edu.usac.cats.velocity.FabricaTemplateVelocity;
+import gt.edu.usac.cats.velocity.contexto.ResumenAsignacionPrimerIngreso;
 import java.util.Date;
 import javax.mail.MessagingException;
 import org.hibernate.Query;
@@ -66,7 +65,7 @@ public class ServicioAsignacionPrimerIngresoImpl extends ServicioGeneralImpl imp
     private ServicioUsuario servicioUsuarioImpl;
 //_____________________________________________________________________________
     @Resource
-    private EmailSender emailSender;
+    private EmailSenderVelocity emailSenderVelocity;
 //_____________________________________________________________________________
     @Override
     public void asignacionCursosPrimerIngreso(AsignacionPrimerIngreso asignacionPrimerIngreso) throws DataAccessException {
@@ -186,32 +185,32 @@ public class ServicioAsignacionPrimerIngresoImpl extends ServicioGeneralImpl imp
     private void enviarCorreo(AsignacionPrimerIngreso asignacionPrimerIngreso,
                                 int totalAsignados,
                                 int totalNoAsignados){
-        String mensaje = "Estimado usuario, \n\n"+
-                         "El proceso de asignacion de cursos a estudiantes de primer ingreso, ha finalizado. A continuacion se le presenta un resumen con el resultado del mismo: \n\n" +
-                         "  - Fecha inicio: " + asignacionPrimerIngreso.getFechaInicio() + "\n" +
-                         "  - Fecha fin: " + asignacionPrimerIngreso.getFechaFin() + "\n" +
-                         "  - Total estudiantes asignados: " + totalAsignados + "\n" +
-                         "  - Total estudiantes no asignados: " + totalNoAsignados + "\n\n" +
-                         "Sistema de control academico\nEscuela de trabajo social";
 
+        ResumenAsignacionPrimerIngreso rapi = new ResumenAsignacionPrimerIngreso();
+
+        rapi.setFechaFin(asignacionPrimerIngreso.getFechaFin());
+        rapi.setFechaInicio(asignacionPrimerIngreso.getFechaInicio());
+        rapi.setTotalAsignados(totalAsignados);
+        rapi.setTotalNoAsignados(totalNoAsignados);
+        
         String correo = this.servicioUsuarioImpl.getCorreoPorUsuario(asignacionPrimerIngreso.getUsuario());
 
         if(!correo.isEmpty()){
-            try {                
-                    try {
 
-                        // se trata de enviar el correo
-                        this.emailSender.enviarCorreo("Proceso de asignacion de primer ingreso", correo, mensaje);
-                    } catch (IOException ex) {
-                        Logger.getLogger(ServicioAsignacionPrimerIngresoImpl.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (MailException ex) {
-                        Logger.getLogger(ServicioAsignacionPrimerIngresoImpl.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+            try{
+                emailSenderVelocity.enviarCorreo("Proceso de asignacion de primer ingreso",
+                        correo,
+                        FabricaTemplateVelocity.NUEVO_USUARIO, rapi);
 
-            } catch (MessagingException ex) {
-                Logger.getLogger(ServicioAsignacionPrimerIngresoImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }catch(MailException e){
+
+            }catch(IOException e){
+
+            }catch(MessagingException e){
+
             }
         }
-        System.out.println(mensaje);
+
+
     }
 }

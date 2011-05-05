@@ -3,17 +3,19 @@
  * Escuela de Trabajo Social
  * Universidad de San Carlos de Guatemala
  */
-
 package gt.edu.usac.cats.controlador.catedratico;
 
 import gt.edu.usac.cats.dominio.Catedratico;
 import gt.edu.usac.cats.dominio.Escuela;
+import gt.edu.usac.cats.dominio.Usuario;
 import gt.edu.usac.cats.dominio.wrapper.WrapperCatedratico;
 import gt.edu.usac.cats.servicio.ServicioCatedratico;
 import gt.edu.usac.cats.servicio.ServicioUsuario;
-import gt.edu.usac.cats.util.EmailSender;
+import gt.edu.usac.cats.util.EmailSenderVelocity;
 import gt.edu.usac.cats.util.RequestUtil;
 import gt.edu.usac.cats.util.Mensajes;
+import gt.edu.usac.cats.velocity.FabricaTemplateVelocity;
+import gt.edu.usac.cats.velocity.contexto.NuevoUsuario;
 import java.io.IOException;
 import java.util.List;
 import javax.annotation.Resource;
@@ -78,7 +80,7 @@ public class ControladorAgregarCatedratico {
      * <p>Bean de servicio que permite enviar correos electronicos</p>
      */
     @Resource
-    private EmailSender emailSender;
+    private EmailSenderVelocity emailSenderVelocity;
 //______________________________________________________________________________
     /**
      * <p>Bean de servicio para validad email unico</p>
@@ -91,11 +93,14 @@ public class ControladorAgregarCatedratico {
      */
     private List<Escuela> listadoEscuelas;
 //______________________________________________________________________________
+
     /**
      * <p>Constructor de la clase, no realiza ninguna accion.</p>
      */
-    public ControladorAgregarCatedratico() {}
+    public ControladorAgregarCatedratico() {
+    }
 //______________________________________________________________________________
+
     /**
      * <p>Este metodo se ejecuta cada vez que se realiza una solicitud del tipo
      * GET de la pagina <code>agregarCatedratico.htm</code>. El metodo se encarga
@@ -117,6 +122,7 @@ public class ControladorAgregarCatedratico {
         return "catedratico/agregarCatedratico";
     }
 //______________________________________________________________________________
+
     /**
      * <p>Este metodo es llamado cuando se realiza un SUBMIT desde la pagina de
      * agregar catedratico. El metodo se encarga de agregar la informacion
@@ -149,12 +155,13 @@ public class ControladorAgregarCatedratico {
 
         // se validan los campos ingresados en el formulario, si existen errores
         // se regresa al formulario para que se muestren los mensajes correspondientes
-        if(bindingResult.hasErrors())
+        if (bindingResult.hasErrors()) {
             return "catedratico/agregarCatedratico";
+        }
 
         try {
             //Validar email unico
-            if(this.servicioUsuarioImpl.getUsuarioPorEmail(wrapperCatedratico.getEmail())!=null){
+            if (this.servicioUsuarioImpl.getUsuarioPorEmail(wrapperCatedratico.getEmail()) != null) {
                 RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "usuario.correoYaExiste", false);
                 return "catedratico/editarCatedratico";
             }
@@ -184,6 +191,7 @@ public class ControladorAgregarCatedratico {
         return "catedratico/agregarCatedratico";
     }
 //______________________________________________________________________________
+
     /**
      * <p>Este metodo se encarga de obtener el objeto {@link Carrera} que se
      * selecciono en el combo box de la pagina. El metodo itera la lista de
@@ -194,13 +202,15 @@ public class ControladorAgregarCatedratico {
      * @return Escuela
      */
     private Escuela getEscuelaSeleccionada(short idEscuela) {
-        for(Escuela escuela : this.listadoEscuelas) {
-            if(escuela.getIdEscuela() == idEscuela)
+        for (Escuela escuela : this.listadoEscuelas) {
+            if (escuela.getIdEscuela() == idEscuela) {
                 return escuela;
+            }
         }
         return null;
     }
 //______________________________________________________________________________
+
     /**
      * <p>Este metodo permite enviar un correo electronico al catedratico que se
      * agrego al sistema. El correo notifica al catedratico que su registro se
@@ -210,29 +220,27 @@ public class ControladorAgregarCatedratico {
      * @param destinatario Correo electronico al que se debe de enviar el correo
      */
     private void enviarEmail(Catedratico catedratico) {
-        String subject = "Informe de registro (Escuela de Trabajo Social)";
-        String mensaje = catedratico.getNombre() + " " +
-                catedratico.getApellido() +
-                "\n\nTu registro en el sitio de la Escuela de Trabajo Social se realizo con exito. " +
-                "Para acceder al sitio utiliza los siguientes datos:" +
-                "\n\nUSUARIO:  " + catedratico.getCodigo() +
-                "\nPASSWORD: " + catedratico.getPassword();
+        Usuario usuario = catedratico.getUsuario();
 
-        //String[] datosCorreo = {subject, catedratico.getEmail(), mensaje};
+        NuevoUsuario nuevoUsuario = new NuevoUsuario();
+        nuevoUsuario.setNombreUsuario(usuario.getNombreUsuario());
+        nuevoUsuario.setPassword(usuario.getPassword());
+        nuevoUsuario.setNombre(catedratico.getNombre() + " " + catedratico.getApellido());
+
 
         try {
-            try {
-                // se trata de enviar el correo
-                this.emailSender.enviarCorreo(subject, catedratico.getEmail(), mensaje);
-            } catch (IOException ex) {
-                log.error(Mensajes.MESSAGING_EXCEPTION, ex);
-            } catch (MailException ex) {
-                log.error(Mensajes.MESSAGING_EXCEPTION, ex);
-            }
+            this.emailSenderVelocity.enviarCorreo("Nuevo catedratico",
+                    catedratico.getEmail(),
+                    FabricaTemplateVelocity.NUEVO_USUARIO,
+                    nuevoUsuario);
 
-        } catch (MessagingException ex) {
-            log.error(Mensajes.MESSAGING_EXCEPTION, ex);
-
+        } catch (MailException e) {
+            log.error(Mensajes.MAIL_EXCEPTION, e);
+        } catch (IOException e) {
+            log.error(Mensajes.IO_EXCEPTION, e);
+        } catch (MessagingException e) {
+            log.error(Mensajes.MESSAGING_EXCEPTION, e);
         }
+
     }
 }

@@ -8,9 +8,11 @@ import gt.edu.usac.cats.dominio.Persona;
 import gt.edu.usac.cats.dominio.Usuario;
 import gt.edu.usac.cats.dominio.busqueda.DatosBusquedaPersona;
 import gt.edu.usac.cats.servicio.ServicioPersona;
-import gt.edu.usac.cats.util.EmailSender;
+import gt.edu.usac.cats.util.EmailSenderVelocity;
 import gt.edu.usac.cats.util.GeneradorPassword;
 import gt.edu.usac.cats.util.ManejadorSitioPropiedades;
+import gt.edu.usac.cats.velocity.FabricaTemplateVelocity;
+import gt.edu.usac.cats.velocity.contexto.NuevoUsuario;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -38,7 +40,7 @@ import org.springframework.stereotype.Service;
 public class ServicioPersonaImpl extends ServicioGeneralImpl implements ServicioPersona {
 
     @Resource
-    private EmailSender emailSender;
+    private EmailSenderVelocity emailSenderVelocity;
 
     /**
      * <p>Agrega una persona al sistema, tiene una funcionalidad diferente por eso no
@@ -90,21 +92,17 @@ public class ServicioPersonaImpl extends ServicioGeneralImpl implements Servicio
     private void enviarCorreo(Persona persona) throws IOException, MailException, MessagingException, URISyntaxException {
 
 
-        String asunto = "ESCUELA DE TRABAJO SOCIAL - NUEVO USUARIO";
-        StringBuilder mensaje = new StringBuilder();
+        Usuario usuario = persona.getUsuario();
 
-        mensaje.append("<p>Se ha a�adido al sistema de la Escuela de Trabajo Social.  Las credenciales son las siguientes:</p> ");
+        NuevoUsuario nuevoUsuario = new NuevoUsuario();
+        nuevoUsuario.setNombreUsuario(usuario.getNombreUsuario());
+        nuevoUsuario.setNombre(persona.getNombre());
+        nuevoUsuario.setPassword(usuario.getPassword());
 
-        mensaje.append("<p><ul><li>Nombre de usuario: <b>").append(persona.getUsuario().getNombreUsuario());
-        mensaje.append("</b></li><li>Password: <b>").append(persona.getUsuario().getPassword()).append("</b></li></ul></p>");
-
-        Properties properties = ManejadorSitioPropiedades.leer();
-
-        mensaje.append("<p>Para ir al acceder al sistema ");
-        mensaje.append("<a href=\"").append(properties.getProperty("url")).append("\">");
-        mensaje.append("Pulse aqu�</a></p>");
-
-        this.emailSender.enviarCorreo(asunto, persona.getEmail(), mensaje.toString());
+        emailSenderVelocity.enviarCorreo("Nuevo usuario", persona.getEmail(),
+                FabricaTemplateVelocity.NUEVO_USUARIO,
+                nuevoUsuario);
+        
     }
 
 //______________________________________________________________________________
