@@ -1,23 +1,24 @@
 #include( "encabezado.vm" )
 <h2>Recordatorio de Contrase&ntilde;a</h2>
 <br/>
+<div id="content">
+    <p>Estimado(a) usuario:</p>
 
-<p>Estimado(a) usuario:</p>
+    <p>
+        Se ha solicitado generar una nueva contrase&ntilde;a para el usuario registrado
+        en el sistema de la Escuela de Trabajo Social.
+    </p>
 
-<p>
-    Se ha solicitado generar una nueva contrase&ntilde;a para el usuario registrado
-    en el sistema de la Escuela de Trabajo Social.
-</p>
+    <p>
+        Para esto se ha generado un c&oacute;digo de validaci&oacute;n para que pueda
+        modificar su contrase&ntilde;a. Utilice la siguiente informaci&oacute;n:
 
-<p>
-    Para esto se ha generado un c&oacute;digo de validaci&oacute;n para que pueda
-    modificar su contrase&ntilde;a. Utilice la siguiente informaci&oacute;n:
+        #set ($pagina = "reiCont.htm?idUsuario=")
+        #set ($link = "$urlHTTPS$pagina$recordatorioContrasenya.getIdUsuario()")
 
-    #set ($pagina = "reiCont.htm?idUsuario=")
-    #set ($link = "$urlHTTPS$pagina$recordatorioContrasenya.getIdUsuario()")
-
-    <ul>
-        <li><b>Ingrese a este enlace:</b> &nbsp;&nbsp;<a href="$link">PULSAR AQU&Iacute;</a></li>
-        <li><b>C&oacute;digo de validaci&oacute;n:</b>&nbsp;&nbsp; $recordatorioContrasenya.getCodigoValidacion()</li>
-    </ul>
-</p>
+        <ul>
+            <li><b>Ingrese a este enlace:</b> &nbsp;&nbsp;<a href="$link">PULSAR AQU&Iacute;</a></li>
+            <li><b>C&oacute;digo de validaci&oacute;n:</b>&nbsp;&nbsp; $recordatorioContrasenya.getCodigoValidacion()</li>
+        </ul>
+    </p>
+</div>

@@ -7,10 +7,11 @@
 
 package gt.edu.usac.cats.controlador.asignacion;
 
-import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
+
 import gt.edu.usac.cats.dominio.Desasignacion;
 import gt.edu.usac.cats.dominio.DetalleAsignacion;
 import gt.edu.usac.cats.dominio.Estudiante;
+import gt.edu.usac.cats.dominio.Horario;
 import gt.edu.usac.cats.dominio.Semestre;
 import gt.edu.usac.cats.dominio.Usuario;
 import gt.edu.usac.cats.dominio.busqueda.DatosAsignacion;
@@ -21,20 +22,19 @@ import gt.edu.usac.cats.servicio.ServicioDetalleAsignacion;
 import gt.edu.usac.cats.servicio.ServicioGeneral;
 import gt.edu.usac.cats.servicio.ServicioSemestre;
 import gt.edu.usac.cats.servicio.ServicioUsuario;
-import gt.edu.usac.cats.util.EmailSender;
+import gt.edu.usac.cats.util.EmailSenderVelocity;
 import gt.edu.usac.cats.util.Mensajes;
 import gt.edu.usac.cats.util.RequestUtil;
+import gt.edu.usac.cats.velocity.FabricaTemplateVelocity;
+import gt.edu.usac.cats.velocity.contexto.DesasignacionEstudianteCurso;
+import gt.edu.usac.cats.velocity.contexto.extras.HorarioCurso;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import javax.xml.ws.BindingType;
 import org.apache.log4j.Logger;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -77,7 +77,7 @@ public class ControladorDesAsignacionCursos {
     private ServicioGeneral servicioGeneralImpl;
 //_____________________________________________________________________________
     @Resource
-    private EmailSender emailSender;
+    private EmailSenderVelocity emailSenderVelocity;
 //  ____________________________________________________________________________
     /**
      * <p>Este metodo se ejecuta cada vez que se realiza una solicitud del tipo
@@ -198,32 +198,34 @@ public class ControladorDesAsignacionCursos {
     //_____________________________________________________________________________
     protected void enviarEmail(List<Desasignacion> listaDesasignacion) throws IOException {
 
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        Date today = new Date();
-        String mensaje = "Estimado/a " + this.estudiante.getNombre() + ", <br/><br/>" +
-                         "La desasignación de cursos se ha realizado exitosamente: <br/><br/>" +
-                         "  - Estudiante: " + this.estudiante.getNombre() + "<br/>" +
-                         "  - Carne: " + this.estudiante.getCarne() + "<br/>" +
-                         "  - Fecha: " +  df.format(today) + "<br/><br/>" +
-                         "Cursos desasignados:<br/>";
+        DesasignacionEstudianteCurso dec = new DesasignacionEstudianteCurso();
 
-        mensaje+="<table align='center' width='50%'><thead><tr>" +
-                      " <td width='25%'><b>Código</b></td>" +
-                      " <td width='50%'><b>Curso</b></td>" +
-                      " <td width='25%'><b>Sección</b></td>" +
-                    "</tr></thead>";
+        dec.setCarnet(this.estudiante.getCarne());
+        dec.setNombre(this.estudiante.getNombre());
+
+        List <HorarioCurso> listadoHorarioCursos = new <HorarioCurso> ArrayList();
+
         for(Desasignacion desasignacion : listaDesasignacion){
-            mensaje+="<tr>" +
-                      " <td>" + desasignacion.getDetalleAsignacion().getHorario().getCurso().getCodigo() + "</td>" +
-                      " <td>" + desasignacion.getDetalleAsignacion().getHorario().getCurso().getNombre() + "</td>" +
-                      " <td>" + desasignacion.getDetalleAsignacion().getHorario().getSeccion() + "</td>" +
-                    "</tr>";
+            HorarioCurso horarioCurso = new HorarioCurso();
+            
+            Horario horario = desasignacion.getDetalleAsignacion().getHorario();
+            horarioCurso.setCodigo(horario.getCurso().getCodigo());
+            horarioCurso.setNombre(horario.getCurso().getNombre());
+            horarioCurso.setSeccion(horario.getSeccion());
+
+            listadoHorarioCursos.add(horarioCurso);
         }
 
-        mensaje+="</table><br/><br/>Control Académico<br/>Escuela de Trabajo Social";
+        dec.setListadoHorarioCursos(listadoHorarioCursos);
+
+        
         try {
             // se trata de enviar el correo
-            this.emailSender.enviarCorreo("Confirmación desasignación de cursos", this.estudiante.getEmail(), mensaje);
+            this.emailSenderVelocity.enviarCorreo(
+                    "Confirmacion de desasignacion de cursos",
+                    this.estudiante.getEmail(),
+                    FabricaTemplateVelocity.DESASIGNACION_ESTUDIANTE_CURSO,
+                    dec);
 
         } catch (MessagingException ex) {
             log.error(Mensajes.MESSAGING_EXCEPTION, ex);

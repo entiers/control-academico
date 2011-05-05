@@ -2,36 +2,35 @@
 <h2>Informe de Desasignaci&oacute;n de Cursos</h2>
 <br/>
 
-
-<h3>$desasignacionEstudianteCurso.getCarnet() - $desasignacionEstudianteCurso.getNombre():</h3>
-
-
-<p>
-    La desasignaci&oacute;n de cursos se ha realizado exitosamente con
-    fecha $desasignacionEstudianteCurso.getFechaActualFormat().
-</p>
-
-<p>
-    <h4>Cursos desasignados:</h4>
+<div id="content">
+    <h3>$desasignacionEstudianteCurso.getCarnet() - $desasignacionEstudianteCurso.getNombre():</h3>
 
 
+    <p>
+        La desasignaci&oacute;n de cursos se ha realizado exitosamente con
+        fecha $desasignacionEstudianteCurso.getFechaActualFormat().
+    </p>
 
-    <table align="center" width="50%">
-        <thead>
-            <tr>
-                <th width="25%"><b>C&oacute;digo</b></th>
-                <th width="50%"><b>Curso</b></th>
-                <th width="25%"><b>Secci&oacute;n</b></th>
-            </tr>
-        </thead>
-        <tbody>
-            #foreach($horarioCurso in $desasignacionEstudianteCurso.getListadoHorarioCursos())
+    <p>
+        <h5>Cursos desasignados:</h5>
+
+        <table align="center" width="50%">
+            <thead>
                 <tr>
-                    <td>$horarioCurso.getCodigo()</td>
-                    <td>$horarioCurso.getNombre()</td>
-                    <td>$horarioCurso.getSeccion()</td>
+                    <th width="25%"><b>C&oacute;digo</b></th>
+                    <th width="50%"><b>Curso</b></th>
+                    <th width="25%"><b>Secci&oacute;n</b></th>
                 </tr>
-            #end
-        </tbody>
-    </table>
-</p>
+            </thead>
+            <tbody>
+                #foreach($horarioCurso in $desasignacionEstudianteCurso.getListadoHorarioCursos())
+                    <tr>
+                        <td>$horarioCurso.getCodigo()</td>
+                        <td>$horarioCurso.getNombre()</td>
+                        <td>$horarioCurso.getSeccion()</td>
+                    </tr>
+                #end
+            </tbody>
+        </table>
+    </p>
+</div>

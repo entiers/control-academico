@@ -3,17 +3,17 @@
  * Escuela de Trabajo Social
  * Universidad de San Carlos de Guatemala
  */
-
 package gt.edu.usac.cats.controlador.estudiante;
-
 
 import gt.edu.usac.cats.dominio.Estudiante;
 import gt.edu.usac.cats.dominio.wrapper.WrapperEstudiante;
 import gt.edu.usac.cats.servicio.ServicioEstudiante;
 import gt.edu.usac.cats.servicio.ServicioUsuario;
-import gt.edu.usac.cats.util.EmailSender;
+import gt.edu.usac.cats.util.EmailSenderVelocity;
 import gt.edu.usac.cats.util.RequestUtil;
 import gt.edu.usac.cats.util.Mensajes;
+import gt.edu.usac.cats.velocity.FabricaTemplateVelocity;
+import gt.edu.usac.cats.velocity.contexto.NuevoUsuario;
 import java.io.IOException;
 import javax.annotation.Resource;
 import javax.mail.MessagingException;
@@ -52,7 +52,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller("controladorAgregarEstudiante")
 @RequestMapping(value = "agregarEstudiante.htm")
-public class ControladorAgregarEstudiante extends ControladorEstudianteAbstracto{
+public class ControladorAgregarEstudiante extends ControladorEstudianteAbstracto {
 
     /**
      * <p>Lleva el nombre del titulo para el mensaje en la pagina.</p>
@@ -63,13 +63,12 @@ public class ControladorAgregarEstudiante extends ControladorEstudianteAbstracto
      * <p>Matiene una bitacora de lo realizado por esta clase.</p>
      */
     private static Logger log = Logger.getLogger(ControladorAgregarEstudiante.class);
-    
 //______________________________________________________________________________
     /**
      * <p>Bean de servicio que permite enviar correos electronicos</p>
      */
     @Resource
-    private EmailSender emailSender;
+    private EmailSenderVelocity emailSenderVelocity;
 //______________________________________________________________________________
     /**
      * <p>Bean de servicio para validad email unico</p>
@@ -77,11 +76,14 @@ public class ControladorAgregarEstudiante extends ControladorEstudianteAbstracto
     @Resource
     private ServicioUsuario servicioUsuarioImpl;
 //______________________________________________________________________________
+
     /**
      * <p>Constructor de la clase, no realiza ninguna accion.</p>
      */
-    public ControladorAgregarEstudiante() {}
+    public ControladorAgregarEstudiante() {
+    }
 //______________________________________________________________________________
+
     /**
      * <p>Este metodo se ejecuta cada vez que se realiza una solicitud del tipo
      * GET de la pagina <code>agregarEstudiante.htm</code>. El metodo se encarga
@@ -93,17 +95,18 @@ public class ControladorAgregarEstudiante extends ControladorEstudianteAbstracto
      */
     @RequestMapping(method = RequestMethod.GET)
     public String crearFormulario(Model modelo) {
-        
+
         this.listarEntidades(modelo);
 
         // se agregan los objetos que se usaran en la pagina
         modelo.addAttribute("wrapperEstudiante", new WrapperEstudiante());
 
-        
+
 
         return "estudiante/agregarEstudiante";
     }
 //______________________________________________________________________________
+
     /**
      * <p>Este metodo es llamado cuando se realiza un SUBMIT desde la pagina de
      * agregar estudiante. El metodo se encarga de agregar la informacion
@@ -136,12 +139,13 @@ public class ControladorAgregarEstudiante extends ControladorEstudianteAbstracto
 
         // se validan los campos ingresados en el formulario, si existen errores
         // se regresa al formulario para que se muestren los mensajes correspondientes
-        if(bindingResult.hasErrors())
+        if (bindingResult.hasErrors()) {
             return "estudiante/agregarEstudiante";
+        }
 
         try {
             //Validar email unico
-            if(this.servicioUsuarioImpl.getUsuarioPorEmail(wrapperEstudiante.getEmail())!=null){
+            if (this.servicioUsuarioImpl.getUsuarioPorEmail(wrapperEstudiante.getEmail()) != null) {
                 RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "usuario.correoYaExiste", false);
                 return "estudiante/agregarEstudiante";
             }
@@ -174,6 +178,7 @@ public class ControladorAgregarEstudiante extends ControladorEstudianteAbstracto
         return "estudiante/agregarEstudiante";
     }
 //______________________________________________________________________________
+
     /**
      * <p>Este metodo permite enviar un correo electronico al estudiante que se
      * agrego al sistema. El correo notifica al estudiante que su registro se
@@ -183,25 +188,17 @@ public class ControladorAgregarEstudiante extends ControladorEstudianteAbstracto
      * @param destinatario Correo electronico al que se debe de enviar el correo
      */
     private void enviarEmail(Estudiante estudiante) {
-        String subject = "Informe de registro (Escuela de Trabajo Social)";
-        String mensaje = estudiante.getNombre() +
-                "\n\nTu registro en el sitio de la Escuela de Trabajo Social se realizo con exito. " +
-                "Para acceder al sitio utiliza los siguientes datos:" +
-                "\n\nUSUARIO:  " + estudiante.getCarne() +
-                "\nPASSWORD: " + estudiante.getPassword();
-
-        
+        NuevoUsuario nuevoUsuario = new NuevoUsuario();
+        nuevoUsuario.setCarnet(estudiante.getCarne());
+        nuevoUsuario.setNombreUsuario(estudiante.getCarne());
+        nuevoUsuario.setNombre(estudiante.getNombre());
+        nuevoUsuario.setPassword(estudiante.getPassword());
 
         try {
-            try {
-                // se trata de enviar el correo
-                this.emailSender.enviarCorreo(subject, estudiante.getEmail(), mensaje);
-            } catch (IOException ex) {
-               log.error(Mensajes.MESSAGING_EXCEPTION, ex);
-            } catch (MailException ex) {
-               log.error(Mensajes.MESSAGING_EXCEPTION, ex);
-            }
-
+            this.emailSenderVelocity.enviarCorreo("Informe de registo de estudiante",
+                    estudiante.getEmail(), FabricaTemplateVelocity.NUEVO_USUARIO, nuevoUsuario);
+        } catch (IOException ex) {
+            log.error(Mensajes.IO_EXCEPTION, ex);
         } catch (MessagingException ex) {
             log.error(Mensajes.MESSAGING_EXCEPTION, ex);
 

@@ -67,7 +67,7 @@ public class EmailSender {
         loMsgHlpr.setSubject(asunto);
         loMsgHlpr.addTo(destinatario);
         loMsgHlpr.setText(mensaje, true);
-
+        
         // se trata de enviar el mensaje de correo electronico
         javaMailSender.send(loMimeMsg);
     }

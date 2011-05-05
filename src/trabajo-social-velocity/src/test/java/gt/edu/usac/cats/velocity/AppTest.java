@@ -46,7 +46,7 @@ public class AppTest
     public void testApp() throws IOException
     {
         
-
+/*
         
         TemplateVelocity tm = FabricaTemplateVelocity.NUEVO_USUARIO.crear(getDataNuevoUsuario());
         Writer writer = tm.transformarTemplate();
@@ -76,7 +76,7 @@ public class AppTest
         tm = FabricaTemplateVelocity.RECORDATORIO_CONTRASENYA.crear(getDataRecordatorioContrasenya());
         writer = tm.transformarTemplate();
         System.out.println(writer);
-        System.out.println("------------------------------------------------");
+        System.out.println("------------------------------------------------");*/
 
         //assertTrue( true );
     }
@@ -108,8 +108,8 @@ public class AppTest
         DesasignacionEstudianteCurso edc = new DesasignacionEstudianteCurso("2003131171", "Mario Batres");
 
 
-        List <HorarioCurso> listadoHorarioCursos = new <HorarioCurso> ArrayList();
-
+        List <HorarioCurso> listadoHorarioCursos = new ArrayList();
+        
         listadoHorarioCursos.add(new HorarioCurso("01", "Curso 1", "A"));
         listadoHorarioCursos.add(new HorarioCurso("02", "Curso 2", "B"));
         listadoHorarioCursos.add(new HorarioCurso("03", "Curso 3", "C"));

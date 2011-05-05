@@ -3,9 +3,7 @@
  * Escuela de Trabajo Social
  * Universidad de San Carlos de Guatemala
  */
-
 package gt.edu.usac.cats.controlador.usuario;
-
 
 import java.io.IOException;
 import javax.mail.MessagingException;
@@ -13,9 +11,10 @@ import org.springframework.stereotype.Controller;
 import gt.edu.usac.cats.dominio.wrapper.WrapperDatosPersonales;
 import gt.edu.usac.cats.dominio.Usuario;
 import gt.edu.usac.cats.servicio.ServicioUsuario;
-import gt.edu.usac.cats.util.EmailSender;
+import gt.edu.usac.cats.util.EmailSenderVelocity;
 import gt.edu.usac.cats.util.Mensajes;
 import gt.edu.usac.cats.util.RequestUtil;
+import gt.edu.usac.cats.velocity.FabricaTemplateVelocity;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -26,7 +25,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-
 /**
  *
  * @author Carlos Solórzano
@@ -34,6 +32,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping(value = "recordarUsuario.htm")
 public class ControladorRecordarUsuario {
+
     private static Logger log = Logger.getLogger(ControladorAsignarPerfilUsuario.class);
 //______________________________________________________________________________
     private static final String TITULO_MENSAJE = "recordarUsuario.titulo";
@@ -44,7 +43,7 @@ public class ControladorRecordarUsuario {
     private ServicioUsuario servicioUsuarioImpl;
 //______________________________________________________________________________
     @Resource
-    private EmailSender emailSender;
+    private EmailSenderVelocity emailSenderVelocity;
 //______________________________________________________________________________
 
     /**
@@ -54,33 +53,34 @@ public class ControladorRecordarUsuario {
      * @return
      */
     @RequestMapping(method = RequestMethod.GET)
-    public String crearFormulario(Model modelo,HttpServletRequest request) {
-        modelo.addAttribute("wrapperDatosPersonales",new WrapperDatosPersonales());
+    public String crearFormulario(Model modelo, HttpServletRequest request) {
+        modelo.addAttribute("wrapperDatosPersonales", new WrapperDatosPersonales());
         return "usuario/recordarUsuario";
     }
 //______________________________________________________________________________
+
     /**
      * @param modelo
      * @param request
      *
      * @return
      */
-
     @RequestMapping(method = RequestMethod.POST)
     public String recordarUsuario(@Valid WrapperDatosPersonales wrapperDatosPersonales, BindingResult bindingResult,
-                        Model modelo, HttpServletRequest request) throws MessagingException {
+            Model modelo, HttpServletRequest request) throws MessagingException {
 
         //Validar que no existan errores en el formulario        
-        if(bindingResult.hasErrors())            
-            return "usuario/recordarUsuario";        
+        if (bindingResult.hasErrors()) {
+            return "usuario/recordarUsuario";
+        }
 
-        try{
+        try {
             //Buscar usuario por email
             this.usuario = this.servicioUsuarioImpl.getUsuarioPorEmail(wrapperDatosPersonales.getEmail());
 
             //Si el correo no esta registrado en el sistema
-            if (this.usuario==null){
-                RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "recordarUsuario.emailNoExiste",false);
+            if (this.usuario == null) {
+                RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "recordarUsuario.emailNoExiste", false);
                 return "usuario/recordarUsuario";
             }
             try {
@@ -110,23 +110,15 @@ public class ControladorRecordarUsuario {
      * @param email     Direccion de correo hacia donde se enviara el correo
      */
     private void enviarEmail(Usuario usuario, String email) throws IOException {
-        String subject = "Usuario registrado (Escuela de Trabajo Social)";
-        String mensaje = "Estimado usuario, \n\n"+
-                "Se ha solicitado recordar el usuario registrado en el sistema de la Escuela de Trabajo Social. " +
-                "El nombre del usuario asociado a esta cuenta de correo electrónico es:\n\n"+
-                "Nombre de usuario: " + usuario.getNombreUsuario();
-
         try {
-            
+
             // se trata de enviar el correo
-            this.emailSender.enviarCorreo(subject, email, mensaje);
+            this.emailSenderVelocity.enviarCorreo("Usuario registrado", email,
+                    FabricaTemplateVelocity.RECORDATORIO_USUARIO, usuario.getNombreUsuario());
 
         } catch (MessagingException ex) {
             log.error(Mensajes.MESSAGING_EXCEPTION, ex);
 
         }
     }
-
-
-
 }

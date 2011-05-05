@@ -8,14 +8,13 @@ package gt.edu.usac.cats.controlador.usuario;
 import gt.edu.usac.cats.dominio.Usuario;
 import gt.edu.usac.cats.dominio.wrapper.WrapperRecordarContrasenia;
 import gt.edu.usac.cats.servicio.ServicioUsuario;
-import gt.edu.usac.cats.util.EmailSender;
-import gt.edu.usac.cats.util.ManejadorSitioPropiedades;
+import gt.edu.usac.cats.util.EmailSenderVelocity;
 import gt.edu.usac.cats.util.Mensajes;
 import gt.edu.usac.cats.util.RequestUtil;
-import java.io.FileInputStream;
+import gt.edu.usac.cats.velocity.FabricaTemplateVelocity;
+import gt.edu.usac.cats.velocity.contexto.RecordatorioContrasenya;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.Properties;
 import javax.annotation.Resource;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
@@ -46,7 +45,7 @@ public class ControladorRecordarContrasenia {
     private ServicioUsuario servicioUsuarioImpl;
 //______________________________________________________________________________
     @Resource
-    private EmailSender emailSender;
+    private EmailSenderVelocity emailSenderVelocity;
 //______________________________________________________________________________
     /**
      * @param modelo
@@ -124,18 +123,16 @@ public class ControladorRecordarContrasenia {
      */
     private void enviarEmail(Usuario usuario, String email) throws IOException, URISyntaxException {
         //Se carga la configuracion para el url del sitio
-        Properties properties = ManejadorSitioPropiedades.leer();
-        
-        String subject = "Reinicio de contraseña (Escuela de Trabajo Social)";
-        String mensaje = "Estimado usuario, \n\n"+
-                "Se ha solicitado generar una nueva contraseña para el usuario registrado en el sistema de la Escuela de Trabajo Social. " +
-                "Para esto se ha generado un código de validación para que pueda modificar su contraseña. Utilice la siguiente información:\n\n"+
-                "Ingrese a este enlace: " + properties.getProperty("urlHTTPS") + "reiCont.htm?idUsuario=" + this.usuario.getIdUsuario() + "\n" +
-                "Código de validación: " + usuario.getCodigoValidacion();
+
+        RecordatorioContrasenya recordatorioContrasenya = new RecordatorioContrasenya();
+        recordatorioContrasenya.setCodigoValidacion(usuario.getCodigoValidacion());
+        recordatorioContrasenya.setIdUsuario(usuario.getIdUsuario());
+
         try {
             
             // se trata de enviar el correo
-            this.emailSender.enviarCorreo(subject, email, mensaje);
+            this.emailSenderVelocity.enviarCorreo("Reinicio de contrasenya", email,
+                    FabricaTemplateVelocity.RECORDATORIO_CONTRASENYA, recordatorioContrasenya);
 
         } catch (MessagingException ex) {
             log.error(Mensajes.MESSAGING_EXCEPTION, ex);
