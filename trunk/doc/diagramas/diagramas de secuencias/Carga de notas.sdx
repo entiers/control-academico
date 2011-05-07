@@ -5,8 +5,8 @@ ccno:ccno : "ControladorCargarNotas"
 sca:sca : "ServicioCalendarioActividades"
 ssem:ssem : "ServicioSemestre"
 sach:sach : "ServicioAsignacionCatedraticoHorario"
-fme:fme : "FabricaManejadorETL"
-me:me : "ManejadorETL"
+sas:sas : "ServicioAsignacion"
+sdas:sdas : "ServicioDetalleAsignacion"
 
 cno:peridoValido=ccno.cargaNotas(catedratico)
 ccno:peridoValido=sca.esActividadVigente(TipoActividad=CargaNotas)
@@ -14,15 +14,14 @@ ccno:semestre=ssem.getSemestreVigente
 ccno:listaCursosAsignados=sach.getCursosAsignados(catedratico,semestre)
 
 [c:Si listaCursosAsignados no vacia Y esPeríodoVálidoAsignaciónRetrasadas ]
-	cno:modelo=ccno.crearModelo()
-	cno:ccno.realizarCargaNotas()
-	[c:if el archivo no es nulo y que el achivo sea un XLS válido]
-		ccno:ccno.cargarArchivoExcel(archivoExcel) &
-		ccno:boolean res=ccno.realizarETL()
-		ccno:ManejadorETL instancia=fme.crear()
-		ccno:boolean res=me.realizar()
-
+	[c:Mientras notas no oficializadas]
+		cno:modelo=ccno.crearModelo(horario)
+		ccno:listadoEstudiantesAsignados=sas.getNotasEstudiantesAsignados(horario)
+		cno:exito=ccno.grabarNotas(tablaNotas)
+		ccno:exito=sdas.grabarNotas(tablaNotas)
 	[/c]
+	cno:exito=ccno.oficializarNotas(tablaNotas)
+	ccno:exito=sdas.oficializarNotas(tablaNotas)
 -- de lo contrario
 cno:Mostrar mensaje "Catedrático sin cursos asignados ó Período inválido de carga de notas"
 [/c]]]></source>
