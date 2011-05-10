@@ -78,7 +78,7 @@ public class ControladorAsignacionRetrasadas extends ControladorAbstractoAsignac
 
             List<Horario> listaHorarioAsignacion = new ArrayList<Horario>();
             Pensum pensum = this.servicioPensumEstudianteCarrera.getPensumEstudianteCarreraValido(
-                    asignacionEstudianteCarrera.getEstudiante()).getPensum();
+                    asignacionEstudianteCarrera).getPensum();
 
             if (pensum != null) {
                 if (datosAsignacion.getDetalleAsignacion()!=null){

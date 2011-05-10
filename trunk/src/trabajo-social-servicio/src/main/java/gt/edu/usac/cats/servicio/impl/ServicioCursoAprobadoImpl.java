@@ -56,7 +56,7 @@ public class ServicioCursoAprobadoImpl extends ServicioGeneralImpl implements Se
         Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
         query.setParameter("curso", curso);
         query.setParameter("pensum", servicioPensumEstudianteCarreraImpl.
-                getPensumEstudianteCarreraValido(asignacionEstudianteCarrera.getEstudiante())
+                getPensumEstudianteCarreraValido(asignacionEstudianteCarrera)
                 .getPensum());
 
         return query.list();
