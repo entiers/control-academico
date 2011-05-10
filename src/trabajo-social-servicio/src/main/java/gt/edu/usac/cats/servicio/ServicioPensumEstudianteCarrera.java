@@ -7,6 +7,7 @@
 package gt.edu.usac.cats.servicio;
 
 import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
+import gt.edu.usac.cats.dominio.Carrera;
 import gt.edu.usac.cats.dominio.Estudiante;
 import gt.edu.usac.cats.dominio.Pensum;
 import gt.edu.usac.cats.dominio.PensumEstudianteCarrera;
@@ -26,12 +27,13 @@ public interface ServicioPensumEstudianteCarrera extends ServicioGeneral {
      * Obtiene el pensum vlido que tiene asignado un estudiante.
      *
      * @param estudiante Objeto de tipo {@link Estudiante}
+     * @param carrera  Objeto de tipo {@link Carrera}
      *
      * @throws DataAccessException Si ocurri&oacute; un error de acceso a datos
      *
      * @return Objeto de tipo {@link PensumEstudianteCarrera}
      */
-    PensumEstudianteCarrera getPensumEstudianteCarreraValido(Estudiante estudiante)
+    PensumEstudianteCarrera getPensumEstudianteCarreraValido(Estudiante estudiante, Carrera carrera)
             throws DataAccessException;
 
 //______________________________________________________________________________
@@ -57,7 +59,7 @@ public interface ServicioPensumEstudianteCarrera extends ServicioGeneral {
      *
      * @return Lista de objetos de tipo {@link PensumEstudianteCarrera}
      */
-    List <PensumEstudianteCarrera> getListadoPensumEstudianteCarreraNoValidos(Estudiante estudiante)
+    List <PensumEstudianteCarrera> getListadoPensumEstudianteCarreraNoValidos(Estudiante estudiante, Carrera carrera)
             throws DataAccessException;
 
 //______________________________________________________________________________

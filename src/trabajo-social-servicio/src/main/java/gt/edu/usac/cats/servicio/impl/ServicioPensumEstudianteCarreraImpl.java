@@ -5,6 +5,7 @@
 package gt.edu.usac.cats.servicio.impl;
 
 import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
+import gt.edu.usac.cats.dominio.Carrera;
 import gt.edu.usac.cats.dominio.Estudiante;
 import gt.edu.usac.cats.dominio.Pensum;
 import gt.edu.usac.cats.dominio.PensumEstudianteCarrera;
@@ -36,12 +37,11 @@ public class ServicioPensumEstudianteCarreraImpl extends ServicioGeneralImpl imp
      *
      * @return Objeto de tipo {@link DetachedCriteria}
      */
-    private DetachedCriteria crearCriteriaPorEstudianteYValido(boolean valido, Estudiante estudiante) {
+    private DetachedCriteria crearCriteriaPorEstudianteYValido(boolean valido, Estudiante estudiante, Carrera carrera) {
         DetachedCriteria criteria = DetachedCriteria.forClass(PensumEstudianteCarrera.class);
         criteria.createAlias("asignacionEstudianteCarrera", "aec");
         criteria.createAlias("pensum", "p");
-        //solo para asegurarse que la carrera es la misma para la asignacion y el pensum
-        criteria.createAlias("p.carrera", "c");
+        criteria.add(Restrictions.eq("aec.carrera", carrera));
         criteria.add(Restrictions.eqProperty("p.carrera", "aec.carrera"));
         criteria.add(Restrictions.eq("valido", valido));
         criteria.add(Restrictions.eq("aec.estudiante", estudiante));
@@ -82,9 +82,10 @@ public class ServicioPensumEstudianteCarreraImpl extends ServicioGeneralImpl imp
      * @return Objeto de tipo {@link PensumEstudianteCarrera}
      */
     @Override
-    public PensumEstudianteCarrera getPensumEstudianteCarreraValido(Estudiante estudiante) throws DataAccessException {
+    public PensumEstudianteCarrera getPensumEstudianteCarreraValido(Estudiante estudiante, Carrera carrera)
+            throws DataAccessException {
         //Se tiene el conocimiento que siempre habr'a un registro valido = true en la BD
-        return this.daoGeneralImpl.uniqueResult(this.crearCriteriaPorEstudianteYValido(true, estudiante));
+        return this.daoGeneralImpl.uniqueResult(this.crearCriteriaPorEstudianteYValido(true, estudiante, carrera));
     }
 //______________________________________________________________________________
     /**
@@ -97,8 +98,8 @@ public class ServicioPensumEstudianteCarreraImpl extends ServicioGeneralImpl imp
      * @return Lista de objetos de tipo {@link PensumEstudianteCarrera}
      */
     @Override
-    public List<PensumEstudianteCarrera> getListadoPensumEstudianteCarreraNoValidos(Estudiante estudiante) throws DataAccessException {
-        return this.daoGeneralImpl.find(this.crearCriteriaPorEstudianteYValido(false, estudiante));
+    public List<PensumEstudianteCarrera> getListadoPensumEstudianteCarreraNoValidos(Estudiante estudiante, Carrera carrera) throws DataAccessException {
+        return this.daoGeneralImpl.find(this.crearCriteriaPorEstudianteYValido(false, estudiante, carrera));
     }
 
 //______________________________________________________________________________

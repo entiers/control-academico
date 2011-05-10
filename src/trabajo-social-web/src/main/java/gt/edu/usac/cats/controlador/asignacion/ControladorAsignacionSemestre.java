@@ -135,7 +135,7 @@ public class ControladorAsignacionSemestre extends ControladorAbstractoAsignacio
             } else {
                 asignacionEstudianteCarrera = servicioGeneralImpl.cargarEntidadPorID(AsignacionEstudianteCarrera.class, datosAsignacion.getIdAsignacionEstudianteCarrera());
                 Pensum pensum = this.servicioPensumEstudianteCarrera.getPensumEstudianteCarreraValido(
-                    asignacionEstudianteCarrera.getEstudiante()).getPensum();
+                    asignacionEstudianteCarrera).getPensum();
                 if (pensum != null) {
                     for (Horario horario : this.listaHorarioAsignacion) {
                        //Validando prerrequisitos por curso
