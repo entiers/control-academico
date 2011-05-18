@@ -47,6 +47,7 @@ public class DetalleAsignacion implements java.io.Serializable {
     private int idDetalleAsignacion;
     private short laboratorio;
     private short zona;
+    private boolean oficializado;
 
     public DetalleAsignacion() {
         this.zona = 0;
@@ -176,6 +177,18 @@ public class DetalleAsignacion implements java.io.Serializable {
 
     public void setDesasignacions(Set<Desasignacion> desasignacions) {
         this.desasignacions = desasignacions;
+    }
+
+    @Column(
+        name = "oficializado",
+        nullable = false
+    )
+    public boolean isOficializado() {
+        return oficializado;
+    }
+
+    public void setOficializado(boolean oficializado) {
+        this.oficializado = oficializado;
     }
 
 }

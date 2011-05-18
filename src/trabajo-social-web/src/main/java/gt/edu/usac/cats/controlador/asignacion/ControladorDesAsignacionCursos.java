@@ -203,7 +203,7 @@ public class ControladorDesAsignacionCursos {
         dec.setCarnet(this.estudiante.getCarne());
         dec.setNombre(this.estudiante.getNombre());
 
-        List <HorarioCurso> listadoHorarioCursos = new <HorarioCurso> ArrayList();
+        List <HorarioCurso> listadoHorarioCursos = new ArrayList();
 
         for(Desasignacion desasignacion : listaDesasignacion){
             HorarioCurso horarioCurso = new HorarioCurso();
