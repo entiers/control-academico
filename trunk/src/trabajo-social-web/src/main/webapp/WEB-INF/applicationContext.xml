@@ -43,6 +43,7 @@
                 <value>/idiomas/textosAsignacionEstudianteCarrera</value>
                 <value>/idiomas/textosCarrera</value>
                 <value>/idiomas/textosDocumento</value>
+                <value>/idiomas/textosDetalleAsignacion</value>
             </list>
         </property>
 	<property name="cacheSeconds" value="0" />

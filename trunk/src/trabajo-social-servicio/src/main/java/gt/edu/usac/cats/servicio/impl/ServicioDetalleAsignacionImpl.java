@@ -50,7 +50,8 @@ public class ServicioDetalleAsignacionImpl extends ServicioGeneralImpl implement
         StringBuilder builder = new StringBuilder();
 
         builder.append(" select deta from DetalleAsignacion deta ")
-               .append(" where deta.horario.idHorario = :idHorario");
+               .append(" where deta.horario.idHorario = :idHorario ")
+               .append(" order by deta.asignacion.asignacionEstudianteCarrera.estudiante.carne");
 
         Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
         query.setParameter("idHorario", idHorario);
