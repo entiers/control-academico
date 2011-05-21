@@ -16,6 +16,27 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script type="text/javascript">
+            $(document).ready(function() {
+                //Cambio combo curso
+                $('#slcTipoHorario').change(function() {
+                    getHorarios($(this).val());
+                });
+
+                //Validacion frmBusqueda
+                $('#frmBusqueda').submit(function(){
+                   /* if($('#slcHorario').val()==null){
+                        $('#lblErrorHorario').html('Campo obligatorio');
+                        return false;
+                    }*/
+                });
+            });
+
+            function getHorarios(valueTipoHorario) {
+                $.get("getHorarioCatedratico.htm", { idTipoHorario: valueTipoHorario}, function(options) {
+                    $('#slcHorario').html(options);
+                });
+            }
+
             $(function() {
                 // se crea y configura el panel popup que muestra los
                 // mensajes de resultados de las operaciones
@@ -24,7 +45,11 @@
                     modal: true,
                     buttons: {
                         '<fmt:message key="btnAceptar"/>': function() {
-                            $(this).dialog('close');
+                            <%if( request.getAttribute("url") != null ) {%>
+                                location.href = "<%= request.getAttribute("url")%>";
+                            <%} else {%>
+                                $(this).dialog('close');
+                            <%}%>
                         }
                     }
                 });
@@ -32,65 +57,55 @@
 
             function guardar(value){
                 $("#hdOficializar").val(value);
-                $("form").submit();
-                
+                $.each($('#frmGuardar input:text'),function(index,value){
+                    if(isNaN(value.value)){
+                        alert('Las notas deben de ser numéricas.');
+                        return false;
+                    }
+                    if(value.value<0 | value.value>100){
+                        alert('Las notas deben de estar entre 0 y 100 puntos.')
+                        return false;
+                    }
+                    $("#frmGuardar").submit();
+                });
             }
         </script>
         <title><fmt:message key="ingresoNota.titulo"/></title>
     </head>
     <body>
         <h1><fmt:message key="ingresoNota.titulo"/></h1>
-        <form:form modelAttribute="wrapperIngresoNota" method="POST">
-            <c:choose>
-                <c:when test="${not empty listadoDetalleAsignacion}">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th><fmt:message key="agregarEstudiante.carne"/></th>
-                                <th><fmt:message key="agregarEstudiante.nombre"/></th>
-                                <th><fmt:message key="ingresoNota.zona"/></th>
-                                <th><fmt:message key="ingresoNota.laboratorio"/></th>
-                                <th><fmt:message key="ingresoNota.final"/></th>
-                            </tr>
-                        </thead>
-                        <c:forEach items="${listadoDetalleAsignacion}" var="detAsign">
-                            <tbody>
-                                <tr>
-                                    <td style="text-align:center">
-                                        ${detAsign.asignacion.asignacionEstudianteCarrera.estudiante.carne}
-                                    </td>
-                                    <td style="text-align:center">
-                                        ${detAsign.asignacion.asignacionEstudianteCarrera.estudiante.nombre}
-                                    </td>
-                                    <td style="text-align:center">
-                                        <form:input path="listZona" value="${detAsign.zona}"
-                                                    cssStyle="width:50px;"
-                                                    disabled="${detAsign.oficializado}"/>
-                                    </td>
-                                    <td style="text-align:center">
-                                        <form:input path="listLaboratorio" value="${detAsign.laboratorio}"
-                                                    cssStyle="width:50px;"
-                                                    disabled="${detAsign.oficializado}"/>
-                                    </td>
-                                    <td style="text-align:center">
-                                        <form:input path="listFinal" value="${detAsign.examenFinal}"
-                                                    cssStyle="width:50px;"
-                                                    disabled="${detAsign.oficializado}" />
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </c:forEach>
-                    </table>
-                </c:when>
-                <c:otherwise>
-                    <label><fmt:message key="ingresoNota.sinAsignaciones"/></label>
-                </c:otherwise>
-            </c:choose>
-            <br/>
-            <form:hidden path="oficializar" id="hdOficializar" />
-            <input type="button" value='<fmt:message key="ingresoNota.btnGuardar"/>' onclick="javascript:guardar(false);" />
-            <input type="button" value='<fmt:message key="ingresoNota.btnOficializar"/>' onclick="javascript:guardar(true);" />
-        </form:form>
+        <c:if test="${validacionesOK}">
+            <form:form modelAttribute="datosIngresoNota" method="post" id="frmBusqueda" >
+                <fieldset>
+                    <legend><fmt:message key="ingresoNota.busquedaAsignaciones"/></legend>
+                    <div id="divCampos">
+                        <form:label for="tipoHorario" path="tipoHorario"><fmt:message key="agregarHorario.tipo"/>:</form:label>
+                        <form:select path="tipoHorario"
+                                     id="slcTipoHorario"
+                                     items="${listaTipoHorario}"
+                                     itemLabel="descripcion"/>
+                        
+                    </div>
+                    <div id="divCampos">
+                        <form:label for="horario.idHorario" path="horario.idHorario"><fmt:message key="horario.menu"/>:</form:label>
+                        <form:select path="horario.idHorario" id="slcHorario">
+                            <c:forEach items="${listaHorario}" var="horario">
+                                <form:option value="${horario.idHorario}">${horario.curso.nombre} - ${horario.seccion}</form:option>
+                            </c:forEach>
+                        </form:select>
+                        <span id="lblErrorHorario" class="claseError" />
+                    </div>
+                   
+                    <input id="btnBuscar" type="submit" value='<fmt:message key="btnBuscar"/>' />
+                </fieldset>
+            </form:form>
+        </c:if>
+        
+        <c:if test="${mostrarEstudiantes}">
+            <form:form action="guardarOficializar.htm" id="frmGuardar" method="POST" modelAttribute="wrapperIngresoNota" >
+                <%@include file="../../jspf/formularios/formularioIngresoNotas.jspf" %>
+            </form:form>
+        </c:if>
 
         <%-- fragmento que muestra como mensaje popup el resultado de las operaciones --%>
         <%@include file="../../jspf/plantilla/popupMensaje.jspf" %>

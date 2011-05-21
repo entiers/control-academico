@@ -14,45 +14,56 @@ import java.util.List;
  * @version 1.0
  */
 public class WrapperIngresoNota {
+//______________________________________________________________________________
     private List listZona;
+//______________________________________________________________________________
     private List listLaboratorio;
+//______________________________________________________________________________
     private List listFinal;
+//______________________________________________________________________________
     private Boolean oficializar;
-
+//______________________________________________________________________________
     public WrapperIngresoNota() {
         oficializar = false;
     }
-   
+    
+//______________________________________________________________________________
     public List getListFinal() {
         return listFinal;
     }
+//______________________________________________________________________________
 
     public void setListFinal(List listFinal) {
         this.listFinal = listFinal;
     }
+//______________________________________________________________________________
 
     public List getListLaboratorio() {
         return listLaboratorio;
     }
+//______________________________________________________________________________
 
     public void setListLaboratorio(List listLaboratorio) {
         this.listLaboratorio = listLaboratorio;
     }
+//______________________________________________________________________________
 
     public List getListZona() {
         return listZona;
     }
+//______________________________________________________________________________
 
     public void setListZona(List listZona) {
         this.listZona = listZona;
     }
+//______________________________________________________________________________
 
     public Boolean getOficializar() {
         return oficializar;
     }
+//______________________________________________________________________________
 
     public void setOficializar(Boolean oficializar) {
         this.oficializar = oficializar;
     }
-
 }

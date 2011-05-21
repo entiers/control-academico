@@ -5,6 +5,7 @@
  */
 package gt.edu.usac.cats.servicio;
 
+import gt.edu.usac.cats.dominio.Catedratico;
 import gt.edu.usac.cats.dominio.Curso;
 import gt.edu.usac.cats.dominio.Horario;
 import gt.edu.usac.cats.dominio.Salon;
@@ -167,5 +168,17 @@ public interface ServicioHorario extends ServicioGeneral {
     public void agregarHorario(Horario horario, String[] horarioDiasWrapper)
             throws DataIntegrityViolationException, DataAccessException;
 
-    ;
+    //______________________________________________________________________________
+    /**
+     * <p>Este metodo se encarga de crear un listado de horarios, el listado
+     * se filtra en base a los parametros especificados.</p>
+     *
+     * @param semestre pojo del tipo {@link Semestre}
+     * @param catedratico pojo del tipo {@link Catedratico}
+     * @param tipoHorario pojo del tipo {@link TipoHorario}
+     * @return List Listado de horarios
+     * @throws HibernateException Si ocurrio un error de acceso a datos
+     */
+    List<Horario> getHorario(Semestre semestre, Catedratico catedratico, TipoHorario tipoHorario)
+            throws DataAccessException;
 }
