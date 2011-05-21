@@ -6,6 +6,7 @@
 
 package gt.edu.usac.cats.servicio.impl;
 
+import gt.edu.usac.cats.dominio.Catedratico;
 import gt.edu.usac.cats.dominio.Curso;
 import gt.edu.usac.cats.dominio.Horario;
 import gt.edu.usac.cats.dominio.HorarioDia;
@@ -278,6 +279,24 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
         Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
         query.setParameter("curso", curso);
         query.setParameter("semestre", semestre);
+        query.setParameter("tipoHorario", tipoHorario);
+
+        return query.list();
+    }
+
+    @Override
+    public List<Horario> getHorario(Semestre semestre, Catedratico catedratico, TipoHorario tipoHorario) throws DataAccessException {
+        StringBuilder builder = new StringBuilder();
+
+        builder.append(" select horario from Horario as horario")
+               .append(" inner join horario.asignacionCatedraticoHorarios aCH")
+               .append(" where horario.semestre = :semestre")
+               .append(" and horario.tipo =:tipoHorario")
+               .append(" and aCH.catedratico = :catedratico ");
+
+        Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
+        query.setParameter("semestre", semestre);
+        query.setParameter("catedratico", catedratico);
         query.setParameter("tipoHorario", tipoHorario);
 
         return query.list();

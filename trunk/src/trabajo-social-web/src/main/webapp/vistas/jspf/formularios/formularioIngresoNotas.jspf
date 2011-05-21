@@ -1,0 +1,58 @@
+<c:choose>
+    <c:when test="${not empty listadoDetalleAsignacion}">
+        <fieldset>
+            <legend><fmt:message key="ingresoNota.asignaciones"/></legend>
+            <h3><fmt:message key="curso.menu"/>: ${nombreCurso}</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th><fmt:message key="agregarEstudiante.carne"/></th>
+                        <th><fmt:message key="agregarEstudiante.nombre"/></th>
+                        <th><fmt:message key="ingresoNota.zona"/></th>
+                        <th><fmt:message key="ingresoNota.laboratorio"/></th>
+                        <th><fmt:message key="ingresoNota.final"/></th>
+                    </tr>
+                </thead>
+                <c:forEach items="${listadoDetalleAsignacion}" var="detAsign">
+                    <tbody>
+                        <tr>
+                            <td style="text-align:center">
+                                ${detAsign.asignacion.asignacionEstudianteCarrera.estudiante.carne}
+                            </td>
+                            <td style="text-align:center">
+                                ${detAsign.asignacion.asignacionEstudianteCarrera.estudiante.nombre}
+                            </td>
+                            <td style="text-align:center">
+                                <form:input path="listZona" value="${detAsign.zona}"
+                                            cssStyle="width:50px;"
+                                            disabled="${detAsign.oficializado}"/>
+                            </td>
+                            <td style="text-align:center">
+                                <form:input path="listLaboratorio" value="${detAsign.laboratorio}"
+                                            cssStyle="width:50px;"
+                                            disabled="${detAsign.oficializado}"/>
+                            </td>
+                            <td style="text-align:center">
+                                <form:input path="listFinal" value="${detAsign.examenFinal}"
+                                            cssStyle="width:50px;"
+                                            disabled="${detAsign.oficializado}"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </c:forEach>
+            </table>
+            <br/>
+            <form:hidden path="oficializar" id="hdOficializar" />
+            <input type="button" value='<fmt:message key="ingresoNota.btnGuardar"/>' onclick="javascript:guardar(false);" />
+            <input type="button" value='<fmt:message key="ingresoNota.btnOficializar"/>' onclick="javascript:guardar(true);" />
+        </fieldset>
+    </c:when>
+    <c:otherwise>
+        <div id="divCampos">
+            <fieldset>
+                <legend><fmt:message key="ingresoNota.asignaciones"/></legend>
+                <label><fmt:message key="ingresoNota.sinAsignaciones"/></label>
+            </fieldset>
+        </div>
+    </c:otherwise>
+</c:choose>

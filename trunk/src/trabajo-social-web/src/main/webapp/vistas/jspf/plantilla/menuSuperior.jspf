@@ -222,7 +222,7 @@
     </sec:authorize>
 
     <%--menu de operaciones--%>
-    <sec:authorize access="hasAnyRole('ROLE_CONTROL_PENSUM','ROLE_ASIGNACION_PRIMER_INGRESO','ROLE_CAMBIO_CIERRE_SECCION')">
+    <sec:authorize access="hasAnyRole('ROLE_CONTROL_PENSUM','ROLE_ASIGNACION_PRIMER_INGRESO','ROLE_CAMBIO_CIERRE_SECCION','ROLE_INGRESO_NOTAS')">
         <li>
             <a href="#">
                 <span class="l"></span><span class="r"></span><span class="t">
@@ -240,6 +240,10 @@
                 <%--Operacion cambio y/o cierre de seccion--%>
                 <sec:authorize access="hasRole('ROLE_CAMBIO_CIERRE_SECCION')">
                     <li><a href="cambioCierreSeccion.htm"><fmt:message key="cambioCierreSeccion.titulo"/></a></li>
+                </sec:authorize>
+                <%--Operacion cambio y/o cierre de seccion--%>
+                <sec:authorize access="hasRole('ROLE_INGRESO_NOTAS')">
+                    <li><a href="ingresoNota.htm"><fmt:message key="ingresoNota.titulo"/></a></li>
                 </sec:authorize>
             </ul>
         </li>
