@@ -41,7 +41,7 @@ import javax.persistence.Transient;
     schema = "control"
 )
 public class AsignacionCursoPensum implements java.io.Serializable {
-     private short idAsignacionCursoPensum;
+          private short idAsignacionCursoPensum;
      private Curso curso;
      private Pensum pensum;
      private boolean obligatorio;
@@ -50,12 +50,14 @@ public class AsignacionCursoPensum implements java.io.Serializable {
      private Short creditosTeoricos;
      private short numeroSemestre;
      private Set<AsignacionCursoPensum> asignacionCursoPensumsForIdCursoPensumPrerequisito = new HashSet<AsignacionCursoPensum>(0);
+     private Set<AsignacionCursoPensum> asignacionCursoPensumsForIdCursoPensumOriginal = new HashSet<AsignacionCursoPensum>(0);
+     private Set<AsignacionCursoPensum> asignacionCursoPensumsForIdCursoPensumEquivalencia = new HashSet<AsignacionCursoPensum>(0);
      private Set<AsignacionCursoPensum> asignacionCursoPensumsForIdCursoPensum = new HashSet<AsignacionCursoPensum>(0);
 
     public AsignacionCursoPensum() {}
 
-    
-    @Id
+
+       @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id_asignacion_curso_pensum", unique=true, nullable=false)
     public short getIdAsignacionCursoPensum() {
@@ -139,6 +141,28 @@ public class AsignacionCursoPensum implements java.io.Serializable {
 
     public void setAsignacionCursoPensumsForIdCursoPensumPrerequisito(Set<AsignacionCursoPensum> asignacionCursoPensumsForIdCursoPensumPrerequisito) {
         this.asignacionCursoPensumsForIdCursoPensumPrerequisito = asignacionCursoPensumsForIdCursoPensumPrerequisito;
+    }
+@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+    @JoinTable(name="curso_pensum_equivalencia", schema="control", joinColumns = {
+        @JoinColumn(name="id_curso_pensum_equivalencia", nullable=false, updatable=false) }, inverseJoinColumns = {
+        @JoinColumn(name="id_curso_pensum_original", nullable=false, updatable=false) })
+    public Set<AsignacionCursoPensum> getAsignacionCursoPensumsForIdCursoPensumOriginal() {
+        return this.asignacionCursoPensumsForIdCursoPensumOriginal;
+    }
+
+    public void setAsignacionCursoPensumsForIdCursoPensumOriginal(Set<AsignacionCursoPensum> asignacionCursoPensumsForIdCursoPensumOriginal) {
+        this.asignacionCursoPensumsForIdCursoPensumOriginal = asignacionCursoPensumsForIdCursoPensumOriginal;
+    }
+@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+    @JoinTable(name="curso_pensum_equivalencia", schema="control", joinColumns = {
+        @JoinColumn(name="id_curso_pensum_original", nullable=false, updatable=false) }, inverseJoinColumns = {
+        @JoinColumn(name="id_curso_pensum_equivalencia", nullable=false, updatable=false) })
+    public Set<AsignacionCursoPensum> getAsignacionCursoPensumsForIdCursoPensumEquivalencia() {
+        return this.asignacionCursoPensumsForIdCursoPensumEquivalencia;
+    }
+
+    public void setAsignacionCursoPensumsForIdCursoPensumEquivalencia(Set<AsignacionCursoPensum> asignacionCursoPensumsForIdCursoPensumEquivalencia) {
+        this.asignacionCursoPensumsForIdCursoPensumEquivalencia = asignacionCursoPensumsForIdCursoPensumEquivalencia;
     }
 @ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
     @JoinTable(name="prerrequisito", schema="control", joinColumns = {

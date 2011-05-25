@@ -3,7 +3,6 @@
  * Escuela de Trabajo Social
  * Universidad de San Carlos de Guatemala
  */
-
 package gt.edu.usac.cats.servicio;
 
 import gt.edu.usac.cats.dominio.AsignacionCursoPensum;
@@ -17,7 +16,7 @@ import org.springframework.dao.DataAccessException;
  * @author Carlos Solorzano
  * @version 1.0
  */
-public interface ServicioAsignacionCursoPensum extends ServicioGeneral{
+public interface ServicioAsignacionCursoPensum extends ServicioGeneral {
 
     /**
      * <p>Devuelve un listado del tipo {@link AsignacionCursoPensum} en base
@@ -28,4 +27,11 @@ public interface ServicioAsignacionCursoPensum extends ServicioGeneral{
      */
     List<AsignacionCursoPensum> getListadoAsignacionCursoPensum(Curso curso, Pensum pensum)
             throws DataAccessException;
+
+    /***/
+    List<Curso> getListadoCursosPorPensum(Pensum pensum);
+
+    /***/
+    List<AsignacionCursoPensum> getListadoCursosOrignalesPorPensumOriginalYEquivalente(
+            Pensum pensumOriginal, Pensum pensumEquivalente);
 }
