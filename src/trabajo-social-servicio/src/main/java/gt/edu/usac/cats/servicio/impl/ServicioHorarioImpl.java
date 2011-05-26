@@ -302,5 +302,20 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
         return query.list();
     }
 
+    @Override
+    public List<Horario> getHorario(Semestre semestre, TipoHorario tipoHorario) throws DataAccessException {
+        StringBuilder builder = new StringBuilder();
+
+        builder.append(" select horario from Horario as horario")
+               .append(" where horario.semestre = :semestre")
+               .append(" and horario.tipo =:tipoHorario");
+        
+        Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
+        query.setParameter("semestre", semestre);
+        query.setParameter("tipoHorario", tipoHorario);
+
+        return query.list();
+    }
+
 
 }

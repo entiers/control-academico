@@ -24,10 +24,10 @@
 
                 //Validacion frmBusqueda
                 $('#frmBusqueda').submit(function(){
-                   /* if($('#slcHorario').val()==null){
+                    if($('#slcHorario').val()==null){
                         $('#lblErrorHorario').html('Campo obligatorio');
                         return false;
-                    }*/
+                    }
                 });
             });
 
@@ -75,7 +75,7 @@
     <body>
         <h1><fmt:message key="ingresoNota.titulo"/></h1>
         <c:if test="${validacionesOK}">
-            <form:form modelAttribute="datosIngresoNota" method="post" id="frmBusqueda" >
+            <form:form modelAttribute="datosIngresoNota" method="post" id="frmBusqueda" action="ingresoNota.htm">
                 <fieldset>
                     <legend><fmt:message key="ingresoNota.busquedaAsignaciones"/></legend>
                     <div id="divCampos">

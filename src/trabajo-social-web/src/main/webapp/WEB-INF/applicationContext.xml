@@ -45,6 +45,7 @@
                 <value>/idiomas/textosDocumento</value>
                 <value>/idiomas/textosDetalleAsignacion</value>
                 <value>/idiomas/textosCursoPensum</value>
+                <value>/idiomas/textosAdministracion</value>
             </list>
         </property>
 	<property name="cacheSeconds" value="0" />
