@@ -22,21 +22,39 @@
                             <td style="text-align:center">
                                 ${detAsign.asignacion.asignacionEstudianteCarrera.estudiante.nombre}
                             </td>
-                            <td style="text-align:center">
-                                <form:input path="listZona" value="${detAsign.zona}"
-                                            cssStyle="width:50px;"
-                                            disabled="${detAsign.oficializado}"/>
-                            </td>
-                            <td style="text-align:center">
-                                <form:input path="listLaboratorio" value="${detAsign.laboratorio}"
-                                            cssStyle="width:50px;"
-                                            disabled="${detAsign.oficializado}"/>
-                            </td>
-                            <td style="text-align:center">
-                                <form:input path="listFinal" value="${detAsign.examenFinal}"
-                                            cssStyle="width:50px;"
-                                            disabled="${detAsign.oficializado}"/>
-                            </td>
+                            <c:choose>
+                                <c:when test="${esAdministrativo}">
+                                    <td style="text-align:center">
+                                        <form:input path="listZona" value="${detAsign.zona}"
+                                                    cssStyle="width:50px;"/>
+                                    </td>
+                                    <td style="text-align:center">
+                                        <form:input path="listLaboratorio" value="${detAsign.laboratorio}"
+                                                    cssStyle="width:50px;"/>
+                                    </td>
+                                    <td style="text-align:center">
+                                        <form:input path="listFinal" value="${detAsign.examenFinal}"
+                                                    cssStyle="width:50px;"/>
+                                    </td>
+                                </c:when>
+                                <c:otherwise>
+                                    <td style="text-align:center">
+                                        <form:input path="listZona" value="${detAsign.zona}"
+                                                    cssStyle="width:50px;"
+                                                    disabled="${detAsign.oficializado}"/>
+                                    </td>
+                                    <td style="text-align:center">
+                                        <form:input path="listLaboratorio" value="${detAsign.laboratorio}"
+                                                    cssStyle="width:50px;"
+                                                    disabled="${detAsign.oficializado}"/>
+                                    </td>
+                                    <td style="text-align:center">
+                                        <form:input path="listFinal" value="${detAsign.examenFinal}"
+                                                    cssStyle="width:50px;"
+                                                    disabled="${detAsign.oficializado}"/>
+                                    </td>
+                                </c:otherwise>
+                            </c:choose>                            
                         </tr>
                     </tbody>
                 </c:forEach>

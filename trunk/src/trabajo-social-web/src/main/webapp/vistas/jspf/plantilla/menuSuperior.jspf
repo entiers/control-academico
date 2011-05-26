@@ -222,7 +222,7 @@
     </sec:authorize>
 
     <%--menu de operaciones--%>
-    <sec:authorize access="hasAnyRole('ROLE_CONTROL_PENSUM','ROLE_ASIGNACION_PRIMER_INGRESO','ROLE_CAMBIO_CIERRE_SECCION','ROLE_INGRESO_NOTAS')">
+    <sec:authorize access="hasAnyRole('ROLE_CONTROL_PENSUM','ROLE_ASIGNACION_PRIMER_INGRESO','ROLE_CAMBIO_CIERRE_SECCION','ROLE_INGRESO_NOTAS','ROLE_INGRESO_NOTAS_ADMINISTRACION','ROLE_ASIGNACION_CURSOS_ADMINISTRACION')">
         <li>
             <a href="#">
                 <span class="l"></span><span class="r"></span><span class="t">
@@ -241,9 +241,17 @@
                 <sec:authorize access="hasRole('ROLE_CAMBIO_CIERRE_SECCION')">
                     <li><a href="cambioCierreSeccion.htm"><fmt:message key="cambioCierreSeccion.titulo"/></a></li>
                 </sec:authorize>
-                <%--Operacion cambio y/o cierre de seccion--%>
+                <%--Operacion ingreso de notas catedraticos--%>
                 <sec:authorize access="hasRole('ROLE_INGRESO_NOTAS')">
                     <li><a href="ingresoNota.htm"><fmt:message key="ingresoNota.titulo"/></a></li>
+                </sec:authorize>
+                <%--Operacion ingreso de notas administracion--%>
+                <sec:authorize access="hasRole('ROLE_INGRESO_NOTAS_ADMINISTRACION')">
+                    <li><a href="ingresoNotaAdmin.htm"><fmt:message key="admin.ingresoNotas.titulo"/></a></li>
+                </sec:authorize>
+                <%--Operacion asignacion de cursos de administracion--%>
+                <sec:authorize access="hasRole('ROLE_ASIGNACION_CURSOS_ADMINISTRACION')">
+                    <li><a href="asignCursosAdmin.htm"><fmt:message key="admin.asignacionCursos.titulo"/></a></li>
                 </sec:authorize>
             </ul>
         </li>

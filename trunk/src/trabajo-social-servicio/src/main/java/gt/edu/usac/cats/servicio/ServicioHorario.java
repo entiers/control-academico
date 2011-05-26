@@ -168,7 +168,7 @@ public interface ServicioHorario extends ServicioGeneral {
     public void agregarHorario(Horario horario, String[] horarioDiasWrapper)
             throws DataIntegrityViolationException, DataAccessException;
 
-    //______________________________________________________________________________
+//______________________________________________________________________________
     /**
      * <p>Este metodo se encarga de crear un listado de horarios, el listado
      * se filtra en base a los parametros especificados.</p>
@@ -181,4 +181,18 @@ public interface ServicioHorario extends ServicioGeneral {
      */
     List<Horario> getHorario(Semestre semestre, Catedratico catedratico, TipoHorario tipoHorario)
             throws DataAccessException;
+
+//______________________________________________________________________________
+    /**
+     * <p>Este metodo se encarga de crear un listado de horarios, el listado
+     * se filtra en base a los parametros especificados.</p>
+     * 
+     * @param semestre pojo del tipo {@link Semestre}
+     * @param tipoHorario pojo del tipo {@link TipoHorario}
+     * @return List Listado de horarios
+     * @throws DataAccessException
+     */
+    List<Horario> getHorario(Semestre semestre, TipoHorario tipoHorario)
+            throws DataAccessException;
+
 }

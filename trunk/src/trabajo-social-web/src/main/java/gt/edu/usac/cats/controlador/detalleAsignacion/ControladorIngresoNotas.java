@@ -53,6 +53,8 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota{
 //______________________________________________________________________________
     private List<Horario> listadoHorario;
 //______________________________________________________________________________
+    private boolean esAdministrativo = false;
+//______________________________________________________________________________
     @Resource
     private ServicioCalendarioActividades servicioCalendarioActividadesImpl;
 //______________________________________________________________________________
@@ -77,6 +79,7 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota{
     @RequestMapping(value="ingresoNota.htm",method=RequestMethod.GET)
     public String buscarEstudiantes(Model modelo, HttpServletRequest request) {
 
+        this.esAdministrativo = false;
         try{
             this.semestre = this.servicioSemestreImpl.getSemestreActivo();
 
@@ -121,6 +124,35 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota{
         this.setModelo(modelo,false, new DatosIngresoNota());
         return "detalleAsignacion/ingresoNota";
     }
+
+//______________________________________________________________________________
+     /**
+     * <p>Metodo que intercepta la peticion GET de la pagina ingresoNota.htm.
+      *Se encarga de validar:
+      * <li>Usuario logueado sea un catedratico</li>
+      * <li>Periodo valido de ingreso de notas</li>
+      * <li>Mostrar el listado de cursos a los que el catedratico se encuentra
+      * asignado en el semestre actual</li>
+      * </p>
+     */
+    @RequestMapping(value="ingresoNotaAdmin.htm",method=RequestMethod.GET)
+    public String getIngresoNotaAdmin(Model modelo, HttpServletRequest request) {
+
+        this.esAdministrativo = true;
+        try{
+            this.semestre = this.servicioSemestreImpl.getSemestreActivo();
+            this.listadoHorario = this.servicioHorarioImpl.getHorario(this.semestre,TipoHorario.values()[0]);
+
+        }
+        catch(Exception ex){
+            RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "dataAccessException", false);
+            log.error(Mensajes.DATA_ACCESS_EXCEPTION, ex);
+        }
+
+        this.setModelo(modelo,false, new DatosIngresoNota());
+        return "detalleAsignacion/ingresoNota";
+    }
+
 //______________________________________________________________________________
     /**
      * <p>Metodo que recibe las peticiones POST de la pagina ingresoNota.htm.
@@ -182,7 +214,10 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota{
             log.error(Mensajes.DATA_ACCESS_EXCEPTION, ex);
         }
 
-        RequestUtil.agregarRedirect(request, "ingresoNota.htm");
+        if(this.esAdministrativo)
+            RequestUtil.agregarRedirect(request, "ingresoNotaAdmin.htm");
+        else
+            RequestUtil.agregarRedirect(request, "ingresoNota.htm");
         return "detalleAsignacion/ingresoNota";
     }
 //  _____________________________________________________________________________
@@ -197,10 +232,14 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota{
     @RequestMapping(value = "getHorarioCatedratico.htm", method = RequestMethod.GET)
     public @ResponseBody String getHorario(@RequestParam String idTipoHorario,
                                                     HttpServletRequest request) {
+        System.out.println("ADMIN: " + this.esAdministrativo);
         String strOptions = "";
         try {
             TipoHorario tipoHorario = TipoHorario.valueOf(idTipoHorario);
-            this.listadoHorario = this.servicioHorarioImpl.getHorario(this.semestre, this.catedratico,
+            if(this.esAdministrativo)
+                this.listadoHorario = this.servicioHorarioImpl.getHorario(this.semestre, tipoHorario);
+            else
+                this.listadoHorario = this.servicioHorarioImpl.getHorario(this.semestre, this.catedratico,
                                     tipoHorario);
             for (Horario horario : this.listadoHorario){
                 strOptions += "<option value=\"" + horario.getIdHorario() + "\">" +
@@ -228,6 +267,8 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota{
         modelo.addAttribute("listadoDetalleAsignacion", super.listadoDetalleAsignacion);
         modelo.addAttribute("mostrarEstudiantes", mostrarAsignaciones);
         modelo.addAttribute("validacionesOK", true);
+        modelo.addAttribute("esAdministrativo", this.esAdministrativo);
+
     }
 
 }
