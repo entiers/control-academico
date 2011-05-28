@@ -85,17 +85,14 @@ public class ServicioCursoImpl extends ServicioGeneralImpl implements ServicioCu
     public List<Curso> getCursoAsignacion(Carrera carrera, Semestre semestre, TipoHorario tipoHorario) throws DataAccessException {
          StringBuilder builder = new StringBuilder();
 
-        builder.append("select acp.curso from AsignacionCursoPensum acp ")
-               .append("where acp.pensum.carrera = :carrera ")
-               .append("and exists (")
-               .append("    select horario from Horario as horario ")
-               .append("    where horario.semestre = :semestre")
-               .append("    and horario.tipo = :tipoHorario")
-               .append("    and horario.curso=acp.curso")
-               .append("    and horario.salon.capacidad > (")
-               .append("        select count(*) from DetalleAsignacion det")
-               .append("        where det.horario = horario")
-               .append("    )")
+        builder.append("select distinct horario.curso from Horario as horario ")
+               .append("inner join horario.curso.asignacionCursoPensums aCP ")
+               .append("where horario.semestre = :semestre ")
+               .append("and aCP.pensum.carrera = :carrera ")
+               .append("and horario.tipo = :tipoHorario ")
+               .append("and horario.salon.capacidad > ( ")
+               .append(" select count(*) from DetalleAsignacion det")
+               .append(" where det.horario = horario")
                .append(")");
 
         Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());

@@ -1,6 +1,6 @@
 <%-- 
-    Document   : asignacionSemestre
-    Created on : 19/02/2011, 03:10:09 PM
+    Document   : realizarAsignacionExtemporanea
+    Created on : 27/05/2011, 06:45:12 PM
     Author     : Carlos Solorzano
 --%>
 
@@ -33,8 +33,12 @@
         </script>
     </head>
     <body>
-        <h1><fmt:message key="miscursos.asignacionCursos.semestre.titulo"/></h1>
-        <form:form method="post" modelAttribute="datosAsignacion" action="agregarHorarioAsignacionSemestre.htm">
+        <h1><fmt:message key="admin.asignacionCursos.titulo"/></h1>
+
+        <%-- fragmento que muestra la informacion del estudiante--%>
+        <%@include file="../../jspf/formularios/informacion/formularioInformacionEstudiante.jspf" %>
+        
+        <form:form method="post" modelAttribute="datosAsignacion" action="agregarHorarioAsignacionExtemporanea.htm">
             <fieldset>
                 <legend><fmt:message key="miscursos.asignacionCursos.horarios"/></legend>
                 <%-- se importan los campos --%>
@@ -44,7 +48,7 @@
         </form:form>
 
         <c:if test="${horarioElegido}" >
-            <form:form method="POST" modelAttribute="datosAsignacion" action="realizarAsignacionSemestre.htm">
+            <form:form method="POST" modelAttribute="datosAsignacion" action="realizarAsignacionExtemporanea.htm">
                 <fieldset>
                     <legend><fmt:message key="buscarHorario.tituloListado"/></legend>
                     <%-- se importan los campos --%>

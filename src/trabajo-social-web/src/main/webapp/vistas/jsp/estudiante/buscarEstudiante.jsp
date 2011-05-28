@@ -106,11 +106,19 @@
                            id="estudiante" requestURI="buscarEstudiante.htm" pagesize="15" >
                 <display:column property="carne" titleKey="agregarEstudiante.carne"  />
                 <display:column property="nombre" titleKey="agregarEstudiante.nombre"  />
-                <sec:authorize access="hasRole('ROLE_MOSTRAR_ASIGNACION_ESTUDIANTE_CARRERA')">
+                <sec:authorize access="hasAnyRole('ROLE_MOSTRAR_ASIGNACION_ESTUDIANTE_CARRERA','ROLE_ASIGNACION_CURSOS_ADMINISTRACION')">
                     <display:column titleKey="acciones" style="text-align: center;" >
-                        <a href="mostrarAsignacionEstudianteCarrera.htm?idEstudiante=${estudiante.idEstudiante}">
-                            <fmt:message key="mostrarAsignacionEstudianteCarrera.link"/>
-                        </a>
+                        <sec:authorize access="hasRole('ROLE_MOSTRAR_ASIGNACION_ESTUDIANTE_CARRERA')">
+                            <a href="mostrarAsignacionEstudianteCarrera.htm?idEstudiante=${estudiante.idEstudiante}">
+                                <fmt:message key="mostrarAsignacionEstudianteCarrera.link"/>
+                            </a>
+                        </sec:authorize>
+                        <%--Operacion asignacion de cursos de administracion--%>
+                        <sec:authorize access="hasRole('ROLE_ASIGNACION_CURSOS_ADMINISTRACION')">
+                            <br/><a href="asignacionCursosAdmin.htm?idEstudiante=${estudiante.idEstudiante}">
+                                <fmt:message key="admin.asignacionCursos.titulo"/>
+                            </a>
+                        </sec:authorize>
                     </display:column>
                 </sec:authorize>
             </display:table>

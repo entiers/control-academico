@@ -138,57 +138,57 @@ public class ControladorAsignacionVacaciones extends ControladorAbstractoAsignac
             if (servicioHorarioImpl.existeTraslape(listaHorarioAsignacion)) {
                 RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.existeTraslape", false);
                 return "asignacion/asignacionVacaciones";
+            }
+
+            asignacionEstudianteCarrera = servicioGeneralImpl.cargarEntidadPorID(AsignacionEstudianteCarrera.class, datosAsignacion.getIdAsignacionEstudianteCarrera());
+            Pensum pensum = this.servicioPensumEstudianteCarrera.getPensumEstudianteCarreraValido(
+                asignacionEstudianteCarrera).getPensum();
+            if (pensum != null) {
+                //Validando que no tenga asignaciones previas y no exceda las permitidas
+                List<DetalleAsignacion> listaDetAsigVacaciones = servicioDetalleAsignacionImpl.getListadoDetalleAsignacion(semestre, asignacionEstudianteCarrera, TipoAsignacion.ASIGNACION_CURSOS_VACACIONES);
+                if (!listaDetAsigVacaciones.isEmpty()){
+                    if(listaHorarioAsignacion.size() + listaDetAsigVacaciones.size() > 2){
+                        RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.vacaciones.limiteCursos", false);
+                        this.cargarModelo(modelo);
+                        return "asignacion/asignacionVacaciones";
+                    }
+                }
+                for (Horario horario : this.listaHorarioAsignacion) {
+                    //Validar zona minima
+                    if(!servicioDetalleAsignacionImpl.tieneZonaMinima(horario.getCurso(), asignacionEstudianteCarrera)){
+                        RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.vacaciones.sinZonaMinima", false);
+                        return "asignacion/asignacionVacaciones";
+                    }
+
+                    //Validando asignaciones en vacaciones
+                    if (!servicioDetalleAsignacionImpl.getListadoDetalleAsignacion(horario.getCurso(), semestre, asignacionEstudianteCarrera,TipoAsignacion.ASIGNACION_CURSOS_VACACIONES).isEmpty()) {
+                        RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.cursoYaAsignado", false);
+                        return "asignacion/asignacionVacaciones";
+                    }
+
+                    //Validando total de asignaciones por curso
+                    if(servicioDetalleAsignacionImpl.getTotalAsignaciones(horario.getCurso(),
+                               asignacionEstudianteCarrera, TipoAsignacion.ASIGNACION_CURSOS_VACACIONES)>=3){
+                        RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.totalAsignacionesExcedidas", false);
+                        return "asignacion/asignacionVacaciones";
+                    }
+
+                    //Validando que el curso este pagado
+                    if(servicioBoletaBancoImpl.listadoBoletaBanco(asignacionEstudianteCarrera.getEstudiante(),
+                                                                horario.getCurso(), semestre, datosAsignacion.getTipoRubro()).isEmpty()){
+                        RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.cursoNoCancelado", false);
+                        return "asignacion/asignacionVacaciones";
+                    }
+                }
             } else {
-                asignacionEstudianteCarrera = servicioGeneralImpl.cargarEntidadPorID(AsignacionEstudianteCarrera.class, datosAsignacion.getIdAsignacionEstudianteCarrera());
-                Pensum pensum = this.servicioPensumEstudianteCarrera.getPensumEstudianteCarreraValido(
-                    asignacionEstudianteCarrera).getPensum();
-                if (pensum != null) {
-                    //Validando que no tenga asignaciones previas y no exceda las permitidas
-                    List<DetalleAsignacion> listaDetAsigVacaciones = servicioDetalleAsignacionImpl.getListadoDetalleAsignacion(semestre, asignacionEstudianteCarrera, TipoAsignacion.ASIGNACION_CURSOS_VACACIONES);
-                    if (!listaDetAsigVacaciones.isEmpty()){
-                        if(listaHorarioAsignacion.size() + listaDetAsigVacaciones.size() > 2){
-                            RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.vacaciones.limiteCursos", false);
-                            this.cargarModelo(modelo);
-                            return "asignacion/asignacionVacaciones";
-                        }
-                    }
-                    for (Horario horario : this.listaHorarioAsignacion) {
-                        //Validar zona minima
-                        if(!servicioDetalleAsignacionImpl.tieneZonaMinima(horario.getCurso(), asignacionEstudianteCarrera)){
-                            RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.vacaciones.sinZonaMinima", false);
-                            return "asignacion/asignacionVacaciones";
-                        }
-
-                        //Validando asignaciones en vacaciones
-                        if (!servicioDetalleAsignacionImpl.getListadoDetalleAsignacion(horario.getCurso(), semestre, asignacionEstudianteCarrera,TipoAsignacion.ASIGNACION_CURSOS_VACACIONES).isEmpty()) {
-                            RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.cursoYaAsignado", false);
-                            return "asignacion/asignacionVacaciones";
-                        }
-
-                        //Validando total de asignaciones por curso
-                        if(servicioDetalleAsignacionImpl.getTotalAsignaciones(horario.getCurso(),
-                                   asignacionEstudianteCarrera, TipoAsignacion.ASIGNACION_CURSOS_VACACIONES)>=3){
-                            RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.totalAsignacionesExcedidas", false);
-                            return "asignacion/asignacionVacaciones";
-                        }
-
-                        //Validando que el curso este pagado
-                        if(servicioBoletaBancoImpl.listadoBoletaBanco(asignacionEstudianteCarrera.getEstudiante(),
-                                                                    horario.getCurso(), semestre, datosAsignacion.getTipoRubro()).isEmpty()){
-                            RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.cursoNoCancelado", false);
-                            return "asignacion/asignacionVacaciones";
-                        }
-                    }
-                } else {
-                    RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.estudianteSinPensum", false);
-                    return "asignacion/asignacionVacaciones";
-                }
-                this.listaAsignacion = servicioAsignacionImpl.realizarAsignacionCursos(this.asignacionEstudianteCarrera, this.listaHorarioAsignacion,datosAsignacion.getTipoAsignacion());
-                if (!this.listaAsignacion.isEmpty()) {
-                    this.enviarEmail(this.listaAsignacion);
-                    listaHorarioAsignacion.clear();
-                    return "redirect:asignacionExitosa.htm?iascsvr=" + this.listaAsignacion.get(0).getAsignacion().getIdAsignacion();
-                }
+                RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.estudianteSinPensum", false);
+                return "asignacion/asignacionVacaciones";
+            }
+            this.listaAsignacion = servicioAsignacionImpl.realizarAsignacionCursos(this.asignacionEstudianteCarrera, this.listaHorarioAsignacion,datosAsignacion.getTipoAsignacion());
+            if (!this.listaAsignacion.isEmpty()) {
+                this.enviarEmail(this.listaAsignacion);
+                listaHorarioAsignacion.clear();
+                return "redirect:asignacionExitosa.htm?iascsvr=" + this.listaAsignacion.get(0).getAsignacion().getIdAsignacion();
             }
         } catch (Exception e) {
             // error de acceso a datos
