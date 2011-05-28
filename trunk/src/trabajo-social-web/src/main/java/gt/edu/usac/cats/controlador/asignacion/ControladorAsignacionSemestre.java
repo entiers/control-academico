@@ -14,7 +14,6 @@ import gt.edu.usac.cats.dominio.Pensum;
 import gt.edu.usac.cats.dominio.busqueda.DatosAsignacion;
 import gt.edu.usac.cats.enums.TipoAsignacion;
 import gt.edu.usac.cats.enums.TipoHorario;
-import gt.edu.usac.cats.enums.TipoRubro;
 import gt.edu.usac.cats.util.Mensajes;
 import gt.edu.usac.cats.util.RequestUtil;
 import java.io.IOException;
@@ -127,49 +126,55 @@ public class ControladorAsignacionSemestre extends ControladorAbstractoAsignacio
 
         this.cargarModelo(modelo);
         AsignacionCursoPensum acp;
-        //Validando traslape de cursos
+        
         try {
+
+            //Validando traslape de cursos
             if (servicioHorarioImpl.existeTraslape(listaHorarioAsignacion)) {
                 RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.existeTraslape", false);
                 return "asignacion/asignacionSemestre";
-            } else {
-                asignacionEstudianteCarrera = servicioGeneralImpl.cargarEntidadPorID(AsignacionEstudianteCarrera.class, datosAsignacion.getIdAsignacionEstudianteCarrera());
-                Pensum pensum = this.servicioPensumEstudianteCarrera.getPensumEstudianteCarreraValido(
-                    asignacionEstudianteCarrera).getPensum();
-                if (pensum != null) {
-                    for (Horario horario : this.listaHorarioAsignacion) {
-                       //Validando prerrequisitos por curso
-                        acp = (AsignacionCursoPensum) servicioAsignacionCursoPensumImpl.getListadoAsignacionCursoPensum(horario.getCurso(), pensum).get(0);
+            }
 
-                        if (servicioCursoAprobadoImpl.getCursoPrerrequisitoPendiente(asignacionEstudianteCarrera, horario.getCurso()).isEmpty()
-                                & servicioCursoAprobadoImpl.getCreditosAprobados(asignacionEstudianteCarrera) < acp.getCreditosPrerrequisito()) {
-                            RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.prerrequisitoPendiente", false);
-                            return "asignacion/asignacionSemestre";
-                        }
-                        //Validando asignaciones en semestre actual
-                        if (!servicioDetalleAsignacionImpl.getListadoDetalleAsignacion(horario.getCurso(), semestre, asignacionEstudianteCarrera,TipoAsignacion.ASIGNACION_CURSOS_SEMESTRE).isEmpty()) {
-                            RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.cursoYaAsignado", false);
-                            return "asignacion/asignacionSemestre";
-                        }
+            asignacionEstudianteCarrera = servicioGeneralImpl.cargarEntidadPorID(AsignacionEstudianteCarrera.class, datosAsignacion.getIdAsignacionEstudianteCarrera());
+            Pensum pensum = this.servicioPensumEstudianteCarrera.getPensumEstudianteCarreraValido(
+                asignacionEstudianteCarrera).getPensum();
 
-                        //Validando total de asignaciones por curso
-                        if(servicioDetalleAsignacionImpl.getTotalAsignaciones(horario.getCurso(),
-                                   asignacionEstudianteCarrera, TipoAsignacion.ASIGNACION_CURSOS_SEMESTRE)>=3){
-                            RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.totalAsignacionesExcedidas", false);
-                            return "asignacion/asignacionSemestre";
-                        }
+            if (pensum != null) {
+                for (Horario horario : this.listaHorarioAsignacion) {
+                   //Validando prerrequisitos por curso
+                    acp = (AsignacionCursoPensum) servicioAsignacionCursoPensumImpl.getListadoAsignacionCursoPensum(horario.getCurso(), pensum).get(0);
 
+                    if (servicioCursoAprobadoImpl.getCursoPrerrequisitoPendiente(asignacionEstudianteCarrera, horario.getCurso()).isEmpty()
+                            & servicioCursoAprobadoImpl.getCreditosAprobados(asignacionEstudianteCarrera) < acp.getCreditosPrerrequisito()) {
+                        RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.prerrequisitoPendiente", false);
+                        return "asignacion/asignacionSemestre";
                     }
-                } else {
-                    RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.estudianteSinPensum", false);
-                    return "asignacion/asignacionSemestre";
+
+                    //Validando asignaciones en semestre actual
+                    if (!servicioDetalleAsignacionImpl.getListadoDetalleAsignacion(horario.getCurso(), semestre, asignacionEstudianteCarrera,TipoAsignacion.ASIGNACION_CURSOS_SEMESTRE).isEmpty()) {
+                        RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.cursoYaAsignado", false);
+                        return "asignacion/asignacionSemestre";
+                    }
+
+                    //Validando total de asignaciones por curso
+                    if(servicioDetalleAsignacionImpl.getTotalAsignaciones(horario.getCurso(),
+                               asignacionEstudianteCarrera, TipoAsignacion.ASIGNACION_CURSOS_SEMESTRE)>=3){
+                        RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.totalAsignacionesExcedidas", false);
+                        return "asignacion/asignacionSemestre";
+                    }
+
                 }
-                this.listaAsignacion = servicioAsignacionImpl.realizarAsignacionCursos(this.asignacionEstudianteCarrera, this.listaHorarioAsignacion,datosAsignacion.getTipoAsignacion());
-                if (!this.listaAsignacion.isEmpty()) {
-                    this.enviarEmail(this.listaAsignacion);
-                    listaHorarioAsignacion.clear();
-                    return "redirect:asignacionExitosa.htm?iascsvr=" + this.listaAsignacion.get(0).getAsignacion().getIdAsignacion();
-                } 
+            } else {
+                RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.estudianteSinPensum", false);
+                return "asignacion/asignacionSemestre";
+            }
+
+            //Realizando asignacion de cursos
+            this.listaAsignacion = servicioAsignacionImpl.realizarAsignacionCursos(this.asignacionEstudianteCarrera, this.listaHorarioAsignacion,datosAsignacion.getTipoAsignacion());
+            if (!this.listaAsignacion.isEmpty()) {
+                this.enviarEmail(this.listaAsignacion);
+                listaHorarioAsignacion.clear();
+                return "redirect:asignacionExitosa.htm?iascsvr=" + this.listaAsignacion.get(0).getAsignacion().getIdAsignacion();
             }
         } catch (Exception e) {
             // error de acceso a datos

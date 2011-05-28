@@ -173,12 +173,12 @@ public class ControladorAsignacionCursos extends ControladorAbstractoAsignacion{
             this.listaCurso = this.servicioCursoImpl.getCursoAsignacion(this.asignacionEstudianteCarrera.getCarrera(),
                                                                             this.semestre,datosAsignacion.getTipoHorario());
 
-            if(!this.listaCurso.isEmpty())
-                this.listaHorario = this.servicioHorarioImpl.getHorario(this.listaCurso.get(0), this.semestre, datosAsignacion.getTipoHorario());
-            else{
+            if(this.listaCurso.isEmpty()){
                 modelo.addAttribute("noExisteHorario", true);
                 return "asignacion/asignacionCursos";
             }
+
+            this.listaHorario = this.servicioHorarioImpl.getHorario(this.listaCurso.get(0), this.semestre, datosAsignacion.getTipoHorario());
 
             if(datosAsignacion.getTipoAsignacion()==TipoAsignacion.ASIGNACION_CURSOS_SEMESTRE)
                 retorno = "asignacion/asignacionSemestre";
