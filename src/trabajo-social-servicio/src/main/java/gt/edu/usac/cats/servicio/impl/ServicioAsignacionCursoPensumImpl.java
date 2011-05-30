@@ -12,6 +12,7 @@ import gt.edu.usac.cats.servicio.ServicioAsignacionCursoPensum;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -33,12 +34,13 @@ public class ServicioAsignacionCursoPensumImpl extends ServicioGeneralImpl imple
 
         return this.daoGeneralImpl.find(criteria);
     }
-
+    
     @Override
-    public List<Curso> getListadoCursosPorPensum(Pensum pensum) {
-
+    public List<Curso> getListadoCursosPorIdPensum(Short idPensum) {
         DetachedCriteria criteria = DetachedCriteria.forClass(Curso.class);
-        criteria.add(Restrictions.eq("pensum", pensum));
+        criteria.createCriteria("asignacionCursoPensums", "acp");
+        criteria.add(Restrictions.eq("acp.pensum.idPensum", idPensum));
+        criteria.addOrder(Order.asc("codigo"));
 
         return this.daoGeneralImpl.find(criteria);
     }

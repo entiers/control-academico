@@ -29,7 +29,7 @@ public interface ServicioAsignacionCursoPensum extends ServicioGeneral {
             throws DataAccessException;
 
     /***/
-    List<Curso> getListadoCursosPorPensum(Pensum pensum);
+    List<Curso> getListadoCursosPorIdPensum(Short idPensum);
 
     /***/
     List<AsignacionCursoPensum> getListadoCursosOrignalesPorPensumOriginalYEquivalente(

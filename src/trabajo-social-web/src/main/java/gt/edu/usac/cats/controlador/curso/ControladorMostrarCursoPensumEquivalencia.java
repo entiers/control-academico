@@ -8,11 +8,9 @@ package gt.edu.usac.cats.controlador.curso;
 import gt.edu.usac.cats.dominio.AsignacionCursoPensum;
 import gt.edu.usac.cats.dominio.Pensum;
 import gt.edu.usac.cats.dominio.wrapper.WrapperCursoPensumEquivalencia;
-import gt.edu.usac.cats.servicio.ServicioAsignacionCursoPensum;
 import gt.edu.usac.cats.util.Mensajes;
 import gt.edu.usac.cats.util.RequestUtil;
 import java.util.List;
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
@@ -30,7 +28,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 
 @Controller
-public class ControladorMostrarCursoPensumEquivalencia {
+public class ControladorMostrarCursoPensumEquivalencia extends ControladorAbstractoCursoPensumEquivalencia{
 
 //______________________________________________________________________________
     /**
@@ -39,19 +37,9 @@ public class ControladorMostrarCursoPensumEquivalencia {
     private static Logger log = Logger.getLogger(ControladorMostrarCursoPensumEquivalencia.class);
 
 //______________________________________________________________________________
-    @Resource
-    private ServicioAsignacionCursoPensum servicioAsignacionCursoPensum;
-
-//______________________________________________________________________________
-    private List <Pensum> listadoPensums;
-
-
-//______________________________________________________________________________
     @RequestMapping(value="mostrarCursoPensumEquivalencia.htm", method=RequestMethod.GET)
     public String crearFormulario(Model modelo){
-
-        this.listadoPensums = this.servicioAsignacionCursoPensum.listarEntidad(Pensum.class, true, "codigo");
-        this.agregarAtributosDefault(modelo, new WrapperCursoPensumEquivalencia());
+        this.agregarAtributosDefault(modelo, new WrapperCursoPensumEquivalencia(), true);
         return "cursoPensum/mostrarCursoPensumEquivalencia";
     }
 
@@ -60,7 +48,7 @@ public class ControladorMostrarCursoPensumEquivalencia {
     public String mostrar(@Valid WrapperCursoPensumEquivalencia wrapperCursoPensumEquivalencia,
             BindingResult bindingResult, Model modelo, HttpServletRequest request){
 
-        this.agregarAtributosDefault(modelo, wrapperCursoPensumEquivalencia);
+        this.agregarAtributosDefault(modelo, wrapperCursoPensumEquivalencia, false);
 
         try{
             Pensum pensumOriginal = wrapperCursoPensumEquivalencia.getPensumOriginal();
@@ -80,14 +68,4 @@ public class ControladorMostrarCursoPensumEquivalencia {
 
         return "cursoPensum/mostrarCursoPensumEquivalencia";
     }
-
-//______________________________________________________________________________
-    private void agregarAtributosDefault(Model modelo,
-            WrapperCursoPensumEquivalencia wrapperCursoPensumEquivalencia){
-        modelo.addAttribute("listadoPensums", listadoPensums);
-
-        modelo.addAttribute("wrapperCursoPensumEquivalencia", wrapperCursoPensumEquivalencia);
-
-    }
-
 }
