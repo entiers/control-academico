@@ -49,4 +49,6 @@ public interface ServicioPensum extends ServicioGeneral{
     List <AsignacionCursoPensum> getAsignacionCursoPensumsPorPensumYNoACP(Pensum pensum, AsignacionCursoPensum asignacionCursoPensum)
             throws DataAccessException ;
 
+
+    List <Pensum> getListadoOtrosPensums(Short idPensum);
 }

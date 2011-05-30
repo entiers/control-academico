@@ -76,4 +76,12 @@ public class ServicioPensumImpl extends ServicioGeneralImpl implements ServicioP
 
         return this.daoGeneralImpl.find(criteria);
     }
+
+    @Override
+    public List<Pensum> getListadoOtrosPensums(Short idPensum) {
+        DetachedCriteria criteria = DetachedCriteria.forClass(Pensum.class);
+        criteria.add(Restrictions.not(Restrictions.eq("idPensum", idPensum)));
+        criteria.addOrder(Order.asc("codigo"));
+        return this.daoGeneralImpl.find(criteria);
+    }
 }
