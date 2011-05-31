@@ -240,8 +240,8 @@ public class ServicioEstudianteImpl extends ServicioGeneralImpl implements Servi
             criteria.addOrder(Order.desc(datos.getColumnaOrden()));
 
         // se pagina el resultado
-        criteria.setFirstResult(datos.getPrimerRegistro());
-        criteria.setMaxResults(DaoGeneralImpl.REGISTROS_MAXIMOS);
+        /*criteria.setFirstResult(datos.getPrimerRegistro());
+        criteria.setMaxResults(DaoGeneralImpl.REGISTROS_MAXIMOS);*/
 
         return criteria.list();
     }
