@@ -40,7 +40,9 @@
         <fieldset>
             <legend><fmt:message key="buscarDocumento.tituloListado"/></legend>
 
-            <display:table class="ui-widget ui-widget-content" name="listadoDocumentos" id="documento" requestURI="buscarDocumento.htm" pagesize="15">
+            <display:table class="ui-widget ui-widget-content"
+                           name="listadoDocumentos"
+                           id="documento" requestURI="buscarDocumentoPag.htm" pagesize="2">
                 <display:column property="nombre" titleKey="agregarPersona.nombre" />
                 <display:column property="descripcion" titleKey="agregarTipoAsignacion.descripcion" />
 

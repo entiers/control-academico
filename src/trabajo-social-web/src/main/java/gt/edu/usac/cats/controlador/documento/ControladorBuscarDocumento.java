@@ -3,7 +3,6 @@
  * Escuela de Trabajo Social
  * Control Academico
  */
-
 package gt.edu.usac.cats.controlador.documento;
 
 import gt.edu.usac.cats.dominio.Documento;
@@ -29,9 +28,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @version 1.0
  */
 @Controller("controladorBuscarDocumento")
-@RequestMapping(value="buscarDocumento.htm")
 public class ControladorBuscarDocumento {
 //______________________________________________________________________________
+
     private static String TITULO_MENSAJE = "agregarDocumento.titulo";
 //______________________________________________________________________________
     private static Logger log = Logger.getLogger(ControladorAgregarDocumento.class);
@@ -44,30 +43,37 @@ public class ControladorBuscarDocumento {
     @Resource
     private ServicioDocumento servicioDocumentoImpl;
 //______________________________________________________________________________
-    @RequestMapping(method=RequestMethod.GET)
-    public String getBuscarDocumento(Model model){
-        this.listaDocumentos = this.servicioGeneralImpl.listarEntidad(Documento.class,true,"nombre");
+
+    @RequestMapping(value = "buscarDocumento.htm", method = RequestMethod.GET)
+    public String getBuscarDocumento(Model model) {
+        this.listaDocumentos = this.servicioGeneralImpl.listarEntidad(Documento.class, true, "nombre");
         this.agregarAtributosDefault(model, new DatosBusquedaDocumento());
         return "documento/buscarDocumento";
     }
 //______________________________________________________________________________
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "buscarDocumentoPag.htm", method = RequestMethod.GET)
+    public String buscarDocumentoPag(Model model, DatosBusquedaDocumento datosBusquedaDocumento){
+        this.agregarAtributosDefault(model, datosBusquedaDocumento);
+        return "documento/buscarDocumento";
+    }
+
+    @RequestMapping(value = "buscarDocumento.htm", method = RequestMethod.POST)
     public String submit(Model modelo,
-                        @Valid DatosBusquedaDocumento datosBusquedaDocumento,
-                        HttpServletRequest request) {
-        modelo.addAttribute("listadoDocumentos");
+            @Valid DatosBusquedaDocumento datosBusquedaDocumento,
+            HttpServletRequest request) {
+
         try {
-            if(datosBusquedaDocumento.esValido()){
+            if (datosBusquedaDocumento.esValido()) {
 
                 this.listaDocumentos = this.servicioDocumentoImpl.getDocumento(datosBusquedaDocumento.getNombre());
 
                 this.agregarAtributosDefault(modelo, datosBusquedaDocumento);
 
-                if(this.listaDocumentos.isEmpty()){
+                if (this.listaDocumentos.isEmpty()) {
                     RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "buscarDocumento.sinResultados", false);
                 }
-            }else{
+            } else {
                 RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "buscarDocumento.formularioNoLLeno", false);
             }
 
@@ -80,10 +86,8 @@ public class ControladorBuscarDocumento {
         return "documento/buscarDocumento";
     }
 
-
     private void agregarAtributosDefault(Model modelo, DatosBusquedaDocumento datosBusquedaDocumento) {
         modelo.addAttribute("listadoDocumentos", this.listaDocumentos);
         modelo.addAttribute("datosBusquedaDocumento", datosBusquedaDocumento);
     }
-
 }
