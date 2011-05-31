@@ -71,6 +71,7 @@ public class ControladorBuscarCalendarioActividades extends ControladorAbstracto
         
         modelo.addAttribute("datosBusquedaCalendarioActividades", new DatosBusquedaCalendarioActividades());
         modelo.addAttribute("listadoSemestres", this.listadoSemestres);
+        modelo.addAttribute("listadoCalendarioActividades", this.listadoCalendarioActividades);
         return "calendarioActividades/buscarCalendarioActividades";
     }
 //______________________________________________________________________________
