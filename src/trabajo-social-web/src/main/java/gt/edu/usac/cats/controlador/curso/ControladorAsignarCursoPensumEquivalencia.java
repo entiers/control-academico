@@ -4,7 +4,6 @@
  */
 package gt.edu.usac.cats.controlador.curso;
 
-import gt.edu.usac.cats.dominio.AsignacionCursoPensum;
 import gt.edu.usac.cats.dominio.Curso;
 import gt.edu.usac.cats.dominio.Pensum;
 import gt.edu.usac.cats.dominio.wrapper.WrapperCursoPensumEquivalencia;

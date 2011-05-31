@@ -121,7 +121,7 @@ public class ControladorBuscarEstudiante {
     public String crearFormulario(Model modelo) {
 
         // se agregan los objetos que se usaran en la pagina
-        this.listadoEstudiantes = new ArrayList<Estudiante>();
+        //this.listadoEstudiantes = new ArrayList<Estudiante>();
         this.datosBusquedaEstudiante = new DatosBusquedaEstudiante();
         modelo.addAttribute("listadoEstudiantes", this.listadoEstudiantes);
         modelo.addAttribute("datosBusquedaEstudiante", this.datosBusquedaEstudiante);

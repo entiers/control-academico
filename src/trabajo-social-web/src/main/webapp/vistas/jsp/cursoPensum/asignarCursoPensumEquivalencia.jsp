@@ -24,7 +24,7 @@
             $(document).ready(function(){
                 $("#slcPensumOriginal").change(function(){
                     getListadoCursos($(this).val(), "#slcCursoOriginal");
-                    $("#slcCursoOriginal").attr("disabled", false);
+                                $("#slcCursoOriginal").attr("disabled", false);
                 });
 
                 $("#slcCursoOriginal").change(function(){
