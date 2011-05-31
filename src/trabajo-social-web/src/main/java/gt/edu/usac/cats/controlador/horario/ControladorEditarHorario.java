@@ -78,7 +78,7 @@ public class ControladorEditarHorario extends ControladorAbstractoHorario {
         wrapperHorario.agregarWrapper(this.horario);
         modelo.addAttribute("wrapperHorario", wrapperHorario);
 
-        this.agregarAtributosDefault(modelo, wrapperHorario);
+        this.agregarAtributosDefault(modelo, wrapperHorario, true);
         return "horario/editarHorario";
     }
 
@@ -131,7 +131,7 @@ public class ControladorEditarHorario extends ControladorAbstractoHorario {
             }
         }
 
-        this.agregarAtributosDefault(modelo, wrapperHorario);
+        this.agregarAtributosDefault(modelo, wrapperHorario, false);
         return "horario/editarHorario";
     }
 }
