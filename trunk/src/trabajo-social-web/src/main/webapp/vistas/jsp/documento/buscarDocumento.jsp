@@ -42,7 +42,7 @@
 
             <display:table class="ui-widget ui-widget-content"
                            name="listadoDocumentos"
-                           id="documento" requestURI="buscarDocumentoPag.htm" pagesize="2">
+                           id="documento" requestURI="buscarDocumentoPag.htm" pagesize="15">
                 <display:column property="nombre" titleKey="agregarPersona.nombre" />
                 <display:column property="descripcion" titleKey="agregarTipoAsignacion.descripcion" />
 

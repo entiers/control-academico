@@ -98,10 +98,11 @@
         <fieldset>
             <legend><fmt:message key="buscarHorario.tituloListado"/></legend>
 
-            <display:table class="ui-widget ui-widget-content" name="listadoHorarios" id="horario" requestURI="buscarHorario.htm" pagesize="10" >
+            <display:table class="ui-widget ui-widget-content" name="listadoHorarios" id="horario" requestURI="buscarHorarioPag.htm"
+                           pagesize="15" >
                 <display:column property="curso.nombre" titleKey="agregarHorario.curso" />
                 <display:column property="horarioDiasAsString" titleKey="agregarHorario.dia" />
-                <display:column property="seccion" titleKey="agregarHorario.seccion" />
+                <display:column property="seccion" titleKey="agregarHorario.seccion" style="text-align: center;"/>
                 <display:column titleKey="agregarHorario.horaInicio" >
                     <fmt:formatDate pattern="hh:mm" value="${horario.horaInicio}" />
                 </display:column>

@@ -55,7 +55,7 @@ public class ControladorAgregarHorario extends ControladorAbstractoHorario {
      */
     @RequestMapping(method = RequestMethod.GET)
     public String crearFormulario(Model modelo) {
-        this.agregarAtributosDefault(modelo, new WrapperHorario());
+        this.agregarAtributosDefault(modelo, new WrapperHorario(), true);
         return "horario/agregarHorario";
     }
 //______________________________________________________________________________
@@ -113,7 +113,7 @@ public class ControladorAgregarHorario extends ControladorAbstractoHorario {
                 log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
             }
         }
-        this.agregarAtributosDefault(modelo, wrapperHorario);
+        this.agregarAtributosDefault(modelo, wrapperHorario, false);
         return "horario/agregarHorario";
     }
 }

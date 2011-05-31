@@ -47,36 +47,31 @@ public abstract class ControladorAbstractoHorario {
      */
     @Resource
     protected ServicioHorario servicioHorarioImpl;
-
 //______________________________________________________________________________
     @Resource
     protected ServicioSemestre servicioSemestreImpl;
 
 //______________________________________________________________________________
-    protected void agregarAtributosDefault(Model modelo, WrapperHorario wrapperHorario) {        
+    protected void agregarAtributosDefault(Model modelo, WrapperHorario wrapperHorario, boolean buscar) {
         modelo.addAttribute("wrapperHorario", wrapperHorario);
 
-        this.listadoCursos = this.servicioHorarioImpl.listarEntidad(Curso.class, true, "nombre");
+        if (buscar) {
+            this.listadoCursos = this.servicioHorarioImpl.listarEntidad(Curso.class, true, "nombre");
+        }
+
         modelo.addAttribute("listadoCursos", this.listadoCursos);
 
         modelo.addAttribute("listadoDias", Dia.values());
-        
-        this.agregarAtributosDefault(modelo);
+
+        this.agregarAtributosDefault(modelo, buscar);
     }
 
 //______________________________________________________________________________
-    protected void agregarAtributosDefaultBusqueda(Model modelo, DatosBusquedaHorario datosBusquedaHorario) {
-        modelo.addAttribute("datosBusquedaHorario", datosBusquedaHorario);
-
-        this.agregarAtributosDefault(modelo);
-
-    }
-
-//______________________________________________________________________________
-    private void agregarAtributosDefault(Model modelo) {
-        this.listadoSalones = this.servicioHorarioImpl.listarEntidad(Salon.class);
-        this.listadoSemestres = this.servicioSemestreImpl.listarSemestresParaBusqueda();
-
+    protected void agregarAtributosDefault(Model modelo, boolean buscar) {
+        if (buscar) {
+            this.listadoSalones = this.servicioHorarioImpl.listarEntidad(Salon.class);
+            this.listadoSemestres = this.servicioSemestreImpl.listarSemestresParaBusqueda();
+        }
         modelo.addAttribute("listadoSalones", this.listadoSalones);
         modelo.addAttribute("listadoSemestres", this.listadoSemestres);
     }

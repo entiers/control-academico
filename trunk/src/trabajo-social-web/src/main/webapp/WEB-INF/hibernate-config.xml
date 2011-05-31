@@ -62,7 +62,7 @@
 	<property name="password" value="${jdbc.password}" />
     </bean>
 
- <!-- ·······································································
+ <!-- ······················�················································
     ··· Bean que crea la conexion con la base de datos por medio de JDBC
     ··· este bean se utiliza cuando el Data Source se encuentra controlado
     ··· por Tomcat, la busqueda se realiza por medio de JNDI
@@ -112,7 +112,7 @@
 
       <bean name="OpenSessionInViewInterceptor"
 	  class="org.springframework.orm.hibernate3.support.OpenSessionInViewInterceptor">
-	  <property name="sessionFactory"><ref bean="sessionFactory"/></property>
+	  <property name="sessionFactory"><ref bean="sessionFactory"/></property>          
       </bean>
 
     <!-- ·······································································
