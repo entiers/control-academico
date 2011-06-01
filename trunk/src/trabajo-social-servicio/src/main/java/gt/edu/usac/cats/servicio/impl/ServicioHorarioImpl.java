@@ -158,7 +158,7 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
         StringBuilder builder = new StringBuilder();
 
         builder.append("select horario from Horario as horario ")
-               .append("where horario.curso = :curso");
+               .append("where horario.curso = :curso order by horario.curso.nombre");
            
         Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
         query.setParameter("curso", curso);
@@ -274,7 +274,7 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
                .append(" and horario.salon.capacidad > (")
                .append("    select count(*) from DetalleAsignacion det")
                .append("    where det.horario = horario")
-               .append(" )");
+               .append(" ) order by horario.curso.nombre");
 
         Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
         query.setParameter("curso", curso);
@@ -292,7 +292,7 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
                .append(" inner join horario.asignacionCatedraticoHorarios aCH")
                .append(" where horario.semestre = :semestre")
                .append(" and horario.tipo =:tipoHorario")
-               .append(" and aCH.catedratico = :catedratico ");
+               .append(" and aCH.catedratico = :catedratico order by horario.curso.nombre");
 
         Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
         query.setParameter("semestre", semestre);
@@ -308,7 +308,8 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
 
         builder.append(" select horario from Horario as horario")
                .append(" where horario.semestre = :semestre")
-               .append(" and horario.tipo =:tipoHorario");
+               .append(" and horario.tipo =:tipoHorario ")
+               .append(" order by horario.curso.nombre");
         
         Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
         query.setParameter("semestre", semestre);

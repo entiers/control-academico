@@ -232,7 +232,6 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota{
     @RequestMapping(value = "getHorarioCatedratico.htm", method = RequestMethod.GET)
     public @ResponseBody String getHorario(@RequestParam String idTipoHorario,
                                                     HttpServletRequest request) {
-        System.out.println("ADMIN: " + this.esAdministrativo);
         String strOptions = "";
         try {
             TipoHorario tipoHorario = TipoHorario.valueOf(idTipoHorario);
