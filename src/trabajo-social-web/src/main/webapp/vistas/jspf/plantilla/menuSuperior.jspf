@@ -275,16 +275,24 @@
     </sec:authorize>
 
     <%--menu de reportes--%>
-    <sec:authorize access="hasAnyRole('ROLE_REPORTE_ASIGNACION_PRIMER_INGRESO')">
+    <sec:authorize access="hasAnyRole('ROLE_REPORTE_ASIGNACION_PRIMER_INGRESO','ROLE_REPORTE_ASIGNACIONES_POR_CURSO','ROLE_REPORTE_NOTAS_POR_CURSO')">
         <li>
             <a href="#">
                 <span class="l"></span><span class="r"></span><span class="t">
                 <fmt:message key="reportes.menu"/></span>
-            </a>
-            <%--Asignacion primer ingreso--%>
+            </a>            
             <ul>
+                <%--Asignacion primer ingreso--%>
                 <sec:authorize access="hasRole('ROLE_REPORTE_ASIGNACION_PRIMER_INGRESO')">
                     <li><a href="rptProcesoAsignacionPrimerIngreso.htm"><fmt:message key="rptAsignacionPrimerIngreso.titulo"/></a></li>
+                </sec:authorize>
+                <%--Asignaciones por curso--%>
+                <sec:authorize access="hasRole('ROLE_REPORTE_ASIGNACIONES_POR_CURSO')">
+                    <li><a href="rptAsignacionCurso.htm"><fmt:message key="rptAsignacionCurso.titulo"/></a></li>
+                </sec:authorize>
+                <%--Notas por curso--%>
+                <sec:authorize access="hasRole('ROLE_REPORTE_NOTAS_POR_CURSO')">
+                    <li><a href="rptNotasCurso.htm"><fmt:message key="rptNotasCurso.titulo"/></a></li>
                 </sec:authorize>
             </ul>
         </li>

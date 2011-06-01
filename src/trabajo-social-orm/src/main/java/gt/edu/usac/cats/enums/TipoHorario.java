@@ -45,6 +45,15 @@ public enum TipoHorario {
     }
 
     /**
+     * <p> Retorna el id del tipo de horario que es almacenado en la BD.</p>
+     *
+     * @return Valor de tipo int.
+     */
+    public int getId(){
+        return this.id;
+    }
+
+    /**
      *<p> Retorna la descripcion del tipo horario, se utiliza para mostrarlo
      * en las vistas donde sea necesario <p>
      *
