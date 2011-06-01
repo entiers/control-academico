@@ -3,7 +3,6 @@
  * Escuela de Trabajo Social
  * Universidad de San Carlos de Guatemala
  */
-
 package gt.edu.usac.cats.controlador.calendarioActividades;
 
 import gt.edu.usac.cats.dominio.CalendarioActividades;
@@ -23,7 +22,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-
 /**
  * Esta clase se encarga de la busqueda de Calendarios de Actividades en la BD
  * para mostrarlos en la pagina de <code>buscarCalendarioActividades.htm</code>.
@@ -31,11 +29,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @author Mario Batres
  * @version 1.0
  */
-
-@Controller("controladorBuscarCalendarioActividades")
-@RequestMapping("buscarCalendarioActividades.htm")
-public class ControladorBuscarCalendarioActividades extends ControladorAbstractoCalendarioActividades{
+@Controller
+public class ControladorBuscarCalendarioActividades extends ControladorAbstractoCalendarioActividades {
 //_____________________________________________________________________________
+
     /**
      * <p>
      * Lleva el nombre del titulo para el mensaje en la pagina
@@ -47,13 +44,11 @@ public class ControladorBuscarCalendarioActividades extends ControladorAbstracto
      * <p>Matiene una bitacora de lo realizado por esta clase.</p>
      */
     private static Logger log = Logger.getLogger(ControladorBuscarCalendarioActividades.class);
-
 //______________________________________________________________________________
-
     /**
      * <p>Listado de todos los calendario de actividades disponibles.</p>
      */
-    private List <CalendarioActividades> listadoCalendarioActividades;
+    private List<CalendarioActividades> listadoCalendarioActividades;
 
 //______________________________________________________________________________
     /**
@@ -65,15 +60,43 @@ public class ControladorBuscarCalendarioActividades extends ControladorAbstracto
      *        seran usados en la pagina
      * @return String Contiene el nombre de la vista a mostrar
      */
-    @RequestMapping(method = RequestMethod.GET)
-    public String crearFormulario(Model modelo){
+    @RequestMapping(value = "buscarCalendarioActividades.htm", method = RequestMethod.GET)
+    public String crearFormulario(Model modelo) {
         this.listadoSemestres = this.servicioSemestreImpl.listarSemestresParaBusqueda();
-        
-        modelo.addAttribute("datosBusquedaCalendarioActividades", new DatosBusquedaCalendarioActividades());
-        modelo.addAttribute("listadoSemestres", this.listadoSemestres);
-        modelo.addAttribute("listadoCalendarioActividades", this.listadoCalendarioActividades);
+        this.listadoCalendarioActividades = null;
+
+        this.agregarAtributosDefault(modelo, new DatosBusquedaCalendarioActividades());
         return "calendarioActividades/buscarCalendarioActividades";
     }
+//______________________________________________________________________________
+
+    /**
+     * @param modelo
+     * @param datosBusquedaCalendarioActividades
+     *
+     * @return
+     */
+    @RequestMapping(value = "buscarCalendarioActividadesPag.htm", method = RequestMethod.GET)
+    public String buscarCalendarioActividadesPag(Model modelo, DatosBusquedaCalendarioActividades datosBusquedaCalendarioActividades) {
+        this.agregarAtributosDefault(modelo, datosBusquedaCalendarioActividades);
+        return "calendarioActividades/buscarCalendarioActividades";
+    }
+
+//______________________________________________________________________________
+    /**
+     * @param modelo
+     * @param datosBusquedaCalendarioActividades
+     *
+     */
+    public void agregarAtributosDefault(Model modelo,
+            DatosBusquedaCalendarioActividades datosBusquedaCalendarioActividades) {
+
+        modelo.addAttribute("datosBusquedaCalendarioActividades", datosBusquedaCalendarioActividades);
+        modelo.addAttribute("listadoSemestres", this.listadoSemestres);
+        modelo.addAttribute("listadoCalendarioActividades", this.listadoCalendarioActividades);
+        modelo.addAttribute("nombreControlReporte", ControlReporte.CALENDARIO_ACTIVIDADES);
+    }
+
 //______________________________________________________________________________
     /**
      * <p>Este metodo se ejecuta cuando se solicita una busqueda desde la pagina
@@ -94,32 +117,29 @@ public class ControladorBuscarCalendarioActividades extends ControladorAbstracto
      * @param request Peticion HTTP
      * @return String Contiene el nombre de la vista a mostrar
      */
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "buscarCalendarioActividades.htm", method = RequestMethod.POST)
     public String buscar(@Valid DatosBusquedaCalendarioActividades datosBusquedaCalendarioActividades,
-            BindingResult bindingResult, Model modelo, HttpServletRequest request){
-        modelo.addAttribute("listadoSemestres", this.listadoSemestres);
+            BindingResult bindingResult, Model modelo, HttpServletRequest request) {
 
-        if(bindingResult.hasErrors())
+        if (bindingResult.hasErrors()) {
             return "calendarioActividades/buscarCalendarioActividades";
+        }
 
-        try{
+        try {
             Semestre semestre = datosBusquedaCalendarioActividades.getSemestre();
 
             this.listadoCalendarioActividades = this.servicioCalendarioActividadesImpl.getCalendarioActividadesPorSemestre(semestre);
 
-            if(this.listadoCalendarioActividades == null || this.listadoCalendarioActividades.isEmpty()) {
+            if (this.listadoCalendarioActividades == null || this.listadoCalendarioActividades.isEmpty()) {
                 RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "buscarHorario.sinResultados", true);
             }
 
-            modelo.addAttribute("listadoCalendarioActividades", this.listadoCalendarioActividades);
-
-
-            modelo.addAttribute("nombreControlReporte", ControlReporte.CALENDARIO_ACTIVIDADES);
-            
-        }catch(DataAccessException e){
+        } catch (DataAccessException e) {
             RequestUtil.crearMensajeRespuesta(request, null, "dataAccessException", false);
             log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
         }
+
+        this.agregarAtributosDefault(modelo, datosBusquedaCalendarioActividades);
         return "calendarioActividades/buscarCalendarioActividades";
     }
 }
