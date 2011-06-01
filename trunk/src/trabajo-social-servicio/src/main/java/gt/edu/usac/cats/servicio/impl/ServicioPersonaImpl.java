@@ -102,7 +102,7 @@ public class ServicioPersonaImpl extends ServicioGeneralImpl implements Servicio
         emailSenderVelocity.enviarCorreo("Nuevo usuario", persona.getEmail(),
                 FabricaTemplateVelocity.NUEVO_USUARIO,
                 nuevoUsuario);
-        
+
     }
 
 //______________________________________________________________________________
@@ -118,7 +118,7 @@ public class ServicioPersonaImpl extends ServicioGeneralImpl implements Servicio
     @Override
     public List<Persona> getListadoPersonas(DatosBusquedaPersona datosBusquedaPersona) throws DataAccessException {
 
-        if (datosBusquedaPersona.esValido()) {
+        if (datosBusquedaPersona != null && datosBusquedaPersona.esValido()) {
             DetachedCriteria criteria = DetachedCriteria.forClass(Persona.class);
 
             String registroPersonal = datosBusquedaPersona.getRegistroPersonal();
@@ -142,7 +142,8 @@ public class ServicioPersonaImpl extends ServicioGeneralImpl implements Servicio
 
             return this.daoGeneralImpl.find(criteria);
         }
-        return null;
+        
+        return this.listarEntidad(Persona.class, true, "nombre");
     }
 //______________________________________________________________________________
 

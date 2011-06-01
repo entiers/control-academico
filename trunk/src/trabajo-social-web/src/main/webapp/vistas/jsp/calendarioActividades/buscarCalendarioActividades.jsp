@@ -18,13 +18,13 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title><fmt:message key="buscarCalendarioActividades.titulo"/></title>
-        <%@include file="../../jspf/scripts/scriptCalendarioActividades.jspf" %>
+        <%@include file="../../jspf/plantilla/scriptPopupMensajeDefault.jspf" %>
     </head>
     <body>
         <h1><fmt:message key="buscarCalendarioActividades.titulo"/></h1>
 
         <%-- formulario para ingresar los datos del calendario de actividades --%>
-        <form:form modelAttribute="datosBusquedaCalendarioActividades" method="post">
+        <form:form modelAttribute="datosBusquedaCalendarioActividades" method="post" action="buscarCalendarioActividades.htm">
             <fieldset>
                 <div id="divCampos">
                     <form:label for="semestre.idSemestre" path="semestre.idSemestre">
@@ -47,8 +47,11 @@
 
         <fieldset>
             <legend><fmt:message key="buscarCalendarioActividades.tituloListado"/></legend>
-
-            <display:table class="ui-widget ui-widget-content" name="listadoCalendarioActividades" id="calendarioActividades" requestURI="buscarCalendarioActividades.htm">
+            
+            <display:table class="ui-widget ui-widget-content" 
+                           name="listadoCalendarioActividades"
+                           id="calendarioActividades"
+                           requestURI="buscarCalendarioActividadesPag.htm" pagesize="${pageSize}">
                 <display:column titleKey="agregarCalendarioActividades.fechaInicio" style="text-align:center;">
                     <fmt:formatDate value="${calendarioActividades.fechaInicio}" pattern="dd-MM-yyyy" />
                 </display:column>

@@ -22,7 +22,8 @@
     <body>
         <h1><fmt:message key="buscarPersona.titulo"/></h1>
         <%-- formulario para ingresar los datos del calendario de actividades --%>
-        <form:form modelAttribute="datosBusquedaPersona" method="post">
+        <form:form modelAttribute="datosBusquedaPersona" method="post"
+                   action="buscarPersona.htm">
             <fieldset>
                 <div id="divCampos">
                     <form:label for="registroPersonal" path="registroPersonal">
@@ -56,7 +57,7 @@
         <fieldset>
             <legend><fmt:message key="buscarPersona.tituloListado"/></legend>
 
-            <display:table class="ui-widget ui-widget-content" name="listadoPersonas" id="persona" requestURI="buscarPersona.htm" pagesize="15">
+            <display:table class="ui-widget ui-widget-content" name="listadoPersonas" id="persona" requestURI="buscarPersonaPag.htm" pagesize="2">
                 <display:column property="nombre" titleKey="agregarPersona.nombre" />
                 <display:column property="usuario.nombreUsuario" titleKey="usuario.nombreUsuario" />
                 <display:column property="registroPersonal" titleKey="agregarPersona.registroPersonal" />

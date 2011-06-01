@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @version 1.0
  */
 @Controller
-@RequestMapping(value = "buscarPersona.htm")
 public class ControladorBuscarPersona extends ControladorAbstractoPersona {
 //______________________________________________________________________________
 
@@ -48,12 +47,24 @@ public class ControladorBuscarPersona extends ControladorAbstractoPersona {
 //______________________________________________________________________________
     /**
      * @param modelo
+     * @param request
      * @return
      */
-    @RequestMapping(method = RequestMethod.GET)
-    public String crearFormulario(Model modelo) {
-        this.listadoPersonas = this.servicioPersonaImpl.listarEntidad(Persona.class, true, "nombre");
-        this.agregarAtributosDefault(modelo, new DatosBusquedaPersona());
+    @RequestMapping(value = "buscarPersona.htm", method = RequestMethod.GET)
+    public String crearFormulario(Model modelo, HttpServletRequest request) {
+        this.realizarBusqueda(modelo, new DatosBusquedaPersona(), request);
+        return "persona/buscarPersona";
+    }
+//______________________________________________________________________________
+    /**
+     * @param model
+     * @param datosBusquedaPersona
+     * @param request
+     */
+    @RequestMapping(value = "buscarPersonaPag.htm", method = RequestMethod.GET)
+    public String buscarPersonaPag(Model model, DatosBusquedaPersona datosBusquedaPersona,
+            HttpServletRequest request) {
+        this.realizarBusqueda(model, datosBusquedaPersona, request);
         return "persona/buscarPersona";
     }
 
@@ -65,35 +76,49 @@ public class ControladorBuscarPersona extends ControladorAbstractoPersona {
      *
      * @return
      */
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "buscarPersona.htm", method = RequestMethod.POST)
     public String submit(Model modelo, @Valid DatosBusquedaPersona datosBusquedaPersona, HttpServletRequest request) {
-        modelo.addAttribute("listadoPersonas");        
+        modelo.addAttribute("listadoPersonas");
+
+        if (datosBusquedaPersona.esValido()) {
+            this.realizarBusqueda(modelo, datosBusquedaPersona, request);
+        } else {
+            RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "buscarPersona.formularioNoLLeno", false);
+        }
+
+        return "persona/buscarPersona";
+    }
+//______________________________________________________________________________
+    /**
+     * @param modelo
+     * @param datosBusquedaPersona
+     */
+    private void agregarAtributosDefault(Model modelo, DatosBusquedaPersona datosBusquedaPersona) {
+        modelo.addAttribute("listadoPersonas", listadoPersonas);
+        modelo.addAttribute("datosBusquedaPersona", datosBusquedaPersona);
+    }
+
+//______________________________________________________________________________
+    /**
+     * @param modelo
+     * @param datosBusquedaPersona
+     * @param request 
+     */
+    private void realizarBusqueda(Model modelo, DatosBusquedaPersona datosBusquedaPersona,
+            HttpServletRequest request) {
         try {
-            if(datosBusquedaPersona.esValido()){
 
-                this.listadoPersonas = this.servicioPersonaImpl.getListadoPersonas(datosBusquedaPersona);
+            this.listadoPersonas = this.servicioPersonaImpl.getListadoPersonas(datosBusquedaPersona);
 
-                this.agregarAtributosDefault(modelo, datosBusquedaPersona);
+            this.agregarAtributosDefault(modelo, datosBusquedaPersona);
 
-                if(this.listadoPersonas.isEmpty()){
-                    RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "buscarPersona.sinResultados", false);
-                }
-            }else{
-                RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "buscarPersona.formularioNoLLeno", false);
+            if (this.listadoPersonas.isEmpty()) {
+                RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "buscarPersona.sinResultados", false);
             }
-
         } catch (DataAccessException e) {
             // error de acceso a datos
             RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "dataAccessException", false);
             log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
         }
-
-        return "persona/buscarPersona";
-    }
-    
-    
-    private void agregarAtributosDefault(Model modelo, DatosBusquedaPersona datosBusquedaPersona) {
-        modelo.addAttribute("listadoPersonas", listadoPersonas);
-        modelo.addAttribute("datosBusquedaPersona", datosBusquedaPersona);
     }
 }
