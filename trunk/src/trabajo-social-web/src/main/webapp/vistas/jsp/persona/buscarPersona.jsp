@@ -57,7 +57,7 @@
         <fieldset>
             <legend><fmt:message key="buscarPersona.tituloListado"/></legend>
 
-            <display:table class="ui-widget ui-widget-content" name="listadoPersonas" id="persona" requestURI="buscarPersonaPag.htm" pagesize="2">
+            <display:table class="ui-widget ui-widget-content" name="listadoPersonas" id="persona" requestURI="buscarPersonaPag.htm" pagesize="${pageSize}">
                 <display:column property="nombre" titleKey="agregarPersona.nombre" />
                 <display:column property="usuario.nombreUsuario" titleKey="usuario.nombreUsuario" />
                 <display:column property="registroPersonal" titleKey="agregarPersona.registroPersonal" />

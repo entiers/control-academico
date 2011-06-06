@@ -6,12 +6,13 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-   "http://www.w3.org/TR/html4/loose.dtd">
+    "http://www.w3.org/TR/html4/loose.dtd">
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="display" uri="http://displaytag.sf.net"%>
 
 <html>
     <head>
@@ -58,44 +59,29 @@
         <%-- tabla con el listado de usuarios --%>
         <form method="post" name="formularioTabla" action="" >
             <fieldset>
-                <legend><fmt:message key="buscarUsuario.tituloListado"/></legend>
-                <table id="tablaUsuarios" class="ui-widget ui-widget-content">
-                    <thead>
-                        <tr class="ui-widget-header ">
-                            <th><fmt:message key="buscarUsuario.nombreUsuario"/></th>
-                            <th><fmt:message key="buscarUsuario.habilitado"/></th>
-                            <sec:authorize access="hasAnyRole('ROLE_ASIGNAR_PERFIL_USUARIO')">
-                                <th><fmt:message key="buscarUsuario.acciones"/></th>
-                            </sec:authorize>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <c:forEach items="${listadoUsuarios}" var="usuario">
-                            <tr>
-                                <td><c:out value="${usuario.nombreUsuario}" /></td>
-                                <td align="center">
-                                    <c:choose>
-                                        <c:when test="${usuario.habilitado}">SI</c:when>
-                                        <c:otherwise>NO</c:otherwise>
-                                    </c:choose>
-                                </td>
-                                <sec:authorize access="hasRole('ROLE_ASIGNAR_PERFIL_USUARIO')">
-                                    <td>
-                                        <a href="asignarPerfilUsuario.htm?idUsuario=${usuario.idUsuario}">
-                                            <fmt:message key="asignarPerfilUsuario.editar"/>
-                                        </a>
-                                    </td>
-                                </sec:authorize>
-                            </tr>
-                        </c:forEach>
-                    </tbody>
-                </table>
+                <legend><fmt:message key="buscarUsuario.tituloListado"/></legend>              
+                <display:table class="ui-widget ui-widget-content" name="listadoUsuarios" id="usuario">
+                    <display:column property="nombreUsuario" titleKey="buscarUsuario.nombreUsuario" />
+                    <display:column titleKey="buscarUsuario.habilitado">
+                        <c:choose>
+                            <c:when test="${usuario.habilitado}">SI</c:when>
+                            <c:otherwise>NO</c:otherwise>
+                        </c:choose>
+                    </display:column>
+                    <sec:authorize access="hasAnyRole('ROLE_ASIGNAR_PERFIL_USUARIO')">
+                        <display:column titleKey="buscarUsuario.acciones" style="text-align:center;">
+                            <a href="asignarPerfilUsuario.htm?idUsuario=${usuario.idUsuario}">
+                                <fmt:message key="asignarPerfilUsuario.editar"/>
+                            </a>
+                        </display:column>
+                    </sec:authorize>
+                </display:table>
 
                 <%-- botones para hacer paginacion de resultados --%>
                 <%@include file="../../jspf/plantilla/botonesPaginacion.jspf" %>
-                
+
             </fieldset>
         </form>
 
-   </body>
+    </body>
 </html>
