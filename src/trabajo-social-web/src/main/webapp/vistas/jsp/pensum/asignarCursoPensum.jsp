@@ -49,7 +49,7 @@
         <fieldset>
             <legend><fmt:message key="asignarCursoPensum.legend.listadoAsigancionCursoPensum" /></legend>
             <display:table class="ui-widget ui-widget-content" name="pensum.asignacionCursoPensums" id="asignacionCursoPensum"
-                           requestURI="asignarCursoPensum.htm" pagesize="15" >
+                           requestURI="asignarCursoPensumPag.htm" pagesize="${pageSize}" >
                 <display:column titleKey="asignarCursoPensum.obligatorio" style="text-align:center;">
                     <input type="checkbox" checked="${asignacionCursoPensum.obligatorio}" disabled="true"/>
                 </display:column>

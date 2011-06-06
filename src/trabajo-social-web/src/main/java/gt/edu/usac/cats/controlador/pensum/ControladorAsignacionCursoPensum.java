@@ -70,10 +70,23 @@ public class ControladorAsignacionCursoPensum extends ControladorAbstractoPensum
             return "redirect:buscarPensum.htm";
         }
 
+        this.agregarAtributosDefault(modelo);
+        return "pensum/asignarCursoPensum";
+    }
+
+//______________________________________________________________________________
+    @RequestMapping(value = "asignarCursoPensumPag.htm", method = RequestMethod.GET)
+    public String asignarCursoPensumPag(Model modelo){
+        this.validarPensum(this.pensum.getIdPensum());
+        this.agregarAtributosDefault(modelo);
+        return "pensum/asignarCursoPensum";
+    }
+
+//______________________________________________________________________________
+    public void agregarAtributosDefault(Model modelo){
         //El pensum es asigando el metodo anterior
         modelo.addAttribute("pensum", this.pensum);
         modelo.addAttribute("nombreControlReporte", ControlReporte.PENSUM_ESTUDIO);
-        return "pensum/asignarCursoPensum";
     }
 
 //______________________________________________________________________________

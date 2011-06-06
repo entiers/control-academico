@@ -79,11 +79,7 @@ public class ControladorBuscarEstudiante {
      * <p>Mantiene una lista con los estudiantes devueltos en una busqueda.</p>
      */
     private List<Estudiante> listadoEstudiantes;
-//______________________________________________________________________________
-    /**
-     * <p>Mantiene los parametros de busqueda ingresados por el usuario.</p>
-     */
-    private DatosBusquedaEstudiante datosBusquedaEstudiante;
+
 //______________________________________________________________________________
 
     private List <Carrera> listadoCarreras;
@@ -107,6 +103,13 @@ public class ControladorBuscarEstudiante {
         modelo.addAttribute("listadoCarreras", this.listadoCarreras);
     }
 //______________________________________________________________________________
+    public void agregarAtributosDefault(Model modelo, DatosBusquedaEstudiante datosBusquedaEstudiante, boolean realizarBusqueda){
+        modelo.addAttribute("listadoEstudiantes", this.listadoEstudiantes);
+        modelo.addAttribute("datosBusquedaEstudiante", datosBusquedaEstudiante);
+        
+        this.agregarAtributosReportes(modelo, realizarBusqueda);
+    }
+//______________________________________________________________________________
 
     /**
      * <p>Este metodo se ejecuta cada vez que se realiza una solicitud del tipo
@@ -119,14 +122,14 @@ public class ControladorBuscarEstudiante {
      */
     @RequestMapping(value = "buscarEstudiante.htm", method = RequestMethod.GET)
     public String crearFormulario(Model modelo) {
+        this.listadoEstudiantes = null;
+        this.agregarAtributosDefault(modelo, new DatosBusquedaEstudiante(), true);
+        return "estudiante/buscarEstudiante";
+    }
 
-        // se agregan los objetos que se usaran en la pagina
-        //this.listadoEstudiantes = new ArrayList<Estudiante>();
-        this.datosBusquedaEstudiante = new DatosBusquedaEstudiante();
-        modelo.addAttribute("listadoEstudiantes", this.listadoEstudiantes);
-        modelo.addAttribute("datosBusquedaEstudiante", this.datosBusquedaEstudiante);
-
-        this.agregarAtributosReportes(modelo, true);
+    @RequestMapping(value = "buscarEstudiantePag.htm", method = RequestMethod.GET)
+    public String buscarEstudiantePag(Model modelo, DatosBusquedaEstudiante datosBusquedaEstudiante){
+        this.agregarAtributosDefault(modelo, datosBusquedaEstudiante, false);
         return "estudiante/buscarEstudiante";
     }
 //______________________________________________________________________________
@@ -152,15 +155,11 @@ public class ControladorBuscarEstudiante {
      */
     @RequestMapping(value = "buscarEstudiante.htm", method = RequestMethod.POST)
     public String buscarEstudiantes(@Valid DatosBusquedaEstudiante datosBusquedaEstudiante,
-            BindingResult bindingResult, Model modelo, HttpServletRequest request) {
-
-        // se almacenan los parametros de busqueda ingresados en la pagina
-        this.datosBusquedaEstudiante = datosBusquedaEstudiante;        
-
+            BindingResult bindingResult, Model modelo, HttpServletRequest request) {        
         // los parametros de busqueda no cumplen las reglas de validacion
-        if (!this.datosBusquedaEstudiante.isEmpty() && !bindingResult.hasErrors()) {
+        if (!datosBusquedaEstudiante.isEmpty() && !bindingResult.hasErrors()) {
             try {
-                this.listadoEstudiantes = this.servicioEstudianteImpl.getListadoEstudiantes(this.datosBusquedaEstudiante);
+                this.listadoEstudiantes = this.servicioEstudianteImpl.getListadoEstudiantes(datosBusquedaEstudiante);
                 if (this.listadoEstudiantes.isEmpty()) {
                     RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "buscarEstudiante.sinResultados", true);
                 }
@@ -170,10 +169,7 @@ public class ControladorBuscarEstudiante {
             }
         }
 
-        modelo.addAttribute("listadoEstudiantes", this.listadoEstudiantes);
-        modelo.addAttribute("datosBusquedaEstudiante", this.datosBusquedaEstudiante);
-        this.agregarAtributosReportes(modelo, false);
-        //this.datosBusquedaEstudiante.inicializarPrimerRegistro();
+        this.agregarAtributosDefault(modelo, datosBusquedaEstudiante, false);
         return "estudiante/buscarEstudiante";
     }
 
