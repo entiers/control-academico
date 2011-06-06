@@ -103,7 +103,7 @@
             <legend><fmt:message key="buscarEstudiante.tituloListado"/></legend>
 
             <display:table class="ui-widget ui-widget-content" name="listadoEstudiantes"
-                           id="estudiante" requestURI="buscarEstudiante.htm" pagesize="15" >
+                           id="estudiante" requestURI="buscarEstudiantePag.htm" pagesize="${pageSize}" >
                 <display:column property="carne" titleKey="agregarEstudiante.carne"  />
                 <display:column property="nombre" titleKey="agregarEstudiante.nombre"  />
                 <sec:authorize access="hasAnyRole('ROLE_MOSTRAR_ASIGNACION_ESTUDIANTE_CARRERA','ROLE_ASIGNACION_CURSOS_ADMINISTRACION')">
