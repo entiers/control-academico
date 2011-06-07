@@ -70,11 +70,10 @@ public class ControladorAsignarCursoPensumEquivalencia extends ControladorAbstra
                         wrapperCursoPensumEquivalencia.getPensumEquivalente());
 
                 Set<AsignacionCursoPensum> equivalencias =
-                        acpOriginal.getAsignacionCursoPensumsForIdCursoPensumOriginal();
-
+                        acpOriginal.getAsignacionCursoPensumsForIdCursoPensumEquivalencia();
                 equivalencias.add(acpEquivalente);
 
-                this.servicioAsignacionCursoPensum.agregar(equivalencias);
+                this.servicioAsignacionCursoPensum.actualizar(acpOriginal);
 
                 RequestUtil.crearMensajeRespuesta(request, "cursoPensum.asignarCursoPensumEquivalencia.titulo", 
                         "cursoPensum.asignarCursoPensumEquivalencia.exito", true);
