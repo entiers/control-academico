@@ -34,4 +34,8 @@ public interface ServicioAsignacionCursoPensum extends ServicioGeneral {
     /***/
     List<AsignacionCursoPensum> getListadoCursosOrignalesPorPensumOriginalYEquivalente(
             Pensum pensumOriginal, Pensum pensumEquivalente);
+
+    /***/
+    AsignacionCursoPensum getAsignacionPorCursoYPensum(Curso curso, Pensum pensum);
+
 }
