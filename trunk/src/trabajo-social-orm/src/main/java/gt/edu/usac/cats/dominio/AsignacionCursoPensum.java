@@ -31,6 +31,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.persistence.UniqueConstraint;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
@@ -39,7 +40,8 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @Entity
 @Table(
     name = "asignacion_curso_pensum",
-    schema = "control"
+    schema = "control",
+    uniqueConstraints=@UniqueConstraint(columnNames={"id_curso", "id_pensum"}, name="asignacion_curso_pensum_uk")
 )
 public class AsignacionCursoPensum implements java.io.Serializable {
           private short idAsignacionCursoPensum;
