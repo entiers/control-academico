@@ -19,55 +19,7 @@
         <title><fmt:message key="cursoPensum.asignarCursoPensumEquivalencia.titulo" /></title>
         <%@include file="../../jspf/plantilla/scriptPopupMensajeDefault.jspf" %>
 
-        <script type="text/javascript">
-
-            $(document).ready(function(){
-                $("#slcPensumOriginal").change(function(){
-                    getListadoCursos($(this).val(), "#slcCursoOriginal");
-                                $("#slcCursoOriginal").attr("disabled", false);
-                });
-
-                $("#slcCursoOriginal").change(function(){
-                    getListadoOtrosPensums($("#slcPensumOriginal").val());
-                    $("#slcPensumEquivalente").attr("disabled", false);
-
-                });
-
-                $("#slcPensumEquivalente").change(function(){
-                    getListadoCursos($(this).val(), "#slcCursoEquivalente");
-                    $("#slcCursoEquivalente").attr("disabled", false);
-                });
-
-            });
-
-
-            var getListadoOtrosPensums = function(idPensum){
-                $.getJSON("getListadoOtrosPensums.htm",
-                {"idPensum" : idPensum}, function(listadoPensums){
-                    var options = "<option value=''>Seleccionar un valor</option>";
-
-                    $.each(listadoPensums, function (index, value) {
-                        options += "<option value='" + value.idPensum + "'>" + value.codigoCarreraNombre + "</option>";
-                    });
-                    $("#slcPensumEquivalente").html(options);
-                });
-            }
-
-            var getListadoCursos = function(idPensum, slc){
-                
-                $.getJSON("getListadoCursosPorIdPensum.htm",
-                {"idPensum" : idPensum}, function(listadoCursos){
-                    var options = "<option value=''>Seleccionar un valor</option>";
-
-                    $.each(listadoCursos, function (index, value) {
-                        options += "<option value='" + value.idCurso + "'>" + value.codigoNombre + "</option>";
-                    });                    
-                    $(slc).html(options);
-                });
-
-            }
-
-        </script>
+        <%@include file="../../jspf/scripts/scriptCursoPensumEquivalencia.jspf" %>
     </head>
     <body>
         <h1><fmt:message key="cursoPensum.asignarCursoPensumEquivalencia.titulo" /></h1>
@@ -79,7 +31,7 @@
                         <fmt:message key="cursoPensum.label.pensumOriginal"/>: *
                     </form:label>
                     <form:select id="slcPensumOriginal" path="pensumOriginal.idPensum" cssStyle="width: 250px;">
-                        <form:option  value="" label="Seleccionar un valor" />
+                        <form:option  value="0" label="Seleccionar un valor" />
                         <form:options items="${listadoPensums}" itemValue="idPensum" itemLabel="codigoCarreraNombre" />
                     </form:select>
 
@@ -90,8 +42,8 @@
                     <form:label for="cursoOriginal.idCurso" path="cursoOriginal.idCurso">
                         <fmt:message key="cursoPensum.label.cursoOriginal"/>: *
                     </form:label>
-                    <form:select id="slcCursoOriginal" path="cursoOriginal.idCurso" cssStyle="width: 250px;" disabled="true">
-                        <form:option  value="" label="Seleccionar un valor" />
+                    <form:select id="slcCursoOriginal" path="cursoOriginal.idCurso" cssStyle="width: 250px;" disabled="true"  cssClass="classDisabled">
+                        <form:option  value="0" label="Seleccionar un valor" />
                     </form:select>
 
                     <form:errors path="cursoOriginal.idCurso" cssClass="claseError" />
@@ -101,8 +53,8 @@
                     <form:label for="pensumEquivalente.idPensum" path="pensumEquivalente.idPensum">
                         <fmt:message key="cursoPensum.label.pensumEquivalente"/>: *
                     </form:label>
-                    <form:select id="slcPensumEquivalente" path="pensumEquivalente.idPensum" cssStyle="width: 250px;" disabled="true">
-                        <form:option  value="" label="Seleccionar un valor" />                        
+                    <form:select id="slcPensumEquivalente" path="pensumEquivalente.idPensum" cssStyle="width: 250px;" disabled="true" cssClass="classDisabled" >
+                        <form:option  value="0" label="Seleccionar un valor" />
                     </form:select>
 
                     <form:errors path="pensumEquivalente.idPensum" cssClass="claseError" />
@@ -112,7 +64,7 @@
                     <form:label for="cursoEquivalente.idCurso" path="cursoEquivalente.idCurso">
                         <fmt:message key="cursoPensum.label.cursoEquivalente"/>: *
                     </form:label>
-                    <form:select id="slcCursoEquivalente" path="cursoEquivalente.idCurso" cssStyle="width: 250px;" disabled="true">
+                    <form:select id="slcCursoEquivalente" path="cursoEquivalente.idCurso" cssStyle="width: 250px;" disabled="true" cssClass="classDisabled">
                         <form:option  value="" label="Seleccionar un valor" />
                     </form:select>
 
@@ -122,5 +74,8 @@
                 <input type="submit" value="<fmt:message key='btnAceptar' />" />
             </form:form>
         </div>
+
+        <%-- fragmento que muestra como mensaje popup el resultado de las operaciones --%>
+        <%@include file="../../jspf/plantilla/popupMensaje.jspf" %>
     </body>
 </html>

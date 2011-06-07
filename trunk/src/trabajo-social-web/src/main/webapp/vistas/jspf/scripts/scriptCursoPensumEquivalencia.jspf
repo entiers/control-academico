@@ -1,0 +1,68 @@
+<%@ page pageEncoding="UTF-8" %>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#slcPensumOriginal").val("0");
+        
+        $(".classDisabled").attr("disabled", true);
+
+
+        $("#slcPensumOriginal").change(function(){
+            if ( $(this).val() != 0 ){
+                getListadoCursos($(this).val(), "#slcCursoOriginal");
+                $("#slcCursoOriginal").attr("disabled", false);
+            } else {
+                $("#slcCursoOriginal").attr("disabled", true).val("0");
+                $("#slcPensumEquivalente").attr("disabled", true).val("0");
+                $("#slcCursoEquivalente").attr("disabled", true).val("0");
+            }
+        });
+
+        $("#slcCursoOriginal").change(function(){
+            if ( $(this).val() != 0 ){
+                getListadoOtrosPensums($("#slcPensumOriginal").val());
+                $("#slcPensumEquivalente").attr("disabled", false);
+            } else {
+                $("#slcPensumEquivalente").attr("disabled", true).val("0");
+                $("#slcCursoEquivalente").attr("disabled", true).val("0");
+            }
+        });
+
+        $("#slcPensumEquivalente").change(function(){
+            if ( $(this).val() != 0 ){
+                getListadoCursos($(this).val(), "#slcCursoEquivalente");
+                $("#slcCursoEquivalente").attr("disabled", false);
+            } else {
+                $("#slcCursoEquivalente").attr("disabled", true).val("0");
+            }
+        });
+
+    });
+
+
+    var getListadoOtrosPensums = function(idPensum){
+        $.getJSON("getListadoOtrosPensums.htm",
+        {"idPensum" : idPensum}, function(listadoPensums){
+            var options = "<option value=''>Seleccionar un valor</option>";
+
+            $.each(listadoPensums, function (index, value) {
+                options += "<option value='" + value.idPensum + "'>" + value.codigoCarreraNombre + "</option>";
+            });
+            $("#slcPensumEquivalente").html(options);
+        });
+    }
+
+    var getListadoCursos = function(idPensum, slc){
+
+        $.getJSON("getListadoCursosPorIdPensum.htm",
+        {"idPensum" : idPensum}, function(listadoCursos){
+            var options = "<option value=''>Seleccionar un valor</option>";
+
+            $.each(listadoCursos, function (index, value) {
+                options += "<option value='" + value.idCurso + "'>" + value.codigoNombre + "</option>";
+            });
+            $(slc).html(options);
+        });
+
+    }
+
+</script>

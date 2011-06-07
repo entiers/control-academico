@@ -63,4 +63,12 @@ public class ServicioAsignacionCursoPensumImpl extends ServicioGeneralImpl imple
 
         return query.list();
     }
+
+    @Override
+    public AsignacionCursoPensum getAsignacionPorCursoYPensum(Curso curso, Pensum pensum) {
+        DetachedCriteria criteria = DetachedCriteria.forClass(AsignacionCursoPensum.class);
+        criteria.add(Restrictions.eq("curso", curso));
+        criteria.add(Restrictions.eq("pensum", pensum));
+        return this.daoGeneralImpl.uniqueResult(criteria);
+    }
 }
