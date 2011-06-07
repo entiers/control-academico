@@ -23,52 +23,60 @@
     <body>
         <h1><fmt:message key="cursoPensum.mostrar.titulo"/></h1>
         <div>
-            <form:form modelAttribute="wrapperCursoPensumEquivalencia" method="post">
-                <div id="divCampos">
-                    <form:label for="pensumOriginal.idPensum" path="pensumOriginal.idPensum">
-                        <fmt:message key="cursoPensum.label.pensumOriginal"/>: *
-                    </form:label>
-                    <form:select path="pensumOriginal.idPensum" cssStyle="width: 250px;">
-                        <form:option  value="" label="Seleccionar un valor" />
-                        <form:options items="${listadoPensums}" itemValue="idPensum" itemLabel="codigo" />
-                    </form:select>
+            <c:if test="${not empty wrapperCursoPensumEquivalencia}">
+                <form:form modelAttribute="wrapperCursoPensumEquivalencia" method="post">
+                    <div id="divCampos">
+                        <form:label for="pensumOriginal.idPensum" path="pensumOriginal.idPensum">
+                            <fmt:message key="cursoPensum.label.pensumOriginal"/>: *
+                        </form:label>
+                        <form:select path="pensumOriginal.idPensum" cssStyle="width: 250px;">
+                            <form:option  value="" label="Seleccionar un valor" />
+                            <form:options items="${listadoPensums}" itemValue="idPensum" itemLabel="codigo" />
+                        </form:select>
 
-                    <form:errors path="pensumOriginal.idPensum" cssClass="claseError" />
-                </div>
+                        <form:errors path="pensumOriginal.idPensum" cssClass="claseError" />
+                    </div>
 
-                <div id="divCampos">
-                    <form:label for="pensumEquivalente.idPensum" path="pensumEquivalente.idPensum">
-                        <fmt:message key="cursoPensum.label.pensumEquivalente"/>: *
-                    </form:label>
-                    <form:select path="pensumEquivalente.idPensum" cssStyle="width: 250px;">
-                        <form:option  value="" label="Seleccionar un valor" />
-                        <form:options items="${listadoPensums}" itemValue="idPensum" itemLabel="codigo" />
-                    </form:select>
+                    <div id="divCampos">
+                        <form:label for="pensumEquivalente.idPensum" path="pensumEquivalente.idPensum">
+                            <fmt:message key="cursoPensum.label.pensumEquivalente"/>: *
+                        </form:label>
+                        <form:select path="pensumEquivalente.idPensum" cssStyle="width: 250px;">
+                            <form:option  value="" label="Seleccionar un valor" />
+                            <form:options items="${listadoPensums}" itemValue="idPensum" itemLabel="codigo" />
+                        </form:select>
 
-                    <form:errors path="pensumEquivalente.idPensum" cssClass="claseError" />
-                </div>
+                        <form:errors path="pensumEquivalente.idPensum" cssClass="claseError" />
+                    </div>
 
-                <input type="submit" value="<fmt:message key='btnBuscar' />" />
-            </form:form>            
+                    <input type="submit" value="<fmt:message key='btnBuscar' />" />
+                    <a href="asignarCursoPensumEquivalencia.htm">
+                        <fmt:message key="cursoPensum.asignarCursoPensumEquivalencia.titulo" />
+                    </a>
+
+                </form:form>
+            </c:if>
         </div>
 
-        <div style="margin-top: 20px">
-            <c:if test="${not empty listadoAsignacionCursoPensums}">
-                <display:table
-                    class="ui-widget ui-widget-content" name="listadoAsignacionCursoPensums"
-                    id="cursoPensum" requestURI="mostrarCursoPensumEquivalencia.htm"
-                    pagesize="10" style="width: 100%;">
+        <div style="margin-top: 20px">            
+            <display:table
+                class="ui-widget ui-widget-content" name="listadoAsignacionCursoPensums"
+                id="cursoPensum" requestURI="mostrarCursoPensumEquivalenciaPag.htm"
+                pagesize="${pageSize}" style="width: 100%;">
 
-                    <display:column property="curso.codigoNombre" titleKey="cursoPensum.label.cursoOriginal"
-                                    style="width: 50%;"/>
-                    <display:column titleKey="cursoPensum.label.cursoEquivalente" style="width: 50%;">
-                        <c:forEach items="${cursoPensum.asignacionCursoPensumsForIdCursoPensumEquivalencia}"
-                                   var="cursoPensumEquivalente">
-                            ${cursoPensumEquivalente.curso.codigoNombre}<br/>
-                        </c:forEach>
-                    </display:column>
-                </display:table>
-            </c:if>
+                <display:column property="curso.codigoNombre" titleKey="cursoPensum.label.cursoOriginal"
+                                style="width: 50%;"/>
+                <display:column titleKey="cursoPensum.label.cursoEquivalente" style="width: 50%;">
+                    <c:forEach items="${cursoPensum.asignacionCursoPensumsForIdCursoPensumEquivalencia}"
+                               var="cursoPensumEquivalente">
+                        ${cursoPensumEquivalente.curso.codigoNombre}
+                        <a href="eliminarCursoPensumEquivalencia.htm?idAsignacionCursoPensumOriginal=${cursoPensum.idAsignacionCursoPensum}&idAsignacionCursoPensumEquivalente=${cursoPensumEquivalente.idAsignacionCursoPensum}">
+                            <fmt:message key="link.eliminar" />
+                        </a>
+                        <br/>
+                    </c:forEach>
+                </display:column>
+            </display:table>
         </div>
 
         <%-- fragmento que muestra como mensaje popup el resultado de las operaciones --%>
