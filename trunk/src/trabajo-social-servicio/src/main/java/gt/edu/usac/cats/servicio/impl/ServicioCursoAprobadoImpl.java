@@ -8,11 +8,15 @@ package gt.edu.usac.cats.servicio.impl;
 
 import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
 import gt.edu.usac.cats.dominio.Curso;
+import gt.edu.usac.cats.dominio.CursoAprobado;
+import gt.edu.usac.cats.dominio.Pensum;
 import gt.edu.usac.cats.servicio.ServicioCursoAprobado;
 import gt.edu.usac.cats.servicio.ServicioPensumEstudianteCarrera;
 import java.util.List;
 import javax.annotation.Resource;
 import org.hibernate.Query;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
@@ -29,17 +33,15 @@ public class ServicioCursoAprobadoImpl extends ServicioGeneralImpl implements Se
 
 //______________________________________________________________________________
     @Override
-    public boolean esCursoAprobado(AsignacionEstudianteCarrera asignacionEstudianteCarrera, Curso curso) throws DataAccessException {
-        StringBuilder builder = new StringBuilder();
-        builder.append("select curAp from CursoAprobado curAp ")
-               .append("where curAp.curso = :curso")
-               .append("and curAp.asignacion.asignacionEstudianteCarrera = :asignacionEstudianteCarrera");
+    public boolean esCursoAprobado(AsignacionEstudianteCarrera asignacionEstudianteCarrera, Curso curso, Pensum pensum) throws DataAccessException {
+        DetachedCriteria criteria = DetachedCriteria.forClass(CursoAprobado.class);
+        criteria.createAlias("asignacion", "a");
+        criteria.createAlias("asignacionCursoPensum", "acp");
+        criteria.add(Restrictions.eq("acp.curso", curso));
+        criteria.add(Restrictions.eq("acp.pensum", pensum));
+        criteria.add(Restrictions.eq("a.asignacionEstudianteCarrera", asignacionEstudianteCarrera));
 
-        Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
-        query.setParameter("curso", curso);
-        query.setParameter("asignacionEstudianteCarrera", asignacionEstudianteCarrera);
-
-        return !query.list().isEmpty();
+        return !this.daoGeneralImpl.find(criteria).isEmpty();
     }
 //______________________________________________________________________________
     @Override

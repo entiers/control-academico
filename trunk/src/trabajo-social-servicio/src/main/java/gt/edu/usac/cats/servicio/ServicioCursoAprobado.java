@@ -11,6 +11,7 @@ import java.util.List;
 
 import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
 import gt.edu.usac.cats.dominio.Curso;
+import gt.edu.usac.cats.dominio.Pensum;
 import org.springframework.dao.DataAccessException;
 
 /**
@@ -29,7 +30,7 @@ public interface ServicioCursoAprobado extends ServicioGeneral{
      * @return boolean
      * @throws DataAccessException Si ocurrio un error de acceso a datos
      */
-    boolean esCursoAprobado(AsignacionEstudianteCarrera asignacionEstudianteCarrera, Curso curso)
+    boolean esCursoAprobado(AsignacionEstudianteCarrera asignacionEstudianteCarrera, Curso curso, Pensum pensum)
             throws DataAccessException;
 //______________________________________________________________________________
     /**
