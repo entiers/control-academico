@@ -3,7 +3,6 @@
  * Escuela de Trabajo Social
  * Universidad de San Carlos de Guatemala
  */
-
 package gt.edu.usac.cats.servicio.impl;
 
 import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
@@ -26,7 +25,7 @@ import org.springframework.stereotype.Service;
  * @version 1.0
  */
 @Service("servicioCursoAprobadoImpl")
-public class ServicioCursoAprobadoImpl extends ServicioGeneralImpl implements ServicioCursoAprobado{
+public class ServicioCursoAprobadoImpl extends ServicioGeneralImpl implements ServicioCursoAprobado {
 
     @Resource
     private ServicioPensumEstudianteCarrera servicioPensumEstudianteCarreraImpl;
@@ -44,45 +43,66 @@ public class ServicioCursoAprobadoImpl extends ServicioGeneralImpl implements Se
         return !this.daoGeneralImpl.find(criteria).isEmpty();
     }
 //______________________________________________________________________________
+
     @Override
     public List<Curso> getCursoPrerrequisitoPendiente(AsignacionEstudianteCarrera asignacionEstudianteCarrera, Curso curso) throws DataAccessException {
 
+
+        Pensum pensumValido = servicioPensumEstudianteCarreraImpl.
+                getPensumEstudianteCarreraValido(asignacionEstudianteCarrera).
+                getPensum();
+
         StringBuilder builder = new StringBuilder();
-        builder.append("select pre.curso from AsignacionCursoPensum acp ")
-               .append("inner join acp.asignacionCursoPensumsForIdCursoPensumPrerequisito pre ")
-               .append("left join pre.curso.cursoAprobados curAp ")
-               .append("where acp.curso = :curso " )
-               .append("and acp.pensum = :pensum ")
-               .append("and curAp is null");
+        builder.append("select p.curso from AsignacionCursoPensum as acp ").
+                append("\n inner join acp.asignacionCursoPensumsForIdCursoPensumPrerequisito as p").
+                append("\n left join p.cursoAprobados as ca").
+                append("\n left join ca.cursoAprobadoEquivalencia as cae ").
+                append(" with cae.asignacionEstudianteCarrera.idAsignacionEstudianteCarrera = :idAsignacionEstudianteCarrera").
+                append("\n left join ca.asignacion as a ").
+                append(" with a.asignacionEstudianteCarrera.idAsignacionEstudianteCarrera = :idAsignacionEstudianteCarrera").
+                append("\n where acp.curso = :curso and acp.pensum = :pensum and ca is null");
 
         Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
         query.setParameter("curso", curso);
-        query.setParameter("pensum", servicioPensumEstudianteCarreraImpl.
-                getPensumEstudianteCarreraValido(asignacionEstudianteCarrera)
-                .getPensum());
+        query.setParameter("pensum", pensumValido);
+        query.setParameter("idAsignacionEstudianteCarrera", asignacionEstudianteCarrera.getIdAsignacionEstudianteCarrera());
 
         return query.list();
     }
 //______________________________________________________________________________
+
     @Override
-    public int getCreditosAprobados(AsignacionEstudianteCarrera asignacionEstudianteCarrera){
+    public int getCreditosAprobados(AsignacionEstudianteCarrera asignacionEstudianteCarrera) {
         StringBuilder builder = new StringBuilder();
-        builder.append("select (sum(acp.creditosPracticos) + sum(acp.creditosTeoricos)) as total ")
-               .append("from AsignacionCursoPensum acp ")
-               .append("inner join acp.curso.cursoAprobados curAp ")
-               .append("where curAp.asignacion.asignacionEstudianteCarrera = :aec");
+        Pensum pensumValido = servicioPensumEstudianteCarreraImpl.
+                getPensumEstudianteCarreraValido(asignacionEstudianteCarrera).
+                getPensum();
+
+
+        builder.append("select (sum(acp.creditosPracticos) + sum(acp.creditosTeoricos)) as total ").
+                append("\nfrom AsignacionCursoPensum acp ").
+                append("\ninner join acp.cursoAprobados ca ").
+                append("\n left join ca.cursoAprobadoEquivalencia as cae ").
+                append(" with cae.asignacionEstudianteCarrera.idAsignacionEstudianteCarrera = :idAsignacionEstudianteCarrera").
+                append("\n left join ca.asignacion as a ").
+                append(" with a.asignacionEstudianteCarrera.idAsignacionEstudianteCarrera = :idAsignacionEstudianteCarrera").
+                append("\n where acp.pensum = :pensum and (cae is not null or a is not null)");
+
 
         Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
-        query.setParameter("aec", asignacionEstudianteCarrera);
+        query.setParameter("pensum", pensumValido);
+
+        query.setParameter("idAsignacionEstudianteCarrera",
+                asignacionEstudianteCarrera.getIdAsignacionEstudianteCarrera());
+
 
         List result = query.list();
-        if(result.isEmpty())
+        if (result.isEmpty()) {
             return 0;
-        else if(result.get(0) == null)
+        } else if (result.get(0) == null) {
             return 0;
-        else
+        } else {
             return Integer.parseInt(result.get(0).toString());
+        }
     }
-
-
 }
