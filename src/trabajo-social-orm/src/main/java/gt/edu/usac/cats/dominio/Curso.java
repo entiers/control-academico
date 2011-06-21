@@ -39,13 +39,13 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     schema = "control"
 )
 public class Curso implements java.io.Serializable {
-    private short idCurso;
+      private short idCurso;
      private String codigo;
      private String nombre;
      private Set<ProgramaCurso> programaCursos = new HashSet<ProgramaCurso>(0);
-     private Set<CursoAprobado> cursoAprobados = new HashSet<CursoAprobado>(0);
      private Set<AsignacionCursoPensum> asignacionCursoPensums = new HashSet<AsignacionCursoPensum>(0);
      private Set<Horario> horarios = new HashSet<Horario>(0);
+     private Set<BoletaBanco> boletaBancos = new HashSet<BoletaBanco>(0);
      private Set<ConteoAsignacion> conteoAsignacions = new HashSet<ConteoAsignacion>(0);
 
 
@@ -86,15 +86,17 @@ public class Curso implements java.io.Serializable {
     public void setProgramaCursos(Set<ProgramaCurso> programaCursos) {
         this.programaCursos = programaCursos;
     }
+
 @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="curso")
 @JsonIgnore
-    public Set<CursoAprobado> getCursoAprobados() {
-        return this.cursoAprobados;
+    public Set<BoletaBanco> getBoletaBancos() {
+        return this.boletaBancos;
     }
 
-    public void setCursoAprobados(Set<CursoAprobado> cursoAprobados) {
-        this.cursoAprobados = cursoAprobados;
+    public void setBoletaBancos(Set<BoletaBanco> boletaBancos) {
+        this.boletaBancos = boletaBancos;
     }
+
 @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="curso")
 @JsonIgnore
     public Set<AsignacionCursoPensum> getAsignacionCursoPensums() {
