@@ -3,6 +3,21 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <script type="text/javascript">
+    
+    $(document).ready(function() {        
+
+        //Validacion notas
+        $('#frmBusqueda').submit(function(){
+            var zona = $('#zona').val(); 
+            var examenFinal = $('#examenFinal').val();
+            if(!isNaN(zona) & !isNaN(examenFinal)){
+                if(zona + examenFinal > 100){
+                    $('#lblErrorNotas').html('<fmt:message key="ingresoNota.validaciones.sumaFinalZona"/>');
+                    return false;
+                }
+            }
+        });
+    });
     $(function() {
 
 
@@ -18,10 +33,13 @@
                         if(<%= RequestUtil.getValorBoolean(request, "limpiarCampos") %>) {
                             $("#curso").val("");
                             $("#obligatorio").val("${wrapperAsignacionCursoPensum.obligatorio}");
-                            $("#creditosPracticos").val("${wrapperAsignacionCursoPensum.creditosPracticos}");;
-                            $("#creditosPrerrequisito").val("${wrapperAsignacionCursoPensum.creditosPrerrequisito}");;
-                            $("#creditosTeoricos").val("${wrapperAsignacionCursoPensum.creditosTeoricos}");;
-                            $("#numeroSemestre").val("${wrapperAsignacionCursoPensum.numeroSemestre}");;
+                            $("#creditosPracticos").val("${wrapperAsignacionCursoPensum.creditosPracticos}");
+                            $("#creditosPrerrequisito").val("${wrapperAsignacionCursoPensum.creditosPrerrequisito}");
+                            $("#creditosTeoricos").val("${wrapperAsignacionCursoPensum.creditosTeoricos}");
+                            $("#numeroSemestre").val("${wrapperAsignacionCursoPensum.numeroSemestre}");
+                            $("#zona").val("${wrapperAsignacionCursoPensum.zona}");
+                            $("#laboratorio").val("${wrapperAsignacionCursoPensum.laboratorio}");
+                            $("#examenFinal").val("${wrapperAsignacionCursoPensum.examenFinal}");
                         }
                         $(this).dialog('close');
                     <%}%>

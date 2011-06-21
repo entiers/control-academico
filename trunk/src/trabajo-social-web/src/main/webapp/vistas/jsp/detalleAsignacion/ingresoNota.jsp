@@ -59,11 +59,11 @@
                 $("#hdOficializar").val(value);
                 $.each($('#frmGuardar input:text'),function(index,value){
                     if(isNaN(value.value)){
-                        alert('Las notas deben de ser numéricas.');
+                        alert('<fmt:message key="ingresoNota.validaciones.notasNumericas"/>');
                         return false;
                     }
                     if(value.value<0 | value.value>100){
-                        alert('Las notas deben de estar entre 0 y 100 puntos.')
+                        alert('<fmt:message key="ingresoNota.validaciones.rango"/>')
                         return false;
                     }
                     $("#frmGuardar").submit();

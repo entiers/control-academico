@@ -33,6 +33,34 @@
 </div>
 
 <div id="divCampos">
+    <form:label for="zona" path="zona">
+        <fmt:message key="ingresoNota.zona"/>: *
+    </form:label>
+
+    <form:input path="zona" cssStyle="width: 250px;" />
+    <form:errors path="zona" cssClass="claseError" />
+</div>
+
+<div id="divCampos">
+    <form:label for="laboratorio" path="laboratorio">
+        <fmt:message key="asignarCursoPensum.porcentajeLaboratorio"/>: *
+    </form:label>
+
+    <form:input path="laboratorio" cssStyle="width: 250px;" /> %
+    <form:errors path="laboratorio" cssClass="claseError" />
+</div>
+
+<div id="divCampos">
+    <form:label for="examenFinal" path="examenFinal">
+        <fmt:message key="ingresoNota.final"/>: *
+    </form:label>
+
+    <form:input path="examenFinal" cssStyle="width: 250px;" />
+    <form:errors path="examenFinal" cssClass="claseError" />
+    <span id="lblErrorNotas" class="claseError" />
+</div>
+
+<div id="divCampos">
     <form:label for="numeroSemestre" path="numeroSemestre">
         <fmt:message key="asignarCursoPensum.numeroSemestre"/>: *
     </form:label>
