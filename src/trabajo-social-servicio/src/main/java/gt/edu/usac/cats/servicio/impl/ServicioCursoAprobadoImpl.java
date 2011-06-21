@@ -53,7 +53,7 @@ public class ServicioCursoAprobadoImpl extends ServicioGeneralImpl implements Se
                 getPensum();
 
         StringBuilder builder = new StringBuilder();
-        builder.append("\n select p2 from AsignacionCursoPensum as acp2").
+        builder.append("\n select p2.curso from AsignacionCursoPensum as acp2").
                 append("\n inner join acp2.asignacionCursoPensumsForIdCursoPensumPrerequisito as p2").
                 append("\n where ").
                 append("\n p2 not in (").
