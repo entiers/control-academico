@@ -41,11 +41,7 @@
                 </form:form>
             </fieldset>
         </div>
-
-
-
-
-
+                
         <fieldset>
             <legend><fmt:message key="asignarCursoPensum.legend.listadoAsigancionCursoPensum" /></legend>
             <display:table class="ui-widget ui-widget-content" name="pensum.asignacionCursoPensums" id="asignacionCursoPensum"
@@ -60,6 +56,11 @@
                     <b><fmt:message key="asignarCursoPensum.creditosPracticos"/>: </b>${asignacionCursoPensum.creditosPracticos} <br/>
                     <b><fmt:message key="asignarCursoPensum.creditosPrerrequisito"/>: </b>${asignacionCursoPensum.creditosPrerrequisito} <br/>
                     <b><fmt:message key="asignarCursoPensum.creditosTeoricos"/>: </b>${asignacionCursoPensum.creditosTeoricos} <br/>
+                </display:column>
+                <display:column titleKey="asignarCursoPensum.notas">
+                    <b><fmt:message key="ingresoNotas.zona"/>: </b>${asignacionCursoPensum.zona} <br/>
+                    <b><fmt:message key="asignarCursoPensum.porcentajeLaboratorio"/>: </b>${asignacionCursoPensum.laboratorio} %<br/>
+                    <b><fmt:message key="ingresoNotas.final"/>: </b>${asignacionCursoPensum.examenFinal} <br/>
                 </display:column>
                 <sec:authorize access="hasAnyRole('ROLE_EDITAR_ASIGNACION_CURSO_PENSUM', 'ROLE_ADMINISTRAR_PRERREQUISITOS', 'ROLE_ELIMINAR_ASIGNACION_CURSO_PENSUM')">
                     <display:column titleKey="acciones" style="text-align:center;">

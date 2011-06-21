@@ -31,6 +31,15 @@ public class WrapperAsignacionCursoPensum {
     @Min(value = 0, message = "{validacion.minimo}")
     @Max(value = 10, message = "{validacion.maximo}")
     private short numeroSemestre;
+    @Min(value = 0, message = "{validacion.minimo}")
+    @Max(value = 100, message = "{validacion.maximo}")
+    private short zona;
+    @Min(value = 0, message = "{validacion.minimo}")
+    @Max(value = 100, message = "{validacion.maximo}")
+    private short laboratorio;
+    @Min(value = 0, message = "{validacion.minimo}")
+    @Max(value = 100, message = "{validacion.maximo}")
+    private short examenFinal;
 
     public WrapperAsignacionCursoPensum() {
         this.obligatorio = true;
@@ -38,6 +47,9 @@ public class WrapperAsignacionCursoPensum {
         this.creditosPracticos = (short) 0;
         this.creditosPrerrequisito = (short) 0;
         this.creditosTeoricos = (short) 0;
+        this.zona = (short) 0;
+        this.laboratorio = (short) 0;
+        this.examenFinal = (short) 0;        
     }
 //______________________________________________________________________________
 
@@ -54,6 +66,9 @@ public class WrapperAsignacionCursoPensum {
         this.setPensum(asignacionCursoPensum.getPensum());
         this.setNumeroSemestre(asignacionCursoPensum.getNumeroSemestre());
         this.setObligatorio(asignacionCursoPensum.isObligatorio());
+        this.setZona(asignacionCursoPensum.getZona());
+        this.setLaboratorio(asignacionCursoPensum.getLaboratorio());
+        this.setExamenFinal(asignacionCursoPensum.getExamenFinal());
     }
 
 //______________________________________________________________________________
@@ -70,6 +85,9 @@ public class WrapperAsignacionCursoPensum {
         asignacionCursoPensum.setCreditosTeoricos(this.getCreditosTeoricos());
         asignacionCursoPensum.setNumeroSemestre(this.getNumeroSemestre());
         asignacionCursoPensum.setObligatorio(this.isObligatorio());
+        asignacionCursoPensum.setZona(this.zona);
+        asignacionCursoPensum.setLaboratorio(this.laboratorio);
+        asignacionCursoPensum.setExamenFinal(this.examenFinal);
 
         if (quitar) {
             asignacionCursoPensum.setCurso(this.getCurso());
@@ -175,4 +193,53 @@ public class WrapperAsignacionCursoPensum {
     public void setNumeroSemestre(short numeroSemestre) {
         this.numeroSemestre = numeroSemestre;
     }
+
+    /**
+     * 
+     * @return the examenFinal
+     */
+    public short getExamenFinal() {
+        return examenFinal;
+    }
+
+    /**
+     * 
+     * @param examenFinal the examenFinal to set
+     */    
+    public void setExamenFinal(short examenFinal) {
+        this.examenFinal = examenFinal;
+    }
+
+    /**
+     * 
+     * @return the laboratorio
+     */
+    public short getLaboratorio() {
+        return laboratorio;
+    }
+
+    /**
+     * 
+     * @param laboratorio the laboratorio to set
+     */
+    public void setLaboratorio(short laboratorio) {
+        this.laboratorio = laboratorio;
+    }
+
+    /**
+     * 
+     * @return the zona
+     */
+    public short getZona() {
+        return zona;
+    }
+
+    /**
+     * 
+     * @param zona the zona to set
+     */
+    public void setZona(short zona) {
+        this.zona = zona;
+    }   
+    
 }
