@@ -3,12 +3,12 @@
  * Escuela de Trabajo Social
  * Universidad de San Carlos de Guatemala
  */
-
 package gt.edu.usac.cats.controlador.pensumEstudianteCarrera;
 
 import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
 import gt.edu.usac.cats.dominio.Pensum;
 import gt.edu.usac.cats.dominio.PensumEstudianteCarrera;
+import gt.edu.usac.cats.dominio.wrapper.WrapperEquivalenciaPorPensum;
 import gt.edu.usac.cats.servicio.ServicioPensumEstudianteCarrera;
 import java.util.List;
 import javax.annotation.Resource;
@@ -56,6 +56,9 @@ public abstract class ControladorAbstractoPensumEstudianteCarrera {
      * las b&uacute;squedas que se realizan.
      */
     private List<Pensum> listadoPensumsNoAsignadosAEsutudianteCarrera;
+
+//______________________________________________________________________________
+    protected WrapperEquivalenciaPorPensum wrapperEquivalenciaPorPensum;
 //______________________________________________________________________________
 
     /**
@@ -91,5 +94,6 @@ public abstract class ControladorAbstractoPensumEstudianteCarrera {
         modelo.addAttribute("listadoPensumEstudianteCarreraNoValidos", listadoPensumEstudianteCarreraNoValidos);
         modelo.addAttribute("listadoPensumsNoAsignadosAEsutudianteCarrera", listadoPensumsNoAsignadosAEsutudianteCarrera);
         modelo.addAttribute("autoOpenDialog", autoOpenDialogAsignar);
+        modelo.addAttribute("wrapperEquivalenciaPorPensum", wrapperEquivalenciaPorPensum);
     }
 }

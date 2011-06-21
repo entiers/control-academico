@@ -6,6 +6,8 @@
 package gt.edu.usac.cats.servicio;
 
 import gt.edu.usac.cats.dominio.AsignacionCursoPensum;
+import gt.edu.usac.cats.dominio.AsignacionEquivalencia;
+import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
 import gt.edu.usac.cats.dominio.Curso;
 import gt.edu.usac.cats.dominio.Pensum;
 import java.util.List;
@@ -38,4 +40,36 @@ public interface ServicioAsignacionCursoPensum extends ServicioGeneral {
     /***/
     AsignacionCursoPensum getAsignacionPorCursoYPensum(Curso curso, Pensum pensum);
 
+//______________________________________________________________________________
+    /**
+     * Este m&eacute;todo se encarga de obtener los cursos de un estudiante que se pueden
+     * hacer equivalencias entre dos pensums de una misma carrera.
+     *
+     * @param asignacionEstudianteCarrera Objeto de tipo {@link AsignacionEstudianteCarrera}
+     * @param pensumOriginal Objeto de tipo {@link Pensum}
+     * @param pensumEquivalencia Objeto de tipo {@link Pensum}
+     * 
+     * @return Listado de objetos de tipo {@link AsignacionCursoPensum} con los cursos
+     * con los cuales se pueden hacer equivalencias.
+     * 
+     * @throws DataAccessException Si ocurri&oacute; un error de acceso a datos
+     */
+    List <AsignacionCursoPensum> getEquivalenciasPorPensums(
+            AsignacionEstudianteCarrera asignacionEstudianteCarrera,
+            Pensum pensumOriginal,
+            Pensum pensumEquivalencia) throws DataAccessException;
+
+//______________________________________________________________________________
+    /**
+     * Realiza el proceso de asignaci&oacute; de cursos por equivalencias.
+     *
+     * @param asignacionEstudianteCarrera Objeto de tipo {@link AsignacionEstudianteCarrera}
+     * @param asignacionEquivalencia Objeto de tipo {@link AsignacionEquivalencia}
+     * @param listadoEquivalencias Listado de objetos de tipo {@link AsignacionCursoPensum}
+     *
+     * @throws DataAccessException Si ocurri&oacute; un error de acceso a datos
+     */
+    void realizarEquivalencias(AsignacionEstudianteCarrera asignacionEstudianteCarrera,
+            AsignacionEquivalencia asignacionEquivalencia,
+            List <AsignacionCursoPensum> listadoEquivalencias) throws DataAccessException;
 }

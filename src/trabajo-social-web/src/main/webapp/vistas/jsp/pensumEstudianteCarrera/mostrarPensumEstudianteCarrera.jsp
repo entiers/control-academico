@@ -18,6 +18,33 @@
         <title><fmt:message key="mostrarPensumEstudianteCarrera.titulo"/></title>
         <%@include file="../../jspf/plantilla/scriptPopupMensajeDefault.jspf" %>
         <%@include file="../../jspf/plantilla/scriptFormularioPopup.jspf" %>
+
+        <script type="text/javascript">
+
+            $(function(){
+                $("#divForm2").dialog({
+                    autoOpen: ${autoOpenDialog},
+                    modal: true,
+                    width: 550,
+
+                    buttons: {
+                        "<fmt:message key="btnSalir" />" : function() {
+                            $(this).dialog('close');
+                        },
+                        "<fmt:message key="btnAceptar" />" : function() {
+                            $("#form2").submit();
+                        }
+                    }
+                });
+
+            });
+            var llenarFormularioParaEquivalencias = function(idPensumOriginal, codigoPensumOriginal){
+
+                $("#divForm2").dialog("open");
+                $("#form2 #idPensumOriginal").val(idPensumOriginal);
+                $("#form2 #codigoPensumOriginal").val(codigoPensumOriginal);
+            }
+        </script>
     </head>
     <body>
         <h1><fmt:message key="mostrarPensumEstudianteCarrera.titulo"/></h1>
@@ -68,7 +95,7 @@
             <fieldset>
                 <legend><fmt:message key="mostrarPensumEstudianteCarrera.listadoPensumsNoValidos" /></legend>
                 <display:table class="ui-widget ui-widget-content" name="listadoPensumEstudianteCarreraNoValidos" id="pensumEstudianteCarrera">
-                    <display:column property="pensum.codigo" titleKey="pensumEstudianteCarrera.pensum"/>
+                    <display:column property="pensum.codigo" titleKey="pensumEstudianteCarrera.pensum" />
                     <display:column titleKey="pensumEstudianteCarrera.fechaFin" style="text-align:center;">
                         <fmt:formatDate value="${pensumEstudianteCarrera.fechaFin}" pattern="dd-MM-yyyy" />
                     </display:column>
@@ -76,12 +103,27 @@
                         <display:column titleKey="acciones" style="text-align:center;">
                             <a href="eliminarPensumEstudianteCarrera.htm?idPensumEstudianteCarrera=${pensumEstudianteCarrera.idPensumEstudianteCarrera}">
                                 <fmt:message key="mostrarPensumEstudianteCarrera.link.eliminar"/>
+                            </a> <br/>
+                            <a style="cursor: pointer" onclick="javascript:llenarFormularioParaEquivalencias(${pensumEstudianteCarrera.pensum.idPensum}, '${pensumEstudianteCarrera.pensum.codigo}')">
+                                Realizar equivalencias al pensum valido
                             </a>
                         </display:column>
                     </sec:authorize>
                 </display:table>
             </fieldset>
         </center>
+
+        <div id="divForm2" title="Realizar equivalencia">
+            <form:form id="form2" action="mostrarParaRealizarEquivalencia.htm" method="post" modelAttribute="wrapperEquivalenciaPorPensum">
+                <div class="divCampos">
+                    <form:label for="pensumOriginal.idPensum" path="pensumOriginal.idPensum">
+                        <fmt:message key="pensumEstudianteCarrera.pensum"/>: *
+                    </form:label>
+                    <form:hidden path="pensumOriginal.idPensum" id="idPensumOriginal" />
+                    <input type="text" readonly="true" id="codigoPensumOriginal" />
+                </div>
+            </form:form>
+        </div>
 
 
         <div style="margin: 20px 0 0 0;">

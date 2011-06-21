@@ -8,6 +8,7 @@ package gt.edu.usac.cats.controlador.pensumEstudianteCarrera;
 
 import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
 import gt.edu.usac.cats.dominio.PensumEstudianteCarrera;
+import gt.edu.usac.cats.dominio.wrapper.WrapperEquivalenciaPorPensum;
 import gt.edu.usac.cats.util.Mensajes;
 import gt.edu.usac.cats.util.RequestUtil;
 import javax.servlet.http.HttpServletRequest;
@@ -69,14 +70,20 @@ public class ControladorMostrarPensumEstudianteCarrera extends ControladorAbstra
             return "redirect:buscarEstudiante.htm";
         }
 
-        PensumEstudianteCarrera pensumEstudianteCarreraValido = this.servicioPensumEstudianteCarreraImpl.getPensumEstudianteCarreraValido(
-                asignacionEstudianteCarrera);
+        PensumEstudianteCarrera pensumEstudianteCarreraValido = this.servicioPensumEstudianteCarreraImpl.
+                getPensumEstudianteCarreraValido(
+                this.asignacionEstudianteCarrera);
 
         this.pensum = null;
         //Se obtiene las relaciones con el pensum valido
         if(pensumEstudianteCarreraValido != null){
             this.pensum = pensumEstudianteCarreraValido.getPensum();
-            modelo.addAttribute("idPensumEstudianteCarreraValido", pensumEstudianteCarreraValido.getIdPensumEstudianteCarrera());
+            modelo.addAttribute("idPensumEstudianteCarreraValido",
+                    pensumEstudianteCarreraValido.getIdPensumEstudianteCarrera());
+
+         this.wrapperEquivalenciaPorPensum =
+                new WrapperEquivalenciaPorPensum(asignacionEstudianteCarrera, pensum);
+
         }
 
         this.agregarAtributosDefault(modelo, new PensumEstudianteCarrera(), false, true);
