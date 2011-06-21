@@ -22,11 +22,12 @@
  * @version 1.0
  */
 public enum TipoAsignacion {
-    ASIGNACION_PRIMER_INGRESO(1,"Asignación primer ingreso"),
-    ASIGNACION_CURSOS_SEMESTRE(2,"Asignación semestre"),
-    ASIGNACION_CURSOS_VACACIONES(3,"Asignación vacaciones"),
-    ASIGNACION_PRIMERA_RETRASADA(4,"Asignación primera retrasada"),
-    ASIGNACION_SEGUNDA_RETRASADA(5,"Asignación segunda retrasada")
+    ASIGNACION_PRIMER_INGRESO(1,"Asignacion primer ingreso"),
+    ASIGNACION_CURSOS_SEMESTRE(2,"Asignacion semestre"),
+    ASIGNACION_CURSOS_VACACIONES(3,"Asignacion vacaciones"),
+    ASIGNACION_PRIMERA_RETRASADA(4,"Asignacion primera retrasada"),
+    ASIGNACION_SEGUNDA_RETRASADA(5,"Asignacion segunda retrasada"),
+    ASIGNACION_EQUIVALENCIA(6, "Asignacion equivalencia")
     ;
 
     private int id;

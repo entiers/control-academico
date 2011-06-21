@@ -5,9 +5,9 @@
  */
 package gt.edu.usac.cats.servicio.impl;
 
+import gt.edu.usac.cats.dominio.AsignacionCursoPensum;
 import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
 import gt.edu.usac.cats.dominio.Curso;
-import gt.edu.usac.cats.dominio.CursoAprobado;
 import gt.edu.usac.cats.dominio.Pensum;
 import gt.edu.usac.cats.servicio.ServicioCursoAprobado;
 import gt.edu.usac.cats.servicio.ServicioPensumEstudianteCarrera;
@@ -33,9 +33,9 @@ public class ServicioCursoAprobadoImpl extends ServicioGeneralImpl implements Se
 //______________________________________________________________________________
     @Override
     public boolean esCursoAprobado(AsignacionEstudianteCarrera asignacionEstudianteCarrera, Curso curso, Pensum pensum) throws DataAccessException {
-        DetachedCriteria criteria = DetachedCriteria.forClass(CursoAprobado.class);
-        criteria.createAlias("asignacion", "a");
-        criteria.createAlias("asignacionCursoPensum", "acp");
+        DetachedCriteria criteria = DetachedCriteria.forClass(AsignacionCursoPensum.class, "acp");
+        criteria.createAlias("acp.cursoAprobados", "ca");
+        criteria.createAlias("ca.asignacion", "a");        
         criteria.add(Restrictions.eq("acp.curso", curso));
         criteria.add(Restrictions.eq("acp.pensum", pensum));
         criteria.add(Restrictions.eq("a.asignacionEstudianteCarrera", asignacionEstudianteCarrera));
@@ -53,20 +53,22 @@ public class ServicioCursoAprobadoImpl extends ServicioGeneralImpl implements Se
                 getPensum();
 
         StringBuilder builder = new StringBuilder();
-        builder.append("select p.curso from AsignacionCursoPensum as acp ").
+        builder.append("\n select p2 from AsignacionCursoPensum as acp2").
+                append("\n inner join acp2.asignacionCursoPensumsForIdCursoPensumPrerequisito as p2").
+                append("\n where ").
+                append("\n p2 not in (").
+                append("\n select p from AsignacionCursoPensum as acp ").
                 append("\n inner join acp.asignacionCursoPensumsForIdCursoPensumPrerequisito as p").
-                append("\n left join p.cursoAprobados as ca").
-                append("\n left join ca.cursoAprobadoEquivalencia as cae ").
-                append(" with cae.asignacionEstudianteCarrera.idAsignacionEstudianteCarrera = :idAsignacionEstudianteCarrera").
-                append("\n left join ca.asignacion as a ").
-                append(" with a.asignacionEstudianteCarrera.idAsignacionEstudianteCarrera = :idAsignacionEstudianteCarrera").
-                append("\n where acp.curso = :curso and acp.pensum = :pensum and ca is null");
-
-        Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
-        query.setParameter("curso", curso);
-        query.setParameter("pensum", pensumValido);
-        query.setParameter("idAsignacionEstudianteCarrera", asignacionEstudianteCarrera.getIdAsignacionEstudianteCarrera());
-
+                append("\n inner join p.cursoAprobados as ca").
+                append("\n inner join ca.asignacion as a").   
+                append("\n where a.asignacionEstudianteCarrera = :asignacionEstudianteCarrera) and ").
+                append("\n acp2.curso = :curso and acp2.pensum = :pensum");
+        
+        Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString()).
+                setParameter("asignacionEstudianteCarrera", asignacionEstudianteCarrera).
+                setParameter("curso", curso).
+                setParameter("pensum", pensumValido);
+        
         return query.list();
     }
 //______________________________________________________________________________
@@ -74,26 +76,23 @@ public class ServicioCursoAprobadoImpl extends ServicioGeneralImpl implements Se
     @Override
     public int getCreditosAprobados(AsignacionEstudianteCarrera asignacionEstudianteCarrera) {
         StringBuilder builder = new StringBuilder();
+        
         Pensum pensumValido = servicioPensumEstudianteCarreraImpl.
                 getPensumEstudianteCarreraValido(asignacionEstudianteCarrera).
                 getPensum();
 
 
-        builder.append("select (sum(acp.creditosPracticos) + sum(acp.creditosTeoricos)) as total ").
-                append("\nfrom AsignacionCursoPensum acp ").
-                append("\ninner join acp.cursoAprobados ca ").
-                append("\n left join ca.cursoAprobadoEquivalencia as cae ").
-                append(" with cae.asignacionEstudianteCarrera.idAsignacionEstudianteCarrera = :idAsignacionEstudianteCarrera").
-                append("\n left join ca.asignacion as a ").
-                append(" with a.asignacionEstudianteCarrera.idAsignacionEstudianteCarrera = :idAsignacionEstudianteCarrera").
-                append("\n where acp.pensum = :pensum and (cae is not null or a is not null)");
+        builder.append("\n select coalesce((sum(acp.creditosPracticos) + sum(acp.creditosTeoricos)), 0) as total ").
+                append("\n from Asignacion a").
+                append("\n inner join a.cursoAprobados ca ").
+                append("\n inner join ca.asignacionCursoPensum as acp ").                
+                append("\n where acp.pensum = :pensum and ").
+                append("\n a.asignacionEstudianteCarrera = :asignacionEstudianteCarrera");
 
 
-        Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
-        query.setParameter("pensum", pensumValido);
-
-        query.setParameter("idAsignacionEstudianteCarrera",
-                asignacionEstudianteCarrera.getIdAsignacionEstudianteCarrera());
+        Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString()).
+                setParameter("pensum", pensumValido).
+                setParameter("asignacionEstudianteCarrera", asignacionEstudianteCarrera);
 
 
         List result = query.list();

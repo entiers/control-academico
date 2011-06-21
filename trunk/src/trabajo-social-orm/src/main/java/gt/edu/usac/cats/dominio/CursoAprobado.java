@@ -39,7 +39,6 @@ public class CursoAprobado implements java.io.Serializable {
     private int idCursoAprobado;
     private Asignacion asignacion;
     private AsignacionCursoPensum asignacionCursoPensum;
-    private CursoAprobadoEquivalencia cursoAprobadoEquivalencia;
     private Date fechaAprobacion;
     private Short zona;
     private Short laboratorio;
@@ -81,16 +80,6 @@ public class CursoAprobado implements java.io.Serializable {
 
     public void setAsignacionCursoPensum(AsignacionCursoPensum asignacionCursoPensum) {
         this.asignacionCursoPensum = asignacionCursoPensum;
-    }
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_curso_aprobado_equivalencia")
-    public CursoAprobadoEquivalencia getCursoAprobadoEquivalencia() {
-        return this.cursoAprobadoEquivalencia;
-    }
-
-    public void setCursoAprobadoEquivalencia(CursoAprobadoEquivalencia cursoAprobadoEquivalencia) {
-        this.cursoAprobadoEquivalencia = cursoAprobadoEquivalencia;
     }
 
     @Temporal(TemporalType.DATE)

@@ -47,7 +47,6 @@ public class AsignacionEstudianteCarrera implements java.io.Serializable {
     private Carrera carrera;
     private Date fechaCierre;
     private Set<PensumEstudianteCarrera> pensumEstudianteCarreras = new HashSet<PensumEstudianteCarrera>(0);
-    private Set<CursoAprobadoEquivalencia> cursoAprobadoEquivalencias = new HashSet<CursoAprobadoEquivalencia>(0);
     private Set<Asignacion> asignacions = new HashSet<Asignacion>(0);
     private Set<HistorialAsignacionEstudianteCarrera> historialAsignacionEstudianteCarreras = new HashSet<HistorialAsignacionEstudianteCarrera>(0);
     private boolean estado;
@@ -162,14 +161,6 @@ public class AsignacionEstudianteCarrera implements java.io.Serializable {
         this.inscrito = inscrito;
     }
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "asignacionEstudianteCarrera")
-    public Set<CursoAprobadoEquivalencia> getCursoAprobadoEquivalencias() {
-        return this.cursoAprobadoEquivalencias;
-    }
-
-    public void setCursoAprobadoEquivalencias(Set<CursoAprobadoEquivalencia> cursoAprobadoEquivalencias) {
-        this.cursoAprobadoEquivalencias = cursoAprobadoEquivalencias;
-    }
 //______________________________________________________________________________
 
     @Override
