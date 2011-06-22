@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package gt.edu.usac.cats.controlador.curso;
+package gt.edu.usac.cats.controlador.asignacionCursoPensum;
 
 import gt.edu.usac.cats.dominio.Pensum;
 import gt.edu.usac.cats.dominio.wrapper.WrapperCursoPensumEquivalencia;

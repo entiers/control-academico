@@ -3,7 +3,6 @@
  * Escuela de Trabajo Social
  * Universidad de San Carlos de Guatemala
  */
-
 package gt.edu.usac.cats.controlador.pensumEstudianteCarrera;
 
 import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
@@ -31,8 +30,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @version 1.0
  */
 @Controller
-public class ControladorMostrarPensumEstudianteCarrera extends ControladorAbstractoPensumEstudianteCarrera{
+public class ControladorMostrarPensumEstudianteCarrera extends ControladorAbstractoPensumEstudianteCarrera {
 //______________________________________________________________________________
+
     /**
      * <p>Matiene una bitacora de lo realizado por esta clase.</p>
      */
@@ -51,40 +51,39 @@ public class ControladorMostrarPensumEstudianteCarrera extends ControladorAbstra
      * @return String con el nombre de la vista a mostrar
      *
      */
-    @RequestMapping(value="mostrarPensumEstudianteCarrera.htm", method=RequestMethod.GET)
-    public String mostrarPensumEstudianteCarrera(Model modelo
-            , Integer idAsignacionEstudianteCarrera){
+    @RequestMapping(value = "mostrarPensumEstudianteCarrera.htm", method = RequestMethod.GET)
+    public String mostrarPensumEstudianteCarrera(Model modelo, Integer idAsignacionEstudianteCarrera,
+            HttpServletRequest request) {
 
-        if(idAsignacionEstudianteCarrera == null){
+        if (idAsignacionEstudianteCarrera == null) {
             return "redirect:buscarEstudiante.htm";
         }
 
         //Se obtiene la asignacion del estudiante con la carrera
-        this.asignacionEstudianteCarrera= this.servicioPensumEstudianteCarreraImpl
-                .cargarEntidadPorID(
-                    AsignacionEstudianteCarrera.class
-                    , idAsignacionEstudianteCarrera
-                    );
+        this.asignacionEstudianteCarrera = this.servicioPensumEstudianteCarreraImpl.cargarEntidadPorID(
+                AsignacionEstudianteCarrera.class, idAsignacionEstudianteCarrera);
 
-        if(asignacionEstudianteCarrera == null){
+        if (asignacionEstudianteCarrera == null) {
             return "redirect:buscarEstudiante.htm";
         }
 
         PensumEstudianteCarrera pensumEstudianteCarreraValido = this.servicioPensumEstudianteCarreraImpl.
-                getPensumEstudianteCarreraValido(
-                this.asignacionEstudianteCarrera);
+                getPensumEstudianteCarreraValido(this.asignacionEstudianteCarrera);
 
         this.pensum = null;
         //Se obtiene las relaciones con el pensum valido
-        if(pensumEstudianteCarreraValido != null){
+        if (pensumEstudianteCarreraValido != null) {
             this.pensum = pensumEstudianteCarreraValido.getPensum();
             modelo.addAttribute("idPensumEstudianteCarreraValido",
                     pensumEstudianteCarreraValido.getIdPensumEstudianteCarrera());
 
-         this.wrapperEquivalenciaPorPensum =
-                new WrapperEquivalenciaPorPensum(asignacionEstudianteCarrera, pensum);
+            this.wrapperEquivalenciaPorPensum =
+                    new WrapperEquivalenciaPorPensum(asignacionEstudianteCarrera, pensum);
 
         }
+
+        request.setAttribute("aec", this.asignacionEstudianteCarrera);
+
 
         this.agregarAtributosDefault(modelo, new PensumEstudianteCarrera(), false, true);
 
@@ -105,37 +104,34 @@ public class ControladorMostrarPensumEstudianteCarrera extends ControladorAbstra
      *
      * @return String con el nombre de la vista a mostrar
      */
+    @RequestMapping(value = "asignarPensumEstudianteCarrera.htm", method = RequestMethod.POST)
+    public String asignar(Model modelo, @Valid PensumEstudianteCarrera pensumEstudianteCarrera, BindingResult bindingResult, HttpServletRequest request) {
 
-    @RequestMapping(value="asignarPensumEstudianteCarrera.htm", method=RequestMethod.POST)
-    public String asignar(Model modelo, @Valid PensumEstudianteCarrera pensumEstudianteCarrera
-            , BindingResult bindingResult, HttpServletRequest request){
+        if (!bindingResult.hasErrors()) {
+            try {
 
-        if(!bindingResult.hasErrors()){
-            try{
-                
                 pensumEstudianteCarrera.setAsignacionEstudianteCarrera(asignacionEstudianteCarrera);
-                pensumEstudianteCarrera.setValido(true);                
+                pensumEstudianteCarrera.setValido(true);
                 this.servicioPensumEstudianteCarreraImpl.agregar(pensumEstudianteCarrera);
-                
-                RequestUtil.agregarRedirect(request, "mostrarPensumEstudianteCarrera.htm?idAsignacionEstudianteCarrera=" 
+
+                RequestUtil.agregarRedirect(request, "mostrarPensumEstudianteCarrera.htm?idAsignacionEstudianteCarrera="
                         + this.asignacionEstudianteCarrera.getIdAsignacionEstudianteCarrera());
                 RequestUtil.crearMensajeRespuesta(request, "asignarPensumEstudianteCarrera.titulo", "asignarPensumEstudianteCarrera.exito", true);
                 log.info(Mensajes.EXITO_AGREGAR + pensumEstudianteCarrera.toString());
 
-            }catch(DataIntegrityViolationException e){
+            } catch (DataIntegrityViolationException e) {
                 RequestUtil.crearMensajeRespuesta(request, "asignarPensumEstudianteCarrera.titulo", "dataIntegrityViolatioException", false);
                 log.error(Mensajes.DATA_INTEGRITY_VIOLATION_EXCEPTION, e);
                 this.agregarAtributosDefault(modelo, pensumEstudianteCarrera, false, false);
-            }catch(DataAccessException e){
+            } catch (DataAccessException e) {
                 RequestUtil.crearMensajeRespuesta(request, "asignarPensumEstudianteCarrera.titulo", "dataAccessException", false);
                 log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
                 this.agregarAtributosDefault(modelo, pensumEstudianteCarrera, false, false);
             }
-        }else{            
+        } else {
             this.agregarAtributosDefault(modelo, pensumEstudianteCarrera, false, false);
         }
-        
+
         return "pensumEstudianteCarrera/mostrarPensumEstudianteCarrera";
     }
-
 }
