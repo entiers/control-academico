@@ -29,6 +29,8 @@
 
                     buttons: {
                         "<fmt:message key="btnSalir" />" : function() {
+                            $("#form2 #idPensumOriginal").val("");
+                            $("#form2 #codigoPensumOriginal").val("");
                             $(this).dialog('close');
                         },
                         "<fmt:message key="btnAceptar" />" : function() {
@@ -94,7 +96,8 @@
         <center>
             <fieldset>
                 <legend><fmt:message key="mostrarPensumEstudianteCarrera.listadoPensumsNoValidos" /></legend>
-                <display:table class="ui-widget ui-widget-content" name="listadoPensumEstudianteCarreraNoValidos" id="pensumEstudianteCarrera">
+                <display:table class="ui-widget ui-widget-content"
+                               name="listadoPensumEstudianteCarreraNoValidos" id="pensumEstudianteCarrera">
                     <display:column property="pensum.codigo" titleKey="pensumEstudianteCarrera.pensum" />
                     <display:column titleKey="pensumEstudianteCarrera.fechaFin" style="text-align:center;">
                         <fmt:formatDate value="${pensumEstudianteCarrera.fechaFin}" pattern="dd-MM-yyyy" />
@@ -104,8 +107,9 @@
                             <a href="eliminarPensumEstudianteCarrera.htm?idPensumEstudianteCarrera=${pensumEstudianteCarrera.idPensumEstudianteCarrera}">
                                 <fmt:message key="mostrarPensumEstudianteCarrera.link.eliminar"/>
                             </a> <br/>
-                            <a style="cursor: pointer" onclick="javascript:llenarFormularioParaEquivalencias(${pensumEstudianteCarrera.pensum.idPensum}, '${pensumEstudianteCarrera.pensum.codigo}')">
-                                Realizar equivalencias al pensum valido
+                            <a style="cursor: pointer"
+                               onclick="javascript:llenarFormularioParaEquivalencias(${pensumEstudianteCarrera.pensum.idPensum}, '${pensumEstudianteCarrera.pensum.codigo}')">
+                                <fmt:message key="cursoPensum.link.equivalencias.pensums" />
                             </a>
                         </display:column>
                     </sec:authorize>
@@ -113,21 +117,27 @@
             </fieldset>
         </center>
 
-        <div id="divForm2" title="Realizar equivalencia">
-            <form:form id="form2" action="mostrarParaRealizarEquivalencia.htm" method="post" modelAttribute="wrapperEquivalenciaPorPensum">
+        <div id="divForm2" title="<fmt:message key="cursoPensum.link.equivalencias.pensums" />">
+            <form:form id="form2" action="mostrarParaRealizarEquivalenciaPorPensum.htm"
+                       method="post" modelAttribute="wrapperEquivalenciaPorPensum">
                 <div class="divCampos">
                     <form:label for="pensumOriginal.idPensum" path="pensumOriginal.idPensum">
                         <fmt:message key="pensumEstudianteCarrera.pensum"/>: *
                     </form:label>
                     <form:hidden path="pensumOriginal.idPensum" id="idPensumOriginal" />
                     <input type="text" readonly="true" id="codigoPensumOriginal" />
+                    <c:set scope="session" var="estudiante" value="${estudiante}" />
+                    <form:hidden path="asignacionEstudianteCarrera.idAsignacionEstudianteCarrera" />
+                    <form:hidden path="pensumEquivalencia.idPensum" />
                 </div>
             </form:form>
         </div>
 
 
         <div style="margin: 20px 0 0 0;">
-            <a href="mostrarAsignacionEstudianteCarrera.htm?idEstudiante=${estudiante.idEstudiante}"><fmt:message key="mostrarPensumEstudianteCarrera.regresar"/></a>
+            <a href="mostrarAsignacionEstudianteCarrera.htm?idEstudiante=${estudiante.idEstudiante}">
+                <fmt:message key="mostrarPensumEstudianteCarrera.regresar"/>
+            </a>
         </div>
 
         <%-- fragmento que muestra como mensaje popup el resultado de las operaciones --%>
