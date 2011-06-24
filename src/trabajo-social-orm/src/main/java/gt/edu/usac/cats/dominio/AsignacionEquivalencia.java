@@ -80,6 +80,16 @@ public class AsignacionEquivalencia  implements java.io.Serializable {
         this.asignacions = asignacions;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("AsignacionEquivalencia(idAsignacionEquivalencia = ").
+                append(this.idAsignacionEquivalencia).
+                append(", acuerdoNumero = \"").append(this.acuerdoNumero).
+                append("\")");
+        return builder.toString();
+    }
+
 
 
 

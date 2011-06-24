@@ -5,6 +5,7 @@
 package gt.edu.usac.cats.dominio.wrapper;
 
 import gt.edu.usac.cats.dominio.AsignacionEquivalencia;
+import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -22,7 +23,17 @@ public class WrapperAsignacionEquivalencia {
     @Size(max = 200, message = "{validacion.caracteresMaximos}")
     private String observaciones;
 
+    private AsignacionEstudianteCarrera asignacionEstudianteCarrera;
+
     public WrapperAsignacionEquivalencia() {
+        this.acuerdoNumero = "";
+        this.observaciones = "";
+    }
+
+    public WrapperAsignacionEquivalencia(AsignacionEstudianteCarrera asignacionEstudianteCarrera) {
+        this.acuerdoNumero = "";
+        this.observaciones = "";
+        this.asignacionEstudianteCarrera = asignacionEstudianteCarrera;
     }
 
     public void agregarWrapper(AsignacionEquivalencia asignacionEquivalencia) {
@@ -62,6 +73,20 @@ public class WrapperAsignacionEquivalencia {
      */
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
+    }
+
+    /**
+     * @return the asignacionEstudianteCarrera
+     */
+    public AsignacionEstudianteCarrera getAsignacionEstudianteCarrera() {
+        return asignacionEstudianteCarrera;
+    }
+
+    /**
+     * @param asignacionEstudianteCarrera the asignacionEstudianteCarrera to set
+     */
+    public void setAsignacionEstudianteCarrera(AsignacionEstudianteCarrera asignacionEstudianteCarrera) {
+        this.asignacionEstudianteCarrera = asignacionEstudianteCarrera;
     }
     
 }
