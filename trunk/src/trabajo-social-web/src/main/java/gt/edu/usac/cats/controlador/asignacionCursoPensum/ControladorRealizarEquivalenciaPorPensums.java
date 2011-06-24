@@ -4,10 +4,8 @@
  */
 package gt.edu.usac.cats.controlador.asignacionCursoPensum;
 
-import gt.edu.usac.cats.dominio.Estudiante;
 import gt.edu.usac.cats.dominio.wrapper.WrapperAsignacionEquivalencia;
 import gt.edu.usac.cats.dominio.wrapper.WrapperEquivalenciaPorPensum;
-import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,7 +28,10 @@ public class ControladorRealizarEquivalenciaPorPensums extends ControladorAbstra
                 wrapperEquivalenciaPorPensum.getPensumOriginal(),
                 wrapperEquivalenciaPorPensum.getPensumEquivalencia());
 
-        WrapperAsignacionEquivalencia wrapperAsignacionEquivalencia = new WrapperAsignacionEquivalencia();
+        WrapperAsignacionEquivalencia wrapperAsignacionEquivalencia =
+                new WrapperAsignacionEquivalencia(
+                wrapperEquivalenciaPorPensum.getAsignacionEstudianteCarrera()   );
+
         this.agregarAtributosDefault(modelo, wrapperAsignacionEquivalencia);
         return "cursoPensum/mostrarParaRealizarEquivalencia";
     }
