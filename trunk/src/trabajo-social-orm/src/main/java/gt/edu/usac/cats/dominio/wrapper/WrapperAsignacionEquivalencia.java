@@ -16,15 +16,18 @@ import org.hibernate.validator.constraints.NotEmpty;
  */
 public class WrapperAsignacionEquivalencia {
 
+//______________________________________________________________________________
     @NotEmpty(message = "{validacion.campoObligatorio}")
     @Size(max = 15, message = "{validacion.caracteresMaximos}")
     private String acuerdoNumero;
 
+//______________________________________________________________________________
     @Size(max = 200, message = "{validacion.caracteresMaximos}")
     private String observaciones;
 
+//______________________________________________________________________________
     private AsignacionEstudianteCarrera asignacionEstudianteCarrera;
-
+//______________________________________________________________________________
     public WrapperAsignacionEquivalencia() {
         this.acuerdoNumero = "";
         this.observaciones = "";

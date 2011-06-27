@@ -16,16 +16,26 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title><fmt:message key="cursoPensum.titulo.realizarEquivalencias" /></title>
+        <title><fmt:message key="cursoPensum.titulo.realizarEquivalencia" /></title>
+        <%@include file="../../jspf/plantilla/scriptPopupMensajeDefault.jspf" %>
+
+        <script type="text/javascript">
+            $(function (){
+                $("#linkRegresar").click(function(){
+                    location.href = "mostrarPensumEstudianteCarrera.htm?idAsignacionEstudianteCarrera=${wrapperAsignacionEquivalencia.asignacionEstudianteCarrera.idAsignacionEstudianteCarrera}";
+                });
+            });
+        </script>
+
     </head>
     <body>
-        <h1><fmt:message key="cursoPensum.titulo.realizarEquivalencias" /></h1>
+        <h1><fmt:message key="cursoPensum.titulo.realizarEquivalencia" /></h1>
 
 
         <%@include file="../../jspf/formularios/informacion/formularioInformacionEstudiante.jspf" %>
 
         <fieldset>
-            <legend><fmt:message key="cursoPensum.label.realizarEquivalencias"/></legend>
+            <legend><fmt:message key="cursoPensum.label.realizarEquivalencia"/></legend>
             <display:table class="ui-widget ui-widget-content" 
                            name="listadoEquivalencias" id="asignacionCursoPensum"
                            style="width:100%">
@@ -36,27 +46,21 @@
             </display:table>
         </fieldset>
 
-        <fieldset>
-            <form:form modelAttribute="wrapperAsignacionEquivalencia"
-                       action="realizarEquivalencias.htm" method="POST">
-                <div class="divCampos">
-                    <form:label for="acuerdoNumero" path="acuerdoNumero">
-                        <fmt:message key="asignacionEsquivalencia.acuerdoNumero"/>: *
-                    </form:label>
-                    <form:input path="acuerdoNumero" cssStyle="width: 250px;" />
-                    <form:errors path="acuerdoNumero" cssClass="claseError" />
-                </div>
-                <div class="divCampos">
-                    <form:label for="observaciones" path="observaciones">
-                        <fmt:message key="asignacionEsquivalencia.observaciones"/>: *
-                    </form:label>
-                    <form:textarea path="observaciones" cssStyle="width: 250px;" />
-                    <form:errors path="observaciones" cssClass="claseError" />
-                </div>
-                <form:hidden path="asignacionEstudianteCarrera.idAsignacionEstudianteCarrera" />
+        <c:if test="${not empty listadoEquivalencias}">
+              <fieldset>
+                  <legend><fmt:message key="asignacionEquivalencia.formulario.titulo"/></legend>
+                  <form:form modelAttribute="wrapperAsignacionEquivalencia"
+                             action="realizarEquivalencias.htm" method="POST">
 
-                <input type="submit" value="<fmt:message key="btnAceptar"/>">
-            </form:form>
-        </fieldset>
+                      <%@include file="../../jspf/formularios/formularioAsignacionEquivalencia.jspf" %>
+
+                      <input type="submit" value="<fmt:message key="btnAceptar"/>">
+                  </form:form>
+              </fieldset>
+        </c:if>
+
+        <a id="linkRegresar" style="cursor:pointer;"><fmt:message key="link.regresar" /></a>
+        <%-- fragmento que muestra como mensaje popup el resultado de las operaciones --%>
+        <%@include file="../../jspf/plantilla/popupMensaje.jspf" %>
     </body>
 </html>

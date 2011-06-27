@@ -8,10 +8,14 @@ import gt.edu.usac.cats.dominio.AsignacionCursoPensum;
 import gt.edu.usac.cats.dominio.AsignacionEquivalencia;
 import gt.edu.usac.cats.dominio.wrapper.WrapperAsignacionEquivalencia;
 import gt.edu.usac.cats.servicio.ServicioAsignacionCursoPensum;
+import gt.edu.usac.cats.util.Mensajes;
+import gt.edu.usac.cats.util.RequestUtil;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import org.apache.log4j.Logger;
+import org.springframework.dao.DataAccessException;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +31,13 @@ public class ControladorAbstractoRealizarEquivalencia {
     @Resource
     protected ServicioAsignacionCursoPensum servicioAsignacionCursoPensumImpl;
     protected List<AsignacionCursoPensum> listadoEquivalencias;
+    private Logger log = Logger.getLogger(ControladorAbstractoRealizarEquivalencia.class);
 
+
+    /**
+     * @param modelo
+     * @param wrapperAsignacionEquivalencia
+     */
     protected void agregarAtributosDefault(Model modelo,
             WrapperAsignacionEquivalencia wrapperAsignacionEquivalencia) {
 
@@ -35,6 +45,12 @@ public class ControladorAbstractoRealizarEquivalencia {
         modelo.addAttribute("wrapperAsignacionEquivalencia", wrapperAsignacionEquivalencia);
     }
 
+    /**
+     * @param wrapperAsignacionEquivalencia
+     * @param bindingResult
+     * @param modelo
+     * @param request
+     */
     @RequestMapping(value = "realizarEquivalencias.htm", method = RequestMethod.POST)
     public String realizarEquivalencias(@Valid WrapperAsignacionEquivalencia wrapperAsignacionEquivalencia,
             BindingResult bindingResult, Model modelo, HttpServletRequest request) {
@@ -43,13 +59,23 @@ public class ControladorAbstractoRealizarEquivalencia {
             AsignacionEquivalencia asignacionEquivalencia = new AsignacionEquivalencia();
             wrapperAsignacionEquivalencia.quitarWrapper(asignacionEquivalencia);
 
-            System.out.println(asignacionEquivalencia);
-            System.out.println(wrapperAsignacionEquivalencia.getAsignacionEstudianteCarrera());
-            System.out.println(this.listadoEquivalencias);
-//
-//            this.servicioAsignacionCursoPensumImpl.realizarEquivalencias(
-//                    wrapperAsignacionEquivalencia.getAsignacionEstudianteCarrera(),
-//                    asignacionEquivalencia, this.listadoEquivalencias);
+            try {
+                this.servicioAsignacionCursoPensumImpl.realizarEquivalencias(
+                        wrapperAsignacionEquivalencia.getAsignacionEstudianteCarrera(),
+                        asignacionEquivalencia, this.listadoEquivalencias);
+
+                RequestUtil.crearMensajeRespuesta(request, "cursoPensum.titulo.realizarEquivalencia",
+                        "cursoPensum.realizarEquivalencias.exito", true);
+
+                this.listadoEquivalencias = null;
+
+            } catch (DataAccessException e) {
+                // error de acceso a datos
+                RequestUtil.crearMensajeRespuesta(request, "cursoPensum.titulo.realizarEquivalencia",
+                        "dataAccessException", false);
+                log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
+            }
+
         }
         this.agregarAtributosDefault(modelo, wrapperAsignacionEquivalencia);
         return "cursoPensum/mostrarParaRealizarEquivalencia";
