@@ -124,8 +124,9 @@ public class ControladorAgregarAsignacionCatedraticoHorario extends ControladorA
     
     private void crearModelo(Model modelo){
         modelo.addAttribute("catedratico", super.catedratico);
-        modelo.addAttribute("tipoHorario",TipoHorario.values());        
-        modelo.addAttribute("tipoHorario",this.listadoHorario);  
+        modelo.addAttribute("listaTipoHorario",TipoHorario.values());        
+        modelo.addAttribute("listaHorario",this.listadoHorario);  
+        modelo.addAttribute("datosIngresoNota", new DatosIngresoNota());
     }
     
     //  _____________________________________________________________________________
