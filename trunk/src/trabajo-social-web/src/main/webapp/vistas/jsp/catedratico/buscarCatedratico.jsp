@@ -75,6 +75,9 @@
                             <th><fmt:message key="agregarCatedratico.telefono"/></th>
                             <th><fmt:message key="agregarCatedratico.celular"/></th>
                             <th><fmt:message key="agregarCatedratico.email"/></th>
+                            <sec:authorize access="hasRole('ROLE_ASIGNACION_HORARIO_CATEDRATICO')">
+                                  <th><fmt:message key="admin.asignacionHorarioCatedratico.titulo"/></th>
+                            </sec:authorize>
                         </tr>
                     </thead>
                     <tbody>
@@ -88,6 +91,18 @@
                                 <td><c:out value="${catedratico.telefono}" /></td>
                                 <td><c:out value="${catedratico.celular}" /></td>
                                 <td><c:out value="${catedratico.email}" /></td>
+                                <%--Operacion asignacion de cursos de administracion--%>
+                                <sec:authorize access="hasRole('ROLE_ASIGNACION_HORARIO_CATEDRATICO')">
+                                    <td>
+                                        <a href="buscarAsignacionCatedraticoHorario.htm?idCatedratico=${catedratico.idCatedratico}">
+                                            <fmt:message key="admin.asignacionCatedraticoHorario.consultar"/>
+                                        </a>
+                                        <br/>
+                                        <a href="agregarAsignacionCatedraticoHorario.htm?idCatedratico=${catedratico.idCatedratico}">
+                                            <fmt:message key="admin.asignacionCatedraticoHorario.realizar"/>
+                                        </a>
+                                    </td>
+                                </sec:authorize>
                             </tr>
                         </c:forEach>
                     </tbody>

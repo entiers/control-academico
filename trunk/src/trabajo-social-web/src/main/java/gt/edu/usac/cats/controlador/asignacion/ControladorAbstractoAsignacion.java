@@ -4,7 +4,6 @@
  * Control Academico
  */
 
-
 package gt.edu.usac.cats.controlador.asignacion;
 
 import gt.edu.usac.cats.dominio.Asignacion;
