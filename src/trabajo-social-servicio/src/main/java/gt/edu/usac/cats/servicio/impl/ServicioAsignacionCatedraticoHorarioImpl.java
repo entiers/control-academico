@@ -8,12 +8,12 @@ package gt.edu.usac.cats.servicio.impl;
 
 import gt.edu.usac.cats.dominio.AsignacionCatedraticoHorario;
 import gt.edu.usac.cats.dominio.Catedratico;
+import gt.edu.usac.cats.dominio.Horario;
 import gt.edu.usac.cats.dominio.Semestre;
+import gt.edu.usac.cats.enums.TipoHorario;
 import gt.edu.usac.cats.servicio.ServicioAsignacionCatedraticoHorario;
 import java.util.List;
 import org.hibernate.Query;
-import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +24,17 @@ import org.springframework.stereotype.Service;
  */
 @Service("servicioAsignacionCatedraticoHorarioImpl")
 public class ServicioAsignacionCatedraticoHorarioImpl extends ServicioGeneralImpl implements ServicioAsignacionCatedraticoHorario {
-
+//______________________________________________________________________________
+    /**
+     * <p>Este metodo se encarga de retornar un listado de 
+     * AsignacionCatedraticoHorario en base a los parametros enviados
+     * </p>
+     * 
+     * @param semestre pojo del tipo {@link Semestre}
+     * @param catedratico pojo del tipo {@link Catedratico}
+     * @return List<AsignacionCatedraticoHorario>
+     * @throws DataAccessException
+     */
     @Override
     public List<AsignacionCatedraticoHorario> getAsignacionCatedraticoHorario(Semestre semestre, Catedratico catedratico) throws DataAccessException {
 
@@ -39,6 +49,33 @@ public class ServicioAsignacionCatedraticoHorarioImpl extends ServicioGeneralImp
 
         return query.list();
 
+    }
+    
+//______________________________________________________________________________
+    /**
+     * <p>Este metodo se encarga de crear un listado de horarios disponibles para 
+     * un catedratico en especifico.</p>
+     * 
+     * @param semestre pojo del tipo {@link Semestre}
+     * @param tipoHorario pojo del tipo {@link TipoHorario}
+     * @return List Listado de horarios
+     * @throws DataAccessException
+     */    
+    @Override
+    public List<Horario> getHorarioDiponibleCatedratico(Semestre semestre, TipoHorario tipoHorario) throws DataAccessException {
+        StringBuilder builder = new StringBuilder();
+
+        builder.append(" select horario from Horario as horario")
+               .append(" where horario.semestre = :semestre")
+               .append(" and horario.tipo =:tipoHorario ")
+               .append(" and not exists elements (horario.asignacionCatedraticoHorarios) ")
+               .append(" order by horario.curso.nombre");
+        
+        Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
+        query.setParameter("semestre", semestre);
+        query.setParameter("tipoHorario", tipoHorario);
+
+        return query.list();
     }
 
 }

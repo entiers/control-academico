@@ -8,7 +8,9 @@ package gt.edu.usac.cats.servicio;
 
 import gt.edu.usac.cats.dominio.AsignacionCatedraticoHorario;
 import gt.edu.usac.cats.dominio.Catedratico;
+import gt.edu.usac.cats.dominio.Horario;
 import gt.edu.usac.cats.dominio.Semestre;
+import gt.edu.usac.cats.enums.TipoHorario;
 import java.util.List;
 import org.springframework.dao.DataAccessException;
 
@@ -33,4 +35,18 @@ public interface ServicioAsignacionCatedraticoHorario extends ServicioGeneral {
      */
     List<AsignacionCatedraticoHorario> getAsignacionCatedraticoHorario(Semestre semestre, Catedratico catedratico)
             throws DataAccessException;
+    
+    //______________________________________________________________________________
+    /**
+     * <p>Este metodo se encarga de crear un listado de horarios disponibles para 
+     * un catedratico en especifico.</p>
+     * 
+     * @param semestre pojo del tipo {@link Semestre}
+     * @param tipoHorario pojo del tipo {@link TipoHorario}
+     * @return List Listado de horarios
+     * @throws DataAccessException
+     */
+    List<Horario> getHorarioDiponibleCatedratico(Semestre semestre, TipoHorario tipoHorario)
+            throws DataAccessException;    
+
 }
