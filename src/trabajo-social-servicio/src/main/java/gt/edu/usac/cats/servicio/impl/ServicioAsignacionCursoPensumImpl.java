@@ -14,7 +14,7 @@ import gt.edu.usac.cats.dominio.CursoAprobado;
 import gt.edu.usac.cats.dominio.Pensum;
 import gt.edu.usac.cats.enums.TipoAsignacion;
 import gt.edu.usac.cats.servicio.ServicioAsignacionCursoPensum;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -135,7 +135,8 @@ public class ServicioAsignacionCursoPensumImpl extends ServicioGeneralImpl imple
             AsignacionEquivalencia asignacionEquivalencia,
             List<AsignacionCursoPensum> listadoEquivalencias) throws DataAccessException {
 
-        List entidades = Collections.EMPTY_LIST;
+        List entidades = new ArrayList();
+        entidades.add(asignacionEquivalencia);
 
         Asignacion asignacion = new Asignacion();
         asignacion.setTipoAsignacion(TipoAsignacion.ASIGNACION_EQUIVALENCIA);

@@ -1,0 +1,19 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<%@ page pageEncoding="UTF-8" %>
+<div id="divCampos">
+    <form:label for="acuerdoNumero" path="acuerdoNumero">
+        <fmt:message key="asignacionEsquivalencia.acuerdoNumero"/>: *
+    </form:label>
+    <form:input path="acuerdoNumero" cssStyle="width: 250px;" />
+    <form:errors path="acuerdoNumero" cssClass="claseError" />
+</div>
+<div id="divCampos">
+    <form:label for="observaciones" path="observaciones">
+        <fmt:message key="asignacionEsquivalencia.observaciones"/>:
+    </form:label>
+    <form:textarea path="observaciones" cssStyle="width: 250px;" />
+    <form:errors path="observaciones" cssClass="claseError" />
+</div>
+<form:hidden path="asignacionEstudianteCarrera.idAsignacionEstudianteCarrera" />

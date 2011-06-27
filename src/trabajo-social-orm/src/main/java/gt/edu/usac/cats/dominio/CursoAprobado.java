@@ -94,29 +94,29 @@ public class CursoAprobado implements java.io.Serializable {
     }
 
     @Column(name = "zona")
-    public short getZona() {
+    public Short getZona() {
         return this.zona;
     }
 
-    public void setZona(short zona) {
+    public void setZona(Short zona) {
         this.zona = zona;
     }
 
     @Column(name = "laboratorio")
-    public short getLaboratorio() {
+    public Short getLaboratorio() {
         return this.laboratorio;
     }
 
-    public void setLaboratorio(short laboratorio) {
+    public void setLaboratorio(Short laboratorio) {
         this.laboratorio = laboratorio;
     }
 
     @Column(name = "examen_final")
-    public short getExamenFinal() {
+    public Short getExamenFinal() {
         return this.examenFinal;
     }
 
-    public void setExamenFinal(short examenFinal) {
+    public void setExamenFinal(Short examenFinal) {
         this.examenFinal = examenFinal;
     }
 

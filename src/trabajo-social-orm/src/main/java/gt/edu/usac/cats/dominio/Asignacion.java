@@ -78,7 +78,7 @@ public class Asignacion implements java.io.Serializable {
     }
 
     @Column(name = "tipo_asignacion",
-    nullable = true)
+    nullable = false)
     @Type(type = "gt.edu.usac.cats.enums.GenericEnumUserType",
     parameters = {
         @Parameter(name = "enumClass",
@@ -97,7 +97,7 @@ public class Asignacion implements java.io.Serializable {
     }
 
     @Column(name = "transaccion",
-    nullable = false,
+    nullable = true,
     length = 40)
     public String getTransaccion() {
         return this.transaccion;
