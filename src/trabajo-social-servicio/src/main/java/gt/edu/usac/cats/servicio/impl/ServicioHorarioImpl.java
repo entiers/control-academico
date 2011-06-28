@@ -7,7 +7,7 @@
 package gt.edu.usac.cats.servicio.impl;
 
 import gt.edu.usac.cats.dominio.Catedratico;
-import gt.edu.usac.cats.dominio.Curso;
+import gt.edu.usac.cats.dominio.AsignacionCursoPensum;
 import gt.edu.usac.cats.dominio.Horario;
 import gt.edu.usac.cats.dominio.HorarioDia;
 import gt.edu.usac.cats.dominio.Salon;
@@ -93,14 +93,14 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
 
 //______________________________________________________________________________
     @Override
-    public Horario getHorarioPorCursoPrimerIngreso(Curso curso) throws DataAccessException {
+    public Horario getHorarioPorCursoPrimerIngreso(AsignacionCursoPensum asignacionCursoPensum) throws DataAccessException {
         Calendar fecha = Calendar.getInstance();
         
         StringBuilder builder = new StringBuilder();
 
         builder.append(" select horario.idHorario from Horario as horario ")
                .append(" left join horario.detalleAsignacions as det ")
-               .append(" where horario.curso = :curso ")
+               .append(" where horario.asignacionCursoPensum = :asignacionCursoPensum ")
                .append(" and horario.tipo = :tipo")
                .append(" and horario.semestre.numero='1' ")
                .append(" and horario.semestre.anio= ")
@@ -113,7 +113,7 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
                .append(" order by count(det)");
 
         Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
-        query.setParameter("curso", curso);
+        query.setParameter("AsignacionCursoPensum", asignacionCursoPensum);
         query.setParameter("tipo", TipoHorario.SEMESTRE);
 
         List list = query.list();
@@ -124,12 +124,12 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
     }
 //______________________________________________________________________________
     @Override
-    public List<Horario> getHorario(Curso curso, Semestre semestre)
+    public List<Horario> getHorario(AsignacionCursoPensum asignacionCursoPensum, Semestre semestre)
             throws DataAccessException {
         DetachedCriteria criteria = DetachedCriteria.forClass(Horario.class);
 
         criteria.add(Restrictions.and(
-                Restrictions.eq("curso", curso),
+                Restrictions.eq("asignacionCursoPensum", asignacionCursoPensum),
                 Restrictions.eq("semestre", semestre))
                 );
 
@@ -142,26 +142,27 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
 
         builder.append(" select horario from Horario as horario ")
                .append(" where horario.idHorario <> :idHorario" )
-               .append(" and horario.curso = :curso ")
+               .append(" and horario.asignacionCursoPensum = :asignacionCursoPensum ")
                .append(" and horario.semestre = :semestre ");
            
         Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
         query.setParameter("idHorario", horario.getIdHorario());
-        query.setParameter("curso", horario.getCurso());
+        query.setParameter("asignacionCursoPensum", horario.getAsignacionCursoPensum());
         query.setParameter("semestre", horario.getSemestre());
 
         return query.list();
     }
 //______________________________________________________________________________
     @Override
-    public List<Horario> getHorario(Curso curso) throws DataAccessException {
+    public List<Horario> getHorario(AsignacionCursoPensum asignacionCursoPensum) throws DataAccessException {
         StringBuilder builder = new StringBuilder();
 
         builder.append("select horario from Horario as horario ")
-               .append("where horario.curso = :curso order by horario.curso.nombre");
+               .append("where horario.asignacionCursoPensum = :asignacionCursoPensum ")
+               .append("order by horario.asignacionCursoPensum.curso.nombre");
            
         Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
-        query.setParameter("curso", curso);
+        query.setParameter("asignacionCursoPensum", asignacionCursoPensum);
 
         return query.list();
     }
@@ -257,18 +258,18 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
      * <p>Este metodo se encarga de devolver los horarios disponibles en el
      * semestre indicado, de una carrera especifica y del tipoHorario especificado.</p>
      *
-     * @param curso Pojo del tipo {@link Curso}
+     * @param asignacionCursoPensum Pojo del tipo {@link AsignacionCursoPensum}
      * @param semestre Pojo del tipo {@link Semestre}
      * @param tipoHorario Pojo del tipo {@link TipoHorario}
      * @throws DataAccessException Si ocurrio un error de acceso a datos
      * @return List
      */
     @Override
-    public List<Horario> getHorario(Curso curso, Semestre semestre, TipoHorario tipoHorario) throws DataAccessException {
+    public List<Horario> getHorario(AsignacionCursoPensum asignacionCursoPensum, Semestre semestre, TipoHorario tipoHorario) throws DataAccessException {
         StringBuilder builder = new StringBuilder();
 
         builder.append(" select horario from Horario as horario ")
-               .append(" where horario.curso = :curso ")
+               .append(" where horario.asignacionCursoPensum = :asignacionCursoPensum ")
                .append(" and horario.semestre = :semestre")
                .append(" and horario.tipo = :tipoHorario")
                .append(" and horario.salon.capacidad > (")
@@ -277,7 +278,7 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
                .append(" ) order by horario.curso.nombre");
 
         Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
-        query.setParameter("curso", curso);
+        query.setParameter("asignacionCursoPensum", asignacionCursoPensum);
         query.setParameter("semestre", semestre);
         query.setParameter("tipoHorario", tipoHorario);
 

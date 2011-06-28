@@ -5,6 +5,7 @@
  */
 package gt.edu.usac.cats.servicio;
 
+import gt.edu.usac.cats.dominio.AsignacionCursoPensum;
 import gt.edu.usac.cats.dominio.Catedratico;
 import gt.edu.usac.cats.dominio.Curso;
 import gt.edu.usac.cats.dominio.Horario;
@@ -60,7 +61,7 @@ public interface ServicioHorario extends ServicioGeneral {
      * @return List
      */
 
-    Horario getHorarioPorCursoPrimerIngreso(Curso curso)
+    Horario getHorarioPorCursoPrimerIngreso(AsignacionCursoPensum asignacionCursoPensum)
             throws DataAccessException;
 
 //______________________________________________________________________________
@@ -74,7 +75,7 @@ public interface ServicioHorario extends ServicioGeneral {
      * @return List
      */
 
-    List<Horario> getHorario(Curso curso, Semestre semestre)
+    List<Horario> getHorario(AsignacionCursoPensum asignacionCursoPensumrso, Semestre semestre)
             throws DataAccessException;
 
 //______________________________________________________________________________
@@ -89,7 +90,7 @@ public interface ServicioHorario extends ServicioGeneral {
      * @return List
      */
 
-    List<Horario> getHorario(Curso curso, Semestre semestre, TipoHorario tipoHorario)
+    List<Horario> getHorario(AsignacionCursoPensum asignacionCursoPensum, Semestre semestre, TipoHorario tipoHorario)
             throws DataAccessException;
 
 
@@ -117,7 +118,7 @@ public interface ServicioHorario extends ServicioGeneral {
      * @throws DataAccessException Si ocurrio un error de acceso a datos
      * @return List
      */
-    List<Horario> getHorario(Curso curso)
+    List<Horario> getHorario(AsignacionCursoPensum asignacionCursoPensum)
             throws DataAccessException;
 //______________________________________________________________________________
 

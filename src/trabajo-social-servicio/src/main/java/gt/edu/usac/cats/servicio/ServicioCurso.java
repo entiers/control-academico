@@ -6,6 +6,7 @@
 
 package gt.edu.usac.cats.servicio;
 
+import gt.edu.usac.cats.dominio.AsignacionCursoPensum;
 import gt.edu.usac.cats.dominio.Carrera;
 import gt.edu.usac.cats.dominio.Curso;
 import gt.edu.usac.cats.dominio.Semestre;
@@ -40,7 +41,7 @@ public interface ServicioCurso extends ServicioGeneral {
      * @return Curso
      * @throws DataAccessException Si ocurrio un error de acceso a datos
      */
-    List<Curso> getCursoPrimerSemestreXCarrera(Carrera carrera)
+    List<AsignacionCursoPensum> getCursoPrimerSemestreXCarrera(Carrera carrera)
             throws DataAccessException;
 
     /**
