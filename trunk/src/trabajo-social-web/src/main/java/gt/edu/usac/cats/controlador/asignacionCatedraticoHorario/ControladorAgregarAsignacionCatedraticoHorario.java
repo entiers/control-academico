@@ -119,8 +119,7 @@ public class ControladorAgregarAsignacionCatedraticoHorario extends ControladorA
             return "asignacionCatedraticoHorario/agregarAsignacionCatedraticoHorario";
         }       
         
-    }
-    
+    }    
     
     private void crearModelo(Model modelo){
         modelo.addAttribute("catedratico", super.catedratico);

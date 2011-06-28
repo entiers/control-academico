@@ -116,6 +116,9 @@
         <intercept-url pattern="/ingresoNota.htm" access="hasRole('ROLE_INGRESO_NOTAS')" />
         <intercept-url pattern="/ingresoNotaAdmin.htm" access="hasRole('ROLE_INGRESO_NOTAS_ADMINISTRACION')" />
         <intercept-url pattern="/asignCursosAdmin.htm" access="hasRole('ROLE_ASIGNACION_CURSOS_ADMINISTRACION')" />
+		
+		<intercept-url pattern="/agregarAsignacionCatedraticoHorario.htm" access="hasRole('ROLE_ASIGNACION_HORARIO_CATEDRATICO')" />
+		<intercept-url pattern="/buscarAsignacionCatedraticoHorario.htm" access="hasRole('ROLE_ASIGNACION_HORARIO_CATEDRATICO')" />
 
         <!-- se especifica que pagina contiene el formulario de login -->
         <form-login login-page='/login.htm' default-target-url='/index.htm' always-use-default-target='true'/>
