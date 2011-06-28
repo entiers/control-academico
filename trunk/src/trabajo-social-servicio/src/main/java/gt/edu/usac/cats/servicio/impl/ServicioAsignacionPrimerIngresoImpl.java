@@ -13,6 +13,7 @@ import java.util.Properties;
 import java.util.UUID;
 import java.util.List;
 import gt.edu.usac.cats.dominio.Asignacion;
+import gt.edu.usac.cats.dominio.AsignacionCursoPensum;
 import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
 import gt.edu.usac.cats.dominio.AsignacionPrimerIngreso;
 import gt.edu.usac.cats.dominio.Carrera;
@@ -85,7 +86,7 @@ public class ServicioAsignacionPrimerIngresoImpl extends ServicioGeneralImpl imp
                 //Obtener estudiantes de primer ingreso por carrera
                 lstAEC = this.servicioAsignacionEstudianteCarreraImpl.getAsignacionEstudianteCarreraPrimerIngreso(carrera);
                 //Obtener cursos por carrera
-                List<Curso> lstCursoPrimerSemestre = this.servicioCursoImpl.getCursoPrimerSemestreXCarrera(carrera);
+                List<AsignacionCursoPensum> lstCursoPrimerSemestre = this.servicioCursoImpl.getCursoPrimerSemestreXCarrera(carrera);
                 if(!lstAEC.isEmpty()){
                     for(AsignacionEstudianteCarrera aec: lstAEC){
                         if (!lstCursoPrimerSemestre.isEmpty()){
@@ -97,9 +98,10 @@ public class ServicioAsignacionPrimerIngresoImpl extends ServicioGeneralImpl imp
                             this.servicioGeneralImpl.agregar(asignacion);
 
                             totalAsignaciones = 0;
-                            for (Curso curso: lstCursoPrimerSemestre){
-                                if(!this.servicioEstudianteImpl.tieneCursoAsignadoPrimerIngreso(aec.getEstudiante(), curso)){
-                                    Horario horario = this.servicioHorarioImpl.getHorarioPorCursoPrimerIngreso(curso);
+                            for (AsignacionCursoPensum asignacionCursoPensum: lstCursoPrimerSemestre){
+                                if(!this.servicioEstudianteImpl.tieneCursoAsignadoPrimerIngreso(aec.getEstudiante(), asignacionCursoPensum.getCurso())){
+                                    
+                                    Horario horario = this.servicioHorarioImpl.getHorarioPorCursoPrimerIngreso(asignacionCursoPensum);
                                     if (horario != null){
                                         DetalleAsignacion detAsign = new DetalleAsignacion();
                                         detAsign.setAsignacion(asignacion);

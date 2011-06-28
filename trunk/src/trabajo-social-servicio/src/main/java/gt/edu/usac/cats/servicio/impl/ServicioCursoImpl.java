@@ -6,6 +6,7 @@
 
 package gt.edu.usac.cats.servicio.impl;
 
+import gt.edu.usac.cats.dominio.AsignacionCursoPensum;
 import gt.edu.usac.cats.dominio.Carrera;
 import gt.edu.usac.cats.dominio.Curso;
 import gt.edu.usac.cats.dominio.Semestre;
@@ -54,10 +55,10 @@ public class ServicioCursoImpl extends ServicioGeneralImpl implements ServicioCu
     }
 
     @Override
-    public List<Curso> getCursoPrimerSemestreXCarrera(Carrera carrera) throws DataAccessException {
+    public List<AsignacionCursoPensum> getCursoPrimerSemestreXCarrera(Carrera carrera) throws DataAccessException {
         StringBuilder builder = new StringBuilder();
 
-        builder.append(" select acp.curso from AsignacionCursoPensum as acp ")
+        builder.append(" select acp from AsignacionCursoPensum as acp ")
                .append(" where acp.pensum.carrera = :carrera ")
                .append("   and acp.numeroSemestre = 1")
                .append("   and acp.pensum.estado = 1 ");
