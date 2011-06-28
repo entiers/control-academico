@@ -39,7 +39,7 @@ import javax.persistence.Table;
     schema = "control"
 )
 public class CuentaCorriente implements java.io.Serializable {
-    private Set<Movimiento> movimientos = new HashSet<Movimiento>(0);
+    private Set<BoletaBanco> boletaBancos = new HashSet<BoletaBanco>(0);
     private boolean activa;
     private String codigo;
     private Estudiante estudiante;
@@ -47,22 +47,7 @@ public class CuentaCorriente implements java.io.Serializable {
 
     public CuentaCorriente() {}
 
-    public CuentaCorriente(int idCuentaCorriente, Estudiante estudiante, String codigo, boolean activa) {
-        this.idCuentaCorriente = idCuentaCorriente;
-        this.estudiante = estudiante;
-        this.codigo = codigo;
-        this.activa = activa;
-    }
-
-    public CuentaCorriente(int idCuentaCorriente, Estudiante estudiante, String codigo, boolean activa,
-                           Set<Movimiento> movimientos) {
-        this.idCuentaCorriente = idCuentaCorriente;
-        this.estudiante = estudiante;
-        this.codigo = codigo;
-        this.activa = activa;
-        this.movimientos = movimientos;
-    }
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(
@@ -116,17 +101,13 @@ public class CuentaCorriente implements java.io.Serializable {
         this.activa = activa;
     }
 
-    @OneToMany(
-        cascade = CascadeType.ALL,
-        fetch = FetchType.LAZY,
-        mappedBy = "cuentaCorriente"
-    )
-    public Set<Movimiento> getMovimientos() {
-        return this.movimientos;
+    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="cuentaCorriente")
+    public Set<BoletaBanco> getBoletaBancos() {
+        return this.boletaBancos;
     }
-
-    public void setMovimientos(Set<Movimiento> movimientos) {
-        this.movimientos = movimientos;
+    
+    public void setBoletaBancos(Set<BoletaBanco> boletaBancos) {
+        this.boletaBancos = boletaBancos;
     }
 }
 

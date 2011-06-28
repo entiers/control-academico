@@ -6,7 +6,7 @@
 
 package gt.edu.usac.cats.dominio.wrapper;
 
-import gt.edu.usac.cats.dominio.Curso;
+import gt.edu.usac.cats.dominio.AsignacionCursoPensum;
 import gt.edu.usac.cats.dominio.Horario;
 import gt.edu.usac.cats.dominio.Salon;
 import gt.edu.usac.cats.dominio.Semestre;
@@ -39,7 +39,7 @@ public class WrapperHorario {
     private String seccion;    
 //______________________________________________________________________________
     
-    private Curso curso;
+    private AsignacionCursoPensum asignacionCursoPensum;
 //______________________________________________________________________________
     private Salon salon;
 //______________________________________________________________________________
@@ -65,7 +65,7 @@ public class WrapperHorario {
      * @param horario Pojo de tipo {@link Horario}
      */
     public void agregarWrapper(Horario horario){        
-        this.curso = horario.getCurso();
+        this.asignacionCursoPensum = horario.getAsignacionCursoPensum();
         this.habilitado = horario.isHabilitado();
         this.horaFin = horario.getHoraFin();
         this.horaInicio = horario.getHoraInicio();
@@ -81,7 +81,7 @@ public class WrapperHorario {
      * @param horario Pojo de tipo {@link Horario}
      */
     public void quitarWrapper(Horario horario){
-        horario.setCurso(this.curso);
+        horario.setAsignacionCursoPensum(this.asignacionCursoPensum);
         horario.setHabilitado(this.habilitado);
         horario.setHoraFin(this.horaFin);
         horario.setHoraInicio(this.horaInicio);
@@ -148,17 +148,17 @@ public class WrapperHorario {
     }
 //______________________________________________________________________________
     /**
-     * @return pojo de tipo {@link Curso}
+     * @return pojo de tipo {@link AsignacionCursoPensum}
      */
-    public Curso getCurso() {
-        return curso;
+    public AsignacionCursoPensum getAsignacionCursoPensum() {
+        return this.asignacionCursoPensum;
     }
 
     /**
      * @param curso pojo de tipo {@link Curso}
      */
-    public void setCurso(Curso curso) {
-        this.curso = curso;
+    public void setAsignacionCursoPensum(AsignacionCursoPensum asignacionCursoPensum) {
+        this.asignacionCursoPensum = asignacionCursoPensum;
     }
 //______________________________________________________________________________
     /**
