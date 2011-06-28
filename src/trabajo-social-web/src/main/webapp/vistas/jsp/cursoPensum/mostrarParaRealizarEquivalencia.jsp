@@ -40,7 +40,7 @@
                            name="listadoEquivalencias" id="asignacionCursoPensum"
                            style="width:100%">
                 <display:column property="curso.codigo" titleKey="agregarCurso.codigo"
-                                style="width: 30%; align:center;" />
+                                style="width: 30%; text-align:center;" />
                 <display:column property="curso.nombre" titleKey="agregarCurso.nombre" 
                                 style="width: 70%"/>
             </display:table>

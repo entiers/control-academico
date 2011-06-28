@@ -42,7 +42,7 @@ public class ServicioAsignacionCursoPensumImpl extends ServicioGeneralImpl imple
 
         return this.daoGeneralImpl.find(criteria);
     }
-    
+
     @Override
     public List<Curso> getListadoCursosPorIdPensum(Short idPensum) {
         DetachedCriteria criteria = DetachedCriteria.forClass(Curso.class);
@@ -94,7 +94,6 @@ public class ServicioAsignacionCursoPensumImpl extends ServicioGeneralImpl imple
      *
      * @throws DataAccessException Si ocurri&oacute; un error de acceso a datos
      */
-
     @Override
     public List<AsignacionCursoPensum> getEquivalenciasPorPensums(
             AsignacionEstudianteCarrera asignacionEstudianteCarrera,
@@ -104,12 +103,19 @@ public class ServicioAsignacionCursoPensumImpl extends ServicioGeneralImpl imple
 
         StringBuilder builder = new StringBuilder();
 
-        builder.append("\n select distinct cpe from Asignacion as a").
+        builder.append("\n select distinct cpe from AsignacionCursoPensum as acp").
+                append("\n inner join acp.asignacionCursoPensumsForIdCursoPensumEquivalencia as cpe").
+                append("\n where cpe not in (").
+                append("\n select acp2 from Asignacion as a").
                 append("\n inner join a.cursoAprobados as ca").
-                append("\n inner join ca.asignacionCursoPensum as acp").
-                append("\n inner join acp.asignacionCursoPensumsForIdCursoPensumEquivalencia cpe").
-                append("\n where acp.pensum = :pensumOriginal and cpe.pensum = :pensumEquivalencia and").
-                append("\n a.asignacionEstudianteCarrera = :asignacionEstudianteCarrera");
+                append("\n inner join ca.asignacionCursoPensum as acp2").
+                append("\n where acp2.pensum = :pensumEquivalencia and a.asignacionEstudianteCarrera = :asignacionEstudianteCarrera)").
+                append("\n and acp in (").
+                append("\n select acp3 from Asignacion as a").
+                append("\n inner join a.cursoAprobados as ca").
+                append("\n inner join ca.asignacionCursoPensum as acp3").
+                append("\n where acp3.pensum = :pensumOriginal and a.asignacionEstudianteCarrera = :asignacionEstudianteCarrera)").
+                append("\n and acp.pensum = :pensumOriginal and cpe.pensum = :pensumEquivalencia");
 
         Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString()).
                 setParameter("asignacionEstudianteCarrera", asignacionEstudianteCarrera).
@@ -120,6 +126,7 @@ public class ServicioAsignacionCursoPensumImpl extends ServicioGeneralImpl imple
         return query.list();
     }
 //______________________________________________________________________________
+
     /**
      * Realiza el proceso de asignaci&oacute; de cursos por equivalencias.
      *
@@ -129,7 +136,6 @@ public class ServicioAsignacionCursoPensumImpl extends ServicioGeneralImpl imple
      *
      * @throws DataAccessException Si ocurri&oacute; un error de acceso a datos
      */
-
     @Override
     public void realizarEquivalencias(AsignacionEstudianteCarrera asignacionEstudianteCarrera,
             AsignacionEquivalencia asignacionEquivalencia,
@@ -146,7 +152,7 @@ public class ServicioAsignacionCursoPensumImpl extends ServicioGeneralImpl imple
 
         entidades.add(asignacion);
 
-        for(Iterator <AsignacionCursoPensum> it = listadoEquivalencias.iterator(); it.hasNext();){
+        for (Iterator<AsignacionCursoPensum> it = listadoEquivalencias.iterator(); it.hasNext();) {
             AsignacionCursoPensum asignacionCursoPensum = it.next();
 
             CursoAprobado cursoAprobado = new CursoAprobado();
@@ -161,6 +167,6 @@ public class ServicioAsignacionCursoPensumImpl extends ServicioGeneralImpl imple
 
         this.daoGeneralImpl.saveOrUpdateAll(entidades);
 
-        
+
     }
 }
