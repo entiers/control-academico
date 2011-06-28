@@ -17,7 +17,6 @@ import gt.edu.usac.cats.util.RequestUtil;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import javax.xml.ws.BindingType;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,7 +27,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * Controlador encargado de manejar las peticiones GET y POST de la página 
+ * Controlador encargado de manejar las peticiones GET y POST de la pï¿½gina 
  * agregarAsignacionCatedraticoHorario.htm. Dentro de la clase se realiza toda la
  * logica relacionada con la asignacion de un catedratico a un horario especifico
  * 
@@ -46,7 +45,7 @@ public class ControladorAgregarAsignacionCatedraticoHorario extends ControladorA
     private List<Horario> listadoHorario;
 //______________________________________________________________________________    
     /**
-     * Metodo encargado de resolver las peticiones de tipo GET de la página 
+     * Metodo encargado de resolver las peticiones de tipo GET de la pï¿½gina 
      * <p>agregarAsignacionCatedraticoHorario.htm</p> asi como de buscar al catedratico 
      * asociado al idCatedratico enviado por parametro y de inicializar los 
      * objetos utilizados en la pagina.
@@ -87,7 +86,7 @@ public class ControladorAgregarAsignacionCatedraticoHorario extends ControladorA
     }            
 //______________________________________________________________________________    
     /**
-     * Metodo encargado de resolver las peticiones de tipo POST de la página 
+     * Metodo encargado de resolver las peticiones de tipo POST de la pï¿½gina 
      * <p>agregarAsignacionCatedraticoHorario.htm</p>. Este metodo es el responsable
      * de crear la asignacion de un horario a un catedratico en especifico.     
      * 

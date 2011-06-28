@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
- * Controlador encargado de manejar las peticiones GET y POST de la página 
+ * Controlador encargado de manejar las peticiones GET y POST de la pï¿½gina 
  * buscarAsignacionCatedraticoHorario.htm. La clase se encarga de manejar
  * la logica para la consulta de las asignaciones de horarios de un catedratico 
  * en especifico
