@@ -42,6 +42,8 @@ public class BoletaBanco  implements java.io.Serializable {
     private short tipoRubro;
     private short varianteRubro;
     private Date fechaPago;
+    private CuentaCorriente cuentaCorriente;
+    private Double monto;
 
     public BoletaBanco() {
     }
@@ -176,6 +178,25 @@ public class BoletaBanco  implements java.io.Serializable {
     
     public void setFechaPago(Date fechaPago) {
         this.fechaPago = fechaPago;
+    }
+    
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="id_cuenta_corriente")
+    public CuentaCorriente getCuentaCorriente() {
+        return this.cuentaCorriente;
+    }
+    
+    public void setCuentaCorriente(CuentaCorriente cuentaCorriente) {
+        this.cuentaCorriente = cuentaCorriente;
+    }
+    
+    @Column(name="monto", precision=17, scale=17)
+    public Double getMonto() {
+        return this.monto;
+    }
+    
+    public void setMonto(Double monto) {
+        this.monto = monto;
     }
 
 }

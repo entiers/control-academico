@@ -56,7 +56,7 @@ import org.hibernate.annotations.Type;
 public class Horario implements java.io.Serializable {
     private int idHorario;
      private Semestre semestre;
-     private Curso curso;
+     private AsignacionCursoPensum asignacionCursoPensum;
      private Salon salon;
      private Date horaInicio;
      private Date horaFin;     
@@ -99,18 +99,15 @@ public class Horario implements java.io.Serializable {
         this.semestre = semestre;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(
-        name = "id_curso",
-        nullable = false
-    )
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="id_asignacion_curso_pensum")
     @JsonIgnore
-    public Curso getCurso() {
-        return this.curso;
+    public AsignacionCursoPensum getAsignacionCursoPensum() {
+        return this.asignacionCursoPensum;
     }
-
-    public void setCurso(Curso curso) {
-        this.curso = curso;
+    
+    public void setAsignacionCursoPensum(AsignacionCursoPensum asignacionCursoPensum) {
+        this.asignacionCursoPensum = asignacionCursoPensum;
     }
 
     @ManyToOne(fetch = FetchType.LAZY)

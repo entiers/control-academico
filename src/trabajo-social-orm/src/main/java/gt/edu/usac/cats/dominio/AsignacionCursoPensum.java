@@ -8,7 +8,7 @@
  */
 package gt.edu.usac.cats.dominio;
 
-//Generated 16/03/2010 06:31:00 PM by Hibernate Tools 3.2.1.GA
+// Generated 28/06/2011 02:49:40 PM by Hibernate Tools 3.2.1.GA
 //~--- JDK imports ------------------------------------------------------------
 import java.util.HashSet;
 import java.util.Set;
@@ -55,6 +55,7 @@ public class AsignacionCursoPensum implements java.io.Serializable {
     private Set<AsignacionCursoPensum> asignacionCursoPensumsForIdCursoPensumOriginal = new HashSet<AsignacionCursoPensum>(0);
     private Set<CursoAprobado> cursoAprobados = new HashSet<CursoAprobado>(0);
     private Set<AsignacionCursoPensum> asignacionCursoPensumsForIdCursoPensumEquivalencia = new HashSet<AsignacionCursoPensum>(0);
+    private Set<Horario> horarios = new HashSet<Horario>(0);
     private Set<AsignacionCursoPensum> asignacionCursoPensumsForIdCursoPensum = new HashSet<AsignacionCursoPensum>(0);
 
     public AsignacionCursoPensum() {
@@ -226,6 +227,15 @@ public class AsignacionCursoPensum implements java.io.Serializable {
     
     public void setCursoAprobados(Set<CursoAprobado> cursoAprobados) {
         this.cursoAprobados = cursoAprobados;
+    }
+    
+    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="asignacionCursoPensum")
+    public Set<Horario> getHorarios() {
+        return this.horarios;
+    }
+    
+    public void setHorarios(Set<Horario> horarios) {
+        this.horarios = horarios;
     }
     
     /**
