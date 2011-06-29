@@ -7,6 +7,7 @@
 package gt.edu.usac.cats.servicio.impl;
 
 import gt.edu.usac.cats.dominio.Asignacion;
+import gt.edu.usac.cats.dominio.AsignacionCursoPensum;
 import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
 import gt.edu.usac.cats.dominio.Curso;
 import gt.edu.usac.cats.dominio.Estudiante;
@@ -71,17 +72,17 @@ public class ServicioDetalleAsignacionImpl extends ServicioGeneralImpl implement
     }
 //______________________________________________________________________________
     @Override
-    public List<DetalleAsignacion> getListadoDetalleAsignacion(Curso curso, Semestre semestre, AsignacionEstudianteCarrera asignacionEstudianteCarrera, TipoAsignacion tipoAsignacion) throws HibernateException {
+    public List<DetalleAsignacion> getListadoDetalleAsignacion(AsignacionCursoPensum asignacionCursoPensum, Semestre semestre, AsignacionEstudianteCarrera asignacionEstudianteCarrera, TipoAsignacion tipoAsignacion) throws HibernateException {
         StringBuilder builder = new StringBuilder();
         builder.append("select det from DetalleAsignacion det ")
-               .append("where det.horario.curso = :curso ")
+               .append("where det.horario.curso = :asignacionCursoPensum ")
                .append("and det.horario.semestre= :semestre ")
                .append("and det.asignacion.asignacionEstudianteCarrera = :asignacionEstudianteCarrera ")
                .append("and det.asignacion.tipoAsignacion = :tipoAsignacion ")
                .append("and not exists (select 'x' from Desasignacion des where des.detalleAsignacion=det)");
 
         Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
-        query.setParameter("curso", curso);
+        query.setParameter("asignacionCursoPensum", asignacionCursoPensum);
         query.setParameter("semestre", semestre);
         query.setParameter("asignacionEstudianteCarrera", asignacionEstudianteCarrera);
         query.setParameter("tipoAsignacion", tipoAsignacion);
@@ -90,17 +91,17 @@ public class ServicioDetalleAsignacionImpl extends ServicioGeneralImpl implement
     }
 //______________________________________________________________________________
     @Override
-    public int getTotalAsignaciones(Curso curso, AsignacionEstudianteCarrera asignacionEstudianteCarrera, TipoAsignacion tipoAsignacion) throws HibernateException {
+    public int getTotalAsignaciones(AsignacionCursoPensum asignacionCursoPensum, AsignacionEstudianteCarrera asignacionEstudianteCarrera, TipoAsignacion tipoAsignacion) throws HibernateException {
         StringBuilder builder = new StringBuilder();
 
         builder.append("select count(*) from DetalleAsignacion det ")
-               .append("where det.horario.curso = :curso ")
+               .append("where det.horario.asignacionCursoPensum = :asignacionCursoPensum ")
                .append("and det.asignacion.asignacionEstudianteCarrera = :aec ")
                .append("and det.asignacion.tipoAsignacion = :tipoAsignacion ")
                .append("and not exists (select 'x' from Desasignacion des where des.detalleAsignacion=det)");
 
         Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
-        query.setParameter("curso", curso);
+        query.setParameter("asignacionCursoPensumcurso", asignacionCursoPensum);
         query.setParameter("aec", asignacionEstudianteCarrera);
         query.setParameter("tipoAsignacion", tipoAsignacion);
         
@@ -161,7 +162,7 @@ public class ServicioDetalleAsignacionImpl extends ServicioGeneralImpl implement
     }
 //______________________________________________________________________________
     @Override
-    public boolean tieneZonaMinima(Curso curso, AsignacionEstudianteCarrera asignacionEstudianteCarrera) throws HibernateException, IOException {
+    public boolean tieneZonaMinima(AsignacionCursoPensum asignacionCursoPensum, AsignacionEstudianteCarrera asignacionEstudianteCarrera) throws HibernateException, IOException {
         // se carga la configuracion
         Properties properties = this.cargarProperties();
         int zonaMinima = Integer.valueOf(properties.getProperty("asignacion.zonaMinima"));
@@ -169,11 +170,11 @@ public class ServicioDetalleAsignacionImpl extends ServicioGeneralImpl implement
         StringBuilder builder = new StringBuilder();
         builder.append("select max(zona) from DetalleAsignacion det ")
                .append("where det.asignacion.asignacionEstudianteCarrera = :asignacionEstudianteCarrera ")
-               .append("and det.horario.curso = :curso ")
+               .append("and det.horario.asignacionCursoPensum = :asignacionCursoPensum ")
                .append("and not exists (select 'x' from Desasignacion des where des.detalleAsignacion=det)");
 
         Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
-        query.setParameter("curso", curso);
+        query.setParameter("asignacionCursoPensum", asignacionCursoPensum);
         query.setParameter("asignacionEstudianteCarrera", asignacionEstudianteCarrera);
 
         List result = query.list();
@@ -186,7 +187,7 @@ public class ServicioDetalleAsignacionImpl extends ServicioGeneralImpl implement
     }
 //______________________________________________________________________________
     @Override
-    public boolean tieneZonaMinima(Curso curso, AsignacionEstudianteCarrera asignacionEstudianteCarrera, Semestre semestre) throws HibernateException, IOException {
+    public boolean tieneZonaMinima(AsignacionCursoPensum asignacionCursoPensum, AsignacionEstudianteCarrera asignacionEstudianteCarrera, Semestre semestre) throws HibernateException, IOException {
         // se carga la configuracion
         Properties properties = this.cargarProperties();
         int zonaMinima = Integer.valueOf(properties.getProperty("asignacion.zonaMinima"));
@@ -194,12 +195,12 @@ public class ServicioDetalleAsignacionImpl extends ServicioGeneralImpl implement
         StringBuilder builder = new StringBuilder();
         builder.append("select max(zona) from DetalleAsignacion det ")
                .append("where det.asignacion.asignacionEstudianteCarrera = :asignacionEstudianteCarrera ")
-               .append("and det.horario.curso = :curso ")
+               .append("and det.horario.asignacionCursoPensum = :asignacionCursoPensum ")
                .append("and det.horario.semestre = :semestre ")
                .append("and not exists (select 'x' from Desasignacion des where des.detalleAsignacion=det)");
 
         Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
-        query.setParameter("curso", curso);
+        query.setParameter("asignacionCursoPensum", asignacionCursoPensum);
         query.setParameter("asignacionEstudianteCarrera", asignacionEstudianteCarrera);
         query.setParameter("semestre", semestre);
 

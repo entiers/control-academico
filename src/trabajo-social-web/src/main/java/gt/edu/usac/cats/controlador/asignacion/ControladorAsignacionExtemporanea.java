@@ -158,10 +158,10 @@ public class ControladorAsignacionExtemporanea extends ControladorAbstractoAsign
 
         this.semestre = this.servicioSemestreImpl.getSemestreActivo();
 
-        this.listaCurso = this.servicioCursoImpl.getCursoAsignacion(this.asignacionEstudianteCarrera.getCarrera(),
+        this.listaAsignacionCursoPensum = this.servicioCursoImpl.getCursoAsignacion(this.asignacionEstudianteCarrera.getCarrera(),
                 this.semestre,datosAsignacion.getTipoHorario());
             
-        if(this.listaCurso.isEmpty()){
+        if(this.listaAsignacionCursoPensum.isEmpty()){
             modelo.addAttribute("wrapperAsignacionCursosExtemporaneas", wrapperAsignacionCursosExtemporaneas);
             modelo.addAttribute("listaTipoHorario", TipoHorario.values());
             modelo.addAttribute("listadoAEC", this.listaAEC);
@@ -169,10 +169,10 @@ public class ControladorAsignacionExtemporanea extends ControladorAbstractoAsign
             return "asignacion/asignacionCursosAdmin";
         }
 
-        this.listaHorario = this.servicioHorarioImpl.getHorario(this.listaCurso.get(0), this.semestre, datosAsignacion.getTipoHorario());
+        this.listaHorario = this.servicioHorarioImpl.getHorario(this.listaAsignacionCursoPensum.get(0), this.semestre, datosAsignacion.getTipoHorario());
 
         modelo.addAttribute("datosAsignacion", datosAsignacion);
-        modelo.addAttribute("listaCurso", this.listaCurso);
+        modelo.addAttribute("listaCurso", this.listaAsignacionCursoPensum);
         modelo.addAttribute("listaHorario", this.listaHorario);
 
         return "asignacion/realizarAsignacionExtemporanea";
@@ -202,7 +202,7 @@ public class ControladorAsignacionExtemporanea extends ControladorAbstractoAsign
             if(datosAsignacion.getTotalCursos()==0){
                 this.listaHorarioAsignacion =  new ArrayList<Horario>();
                 listaHorario = new ArrayList<Horario>();
-                listaCurso = servicioCursoImpl.getCursoAsignacion(asignacionEstudianteCarrera.getCarrera(),
+                listaAsignacionCursoPensum = servicioCursoImpl.getCursoAsignacion(asignacionEstudianteCarrera.getCarrera(),
                                                                     semestre,TipoHorario.SEMESTRE);
             }
 
@@ -214,18 +214,19 @@ public class ControladorAsignacionExtemporanea extends ControladorAbstractoAsign
             }
 
             //Cargar horario seleccionado al listadoHorarioAsignacion
-            if (!listaCurso.isEmpty()) {
-                Curso curso = servicioGeneralImpl.cargarEntidadPorID(Curso.class, Short.parseShort(String.valueOf(datosAsignacion.getIdCurso())));
+            if (!listaAsignacionCursoPensum.isEmpty()) {
+                AsignacionCursoPensum asignacionCursoPensum = 
+                        servicioGeneralImpl.cargarEntidadPorID(AsignacionCursoPensum.class, Short.parseShort(String.valueOf(datosAsignacion.getIdAsignacionCursoPensum())));
                 Horario horario = servicioGeneralImpl.cargarEntidadPorID(Horario.class, datosAsignacion.getIdHorario());
                 listaHorarioAsignacion.add(horario);
                 datosAsignacion.incrementarTotalCursos();
-                for (int i = 0; i < listaCurso.size(); i++) {
-                    if (listaCurso.get(i).getIdCurso()==curso.getIdCurso()) {
-                        listaCurso.remove(i);
+                for (int i = 0; i < listaAsignacionCursoPensum.size(); i++) {
+                    if (listaAsignacionCursoPensum.get(i).getIdAsignacionCursoPensum()==asignacionCursoPensum.getIdAsignacionCursoPensum()) {
+                        listaAsignacionCursoPensum.remove(i);
                     }
                 }
-                if (!listaCurso.isEmpty()) {
-                    listaHorario = servicioHorarioImpl.getHorario(listaCurso.get(0), semestre, TipoHorario.SEMESTRE);
+                if (!listaAsignacionCursoPensum.isEmpty()) {
+                    listaHorario = servicioHorarioImpl.getHorario(listaAsignacionCursoPensum.get(0), semestre, TipoHorario.SEMESTRE);
                 } else {
                     listaHorario.clear();
                 }
@@ -289,22 +290,22 @@ public class ControladorAsignacionExtemporanea extends ControladorAbstractoAsign
                 
                 for (Horario horario : this.listaHorarioAsignacion) {
                    //Validando prerrequisitos por curso
-                    acp = (AsignacionCursoPensum) servicioAsignacionCursoPensumImpl.getListadoAsignacionCursoPensum(horario.getCurso(), pensum).get(0);
+                    acp = (AsignacionCursoPensum) servicioAsignacionCursoPensumImpl.getListadoAsignacionCursoPensum(horario.getAsignacionCursoPensum(), pensum).get(0);
 
-                    if (servicioCursoAprobadoImpl.getCursoPrerrequisitoPendiente(asignacionEstudianteCarrera, horario.getCurso()).isEmpty()
+                    if (servicioCursoAprobadoImpl.getCursoPrerrequisitoPendiente(asignacionEstudianteCarrera, horario.getAsignacionCursoPensum()).isEmpty()
                             & servicioCursoAprobadoImpl.getCreditosAprobados(asignacionEstudianteCarrera) < acp.getCreditosPrerrequisito()) {
                         RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.prerrequisitoPendiente", false);
                         return "asignacion/realizarAsignacionExtemporanea";
                     }
 
                     //Validando asignaciones en semestre actual
-                    if (!servicioDetalleAsignacionImpl.getListadoDetalleAsignacion(horario.getCurso(), semestre, asignacionEstudianteCarrera,datosAsignacion.getTipoAsignacion()).isEmpty()) {
+                    if (!servicioDetalleAsignacionImpl.getListadoDetalleAsignacion(horario.getAsignacionCursoPensum(), semestre, asignacionEstudianteCarrera,datosAsignacion.getTipoAsignacion()).isEmpty()) {
                         RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.cursoYaAsignado", false);
                         return "asignacion/realizarAsignacionExtemporanea";
                     }
 
                     //Validando total de asignaciones por curso
-                    if(servicioDetalleAsignacionImpl.getTotalAsignaciones(horario.getCurso(),
+                    if(servicioDetalleAsignacionImpl.getTotalAsignaciones(horario.getAsignacionCursoPensum(),
                                asignacionEstudianteCarrera, datosAsignacion.getTipoAsignacion())>=3){
                         RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.totalAsignacionesExcedidas", false);
                         return "asignacion/realizarAsignacionExtemporanea";
@@ -313,14 +314,14 @@ public class ControladorAsignacionExtemporanea extends ControladorAbstractoAsign
                     //Validando que el curso este pagado
                     if(datosAsignacion.getTipoAsignacion()!=TipoAsignacion.ASIGNACION_CURSOS_SEMESTRE &
                             servicioBoletaBancoImpl.listadoBoletaBanco(asignacionEstudianteCarrera.getEstudiante(),
-                                                                horario.getCurso(), semestre, datosAsignacion.getTipoRubro()).isEmpty()){
+                                                                horario.getAsignacionCursoPensum(), semestre, datosAsignacion.getTipoRubro()).isEmpty()){
                         RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.cursoNoCancelado", false);
                         return "asignacion/realizarAsignacionExtemporanea";
                     }
 
                     //Validar zona minima
                     if(datosAsignacion.getTipoAsignacion()!=TipoAsignacion.ASIGNACION_CURSOS_SEMESTRE &
-                            !servicioDetalleAsignacionImpl.tieneZonaMinima(horario.getCurso(), asignacionEstudianteCarrera)){
+                            !servicioDetalleAsignacionImpl.tieneZonaMinima(horario.getAsignacionCursoPensum(), asignacionEstudianteCarrera)){
                         RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.vacaciones.sinZonaMinima", false);
                         return "asignacion/realizarAsignacionExtemporanea";
                     }
@@ -328,7 +329,7 @@ public class ControladorAsignacionExtemporanea extends ControladorAbstractoAsign
                     if(datosAsignacion.getTipoAsignacion()==TipoAsignacion.ASIGNACION_PRIMERA_RETRASADA |
                             datosAsignacion.getTipoAsignacion()==TipoAsignacion.ASIGNACION_SEGUNDA_RETRASADA ){
                         //Validando que el curso este asignado en el semestre actual
-                        if (servicioDetalleAsignacionImpl.getListadoDetalleAsignacion(horario.getCurso(), semestre, asignacionEstudianteCarrera, TipoAsignacion.ASIGNACION_CURSOS_SEMESTRE).isEmpty()) {
+                        if (servicioDetalleAsignacionImpl.getListadoDetalleAsignacion(horario.getAsignacionCursoPensum(), semestre, asignacionEstudianteCarrera, TipoAsignacion.ASIGNACION_CURSOS_SEMESTRE).isEmpty()) {
                             RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.retrasada.cursoNoAsignado", false);
                             return "asignacion/realizarAsignacionExtemporanea";
                         }
@@ -359,7 +360,7 @@ public class ControladorAsignacionExtemporanea extends ControladorAbstractoAsign
 
     //  _____________________________________________________________________________
     private void cargarModelo(Model modelo){
-        modelo.addAttribute("listaCurso", listaCurso);
+        modelo.addAttribute("listaAsignacionCursoPensum", listaAsignacionCursoPensum);
         modelo.addAttribute("listaHorario", listaHorario);
         modelo.addAttribute("horarioElegido", true);
         modelo.addAttribute("listadoHorarioAsignados", this.listaHorarioAsignacion);

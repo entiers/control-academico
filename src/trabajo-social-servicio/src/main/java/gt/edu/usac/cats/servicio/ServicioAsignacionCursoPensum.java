@@ -27,7 +27,7 @@ public interface ServicioAsignacionCursoPensum extends ServicioGeneral {
      * @param curso pojo del tipo {@link Curso}
      * @throws DataAccessException
      */
-    List<AsignacionCursoPensum> getListadoAsignacionCursoPensum(Curso curso, Pensum pensum)
+    List<AsignacionCursoPensum> getListadoAsignacionCursoPensum(AsignacionCursoPensum asignacionCursoPensum, Pensum pensum)
             throws DataAccessException;
 
     /***/

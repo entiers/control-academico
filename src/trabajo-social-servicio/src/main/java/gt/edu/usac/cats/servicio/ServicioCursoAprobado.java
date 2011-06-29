@@ -7,6 +7,7 @@
 
 package gt.edu.usac.cats.servicio;
 
+import gt.edu.usac.cats.dominio.AsignacionCursoPensum;
 import java.util.List;
 
 import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
@@ -41,7 +42,7 @@ public interface ServicioCursoAprobado extends ServicioGeneral{
      * @return boolean
      * @throws DataAccessException Si ocurrio un error de acceso a datos
      */
-    List<Curso> getCursoPrerrequisitoPendiente(AsignacionEstudianteCarrera asignacionEstudianteCarrera, Curso curso)
+    List<Curso> getCursoPrerrequisitoPendiente(AsignacionEstudianteCarrera asignacionEstudianteCarrera, AsignacionCursoPensum asignacionCursoPensum)
             throws DataAccessException;
 //______________________________________________________________________________
     /**

@@ -7,6 +7,7 @@
 
 package gt.edu.usac.cats.servicio;
 
+import gt.edu.usac.cats.dominio.AsignacionCursoPensum;
 import gt.edu.usac.cats.dominio.BoletaBanco;
 import gt.edu.usac.cats.dominio.Curso;
 import gt.edu.usac.cats.dominio.Estudiante;
@@ -30,14 +31,14 @@ public interface ServicioBoletaBanco extends ServicioGeneral{
      * especificadas.
      *
      * @param estudiante POJO que hacer referencia a la clase {@link Estudiante}
-     * @param curso POJO que hacer referencia a la clase {@link Curso}
+     * @param asignacionCursoPensum POJO que hacer referencia a la clase {@link AsignacionCursoPensum}
      * @param semestre POJO que hacer referencia a la clase {@link Semestre}
      * @param tipoRubro POJO que hacer referencia a la clase {@link TipoRubro}
      * @param varianteRubro POJO que hacer referencia a la clase {@link VarianteRubro}
      * @return List<BoletaBanco> Listado de boletas que cumplan las restricciones
      * @throws DataAccessException
      */
-    List<BoletaBanco> listadoBoletaBanco(Estudiante estudiante, Curso curso, Semestre semestre, TipoRubro tipoRubro)
+    List<BoletaBanco> listadoBoletaBanco(Estudiante estudiante, AsignacionCursoPensum asignacionCursoPensum, Semestre semestre, TipoRubro tipoRubro)
             throws DataAccessException;
 
 }

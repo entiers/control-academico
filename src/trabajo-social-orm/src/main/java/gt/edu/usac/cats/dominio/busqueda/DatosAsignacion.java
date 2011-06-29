@@ -23,7 +23,7 @@ public class DatosAsignacion {
     private TipoRubro tipoRubro;
     private int idAsignacionEstudianteCarrera;
     private int idHorario;
-    private int idCurso;
+    private int idAsignacionCursoPensum;
     private int totalCursos;
     private List detalleAsignacion;
 
@@ -39,12 +39,12 @@ public class DatosAsignacion {
         this.idAsignacionEstudianteCarrera = idAsignacionEstudianteCarrera;
     }
 
-    public int getIdCurso() {
-        return idCurso;
+    public int getIdAsignacionCursoPensum() {
+        return idAsignacionCursoPensum;
     }
 
-    public void setIdCurso(int idCurso) {
-        this.idCurso = idCurso;
+    public void setIdAsignacionCursoPensum(int idAsignacionCursoPensum) {
+        this.idAsignacionCursoPensum = idAsignacionCursoPensum;
     }
 
     public int getIdHorario() {

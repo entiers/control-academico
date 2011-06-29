@@ -45,7 +45,7 @@ public class ServicioCursoAprobadoImpl extends ServicioGeneralImpl implements Se
 //______________________________________________________________________________
 
     @Override
-    public List<Curso> getCursoPrerrequisitoPendiente(AsignacionEstudianteCarrera asignacionEstudianteCarrera, Curso curso) throws DataAccessException {
+    public List<Curso> getCursoPrerrequisitoPendiente(AsignacionEstudianteCarrera asignacionEstudianteCarrera, AsignacionCursoPensum asignacionCursoPensum) throws DataAccessException {
 
 
         Pensum pensumValido = servicioPensumEstudianteCarreraImpl.
@@ -62,11 +62,11 @@ public class ServicioCursoAprobadoImpl extends ServicioGeneralImpl implements Se
                 append("\n inner join p.cursoAprobados as ca").
                 append("\n inner join ca.asignacion as a").   
                 append("\n where a.asignacionEstudianteCarrera = :asignacionEstudianteCarrera) and ").
-                append("\n acp2.curso = :curso and acp2.pensum = :pensum");
+                append("\n acp2 = :asignacionCursoPensum and acp2.pensum = :pensum");
         
         Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString()).
                 setParameter("asignacionEstudianteCarrera", asignacionEstudianteCarrera).
-                setParameter("curso", curso).
+                setParameter("asignacionCursoPensum", asignacionCursoPensum).
                 setParameter("pensum", pensumValido);
         
         return query.list();

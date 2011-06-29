@@ -34,10 +34,10 @@ import org.springframework.stereotype.Service;
 public class ServicioAsignacionCursoPensumImpl extends ServicioGeneralImpl implements ServicioAsignacionCursoPensum {
 
     @Override
-    public List<AsignacionCursoPensum> getListadoAsignacionCursoPensum(Curso curso, Pensum pensum) throws DataAccessException {
+    public List<AsignacionCursoPensum> getListadoAsignacionCursoPensum(AsignacionCursoPensum asignacionCursoPensum, Pensum pensum) throws DataAccessException {
         DetachedCriteria criteria = DetachedCriteria.forClass(AsignacionCursoPensum.class);
         criteria.add(Restrictions.and(
-                Restrictions.eq("curso", curso),
+                Restrictions.eq("asignacionCursoPensum", asignacionCursoPensum),
                 Restrictions.eq("pensum", pensum)));
 
         return this.daoGeneralImpl.find(criteria);

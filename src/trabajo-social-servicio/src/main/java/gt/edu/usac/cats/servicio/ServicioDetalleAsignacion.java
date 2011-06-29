@@ -7,6 +7,7 @@
 package gt.edu.usac.cats.servicio;
 
 import gt.edu.usac.cats.dominio.Asignacion;
+import gt.edu.usac.cats.dominio.AsignacionCursoPensum;
 import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
 import gt.edu.usac.cats.dominio.Curso;
 import gt.edu.usac.cats.dominio.DetalleAsignacion;
@@ -72,7 +73,8 @@ public interface ServicioDetalleAsignacion extends ServicioGeneral{
      * @param tipoAsignacion Contiene el pojo del tipo {@link TipoAsignacion} para filtrar los resultados
      * @throws HibernateException Si ocurrio un error de acceso a datos
      */
-     List<DetalleAsignacion> getListadoDetalleAsignacion(Curso curso, Semestre semestre, AsignacionEstudianteCarrera asignacionEstudianteCarrera, TipoAsignacion tipoAsignacion)
+     List<DetalleAsignacion> getListadoDetalleAsignacion(AsignacionCursoPensum asignacionCursoPensum, 
+             Semestre semestre, AsignacionEstudianteCarrera asignacionEstudianteCarrera, TipoAsignacion tipoAsignacion)
              throws HibernateException;
 
 //______________________________________________________________________________
@@ -120,7 +122,7 @@ public interface ServicioDetalleAsignacion extends ServicioGeneral{
      * @param tipoAsignacion Contiene el pojo del tipo (@link TipoAsignacion) para filtrar los resultados
      * @throws HibernateException Si ocurrio un error de acceso a datos
      */
-     int getTotalAsignaciones(Curso curso, AsignacionEstudianteCarrera asignacionEstudianteCarrera, TipoAsignacion tipoAsignacion)
+     int getTotalAsignaciones(AsignacionCursoPensum asignacionCursoPensum, AsignacionEstudianteCarrera asignacionEstudianteCarrera, TipoAsignacion tipoAsignacion)
              throws HibernateException;
 
  //______________________________________________________________________________
@@ -131,7 +133,7 @@ public interface ServicioDetalleAsignacion extends ServicioGeneral{
      * @param asignacionEstudianteCarrera Contiene el pojo del tipo {@link AsignacionEstudianteCarrera} para filtrar los resultados
      * @throws HibernateException Si ocurrio un error de acceso a datos
      */
-     boolean tieneZonaMinima(Curso curso, AsignacionEstudianteCarrera asignacionEstudianteCarrera)
+     boolean tieneZonaMinima(AsignacionCursoPensum asignacionCursoPensum, AsignacionEstudianteCarrera asignacionEstudianteCarrera)
              throws HibernateException, IOException;
  //______________________________________________________________________________
     /**
@@ -142,7 +144,7 @@ public interface ServicioDetalleAsignacion extends ServicioGeneral{
      * @param semestre Contiene el pojo del tipo {@link Semestre} para filtrar los resultados
      * @throws HibernateException Si ocurrio un error de acceso a datos
      */
-     boolean tieneZonaMinima(Curso curso, AsignacionEstudianteCarrera asignacionEstudianteCarrera, Semestre semestre)
+     boolean tieneZonaMinima(AsignacionCursoPensum asignacionCursoPensum, AsignacionEstudianteCarrera asignacionEstudianteCarrera, Semestre semestre)
              throws HibernateException, IOException;
 
 }

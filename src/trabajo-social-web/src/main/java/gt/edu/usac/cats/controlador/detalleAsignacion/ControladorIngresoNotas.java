@@ -176,7 +176,7 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota{
 
 
         if(!super.listadoDetalleAsignacion.isEmpty())
-            modelo.addAttribute("nombreCurso",super.listadoDetalleAsignacion.get(0).getHorario().getCurso().getNombre());
+            modelo.addAttribute("nombreCurso",super.listadoDetalleAsignacion.get(0).getHorario().getAsignacionCursoPensum().getCurso().getNombre());
         
         this.setModelo(modelo, true, datosIngresoNota);
         
@@ -242,7 +242,7 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota{
                                     tipoHorario);
             for (Horario horario : this.listadoHorario){
                 strOptions += "<option value=\"" + horario.getIdHorario() + "\">" +
-                        horario.getCurso().getNombre() + " - " + horario.getSeccion() +
+                        horario.getAsignacionCursoPensum().getCurso().getNombre() + " - " + horario.getSeccion() +
                         "</option>";
             }
         } catch (Exception e) {

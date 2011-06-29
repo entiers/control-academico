@@ -87,26 +87,26 @@ public class ControladorAsignacionRetrasadas extends ControladorAbstractoAsignac
                         Horario horario = detalleAsignacion.getHorario();
 
                         //Validando asignacion de curso en semestre actual
-                        if (servicioDetalleAsignacionImpl.getListadoDetalleAsignacion(horario.getCurso(), semestre, asignacionEstudianteCarrera, TipoAsignacion.ASIGNACION_CURSOS_SEMESTRE).isEmpty()) {
+                        if (servicioDetalleAsignacionImpl.getListadoDetalleAsignacion(horario.getAsignacionCursoPensum(), semestre, asignacionEstudianteCarrera, TipoAsignacion.ASIGNACION_CURSOS_SEMESTRE).isEmpty()) {
                             RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.retrasada.cursoNoAsignado", false);
                             return "asignacion/asignacionRetrasada";
                         }
 
                         //Validar zona minima en semestre actual
-                        if(!servicioDetalleAsignacionImpl.tieneZonaMinima(horario.getCurso(), asignacionEstudianteCarrera, semestre)){
+                        if(!servicioDetalleAsignacionImpl.tieneZonaMinima(horario.getAsignacionCursoPensum(), asignacionEstudianteCarrera, semestre)){
                             RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.vacaciones.sinZonaMinima", false);
                             return "asignacion/asignacionRetrasada";
                         }
 
                         //Validando asignaciones en retrasada
-                        if (!servicioDetalleAsignacionImpl.getListadoDetalleAsignacion(horario.getCurso(), semestre, asignacionEstudianteCarrera,datosAsignacion.getTipoAsignacion()).isEmpty()) {
+                        if (!servicioDetalleAsignacionImpl.getListadoDetalleAsignacion(horario.getAsignacionCursoPensum(), semestre, asignacionEstudianteCarrera,datosAsignacion.getTipoAsignacion()).isEmpty()) {
                             RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.cursoYaAsignado", false);
                             return "asignacion/asignacionRetrasada";
                         }
 
                         //Validando que el curso este pagado
                         if(servicioBoletaBancoImpl.listadoBoletaBanco(asignacionEstudianteCarrera.getEstudiante(),
-                                                                    horario.getCurso(), semestre, datosAsignacion.getTipoRubro()).isEmpty()){
+                                                                    horario.getAsignacionCursoPensum(), semestre, datosAsignacion.getTipoRubro()).isEmpty()){
                             RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.cursoNoCancelado", false);
                             return "asignacion/asignacionRetrasada";
                         }

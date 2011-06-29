@@ -83,10 +83,10 @@ public class ServicioCursoImpl extends ServicioGeneralImpl implements ServicioCu
     }
 
     @Override
-    public List<Curso> getCursoAsignacion(Carrera carrera, Semestre semestre, TipoHorario tipoHorario) throws DataAccessException {
+    public List<AsignacionCursoPensum> getCursoAsignacion(Carrera carrera, Semestre semestre, TipoHorario tipoHorario) throws DataAccessException {
          StringBuilder builder = new StringBuilder();
 
-        builder.append("select distinct horario.curso from Horario as horario ")
+        builder.append("select distinct horario.asignacionCursoPensum from Horario as horario ")
                .append("inner join horario.curso.asignacionCursoPensums aCP ")
                .append("where horario.semestre = :semestre ")
                .append("and aCP.pensum.carrera = :carrera ")

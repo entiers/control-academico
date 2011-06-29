@@ -65,7 +65,7 @@ public class ControladorCambioCierreSeccion {
         
         try{
             //buscarHorario
-            List listadoHorario = this.servicioHorarioImpl.getHorario(datosBusquedaHorario.getCurso(),
+            List listadoHorario = this.servicioHorarioImpl.getHorario(datosBusquedaHorario.getAsignacionCursoPensum(),
                                                     datosBusquedaHorario.getSemestre());
             
             modelo.addAttribute("listadoHorario",listadoHorario);

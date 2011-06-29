@@ -120,7 +120,7 @@ public class ControladorReporteAsignacionesYNotasCurso {
                                     tipoHorario);
             for (Horario horario : listadoHorario){
                 strOptions += "<option value=\"" + horario.getIdHorario() + "\">" +
-                        horario.getCurso().getNombre() + " - " + horario.getSeccion() +
+                        horario.getAsignacionCursoPensum().getCurso().getNombre() + " - " + horario.getSeccion() +
                         "</option>";
             }
         } catch (Exception e) {
