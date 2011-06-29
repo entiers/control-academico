@@ -209,8 +209,8 @@ public class ControladorDesAsignacionCursos {
             HorarioCurso horarioCurso = new HorarioCurso();
             
             Horario horario = desasignacion.getDetalleAsignacion().getHorario();
-            horarioCurso.setCodigo(horario.getCurso().getCodigo());
-            horarioCurso.setNombre(horario.getCurso().getNombre());
+            horarioCurso.setCodigo(horario.getAsignacionCursoPensum().getCurso().getCodigo());
+            horarioCurso.setNombre(horario.getAsignacionCursoPensum().getCurso().getNombre());
             horarioCurso.setSeccion(horario.getSeccion());
 
             listadoHorarioCursos.add(horarioCurso);

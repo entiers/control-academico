@@ -8,8 +8,8 @@
 package gt.edu.usac.cats.controlador.asignacion;
 
 import gt.edu.usac.cats.dominio.Asignacion;
+import gt.edu.usac.cats.dominio.AsignacionCursoPensum;
 import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
-import gt.edu.usac.cats.dominio.Curso;
 import gt.edu.usac.cats.dominio.DetalleAsignacion;
 import gt.edu.usac.cats.dominio.Estudiante;
 import gt.edu.usac.cats.dominio.Horario;
@@ -170,15 +170,15 @@ public class ControladorAsignacionCursos extends ControladorAbstractoAsignacion{
         try {
             this.asignacionEstudianteCarrera = this.servicioAsignacionEstudianteCarreraImpl.cargarEntidadPorID(AsignacionEstudianteCarrera.class, datosAsignacion.getIdAsignacionEstudianteCarrera());
             
-            this.listaCurso = this.servicioCursoImpl.getCursoAsignacion(this.asignacionEstudianteCarrera.getCarrera(),
+            this.listaAsignacionCursoPensum = this.servicioCursoImpl.getCursoAsignacion(this.asignacionEstudianteCarrera.getCarrera(),
                                                                             this.semestre,datosAsignacion.getTipoHorario());
 
-            if(this.listaCurso.isEmpty()){
+            if(this.listaAsignacionCursoPensum.isEmpty()){
                 modelo.addAttribute("noExisteHorario", true);
                 return "asignacion/asignacionCursos";
             }
 
-            this.listaHorario = this.servicioHorarioImpl.getHorario(this.listaCurso.get(0), this.semestre, datosAsignacion.getTipoHorario());
+            this.listaHorario = this.servicioHorarioImpl.getHorario(this.listaAsignacionCursoPensum.get(0), this.semestre, datosAsignacion.getTipoHorario());
 
             if(datosAsignacion.getTipoAsignacion()==TipoAsignacion.ASIGNACION_CURSOS_SEMESTRE)
                 retorno = "asignacion/asignacionSemestre";
@@ -201,7 +201,7 @@ public class ControladorAsignacionCursos extends ControladorAbstractoAsignacion{
             datosAsignacion.setTotalCursos(0);
 
             modelo.addAttribute("datosAsignacion", datosAsignacion);
-            modelo.addAttribute("listaCurso", this.listaCurso);
+            modelo.addAttribute("listaAsignacionCursoPensum", this.listaAsignacionCursoPensum);
             modelo.addAttribute("listaHorario", this.listaHorario);
         } catch (DataAccessException e) {
             // error de acceso a datos
@@ -245,20 +245,20 @@ public class ControladorAsignacionCursos extends ControladorAbstractoAsignacion{
      * @return String Contiene el nombre de la vista a mostrar
      */
     @RequestMapping(value = "getHorarioAsignacion.htm", method = RequestMethod.GET)
-    public @ResponseBody @JsonIgnore List<Horario> getHorario(@RequestParam Short idCurso,
+    public @ResponseBody @JsonIgnore List<Horario> getHorario(@RequestParam Short idAsignacionCursoPensum,
                                                             @RequestParam String idTipoHorario,
                                                             HttpServletRequest request) {
-        Curso curso = null;
+        AsignacionCursoPensum asignacionCursoPensum = null;
         semestre = servicioSemestreImpl.getSemestreActivo();
         try {
-            curso = servicioGeneralImpl.cargarEntidadPorID(Curso.class, idCurso);
+            asignacionCursoPensum = servicioGeneralImpl.cargarEntidadPorID(AsignacionCursoPensum.class, idAsignacionCursoPensum);
         } catch (DataAccessException e) {
             // error de acceso a datos
             RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "dataAccessException", false);
             log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
         }
         TipoHorario tipoHorario = TipoHorario.valueOf(idTipoHorario);
-        return servicioHorarioImpl.getHorario(curso, semestre, tipoHorario);
+        return servicioHorarioImpl.getHorario(asignacionCursoPensum, semestre, tipoHorario);
     }
 
 }

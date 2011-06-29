@@ -144,7 +144,7 @@ public class ControladorAgregarAsignacionCatedraticoHorario extends ControladorA
             this.listadoHorario = super.servicioAsignacionCatedraticoHorarioImpl.getHorarioDiponibleCatedratico(this.semestre,tipoHorario);                        
             for (Horario horario : this.listadoHorario){
                 strOptions += "<option value=\"" + horario.getIdHorario() + "\">" +
-                        horario.getCurso().getNombre() + " - " + horario.getSeccion() +
+                        horario.getAsignacionCursoPensum().getCurso().getNombre() + " - " + horario.getSeccion() +
                         "</option>";
             }
         } catch (Exception e) {

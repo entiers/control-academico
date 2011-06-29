@@ -7,6 +7,7 @@
 package gt.edu.usac.cats.controlador.asignacion;
 
 import gt.edu.usac.cats.dominio.Asignacion;
+import gt.edu.usac.cats.dominio.AsignacionCursoPensum;
 import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
 import gt.edu.usac.cats.dominio.Curso;
 import gt.edu.usac.cats.dominio.DetalleAsignacion;
@@ -59,7 +60,7 @@ public abstract class ControladorAbstractoAsignacion {
 //_____________________________________________________________________________
     protected List<AsignacionEstudianteCarrera> listaAEC;
 //_____________________________________________________________________________
-    protected List<Curso> listaCurso;
+    protected List<AsignacionCursoPensum> listaAsignacionCursoPensum;
 //_____________________________________________________________________________
     protected List<Horario> listaHorario;
 //_____________________________________________________________________________

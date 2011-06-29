@@ -6,8 +6,8 @@
 
 package gt.edu.usac.cats.controlador.asignacion;
 
+import gt.edu.usac.cats.dominio.AsignacionCursoPensum;
 import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
-import gt.edu.usac.cats.dominio.Curso;
 import gt.edu.usac.cats.dominio.DetalleAsignacion;
 import gt.edu.usac.cats.dominio.Horario;
 import gt.edu.usac.cats.dominio.Pensum;
@@ -71,7 +71,7 @@ public class ControladorAsignacionVacaciones extends ControladorAbstractoAsignac
             if(datosAsignacion.getTotalCursos()==0){
                 this.listaHorarioAsignacion =  new ArrayList<Horario>();
                 listaHorario = new ArrayList<Horario>();
-                listaCurso = servicioCursoImpl.getCursoAsignacion(asignacionEstudianteCarrera.getCarrera(),
+                listaAsignacionCursoPensum = servicioCursoImpl.getCursoAsignacion(asignacionEstudianteCarrera.getCarrera(),
                                                                     semestre,TipoHorario.VACACIONES);
             }
 
@@ -83,18 +83,19 @@ public class ControladorAsignacionVacaciones extends ControladorAbstractoAsignac
             }
             else{
                 //Cargar horario seleccionado al listadoHorarioAsignacion
-                if (!listaCurso.isEmpty()) {
-                    Curso curso = servicioGeneralImpl.cargarEntidadPorID(Curso.class, Short.parseShort(String.valueOf(datosAsignacion.getIdCurso())));
+                if (!listaAsignacionCursoPensum.isEmpty()) {
+                    AsignacionCursoPensum asignacionCursoPensum = servicioGeneralImpl.
+                            cargarEntidadPorID(AsignacionCursoPensum.class, Short.parseShort(String.valueOf(datosAsignacion.getIdAsignacionCursoPensum())));
                     Horario horario = servicioGeneralImpl.cargarEntidadPorID(Horario.class, datosAsignacion.getIdHorario());
                     listaHorarioAsignacion.add(horario);
                     datosAsignacion.incrementarTotalCursos();
-                    for (int i = 0; i < listaCurso.size(); i++) {
-                        if (listaCurso.get(i).getIdCurso()==curso.getIdCurso()) {
-                            listaCurso.remove(i);
+                    for (int i = 0; i < listaAsignacionCursoPensum.size(); i++) {
+                        if (listaAsignacionCursoPensum.get(i).getIdAsignacionCursoPensum()==asignacionCursoPensum.getIdAsignacionCursoPensum()) {
+                            listaAsignacionCursoPensum.remove(i);
                         }
                     }
-                    if (!listaCurso.isEmpty()) {
-                        listaHorario = servicioHorarioImpl.getHorario(listaCurso.get(0), semestre, TipoHorario.VACACIONES);
+                    if (!listaAsignacionCursoPensum.isEmpty()) {
+                        listaHorario = servicioHorarioImpl.getHorario(listaAsignacionCursoPensum.get(0), semestre, TipoHorario.VACACIONES);
                     } else {
                         listaHorario.clear();
                     }
@@ -155,19 +156,19 @@ public class ControladorAsignacionVacaciones extends ControladorAbstractoAsignac
                 }
                 for (Horario horario : this.listaHorarioAsignacion) {
                     //Validar zona minima
-                    if(!servicioDetalleAsignacionImpl.tieneZonaMinima(horario.getCurso(), asignacionEstudianteCarrera)){
+                    if(!servicioDetalleAsignacionImpl.tieneZonaMinima(horario.getAsignacionCursoPensum(), asignacionEstudianteCarrera)){
                         RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.vacaciones.sinZonaMinima", false);
                         return "asignacion/asignacionVacaciones";
                     }
 
                     //Validando asignaciones en vacaciones
-                    if (!servicioDetalleAsignacionImpl.getListadoDetalleAsignacion(horario.getCurso(), semestre, asignacionEstudianteCarrera,TipoAsignacion.ASIGNACION_CURSOS_VACACIONES).isEmpty()) {
+                    if (!servicioDetalleAsignacionImpl.getListadoDetalleAsignacion(horario.getAsignacionCursoPensum(), semestre, asignacionEstudianteCarrera,TipoAsignacion.ASIGNACION_CURSOS_VACACIONES).isEmpty()) {
                         RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.cursoYaAsignado", false);
                         return "asignacion/asignacionVacaciones";
                     }
 
                     //Validando total de asignaciones por curso
-                    if(servicioDetalleAsignacionImpl.getTotalAsignaciones(horario.getCurso(),
+                    if(servicioDetalleAsignacionImpl.getTotalAsignaciones(horario.getAsignacionCursoPensum(),
                                asignacionEstudianteCarrera, TipoAsignacion.ASIGNACION_CURSOS_VACACIONES)>=3){
                         RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.totalAsignacionesExcedidas", false);
                         return "asignacion/asignacionVacaciones";
@@ -175,7 +176,7 @@ public class ControladorAsignacionVacaciones extends ControladorAbstractoAsignac
 
                     //Validando que el curso este pagado
                     if(servicioBoletaBancoImpl.listadoBoletaBanco(asignacionEstudianteCarrera.getEstudiante(),
-                                                                horario.getCurso(), semestre, datosAsignacion.getTipoRubro()).isEmpty()){
+                                                                horario.getAsignacionCursoPensum(), semestre, datosAsignacion.getTipoRubro()).isEmpty()){
                         RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.cursoNoCancelado", false);
                         return "asignacion/asignacionVacaciones";
                     }
@@ -199,7 +200,7 @@ public class ControladorAsignacionVacaciones extends ControladorAbstractoAsignac
     }
 //  _____________________________________________________________________________
     private void cargarModelo(Model modelo){
-        modelo.addAttribute("listaCurso", listaCurso);
+        modelo.addAttribute("listaAsignacionCursoPensum", listaAsignacionCursoPensum);
         modelo.addAttribute("listaHorario", listaHorario);
         modelo.addAttribute("horarioElegido", true);
         modelo.addAttribute("listadoHorarioAsignados", this.listaHorarioAsignacion);
