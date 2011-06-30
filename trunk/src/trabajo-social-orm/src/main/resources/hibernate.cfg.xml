@@ -36,7 +36,6 @@
         <mapping class="gt.edu.usac.cats.dominio.AsignacionCatedraticoEscuela"/>
         <mapping class="gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera"/>
         <mapping class="gt.edu.usac.cats.dominio.CuentaCorriente"/>
-        <mapping class="gt.edu.usac.cats.dominio.Movimiento"/>
         <mapping class="gt.edu.usac.cats.dominio.Situacion"/>
         <mapping class="gt.edu.usac.cats.dominio.HistorialAsignacionEstudianteCarrera"/>
         <mapping class="gt.edu.usac.cats.dominio.LugarNacimiento"/>

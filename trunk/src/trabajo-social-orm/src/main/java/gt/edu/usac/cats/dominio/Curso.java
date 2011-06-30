@@ -44,7 +44,6 @@ public class Curso implements java.io.Serializable {
      private String nombre;
      private Set<ProgramaCurso> programaCursos = new HashSet<ProgramaCurso>(0);
      private Set<AsignacionCursoPensum> asignacionCursoPensums = new HashSet<AsignacionCursoPensum>(0);
-     private Set<Horario> horarios = new HashSet<Horario>(0);
      private Set<BoletaBanco> boletaBancos = new HashSet<BoletaBanco>(0);
      private Set<ConteoAsignacion> conteoAsignacions = new HashSet<ConteoAsignacion>(0);
 
@@ -97,8 +96,8 @@ public class Curso implements java.io.Serializable {
         this.boletaBancos = boletaBancos;
     }
 
-@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="curso")
-@JsonIgnore
+    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="curso")
+    @JsonIgnore
     public Set<AsignacionCursoPensum> getAsignacionCursoPensums() {
         return this.asignacionCursoPensums;
     }
@@ -106,17 +105,9 @@ public class Curso implements java.io.Serializable {
     public void setAsignacionCursoPensums(Set<AsignacionCursoPensum> asignacionCursoPensums) {
         this.asignacionCursoPensums = asignacionCursoPensums;
     }
-@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="curso")
-@JsonIgnore
-    public Set<Horario> getHorarios() {
-        return this.horarios;
-    }
 
-    public void setHorarios(Set<Horario> horarios) {
-        this.horarios = horarios;
-    }
-@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="curso")
-@JsonIgnore
+    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="curso")
+    @JsonIgnore
     public Set<ConteoAsignacion> getConteoAsignacions() {
         return this.conteoAsignacions;
     }
