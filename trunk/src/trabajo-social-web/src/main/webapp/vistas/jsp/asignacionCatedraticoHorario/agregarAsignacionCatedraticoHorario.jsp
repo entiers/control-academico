@@ -4,13 +4,13 @@
     Author     : Carlos Solorzano
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
    "http://www.w3.org/TR/html4/loose.dtd">
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 
 <html>
     <head>
@@ -54,15 +54,15 @@
                 });
             });
         </script>
-        <title><fmt:message key="asignacionHorarioCatedratico.titulo" /></title>
+        <title><fmt:message key="admin.asignacionHorarioCatedratico.titulo" /></title>
     </head>
     <body>
-        <h1><fmt:message key="asignacionHorarioCatedratico.titulo" /></h1>
+        <h1><fmt:message key="admin.asignacionHorarioCatedratico.titulo" /></h1>
         
         <%-- fragmento que muestra la informacion del catedratico--%>        
         <%@include file="../../jspf/formularios/informacion/formularioInformacionCatedratico.jspf" %>
         
-        <form:form modelAttribute="datosIngresoNota" method="post" id="frmBusqueda" >            
+        <form:form modelAttribute="datosIngresoNota" method="post" >            
             <fieldset>
                 <legend><fmt:message key="ingresoNota.busquedaAsignaciones"/></legend>
                 <div id="divCampos">

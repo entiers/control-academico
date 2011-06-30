@@ -69,7 +69,7 @@ public class ServicioAsignacionCatedraticoHorarioImpl extends ServicioGeneralImp
                .append(" where horario.semestre = :semestre")
                .append(" and horario.tipo =:tipoHorario ")
                .append(" and not exists elements (horario.asignacionCatedraticoHorarios) ")
-               .append(" order by horario.curso.nombre");
+               .append(" order by horario.asignacionCursoPensum.curso.nombre");
         
         Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
         query.setParameter("semestre", semestre);

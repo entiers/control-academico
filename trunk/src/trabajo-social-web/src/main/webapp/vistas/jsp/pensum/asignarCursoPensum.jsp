@@ -58,9 +58,9 @@
                     <b><fmt:message key="asignarCursoPensum.creditosTeoricos"/>: </b>${asignacionCursoPensum.creditosTeoricos} <br/>
                 </display:column>
                 <display:column titleKey="asignarCursoPensum.notas">
-                    <b><fmt:message key="ingresoNotas.zona"/>: </b>${asignacionCursoPensum.zona} <br/>
+                    <b><fmt:message key="ingresoNota.zona"/>: </b>${asignacionCursoPensum.zona} <br/>
                     <b><fmt:message key="asignarCursoPensum.porcentajeLaboratorio"/>: </b>${asignacionCursoPensum.laboratorio} %<br/>
-                    <b><fmt:message key="ingresoNotas.final"/>: </b>${asignacionCursoPensum.examenFinal} <br/>
+                    <b><fmt:message key="ingresoNota.final"/>: </b>${asignacionCursoPensum.examenFinal} <br/>
                 </display:column>
                 <sec:authorize access="hasAnyRole('ROLE_EDITAR_ASIGNACION_CURSO_PENSUM', 'ROLE_ADMINISTRAR_PRERREQUISITOS', 'ROLE_ELIMINAR_ASIGNACION_CURSO_PENSUM')">
                     <display:column titleKey="acciones" style="text-align:center;">
