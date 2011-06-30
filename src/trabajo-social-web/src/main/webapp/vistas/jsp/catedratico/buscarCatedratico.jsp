@@ -95,11 +95,11 @@
                                 <sec:authorize access="hasRole('ROLE_ASIGNACION_HORARIO_CATEDRATICO')">
                                     <td>
                                         <a href="buscarAsignacionCatedraticoHorario.htm?idCatedratico=${catedratico.idCatedratico}">
-                                            <fmt:message key="admin.asignacionCatedraticoHorario.consultar"/>
+                                            <fmt:message key="admin.asignacionHorarioCatedratico.consultar"/>
                                         </a>
                                         <br/>
                                         <a href="agregarAsignacionCatedraticoHorario.htm?idCatedratico=${catedratico.idCatedratico}">
-                                            <fmt:message key="admin.asignacionCatedraticoHorario.realizar"/>
+                                            <fmt:message key="admin.asignacionHorarioCatedratico.realizar"/>
                                         </a>
                                     </td>
                                 </sec:authorize>

@@ -35,7 +35,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @version 1.0
  */
 @Controller("controladorAgregarAsignacionCatedraticoHorario")
-@RequestMapping(value="agregarAsignacionCatedraticoHorario.htm")
 public class ControladorAgregarAsignacionCatedraticoHorario extends ControladorAbstractoAsignacionCatedraticoHorario{
 //______________________________________________________________________________       
     private static Logger log = Logger.getLogger(ControladorAgregarAsignacionCatedraticoHorario.class);
@@ -55,22 +54,21 @@ public class ControladorAgregarAsignacionCatedraticoHorario extends ControladorA
      * @param idCatedratico
      * @return 
      */
-    @RequestMapping(method= RequestMethod.GET)
-    public String getAgregarCatHorario(Model modelo, HttpServletRequest request,@RequestParam Short idCatedratico){  
-            
+    @RequestMapping(value="agregarAsignacionCatedraticoHorario.htm",method= RequestMethod.GET)
+    public String getAgregarCatHorario(Model modelo, HttpServletRequest request, Integer idCatedratico){
+        modelo.addAttribute("datosIngresoNota", new DatosIngresoNota());
         if(idCatedratico==null){
             RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "asignacionHorarioCatedratico.idCatedratico.nulo", false);
             RequestUtil.agregarRedirect(request, "buscarCatedratico.htm");
             return "asignacionCatedraticoHorario/agregarAsignacionCatedraticoHorario";
         }
         try {
-            super.catedratico = super.servicioGeneralImpl.cargarEntidadPorID(Catedratico.class, idCatedratico);            
+            super.catedratico = super.servicioGeneralImpl.cargarEntidadPorID(Catedratico.class, Short.parseShort(idCatedratico.toString()) );
             if(super.catedratico==null){
                 RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "asignacionHorarioCatedratico.catedraticoNoEncontrado", false);
                 RequestUtil.agregarRedirect(request, "buscarCatedratico.htm");
                 return "asignacionCatedraticoHorario/agregarAsignacionCatedraticoHorario";
-            }        
-            
+            }
             super.semestre = super.servicioSemestreImpl.getSemestreActivo();
             this.listadoHorario = this.servicioAsignacionCatedraticoHorarioImpl.getHorarioDiponibleCatedratico(this.semestre, TipoHorario.values()[0]);
             this.crearModelo(modelo);
@@ -83,6 +81,7 @@ public class ControladorAgregarAsignacionCatedraticoHorario extends ControladorA
         finally{
             return "asignacionCatedraticoHorario/agregarAsignacionCatedraticoHorario";
         }
+        
     }            
 //______________________________________________________________________________    
     /**
@@ -95,11 +94,12 @@ public class ControladorAgregarAsignacionCatedraticoHorario extends ControladorA
      * @param idCatedratico
      * @return 
      */   
-    @RequestMapping(method= RequestMethod.POST)
+    @RequestMapping(value="agregarAsignacionCatedraticoHorario.htm",method= RequestMethod.POST)
     public String postRealizarAgregarCatHorario(@Valid DatosIngresoNota datosIngresoNota,
                                         BindingResult bindingResult,
                                         Model modelo, HttpServletRequest request){
-        
+
+        modelo.addAttribute("datosIngresoNota", new DatosIngresoNota());
         try{
             this.crearModelo(modelo);
             AsignacionCatedraticoHorario aCH = new AsignacionCatedraticoHorario();
@@ -122,9 +122,8 @@ public class ControladorAgregarAsignacionCatedraticoHorario extends ControladorA
     
     private void crearModelo(Model modelo){
         modelo.addAttribute("catedratico", super.catedratico);
-        modelo.addAttribute("listaTipoHorario",TipoHorario.values());        
-        modelo.addAttribute("listaHorario",this.listadoHorario);  
-        modelo.addAttribute("datosIngresoNota", new DatosIngresoNota());
+        modelo.addAttribute("listaTipoHorario",TipoHorario.values());
+        modelo.addAttribute("listaHorario",this.listadoHorario);          
     }
     
     //  _____________________________________________________________________________
