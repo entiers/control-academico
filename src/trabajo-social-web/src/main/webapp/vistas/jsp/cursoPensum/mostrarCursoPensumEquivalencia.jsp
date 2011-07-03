@@ -4,7 +4,7 @@
     Author     : Mario Batres
 --%>
 
-<%@page contentType="text/html" pageEncoding="ISO-8859-1"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 
@@ -17,11 +17,11 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title><fmt:message key="cursoPensum.mostrar.titulo"/></title>
+        <title><fmt:message key="cursoPensum.equivalencia.titulo"/></title>
         <%@include file="../../jspf/plantilla/scriptPopupMensajeDefault.jspf" %>
     </head>
     <body>
-        <h1><fmt:message key="cursoPensum.mostrar.titulo"/></h1>
+        <h1><fmt:message key="cursoPensum.equivalencia.titulo"/></h1>
         <div>
             <c:if test="${not empty wrapperCursoPensumEquivalencia}">
                 <form:form modelAttribute="wrapperCursoPensumEquivalencia" method="post">
@@ -50,9 +50,13 @@
                     </div>
 
                     <input type="submit" value="<fmt:message key='btnBuscar' />" />
-                    <a href="asignarCursoPensumEquivalencia.htm">
-                        <fmt:message key="cursoPensum.asignarCursoPensumEquivalencia.titulo" />
-                    </a>
+
+
+                    <sec:authorize access="hasRole('ROLE_ASIGNACION_EQUIVALENCIAS')">
+                        <a href="asignarCursoPensumEquivalencia.htm">
+                            <fmt:message key="cursoPensum.asignarCursoPensumEquivalencia.titulo" />
+                        </a>
+                    </sec:authorize>
 
                 </form:form>
             </c:if>
@@ -70,9 +74,11 @@
                     <c:forEach items="${cursoPensum.asignacionCursoPensumsForIdCursoPensumEquivalencia}"
                                var="cursoPensumEquivalente">
                         ${cursoPensumEquivalente.curso.codigoNombre}
-                        <a href="eliminarCursoPensumEquivalencia.htm?idAsignacionCursoPensumOriginal=${cursoPensum.idAsignacionCursoPensum}&idAsignacionCursoPensumEquivalente=${cursoPensumEquivalente.idAsignacionCursoPensum}">
-                            <fmt:message key="link.eliminar" />
-                        </a>
+                        <sec:authorize access="hasRole('ELIMINAR_ASIGNACION_EQUIVALENCIAS')">
+                            <a href="eliminarCursoPensumEquivalencia.htm?idAsignacionCursoPensumOriginal=${cursoPensum.idAsignacionCursoPensum}&idAsignacionCursoPensumEquivalente=${cursoPensumEquivalente.idAsignacionCursoPensum}">
+                                <fmt:message key="link.eliminar" />
+                            </a>
+                        </sec:authorize>
                         <br/>
                     </c:forEach>
                 </display:column>
