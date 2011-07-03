@@ -46,6 +46,7 @@
                 <value>/idiomas/textosDetalleAsignacion</value>
                 <value>/idiomas/textosCursoPensum</value>
                 <value>/idiomas/textosAdministracion</value>
+                <value>/idiomas/textosAsignacionCatedraticoHorario</value>
             </list>
         </property>
 	<property name="cacheSeconds" value="0" />

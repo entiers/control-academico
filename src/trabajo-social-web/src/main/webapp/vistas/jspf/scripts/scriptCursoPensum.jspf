@@ -7,12 +7,13 @@
     $(document).ready(function() {        
 
         //Validacion notas
-        $('#frmBusqueda').submit(function(){
+        $('form').submit(function(){
             var zona = $('#zona').val(); 
             var examenFinal = $('#examenFinal').val();
             if(!isNaN(zona) & !isNaN(examenFinal)){
-                if(zona + examenFinal > 100){
-                    $('#lblErrorNotas').html('<fmt:message key="ingresoNota.validaciones.sumaFinalZona"/>');
+                var total= parseInt(zona) + parseInt(examenFinal);
+                if(total != 100){
+                    alert('<fmt:message key="ingresoNota.validaciones.sumaFinalZona"/>');
                     return false;
                 }
             }

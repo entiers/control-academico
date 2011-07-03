@@ -56,7 +56,7 @@ public class ControladorAgregarAsignacionCatedraticoHorario extends ControladorA
      */
     @RequestMapping(value="agregarAsignacionCatedraticoHorario.htm",method= RequestMethod.GET)
     public String getAgregarCatHorario(Model modelo, HttpServletRequest request, Integer idCatedratico){
-        modelo.addAttribute("datosIngresoNota", new DatosIngresoNota());
+
         if(idCatedratico==null){
             RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "asignacionHorarioCatedratico.idCatedratico.nulo", false);
             RequestUtil.agregarRedirect(request, "buscarCatedratico.htm");
@@ -64,11 +64,6 @@ public class ControladorAgregarAsignacionCatedraticoHorario extends ControladorA
         }
         try {
             super.catedratico = super.servicioGeneralImpl.cargarEntidadPorID(Catedratico.class, Short.parseShort(idCatedratico.toString()) );
-            if(super.catedratico==null){
-                RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "asignacionHorarioCatedratico.catedraticoNoEncontrado", false);
-                RequestUtil.agregarRedirect(request, "buscarCatedratico.htm");
-                return "asignacionCatedraticoHorario/agregarAsignacionCatedraticoHorario";
-            }
             super.semestre = super.servicioSemestreImpl.getSemestreActivo();
             this.listadoHorario = this.servicioAsignacionCatedraticoHorarioImpl.getHorarioDiponibleCatedratico(this.semestre, TipoHorario.values()[0]);
             this.crearModelo(modelo);
@@ -76,6 +71,7 @@ public class ControladorAgregarAsignacionCatedraticoHorario extends ControladorA
         catch(Exception ex){
             // error de acceso a datos
             RequestUtil.crearMensajeRespuesta(request, null, "dataAccessException", false);
+            RequestUtil.agregarRedirect(request, "buscarCatedratico.htm");
             log.error(Mensajes.DATA_ACCESS_EXCEPTION, ex);
         }
         finally{
@@ -99,19 +95,19 @@ public class ControladorAgregarAsignacionCatedraticoHorario extends ControladorA
                                         BindingResult bindingResult,
                                         Model modelo, HttpServletRequest request){
 
-        modelo.addAttribute("datosIngresoNota", new DatosIngresoNota());
         try{
-            this.crearModelo(modelo);
             AsignacionCatedraticoHorario aCH = new AsignacionCatedraticoHorario();
             aCH.setCatedratico(super.catedratico);
             aCH.setHorario(datosIngresoNota.getHorario());
             super.servicioGeneralImpl.agregar(aCH);
-            RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "asignacionHorarioCatedratico.exitosa", false);
-            RequestUtil.agregarRedirect(request, "agregarAsignacionCatedraticoHorario.htm");                        
+            this.crearModelo(modelo);
+            RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "asignacionHorarioCatedratico.exitosa", true);
+            RequestUtil.agregarRedirect(request, "buscarCatedratico.htm");
         }
         catch(Exception ex){
              // error de acceso a datos
             RequestUtil.crearMensajeRespuesta(request, null, "dataAccessException", false);
+            RequestUtil.agregarRedirect(request, "buscarCatedratico.htm");
             log.error(Mensajes.DATA_ACCESS_EXCEPTION, ex);
         }
         finally{
@@ -121,9 +117,11 @@ public class ControladorAgregarAsignacionCatedraticoHorario extends ControladorA
     }    
     
     private void crearModelo(Model modelo){
+        modelo.addAttribute("datosIngresoNota", new DatosIngresoNota());
         modelo.addAttribute("catedratico", super.catedratico);
         modelo.addAttribute("listaTipoHorario",TipoHorario.values());
-        modelo.addAttribute("listaHorario",this.listadoHorario);          
+        modelo.addAttribute("listaHorario",this.listadoHorario);
+        modelo.addAttribute("modeloOK",true);
     }
     
     //  _____________________________________________________________________________

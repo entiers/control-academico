@@ -4,10 +4,10 @@
  */
 package gt.edu.usac.cats.controlador.horario;
 
+import gt.edu.usac.cats.dominio.AsignacionCursoPensum;
 import gt.edu.usac.cats.dominio.Curso;
 import gt.edu.usac.cats.dominio.Salon;
 import gt.edu.usac.cats.dominio.Semestre;
-import gt.edu.usac.cats.dominio.busqueda.DatosBusquedaHorario;
 import gt.edu.usac.cats.dominio.wrapper.WrapperHorario;
 import gt.edu.usac.cats.enums.Dia;
 import gt.edu.usac.cats.servicio.ServicioHorario;
@@ -37,7 +37,7 @@ public abstract class ControladorAbstractoHorario {
     /**
      * <p>Listado de todas las cursos disponibles.</p>
      */
-    protected List<Curso> listadoCursos;
+    protected List<AsignacionCursoPensum> listadoCursos;
 //______________________________________________________________________________
     /**
      * <p>Contiene metodos que permiten el manejo de la informacion relacionada
@@ -56,7 +56,7 @@ public abstract class ControladorAbstractoHorario {
         modelo.addAttribute("wrapperHorario", wrapperHorario);
 
         if (buscar) {
-            this.listadoCursos = this.servicioHorarioImpl.listarEntidad(Curso.class, true, "nombre");
+            this.listadoCursos = this.servicioHorarioImpl.listarEntidad(AsignacionCursoPensum.class,true,"pensum");
         }
 
         modelo.addAttribute("listadoCursos", this.listadoCursos);

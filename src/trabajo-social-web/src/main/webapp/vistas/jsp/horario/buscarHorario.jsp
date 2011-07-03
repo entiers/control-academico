@@ -100,7 +100,7 @@
 
             <display:table class="ui-widget ui-widget-content" name="listadoHorarios" id="horario" requestURI="buscarHorarioPag.htm"
                            pagesize="${pageSize}" >
-                <display:column property="curso.nombre" titleKey="agregarHorario.curso" />
+                <display:column property="asignacionCursoPensum.curso.nombre" titleKey="agregarHorario.curso" />
                 <display:column property="horarioDiasAsString" titleKey="agregarHorario.dia" />
                 <display:column property="seccion" titleKey="agregarHorario.seccion" style="text-align: center;"/>
                 <display:column titleKey="agregarHorario.horaInicio" >

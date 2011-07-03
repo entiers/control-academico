@@ -42,15 +42,17 @@
 
 
 <div id="divCampos">
-    <form:label for="curso.idCurso" path="curso.idCurso">
+    <form:label for="asignacionCursoPensum.idAsignacionCursoPensum" path="asignacionCursoPensum.idAsignacionCursoPensum">
         <fmt:message key="agregarHorario.curso"/>: *
     </form:label>
 
-    <form:select path="curso.idCurso" cssStyle="width: 250px;">
-        <form:option  value="" label="Seleccionar un valor" />
-        <form:options items="${listadoCursos}" itemValue="idCurso" itemLabel="nombre" />
+    <form:select path="asignacionCursoPensum.idAsignacionCursoPensum" cssStyle="width: 250px;">
+        <form:option value="" label="Seleccionar un valor" />
+        <c:forEach items="${listadoCursos}" var="aCP">
+            <form:option value="${aCP.idAsignacionCursoPensum}">${aCP.pensum.codigo} - ${aCP.curso.nombre}</form:option>>
+        </c:forEach>
     </form:select>
-    <form:errors path="curso.idCurso" cssClass="claseError" />
+    <form:errors path="asignacionCursoPensum.idAsignacionCursoPensum" cssClass="claseError" />
 </div>
 
 <div id="divCampos">

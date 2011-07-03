@@ -19,7 +19,7 @@
                             $("#horaFin").val("<fmt:formatDate value="${wrapperHorario.horaFin}"  pattern="HH:mm"/>");
                             $("#horaInicio").val("<fmt:formatDate value="${wrapperHorario.horaInicio}"  pattern="HH:mm"/>");
                             $("#seccion").val("${wrapperHorario.seccion}");
-                            $("#curso.idCurso").val("${wrapperHorario.curso.idCurso}");
+                            $("#asignacionCursoPensum.idAsignacionCursoPensum").val("${wrapperHorario.asignacionCursoPensum.idAsignacionCursoPensum}");
                             $("#salon.idSalon").val("${wrapperHorario.salon.idSalon}");
                             $("#semestre.idSemestre").val("${wrapperHorario.semestre.idSemestre}");
                             $("#habilitado").val("${wrapperHorario.habilitado}");

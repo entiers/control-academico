@@ -23,7 +23,7 @@
                 });
 
                 //Validacion frmBusqueda
-                $('#frmBusqueda').submit(function(){
+                $('form').submit(function(){
                     if($('#slcHorario').val()==null){
                         $('#lblErrorHorario').html('Campo obligatorio');
                         return false;
@@ -58,34 +58,37 @@
     </head>
     <body>
         <h1><fmt:message key="admin.asignacionHorarioCatedratico.titulo" /></h1>
-        
-        <%-- fragmento que muestra la informacion del catedratico--%>        
-        <%@include file="../../jspf/formularios/informacion/formularioInformacionCatedratico.jspf" %>
-        
-        <form:form modelAttribute="datosIngresoNota" method="post" >            
-            <fieldset>
-                <legend><fmt:message key="ingresoNota.busquedaAsignaciones"/></legend>
-                <div id="divCampos">
-                    <form:label for="tipoHorario" path="tipoHorario"><fmt:message key="agregarHorario.tipo"/>:</form:label>
-                    <form:select path="tipoHorario"
-                                 id="slcTipoHorario"
-                                 items="${listaTipoHorario}"
-                                 itemLabel="descripcion"/>
 
-                </div>
-                <div id="divCampos">
-                    <form:label for="horario.idHorario" path="horario.idHorario"><fmt:message key="horario.menu"/>:</form:label>
-                    <form:select path="horario.idHorario" id="slcHorario">
-                        <c:forEach items="${listaHorario}" var="horario">
-                            <form:option value="${horario.idHorario}">${horario.curso.nombre} - ${horario.seccion}</form:option>
-                        </c:forEach>
-                    </form:select>
-                    <span id="lblErrorHorario" class="claseError" />
-                </div>
+        <c:if test="${modeloOK}">
+            <%-- fragmento que muestra la informacion del catedratico--%>
+            <%@include file="../../jspf/formularios/informacion/formularioInformacionCatedratico.jspf" %>
 
-                <input id="btnBuscar" type="submit" value='<fmt:message key="miscursos.asignacionCursos.realizar"/>' />
-            </fieldset>
-        </form:form>
+            <form:form modelAttribute="datosIngresoNota" method="post" >
+                <fieldset>
+                    <legend><fmt:message key="ingresoNota.busquedaAsignaciones"/></legend>
+                    <div id="divCampos">
+                        <form:label for="tipoHorario" path="tipoHorario"><fmt:message key="agregarHorario.tipo"/>:</form:label>
+                        <form:select path="tipoHorario"
+                                     id="slcTipoHorario"
+                                     items="${listaTipoHorario}"
+                                     itemLabel="descripcion"/>
+
+                    </div>
+                    <div id="divCampos">
+                        <form:label for="horario.idHorario" path="horario.idHorario"><fmt:message key="horario.menu"/>:</form:label>
+                        <form:select path="horario.idHorario" id="slcHorario">
+                            <c:forEach items="${listaHorario}" var="horario">
+                                <form:option value="${horario.idHorario}">${horario.asignacionCursoPensum.curso.nombre} - ${horario.seccion}</form:option>
+                            </c:forEach>
+                        </form:select>
+                        <span id="lblErrorHorario" class="claseError" />
+                    </div>
+
+                    <input id="btnBuscar" type="submit" value='<fmt:message key="miscursos.asignacionCursos.realizar"/>' />
+                    <a href="javascript:history.back();"><fmt:message key="link.regresar"/></a>
+                </fieldset>
+            </form:form>
+        </c:if>
         
         <%-- fragmento que muestra como mensaje popup el resultado de las operaciones --%>
         <%@include file="../../jspf/plantilla/popupMensaje.jspf" %>
