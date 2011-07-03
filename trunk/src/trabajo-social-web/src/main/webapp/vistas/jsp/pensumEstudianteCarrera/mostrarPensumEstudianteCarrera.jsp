@@ -102,15 +102,19 @@
                     <display:column titleKey="pensumEstudianteCarrera.fechaFin" style="text-align:center;">
                         <fmt:formatDate value="${pensumEstudianteCarrera.fechaFin}" pattern="dd-MM-yyyy" />
                     </display:column>
-                    <sec:authorize access="hasRole('ROLE_ELIMINAR_PENSUM_ESTUDIANTE_CARRERA')">
+                    <sec:authorize access="hasAnyRole('ROLE_ELIMINAR_PENSUM_ESTUDIANTE_CARRERA', 'ROLE_REALIZAR_EQUIVALENCIAS')">
                         <display:column titleKey="acciones" style="text-align:center;">
-                            <a href="eliminarPensumEstudianteCarrera.htm?idPensumEstudianteCarrera=${pensumEstudianteCarrera.idPensumEstudianteCarrera}">
-                                <fmt:message key="mostrarPensumEstudianteCarrera.link.eliminar"/>
-                            </a> <br/>
-                            <a style="cursor: pointer"
-                               onclick="javascript:llenarFormularioParaEquivalencias(${pensumEstudianteCarrera.pensum.idPensum}, '${pensumEstudianteCarrera.pensum.codigo}')">
-                                <fmt:message key="cursoPensum.link.equivalencias.pensums" />
-                            </a>
+                            <sec:authorize access="hasRole('ROLE_ELIMINAR_PENSUM_ESTUDIANTE_CARRERA')">
+                                <a href="eliminarPensumEstudianteCarrera.htm?idPensumEstudianteCarrera=${pensumEstudianteCarrera.idPensumEstudianteCarrera}">
+                                    <fmt:message key="mostrarPensumEstudianteCarrera.link.eliminar"/>
+                                </a> <br/>
+                            </sec:authorize>
+                            <sec:authorize access="hasRole('ROLE_REALIZAR_EQUIVALENCIAS')">
+                                <a style="cursor: pointer"
+                                   onclick="javascript:llenarFormularioParaEquivalencias(${pensumEstudianteCarrera.pensum.idPensum}, '${pensumEstudianteCarrera.pensum.codigo}')">
+                                    <fmt:message key="cursoPensum.link.equivalencias.pensums" />
+                                </a>
+                            </sec:authorize>
                         </display:column>
                     </sec:authorize>
                 </display:table>
@@ -120,7 +124,7 @@
         <div id="divForm2" title="<fmt:message key="cursoPensum.link.equivalencias.pensums" />">
             <form:form id="form2" action="mostrarParaRealizarEquivalenciaPorPensum.htm"
                        method="post" modelAttribute="wrapperEquivalenciaPorPensum">
-                <div class="divCampos">
+                <div id="divCampos">
                     <form:label for="pensumOriginal.idPensum" path="pensumOriginal.idPensum">
                         <fmt:message key="pensumEstudianteCarrera.pensum"/>: *
                     </form:label>
