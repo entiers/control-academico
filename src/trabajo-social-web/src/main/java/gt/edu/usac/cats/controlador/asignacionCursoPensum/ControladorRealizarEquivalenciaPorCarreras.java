@@ -14,6 +14,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import javax.validation.Valid;
+import org.springframework.validation.BindingResult;
+import gt.edu.usac.cats.dominio.wrapper.WrapperAsignacionEquivalencia;
+import javax.servlet.http.HttpServletRequest;
+
 
 /**
  *
@@ -46,6 +51,14 @@ public class ControladorRealizarEquivalenciaPorCarreras extends ControladorAbstr
                 wrapperEquivalenciaPorCarrera.getAsignacionEstudianteCarreraEquivalencia());
 
         this.agregarAtributosDefault(modelo, wrapperAsignacionEquivalencia);
+
+	this.nombreAction = "realizarEquivalenciaPorCarreras.htm";
         return "cursoPensum/mostrarParaRealizarEquivalencia";
+    }
+
+    @RequestMapping(value = "realizarEquivalenciaPorCarreras.htm", method = RequestMethod.POST)
+	public String realizarEquivalenciaPorCarreras(@Valid WrapperAsignacionEquivalencia wrapperAsignacionEquivalencia,
+						     BindingResult bindingResult, Model modelo, HttpServletRequest request){
+	return this.realizarEquivalencia(wrapperAsignacionEquivalencia, bindingResult,modelo,request);
     }
 }

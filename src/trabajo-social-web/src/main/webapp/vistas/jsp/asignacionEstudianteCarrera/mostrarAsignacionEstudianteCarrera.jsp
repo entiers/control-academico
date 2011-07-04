@@ -146,9 +146,28 @@
                         <fmt:formatDate value="${asignacionEstudianteCarrera.fechaCierre}" pattern="dd-MM-yyyy" var="fechaCierre" />
                         ${fechaCierre}
                     </display:column>
+		    <display:column titileKey="acciones" style="text-align:center">
+		         <a style="cursor:pointer;" onclick="llenarFormularioEquivalencia(${asignacionEstudianteCarrera.getIdAsignacionEstudianteCarrera});">  		    
+		         Realizar equivalencias a la carrera actual
+			 </a>
+		    </display:column>
                 </display:table>
             </center>
         </fieldset>
+
+	<form:form id="formEquivalencia" modelAttribute="wrapperEquivalenciaPorCarrera" method="POST" 
+		   action="mostrarParaRealizarEquivalenciaPorCarreras.htm">
+		   <div id="divCampos">
+		   	<form:label for="asignacionEstudianteCarreraOriginal.idAsignacionEstudianteCarrera"
+				    path="asignacionEstudianteCarreraOriginal.idAsignacionEstudianteCarrera">
+			</form:label>
+			<form:select path="asignacionEstudianteCarreraOriginal.idAsignacionEstudianteCarrera"
+				values="${listadoAsignacionEstudianteCarrera}"
+				itemValue="idAsignacionEstudianteCarrera" itemLabel="carrera.codigoNombre"    />
+				     
+			
+		   </div>
+	</form:form>
 
 
         <div style="margin: 20px 0 0 0; ">

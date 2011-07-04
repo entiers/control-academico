@@ -26,13 +26,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @author Mairo Batres
  * @version 1.0
  */
-public class ControladorAbstractoRealizarEquivalencia {
+public abstract class ControladorAbstractoRealizarEquivalencia {
 
     @Resource
     protected ServicioAsignacionCursoPensum servicioAsignacionCursoPensumImpl;
     protected List<AsignacionCursoPensum> listadoEquivalencias;
     private Logger log = Logger.getLogger(ControladorAbstractoRealizarEquivalencia.class);
-
+    protected String nombreAction;
 
     /**
      * @param modelo
@@ -43,6 +43,7 @@ public class ControladorAbstractoRealizarEquivalencia {
 
         modelo.addAttribute("listadoEquivalencias", this.listadoEquivalencias);
         modelo.addAttribute("wrapperAsignacionEquivalencia", wrapperAsignacionEquivalencia);
+	modelo.addAttribute("nombreAction", this.nombreAction);
     }
 
     /**
@@ -51,8 +52,8 @@ public class ControladorAbstractoRealizarEquivalencia {
      * @param modelo
      * @param request
      */
-    @RequestMapping(value = "realizarEquivalencias.htm", method = RequestMethod.POST)
-    public String realizarEquivalencias(@Valid WrapperAsignacionEquivalencia wrapperAsignacionEquivalencia,
+    // @RequestMapping(value = "realizarEquivalencias.htm", method = RequestMethod.POST)
+    protected  String realizarEquivalencia(WrapperAsignacionEquivalencia wrapperAsignacionEquivalencia,
             BindingResult bindingResult, Model modelo, HttpServletRequest request) {
 
         if (!bindingResult.hasErrors()) {

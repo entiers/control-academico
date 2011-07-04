@@ -12,6 +12,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import javax.validation.Valid;
+import org.springframework.validation.BindingResult;
+import gt.edu.usac.cats.dominio.wrapper.WrapperAsignacionEquivalencia;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -35,6 +39,13 @@ public class ControladorRealizarEquivalenciaPorPensums extends ControladorAbstra
                 wrapperEquivalenciaPorPensum.getAsignacionEstudianteCarrera()   );
 
         this.agregarAtributosDefault(modelo, wrapperAsignacionEquivalencia);
+	this.nombreAction = "realizarEquivalenciaPorPensums.htm";
         return "cursoPensum/mostrarParaRealizarEquivalencia";
+    }
+
+    @RequestMapping(value = "realizarEquivalenciaPorPensums.htm", method = RequestMethod.POST)
+    public String realizarEquivalenciaPorPensums(@Valid WrapperAsignacionEquivalencia wrapperAsignacionEquivalencia,
+						 BindingResult bindingResult, Model modelo, HttpServletRequest request){
+	return this.realizarEquivalencia(wrapperAsignacionEquivalencia, bindingResult, modelo, request);
     }
 }
