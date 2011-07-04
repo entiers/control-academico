@@ -121,22 +121,23 @@
             </fieldset>
         </center>
 
-        <div id="divForm2" title="<fmt:message key="cursoPensum.link.equivalencias.pensums" />">
-            <form:form id="form2" action="mostrarParaRealizarEquivalenciaPorPensum.htm"
-                       method="post" modelAttribute="wrapperEquivalenciaPorPensum">
-                <div id="divCampos">
-                    <form:label for="pensumOriginal.idPensum" path="pensumOriginal.idPensum">
-                        <fmt:message key="pensumEstudianteCarrera.pensum"/>: *
-                    </form:label>
-                    <form:hidden path="pensumOriginal.idPensum" id="idPensumOriginal" />
-                    <input type="text" readonly="true" id="codigoPensumOriginal" />
-                    <c:set scope="session" var="estudiante" value="${estudiante}" />
-                    <form:hidden path="asignacionEstudianteCarrera.idAsignacionEstudianteCarrera" />
-                    <form:hidden path="pensumEquivalencia.idPensum" />
-                </div>
-            </form:form>
-        </div>
-
+        <c:if test="${wrapperEquivalenciaPorPensum != null}">
+            <div id="divForm2" title="<fmt:message key="cursoPensum.link.equivalencias.pensums" />">
+                <form:form id="form2" action="mostrarParaRealizarEquivalenciaPorPensum.htm"
+                           method="post" modelAttribute="wrapperEquivalenciaPorPensum">
+                    <div id="divCampos">
+                        <form:label for="pensumOriginal.idPensum" path="pensumOriginal.idPensum">
+                            <fmt:message key="pensumEstudianteCarrera.pensum"/>: *
+                        </form:label>
+                        <form:hidden path="pensumOriginal.idPensum" id="idPensumOriginal" />
+                        <input type="text" readonly="true" id="codigoPensumOriginal" />
+                        <c:set scope="session" var="estudiante" value="${estudiante}" />
+                        <form:hidden path="asignacionEstudianteCarrera.idAsignacionEstudianteCarrera" />
+                        <form:hidden path="pensumEquivalencia.idPensum" />
+                    </div>
+                </form:form>
+            </div>
+        </c:if>
 
         <div style="margin: 20px 0 0 0;">
             <a href="mostrarAsignacionEstudianteCarrera.htm?idEstudiante=${estudiante.idEstudiante}">

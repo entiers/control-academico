@@ -12,6 +12,7 @@ import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
 import gt.edu.usac.cats.dominio.Curso;
 import gt.edu.usac.cats.dominio.CursoAprobado;
 import gt.edu.usac.cats.dominio.Pensum;
+import gt.edu.usac.cats.dominio.PensumEstudianteCarrera;
 import gt.edu.usac.cats.enums.TipoAsignacion;
 import gt.edu.usac.cats.servicio.ServicioAsignacionCursoPensum;
 import java.util.ArrayList;
@@ -124,6 +125,52 @@ public class ServicioAsignacionCursoPensumImpl extends ServicioGeneralImpl imple
 
 
         return query.list();
+    }
+    
+    //______________________________________________________________________________
+    /**
+     * Este m&eacute;todo se encarga de obtener los cursos de un estudiante que son 
+     * equivalente entre dos carreras
+     * 
+     * @param pecOriginal Objeto de tipo {@link PensumEstudianteCarrera}
+     * @param pecEquivalente Objeto de tipo {@link PensumEstudianteCarrera}
+     * 
+     * @return Listado de objetos de tipo {@link AsignacionCursoPensum} con los cursos
+     * con los cuales se pueden hacer equivalencias.
+     * 
+     * @throws DataAccessException Si ocurri&oacute; un error de acceso a datos
+     */
+    
+    @Override
+    public List <AsignacionCursoPensum> getEquivalenciasPorCarreras(
+            PensumEstudianteCarrera pecOriginal,
+            PensumEstudianteCarrera pecEquivalencia) throws DataAccessException{
+    
+                StringBuilder builder = new StringBuilder();
+
+        builder.append("\n select distinct cpe from AsignacionCursoPensum as acp").
+                append("\n inner join acp.asignacionCursoPensumsForIdCursoPensumEquivalencia as cpe").
+                append("\n where cpe not in (").
+                append("\n select acp2 from Asignacion as a1").
+                append("\n inner join a1.cursoAprobados as ca").
+                append("\n inner join ca.asignacionCursoPensum as acp2").
+                append("\n where acp2.pensum = :pensumEquivalencia and a1.asignacionEstudianteCarrera = :aecEquivalencia)").
+                append("\n and acp in (").
+                append("\n select acp3 from Asignacion as a").
+                append("\n inner join a.cursoAprobados as ca").
+                append("\n inner join ca.asignacionCursoPensum as acp3").
+                append("\n where acp3.pensum = :pensumOriginal and a.asignacionEstudianteCarrera = :aecOriginal)").
+                append("\n and acp.pensum = :pensumOriginal and cpe.pensum = :pensumEquivalencia");
+
+        Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString()).
+                setParameter("aecOriginal", pecOriginal.getAsignacionEstudianteCarrera()).
+                setParameter("aecEquivalencia", pecEquivalencia.getAsignacionEstudianteCarrera()).
+                setParameter("pensumOriginal", pecOriginal.getPensum()).
+                setParameter("pensumEquivalencia", pecEquivalencia.getPensum());
+
+
+        return query.list();
+        
     }
 //______________________________________________________________________________
 

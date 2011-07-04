@@ -10,6 +10,7 @@ import gt.edu.usac.cats.dominio.AsignacionEquivalencia;
 import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
 import gt.edu.usac.cats.dominio.Curso;
 import gt.edu.usac.cats.dominio.Pensum;
+import gt.edu.usac.cats.dominio.PensumEstudianteCarrera;
 import java.util.List;
 import org.springframework.dao.DataAccessException;
 
@@ -58,7 +59,24 @@ public interface ServicioAsignacionCursoPensum extends ServicioGeneral {
             AsignacionEstudianteCarrera asignacionEstudianteCarrera,
             Pensum pensumOriginal,
             Pensum pensumEquivalencia) throws DataAccessException;
-
+    
+//______________________________________________________________________________
+    /**
+     * Este m&eacute;todo se encarga de obtener los cursos de un estudiante que son 
+     * equivalente entre dos carreras
+     * 
+     * @param pecOriginal Objeto de tipo {@link PensumEstudianteCarrera}
+     * @param pecEquivalente Objeto de tipo {@link PensumEstudianteCarrera}
+     * 
+     * @return Listado de objetos de tipo {@link AsignacionCursoPensum} con los cursos
+     * con los cuales se pueden hacer equivalencias.
+     * 
+     * @throws DataAccessException Si ocurri&oacute; un error de acceso a datos
+     */
+    
+    List <AsignacionCursoPensum> getEquivalenciasPorCarreras(
+            PensumEstudianteCarrera pecOriginal,
+            PensumEstudianteCarrera pecEquivalente) throws DataAccessException;
 //______________________________________________________________________________
     /**
      * Realiza el proceso de asignaci&oacute; de cursos por equivalencias.
