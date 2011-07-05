@@ -56,18 +56,42 @@
             });
 
             function guardar(value){
+                var zona = ${limiteZona};
+                var examenFinal = ${limiteExamenFinal};                
                 $("#hdOficializar").val(value);
-                $.each($('#frmGuardar input:text'),function(index,value){
-                    if(isNaN(value.value)){
+                $.each($('#frmGuardar input:text'),function(index,item){                    
+                    if(isNaN(item.value)){
                         alert('<fmt:message key="ingresoNota.validaciones.notasNumericas"/>');
+                        item.focus();
                         return false;
                     }
-                    if(value.value<0 | value.value>100){
-                        alert('<fmt:message key="ingresoNota.validaciones.rango"/>')
+                });                
+                $.each($('input[name="zona"]'),function(index,item){                    
+                    if(item.value<0 | item.value>zona){
+                        alert('<fmt:message key="ingresoNota.validaciones.rango.zona"/> ' + 
+                            zona + 
+                            ' <fmt:message key="ingresoNota.validaciones.puntos"/>');
+                        item.focus();
                         return false;
-                    }
-                    $("#frmGuardar").submit();
+                    }                    
                 });
+                $.each($('input[name="laboratorio"]'),function(index,item){                    
+                    if(item.value<0 | item.value>100){
+                        alert('<fmt:message key="ingresoNota.validaciones.rango.laboratorio"/>');
+                        item.focus();
+                        return false;
+                    }                    
+                });
+                $.each($('input[name="examenFinal"]'),function(index,item){                    
+                    if(item.value<0 | item.value>examenFinal){
+                        alert('<fmt:message key="ingresoNota.validaciones.rango.examenFinal"/> ' + 
+                            examenFinal +
+                            ' <fmt:message key="ingresoNota.validaciones.puntos"/>');
+                        item.focus();
+                        return false;
+                    }                    
+                });
+                $("#frmGuardar").submit();
             }
         </script>
         <title><fmt:message key="ingresoNota.titulo"/></title>

@@ -26,32 +26,38 @@
                                 <c:when test="${esAdministrativo}">
                                     <td style="text-align:center">
                                         <form:input path="listZona" value="${detAsign.zona}"
-                                                    cssStyle="width:50px;"/>
+                                                    cssStyle="width:50px;"
+                                                    name="zona"/>
                                     </td>
                                     <td style="text-align:center">
                                         <form:input path="listLaboratorio" value="${detAsign.laboratorio}"
-                                                    cssStyle="width:50px;"/>
+                                                    cssStyle="width:50px;"
+                                                    name="laboratorio"/>
                                     </td>
                                     <td style="text-align:center">
                                         <form:input path="listFinal" value="${detAsign.examenFinal}"
-                                                    cssStyle="width:50px;"/>
+                                                    cssStyle="width:50px;"
+                                                    name="examenFinal"/>
                                     </td>
                                 </c:when>
                                 <c:otherwise>
                                     <td style="text-align:center">
                                         <form:input path="listZona" value="${detAsign.zona}"
                                                     cssStyle="width:50px;"
-                                                    disabled="${detAsign.oficializado}"/>
+                                                    disabled="${detAsign.oficializado}"
+                                                    name="zona"/>
                                     </td>
                                     <td style="text-align:center">
                                         <form:input path="listLaboratorio" value="${detAsign.laboratorio}"
                                                     cssStyle="width:50px;"
-                                                    disabled="${detAsign.oficializado}"/>
+                                                    disabled="${detAsign.oficializado}"
+                                                    name="laboratorio"/>
                                     </td>
                                     <td style="text-align:center">
                                         <form:input path="listFinal" value="${detAsign.examenFinal}"
                                                     cssStyle="width:50px;"
-                                                    disabled="${detAsign.oficializado}"/>
+                                                    disabled="${detAsign.oficializado}"
+                                                    name="examenFinal"/>
                                     </td>
                                 </c:otherwise>
                             </c:choose>                            
