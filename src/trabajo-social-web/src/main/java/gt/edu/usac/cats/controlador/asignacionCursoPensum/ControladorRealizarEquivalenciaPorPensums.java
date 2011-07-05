@@ -38,8 +38,11 @@ public class ControladorRealizarEquivalenciaPorPensums extends ControladorAbstra
                 new WrapperAsignacionEquivalencia(
                 wrapperEquivalenciaPorPensum.getAsignacionEstudianteCarrera()   );
 
+		  this.nombreAction = "realizarEquivalenciaPorPensums.htm";
+		  this.linkRegresar = "mostrarPensumEstudianteCarrera.htm?idAsignacionEstudianteCarrera=" +
+		  		wrapperAsignacionEquivalencia.getAsignacionEstudianteCarrera().getIdAsignacionEstudianteCarrera();
         this.agregarAtributosDefault(modelo, wrapperAsignacionEquivalencia);
-	this.nombreAction = "realizarEquivalenciaPorPensums.htm";
+		  
         return "cursoPensum/mostrarParaRealizarEquivalencia";
     }
 

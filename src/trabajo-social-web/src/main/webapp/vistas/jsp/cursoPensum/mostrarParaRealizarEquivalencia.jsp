@@ -22,7 +22,7 @@
         <script type="text/javascript">
             $(function (){
                 $("#linkRegresar").click(function(){
-                    location.href = "mostrarPensumEstudianteCarrera.htm?idAsignacionEstudianteCarrera=${wrapperAsignacionEquivalencia.asignacionEstudianteCarrera.idAsignacionEstudianteCarrera}";
+                    location.href = "${linkRegresar}";
                 });
             });
         </script>
@@ -50,7 +50,7 @@
               <fieldset>
                   <legend><fmt:message key="asignacionEquivalencia.formulario.titulo"/></legend>
                   <form:form modelAttribute="wrapperAsignacionEquivalencia"
-                             action="realizarEquivalencias.htm" method="POST">
+                             action="${nombreAction}" method="POST">
 
                       <%@include file="../../jspf/formularios/formularioAsignacionEquivalencia.jspf" %>
 

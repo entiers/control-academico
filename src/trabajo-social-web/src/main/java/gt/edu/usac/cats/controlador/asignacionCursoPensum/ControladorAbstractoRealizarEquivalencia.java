@@ -33,6 +33,7 @@ public abstract class ControladorAbstractoRealizarEquivalencia {
     protected List<AsignacionCursoPensum> listadoEquivalencias;
     private Logger log = Logger.getLogger(ControladorAbstractoRealizarEquivalencia.class);
     protected String nombreAction;
+    protected String linkRegresar;
 
     /**
      * @param modelo
@@ -43,7 +44,8 @@ public abstract class ControladorAbstractoRealizarEquivalencia {
 
         modelo.addAttribute("listadoEquivalencias", this.listadoEquivalencias);
         modelo.addAttribute("wrapperAsignacionEquivalencia", wrapperAsignacionEquivalencia);
-	modelo.addAttribute("nombreAction", this.nombreAction);
+		  modelo.addAttribute("nombreAction", this.nombreAction);
+		  modelo.addAttribute("linkRegresar", this.linkRegresar);
     }
 
     /**
@@ -52,7 +54,6 @@ public abstract class ControladorAbstractoRealizarEquivalencia {
      * @param modelo
      * @param request
      */
-    // @RequestMapping(value = "realizarEquivalencias.htm", method = RequestMethod.POST)
     protected  String realizarEquivalencia(WrapperAsignacionEquivalencia wrapperAsignacionEquivalencia,
             BindingResult bindingResult, Model modelo, HttpServletRequest request) {
 
