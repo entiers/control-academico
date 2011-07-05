@@ -6,6 +6,7 @@
 
 package gt.edu.usac.cats.controlador.detalleAsignacion;
 
+import gt.edu.usac.cats.dominio.AsignacionCursoPensum;
 import gt.edu.usac.cats.dominio.Catedratico;
 import gt.edu.usac.cats.dominio.DetalleAsignacion;
 import gt.edu.usac.cats.dominio.Horario;
@@ -178,7 +179,7 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota{
         if(!super.listadoDetalleAsignacion.isEmpty())
             modelo.addAttribute("nombreCurso",super.listadoDetalleAsignacion.get(0).getHorario().getAsignacionCursoPensum().getCurso().getNombre());
         
-        this.setModelo(modelo, true, datosIngresoNota);
+        this.setModelo(modelo, true, datosIngresoNota);        
         
         return "detalleAsignacion/ingresoNota";
     }
@@ -267,7 +268,15 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota{
         modelo.addAttribute("mostrarEstudiantes", mostrarAsignaciones);
         modelo.addAttribute("validacionesOK", true);
         modelo.addAttribute("esAdministrativo", this.esAdministrativo);
-
+        
+        if(mostrarAsignaciones){
+            modelo.addAttribute("limiteZona", datosIngresoNota.getHorario().getAsignacionCursoPensum().getZona());
+            modelo.addAttribute("limiteExamenFinal", datosIngresoNota.getHorario().getAsignacionCursoPensum().getExamenFinal());
+        }
+        else{
+            modelo.addAttribute("limiteZona", 0);
+            modelo.addAttribute("limiteExamenFinal",0);
+        }
     }
 
 }
