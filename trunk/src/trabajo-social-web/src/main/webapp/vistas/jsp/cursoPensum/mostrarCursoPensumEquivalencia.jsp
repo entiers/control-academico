@@ -31,7 +31,7 @@
                         </form:label>
                         <form:select path="pensumOriginal.idPensum" cssStyle="width: 250px;">
                             <form:option  value="" label="Seleccionar un valor" />
-                            <form:options items="${listadoPensums}" itemValue="idPensum" itemLabel="codigo" />
+                            <form:options items="${listadoPensums}" itemValue="idPensum" itemLabel="codigoCarreraNombre" />
                         </form:select>
 
                         <form:errors path="pensumOriginal.idPensum" cssClass="claseError" />
@@ -43,7 +43,7 @@
                         </form:label>
                         <form:select path="pensumEquivalente.idPensum" cssStyle="width: 250px;">
                             <form:option  value="" label="Seleccionar un valor" />
-                            <form:options items="${listadoPensums}" itemValue="idPensum" itemLabel="codigo" />
+                            <form:options items="${listadoPensums}" itemValue="idPensum" itemLabel="codigoCarreraNombre" />
                         </form:select>
 
                         <form:errors path="pensumEquivalente.idPensum" cssClass="claseError" />
@@ -74,7 +74,7 @@
                     <c:forEach items="${cursoPensum.asignacionCursoPensumsForIdCursoPensumEquivalencia}"
                                var="cursoPensumEquivalente">
                         ${cursoPensumEquivalente.curso.codigoNombre}
-                        <sec:authorize access="hasRole('ELIMINAR_ASIGNACION_EQUIVALENCIAS')">
+                        <sec:authorize access="hasRole('ROLE_ELIMINAR_ASIGNACION_EQUIVALENCIAS')">
                             <a href="eliminarCursoPensumEquivalencia.htm?idAsignacionCursoPensumOriginal=${cursoPensum.idAsignacionCursoPensum}&idAsignacionCursoPensumEquivalente=${cursoPensumEquivalente.idAsignacionCursoPensum}">
                                 <fmt:message key="link.eliminar" />
                             </a>
