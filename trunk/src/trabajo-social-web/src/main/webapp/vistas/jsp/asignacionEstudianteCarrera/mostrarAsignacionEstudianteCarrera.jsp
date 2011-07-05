@@ -13,6 +13,8 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="display" uri="http://displaytag.sf.net"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <html>
     <head>
         <title><fmt:message key="mostrarAsignacionEstudianteCarrera.titulo"/></title>
@@ -67,7 +69,7 @@
                             <sec:authorize access="hasRole('ROLE_MODIFICAR_ASIGNACION_ESTUDIANTE_CARRERA')">
                                 <br/>
                                 <a style="cursor: pointer;"
-                                    class="a-acciones" onclick="modificar(${asignacionEstudianteCarrera.idAsignacionEstudianteCarrera}, '${fechaCierre}', ${asignacionEstudianteCarrera.inscrito})">
+                                   class="a-acciones" onclick="modificar(${asignacionEstudianteCarrera.idAsignacionEstudianteCarrera}, '${fechaCierre}', ${asignacionEstudianteCarrera.inscrito})">
                                     <fmt:message key="asignacionEstudianteCarrera.boton.modificar"/>
                                 </a>
                             </sec:authorize>
@@ -146,28 +148,58 @@
                         <fmt:formatDate value="${asignacionEstudianteCarrera.fechaCierre}" pattern="dd-MM-yyyy" var="fechaCierre" />
                         ${fechaCierre}
                     </display:column>
-		    <display:column titileKey="acciones" style="text-align:center">
-		         <a style="cursor:pointer;" onclick="llenarFormularioEquivalencia(${asignacionEstudianteCarrera.getIdAsignacionEstudianteCarrera});">  		    
-		         Realizar equivalencias a la carrera actual
-			 </a>
-		    </display:column>
+                    <display:column titleKey="acciones" style="text-align:center">
+                        <a style="cursor:pointer;" onclick="llenarFormularioEquivalencia(${asignacionEstudianteCarrera.idAsignacionEstudianteCarrera});">  		    
+                            <fmt:message key="cursoPensum.link.equivalencias.carreras"/>
+                        </a>
+                    </display:column>
                 </display:table>
             </center>
         </fieldset>
 
-	<form:form id="formEquivalencia" modelAttribute="wrapperEquivalenciaPorCarrera" method="POST" 
-		   action="mostrarParaRealizarEquivalenciaPorCarreras.htm">
-		   <div id="divCampos">
-		   	<form:label for="asignacionEstudianteCarreraOriginal.idAsignacionEstudianteCarrera"
-				    path="asignacionEstudianteCarreraOriginal.idAsignacionEstudianteCarrera">
-			</form:label>
-			<form:select path="asignacionEstudianteCarreraOriginal.idAsignacionEstudianteCarrera"
-				values="${listadoAsignacionEstudianteCarrera}"
-				itemValue="idAsignacionEstudianteCarrera" itemLabel="carrera.codigoNombre"    />
-				     
-			
-		   </div>
-	</form:form>
+        <form:form id="formEquivalencia" modelAttribute="wrapperEquivalenciaPorCarrera" method="POST" 
+                   action="mostrarParaRealizarEquivalenciaPorCarreras.htm">
+            <div id="divCampos">
+                <form:label for="asignacionEstudianteCarreraOriginal.idAsignacionEstudianteCarrera"
+                            path="asignacionEstudianteCarreraOriginal.idAsignacionEstudianteCarrera">
+                    <fmt:message key="cursoPensum.label.carreraOriginal" />
+                </form:label>
+
+                <c:choose>
+                    <c:when test="${fn:length(listadoAsignacionEstudianteCarrera) > 1}">
+                        <form:select path="asignacionEstudianteCarreraOriginal.idAsignacionEstudianteCarrera"
+                                     items="${listadoAsignacionEstudianteCarrera}"
+                                     itemValue="idAsignacionEstudianteCarrera" itemLabel="carrera.codigoNombre"    />
+                    </c:when>
+                    <c:otherwise>
+                        <form:hidden path="asignacionEstudianteCarreraOriginal.idAsignacionEstudianteCarrera" 
+                                    id="idAsignacionEstudianteCarreraOriginal"/>:
+                        
+                        <c:forEach items="${listadoAsignacionEstudianteCarrera}" var="asignacionEstudianteCarrera">
+                            ${asignacionEstudianteCarrera.carrera.codigoNombre}
+                            <c:set scope="request" var="idAsignacionEstudianteCarreraOriginal" 
+                                   value="${asignacionEstudianteCarrera.idAsignacionEstudianteCarrera}" />
+                        </c:forEach>
+                        
+                        <script type="text/javascript">
+                            $(function (){
+                                $("#idAsignacionEstudianteCarreraOriginal").val("${idAsignacionEstudianteCarreraOriginal}");
+                            });
+                        </script>
+                    </c:otherwise>
+                </c:choose>
+            </div>
+            <div id="divCampos">
+                <form:label for="asignacionEstudianteCarreraEquivalencia.idAsignacionEstudianteCarrera"
+                            path="asignacionEstudianteCarreraEquivalencia.idAsignacionEstudianteCarrera">
+                    <fmt:message key="cursoPensum.label.carreraEquivalencia" />:
+                </form:label>
+                <form:input path="asignacionEstudianteCarreraEquivalencia.idAsignacionEstudianteCarrera" />
+            </div>            
+            <blockquote>
+                <fmt:message key="cursoPensum.mensaje.equivalencia.carrera" />
+            </blockquote>
+        </form:form>
 
 
         <div style="margin: 20px 0 0 0; ">
