@@ -11,6 +11,7 @@ import gt.edu.usac.cats.dominio.Estudiante;
 import gt.edu.usac.cats.dominio.Semestre;
 import gt.edu.usac.cats.dominio.Situacion;
 import gt.edu.usac.cats.dominio.wrapper.WrapperAgregarAsignacionEstudianteCarrera;
+import gt.edu.usac.cats.dominio.wrapper.WrapperEquivalenciaPorCarrera;
 import gt.edu.usac.cats.dominio.wrapper.WrapperHistorialAsignacionEstudianteCarrera;
 import gt.edu.usac.cats.servicio.ServicioAsignacionEstudianteCarrera;
 import gt.edu.usac.cats.servicio.ServicioSemestre;
@@ -159,6 +160,7 @@ public abstract class ControladorAbstractoAsignacionEstudianteCarrera {
         }
 
         modelo.addAttribute("wrapperModificarAsignacionEstudianteCarrera", wrapperModificarAsignacionEstudianteCarrera);
+        modelo.addAttribute("wrapperEquivalenciaPorCarrera", new WrapperEquivalenciaPorCarrera());
 
     }
 
