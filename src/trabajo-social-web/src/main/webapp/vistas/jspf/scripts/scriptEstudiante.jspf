@@ -4,6 +4,8 @@
 <script type="text/javascript">
     $(function() {
 
+        $("#fechaNacimiento").datepicker("option", "maxDate", "-16Y" );
+        $("#fechaNacimiento").datepicker("option", "minDate", new Date(1970, 1 - 1, 1) );
         // agrega un panel popup para seleccionar fecha al input
         // de fecha de nacimiento
         // configuracion del panel popup para deshabilitar estudiantes
