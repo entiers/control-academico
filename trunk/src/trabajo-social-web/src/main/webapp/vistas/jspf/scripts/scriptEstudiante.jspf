@@ -3,9 +3,15 @@
 
 <script type="text/javascript">
     $(function() {
-
-        $("#fechaNacimiento").datepicker("option", "maxDate", "-16Y" );
-        $("#fechaNacimiento").datepicker("option", "minDate", new Date(1970, 1 - 1, 1) );
+        var maxDate = new Date();
+        var defaultDate = new Date();
+        maxDate.setFullYear(maxDate.getFullYear()-16); 
+        maxDate.setMonth(11, 31);
+        defaultDate.setFullYear(defaultDate.getFullYear()-16); 
+        defaultDate.setMonth(0, 1);
+        $("#fechaNacimiento").datepicker("option", "maxDate", maxDate );
+        $("#fechaNacimiento").datepicker("option", "minDate", new Date(1970, 0, 1) );
+        $("#fechaNacimiento").datepicker("option", "defaultDate", defaultDate);
         // agrega un panel popup para seleccionar fecha al input
         // de fecha de nacimiento
         // configuracion del panel popup para deshabilitar estudiantes

@@ -1,0 +1,13 @@
+#include( "encabezado.vm" )
+<h2>Recordatorio de Usuario</h2>
+<br/>
+<div id="content">
+    <p>Estimado(a) usuario:</p>
+
+    <p>Se ha solicitado recordar el usuario registrado en el sistema de la Escuela de Trabajo Social. </p>
+    <p>El nombre del usuario asociado a esta cuenta de correo electr&oacute;nico es:
+        <ul>
+            <li><b>Nombre de usuario:</b> &nbsp;&nbsp; $nombreUsuario</li>
+        </ul>
+    </p>
+</div>
