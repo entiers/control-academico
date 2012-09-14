@@ -1,0 +1,20 @@
+#include( "encabezado.vm" )
+<div class="main-cats">
+    <h2>Informe de Asignaci&oacute;n de Cursos de Primer Ingreso</h2>
+    <br/>
+    <div id="content">
+        <p>Estimado usuario:</p>
+
+        <p>
+        El proceso de asignaci&oacute;n de cursos a estudiantes de primer ingreso,
+        ha finalizado. A continuaci&oacute;n se le presenta un resumen con el resultado del mismo:
+
+        <ul>
+            <li><b>Fecha inicio:</b> $resumenAsignacionPrimerIngreso.getFechaInicioFormat() </li>
+            <li><b>Fecha fin:</b> $resumenAsignacionPrimerIngreso.getFechaFinFormat() </li>
+            <li><b>Total estudiantes asignados:</b> $resumenAsignacionPrimerIngreso.getTotalAsignados() </li>
+            <li><b>Total estudiantes no asignados:</b> $resumenAsignacionPrimerIngreso.getTotalNoAsignados() </li>
+        </ul>
+        </p>
+    </div>
+</div>
