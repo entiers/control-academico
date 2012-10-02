@@ -16,8 +16,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title><fmt:message key="agregarEstudiante.titulo"/></title>        
-        <%@include file="../../jspf/scripts/scriptEstudiante.jspf" %>
-        <style type="text/css">.ui-datepicker{display: none;}</style>
+        <%@include file="../../jspf/scripts/scriptEstudiante.jspf" %>        
     </head>
     <body>
         <h1><fmt:message key="agregarEstudiante.titulo"/></h1>
