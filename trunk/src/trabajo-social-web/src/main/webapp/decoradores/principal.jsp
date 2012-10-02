@@ -36,6 +36,7 @@
     <!--[if IE 6]><link rel="stylesheet" href="<%= request.getContextPath()%>/css/style.ie6.css" type="text/css" media="screen" /><![endif]-->
     <!--[if IE 7]><link rel="stylesheet" href="<%= request.getContextPath()%>/css/style.ie7.css" type="text/css" media="screen" /><![endif]-->
 
+        <style type="text/css">.ui-datepicker{display: none;}</style>
         <script type="text/javascript">
             $(function() {
                 $(".datepicker").datepicker({
