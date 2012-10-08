@@ -218,8 +218,7 @@ public class ServicioAsignacionEstudianteCarreraImpl extends ServicioGeneralImpl
         criteria.add(Restrictions.eq("inscrito", true));
         criteria.add(Restrictions.eq("estudiante", estudiante));
 
-        Integer count = (Integer) this.daoGeneralImpl.uniqueResult(criteria);
-
+        Long count = (Long) this.daoGeneralImpl.uniqueResult(criteria);
         return count.intValue() > 0;
     }
 
