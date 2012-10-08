@@ -10,6 +10,7 @@ import gt.edu.usac.cats.dominio.Salon;
 import gt.edu.usac.cats.dominio.Semestre;
 import gt.edu.usac.cats.dominio.wrapper.WrapperHorario;
 import gt.edu.usac.cats.enums.Dia;
+import gt.edu.usac.cats.enums.TipoHorario;
 import gt.edu.usac.cats.servicio.ServicioHorario;
 import gt.edu.usac.cats.servicio.ServicioSemestre;
 import java.util.List;
@@ -62,6 +63,8 @@ public abstract class ControladorAbstractoHorario {
         modelo.addAttribute("listadoCursos", this.listadoCursos);
 
         modelo.addAttribute("listadoDias", Dia.values());
+        
+        modelo.addAttribute("listaTipoHorario", TipoHorario.values());
 
         this.agregarAtributosDefault(modelo, buscar);
     }

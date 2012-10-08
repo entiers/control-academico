@@ -79,6 +79,15 @@
     <form:errors path="semestre.idSemestre" cssClass="claseError" />
 </div>
 
+<div id="divCampos">
+    <form:label for="tipoHorario" path="tipoHorario"><fmt:message key="agregarHorario.tipo"/>:</form:label>
+    <form:select path="tipoHorario"
+                    id="slcTipoHorario"
+                    items="${listaTipoHorario}"
+                    itemLabel="descripcion"/>
+
+</div>
+
 
 <c:if test="${!agregar}">
     <div id="divCampos" >

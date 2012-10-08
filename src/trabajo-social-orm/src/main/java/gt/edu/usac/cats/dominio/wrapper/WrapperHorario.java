@@ -10,6 +10,7 @@ import gt.edu.usac.cats.dominio.AsignacionCursoPensum;
 import gt.edu.usac.cats.dominio.Horario;
 import gt.edu.usac.cats.dominio.Salon;
 import gt.edu.usac.cats.dominio.Semestre;
+import gt.edu.usac.cats.enums.TipoHorario;
 import java.util.Date;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -47,6 +48,8 @@ public class WrapperHorario {
 //______________________________________________________________________________
 
     private String [] horarioDiasWrapper;
+    
+    private TipoHorario tipoHorario;
 
      /**
      * Constructor del wrapper, se inicializan los atributos a mostrar en las
@@ -73,6 +76,7 @@ public class WrapperHorario {
         this.seccion = horario.getSeccion();
         this.semestre = horario.getSemestre();        
         this.horarioDiasWrapper = horario.getHorarioDiasNumeroAsArrayString();
+        this.setTipoHorario(horario.getTipo());
     }
 //______________________________________________________________________________
     /**
@@ -89,6 +93,7 @@ public class WrapperHorario {
         horario.setSeccion(this.seccion);
         horario.setSemestre(this.semestre);        
         //horario.setHorarioDias(this.horarioDias);
+        horario.setTipo(getTipoHorario());
     }
 //______________________________________________________________________________
     /**
@@ -201,6 +206,20 @@ public class WrapperHorario {
      */
     public void setHorarioDiasWrapper(String [] horarioDiasWrapper) {
         this.horarioDiasWrapper = horarioDiasWrapper;
+    }
+
+    /**
+     * @return the tipoHorario
+     */
+    public TipoHorario getTipoHorario() {
+        return tipoHorario;
+    }
+
+    /**
+     * @param tipoHorario the tipoHorario to set
+     */
+    public void setTipoHorario(TipoHorario tipoHorario) {
+        this.tipoHorario = tipoHorario;
     }
 
 }
