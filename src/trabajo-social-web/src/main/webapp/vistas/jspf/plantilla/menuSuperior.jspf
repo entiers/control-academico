@@ -255,6 +255,10 @@
                     <sec:authorize access="hasRole('ROLE_INGRESO_NOTAS_ADMINISTRACION')">
                         <li><a href="ingresoNotaAdmin.htm"><fmt:message key="admin.ingresoNotas.titulo"/></a></li>
                     </sec:authorize>
+                    <%--Operacion ingreso de notas administracion--%>
+                    <sec:authorize access="hasRole('ROLE_CAMBIO_CONTRASENIA')">
+                        <li><a href="cambioContrasenia.htm"><fmt:message key="cambioContrasenia.titulo"/></a></li>
+                    </sec:authorize>
                 </ul>
             </li>
         </sec:authorize>
