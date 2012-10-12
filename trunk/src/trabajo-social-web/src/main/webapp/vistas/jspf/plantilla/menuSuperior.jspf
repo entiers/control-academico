@@ -304,6 +304,14 @@
                     <sec:authorize access="hasRole('ROLE_REPORTE_NOTAS_POR_CURSO')">
                         <li><a href="rptNotasCurso.htm"><fmt:message key="rptNotasCurso.titulo"/></a></li>
                     </sec:authorize>
+                    <%--Certificaciones de cursos--%>
+                    <sec:authorize access="hasRole('ROLE_REPORTE_CERTIFICACION_CURSOS')">
+                        <li><a href="rptCertificacionCursos.htm"><fmt:message key="rptCertificacionCursos.titulo"/></a></li>
+                    </sec:authorize>
+                    <%--Historial notas de cursos asignados--%>
+                    <sec:authorize access="hasRole('ROLE_REPORTE_NOTAS_CURSOS_ASIGNADOS')">
+                        <li><a href="rptNotasCursosAsignados.htm"><fmt:message key="rptNotasCursosAsignados.titulo"/></a></li>
+                    </sec:authorize>
                 </ul>
             </li>
         </sec:authorize>

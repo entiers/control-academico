@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="600" pageHeight="842" columnWidth="560" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="carne" class="java.lang.String"/>
+	<parameter name="id_carrera" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select e.carne, e.nombre as estudiante, cur.codigo, cur.nombre as curso, 
+    cuap.laboratorio, cuap.zona + cuap.examen_final as nota, 
+    acp.creditos_practicos + acp.creditos_teoricos as creditos,
+    car.nombre as carrera, 
+    to_char(current_date,'DD/MM/YYYY') as fechahoy,
+    to_char(cuap.fecha_aprobacion,'DD/MM/YYYY') as fecha_aprobacion
+from control.estudiante e 
+    inner join control.asignacion_estudiante_carrera aec on e.id_estudiante = aec.id_estudiante
+    inner join control.asignacion asig on aec.id_asignacion_estudiante_carrera = asig.id_asignacion_estudiante_carrera
+    inner join control.curso_aprobado cuap on asig.id_asignacion = cuap.id_asignacion
+    inner join control.asignacion_curso_pensum acp on acp.id_asignacion_curso_pensum = cuap.id_asignacion_curso_pensum
+    inner join control.curso cur on cur.id_curso = acp.id_curso
+    inner join control.carrera car on car.id_carrera = aec.id_carrera
+where e.carne = $P{carne}
+and car.id_carrera = $P{id_carrera}
+order by cur.codigo, cuap.fecha_aprobacion;]]>
+	</queryString>
+	<field name="carne" class="java.lang.String"/>
+	<field name="estudiante" class="java.lang.String"/>
+	<field name="codigo" class="java.lang.String"/>
+	<field name="curso" class="java.lang.String"/>
+	<field name="laboratorio" class="java.lang.Integer"/>
+	<field name="nota" class="java.lang.Integer"/>
+	<field name="creditos" class="java.lang.Integer"/>
+	<field name="carrera" class="java.lang.String"/>
+	<field name="fechahoy" class="java.lang.String"/>
+	<field name="fecha_aprobacion" class="java.lang.String"/>
+	<variable name="nota_1" class="java.lang.Integer" calculation="Average">
+		<variableExpression><![CDATA[$F{nota}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="122" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="83" width="89" height="17" forecolor="#010101"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estudiante:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="89" y="83" width="455" height="17"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{estudiante}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="89" y="66" width="127" height="17"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{carne}]]></textFieldExpression>
+			</textField>
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="560" height="66" backcolor="#006699"/>
+				<staticText>
+					<reportElement x="0" y="3" width="400" height="20" forecolor="#FFFFFF"/>
+					<textElement>
+						<font size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[UNIVERSIDAD DE SAN CARLOS DE GUATEMALA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="23" width="378" height="18" forecolor="#FFFFFF"/>
+					<textElement>
+						<font size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[ESCUELA DE TRABAJO SOCIAL]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="41" width="378" height="25" forecolor="#FFFFFF"/>
+					<textElement>
+						<font size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[CERTIFICACIÓN DE CURSOS]]></text>
+				</staticText>
+			</frame>
+			<staticText>
+				<reportElement x="0" y="66" width="89" height="17" forecolor="#010101"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[No. carné:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="100" width="89" height="17" forecolor="#010101"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Carrera:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="89" y="100" width="455" height="17"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{carrera}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="417" y="66" width="127" height="17"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Fecha: " + $F{fechahoy}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="32" splitType="Stretch">
+			<staticText>
+				<reportElement x="48" y="0" width="231" height="31"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Double"/>
+					<bottomPen lineWidth="1.0" lineStyle="Double"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[	NOMBRE CURSO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="48" height="31"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Double"/>
+					<bottomPen lineWidth="1.0" lineStyle="Double"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CODIGO
+CURSO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="362" y="0" width="54" height="31"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Double"/>
+					<bottomPen lineWidth="1.0" lineStyle="Double"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOTA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="478" y="0" width="82" height="31"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Double"/>
+					<bottomPen lineWidth="1.0" lineStyle="Double"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA
+APROBACIÓN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="416" y="0" width="62" height="31"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Double"/>
+					<bottomPen lineWidth="1.0" lineStyle="Double"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CRÉDITOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="279" y="0" width="83" height="31"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Double"/>
+					<bottomPen lineWidth="1.0" lineStyle="Double"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[LABORATORIO]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="48" height="16"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{codigo}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="48" y="0" width="231" height="16"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{curso}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="279" y="0" width="83" height="16"/>
+				<box rightPadding="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{laboratorio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="362" y="0" width="54" height="16"/>
+				<box rightPadding="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nota}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="416" y="0" width="62" height="16"/>
+				<box rightPadding="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{creditos}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="478" y="0" width="82" height="16"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{fecha_aprobacion}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="47" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="7" width="118" height="17" forecolor="#010101"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CURSOS APROBADOS:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="0" width="560" height="1"/>
+			</line>
+			<textField>
+				<reportElement x="118" y="7" width="38" height="17"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="24" width="118" height="17" forecolor="#010101"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PROMEDIO:]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement x="118" y="24" width="38" height="17"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{nota_1}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="46" width="560" height="1"/>
+			</line>
+		</band>
+	</summary>
+</jasperReport>

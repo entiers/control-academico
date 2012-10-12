@@ -80,8 +80,7 @@
         <intercept-url pattern="/buscarAsignacionPorEstudiante.htm" access="hasRole('ROLE_MOSTRAR_CURSOS_ASIGNADOS')" />
         <intercept-url pattern="/cambioCierreSeccion.htm" access="hasRole('ROLE_CAMBIO_CIERRE_SECCION')" />
         <intercept-url pattern="/cambioCierreSeccion2.htm" access="hasRole('ROLE_CAMBIO_CIERRE_SECCION')" />
-        <intercept-url pattern="/rptProcesoAsignacionPrimerIngreso.htm" access="hasRole('ROLE_REPORTE_ASIGNACION_PRIMER_INGRESO')" />
-
+        
         <intercept-url pattern="/asignacionCursos.htm" access="hasRole('ROLE_ASIGNACION_CURSOS')" />
         <intercept-url pattern="/asignacionRetrasada.htm" access="hasRole('ROLE_ASIGNACION_CURSOS')" />
         <intercept-url pattern="/asignacionSemestre.htm" access="hasRole('ROLE_ASIGNACION_CURSOS')" />
@@ -119,13 +118,19 @@
 		
         <intercept-url pattern="/agregarAsignacionCatedraticoHorario.htm" access="hasRole('ROLE_ASIGNACION_HORARIO_CATEDRATICO')" />
         <intercept-url pattern="/buscarAsignacionCatedraticoHorario.htm" access="hasRole('ROLE_ASIGNACION_HORARIO_CATEDRATICO')" />
-        
-        
+                
         <intercept-url pattern="/mostrarParaRealizarEquivalenciaPorPensum.htm" access="hasRole('ROLE_REALIZAR_EQUIVALENCIAS')" />
         <intercept-url pattern="/mostrarCursoPensumEquivalencia.htm" access="hasRole('ROLE_MOSTRAR_ASIGNACION_EQUIVALENCIAS')" />
         <intercept-url pattern="/asignarCursoPensumEquivalencia.htm" access="hasRole('ROLE_ASIGNACION_EQUIVALENCIAS')" />
         <intercept-url pattern="/eliminarCursoPensumEquivalencia.htm" access="hasRole('ROLE_ELIMINAR_ASIGNACION_EQUIVALENCIAS')" />
         
+        <intercept-url pattern="/rptProcesoAsignacionPrimerIngreso.htm" access="hasRole('ROLE_REPORTE_ASIGNACION_PRIMER_INGRESO')" />
+        <intercept-url pattern="/rptAsignacionCurso.htm" access="hasRole('ROLE_REPORTE_ASIGNACIONES_POR_CURSO')" />
+        <intercept-url pattern="/rptNotasCurso.htm" access="hasRole('ROLE_REPORTE_NOTAS_POR_CURSO')" />
+        <intercept-url pattern="/rptCertificacionCursos.htm" access="hasRole('ROLE_REPORTE_CERTIFICACION_CURSOS')" />
+        <intercept-url pattern="/rptNotasCursosAsignados.htm" access="hasRole('ROLE_REPORTE_NOTAS_CURSOS_ASIGNADOS')" />
+        
+        <intercept-url pattern="/cambioContrasenia.htm" access="hasRole('ROLE_CAMBIO_CONTRASENIA')" />
         <!-- se especifica que pagina contiene el formulario de login -->
         <form-login login-page='/login.htm' default-target-url='/index.htm' always-use-default-target='true'/>
         
