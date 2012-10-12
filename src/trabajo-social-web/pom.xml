@@ -175,7 +175,7 @@
         <dependency>
             <groupId>net.sf.jasperreports</groupId>
             <artifactId>jasperreports</artifactId>
-            <version>3.7.4</version>
+            <version>4.7.1</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -601,8 +601,6 @@
             </build>
         </profile>
     </profiles>
-    <properties>
-        <netbeans.hint.deploy.server>Tomcat60</netbeans.hint.deploy.server>
-    </properties>
+    <properties></properties>
 </project>
 
