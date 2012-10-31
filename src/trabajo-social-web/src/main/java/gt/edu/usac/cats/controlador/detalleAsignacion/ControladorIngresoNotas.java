@@ -6,7 +6,6 @@
 
 package gt.edu.usac.cats.controlador.detalleAsignacion;
 
-import gt.edu.usac.cats.dominio.AsignacionCursoPensum;
 import gt.edu.usac.cats.dominio.Catedratico;
 import gt.edu.usac.cats.dominio.DetalleAsignacion;
 import gt.edu.usac.cats.dominio.Horario;
@@ -164,6 +163,7 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota{
             Model modelo, HttpServletRequest request) {
         
         try{
+            datosIngresoNota.setHorario(this.servicioHorarioImpl.cargarEntidadPorID(Horario.class, datosIngresoNota.getHorario().getIdHorario()));
             super.listadoDetalleAsignacion = super.servicioDetalleAsignacionImpl.
                     getListadoDetalleAsignacion(datosIngresoNota.getHorario().getIdHorario());
         }
