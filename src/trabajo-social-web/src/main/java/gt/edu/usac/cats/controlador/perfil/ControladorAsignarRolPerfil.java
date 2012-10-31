@@ -52,19 +52,33 @@ public class ControladorAsignarRolPerfil {
      * @return
      */
     @RequestMapping(value="asignarRolPerfil.htm", method = RequestMethod.GET)
-    public String crearFormulario(Model modelo, Short idPerfil, HttpServletRequest request) {
+    public String crearFormulario(Model modelo, Short idPerfil, 
+                        String accion,HttpServletRequest request) {
+        try
+        {
+            if(idPerfil == null){
+                return "perfil/buscarPerfil";
+            }
 
-        if(idPerfil == null){
+            this.perfil = this.servicioGeneralImpl.cargarEntidadPorID(Perfil.class, idPerfil);
+
+            if(this.perfil == null){
+                RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "buscarPerfil.sinResultados", false);
+                return "perfil/buscarPerfil";
+            }        
+
+            if(accion != null){
+                if(accion.equals("ADDOK"))
+                    RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "asignarRolPerfil.exito", true);                
+                else if(accion.equals("DELOK"))
+                    RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "desasignarRolPerfil.exito", true);
+            }
+        }catch (Exception e) {
+            // error de acceso a datos
+            RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "dataAccessException", false);
+            log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
             return "perfil/buscarPerfil";
         }
-
-        this.perfil = this.servicioGeneralImpl.cargarEntidadPorID(Perfil.class, idPerfil);
-
-        if(this.perfil == null){
-            RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "buscarPerfil.sinResultados", false);
-            return "perfil/buscarPerfil";
-        }        
-
         this.setModel(modelo);
         return "perfil/asignarRolPerfil";
     }
@@ -84,8 +98,7 @@ public class ControladorAsignarRolPerfil {
         {
             asignacionRolPerfil.setPerfil(this.perfil);
             this.servicioGeneralImpl.agregar(asignacionRolPerfil);
-
-            RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "asignarRolPerfil.exito", true);
+            
             String msg = Mensajes.EXITO_AGREGAR + "Asignar Rol Perfil, id = "
                     + asignacionRolPerfil.getIdAsignacionRolPerfil();
             log.info(msg);
@@ -97,7 +110,7 @@ public class ControladorAsignarRolPerfil {
         }
 
         this.setModel(modelo);
-        return "perfil/asignarRolPerfil";
+        return "redirect:asignarRolPerfil.htm?accion=ADDOK&idPerfil=" + this.perfil.getIdPerfil();
     }
     /**
      * @param modelo
@@ -116,8 +129,7 @@ public class ControladorAsignarRolPerfil {
                 AsignacionRolPerfil asignacionRolPerfil = this.servicioGeneralImpl
                         .cargarEntidadPorID(AsignacionRolPerfil.class, idAsignacionRolPerfil);
 
-                this.servicioGeneralImpl.borrar(asignacionRolPerfil);
-                RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "desasignarRolPerfil.exito", true);
+                this.servicioGeneralImpl.borrar(asignacionRolPerfil);                
                 String msg = Mensajes.EXITO_AGREGAR + "Desasignar Rol Perfil, id = "+ idAsignacionRolPerfil;
                 log.info(msg);
             }catch(DataAccessException e){
@@ -127,7 +139,7 @@ public class ControladorAsignarRolPerfil {
         }
 
         this.setModel(modelo);
-        return "perfil/asignarRolPerfil";
+        return "redirect:asignarRolPerfil.htm?accion=DELOK&idPerfil=" + this.perfil.getIdPerfil();
     }
 
 //______________________________________________________________________________
