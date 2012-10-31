@@ -9,7 +9,6 @@ package gt.edu.usac.cats.servicio.impl;
 import gt.edu.usac.cats.dominio.Asignacion;
 import gt.edu.usac.cats.dominio.AsignacionCursoPensum;
 import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
-import gt.edu.usac.cats.dominio.Curso;
 import gt.edu.usac.cats.dominio.Estudiante;
 import gt.edu.usac.cats.dominio.Horario;
 import gt.edu.usac.cats.dominio.DetalleAsignacion;

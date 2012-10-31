@@ -275,7 +275,7 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
                .append(" and horario.salon.capacidad > (")
                .append("    select count(*) from DetalleAsignacion det")
                .append("    where det.horario = horario")
-               .append(" ) order by horario.curso.nombre");
+               .append(" ) order by horario.asignacionCursoPensum.curso.nombre");
 
         Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
         query.setParameter("asignacionCursoPensum", asignacionCursoPensum);
@@ -293,7 +293,7 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
                .append(" inner join horario.asignacionCatedraticoHorarios aCH")
                .append(" where horario.semestre = :semestre")
                .append(" and horario.tipo =:tipoHorario")
-               .append(" and aCH.catedratico = :catedratico order by horario.curso.nombre");
+               .append(" and aCH.catedratico = :catedratico order by horario.asignacionCursoPensum.curso.nombre");
 
         Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
         query.setParameter("semestre", semestre);
@@ -310,7 +310,7 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
         builder.append(" select horario from Horario as horario")
                .append(" where horario.semestre = :semestre")
                .append(" and horario.tipo =:tipoHorario ")
-               .append(" order by horario.curso.nombre");
+               .append(" order by horario.asignacionCursoPensum.curso.nombre");
         
         Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
         query.setParameter("semestre", semestre);
