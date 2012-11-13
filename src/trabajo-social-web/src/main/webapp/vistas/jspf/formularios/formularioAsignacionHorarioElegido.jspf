@@ -17,7 +17,7 @@
     <tbody>
         <c:forEach items="${listadoHorarioAsignados}" var="horario">
             <tr>
-                <td><c:out value="${horario.curso.nombre}" /></td>
+                <td><c:out value="${horario.asignacionCursoPensum.curso.nombre}" /></td>
                 <td align="center"><c:out value="${horario.seccion}" /></td>
                 <td align="center">
                     <c:out value="${horario.salon.edificio}" />-<c:out value="${horario.salon.numero}" />

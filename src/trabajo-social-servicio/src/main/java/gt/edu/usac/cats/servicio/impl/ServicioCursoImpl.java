@@ -86,8 +86,8 @@ public class ServicioCursoImpl extends ServicioGeneralImpl implements ServicioCu
     public List<AsignacionCursoPensum> getCursoAsignacion(Carrera carrera, Semestre semestre, TipoHorario tipoHorario) throws DataAccessException {
          StringBuilder builder = new StringBuilder();
 
-        builder.append("select distinct horario.asignacionCursoPensum from Horario as horario ")
-               .append("inner join horario.curso.asignacionCursoPensums aCP ")
+        builder.append("select distinct aCP from AsignacionCursoPensum as aCP ")
+               .append("inner join aCP.horarios horario ")
                .append("where horario.semestre = :semestre ")
                .append("and aCP.pensum.carrera = :carrera ")
                .append("and horario.tipo = :tipoHorario ")

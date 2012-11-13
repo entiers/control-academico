@@ -38,7 +38,7 @@ public class ServicioAsignacionCursoPensumImpl extends ServicioGeneralImpl imple
     public List<AsignacionCursoPensum> getListadoAsignacionCursoPensum(AsignacionCursoPensum asignacionCursoPensum, Pensum pensum) throws DataAccessException {
         DetachedCriteria criteria = DetachedCriteria.forClass(AsignacionCursoPensum.class);
         criteria.add(Restrictions.and(
-                Restrictions.eq("asignacionCursoPensum", asignacionCursoPensum),
+                Restrictions.eq("idAsignacionCursoPensum", asignacionCursoPensum.getIdAsignacionCursoPensum()),
                 Restrictions.eq("pensum", pensum)));
 
         return this.daoGeneralImpl.find(criteria);

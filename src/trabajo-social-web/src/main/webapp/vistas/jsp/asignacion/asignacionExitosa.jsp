@@ -74,7 +74,7 @@
                 <tbody>
                     <c:forEach items="${listaAsignacion}" var="asignacion">
                         <tr>
-                            <td><c:out value="${asignacion.horario.curso.nombre}" /></td>
+                            <td><c:out value="${asignacion.horario.asignacionCursoPensum.curso.nombre}" /></td>
                             <td align="center"><c:out value="${asignacion.horario.seccion}" /></td>
                             <td align="center">
                                 <fmt:formatDate pattern="hh:mm" value="${asignacion.horario.horaInicio}" />

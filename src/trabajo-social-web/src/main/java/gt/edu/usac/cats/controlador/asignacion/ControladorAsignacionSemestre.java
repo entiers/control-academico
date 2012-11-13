@@ -10,6 +10,7 @@ import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
 import gt.edu.usac.cats.dominio.DetalleAsignacion;
 import gt.edu.usac.cats.dominio.Horario;
 import gt.edu.usac.cats.dominio.Pensum;
+import gt.edu.usac.cats.dominio.PensumEstudianteCarrera;
 import gt.edu.usac.cats.dominio.busqueda.DatosAsignacion;
 import gt.edu.usac.cats.enums.TipoAsignacion;
 import gt.edu.usac.cats.enums.TipoHorario;
@@ -136,13 +137,13 @@ public class ControladorAsignacionSemestre extends ControladorAbstractoAsignacio
             }
 
             asignacionEstudianteCarrera = servicioGeneralImpl.cargarEntidadPorID(AsignacionEstudianteCarrera.class, datosAsignacion.getIdAsignacionEstudianteCarrera());
-            Pensum pensum = this.servicioPensumEstudianteCarrera.getPensumEstudianteCarreraValido(
-                asignacionEstudianteCarrera).getPensum();
+            PensumEstudianteCarrera pensumEstudianteCarrera = this.servicioPensumEstudianteCarrera.getPensumEstudianteCarreraValido(
+                asignacionEstudianteCarrera);
 
-            if (pensum != null) {
+            if (pensumEstudianteCarrera != null) {
                 for (Horario horario : this.listaHorarioAsignacion) {
                    //Validando prerrequisitos por curso
-                    acp = (AsignacionCursoPensum) servicioAsignacionCursoPensumImpl.getListadoAsignacionCursoPensum(horario.getAsignacionCursoPensum(), pensum).get(0);
+                    acp = (AsignacionCursoPensum) servicioAsignacionCursoPensumImpl.getListadoAsignacionCursoPensum(horario.getAsignacionCursoPensum(), pensumEstudianteCarrera.getPensum()).get(0);
 
                     if (servicioCursoAprobadoImpl.getCursoPrerrequisitoPendiente(asignacionEstudianteCarrera, horario.getAsignacionCursoPensum()).isEmpty()
                             & servicioCursoAprobadoImpl.getCreditosAprobados(asignacionEstudianteCarrera) < acp.getCreditosPrerrequisito()) {
