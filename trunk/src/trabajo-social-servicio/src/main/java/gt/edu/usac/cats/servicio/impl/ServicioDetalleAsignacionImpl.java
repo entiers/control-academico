@@ -74,7 +74,7 @@ public class ServicioDetalleAsignacionImpl extends ServicioGeneralImpl implement
     public List<DetalleAsignacion> getListadoDetalleAsignacion(AsignacionCursoPensum asignacionCursoPensum, Semestre semestre, AsignacionEstudianteCarrera asignacionEstudianteCarrera, TipoAsignacion tipoAsignacion) throws HibernateException {
         StringBuilder builder = new StringBuilder();
         builder.append("select det from DetalleAsignacion det ")
-               .append("where det.horario.curso = :asignacionCursoPensum ")
+               .append("where det.horario.asignacionCursoPensum = :asignacionCursoPensum ")
                .append("and det.horario.semestre= :semestre ")
                .append("and det.asignacion.asignacionEstudianteCarrera = :asignacionEstudianteCarrera ")
                .append("and det.asignacion.tipoAsignacion = :tipoAsignacion ")
@@ -100,7 +100,7 @@ public class ServicioDetalleAsignacionImpl extends ServicioGeneralImpl implement
                .append("and not exists (select 'x' from Desasignacion des where des.detalleAsignacion=det)");
 
         Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
-        query.setParameter("asignacionCursoPensumcurso", asignacionCursoPensum);
+        query.setParameter("asignacionCursoPensum", asignacionCursoPensum);
         query.setParameter("aec", asignacionEstudianteCarrera);
         query.setParameter("tipoAsignacion", tipoAsignacion);
         

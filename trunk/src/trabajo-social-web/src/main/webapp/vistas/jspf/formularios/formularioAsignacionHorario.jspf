@@ -4,15 +4,15 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <div id="divCampos">
-    <form:label path="idCurso" for="idCurso">
+    <form:label path="idAsignacionCursoPensum" for="idAsignacionCursoPensum">
         <fmt:message key="curso.menu" /> :
     </form:label>
     <form:select id="slcCurso"
-                 path="idCurso"
-                 items="${listaCurso}"
-                 itemLabel="nombre"
-                 itemValue="idCurso"/>
-    <form:errors path="idCurso" cssClass="claseError" />
+                 path="idAsignacionCursoPensum"
+                 items="${listaAsignacionCursoPensum}"
+                 itemLabel="curso.nombre"
+                 itemValue="idAsignacionCursoPensum"/>
+    <form:errors path="idAsignacionCursoPensum" cssClass="claseError" />
 </div>
 <div id="divCampos">
     <form:label path="idHorario" for="idHorario">
