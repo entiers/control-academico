@@ -19,7 +19,8 @@ inner join control.horario hor on hor.id_horario = det.id_horario
 inner join control.asignacion_curso_pensum acp on acp.id_asignacion_curso_pensum = hor.id_asignacion_curso_pensum
 inner join control.curso cur on cur.id_curso = acp.id_curso
 inner join control.semestre sem on sem.id_semestre = hor.id_semestre
-inner join control.salon sal on sal.id_salon = hor.id_salon]]>
+inner join control.salon sal on sal.id_salon = hor.id_salon
+order by cur.codigo]]>
 	</queryString>
 	<field name="carne" class="java.lang.String"/>
 	<field name="nombreestudiante" class="java.lang.String"/>
