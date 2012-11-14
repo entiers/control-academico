@@ -9,6 +9,7 @@ package gt.edu.usac.cats.servicio.impl;
 import gt.edu.usac.cats.dominio.AsignacionCursoPensum;
 import gt.edu.usac.cats.dominio.Carrera;
 import gt.edu.usac.cats.dominio.Curso;
+import gt.edu.usac.cats.dominio.Pensum;
 import gt.edu.usac.cats.dominio.Semestre;
 import gt.edu.usac.cats.enums.TipoHorario;
 import gt.edu.usac.cats.servicio.ServicioCurso;
@@ -83,13 +84,13 @@ public class ServicioCursoImpl extends ServicioGeneralImpl implements ServicioCu
     }
 
     @Override
-    public List<AsignacionCursoPensum> getCursoAsignacion(Carrera carrera, Semestre semestre, TipoHorario tipoHorario) throws DataAccessException {
+    public List<AsignacionCursoPensum> getCursoAsignacion(Pensum pensum, Semestre semestre, TipoHorario tipoHorario) throws DataAccessException {
          StringBuilder builder = new StringBuilder();
 
         builder.append("select distinct aCP from AsignacionCursoPensum as aCP ")
                .append("inner join aCP.horarios horario ")
                .append("where horario.semestre = :semestre ")
-               .append("and aCP.pensum.carrera = :carrera ")
+               .append("and aCP.pensum = :pensum ")
                .append("and horario.tipo = :tipoHorario ")
                .append("and horario.salon.capacidad > ( ")
                .append(" select count(*) from DetalleAsignacion det")
@@ -97,7 +98,7 @@ public class ServicioCursoImpl extends ServicioGeneralImpl implements ServicioCu
                .append(")");
 
         Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
-        query.setParameter("carrera", carrera);
+        query.setParameter("pensum", pensum);
         query.setParameter("tipoHorario", tipoHorario);
         query.setParameter("semestre", semestre);
 

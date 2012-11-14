@@ -9,7 +9,6 @@ package gt.edu.usac.cats.controlador.asignacion;
 
 import gt.edu.usac.cats.dominio.AsignacionCursoPensum;
 import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
-import gt.edu.usac.cats.dominio.Curso;
 import gt.edu.usac.cats.dominio.DetalleAsignacion;
 import gt.edu.usac.cats.dominio.Estudiante;
 import gt.edu.usac.cats.dominio.Horario;
@@ -123,7 +122,9 @@ public class ControladorAsignacionExtemporanea extends ControladorAbstractoAsign
 
         this.asignacionEstudianteCarrera = this.servicioGeneralImpl.cargarEntidadPorID(AsignacionEstudianteCarrera.class,
                 wrapperAsignacionCursosExtemporaneas.getAsignacionEstudianteCarrera().getIdAsignacionEstudianteCarrera());
-
+        
+        pensumEstudianteCarrera = servicioPensumEstudianteCarrera.getPensumEstudianteCarreraValido(asignacionEstudianteCarrera);
+            
         //Validando estudiante inscrito
         if(!this.servicioAsignacionEstudianteCarreraImpl.estaEstudianteInscrito(
                 this.asignacionEstudianteCarrera.getEstudiante(),
@@ -158,7 +159,7 @@ public class ControladorAsignacionExtemporanea extends ControladorAbstractoAsign
 
         this.semestre = this.servicioSemestreImpl.getSemestreActivo();
 
-        this.listaAsignacionCursoPensum = this.servicioCursoImpl.getCursoAsignacion(this.asignacionEstudianteCarrera.getCarrera(),
+        this.listaAsignacionCursoPensum = this.servicioCursoImpl.getCursoAsignacion(pensumEstudianteCarrera.getPensum(),
                 this.semestre,datosAsignacion.getTipoHorario());
             
         if(this.listaAsignacionCursoPensum.isEmpty()){
@@ -197,12 +198,13 @@ public class ControladorAsignacionExtemporanea extends ControladorAbstractoAsign
         try {
             asignacionEstudianteCarrera = servicioGeneralImpl.cargarEntidadPorID(AsignacionEstudianteCarrera.class, datosAsignacion.getIdAsignacionEstudianteCarrera());
             semestre = servicioSemestreImpl.getSemestreActivo();
+            pensumEstudianteCarrera = servicioPensumEstudianteCarrera.getPensumEstudianteCarreraValido(asignacionEstudianteCarrera);
 
             //Validar que sea el primer curso a asignar
             if(datosAsignacion.getTotalCursos()==0){
                 this.listaHorarioAsignacion =  new ArrayList<Horario>();
                 listaHorario = new ArrayList<Horario>();
-                listaAsignacionCursoPensum = servicioCursoImpl.getCursoAsignacion(asignacionEstudianteCarrera.getCarrera(),
+                listaAsignacionCursoPensum = servicioCursoImpl.getCursoAsignacion(pensumEstudianteCarrera.getPensum(),
                                                                     semestre,TipoHorario.SEMESTRE);
             }
 
