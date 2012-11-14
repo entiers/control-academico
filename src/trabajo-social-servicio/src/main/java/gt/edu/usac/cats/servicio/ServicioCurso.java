@@ -9,6 +9,7 @@ package gt.edu.usac.cats.servicio;
 import gt.edu.usac.cats.dominio.AsignacionCursoPensum;
 import gt.edu.usac.cats.dominio.Carrera;
 import gt.edu.usac.cats.dominio.Curso;
+import gt.edu.usac.cats.dominio.Pensum;
 import gt.edu.usac.cats.dominio.Semestre;
 import gt.edu.usac.cats.enums.TipoHorario;
 import java.util.List;
@@ -65,7 +66,7 @@ public interface ServicioCurso extends ServicioGeneral {
      * @return Curso
      * @throws DataAccessException Si ocurrio un error de acceso a datos
      */
-    List<AsignacionCursoPensum> getCursoAsignacion(Carrera carrera,Semestre semestre, TipoHorario tipoHorario)
+    List<AsignacionCursoPensum> getCursoAsignacion(Pensum pensum,Semestre semestre, TipoHorario tipoHorario)
             throws DataAccessException;
 
 

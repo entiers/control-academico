@@ -66,12 +66,13 @@ public class ControladorAsignacionVacaciones extends ControladorAbstractoAsignac
         try {
             asignacionEstudianteCarrera = servicioGeneralImpl.cargarEntidadPorID(AsignacionEstudianteCarrera.class, datosAsignacion.getIdAsignacionEstudianteCarrera());
             semestre = servicioSemestreImpl.getSemestreActivo();
+            pensumEstudianteCarrera = servicioPensumEstudianteCarrera.getPensumEstudianteCarreraValido(asignacionEstudianteCarrera);
 
             //Validar que sea el primer curso a asignar
             if(datosAsignacion.getTotalCursos()==0){
                 this.listaHorarioAsignacion =  new ArrayList<Horario>();
                 listaHorario = new ArrayList<Horario>();
-                listaAsignacionCursoPensum = servicioCursoImpl.getCursoAsignacion(asignacionEstudianteCarrera.getCarrera(),
+                listaAsignacionCursoPensum = servicioCursoImpl.getCursoAsignacion(pensumEstudianteCarrera.getPensum(),
                                                                     semestre,TipoHorario.VACACIONES);
             }
 

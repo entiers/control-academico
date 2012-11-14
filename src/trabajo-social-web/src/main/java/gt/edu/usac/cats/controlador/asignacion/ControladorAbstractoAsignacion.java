@@ -13,6 +13,7 @@ import gt.edu.usac.cats.dominio.Curso;
 import gt.edu.usac.cats.dominio.DetalleAsignacion;
 import gt.edu.usac.cats.dominio.Estudiante;
 import gt.edu.usac.cats.dominio.Horario;
+import gt.edu.usac.cats.dominio.PensumEstudianteCarrera;
 import gt.edu.usac.cats.dominio.Semestre;
 import gt.edu.usac.cats.dominio.Usuario;
 import gt.edu.usac.cats.servicio.ServicioAsignacion;
@@ -47,6 +48,8 @@ import org.apache.log4j.Logger;
 public abstract class ControladorAbstractoAsignacion {
 //______________________________________________________________________________
     private static Logger log = Logger.getLogger(ControladorAbstractoAsignacion.class);
+//_____________________________________________________________________________
+    protected PensumEstudianteCarrera pensumEstudianteCarrera;
 //_____________________________________________________________________________
     protected AsignacionEstudianteCarrera asignacionEstudianteCarrera;
 //_____________________________________________________________________________

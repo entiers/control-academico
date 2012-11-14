@@ -169,8 +169,14 @@ public class ControladorAsignacionCursos extends ControladorAbstractoAsignacion{
         String retorno = "redirect:index.htm";
         try {
             this.asignacionEstudianteCarrera = this.servicioAsignacionEstudianteCarreraImpl.cargarEntidadPorID(AsignacionEstudianteCarrera.class, datosAsignacion.getIdAsignacionEstudianteCarrera());
+            pensumEstudianteCarrera = servicioPensumEstudianteCarrera.getPensumEstudianteCarreraValido(asignacionEstudianteCarrera);
             
-            this.listaAsignacionCursoPensum = this.servicioCursoImpl.getCursoAsignacion(this.asignacionEstudianteCarrera.getCarrera(),
+            if(pensumEstudianteCarrera == null){
+                modelo.addAttribute("noPensumValido", true);
+                return "asignacion/asignacionCursos";
+            }
+            
+            this.listaAsignacionCursoPensum = this.servicioCursoImpl.getCursoAsignacion(pensumEstudianteCarrera.getPensum(),
                                                                             this.semestre,datosAsignacion.getTipoHorario());
 
             if(this.listaAsignacionCursoPensum.isEmpty()){

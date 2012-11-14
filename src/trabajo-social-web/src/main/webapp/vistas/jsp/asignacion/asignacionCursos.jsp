@@ -50,6 +50,9 @@
             <c:when test="${noExisteHorario}">
                 <label><fmt:message key="miscursos.asignacionCursos.noExisteHorario"/></label>
             </c:when>
+            <c:when test="${noPensumValido}">
+                <label><fmt:message key="miscursos.asignacionCursos.estudianteSinPensumValido"/></label>
+            </c:when>
             <c:otherwise>
                 <form:form method="post" modelAttribute="datosAsignacion">
                     <fieldset>
