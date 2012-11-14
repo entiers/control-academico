@@ -9,7 +9,6 @@ import gt.edu.usac.cats.dominio.AsignacionCursoPensum;
 import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
 import gt.edu.usac.cats.dominio.DetalleAsignacion;
 import gt.edu.usac.cats.dominio.Horario;
-import gt.edu.usac.cats.dominio.PensumEstudianteCarrera;
 import gt.edu.usac.cats.dominio.busqueda.DatosAsignacion;
 import gt.edu.usac.cats.enums.TipoAsignacion;
 import gt.edu.usac.cats.enums.TipoHorario;
@@ -137,7 +136,7 @@ public class ControladorAsignacionSemestre extends ControladorAbstractoAsignacio
             }
 
             asignacionEstudianteCarrera = servicioGeneralImpl.cargarEntidadPorID(AsignacionEstudianteCarrera.class, datosAsignacion.getIdAsignacionEstudianteCarrera());
-            PensumEstudianteCarrera pensumEstudianteCarrera = this.servicioPensumEstudianteCarrera.getPensumEstudianteCarreraValido(
+            pensumEstudianteCarrera = this.servicioPensumEstudianteCarrera.getPensumEstudianteCarreraValido(
                 asignacionEstudianteCarrera);
 
             if (pensumEstudianteCarrera != null) {
