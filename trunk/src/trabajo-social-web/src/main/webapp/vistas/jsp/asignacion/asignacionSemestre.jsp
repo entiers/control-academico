@@ -58,13 +58,13 @@
             $(document).ready(function() {
                 //Cambio combo curso
                 $('#slcCurso').change(function() {
-                    getHorarios($(this).val(),$('#tipoHorario').val());
+                    getHorarios($(this).val(),$('#tipoHorario').val());                    
                 });
 
             });
 
-            function getHorarios(valueCurso,valueHorario) {
-                $.getJSON("getHorarioAsignacion.htm", { idCurso: valueCurso, idTipoHorario: valueHorario}, function(lstHorario) {
+            function getHorarios(valueCurso,valueHorario) {                
+                $.getJSON("getHorarioAsignacion.htm", { idAsignacionCursoPensum: valueCurso, idTipoHorario: valueHorario}, function(lstHorario) {
                     var options = '';
                     $.each(lstHorario, function (index,value) {
                         options += "<option value='" + value.idHorario + "'>" + value.seccion + "</option>";
