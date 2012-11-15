@@ -192,7 +192,7 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota{
     public String metodoPost(@Valid WrapperIngresoNota wrapperIngresoNota, BindingResult bindingResult,
             Model modelo, HttpServletRequest request) {
 
-        this.setModelo(modelo, true, new DatosIngresoNota());
+        this.setModelo(modelo, false, new DatosIngresoNota());
         try{
             int i=0;
             for(DetalleAsignacion detAsign : super.listadoDetalleAsignacion){
