@@ -7,6 +7,7 @@
 package gt.edu.usac.cats.controlador.detalleAsignacion;
 
 import gt.edu.usac.cats.dominio.Catedratico;
+import gt.edu.usac.cats.dominio.CursoAprobado;
 import gt.edu.usac.cats.dominio.DetalleAsignacion;
 import gt.edu.usac.cats.dominio.Horario;
 import gt.edu.usac.cats.dominio.Semestre;
@@ -16,10 +17,12 @@ import gt.edu.usac.cats.enums.TipoActividad;
 import gt.edu.usac.cats.enums.TipoHorario;
 import gt.edu.usac.cats.servicio.ServicioAsignacionCatedraticoHorario;
 import gt.edu.usac.cats.servicio.ServicioCalendarioActividades;
+import gt.edu.usac.cats.servicio.ServicioCursoAprobado;
 import gt.edu.usac.cats.servicio.ServicioHorario;
 import gt.edu.usac.cats.servicio.ServicioSemestre;
 import gt.edu.usac.cats.util.Mensajes;
 import gt.edu.usac.cats.util.RequestUtil;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -66,6 +69,9 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota{
 //______________________________________________________________________________
     @Resource
     private ServicioAsignacionCatedraticoHorario servicioAsignacionCatedraticoHorarioImpl;
+//______________________________________________________________________________
+    @Resource
+    private ServicioCursoAprobado servicioCursoAprobadoImpl;
 //______________________________________________________________________________
      /**
      * <p>Metodo que intercepta la peticion GET de la pagina ingresoNota.htm. 
@@ -192,15 +198,35 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota{
     public String metodoPost(@Valid WrapperIngresoNota wrapperIngresoNota, BindingResult bindingResult,
             Model modelo, HttpServletRequest request) {
 
+        short notaFinal, zona, laboratorio, examenFinal;        
         this.setModelo(modelo, false, new DatosIngresoNota());
         try{
             int i=0;
             for(DetalleAsignacion detAsign : super.listadoDetalleAsignacion){
-                detAsign.setZona(Short.valueOf(wrapperIngresoNota.getListZona().get(i).toString()));
-                detAsign.setLaboratorio(Short.valueOf(wrapperIngresoNota.getListLaboratorio().get(i).toString()));
-                detAsign.setExamenFinal(Short.valueOf(wrapperIngresoNota.getListFinal().get(i).toString()));
+                zona = Short.valueOf(wrapperIngresoNota.getListZona().get(i).toString());
+                laboratorio = Short.valueOf(wrapperIngresoNota.getListLaboratorio().get(i).toString());
+                examenFinal = Short.valueOf(wrapperIngresoNota.getListFinal().get(i).toString());
+                notaFinal = (short) (zona + examenFinal);
+                detAsign.setZona(zona);
+                detAsign.setLaboratorio(laboratorio);
+                detAsign.setExamenFinal(examenFinal);
                 detAsign.setOficializado(wrapperIngresoNota.getOficializar());
                 super.servicioDetalleAsignacionImpl.actualizar(detAsign);
+                
+                if(wrapperIngresoNota.getOficializar()){
+                    if(notaFinal >= detAsign.getHorario().getAsignacionCursoPensum().getNotaAprobacion() && 
+                            this.servicioCursoAprobadoImpl.getCursoAprobado(detAsign.getAsignacion(), 
+                                detAsign.getHorario().getAsignacionCursoPensum()) == null){
+                        CursoAprobado cursoAprobado = new CursoAprobado();
+                        cursoAprobado.setAsignacion(detAsign.getAsignacion());
+                        cursoAprobado.setAsignacionCursoPensum(detAsign.getHorario().getAsignacionCursoPensum());
+                        cursoAprobado.setExamenFinal(examenFinal);
+                        cursoAprobado.setFechaAprobacion(new Date());
+                        cursoAprobado.setLaboratorio(laboratorio);
+                        cursoAprobado.setZona(zona);
+                        super.servicioUsuarioImpl.agregar(cursoAprobado);
+                    }
+                }
                 i++;
             }
             if(wrapperIngresoNota.getOficializar())

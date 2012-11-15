@@ -51,6 +51,7 @@ public class AsignacionCursoPensum implements java.io.Serializable {
     private short examenFinal;
     private short laboratorio;
     private short zona;
+    private short notaAprobacion;
     private Set<AsignacionCursoPensum> asignacionCursoPensumsForIdCursoPensumPrerequisito = new HashSet<AsignacionCursoPensum>(0);
     private Set<AsignacionCursoPensum> asignacionCursoPensumsForIdCursoPensumOriginal = new HashSet<AsignacionCursoPensum>(0);
     private Set<CursoAprobado> cursoAprobados = new HashSet<CursoAprobado>(0);
@@ -257,6 +258,15 @@ public class AsignacionCursoPensum implements java.io.Serializable {
                 append(", obligatorio=").append(this.obligatorio).append(")");
 
         return builder.toString();
+    }
+    
+    @Column(name = "nota_aprobacion", nullable = false)
+    public short getNotaAprobacion() {
+        return this.notaAprobacion;
+    }
+
+    public void setNotaAprobacion(short notaAprobacion) {
+        this.zona = notaAprobacion;
     }
 }
 

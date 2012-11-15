@@ -5,9 +5,11 @@
  */
 package gt.edu.usac.cats.servicio.impl;
 
+import gt.edu.usac.cats.dominio.Asignacion;
 import gt.edu.usac.cats.dominio.AsignacionCursoPensum;
 import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
 import gt.edu.usac.cats.dominio.Curso;
+import gt.edu.usac.cats.dominio.CursoAprobado;
 import gt.edu.usac.cats.dominio.Pensum;
 import gt.edu.usac.cats.servicio.ServicioCursoAprobado;
 import gt.edu.usac.cats.servicio.ServicioPensumEstudianteCarrera;
@@ -103,5 +105,17 @@ public class ServicioCursoAprobadoImpl extends ServicioGeneralImpl implements Se
         } else {
             return Integer.parseInt(result.get(0).toString());
         }
+    }
+
+    @Override
+    public CursoAprobado getCursoAprobado(Asignacion asignacion, AsignacionCursoPensum asignacionCursoPensum) throws DataAccessException {
+        DetachedCriteria criteria = DetachedCriteria.forClass(CursoAprobado.class);
+        criteria.add(
+                Restrictions.and(
+                    Restrictions.eq("asignacion", asignacion), 
+                    Restrictions.eq("asignacionCursoPensum", asignacionCursoPensum)
+                )
+        );        
+        return this.daoGeneralImpl.uniqueResult(criteria);
     }
 }
