@@ -7,11 +7,13 @@
 
 package gt.edu.usac.cats.servicio;
 
+import gt.edu.usac.cats.dominio.Asignacion;
 import gt.edu.usac.cats.dominio.AsignacionCursoPensum;
 import java.util.List;
 
 import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
 import gt.edu.usac.cats.dominio.Curso;
+import gt.edu.usac.cats.dominio.CursoAprobado;
 import gt.edu.usac.cats.dominio.Pensum;
 import org.springframework.dao.DataAccessException;
 
@@ -53,5 +55,16 @@ public interface ServicioCursoAprobado extends ServicioGeneral{
      * @throws DataAccessException Si ocurrio un error de acceso a datos
      */
     int getCreditosAprobados(AsignacionEstudianteCarrera asignacionEstudianteCarrera)
-            throws DataAccessException;
+            throws DataAccessException;    
+//______________________________________________________________________________
+    /**
+     * <p>Obtener un {@link CursoAprobado} en base a los parámetros enviados</p>
+     * 
+     * @param asignacion
+     * @param asignacionCursoPensum
+     * @return
+     * @throws DataAccessException 
+     */
+    CursoAprobado getCursoAprobado(Asignacion asignacion, AsignacionCursoPensum asignacionCursoPensum)
+        throws DataAccessException;
 }
