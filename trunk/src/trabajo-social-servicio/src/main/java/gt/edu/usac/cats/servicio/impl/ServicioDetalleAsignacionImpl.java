@@ -177,9 +177,7 @@ public class ServicioDetalleAsignacionImpl extends ServicioGeneralImpl implement
         query.setParameter("asignacionEstudianteCarrera", asignacionEstudianteCarrera);
 
         List result = query.list();
-        if(result.isEmpty())
-            return false;
-        else if(result.get(0) == null)
+        if(result.isEmpty() || result.get(0) == null)
             return false;
         else
             return Integer.valueOf(result.get(0).toString()) >= zonaMinima;

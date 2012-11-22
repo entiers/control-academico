@@ -29,12 +29,12 @@ public class ServicioBoletaBancoImpl extends ServicioGeneralImpl implements Serv
 //______________________________________________________________________________
     @Override
     public List<BoletaBanco> listadoBoletaBanco(Estudiante estudiante, AsignacionCursoPensum asignacionCursoPensum, Semestre semestre, TipoRubro tipoRubro) throws DataAccessException {
-        DetachedCriteria criteria = DetachedCriteria.forClass(BoletaBanco.class);
-
-        criteria.add(Restrictions.eq("estudiante", estudiante));
-        criteria.add(Restrictions.eq("asignacionCursoPensum", asignacionCursoPensum));
-        criteria.add(Restrictions.eq("semestre", semestre));
-        criteria.add(Restrictions.eq("tipoRubro", tipoRubro));
+        DetachedCriteria criteria = DetachedCriteria.forClass(BoletaBanco.class,"b");
+        criteria.createAlias("b.cuentaCorriente", "ca");        
+        criteria.add(Restrictions.eq("ca.estudiante", estudiante));
+        criteria.add(Restrictions.eq("b.asignacionCursoPensum", asignacionCursoPensum));
+        criteria.add(Restrictions.eq("b.semestre", semestre));
+        criteria.add(Restrictions.eq("b.tipoRubro", tipoRubro));
         
         return this.daoGeneralImpl.find(criteria);
     }

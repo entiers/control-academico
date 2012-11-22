@@ -29,3 +29,4 @@
 <form:hidden path="tipoHorario" id="tipoHorario" />
 <form:hidden path="idAsignacionEstudianteCarrera" />
 <form:hidden path="totalCursos" />
+<form:hidden path="tipoRubro" />

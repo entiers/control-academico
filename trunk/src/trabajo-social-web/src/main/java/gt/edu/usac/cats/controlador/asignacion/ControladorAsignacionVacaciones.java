@@ -107,6 +107,7 @@ public class ControladorAsignacionVacaciones extends ControladorAbstractoAsignac
             RequestUtil.crearMensajeRespuesta(request,TITULO_MENSAJE, "dataAccessException", false);
             log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
         }
+        modelo.addAttribute("datosAsignacion", datosAsignacion);
         this.cargarModelo(modelo);
         return "asignacion/asignacionVacaciones";
     }
@@ -197,11 +198,12 @@ public class ControladorAsignacionVacaciones extends ControladorAbstractoAsignac
             RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "dataAccessException", false);
             log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
         }
+        modelo.addAttribute("datosAsignacion", datosAsignacion);
         return "asignacion/asignacionVacaciones";
     }
 //  _____________________________________________________________________________
     private void cargarModelo(Model modelo){
-        modelo.addAttribute("listaAsignacionCursoPensum", listaAsignacionCursoPensum);
+                modelo.addAttribute("listaAsignacionCursoPensum", listaAsignacionCursoPensum);
         modelo.addAttribute("listaHorario", listaHorario);
         modelo.addAttribute("horarioElegido", true);
         modelo.addAttribute("listadoHorarioAsignados", this.listaHorarioAsignacion);

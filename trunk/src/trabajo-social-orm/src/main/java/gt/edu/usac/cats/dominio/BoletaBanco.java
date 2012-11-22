@@ -11,6 +11,8 @@ package gt.edu.usac.cats.dominio;
 // Generated 23/03/2011 12:56:07 AM by Hibernate Tools 3.2.1.GA
 
 
+import gt.edu.usac.cats.enums.TipoRubro;
+import gt.edu.usac.cats.enums.VarianteRubro;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,13 +36,12 @@ import org.hibernate.annotations.Type;
 )
 public class BoletaBanco  implements java.io.Serializable {
     private int idBoletaBanco;
-    private Semestre semestre;
-    private Estudiante estudiante;
-    private Curso curso;
+    private Semestre semestre;    
+    private AsignacionCursoPensum asignacionCursoPensum;
     private int ordenPago;
     private int numeroBoleta;
-    private short tipoRubro;
-    private short varianteRubro;
+    private TipoRubro tipoRubro;
+    private VarianteRubro varianteRubro;
     private Date fechaPago;
     private CuentaCorriente cuentaCorriente;
     private Double monto;
@@ -48,11 +49,11 @@ public class BoletaBanco  implements java.io.Serializable {
     public BoletaBanco() {
     }
 
-    public BoletaBanco(int idBoletaBanco, Semestre semestre, Estudiante estudiante, Curso curso, int ordenPago, int numeroBoleta, short tipoRubro, short varianteRubro, Date fechaPago) {
+    public BoletaBanco(int idBoletaBanco, Semestre semestre, Estudiante estudiante, AsignacionCursoPensum asignacionCursoPensum, int ordenPago, int numeroBoleta, 
+            TipoRubro tipoRubro, VarianteRubro varianteRubro, Date fechaPago) {
        this.idBoletaBanco = idBoletaBanco;
        this.semestre = semestre;
-       this.estudiante = estudiante;
-       this.curso = curso;
+       this.asignacionCursoPensum = asignacionCursoPensum;
        this.ordenPago = ordenPago;
        this.numeroBoleta = numeroBoleta;
        this.tipoRubro = tipoRubro;
@@ -81,23 +82,13 @@ public class BoletaBanco  implements java.io.Serializable {
     }
 
     @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="id_estudiante", nullable=false)
-    public Estudiante getEstudiante() {
-        return this.estudiante;
+    @JoinColumn(name="id_asignacion_curso_pensum", nullable=false)
+    public AsignacionCursoPensum getAsignacionCursoPensum() {
+        return this.asignacionCursoPensum;
     }
     
-    public void setEstudiante(Estudiante estudiante) {
-        this.estudiante = estudiante;
-    }
-
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="id_curso", nullable=false)
-    public Curso getCurso() {
-        return this.curso;
-    }
-    
-    public void setCurso(Curso curso) {
-        this.curso = curso;
+    public void setAsignacionCursoPensum(AsignacionCursoPensum asignacionCursoPensum) {
+        this.asignacionCursoPensum = asignacionCursoPensum;
     }
     
     @Column(name="orden_pago", nullable=false)
@@ -136,11 +127,11 @@ public class BoletaBanco  implements java.io.Serializable {
             )
         }
     )
-    public short getTipoRubro() {
+    public TipoRubro getTipoRubro() {
         return this.tipoRubro;
     }
     
-    public void setTipoRubro(short tipoRubro) {
+    public void setTipoRubro(TipoRubro tipoRubro) {
         this.tipoRubro = tipoRubro;
     }
     
@@ -162,11 +153,11 @@ public class BoletaBanco  implements java.io.Serializable {
             )
         }
     )
-    public short getVarianteRubro() {
+    public VarianteRubro getVarianteRubro() {
         return this.varianteRubro;
     }
     
-    public void setVarianteRubro(short varianteRubro) {
+    public void setVarianteRubro(VarianteRubro varianteRubro) {
         this.varianteRubro = varianteRubro;
     }
 

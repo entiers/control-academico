@@ -9,7 +9,6 @@ package gt.edu.usac.cats.servicio;
 
 import gt.edu.usac.cats.dominio.AsignacionCursoPensum;
 import gt.edu.usac.cats.dominio.BoletaBanco;
-import gt.edu.usac.cats.dominio.Curso;
 import gt.edu.usac.cats.dominio.Estudiante;
 import gt.edu.usac.cats.dominio.Semestre;
 import gt.edu.usac.cats.enums.TipoRubro;
