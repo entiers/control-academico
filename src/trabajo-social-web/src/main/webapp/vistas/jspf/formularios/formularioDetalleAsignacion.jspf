@@ -17,10 +17,10 @@
         <c:forEach items="${listadoDetalleAsignacion}" var="detAsign">
             <tr>
                 <td style="text-align:center">
-                    ${detAsign.horario.curso.codigo}
+                    ${detAsign.horario.asignacionCursoPensum.curso.codigo}
                 </td>
                 <td>
-                    ${detAsign.horario.curso.nombre}
+                    ${detAsign.horario.asignacionCursoPensum.curso.nombre}
                 </td>
                 <td style="text-align:center">
                     <form:checkbox path="detalleAsignacion"

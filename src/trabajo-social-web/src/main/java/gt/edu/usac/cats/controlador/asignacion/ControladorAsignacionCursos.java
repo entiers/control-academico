@@ -179,7 +179,9 @@ public class ControladorAsignacionCursos extends ControladorAbstractoAsignacion{
             this.listaAsignacionCursoPensum = this.servicioCursoImpl.getCursoAsignacion(pensumEstudianteCarrera.getPensum(),
                                                                             this.semestre,datosAsignacion.getTipoHorario());
 
-            if(this.listaAsignacionCursoPensum.isEmpty()){
+            if(this.listaAsignacionCursoPensum.isEmpty() && (
+                    datosAsignacion.getTipoAsignacion() != TipoAsignacion.ASIGNACION_PRIMERA_RETRASADA || 
+                    datosAsignacion.getTipoAsignacion() != TipoAsignacion.ASIGNACION_SEGUNDA_RETRASADA  )){
                 modelo.addAttribute("noExisteHorario", true);
                 return "asignacion/asignacionCursos";
             }

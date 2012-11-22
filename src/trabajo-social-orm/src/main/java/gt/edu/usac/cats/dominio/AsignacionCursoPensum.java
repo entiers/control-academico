@@ -58,6 +58,7 @@ public class AsignacionCursoPensum implements java.io.Serializable {
     private Set<AsignacionCursoPensum> asignacionCursoPensumsForIdCursoPensumEquivalencia = new HashSet<AsignacionCursoPensum>(0);
     private Set<Horario> horarios = new HashSet<Horario>(0);
     private Set<AsignacionCursoPensum> asignacionCursoPensumsForIdCursoPensum = new HashSet<AsignacionCursoPensum>(0);
+    private Set<BoletaBanco> boletaBancos = new HashSet<BoletaBanco>(0);
 
     public AsignacionCursoPensum() {
     }
@@ -239,6 +240,15 @@ public class AsignacionCursoPensum implements java.io.Serializable {
         this.horarios = horarios;
     }
     
+    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="asignacionCursoPensum")
+    @JsonIgnore
+    public Set<BoletaBanco> getBoletaBancos() {
+        return this.boletaBancos;
+    }
+
+    public void setBoletaBancos(Set<BoletaBanco> boletaBancos) {
+        this.boletaBancos = boletaBancos;
+    }
     /**
      * Concatena la informaci&oacute;n del curso con el n&uacute;mero del semestre.  Es de utilizada para la visualizaci&oacute;n
      * en las vistas.  Este atributo <b>NO</b> pertenece a la BD.

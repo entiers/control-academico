@@ -65,6 +65,7 @@
                             <form:errors path="idAsignacionEstudianteCarrera" cssClass="claseError" />
                             <form:hidden path="tipoAsignacion" />
                             <form:hidden path="tipoHorario" />
+                            <form:hidden path="tipoRubro" />
                         </div>
                         <br/>
                         <input type="submit" value='<fmt:message key="miscursos.asignacionCursos.carrera" />' />

@@ -43,8 +43,7 @@ public class Curso implements java.io.Serializable {
      private String codigo;
      private String nombre;
      private Set<ProgramaCurso> programaCursos = new HashSet<ProgramaCurso>(0);
-     private Set<AsignacionCursoPensum> asignacionCursoPensums = new HashSet<AsignacionCursoPensum>(0);
-     private Set<BoletaBanco> boletaBancos = new HashSet<BoletaBanco>(0);
+     private Set<AsignacionCursoPensum> asignacionCursoPensums = new HashSet<AsignacionCursoPensum>(0);     
      private Set<ConteoAsignacion> conteoAsignacions = new HashSet<ConteoAsignacion>(0);
 
 
@@ -84,16 +83,6 @@ public class Curso implements java.io.Serializable {
 
     public void setProgramaCursos(Set<ProgramaCurso> programaCursos) {
         this.programaCursos = programaCursos;
-    }
-
-@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="curso")
-@JsonIgnore
-    public Set<BoletaBanco> getBoletaBancos() {
-        return this.boletaBancos;
-    }
-
-    public void setBoletaBancos(Set<BoletaBanco> boletaBancos) {
-        this.boletaBancos = boletaBancos;
     }
 
     @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="curso")
