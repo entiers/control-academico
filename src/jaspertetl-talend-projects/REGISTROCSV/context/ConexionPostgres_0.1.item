@@ -5,5 +5,5 @@
   <contextParameter comment="" name="ConexionPostgres_Database" prompt="ConexionPostgres_Database?" promptNeeded="false" type="id_String" value="control_academico"/>
   <contextParameter comment="" name="ConexionPostgres_Server" prompt="ConexionPostgres_Server?" promptNeeded="false" type="id_String" value="localhost"/>
   <contextParameter comment="" name="ConexionPostgres_Login" prompt="ConexionPostgres_Login?" promptNeeded="false" type="id_String" value="postgres"/>
-  <contextParameter comment="" name="ConexionPostgres_Password" prompt="ConexionPostgres_Password?" promptNeeded="false" type="id_Password" value="4Gc28Ci67A4="/>
+  <contextParameter comment="" name="ConexionPostgres_Password" prompt="ConexionPostgres_Password?" promptNeeded="false" type="id_Password" value="c7psnEs9bIY="/>
 </talendfile:ContextType>

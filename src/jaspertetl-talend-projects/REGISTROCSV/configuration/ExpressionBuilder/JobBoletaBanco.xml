@@ -1,0 +1,119 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:expression="http:///expression.ecore">
+  <expression:EMFExpression id="null=>semestre=>numero" expression="row1.id_rubro ==2 || row1.id_rubro==4 || row1.id_rubro==5 ? &quot;1&quot; : &quot;2&quot;     ">
+    <variables name="row1.carnet" value="null" talendType="id_String" nullable="true"/>
+    <variables name="row1.nombre" value="null" talendType="id_String" nullable="true"/>
+    <variables name="row1.curso" value="null" talendType="id_String" nullable="true"/>
+    <variables name="row1.nombre_curso" value="null" talendType="id_String" nullable="true"/>
+    <variables name="row1.unidad" value="null" talendType="id_Integer" nullable="true"/>
+    <variables name="row1.extension" value="null" talendType="id_Integer" nullable="true"/>
+    <variables name="row1.carrera" value="null" talendType="id_Integer" nullable="true"/>
+    <variables name="row1.id_orden_pago" value="null" talendType="id_Integer" nullable="true"/>
+    <variables name="row1.tipo_curso" value="null" talendType="id_String" nullable="true"/>
+    <variables name="row1.seccion" value="null" talendType="id_Character" nullable="true"/>
+    <variables name="row1.valor" value="null" talendType="id_Double" nullable="true"/>
+    <variables name="row1.no_boleta_deposito" value="null" talendType="id_Integer" nullable="true"/>
+    <variables name="row1.fecha" value="null" talendType="id_Date" nullable="true"/>
+    <variables name="row1.anio_temporada" value="null" talendType="id_Short" nullable="true"/>
+    <variables name="row1.id_rubro" value="null" talendType="id_Short" nullable="true"/>
+    <variables name="row1.id_variante_rubro" value="null" talendType="id_Short" nullable="true"/>
+    <variables name="curso.id_curso" value="0" talendType="id_Short"/>
+    <variables name="curso.codigo" value="null" talendType="id_String"/>
+    <variables name="curso.nombre" value="null" talendType="id_String"/>
+    <variables name="asignacion_curso_pensum.id_asignacion_curso_pensum" value="0" talendType="id_Short"/>
+    <variables name="asignacion_curso_pensum.obligatorio" value="false" talendType="id_Boolean"/>
+    <variables name="asignacion_curso_pensum.id_curso" value="0" talendType="id_Short"/>
+    <variables name="asignacion_curso_pensum.id_pensum" value="0" talendType="id_Short"/>
+    <variables name="asignacion_curso_pensum.creditos_practicos" value="null" talendType="id_Short" nullable="true"/>
+    <variables name="asignacion_curso_pensum.creditos_prerrequisito" value="null" talendType="id_Short" nullable="true"/>
+    <variables name="asignacion_curso_pensum.creditos_teoricos" value="null" talendType="id_Short" nullable="true"/>
+    <variables name="asignacion_curso_pensum.numero_semestre" value="0" talendType="id_Short"/>
+    <variables name="asignacion_curso_pensum.examen_final" value="0" talendType="id_Short"/>
+    <variables name="asignacion_curso_pensum.laboratorio" value="0" talendType="id_Short"/>
+    <variables name="asignacion_curso_pensum.zona" value="0" talendType="id_Short"/>
+    <variables name="asignacion_curso_pensum.nota_aprobacion" value="null" talendType="id_Short" nullable="true"/>
+    <variables name="estudiante.id_estudiante" value="0" talendType="id_Integer"/>
+    <variables name="estudiante.carne" value="null" talendType="id_String"/>
+    <variables name="estudiante.nombre" value="null" talendType="id_String"/>
+    <variables name="estudiante.direccion" value="null" talendType="id_String" nullable="true"/>
+    <variables name="estudiante.telefono" value="null" talendType="id_String" nullable="true"/>
+    <variables name="estudiante.celular" value="null" talendType="id_String" nullable="true"/>
+    <variables name="estudiante.email" value="null" talendType="id_String" nullable="true"/>
+    <variables name="estudiante.fecha_nacimiento" value="null" talendType="id_Date"/>
+    <variables name="estudiante.requisitos" value="null" talendType="id_Boolean" nullable="true"/>
+    <variables name="estudiante.id_usuario" value="null" talendType="id_Integer" nullable="true"/>
+    <variables name="estudiante.carne_modificado" value="null" talendType="id_String" nullable="true"/>
+    <variables name="estudiante.nov" value="null" talendType="id_String" nullable="true"/>
+    <variables name="estudiante.sexo" value="null" talendType="id_String"/>
+    <variables name="estudiante.id_lugar_nacimiento" value="0" talendType="id_Short"/>
+    <variables name="estudiante.id_nacionalidad" value="0" talendType="id_Short"/>
+    <variables name="cuenta_corriente.id_cuenta_corriente" value="0" talendType="id_Integer"/>
+    <variables name="cuenta_corriente.codigo" value="null" talendType="id_String"/>
+    <variables name="cuenta_corriente.activa" value="false" talendType="id_Boolean"/>
+    <variables name="cuenta_corriente.id_estudiante" value="0" talendType="id_Integer"/>
+    <variables name="semestre.id_semestre" value="0" talendType="id_Short"/>
+    <variables name="semestre.anio" value="0" talendType="id_Short"/>
+    <variables name="semestre.numero" value="null" talendType="id_String"/>
+    <variables name="semestre.observacion" value="null" talendType="id_String" nullable="true"/>
+    <variables name="semestre.activo" value="false" talendType="id_Boolean"/>
+    <variables name="semestre.nombre" value="null" talendType="id_String" nullable="true"/>
+  </expression:EMFExpression>
+  <expression:EMFExpression id="null=>boletas=>tipo_rubro" expression="row1.id_rubro == 2 || row1.id_rubro == 3 ? (short)1 : row1.id_rubro == 4 || row1.id_rubro == 6 ? (short)2 : (short)3">
+    <variables name="row1.carnet" value="null" talendType="id_String" nullable="true"/>
+    <variables name="row1.nombre" value="null" talendType="id_String" nullable="true"/>
+    <variables name="row1.curso" value="null" talendType="id_String" nullable="true"/>
+    <variables name="row1.nombre_curso" value="null" talendType="id_String" nullable="true"/>
+    <variables name="row1.unidad" value="null" talendType="id_Integer" nullable="true"/>
+    <variables name="row1.extension" value="null" talendType="id_Integer" nullable="true"/>
+    <variables name="row1.carrera" value="null" talendType="id_Integer" nullable="true"/>
+    <variables name="row1.id_orden_pago" value="null" talendType="id_Integer" nullable="true"/>
+    <variables name="row1.tipo_curso" value="null" talendType="id_String" nullable="true"/>
+    <variables name="row1.seccion" value="null" talendType="id_Character" nullable="true"/>
+    <variables name="row1.valor" value="null" talendType="id_Double" nullable="true"/>
+    <variables name="row1.no_boleta_deposito" value="null" talendType="id_Integer" nullable="true"/>
+    <variables name="row1.fecha" value="null" talendType="id_Date" nullable="true"/>
+    <variables name="row1.anio_temporada" value="null" talendType="id_Short" nullable="true"/>
+    <variables name="row1.id_rubro" value="null" talendType="id_Short" nullable="true"/>
+    <variables name="row1.id_variante_rubro" value="null" talendType="id_Short" nullable="true"/>
+    <variables name="curso.id_curso" value="0" talendType="id_Short"/>
+    <variables name="curso.codigo" value="null" talendType="id_String"/>
+    <variables name="curso.nombre" value="null" talendType="id_String"/>
+    <variables name="asignacion_curso_pensum.id_asignacion_curso_pensum" value="0" talendType="id_Short"/>
+    <variables name="asignacion_curso_pensum.obligatorio" value="false" talendType="id_Boolean"/>
+    <variables name="asignacion_curso_pensum.id_curso" value="0" talendType="id_Short"/>
+    <variables name="asignacion_curso_pensum.id_pensum" value="0" talendType="id_Short"/>
+    <variables name="asignacion_curso_pensum.creditos_practicos" value="null" talendType="id_Short" nullable="true"/>
+    <variables name="asignacion_curso_pensum.creditos_prerrequisito" value="null" talendType="id_Short" nullable="true"/>
+    <variables name="asignacion_curso_pensum.creditos_teoricos" value="null" talendType="id_Short" nullable="true"/>
+    <variables name="asignacion_curso_pensum.numero_semestre" value="0" talendType="id_Short"/>
+    <variables name="asignacion_curso_pensum.examen_final" value="0" talendType="id_Short"/>
+    <variables name="asignacion_curso_pensum.laboratorio" value="0" talendType="id_Short"/>
+    <variables name="asignacion_curso_pensum.zona" value="0" talendType="id_Short"/>
+    <variables name="asignacion_curso_pensum.nota_aprobacion" value="null" talendType="id_Short" nullable="true"/>
+    <variables name="estudiante.id_estudiante" value="0" talendType="id_Integer"/>
+    <variables name="estudiante.carne" value="null" talendType="id_String"/>
+    <variables name="estudiante.nombre" value="null" talendType="id_String"/>
+    <variables name="estudiante.direccion" value="null" talendType="id_String" nullable="true"/>
+    <variables name="estudiante.telefono" value="null" talendType="id_String" nullable="true"/>
+    <variables name="estudiante.celular" value="null" talendType="id_String" nullable="true"/>
+    <variables name="estudiante.email" value="null" talendType="id_String" nullable="true"/>
+    <variables name="estudiante.fecha_nacimiento" value="null" talendType="id_Date"/>
+    <variables name="estudiante.requisitos" value="null" talendType="id_Boolean" nullable="true"/>
+    <variables name="estudiante.id_usuario" value="null" talendType="id_Integer" nullable="true"/>
+    <variables name="estudiante.carne_modificado" value="null" talendType="id_String" nullable="true"/>
+    <variables name="estudiante.nov" value="null" talendType="id_String" nullable="true"/>
+    <variables name="estudiante.sexo" value="null" talendType="id_String"/>
+    <variables name="estudiante.id_lugar_nacimiento" value="0" talendType="id_Short"/>
+    <variables name="estudiante.id_nacionalidad" value="0" talendType="id_Short"/>
+    <variables name="cuenta_corriente.id_cuenta_corriente" value="0" talendType="id_Integer"/>
+    <variables name="cuenta_corriente.codigo" value="null" talendType="id_String"/>
+    <variables name="cuenta_corriente.activa" value="false" talendType="id_Boolean"/>
+    <variables name="cuenta_corriente.id_estudiante" value="0" talendType="id_Integer"/>
+    <variables name="semestre.id_semestre" value="0" talendType="id_Short"/>
+    <variables name="semestre.anio" value="0" talendType="id_Short"/>
+    <variables name="semestre.numero" value="null" talendType="id_String"/>
+    <variables name="semestre.observacion" value="null" talendType="id_String" nullable="true"/>
+    <variables name="semestre.activo" value="false" talendType="id_Boolean"/>
+    <variables name="semestre.nombre" value="null" talendType="id_String" nullable="true"/>
+  </expression:EMFExpression>
+</xmi:XMI>
