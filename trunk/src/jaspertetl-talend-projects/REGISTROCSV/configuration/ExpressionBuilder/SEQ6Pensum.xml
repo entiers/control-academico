@@ -1,0 +1,11 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<expression:EMFExpression xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:expression="http:///expression.ecore" id="null=>pensum1=>codigo" expression="row3.pensum == null ? &quot;&quot; : row3.pensum ">
+  <variables name="row2.id_carrera" value="0" talendType="id_Short"/>
+  <variables name="row2.nombre" value="null" talendType="id_String" nullable="true"/>
+  <variables name="row2.descripcion" value="null" talendType="id_String" nullable="true"/>
+  <variables name="row2.id_escuela" value="0" talendType="id_Short"/>
+  <variables name="row2.codigo" value="null" talendType="id_Short" nullable="true"/>
+  <variables name="row2.nivel" value="0" talendType="id_Short"/>
+  <variables name="row3.pensum" value="null" talendType="id_String"/>
+  <variables name="row3.carrera" value="0" talendType="id_Short"/>
+</expression:EMFExpression>
