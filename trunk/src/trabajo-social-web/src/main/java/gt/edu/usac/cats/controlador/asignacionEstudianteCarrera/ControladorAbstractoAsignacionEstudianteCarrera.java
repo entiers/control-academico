@@ -128,7 +128,9 @@ public abstract class ControladorAbstractoAsignacionEstudianteCarrera {
             WrapperAgregarAsignacionEstudianteCarrera wrapperAgregarAsignacionEstudianteCarrera,
             boolean autoOpenDialog,
             WrapperModificarAsignacionEstudianteCarrera wrapperModificarAsignacionEstudianteCarrera,
-            boolean autoOpenDialogModificar, boolean realizarBusqueda) {
+            boolean autoOpenDialogModificar, 
+            boolean realizarBusqueda,
+            WrapperEquivalenciaPorCarrera wrapperEquivalenciaPorCarrera) {
 
         if (realizarBusqueda) {
             this.listadoCarrerasNoAsignadas =
@@ -152,6 +154,7 @@ public abstract class ControladorAbstractoAsignacionEstudianteCarrera {
         modelo.addAttribute("listadoAsignacionEstudianteCarrera", this.listadoAsignacionEstudianteCarrera);
         modelo.addAttribute("listadoAsignacionEstudianteCarreraNoAsignadas", this.listadoAsignacionEstudianteCarreraNoAsignadas);
         modelo.addAttribute("wrapperAgregarAsignacionEstudianteCarrera", wrapperAgregarAsignacionEstudianteCarrera);
+        modelo.addAttribute("wrapperEquivalenciaPorCarrera", wrapperEquivalenciaPorCarrera);
         modelo.addAttribute("listadoCarrerasNoAsignadas", this.listadoCarrerasNoAsignadas);
         modelo.addAttribute("listadoSituaciones", this.listadoSituaciones);
         modelo.addAttribute("listadoSemestres", this.listadoSemestres);
@@ -182,7 +185,7 @@ public abstract class ControladorAbstractoAsignacionEstudianteCarrera {
 
         this.estudiante = this.asignacionEstudianteCarrera.getEstudiante();
         this.agregarAtributosDefault(modelo, wrapperAgregarAsignacionEstudianteCarrera,
-                false, null, false, realizarBusqueda);
+                false, null, false, realizarBusqueda,null);
 
     }
 
