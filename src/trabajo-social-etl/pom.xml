@@ -57,6 +57,13 @@
       <version>1.0</version>
       <scope>compile</scope>
     </dependency>
+    
+    <dependency>
+      <groupId>talend.tos</groupId>
+      <artifactId>systemRoutines</artifactId>
+      <version>1.0</version>
+      <scope>compile</scope>
+    </dependency>
 
     <dependency>
       <groupId>talend.tos</groupId>

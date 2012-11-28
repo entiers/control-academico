@@ -5,9 +5,7 @@
 
 package gt.edu.usac.cats.etl;
 
-import java.io.IOException;
 import junit.framework.TestCase;
-import registrocsv.etlregistrocsv_0_1.ETLRegistroCSV;
 
 /**
  *
@@ -52,6 +50,17 @@ public class FabricaManejadorETLTest extends TestCase {
         }
         assertEquals(1, length);
         System.out.println("--Finalizado--");
+    }
+    
+    public static void main(String[] args){
+        ManejadorETL instance = FabricaManejadorETL.BOLETA_BANCO_CSV.crear();
+        int length = -1;
+        try{
+            length = instance.realizar().length;
+        }catch(Exception e){
+            e.printStackTrace();
+            fail(e.getMessage());        
+        }
     }
 
 }
