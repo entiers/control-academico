@@ -14,13 +14,11 @@
                     $(this).dialog('close');
                 },
                 "<fmt:message key="btnAceptar" />" : function() {
-
                     $("#formModificar").submit();
-
                 }
             },
             close : function(){
-                $("#formModificar .claseError").css({"display":"none"})
+                $("#divFormularioModificarPopup").dialog('close');
             }
         });
     });

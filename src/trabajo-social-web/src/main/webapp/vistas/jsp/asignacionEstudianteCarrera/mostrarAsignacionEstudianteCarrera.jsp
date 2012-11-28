@@ -29,7 +29,6 @@
 					$("#formModificar #inputIdAsignacionEstudianteCarrera").val(idAsignacionEstudianteCarrera);
 					$("#formModificar #inputFechaCierre").val(fechaCierre);
 					$("#formModificar #checkboxInscrito").attr({"checked" : inscrito == true ? "checked" : ""});
-
 					$("#divFormularioModificarPopup").dialog("open");                
 				}
             
@@ -40,24 +39,21 @@
 				}
 			           
 				$(function (){
-					$("#divFormularioEquivalencia").dialog({
-							autoOpen: false,
-							modal: true,
-							width: 650,
-			
-							buttons: {
-								"<fmt:message key="btnSalir" />" : function() {                    
-									$(this).dialog('close');
-								},
-								"<fmt:message key="btnAceptar" />" : function() {
-			
-									$("#formEquivalencia").submit();
-			
-								}
-							}
-					});
+                                    $("#divFormularioEquivalencia").dialog({
+                                        autoOpen: false,
+                                        modal: true,
+                                        width: 650,
+                                        buttons: {
+                                                "<fmt:message key="btnSalir" />" : function() {                    
+                                                        $(this).dialog('close');
+                                                },
+                                                "<fmt:message key="btnAceptar" />" : function() {
+                                                        $(this).dialog('close');
+                                                        $("#formEquivalencia").submit();
+                                                }
+                                        }
+                                    });
 				});
-
 		</script>
 	</head>
 	<body>
@@ -136,29 +132,29 @@
 		<sec:authorize access="hasRole('ROLE_MODIFICAR_ASIGNACION_ESTUDIANTE_CARRERA')">
 				<c:if test="${ not empty wrapperModificarAsignacionEstudianteCarrera}">
 					<div id="divFormularioModificarPopup" title="<fmt:message key='modificarAsignacionEstudianteCarrera.titulo'/>" >
-						<form:form id="formModificar"
-										modelAttribute="wrapperModificarAsignacionEstudianteCarrera" method="POST"
-										action="modificarAsignacionEstudianteCarrera.htm">
-								<form:hidden id="inputIdAsignacionEstudianteCarrera"
-												path="idAsignacionEstudianteCarrera" />
-								<form:errors path="idAsignacionEstudianteCarrera" cssClass="claseError claseErrorModificar" />
+                                            <form:form id="formModificar"
+                                                                modelAttribute="wrapperModificarAsignacionEstudianteCarrera" method="POST"
+                                                                action="modificarAsignacionEstudianteCarrera.htm">
+                                                <form:hidden id="inputIdAsignacionEstudianteCarrera"
+                                                                                path="idAsignacionEstudianteCarrera" />
+                                                <form:errors path="idAsignacionEstudianteCarrera" cssClass="claseError claseErrorModificar" />
 
-								<div id="divCampos">
-									<form:label for="inscrito" path="inscrito">
-										<fmt:message key="asignacionEstudianteCarrera.inscrito"/>: *
-									</form:label>
-									<form:checkbox id="checkboxInscrito" path="inscrito" />
-									<form:errors path="inscrito" cssClass="claseError" />
-								</div>
+                                                <div id="divCampos">
+                                                        <form:label for="inscrito" path="inscrito">
+                                                                <fmt:message key="asignacionEstudianteCarrera.inscrito"/>: *
+                                                        </form:label>
+                                                        <form:checkbox id="checkboxInscrito" path="inscrito" />
+                                                        <form:errors path="inscrito" cssClass="claseError" />
+                                                </div>
 
-								<div id="divCampos">
-									<form:label for="fechaCierre" path="fechaCierre">
-										<fmt:message key="asignacionEstudianteCarrera.fechaCierre"/>:
-									</form:label>
-									<form:input id="inputFechaCierre" path="fechaCierre" cssStyle="width: 250px;" cssClass="datepicker"/>
-									<form:errors path="fechaCierre" cssClass="claseError" />
-								</div>
-						</form:form>
+                                                <div id="divCampos">
+                                                        <form:label for="fechaCierre" path="fechaCierre">
+                                                                <fmt:message key="asignacionEstudianteCarrera.fechaCierre"/>:
+                                                        </form:label>
+                                                        <form:input id="inputFechaCierre" path="fechaCierre" cssStyle="width: 250px;" cssClass="datepicker"/>
+                                                        <form:errors path="fechaCierre" cssClass="claseError" />                                                                        
+                                                </div>
+                                            </form:form>
 					</div>
 				</c:if>
 		</sec:authorize>

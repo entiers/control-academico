@@ -10,6 +10,7 @@ import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
 import gt.edu.usac.cats.dominio.Estudiante;
 import gt.edu.usac.cats.dominio.HistorialAsignacionEstudianteCarrera;
 import gt.edu.usac.cats.dominio.wrapper.WrapperAgregarAsignacionEstudianteCarrera;
+import gt.edu.usac.cats.dominio.wrapper.WrapperEquivalenciaPorCarrera;
 import gt.edu.usac.cats.util.Mensajes;
 import gt.edu.usac.cats.util.RequestUtil;
 import javax.servlet.http.HttpServletRequest;
@@ -80,7 +81,8 @@ public class ControladorMostrarAsignacionEstudianteCarrera extends ControladorAb
         }
 
         this.agregarAtributosDefault(modelo, new WrapperAgregarAsignacionEstudianteCarrera(), false, 
-                new WrapperModificarAsignacionEstudianteCarrera(), false, true);
+                new WrapperModificarAsignacionEstudianteCarrera(), false, true,
+                new WrapperEquivalenciaPorCarrera());
 
 
 
@@ -132,17 +134,20 @@ public class ControladorMostrarAsignacionEstudianteCarrera extends ControladorAb
                 log.error(Mensajes.DATA_INTEGRITY_VIOLATION_EXCEPTION, e);
 
                 this.agregarAtributosDefault(modelo, wrapperAgregarAsignacionEstudianteCarrera,
-                        true, new WrapperModificarAsignacionEstudianteCarrera(),  false, false);
+                        true, new WrapperModificarAsignacionEstudianteCarrera(),  false, false,
+                        new WrapperEquivalenciaPorCarrera());
             } catch (DataAccessException e) {
                 RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE_AGREGAR, "dataAccessException", false);
                 log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
 
                 this.agregarAtributosDefault(modelo, wrapperAgregarAsignacionEstudianteCarrera,
-                        true, new WrapperModificarAsignacionEstudianteCarrera(),  false, false);
+                        true, new WrapperModificarAsignacionEstudianteCarrera(),  false, false,
+                        new WrapperEquivalenciaPorCarrera());
             }
         } else {
             this.agregarAtributosDefault(modelo, wrapperAgregarAsignacionEstudianteCarrera,
-                        true, new WrapperModificarAsignacionEstudianteCarrera(),  false, false);
+                        true, new WrapperModificarAsignacionEstudianteCarrera(),  false, false,
+                        new WrapperEquivalenciaPorCarrera());
         }
         return "asignacionEstudianteCarrera/mostrarAsignacionEstudianteCarrera";
     }
@@ -171,11 +176,6 @@ public class ControladorMostrarAsignacionEstudianteCarrera extends ControladorAb
 
                 this.servicioAsignacionEstudianteCarreraImpl.actualizar(asignacionEstudianteCarrera);
 
-
-                RequestUtil.agregarRedirect(request, "mostrarAsignacionEstudianteCarrera.htm?idEstudiante="
-                        + this.estudiante.getIdEstudiante());
-
-
                 RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE_MODIFICAR, "modificarAsignacionEstudianteCarrera.exito", true);
                 log.info(Mensajes.EXITO_ACTUALIZACION + asignacionEstudianteCarrera.toString());
 
@@ -183,21 +183,23 @@ public class ControladorMostrarAsignacionEstudianteCarrera extends ControladorAb
             } catch (DataIntegrityViolationException e) {
                 RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE_MODIFICAR, "dataIntegrityViolationException", false);
                 log.error(Mensajes.DATA_INTEGRITY_VIOLATION_EXCEPTION, e);
-
-                this.agregarAtributosDefault(modelo, new WrapperAgregarAsignacionEstudianteCarrera(),
-                        false, wrapperModificarAsignacionEstudianteCarrera,  true, false);
+                
             } catch (DataAccessException e) {
                 RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE_MODIFICAR, "dataAccessException", false);
-                log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
-
+                log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);                
+            } finally {
                 this.agregarAtributosDefault(modelo, new WrapperAgregarAsignacionEstudianteCarrera(),
-                        false, wrapperModificarAsignacionEstudianteCarrera,  true, false);
+                        false, wrapperModificarAsignacionEstudianteCarrera,  true, false,
+                        new WrapperEquivalenciaPorCarrera());
             }
         } else {
             this.agregarAtributosDefault(modelo, new WrapperAgregarAsignacionEstudianteCarrera(),
-                        false, wrapperModificarAsignacionEstudianteCarrera,  true, false);
+                false, wrapperModificarAsignacionEstudianteCarrera,  true, false,
+                new WrapperEquivalenciaPorCarrera());
         }
-        return "asignacionEstudianteCarrera/mostrarAsignacionEstudianteCarrera";
+        
+        return "redirect:mostrarAsignacionEstudianteCarrera.htm?idEstudiante="
+                        + this.estudiante.getIdEstudiante();
 
     }
 }

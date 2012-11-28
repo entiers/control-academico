@@ -69,7 +69,7 @@ public class ServicioAsignacionEstudianteCarreraImpl extends ServicioGeneralImpl
     @Override
     public List<AsignacionEstudianteCarrera> getAsignacionEstudianteCarreraPorEstudiante(Estudiante estudiante){
         StringBuilder builder = new StringBuilder();
-        builder.append(" select aec from AsignacionEstudianteCarrera aec ")
+        builder.append(" select distinct aec from AsignacionEstudianteCarrera aec ")
                .append(" where aec.estudiante =:estudiante ")
                .append(" and exists elements(")
                .append("    aec.carrera.pensums.asignacionCursoPensums )");
