@@ -78,6 +78,7 @@
         <intercept-url pattern="/ajxEjecutarAsignacionPrimerIngreso.htm" access="hasRole('ROLE_ASIGNACION_PRIMER_INGRESO')" />
         <intercept-url pattern="/asignacionPrimerIngreso.htm" access="hasRole('ROLE_ASIGNACION_PRIMER_INGRESO')" />
         <intercept-url pattern="/buscarAsignacionPorEstudiante.htm" access="hasRole('ROLE_MOSTRAR_CURSOS_ASIGNADOS')" />
+        <intercept-url pattern="/verAsignacionPorEstudiante.htm" access="hasRole('ROLE_MOSTRAR_CURSOS_ASIGNADOS')" />
         <intercept-url pattern="/cambioCierreSeccion.htm" access="hasRole('ROLE_CAMBIO_CIERRE_SECCION')" />
         <intercept-url pattern="/cambioCierreSeccion2.htm" access="hasRole('ROLE_CAMBIO_CIERRE_SECCION')" />
         

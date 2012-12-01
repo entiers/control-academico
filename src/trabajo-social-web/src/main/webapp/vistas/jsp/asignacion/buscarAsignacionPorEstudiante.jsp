@@ -52,6 +52,7 @@
                                         <th><fmt:message key="asignacion.transaccion"/></th>
                                         <th><fmt:message key="asignacion.fecha"/></th>
                                         <th><fmt:message key="asignacion.detalle"/></th>
+                                        <th><fmt:message key="asignacion.detalle"/></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -60,6 +61,9 @@
                                             <td>${asignacion.transaccion}</td>
                                             <td>${asignacion.fecha}</td>
                                             <td align="center">
+                                                <a href="verDetalleAsignacion.htm?idAsignacion=${asignacion.idAsignacion}"><fmt:message key="asignacion.verDetalle"/></a>
+                                            </td>
+                                            <td align="center">
                                                 <form:form action="generarReporte.htm" method="post">
                                                     <input type="hidden" name="nombreControlReporte" value="${nombreControlReporte}" />
 
@@ -67,7 +71,7 @@
                                                     <input type="hidden" name="valorParametro" value="${asignacion.idAsignacion}" />
                                                     <input type="hidden" name="tipoParametro" value="integer" />
 
-                                                    <input type="submit" value="Imprimir"/>
+                                                    <input type="submit" value="<fmt:message key="asignacion.imprimirBoleta"/>"/>
                                                 </form:form>
                                             </td>
                                         </tr>
