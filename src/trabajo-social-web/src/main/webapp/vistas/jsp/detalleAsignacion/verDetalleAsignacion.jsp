@@ -15,24 +15,72 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
         <title><fmt:message key="detalleAsignacion.titulo"/></title>
+        <script type="text/javascript">
+            $(function (){
+                $('div[name="divQuitarPopup"]').dialog({
+                    autoOpen: false,
+                    modal: true,
+                    width: 550,
+                    buttons: {
+                        "<fmt:message key="btnSalir" />" : function() {                    
+                            $(this).dialog('close');
+                        },
+                        "<fmt:message key="btnAceptar" />" : function() {
+                            $(this).children("form").submit();
+                            $(this).dialog('close');
+                        }
+                    },
+                    close : function(){
+                        $(this).dialog('close');
+                    }
+                });
+                
+                $('#divConfirmPopup').dialog({
+                    autoOpen: false,
+                    modal: true,
+                    width: 550,
+                    buttons: {
+                        "<fmt:message key="btnSalir" />" : function() {                    
+                            $(this).dialog('close');
+                        },
+                        "<fmt:message key="btnAceptar" />" : function() {
+                            $("#frmEliminarDetalleAsignacion").submit();
+                            $(this).dialog('close');
+                        }
+                    },
+                    close : function(){
+                        $(this).dialog('close');
+                    }
+                });
+                
+                $('#divOperacionExitosa').dialog({
+                    autoOpen: true,
+                    modal: true,
+                    width: 550,
+                    buttons: {
+                        "<fmt:message key="btnAceptar" />" : function() {                            
+                            $(this).dialog('close');
+                        }
+                    },
+                    close : function(){
+                        window.location.href="buscarAsignacionPorEstudiante.htm";
+                        $(this).dialog('close');
+                    }
+                });
+            });
+        </script>
     </head>
     <body>
         <h1><fmt:message key="detalleAsignacion.titulo"/></h1>
         <c:choose>
             <c:when test="${errorEntidad}">
-                <div id="divCampos">
-                    <p class="claseError"><fmt:message key="miscursos.asignacionCursos.noEstudiante"/></p>
-                </div>
+                <p><fmt:message key="miscursos.asignacionCursos.noEstudiante"/></p>
             </c:when>
-            <c:when test="${errorEstudianteAsignacion}">
-                <div id="divCampos">
-                    <p class="claseError"><fmt:message key="asignacionCursos.asignacionNoEstudiante"/></p>
-                </div>
+            <c:when test="${errorEstudianteAsignacion}">                
+                <p><fmt:message key="asignacionCursos.asignacionNoEstudiante"/></p>                
             </c:when>
-            <c:when test="${errorAsignacionSinDetalle}">
-                <div id="divCampos">
-                    <p class="claseError"><fmt:message key="asignacionCursos.errorAsignacionSinDetalle"/></p>
-                </div>
+            <c:when test="${errorAsignacionSinDetalle}">                
+                <p><fmt:message key="asignacionCursos.errorAsignacionSinDetalle"/></p>                
             </c:when>
             <c:otherwise>
                 <fieldset>
@@ -93,13 +141,18 @@
                                     <c:choose>
                                         <c:when test="${periodoAsignacion}">
                                             <td>
-                                                <div name="divConfirmPopup"
-                                                     title="<fmt:message key='asignacionCursos.confirmacion' />">
-                                                    <input type="button" 
-                                                           name="btnConfirmar" 
-                                                           value="<fmt:message key='asignacionCursos.eliminar' />" 
-                                                           onclick="alert('HOLA MUNDO' + ${detalleAsignacion.idDetalleAsignacion})"/>
+                                                <div id="divQuitarPopup${detalleAsignacion.idDetalleAsignacion}" 
+                                                     name="divQuitarPopup" 
+                                                     title="<fmt:message key='modificarAsignacionEstudianteCarrera.titulo'/>" >
+                                                    <form:form id="frmConfirmar${detalleAsignacion.idDetalleAsignacion}"
+                                                               action="quitarDetalleAsignacion.htm?detail=${detalleAsignacion.idDetalleAsignacion}">
+                                                        <p>Confirme que desea quitar el curso ${detalleAsignacion.horario.asignacionCursoPensum.curso.nombre} 
+                                                            sección ${detalleAsignacion.horario.seccion} de la asignación.</p>
+                                                    </form:form>
                                                 </div>
+                                                <input type="button" 
+                                                   value="<fmt:message key='asignacionCursos.eliminar'/>"
+                                                   onclick="$('#divQuitarPopup${detalleAsignacion.idDetalleAsignacion}').dialog('open')"/>
                                             </td>
                                         </c:when>
                                     </c:choose>
@@ -107,7 +160,27 @@
                             </c:forEach>
                         </tbody>
                     </table>
-                </fieldset>
+                </fieldset>                                
+                <div id="divConfirmPopup" 
+                     name="divConfirmPopup" 
+                     title="<fmt:message key='modificarAsignacionEstudianteCarrera.titulo'/>" >
+                    <form:form id="frmEliminarDetalleAsignacion"
+                               action="eliminarDetalleAsignacion.htm">
+                        <p><fmt:message key='detalleAsignacion.confirmaEliminacion'/></p>
+                    </form:form>
+                </div>
+                <a href="buscarAsignacionPorEstudiante.htm"><fmt:message key="link.regresar"/></a> 
+                <input type="button" 
+                   value="<fmt:message key='ingresoNota.btnGuardar'/>"
+                   onclick="$('#divConfirmPopup').dialog('open')"/>
+                <c:choose>
+                    <c:when test="${operacionExitosa}">                    
+                        <div id="divOperacionExitosa"
+                             title="<fmt:message key='modificarAsignacionEstudianteCarrera.titulo'/>">
+                            <p><fmt:message key='detalleAsignacion.eliminacionExitosa'/></p>
+                        </div>
+                    </c:when>
+                </c:choose>                
             </c:otherwise>
         </c:choose>
     </body>
