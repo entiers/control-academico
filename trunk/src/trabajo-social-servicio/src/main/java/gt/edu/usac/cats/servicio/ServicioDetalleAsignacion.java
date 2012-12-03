@@ -146,5 +146,14 @@ public interface ServicioDetalleAsignacion extends ServicioGeneral{
      */
      boolean tieneZonaMinima(AsignacionCursoPensum asignacionCursoPensum, AsignacionEstudianteCarrera asignacionEstudianteCarrera, Semestre semestre)
              throws HibernateException, IOException;
+//______________________________________________________________________________     
+     /**
+      * <p>Método para realizar la eliminación de los detalles de asignacion para una asignacion determinada</p>
+      * @param listadoEliminacion
+      * @return
+      * @throws HibernateException
+      * @throws IOException 
+      */
+     void eliminarDetalleAsignacion(List<DetalleAsignacion> listadoEliminacion) throws HibernateException;
 
 }

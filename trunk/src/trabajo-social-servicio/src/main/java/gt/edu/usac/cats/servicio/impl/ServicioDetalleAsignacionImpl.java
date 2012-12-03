@@ -229,4 +229,20 @@ public class ServicioDetalleAsignacionImpl extends ServicioGeneralImpl implement
 
         return properties;
     }
+//______________________________________________________________________________     
+     /**
+      * <p>Método para realizar la eliminación de los detalles de asignacion para una asignacion determinada</p>
+      * @param listadoEliminacion
+      * @return
+      * @throws HibernateException
+      * @throws IOException 
+      */
+    @Override
+    public void eliminarDetalleAsignacion(List<DetalleAsignacion> listadoEliminacion) throws HibernateException {        
+        if(!listadoEliminacion.isEmpty()){            
+            for(DetalleAsignacion detalleAsignacion : listadoEliminacion){
+                this.daoGeneralImpl.delete(detalleAsignacion);
+            }
+        }        
+    }
 }
