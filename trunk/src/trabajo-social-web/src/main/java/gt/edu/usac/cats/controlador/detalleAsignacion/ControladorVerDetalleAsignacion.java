@@ -85,8 +85,7 @@ public class ControladorVerDetalleAsignacion{
         }
 
         this.semestre = this.servicioSemestreImpl.getSemestreActivo();
-        this.asignacion = this.servicioSemestreImpl.cargarEntidadPorID(Asignacion.class, idAsignacion);
-        
+        this.asignacion = this.servicioSemestreImpl.cargarEntidadPorID(Asignacion.class, idAsignacion);        
         
         //Validando que la asignacion enviada sea la del estudiante logueado
         if(!this.asignacion.getAsignacionEstudianteCarrera().getEstudiante().equals(this.estudiante)){
@@ -94,7 +93,15 @@ public class ControladorVerDetalleAsignacion{
             return "detalleAsignacion/verDetalleAsignacion";
         }
         
-        this.periodoAsignacion = this.servicioCalendarioActividadesImpl.esFechaActividadValida(TipoActividad.ASIGNACION_SEMESTRE,
+        if(this.asignacion.getDetalleAsignacions() != null){
+            Semestre semestreAsignacion = this.asignacion.getDetalleAsignacions().iterator().next().getHorario().getSemestre();
+            this.periodoAsignacion = semestreAsignacion.equals(this.semestre);
+        } else {
+            modelo.addAttribute("errorAsignacionSinDetalle", true);
+            return "detalleAsignacion/verDetalleAsignacion";
+        }
+        
+        this.periodoAsignacion = this.periodoAsignacion && this.servicioCalendarioActividadesImpl.esFechaActividadValida(TipoActividad.ASIGNACION_SEMESTRE,
                                                                     this.semestre,
                                                                     new java.util.Date()) || 
                 this.servicioCalendarioActividadesImpl.esFechaActividadValida(TipoActividad.ASIGNACION_VACACIONES,
