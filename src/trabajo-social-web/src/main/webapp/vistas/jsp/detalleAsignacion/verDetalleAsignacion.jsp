@@ -20,10 +20,19 @@
         <h1><fmt:message key="detalleAsignacion.titulo"/></h1>
         <c:choose>
             <c:when test="${errorEntidad}">
-                <th></th>
+                <div id="divCampos">
+                    <p class="claseError"><fmt:message key="miscursos.asignacionCursos.noEstudiante"/></p>
+                </div>
             </c:when>
             <c:when test="${errorEstudianteAsignacion}">
-                <th></th>
+                <div id="divCampos">
+                    <p class="claseError"><fmt:message key="asignacionCursos.asignacionNoEstudiante"/></p>
+                </div>
+            </c:when>
+            <c:when test="${errorAsignacionSinDetalle}">
+                <div id="divCampos">
+                    <p class="claseError"><fmt:message key="asignacionCursos.errorAsignacionSinDetalle"/></p>
+                </div>
             </c:when>
             <c:otherwise>
                 <fieldset>
@@ -83,7 +92,15 @@
                                     <td>${detalleAsignacion.horario.horarioDiasAsString}</td>
                                     <c:choose>
                                         <c:when test="${periodoAsignacion}">
-                                            <td>Eliminar</td>
+                                            <td>
+                                                <div name="divConfirmPopup"
+                                                     title="<fmt:message key='asignacionCursos.confirmacion' />">
+                                                    <input type="button" 
+                                                           name="btnConfirmar" 
+                                                           value="<fmt:message key='asignacionCursos.eliminar' />" 
+                                                           onclick="alert('HOLA MUNDO' + ${detalleAsignacion.idDetalleAsignacion})"/>
+                                                </div>
+                                            </td>
                                         </c:when>
                                     </c:choose>
                                 </tr>
