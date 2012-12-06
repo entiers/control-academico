@@ -1,5 +1,5 @@
 #include( "encabezado.vm" )
-<h2>Informe de Desasignaci&oacute;n de Cursos</h2>
+<h2>Informe de Asignaci&oacute;n de Cursos</h2>
 <br/>
 <div id="content">
     <h3>$informacionAsignacionEstudiante.getCarnet() - $informacionAsignacionEstudiante.getNombre(): </h3>
