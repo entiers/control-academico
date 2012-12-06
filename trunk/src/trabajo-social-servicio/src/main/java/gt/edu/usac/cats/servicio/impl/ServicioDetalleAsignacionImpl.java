@@ -240,8 +240,12 @@ public class ServicioDetalleAsignacionImpl extends ServicioGeneralImpl implement
     @Override
     public void eliminarDetalleAsignacion(List<DetalleAsignacion> listadoEliminacion) throws HibernateException {        
         if(!listadoEliminacion.isEmpty()){            
+            Asignacion asignacion = this.cargarEntidadPorID(Asignacion.class, listadoEliminacion.get(0).getAsignacion().getIdAsignacion());
             for(DetalleAsignacion detalleAsignacion : listadoEliminacion){
                 this.daoGeneralImpl.delete(detalleAsignacion);
+            }
+            if(this.getListadoDetalleAsignacion(asignacion).isEmpty()){
+                this.daoGeneralImpl.delete(asignacion);
             }
         }        
     }
