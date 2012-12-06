@@ -229,7 +229,7 @@
       <column comment="" key="false" name="habilitado" nullable="true" pattern="" sourceType="" type="id_Boolean"/>
     </metadata>
     <nodeData xsi:type="MapperData">
-      <uiProperties shellMaximized="true"/>
+      <uiProperties/>
       <varTables sizeState="INTERMEDIATE" name="Var" minimized="true"/>
       <outputTables sizeState="INTERMEDIATE" name="usuario">
         <mapperTableEntries name="nombre_usuario" expression="row1.carnet " type="id_String" nullable="true"/>
