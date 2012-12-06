@@ -280,7 +280,7 @@
     <elementParameter field="EXTERNAL" name="MAP" value=""/>
     <elementParameter field="CLOSED_LIST" name="LINK_STYLE" value="AUTO"/>
     <elementParameter field="DIRECTORY" name="TEMPORARY_DATA_DIRECTORY" value=""/>
-    <elementParameter field="IMAGE" name="PREVIEW" value="_KOA1YDizEeKJe6QvLJ-StQ-tMap_1-PREVIEW.bmp"/>
+    <elementParameter field="IMAGE" name="PREVIEW" value="_ZCMRgFakEeCjNc_Z8PFiPQ-tMap_3-PREVIEW.bmp"/>
     <elementParameter field="CHECK" name="DIE_ON_ERROR" value="true"/>
     <elementParameter field="CHECK" name="LKUP_PARALLELIZE" value="false"/>
     <elementParameter field="TEXT" name="ROWS_BUFFER_SIZE" value="2000000"/>
@@ -331,12 +331,12 @@
         <mapperTableEntries name="id_rubro" type="id_Short" nullable="true"/>
         <mapperTableEntries name="id_variante_rubro" type="id_Short" nullable="true"/>
       </inputTables>
-      <inputTables sizeState="INTERMEDIATE" name="curso" matchingMode="UNIQUE_MATCH" lookupMode="LOAD_ONCE">
+      <inputTables sizeState="INTERMEDIATE" name="curso" matchingMode="UNIQUE_MATCH" lookupMode="LOAD_ONCE" innerJoin="true">
         <mapperTableEntries name="id_curso" type="id_Short"/>
         <mapperTableEntries name="codigo" expression="row1.curso " type="id_String" operator="="/>
         <mapperTableEntries name="nombre" type="id_String"/>
       </inputTables>
-      <inputTables sizeState="INTERMEDIATE" name="asignacion_curso_pensum" matchingMode="UNIQUE_MATCH" lookupMode="LOAD_ONCE">
+      <inputTables sizeState="INTERMEDIATE" name="asignacion_curso_pensum" activateCondensedTool="true" matchingMode="UNIQUE_MATCH" lookupMode="LOAD_ONCE" innerJoin="true">
         <mapperTableEntries name="id_asignacion_curso_pensum" type="id_Short"/>
         <mapperTableEntries name="obligatorio" type="id_Boolean"/>
         <mapperTableEntries name="id_curso" expression="curso.id_curso " type="id_Short" operator="="/>
@@ -350,7 +350,7 @@
         <mapperTableEntries name="zona" type="id_Short"/>
         <mapperTableEntries name="nota_aprobacion" type="id_Short" nullable="true"/>
       </inputTables>
-      <inputTables sizeState="INTERMEDIATE" name="estudiante" matchingMode="UNIQUE_MATCH" lookupMode="LOAD_ONCE">
+      <inputTables sizeState="INTERMEDIATE" name="estudiante" activateCondensedTool="true" matchingMode="UNIQUE_MATCH" lookupMode="LOAD_ONCE" innerJoin="true">
         <mapperTableEntries name="id_estudiante" expression="" type="id_Integer"/>
         <mapperTableEntries name="carne" expression="row1.carnet " type="id_String" operator="="/>
         <mapperTableEntries name="nombre" type="id_String"/>
@@ -367,13 +367,13 @@
         <mapperTableEntries name="id_lugar_nacimiento" type="id_Short"/>
         <mapperTableEntries name="id_nacionalidad" type="id_Short"/>
       </inputTables>
-      <inputTables sizeState="INTERMEDIATE" name="cuenta_corriente" matchingMode="UNIQUE_MATCH" lookupMode="LOAD_ONCE">
+      <inputTables sizeState="INTERMEDIATE" name="cuenta_corriente" activateCondensedTool="true" matchingMode="UNIQUE_MATCH" lookupMode="LOAD_ONCE" innerJoin="true">
         <mapperTableEntries name="id_cuenta_corriente" type="id_Integer"/>
         <mapperTableEntries name="codigo" type="id_String"/>
         <mapperTableEntries name="activa" type="id_Boolean"/>
         <mapperTableEntries name="id_estudiante" expression="estudiante.id_estudiante " type="id_Integer" operator="="/>
       </inputTables>
-      <inputTables sizeState="INTERMEDIATE" name="semestre" matchingMode="UNIQUE_MATCH" lookupMode="LOAD_ONCE">
+      <inputTables sizeState="INTERMEDIATE" name="semestre" activateCondensedTool="true" matchingMode="UNIQUE_MATCH" lookupMode="LOAD_ONCE" innerJoin="true">
         <mapperTableEntries name="id_semestre" type="id_Short"/>
         <mapperTableEntries name="anio" expression="row1.anio_temporada " type="id_Short" operator="="/>
         <mapperTableEntries name="numero" expression="row1.id_rubro ==2 || row1.id_rubro==4 || row1.id_rubro==5 ? &quot;1&quot; : &quot;2&quot;      " type="id_String"/>
