@@ -8,11 +8,16 @@ package gt.edu.usac.cats.controlador.etl;
 import gt.edu.usac.cats.etl.FabricaManejadorETL;
 import gt.edu.usac.cats.etl.ManejadorETL;
 import gt.edu.usac.cats.util.RequestUtil;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
@@ -32,21 +37,30 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller("controladorRealizarETL")
 public class ControladorRealizarETL {
 //______________________________________________________________________________
+    
+    private static final String CONTEXT_REGISTRO_CSV = "/registrocsv/etlregistrocsv_0_1/contexts/Default.properties";
+    
+//______________________________________________________________________________
 
-    /** <p>Lleva el nombre del titulo para el mensaje en la pagina<p>*/
+    private static final String CONTEXT_BOLETA_BANCO = "/registrocsv/etlboletabanco_0_1/contexts/Default.properties";
+//______________________________________________________________________________
+    /**
+     * <p>Lleva el nombre del titulo para el mensaje en la pagina<p>
+     */
     private static Logger log = Logger.getLogger(ControladorRealizarETL.class);
 
 //______________________________________________________________________________
     /**
-     * Este metodo se encarga de almacenar los archivos cargados desde de la pagina
-     * y lee los atributos de los archivos .properties que utiliza el modulo ETL realizado
-     * por Jasper ETL y los almacena en la ubicacion que alla se menciona.
+     * Este metodo se encarga de almacenar los archivos cargados desde de la
+     * pagina y lee los atributos de los archivos .properties que utiliza el
+     * modulo ETL realizado por Jasper ETL y los almacena en la ubicacion que
+     * alla se menciona.
      *
      * @param file Es el archivo que es cargado desde el sistema.
      * @param key Es la clave del archivo .properties utilizado por el modulo de
      * JasperETL que tiene la ubicaci�n del archivo a procesar.
-     * @param pathArchivoPropiedades Es la ubicaci�n del archivo .properties que utiliza
-     * el modulo ETL.
+     * @param pathArchivoPropiedades Es la ubicaci�n del archivo .properties
+     * que utiliza el modulo ETL.
      *
      * @throws IOException
      */
@@ -72,19 +86,60 @@ public class ControladorRealizarETL {
         outputStream.close();
 
     }
-
 //______________________________________________________________________________
+
+    private StringBuffer leerArchivoErrores() throws FileNotFoundException, IOException {
+        
+        Properties properties = new Properties();
+
+        InputStream inputStream = ControladorRealizarETL.class.getClassLoader().getResourceAsStream(
+                CONTEXT_REGISTRO_CSV);
+
+        properties.load(inputStream);
+        String pathArchivo = properties.getProperty("ArchivoCSV_FileError");
+        
+        File filePathArchivo = new File(pathArchivo);
+        
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(filePathArchivo));
+        String line;
+
+        List<String> errors = new ArrayList<String>();
+
+        while ((line = bufferedReader.readLine()) != null) {
+            if (!line.equalsIgnoreCase("For input string: \"UA\" - Line: 0")) {
+                if (!errors.contains(line)) {
+                    errors.add(line);
+                }
+            }
+        }
+
+        StringBuffer buffer = new StringBuffer();
+        
+        for (String error : errors) {
+            buffer.append(error).append("\n");
+        }
+        
+        bufferedReader.close();
+        inputStream.close();
+        
+        filePathArchivo.delete();
+        
+        return buffer;
+    }
+//______________________________________________________________________________
+
     /**
      * Este metodo realiza el proceso ETL.
      *
-     * @param tipo Es de tipo {@link FabricaManejoETL} que identifica que modulo de
-     * ETL llamar para reliazliar el proceso.
+     * @param tipo Es de tipo {@link FabricaManejoETL} que identifica que modulo
+     * de ETL llamar para reliazliar el proceso.
      *
-     * @return Devuelve <k>true</k> si no han existido errores en el proceso de ETL
-     * y <k>false</k> si existio al menos un error en el proceso.
+     * @return Devuelve <k>true</k> si no han existido errores en el proceso de
+     * ETL y <k>false</k> si existio al menos un error en el proceso.
      *
      * @throws IOException
-     **/
+     *
+     */
     private boolean realizarETL(FabricaManejadorETL tipo) throws IOException, Exception {
         try {
             ManejadorETL manejadorETL = tipo.crear();
@@ -99,8 +154,9 @@ public class ControladorRealizarETL {
 //______________________________________________________________________________
     /**
      * <p>Este metodo se ejecuta cada vez que se realiza una solicitud del tipo
-     * GET de la pagina <code>ingresarRegistroCSV.htm</code>. El metodo se encarga
-     * de iniciar los objetos que se usaran en la pagina.</p>
+     * GET de la pagina
+     * <code>ingresarRegistroCSV.htm</code>. El metodo se encarga de iniciar los
+     * objetos que se usaran en la pagina.</p>
      *
      * @return Contiene el nombre de la vista a mostrar
      */
@@ -111,16 +167,14 @@ public class ControladorRealizarETL {
 
 //______________________________________________________________________________
     /**
-     * Este m�todo se utiliza cuando se hace un <k>submit</k> desde la p�gina
-     * <code>ingresarRegistroCSV.htm</code>.  Este metodo realiza lo siguiente:
+     * Este m�todo se utiliza cuando se hace un <k>submit</k> desde la
+     * p�gina
+     * <code>ingresarRegistroCSV.htm</code>. Este metodo realiza lo siguiente:
      *
-     * <ol>
-     *  <li>Verifica que se haya seleccionado un archivo</li>
-     *  <li>Verifica que el archivo seleccionado sea un CSV v�lido</li>
-     *  <li> Guarda el archivo en disco</li>
-     *  <li> Realiza el proceso de ETL</li>
-     *  <li> Verifica que el proceso de ETL se haya realizado satisfactoriamente</li>
-     * </ol>
+     * <ol> <li>Verifica que se haya seleccionado un archivo</li> <li>Verifica
+     * que el archivo seleccionado sea un CSV v�lido</li> <li> Guarda el
+     * archivo en disco</li> <li> Realiza el proceso de ETL</li> <li> Verifica
+     * que el proceso de ETL se haya realizado satisfactoriamente</li> </ol>
      *
      * @param archivoCSV Archivo CSV que se selecciona desde la aplicacion web.
      * @param request Objeto {@link HttpServletRequest}
@@ -136,7 +190,7 @@ public class ControladorRealizarETL {
                 System.out.println(archivoCSV.getContentType());
                 //if(archivoCSV.getContentType().equalsIgnoreCase("text/csv")){
 
-                this.guardarArchivoEnDisco(archivoCSV, "ArchivoCSV_File", "/registrocsv/etlregistrocsv_0_1/contexts/Default.properties");
+                this.guardarArchivoEnDisco(archivoCSV, "ArchivoCSV_File", CONTEXT_REGISTRO_CSV);
 
                 boolean exito = this.realizarETL(FabricaManejadorETL.REGISTRO_CSV);
 
@@ -153,16 +207,19 @@ public class ControladorRealizarETL {
                     log.error("Hubo problemas en la carga del archivo CSV");
                 }
                 /*}else{
-                RequestUtil.crearMensajeRespuesta(request, "etl.ingresarRegistroCSV.titulo", "etl.archivoCSV.contentTypeInvalido",
-                false);
+                 RequestUtil.crearMensajeRespuesta(request, "etl.ingresarRegistroCSV.titulo", "etl.archivoCSV.contentTypeInvalido",
+                 false);
 
-                log.error("El archivo CSV a cargar no es un archivo csv valido");
-                }*/
+                 log.error("El archivo CSV a cargar no es un archivo csv valido");
+                 }*/
             } else {
                 RequestUtil.crearMensajeRespuesta(request, "etl.ingresarRegistroCSV.titulo", "etl.archivoCSV.obligatorio",
                         false);
                 log.error("No se cargo ningun archivo CSV");
             }
+            
+            String errores = this.leerArchivoErrores().toString();
+            request.setAttribute("errores", errores);
 
         } catch (IOException e) {
             RequestUtil.crearMensajeRespuesta(request, "etl.ingresarRegistroCSV.titulo", "etl.ioException", false);
@@ -178,8 +235,9 @@ public class ControladorRealizarETL {
     //______________________________________________________________________________
     /**
      * <p>Este metodo se ejecuta cada vez que se realiza una solicitud del tipo
-     * GET de la pagina <code>ingresarBoletaBancoCSV.htm</code>. El metodo se encarga
-     * de iniciar los objetos que se usaran en la pagina.</p>
+     * GET de la pagina
+     * <code>ingresarBoletaBancoCSV.htm</code>. El metodo se encarga de iniciar
+     * los objetos que se usaran en la pagina.</p>
      *
      * @return Contiene el nombre de la vista a mostrar
      */
@@ -191,15 +249,13 @@ public class ControladorRealizarETL {
     //______________________________________________________________________________
     /**
      * Este metodo se utiliza cuando se hace un <k>submit</k> desde la p�gina
-     * <code>ingresarBoletaBancoCSV.htm</code>.  Este metodo realiza lo siguiente:
+     * <code>ingresarBoletaBancoCSV.htm</code>. Este metodo realiza lo
+     * siguiente:
      *
-     * <ol>
-     *  <li>Verifica que se haya seleccionado un archivo</li>
-     *  <li>Verifica que el archivo seleccionado sea un CSV valido</li>
-     *  <li> Guarda el archivo en disco</li>
-     *  <li> Realiza el proceso de ETL</li>
-     *  <li> Verifica que el proceso de ETL se haya realizado satisfactoriamente</li>
-     * </ol>
+     * <ol> <li>Verifica que se haya seleccionado un archivo</li> <li>Verifica
+     * que el archivo seleccionado sea un CSV valido</li> <li> Guarda el archivo
+     * en disco</li> <li> Realiza el proceso de ETL</li> <li> Verifica que el
+     * proceso de ETL se haya realizado satisfactoriamente</li> </ol>
      *
      * @param archivoCSV Archivo CSV que se selecciona desde la aplicacion web.
      * @param request Objeto {@link HttpServletRequest}
@@ -213,29 +269,28 @@ public class ControladorRealizarETL {
             if (!archivoCSV.isEmpty()) {
                 //if (archivoCSV.getContentType().equalsIgnoreCase("text/csv")) {
 
-                    this.guardarArchivoEnDisco(archivoCSV, "ArchivoCSVBoletaBanco_File",
-                            "/registrocsv/etlboletabanco_0_1/contexts/Default.properties");
+                this.guardarArchivoEnDisco(archivoCSV, "ArchivoCSVBoletaBanco_File", CONTEXT_BOLETA_BANCO);
 
-                    boolean exito = this.realizarETL(FabricaManejadorETL.BOLETA_BANCO_CSV);
+                boolean exito = this.realizarETL(FabricaManejadorETL.BOLETA_BANCO_CSV);
 
-                    if (exito) {
-                        RequestUtil.crearMensajeRespuesta(request, "etl.ingresarBoletaBancoCSV.titulo",
-                                "etl.ingresarRegistroCSV.exito", true);
+                if (exito) {
+                    RequestUtil.crearMensajeRespuesta(request, "etl.ingresarBoletaBancoCSV.titulo",
+                            "etl.ingresarRegistroCSV.exito", true);
 
-                        log.info("Se realizo el ETL del archivo CSV de Boletas del banco satisfactoriamente");
-                    } else {
-
-                        RequestUtil.crearMensajeRespuesta(request, "etl.ingresarBoletaBancoCSV.titulo", "etl.archivoCSV.error", false);
-                        log.error("Hubo problemas en la carga del archivo CSV de Boletas del banco satisfactoriamente");
-                    }
+                    log.info("Se realizo el ETL del archivo CSV de Boletas del banco satisfactoriamente");
                 } else {
-                    RequestUtil.crearMensajeRespuesta(request, "etl.ingresarBoletaBancoCSV.titulo", "etl.archivoCSV.contentTypeInvalido", false);
-                    log.error("El archivo CSV a cargar no es un archivo csv valido");
+
+                    RequestUtil.crearMensajeRespuesta(request, "etl.ingresarBoletaBancoCSV.titulo", "etl.archivoCSV.error", false);
+                    log.error("Hubo problemas en la carga del archivo CSV de Boletas del banco satisfactoriamente");
                 }
+            } else {
+                RequestUtil.crearMensajeRespuesta(request, "etl.ingresarBoletaBancoCSV.titulo", "etl.archivoCSV.contentTypeInvalido", false);
+                log.error("El archivo CSV a cargar no es un archivo csv valido");
+            }
             /*} else {
-                RequestUtil.crearMensajeRespuesta(request, "etl.ingresarBoletaBancoCSV.titulo", "etl.archivoCSV.obligatorio", false);
-                log.error("No se cargo ningun archivo CSV");
-            }*/
+             RequestUtil.crearMensajeRespuesta(request, "etl.ingresarBoletaBancoCSV.titulo", "etl.archivoCSV.obligatorio", false);
+             log.error("No se cargo ningun archivo CSV");
+             }*/
 
         } catch (IOException e) {
             RequestUtil.crearMensajeRespuesta(request, "etl.ingresarBoletaBancoCSV.titulo", "etl.ioException", false);

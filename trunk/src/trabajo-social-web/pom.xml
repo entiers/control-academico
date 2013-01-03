@@ -601,6 +601,8 @@
             </build>
         </profile>
     </profiles>
-    <properties></properties>
+    <properties>
+        <netbeans.hint.deploy.server>gfv3ee6</netbeans.hint.deploy.server>
+    </properties>
 </project>
 
