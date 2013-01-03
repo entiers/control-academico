@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>REGISTROCSV</name>
+	<comment>
+To have ready-to-use Job Designs at your disposal, import the Demo Project include in Talend Open Studio.
+
+Simply follow the steps below:
+
+    * Launch Talend Open Studio
+    * In the login window, click on Demo
+    * Choose Java or Perl Demo Project
+    * Click on Finish to complete the operation
+    * Choose the TALENDDEMOJAVA or TALENDDEMOPERL on the &quot;Existing&quot; list
+    * Click on Ok</comment>
+	<projects>
+	</projects>
+	<buildSpec>
+	</buildSpec>
+	<natures>
+		<nature>org.talend.core.talendnature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>REGISTROCSV</name>
+			<type>1</type>
+			<locationURI>external_lib_java_path/jakarta-oro-2.0.8.jar</locationURI>
+		</link>
+	</linkedResources>
+</projectDescription>
