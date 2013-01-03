@@ -130,7 +130,7 @@ public class ControladorVerDetalleAsignacion extends ControladorAbstractoAsignac
     @RequestMapping(value="quitarDetalleAsignacion.htm",method=RequestMethod.POST)
     public String quitarDetalleAsignacion(@RequestParam("detail") int detail,
         Model modelo, HttpServletRequest request) {  
-        //Lo hice así porque no se porque no me carga los Detalles asignacion por id :S        
+        //Lo hice asi porque no se porque no me carga los Detalles asignacion por id :S        
         for(DetalleAsignacion detalleAsignacion : this.listaDetalleAsignacion){
             if(detalleAsignacion.getIdDetalleAsignacion() == detail){
                 listaDA.add(detalleAsignacion);
