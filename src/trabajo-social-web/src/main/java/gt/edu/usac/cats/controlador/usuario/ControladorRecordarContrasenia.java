@@ -131,7 +131,7 @@ public class ControladorRecordarContrasenia {
         try {
             
             // se trata de enviar el correo
-            this.emailSenderVelocity.enviarCorreo("Reinicio de contrasenya", email,
+            this.emailSenderVelocity.enviarCorreo("Reinicio de password", email,
                     FabricaTemplateVelocity.RECORDATORIO_CONTRASENYA, recordatorioContrasenya);
 
         } catch (MessagingException ex) {

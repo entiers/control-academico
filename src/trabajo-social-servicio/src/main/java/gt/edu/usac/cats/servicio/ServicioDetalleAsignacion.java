@@ -148,7 +148,7 @@ public interface ServicioDetalleAsignacion extends ServicioGeneral{
              throws HibernateException, IOException;
 //______________________________________________________________________________     
      /**
-      * <p>Método para realizar la eliminación de los detalles de asignacion para una asignacion determinada</p>
+      * <p>Metodo para realizar la eliminacion de los detalles de asignacion para una asignacion determinada</p>
       * @param listadoEliminacion
       * @return
       * @throws HibernateException

@@ -58,7 +58,7 @@ public interface ServicioCursoAprobado extends ServicioGeneral{
             throws DataAccessException;    
 //______________________________________________________________________________
     /**
-     * <p>Obtener un {@link CursoAprobado} en base a los parámetros enviados</p>
+     * <p>Obtener un {@link CursoAprobado} en base a los parametros enviados</p>
      * 
      * @param asignacion
      * @param asignacionCursoPensum
