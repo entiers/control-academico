@@ -82,13 +82,13 @@ public class EmailSender {
      */
     private Properties cargarProperties() throws IOException {
         // se crea el desencriptador
-        StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
-        encryptor.setPassword("APP_ENCRYPTION_PASSWORD");
+      //  StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
+       // encryptor.setPassword("APP_ENCRYPTION_PASSWORD");
 
         // se crea el archivo de propiedades
-        Properties properties = new EncryptableProperties(encryptor);
+        Properties properties = new Properties();
         properties.load(this.getClass().getResourceAsStream("/gt/edu/usac/cats/util/smtp.properties"));
-
+        System.out.println(properties);
         return properties;
     }
 }

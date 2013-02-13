@@ -16,6 +16,8 @@ import java.util.Date;
 import gt.edu.usac.cats.velocity.contexto.RecordatorioContrasenya;
 import java.io.Serializable;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.mail.MessagingException;
 import junit.framework.TestCase;
 import org.junit.After;
@@ -44,12 +46,18 @@ public class EmailSenderVelocityTest extends TestCase {
     public void tearDown() {
     }
 
-    public void testApp() throws IOException, MailException, MessagingException  {
-        /*EmailSenderVelocity ev = new EmailSenderVelocity();
-        
-        ev.enviarCorreo("RESUMEN_ASIGNACION_PRIMER_INGRESO", "shaka.mca2407@gmail.com",
-                FabricaTemplateVelocity.RESUMEN_ASIGNACION_PRIMER_INGRESO,
-                this.getDataResumenAsignacionPrimerIngreso());*/
+    public void testApp()   {
+        EmailSender emailSender = new EmailSender();
+        try {
+          emailSender.enviarCorreo("Preuba", "shaka.mca2407@gmail.com", "writer.toString()");
+        } catch (IOException ex) {
+            Logger.getLogger(EmailSenderVelocityTest.class.getName()).log(Level.SEVERE, null, ex);
+            
+        } catch (MailException ex) {
+            Logger.getLogger(EmailSenderVelocityTest.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (MessagingException ex) {
+            Logger.getLogger(EmailSenderVelocityTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
 
     }
