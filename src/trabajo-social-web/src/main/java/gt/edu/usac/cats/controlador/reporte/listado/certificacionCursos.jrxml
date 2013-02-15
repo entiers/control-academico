@@ -35,7 +35,7 @@ order by cur.codigo, cuap.fecha_aprobacion;]]>
 	<field name="carrera" class="java.lang.String"/>
 	<field name="fechahoy" class="java.lang.String"/>
 	<field name="fecha_aprobacion" class="java.lang.String"/>
-	<variable name="nota_1" class="java.lang.Integer" calculation="Average">
+	<variable name="nota_1" class="java.lang.Double" calculation="Average">
 		<variableExpression><![CDATA[$F{nota}]]></variableExpression>
 	</variable>
 	<background>
