@@ -45,8 +45,10 @@ public class CursoAprobado implements java.io.Serializable {
     private Short examenFinal;
     private String observaciones;
     private Set<NotaIndicador> notaIndicadors = new HashSet<NotaIndicador>(0);
+    private boolean ingresoManual;
 
     public CursoAprobado() {
+        this.ingresoManual = false;
     }
 
     @Id
@@ -147,6 +149,15 @@ public class CursoAprobado implements java.io.Serializable {
                 append(this.idCursoAprobado).
                 append(")");
         return builder.toString();
+    }
+    
+    @Column(name = "ingreso_manual")    
+    public boolean getIngresoManual() {
+        return this.ingresoManual;
+    }
+
+    public void setIngresoManual(boolean ingresoManual) {
+        this.ingresoManual = ingresoManual;
     }
 }
 

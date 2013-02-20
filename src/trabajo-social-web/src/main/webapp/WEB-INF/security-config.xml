@@ -133,6 +133,10 @@
         <intercept-url pattern="/rptCertificacionCursos.htm" access="hasRole('ROLE_REPORTE_CERTIFICACION_CURSOS')" />
         <intercept-url pattern="/rptNotasCursosAsignados.htm" access="hasRole('ROLE_REPORTE_NOTAS_CURSOS_ASIGNADOS')" />
         
+        <intercept-url pattern="/agregarCursoAprobado.htm" access="hasRole('ROLE_AGREGAR_CURSO_APROBADO')" />
+        <intercept-url pattern="/modificarCursoAprobado.htm" access="hasRole('ROLE_AGREGAR_CURSO_APROBADO')" />
+        <intercept-url pattern="/modificarCursoAprobadoLista.htm" access="hasRole('ROLE_AGREGAR_CURSO_APROBADO')" />
+        
         <intercept-url pattern="/cambioContrasenia.htm" access="hasRole('ROLE_CAMBIO_CONTRASENIA')" />
         <!-- se especifica que pagina contiene el formulario de login -->
         <form-login login-page='/login.htm' default-target-url='/index.htm' always-use-default-target='true'/>

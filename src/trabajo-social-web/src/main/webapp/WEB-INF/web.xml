@@ -9,28 +9,23 @@
         <param-name>log4jConfigLocation</param-name>
         <param-value>/WEB-INF/log4j.properties</param-value>
     </context-param>
-
     <listener>
         <description>Listener de Log4j para la peticiones de log</description>
         <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
     </listener>
-
-
     <!-- ·······································································
     ··· Front-end encargado de escuchar todas las peticiones web
     ········································································ -->
-     <context-param>
+    <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>/WEB-INF/applicationContext.xml</param-value>
     </context-param>
-    
     <!-- ·······································································
     ··· Se encarga de iniciar el contexto para Spring
     ········································································ -->
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
-    
     <servlet>
         <servlet-name>dispatcher</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -40,8 +35,6 @@
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>*.htm</url-pattern>
     </servlet-mapping>
-
-
     <!-- ·······································································
     ··· Lee los request utilizando codificacion UTF-8
     ········································································ -->
@@ -59,14 +52,11 @@
             <param-value>true</param-value>
         </init-param>
     </filter>
-
     <!-- url a las que se aplicara el filtro -->
     <filter-mapping>
         <filter-name>characterEncodingFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-
-
     <!-- ·······································································
         Filtro encargado de mantener las sesiones de Hibernate, su funcion es
         que para una peticion se utilice la sesion existente, y si no existe
@@ -87,13 +77,10 @@
             <param-value>sessionFactory</param-value>
         </init-param>
     </filter>
-
-
     <filter-mapping>
         <filter-name>OpenSessionInView</filter-name>
         <url-pattern>*.htm</url-pattern>
     </filter-mapping>
-
     <!-- ·······································································
     ··· Configuracion de Spring Security 3.0
     ········································································ -->
@@ -104,26 +91,20 @@
     </filter>
     <filter-mapping>
         <filter-name>springSecurityFilterChain</filter-name>
-
         <!-- se indica que objetos del sistema tendran seguridad -->
         <url-pattern>/vistas/*</url-pattern>
         <url-pattern>*.htm</url-pattern>
-
         <!--
         establece el formulario de logeo, solo se utiliza cuando se
         quiere que Spring Security sea el que cree la pagina con el formulario
         de logeo
         -->
         <!-- url-pattern>/spring_security_login</url-pattern -->
-
         <!-- realiza la validacion de las credenciales -->
         <url-pattern>/j_spring_security_check</url-pattern>
-
         <!-- realiza logout de la aplicación -->
         <url-pattern>/j_spring_security_logout</url-pattern>
     </filter-mapping>
-
-
     <!-- ·······································································
     ··· Configuracion de Sitemesh
     ········································································ -->
@@ -131,15 +112,10 @@
         <filter-name>sitemesh</filter-name>
         <filter-class>com.opensymphony.sitemesh.webapp.SiteMeshFilter</filter-class>
     </filter>
-
     <filter-mapping>
         <filter-name>sitemesh</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-
-
-
-
     <!-- ·······································································
     ··· Configuracion de la sesion
     ········································································ -->
@@ -148,27 +124,21 @@
             30
         </session-timeout>
     </session-config>
-
-    
     <!-- ·······································································
     ··· Listado de paginas de inicio
     ········································································ -->
     <welcome-file-list>
         <welcome-file>redirect.jsp</welcome-file>
     </welcome-file-list>
-
     <!-- ·······································································
     ··· Configuracion de SimpleCaptcha
     ········································································ -->
-
     <servlet>
         <servlet-name>SimpleCaptchaServlet</servlet-name>
         <servlet-class>nl.captcha.servlet.SimpleCaptchaServlet</servlet-class>
     </servlet>
-
     <servlet-mapping>
         <servlet-name>SimpleCaptchaServlet</servlet-name>
         <url-pattern>/simpleImg</url-pattern>
     </servlet-mapping>
-
 </web-app>

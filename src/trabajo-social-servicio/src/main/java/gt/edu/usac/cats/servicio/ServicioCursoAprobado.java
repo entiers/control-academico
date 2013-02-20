@@ -15,6 +15,7 @@ import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
 import gt.edu.usac.cats.dominio.Curso;
 import gt.edu.usac.cats.dominio.CursoAprobado;
 import gt.edu.usac.cats.dominio.Pensum;
+import gt.edu.usac.cats.dominio.wrapper.WrapperCursoAprobado;
 import org.springframework.dao.DataAccessException;
 
 /**
@@ -66,5 +67,25 @@ public interface ServicioCursoAprobado extends ServicioGeneral{
      * @throws DataAccessException 
      */
     CursoAprobado getCursoAprobado(Asignacion asignacion, AsignacionCursoPensum asignacionCursoPensum)
-        throws DataAccessException;
+        throws DataAccessException;    
+//______________________________________________________________________________
+    /**
+     * 
+     * @param asignacionEstudianteCarrera
+     * @param asignacionCursoPensum
+     * @param wrapperCursoAprobado
+     * @throws DataAccessException 
+     */
+    void agregarCursoAprobado(AsignacionEstudianteCarrera asignacionEstudianteCarrera, 
+            AsignacionCursoPensum asignacionCursoPensum,
+            WrapperCursoAprobado wrapperCursoAprobado) throws DataAccessException;
+//______________________________________________________________________________
+    /**
+     * 
+     * @param asignacionEstudianteCarrera
+     * @return
+     * @throws DataAccessException 
+     */
+    List<CursoAprobado> listaCursoAprobadoModificable(AsignacionEstudianteCarrera asignacionEstudianteCarrera)
+            throws DataAccessException;
 }
