@@ -11,9 +11,11 @@ import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
 import gt.edu.usac.cats.dominio.Curso;
 import gt.edu.usac.cats.dominio.CursoAprobado;
 import gt.edu.usac.cats.dominio.Pensum;
+import gt.edu.usac.cats.dominio.wrapper.WrapperCursoAprobado;
 import gt.edu.usac.cats.servicio.ServicioCursoAprobado;
 import gt.edu.usac.cats.servicio.ServicioPensumEstudianteCarrera;
 import java.util.List;
+import java.util.UUID;
 import javax.annotation.Resource;
 import org.hibernate.Query;
 import org.hibernate.criterion.DetachedCriteria;
@@ -106,7 +108,7 @@ public class ServicioCursoAprobadoImpl extends ServicioGeneralImpl implements Se
             return Integer.parseInt(result.get(0).toString());
         }
     }
-
+//______________________________________________________________________________
     @Override
     public CursoAprobado getCursoAprobado(Asignacion asignacion, AsignacionCursoPensum asignacionCursoPensum) throws DataAccessException {
         DetachedCriteria criteria = DetachedCriteria.forClass(CursoAprobado.class);
@@ -117,5 +119,34 @@ public class ServicioCursoAprobadoImpl extends ServicioGeneralImpl implements Se
                 )
         );        
         return this.daoGeneralImpl.uniqueResult(criteria);
+    }
+//______________________________________________________________________________
+    @Override
+    public void agregarCursoAprobado(AsignacionEstudianteCarrera asignacionEstudianteCarrera, 
+            AsignacionCursoPensum asignacionCursoPensum,
+            WrapperCursoAprobado wrapperCursoAprobado) throws DataAccessException {        
+        Asignacion asignacion = new Asignacion();
+        asignacion.setTransaccion(UUID.randomUUID().toString());
+        asignacion.setAsignacionEstudianteCarrera(asignacionEstudianteCarrera);
+        asignacion.setTipoAsignacion(wrapperCursoAprobado.getTipoAsignacion());
+        this.agregar(asignacion);
+        
+        CursoAprobado cursoAprobado = new CursoAprobado();
+        wrapperCursoAprobado.quitarWrapper(cursoAprobado);
+        cursoAprobado.setAsignacionCursoPensum(asignacionCursoPensum);
+        cursoAprobado.setAsignacion(asignacion);  
+        cursoAprobado.setIngresoManual(true);
+        this.agregar(cursoAprobado);
+    }
+//______________________________________________________________________________
+    @Override
+    public List<CursoAprobado> listaCursoAprobadoModificable(AsignacionEstudianteCarrera asignacionEstudianteCarrera) throws DataAccessException {
+        DetachedCriteria cursoAprobado = DetachedCriteria.forClass(CursoAprobado.class);
+        DetachedCriteria asignacion = cursoAprobado.createCriteria("asignacion");
+        
+        asignacion.add(Restrictions.eq("asignacionEstudianteCarrera", asignacionEstudianteCarrera));        
+        cursoAprobado.add(Restrictions.eq("ingresoManual", true));
+        
+        return this.daoGeneralImpl.find(cursoAprobado);
     }
 }

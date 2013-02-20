@@ -119,6 +119,18 @@
                                 <fmt:message key="admin.asignacionCursos.titulo"/>
                             </a>
                         </sec:authorize>
+                        <%--Operacion ingreso de curso aprobado--%>
+                        <sec:authorize access="hasRole('ROLE_AGREGAR_CURSO_APROBADO')">
+                            <br/><a href="agregarCursoAprobado.htm?idEstudiante=${estudiante.idEstudiante}">
+                                <fmt:message key="admin.agregarCursoAprobado.titulo"/>
+                            </a>
+                        </sec:authorize>
+                        <%--Operacion modificación de curso aprobado--%>
+                        <sec:authorize access="hasRole('ROLE_AGREGAR_CURSO_APROBADO')">
+                            <br/><a href="modificarCursoAprobadoLista.htm?idEstudiante=${estudiante.idEstudiante}">
+                                <fmt:message key="admin.modificarCursoAprobado.titulo"/>
+                            </a>
+                        </sec:authorize>  
                     </display:column>
                 </sec:authorize>
             </display:table>

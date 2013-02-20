@@ -22,7 +22,10 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.Subqueries;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
@@ -215,5 +218,33 @@ public class ServicioAsignacionCursoPensumImpl extends ServicioGeneralImpl imple
         this.daoGeneralImpl.saveOrUpdateAll(entidades);
 
 
+    }
+//______________________________________________________________________________
+    /**
+     * 
+     * @param asignacionEstudianteCarrera
+     * @return
+     * @throws DataAccessException 
+     */
+    @Override
+    public List<AsignacionCursoPensum> cursosSinAprobarValidos(AsignacionEstudianteCarrera asignacionEstudianteCarrera) throws DataAccessException {        
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("select acp from AsignacionCursoPensum as acp ").
+                append("inner join acp.pensum as pe ").
+                append("inner join pe.pensumEstudianteCarreras as pec ").
+                append("where pec.asignacionEstudianteCarrera = :asignacionEstudianteCarrera ").
+                append("and not exists ( ").
+                append("    select ca from CursoAprobado ca ").
+                append("    inner join ca.asignacion asig ").
+                append("    where asig.asignacionEstudianteCarrera = :asignacionEstudianteCarrera ").
+                append("    and ca.asignacionCursoPensum = acp ").
+                append(") ").
+                append("order by acp.curso.codigo");
+
+        Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString()).
+                setParameter("asignacionEstudianteCarrera", asignacionEstudianteCarrera);                
+        
+        return query.list();
     }
 }

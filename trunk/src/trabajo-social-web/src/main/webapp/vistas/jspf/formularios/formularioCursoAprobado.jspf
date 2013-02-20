@@ -1,0 +1,60 @@
+<%@ page pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
+<div id="divCampos">
+    <form:label for="idAsignacionEstudianteCarrera" path="idAsignacionEstudianteCarrera">
+        <fmt:message key="asignacionEstudianteCarrera.carrera"/>: *
+    </form:label>
+    <form:select path="idAsignacionEstudianteCarrera"
+        id="slcAsignacionEstudianteCarrera"
+        items="${listaAEC}"
+        itemLabel="carrera.nombre"
+        itemValue="idAsignacionEstudianteCarrera"/> 
+    <form:errors path="idAsignacionEstudianteCarrera" cssClass="claseError" />
+</div>
+
+<div id="divCampos">
+    <form:label for="tipoAsignacion" path="tipoAsignacion"><fmt:message key="tipoAsignacion.menu"/>: *</form:label>
+    <form:select path="tipoAsignacion"
+        items="${listaTipoAsignacion}"
+        itemLabel="descripcion" />        
+    <form:errors path="tipoAsignacion" cssClass="claseError" />
+</div>
+
+<div id="divCampos">
+    <form:label for="idAsignacionCursoPensum" path="idAsignacionCursoPensum"><fmt:message key="curso.menu"/>: *</form:label>
+    <form:select path="idAsignacionCursoPensum"
+         id="slcAsignacionCursoPensum"
+        items="${listaACP}"
+        itemLabel="curso.codigoNombre"
+        itemValue="idAsignacionCursoPensum"/>
+    <form:errors path="idAsignacionCursoPensum" cssClass="claseError" />
+</div>
+
+<div id="divCampos">
+    <form:label for="fechaAprobacion" path="fechaAprobacion"><fmt:message key="admin.agregarCursoAprobado.fechaAprobacion"/>: *</form:label>
+    <form:input path="fechaAprobacion" cssClass="datepicker" cssStyle="width: 250px;" />
+    <form:errors path="fechaAprobacion" cssClass="claseError" />
+</div>
+
+<div id="divCampos">
+    <form:label for="zona" path="zona"><fmt:message key="ingresoNota.zona"/>: *</form:label>
+    <form:input path="zona" />
+    <form:errors path="zona" cssClass="claseError" />
+</div>
+
+<div id="divCampos">
+    <form:label for="examenFinal" path="examenFinal"><fmt:message key="ingresoNota.final"/>: *</form:label>
+    <form:input path="examenFinal" />
+    <form:errors path="examenFinal" cssClass="claseError" />
+</div>
+
+<div id="divCampos">
+    <form:label for="observacion" path="observacion"><fmt:message key="admin.agregarCursoAprobado.observacion"/>: *</form:label>
+    <form:textarea path="observacion" />
+    <form:errors path="observacion" cssClass="claseError" />
+</div>
+
+

@@ -90,4 +90,14 @@ public interface ServicioAsignacionCursoPensum extends ServicioGeneral {
     void realizarEquivalencias(AsignacionEstudianteCarrera asignacionEstudianteCarrera,
             AsignacionEquivalencia asignacionEquivalencia,
             List <AsignacionCursoPensum> listadoEquivalencias) throws DataAccessException;
+//______________________________________________________________________________
+    /**
+     * Metodo que retorna el listado de cursos sin aprobar que se pueden agregar al estudiante
+     * con las restricciones correspondientes para que lo tenga aprobado
+     * @param asignacionEstudianteCarrera
+     * @return
+     * @throws DataAccessException 
+     */
+    List<AsignacionCursoPensum> cursosSinAprobarValidos(AsignacionEstudianteCarrera asignacionEstudianteCarrera)
+            throws DataAccessException;
 }
