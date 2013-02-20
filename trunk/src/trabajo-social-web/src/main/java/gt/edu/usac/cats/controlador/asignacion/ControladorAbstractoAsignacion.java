@@ -123,13 +123,16 @@ public abstract class ControladorAbstractoAsignacion {
         
         try {
             // se trata de enviar el correo
-            emailSenderVelocity.enviarCorreo("Boleta de asignacion",
+            if(estudiante2.getEmail() != null 
+                    && estudiante2.getEmail().trim().length()>0){
+                emailSenderVelocity.enviarCorreo("Boleta de asignacion",
                     estudiante2.getEmail(),
                     FabricaTemplateVelocity.INFORMACION_ASIGNACION_ESTUDIANTE,
                     iae);
+            }
 
-        } catch (MessagingException ex) {
-            log.error(Mensajes.MESSAGING_EXCEPTION, ex);
+        } catch (Exception ex) {
+            log.error(Mensajes.MAIL_EXCEPTION, ex);
         }
     }
 }
