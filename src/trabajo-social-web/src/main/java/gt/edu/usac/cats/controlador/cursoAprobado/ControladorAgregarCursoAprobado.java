@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * @author Carlos Solórzano
+ * @author Carlos Solorzano
  * @version 1.0
  */
 
@@ -125,7 +125,7 @@ public class ControladorAgregarCursoAprobado {
             return "cursoAprobado/agregarCursoAprobado";
         }        
         
-        //Validando nota de aprobación
+        //Validando nota de aprobacion
         if(wrapperCursoAprobado.getExamenFinal() + wrapperCursoAprobado.getZona() < 
                 acp.getNotaAprobacion()){
             RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, 

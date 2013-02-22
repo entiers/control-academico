@@ -178,9 +178,10 @@ public class ControladorModificarDatosPersonales {
     }
 
     private boolean correoValido(String correoAnterior, String correoNuevo){
-        if(!correoAnterior.equals(correoNuevo)){
-            if(this.servicioUsuarioImpl.getUsuarioPorEmail(correoNuevo)!=null)
-                return false;
+        if(correoAnterior != null && !correoAnterior.equals(correoNuevo)){
+            if(this.servicioUsuarioImpl.getUsuarioPorEmail(correoNuevo)!=null){
+                 return false;
+            }
         }
         return true;
     }
