@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
- * @author Carlos Solórzano
+ * @author Carlos Solorzano
  * @version 1.0
  */
 
@@ -133,7 +133,7 @@ public class ControladorModificarCursoAprobado {
         modelo.addAttribute("wrapperCursoAprobado", wrapperCursoAprobado);
         
         if(!bindingResult.hasErrors()){
-            //Validando nota de aprobación
+            //Validando nota de aprobacion
             if(wrapperCursoAprobado.getExamenFinal() + wrapperCursoAprobado.getZona() < 
                     this.cursoAprobado.getAsignacionCursoPensum().getNotaAprobacion()){
                 RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, 
