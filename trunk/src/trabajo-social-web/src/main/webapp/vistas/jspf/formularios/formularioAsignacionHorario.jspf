@@ -7,23 +7,23 @@
     <form:label path="idAsignacionCursoPensum" for="idAsignacionCursoPensum">
         <fmt:message key="curso.menu" /> :
     </form:label>
-    <form:select id="slcCurso"
-                 path="idAsignacionCursoPensum"
-                 items="${listaAsignacionCursoPensum}"
-                 itemLabel="curso.nombre"
-                 itemValue="idAsignacionCursoPensum"/>
+
+    <form:select id="slcCurso" path="idAsignacionCursoPensum" cssStyle="width: 250px;">
+        <form:option  value="" label="Seleccionar un curso" />
+        <form:options items="${listaAsignacionCursoPensum}" itemValue="idAsignacionCursoPensum" itemLabel="curso.nombre" />
+    </form:select>
     <form:errors path="idAsignacionCursoPensum" cssClass="claseError" />
 </div>
 <div id="divCampos">
-    <form:label path="idHorario" for="idHorario">
+    <form:label path="seccion" for="idAsignacionCursoPensum">
         <fmt:message key="agregarHorario.seccion" /> :
     </form:label>
-    <form:select id="slcHorario"
-                 path="idHorario"
-                 items="${listaHorario}"
-                 itemLabel="seccion"
-                 itemValue="idHorario"/>
-    <form:errors path="idHorario" cssClass="claseError" />
+
+    <form:select id="slcHorario" path="seccion" cssStyle="width: 250px;">
+
+    </form:select>
+
+    <!--<--form:errors path="seccion" cssClass="claseError" />-->
 </div>
 <form:hidden path="tipoAsignacion" />
 <form:hidden path="tipoHorario" id="tipoHorario" />

@@ -11,6 +11,7 @@ import gt.edu.usac.cats.enums.TipoHorario;
 import gt.edu.usac.cats.enums.TipoRubro;
 import java.util.ArrayList;
 import java.util.List;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  *
@@ -26,6 +27,8 @@ public class DatosAsignacion {
     private int idAsignacionCursoPensum;
     private int totalCursos;
     private List detalleAsignacion;
+    @NotEmpty(message = "{validacion.campoObligatorio}")
+    private String seccion;
 
     public DatosAsignacion(){
         this.detalleAsignacion = new ArrayList();
@@ -98,4 +101,14 @@ public class DatosAsignacion {
     public void setTipoRubro(TipoRubro tipoRubro) {
         this.tipoRubro = tipoRubro;
     }
+
+    public String getSeccion() {
+        return seccion;
+    }
+
+    public void setSeccion(String seccion) {
+        this.seccion = seccion;
+    }
+    
+    
 }

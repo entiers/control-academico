@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<table id="tablaHorarios" class="ui-widget ui-widget-content" align="center">
+<table id="tablaHorarios" class="ui-widget ui-widget-content" align="center" style="width:100%;">
     <thead>
         <tr class="ui-widget-header ">
             <th><fmt:message key="agregarHorario.curso"/></th>
@@ -23,10 +23,10 @@
                     <c:out value="${horario.salon.edificio}" />-<c:out value="${horario.salon.numero}" />
                 </td>
                 <td align="center">
-                    <fmt:formatDate pattern="hh:mm" value="${horario.horaInicio}" />
+                    <fmt:formatDate pattern="HH:mm" value="${horario.horaInicio}" />
                 </td>
                 <td align="center">
-                    <fmt:formatDate pattern="hh:mm" value="${horario.horaFin}" />
+                    <fmt:formatDate pattern="HH:mm" value="${horario.horaFin}" />
                 </td>
                 <td><c:out value="${horario.horarioDiasAsString}" /></td>
             </tr>

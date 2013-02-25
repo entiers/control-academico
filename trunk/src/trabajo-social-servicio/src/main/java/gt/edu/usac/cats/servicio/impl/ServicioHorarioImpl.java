@@ -6,8 +6,8 @@
 
 package gt.edu.usac.cats.servicio.impl;
 
-import gt.edu.usac.cats.dominio.Catedratico;
 import gt.edu.usac.cats.dominio.AsignacionCursoPensum;
+import gt.edu.usac.cats.dominio.Catedratico;
 import gt.edu.usac.cats.dominio.Horario;
 import gt.edu.usac.cats.dominio.HorarioDia;
 import gt.edu.usac.cats.dominio.Salon;
@@ -21,6 +21,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -117,10 +118,10 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
         query.setParameter("tipo", TipoHorario.SEMESTRE);
 
         List list = query.list();
-        if (!list.isEmpty())
+        if (!list.isEmpty()){
             return this.cargarEntidadPorID(Horario.class, Integer.valueOf(list.get(0).toString())) ;
-        else
-            return null;
+        }
+        return null;
     }
 //______________________________________________________________________________
     @Override
@@ -177,16 +178,18 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
                     if((h2.getHoraFin().compareTo(h1.getHoraInicio()) > 0 & h2.getHoraFin().compareTo(h1.getHoraFin()) <= 0)
                         | (h2.getHoraInicio().compareTo(h1.getHoraFin()) < 0 & h2.getHoraInicio().compareTo(h1.getHoraInicio()) >= 0)
                         | (h2.getHoraInicio().compareTo(h1.getHoraInicio()) <= 0 & h2.getHoraFin().compareTo(h1.getHoraFin()) >= 0  ))
-
+                    {
                         //Validando traslape de dias
                         for(Iterator <HorarioDia> it1 = h1.getHorarioDias().iterator(); it1.hasNext();){
                             HorarioDia horarioDia1 = it1.next();
                             for(Iterator <HorarioDia> it2 = h2.getHorarioDias().iterator(); it2.hasNext();){
                                HorarioDia horarioDia2 = it2.next();
-                                    if(horarioDia1.getNumeroDia()==horarioDia2.getNumeroDia())
+                                    if(horarioDia1.getNumeroDia()==horarioDia2.getNumeroDia()){
                                         return true;
+                                    }
                             }
                         }
+                    }
                     
                 }
             }
@@ -319,5 +322,30 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
         return query.list();
     }
 
+    @Override
+    public List getSeccionesHorario(AsignacionCursoPensum asignacionCursoPensum, Semestre semestre, TipoHorario tipoHorario) throws DataAccessException {
+        DetachedCriteria criteria = DetachedCriteria.forClass(Horario.class);
+        criteria.add(Restrictions.eq("semestre", semestre));
+        criteria.add(Restrictions.eq("tipo", tipoHorario));
+        criteria.add(Restrictions.eq("asignacionCursoPensum", asignacionCursoPensum));
+        criteria.setProjection(Projections.groupProperty("seccion"));
+        
+        return this.daoGeneralImpl.find(criteria);
+    }
+
+    @Override
+    public List<Horario> getHorariosPorSecciones(String seccion, 
+    AsignacionCursoPensum asignacionCursoPensum, 
+    Semestre semestre, TipoHorario tipoHorario) throws DataAccessException {
+        DetachedCriteria criteria = DetachedCriteria.forClass(Horario.class);
+        criteria.add(Restrictions.eq("seccion", seccion));
+        criteria.add(Restrictions.eq("semestre", semestre));
+        criteria.add(Restrictions.eq("tipo", tipoHorario));
+        criteria.add(Restrictions.eq("asignacionCursoPensum", asignacionCursoPensum));
+        
+        
+        return this.daoGeneralImpl.find(criteria);
+    }
+ 
 
 }

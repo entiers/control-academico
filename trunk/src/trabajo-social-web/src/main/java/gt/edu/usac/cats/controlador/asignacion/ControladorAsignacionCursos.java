@@ -188,10 +188,12 @@ public class ControladorAsignacionCursos extends ControladorAbstractoAsignacion{
 
             this.listaHorario = this.servicioHorarioImpl.getHorario(this.listaAsignacionCursoPensum.get(0), this.semestre, datosAsignacion.getTipoHorario());
 
-            if(datosAsignacion.getTipoAsignacion()==TipoAsignacion.ASIGNACION_CURSOS_SEMESTRE)
+            if(datosAsignacion.getTipoAsignacion()==TipoAsignacion.ASIGNACION_CURSOS_SEMESTRE){
                 retorno = "asignacion/asignacionSemestre";
-            else if(datosAsignacion.getTipoAsignacion()==TipoAsignacion.ASIGNACION_CURSOS_VACACIONES)
+            }
+            else if(datosAsignacion.getTipoAsignacion()==TipoAsignacion.ASIGNACION_CURSOS_VACACIONES){
                 retorno = "asignacion/asignacionVacaciones";
+            }
             else if(datosAsignacion.getTipoAsignacion()==TipoAsignacion.ASIGNACION_PRIMERA_RETRASADA |
                     datosAsignacion.getTipoAsignacion()==TipoAsignacion.ASIGNACION_SEGUNDA_RETRASADA){
 
@@ -266,7 +268,10 @@ public class ControladorAsignacionCursos extends ControladorAbstractoAsignacion{
             log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
         }
         TipoHorario tipoHorario = TipoHorario.valueOf(idTipoHorario);
-        return servicioHorarioImpl.getHorario(asignacionCursoPensum, semestre, tipoHorario);
+        
+        List secciones = servicioHorarioImpl.getSeccionesHorario(asignacionCursoPensum, semestre, tipoHorario);
+        
+        return secciones;//servicioHorarioImpl.getHorario(asignacionCursoPensum, semestre, tipoHorario);
     }
 
 }

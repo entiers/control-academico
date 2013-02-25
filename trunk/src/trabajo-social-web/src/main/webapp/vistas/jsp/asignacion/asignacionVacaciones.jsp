@@ -43,7 +43,7 @@
             </fieldset>
         </form:form>
 
-        <c:if test="${horarioElegido}" >
+        <c:if test="${not empty listadoHorarioAsignados}" >
             <form:form method="POST" modelAttribute="datosAsignacion" action="realizarAsignacionVacaciones.htm">
                 <fieldset>
                     <legend><fmt:message key="buscarHorario.tituloListado"/></legend>
