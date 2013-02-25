@@ -6,7 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-   "http://www.w3.org/TR/html4/loose.dtd">
+    "http://www.w3.org/TR/html4/loose.dtd">
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
@@ -29,7 +29,7 @@
                         }
                     }
                 });
-             });
+            });
         </script>
     </head>
     <body>
@@ -63,14 +63,19 @@
 
             });
 
-            function getHorarios(valueCurso,valueHorario) {                
-                $.getJSON("getHorarioAsignacion.htm", { idAsignacionCursoPensum: valueCurso, idTipoHorario: valueHorario}, function(lstHorario) {
-                    var options = '';
-                    $.each(lstHorario, function (index,value) {
-                        options += "<option value='" + value.idHorario + "'>" + value.seccion + "</option>";
+            function getHorarios(valueCurso,valueHorario) {   
+                if ($('#slcCurso').val() != ""){
+                    $.getJSON("getHorarioAsignacion.htm", { idAsignacionCursoPensum: valueCurso, idTipoHorario: valueHorario}, function(lstHorario) {
+                        var options = '';
+                        $.each(lstHorario, function (index,value) {
+                            options += "<option value='" + value + "'>" + value+ "</option>";
+                        });
+                        $('#slcHorario').html(options);
                     });
-                    $('#slcHorario').html(options);
-                });
+                } else {
+                    $('#slcHorario').html("");
+                }
+                
             }
         </script>
 

@@ -6,7 +6,6 @@
 package gt.edu.usac.cats.controlador.horario;
 
 import gt.edu.usac.cats.dominio.Horario;
-import gt.edu.usac.cats.dominio.HorarioDia;
 import gt.edu.usac.cats.dominio.wrapper.WrapperHorario;
 import gt.edu.usac.cats.servicio.ServicioHorario;
 import gt.edu.usac.cats.util.RequestUtil;

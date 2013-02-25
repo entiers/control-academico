@@ -17,7 +17,6 @@ import gt.edu.usac.cats.util.RequestUtil;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -71,16 +70,27 @@ public class ControladorAsignacionSemestre extends ControladorAbstractoAsignacio
             if(datosAsignacion.getTotalCursos()==0){
                 this.listaHorarioAsignacion =  new ArrayList<Horario>();
                 listaHorario = new ArrayList<Horario>();
-                listaAsignacionCursoPensum = servicioCursoImpl.getCursoAsignacion(pensumEstudianteCarrera.getPensum(),
+                listaAsignacionCursoPensum = servicioCursoImpl
+                        .getCursoAsignacion(pensumEstudianteCarrera.getPensum(),
                                                                     semestre,TipoHorario.SEMESTRE);
             }
 
             //Cargar horario seleccionado al listadoHorarioAsignacion
             if (!listaAsignacionCursoPensum.isEmpty()) {
                 AsignacionCursoPensum asignacionCursoPensum = servicioGeneralImpl.
-                        cargarEntidadPorID(AsignacionCursoPensum.class, Short.parseShort(String.valueOf(datosAsignacion.getIdAsignacionCursoPensum())));
-                Horario horario = servicioGeneralImpl.cargarEntidadPorID(Horario.class, datosAsignacion.getIdHorario());
-                listaHorarioAsignacion.add(horario);
+                        cargarEntidadPorID(AsignacionCursoPensum.class, 
+                        Short.parseShort(String.valueOf(datosAsignacion.getIdAsignacionCursoPensum())));
+                /*
+                Horario horario = servicioGeneralImpl
+                        .cargarEntidadPorID(Horario.class, datosAsignacion.getIdHorario());
+                */
+                
+                System.out.println(datosAsignacion.getSeccion());
+                listaHorarioAsignacion.addAll(this.servicioHorarioImpl.getHorariosPorSecciones(datosAsignacion.getSeccion(), 
+                        asignacionCursoPensum, 
+                        semestre, 
+                        datosAsignacion.getTipoHorario()));
+                
                 datosAsignacion.incrementarTotalCursos();
                 for (int i = 0; i < listaAsignacionCursoPensum.size(); i++) {
                     if (listaAsignacionCursoPensum.get(i).getIdAsignacionCursoPensum()==asignacionCursoPensum.getIdAsignacionCursoPensum()) {
@@ -88,7 +98,9 @@ public class ControladorAsignacionSemestre extends ControladorAbstractoAsignacio
                     }
                 }
                 if (!listaAsignacionCursoPensum.isEmpty()) {
-                    listaHorario = servicioHorarioImpl.getHorario(listaAsignacionCursoPensum.get(0), semestre, TipoHorario.SEMESTRE);
+                    listaHorario = servicioHorarioImpl
+                            .getHorario(listaAsignacionCursoPensum.get(0), semestre, 
+                            TipoHorario.SEMESTRE);
                 } else {
                     listaHorario.clear();
                 }
