@@ -97,7 +97,7 @@
                             </tr>
                             <tr>
                                 <td><fmt:message key="asignacion.fecha"/></td>
-                                <td><fmt:formatDate pattern="dd/MM/yyyy hh:mm:ss"  value="${asignacion.fecha}" /></td>
+                                <td><fmt:formatDate pattern="dd/MM/yyyy HH:mm:ss"  value="${asignacion.fecha}" /></td>
                             </tr>
                             <tr>
                                 <td><fmt:message key="asignacion.transaccion"/></td>
@@ -135,8 +135,8 @@
                                     <td>
                                        ${detalleAsignacion.horario.salon.numero} ${detalleAsignacion.horario.salon.edificio}
                                     </td>                            
-                                    <td><fmt:formatDate pattern="hh:mm" value="${detalleAsignacion.horario.horaInicio}" /></td>
-                                    <td><fmt:formatDate pattern="hh:mm" value="${detalleAsignacion.horario.horaFin}" /></td>
+                                    <td><fmt:formatDate pattern="HH:mm" value="${detalleAsignacion.horario.horaInicio}" /></td>
+                                    <td><fmt:formatDate pattern="HH:mm" value="${detalleAsignacion.horario.horaFin}" /></td>
                                     <td>${detalleAsignacion.horario.horarioDiasAsString}</td>
                                     <c:choose>
                                         <c:when test="${periodoAsignacion}">

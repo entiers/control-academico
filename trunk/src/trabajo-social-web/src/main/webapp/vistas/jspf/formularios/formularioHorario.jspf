@@ -3,18 +3,17 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<div>
-
-
-    <div id="divCampos">
+<div style="height: 150px;">
+    <div id="divCampos" style="">
         <form:label for="horarioDiasWrapper" path="horarioDiasWrapper">
             <fmt:message key="agregarHorario.dia"/>: *
         </form:label>
+            
     </div>
-    <div style="font-size: small;">
+    <div style="font-size: small;margin-left: 35%; position: absolute;">
         <form:checkboxes path="horarioDiasWrapper" items="${listadoDias}"
                          itemLabel="nombreDia" itemValue="numeroDia"
-                         delimiter="" cssStyle="width: 50px;"  />
+                         delimiter="<br/>" cssStyle="width: 50px;"   />
     </div>
     <form:errors path="horarioDiasWrapper" cssClass="claseError" />
 </div>

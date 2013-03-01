@@ -49,7 +49,7 @@
                     </tr>
                     <tr>
                         <td><fmt:message key="asignacion.fecha"/></td>
-                        <td><fmt:formatDate pattern="dd/MM/yyyy hh:mm:ss"  value="${asignacion.fecha}" /></td>
+                        <td><fmt:formatDate pattern="dd/MM/yyyy HH:mm:ss"  value="${asignacion.fecha}" /></td>
                     </tr>
                     <tr>
                         <td><fmt:message key="asignacion.transaccion"/></td>
@@ -77,10 +77,10 @@
                             <td><c:out value="${asignacion.horario.asignacionCursoPensum.curso.nombre}" /></td>
                             <td align="center"><c:out value="${asignacion.horario.seccion}" /></td>
                             <td align="center">
-                                <fmt:formatDate pattern="hh:mm" value="${asignacion.horario.horaInicio}" />
+                                <fmt:formatDate pattern="HH:mm" value="${asignacion.horario.horaInicio}" />
                             </td>
                             <td align="center">
-                                <fmt:formatDate pattern="hh:mm" value="${asignacion.horario.horaFin}" />
+                                <fmt:formatDate pattern="HH:mm" value="${asignacion.horario.horaFin}" />
                             </td>
                             <td><c:out value="${asignacion.horario.horarioDiasAsString}" /></td>
                         </tr>
