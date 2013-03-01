@@ -104,10 +104,10 @@
                 <display:column property="horarioDiasAsString" titleKey="agregarHorario.dia" />
                 <display:column property="seccion" titleKey="agregarHorario.seccion" style="text-align: center;"/>
                 <display:column titleKey="agregarHorario.horaInicio" >
-                    <fmt:formatDate pattern="hh:mm" value="${horario.horaInicio}" />
+                    <fmt:formatDate pattern="HH:mm" value="${horario.horaInicio}" />
                 </display:column>
                 <display:column titleKey="agregarHorario.horaFin">
-                    <fmt:formatDate pattern="hh:mm" value="${horario.horaFin}" />
+                    <fmt:formatDate pattern="HH:mm" value="${horario.horaFin}" />
                 </display:column>
                 <display:column titleKey="agregarHorario.habilitado">
                     <c:choose>

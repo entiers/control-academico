@@ -101,7 +101,7 @@
                                 <div class="art-Post-body">
                                     <div id="envoltorio">
                                         <div id="contenido" class="art-Post-inner">
-                                            <c:set var="pageSize" value="2" scope="session" />
+                                            <c:set var="pageSize" value="10" scope="session" />
                                             <decorator:body />
                                             <div class="cleared"></div>
                                         </div>

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="horarioSubreporte1" language="groovy" pageWidth="572" pageHeight="752" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+<!DOCTYPE jasperReport PUBLIC "-//JasperReports//DTD JasperReport//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="horarioSubreporte1" language="java" pageWidth="572" pageHeight="752" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="066c5001-910d-4947-96f6-fdfc6be790f2">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -27,7 +29,7 @@ reporte.get_marca_horario_dia($P{id_horario}, 1) as dom
 	<detail>
 		<band height="22" splitType="Stretch">
 			<textField isBlankWhenNull="true">
-				<reportElement x="0" y="0" width="22" height="20"/>
+				<reportElement uuid="fdcbb3f3-878b-4557-9482-f623dd366dd1" x="0" y="0" width="22" height="20"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -37,10 +39,10 @@ reporte.get_marca_horario_dia($P{id_horario}, 1) as dom
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{dom}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{dom}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="22" y="0" width="22" height="20"/>
+				<reportElement uuid="70f5ac10-e837-460f-9503-17fc50769d90" x="22" y="0" width="22" height="20"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
@@ -49,10 +51,10 @@ reporte.get_marca_horario_dia($P{id_horario}, 1) as dom
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{lun}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{lun}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="44" y="0" width="22" height="20"/>
+				<reportElement uuid="469485ff-87ff-4ecc-93d2-0d3017683932" x="44" y="0" width="22" height="20"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
@@ -61,10 +63,10 @@ reporte.get_marca_horario_dia($P{id_horario}, 1) as dom
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{mar}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{mar}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="66" y="0" width="22" height="20"/>
+				<reportElement uuid="c050042d-c533-4441-a5ee-a8f8ded7fa74" x="66" y="0" width="22" height="20"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
@@ -73,10 +75,10 @@ reporte.get_marca_horario_dia($P{id_horario}, 1) as dom
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{mie}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{mie}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="88" y="0" width="22" height="20"/>
+				<reportElement uuid="bbc348e1-b2fe-4201-ba7f-41a0656f7246" x="88" y="0" width="22" height="20"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
@@ -85,10 +87,10 @@ reporte.get_marca_horario_dia($P{id_horario}, 1) as dom
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{jue}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{jue}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="132" y="0" width="22" height="20"/>
+				<reportElement uuid="71a719bb-1cdb-4c31-b22a-ec1baee8d71f" x="132" y="0" width="22" height="20"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
@@ -97,10 +99,11 @@ reporte.get_marca_horario_dia($P{id_horario}, 1) as dom
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{vie}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{sab}
+]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="110" y="0" width="22" height="20"/>
+				<reportElement uuid="2011c115-6084-483b-bcbf-4db04adb471a" x="110" y="0" width="22" height="20"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
@@ -109,7 +112,7 @@ reporte.get_marca_horario_dia($P{id_horario}, 1) as dom
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{sab}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{vie}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
