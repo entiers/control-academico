@@ -20,6 +20,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -32,6 +34,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @version 1.0
  */
 @Controller("ControladorAsignacionRetrasadas")
+@Scope(value="session", proxyMode=ScopedProxyMode.TARGET_CLASS)
 public class ControladorAsignacionRetrasadas extends ControladorAbstractoAsignacion{
 //______________________________________________________________________________
     private static Logger log = Logger.getLogger(ControladorAsignacionRetrasadas.class);
