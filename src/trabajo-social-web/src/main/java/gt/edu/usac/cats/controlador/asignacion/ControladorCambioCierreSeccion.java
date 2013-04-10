@@ -20,6 +20,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
+import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,6 +36,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @version 1.0
  */
 @Controller("controladorCambioCierreSeccion")
+@Scope(value="session")
 public class ControladorCambioCierreSeccion {
 //______________________________________________________________________________
     private static Logger log = Logger.getLogger(ControladorCambioCierreSeccion.class);

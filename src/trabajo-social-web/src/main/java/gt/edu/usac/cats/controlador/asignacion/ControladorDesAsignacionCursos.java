@@ -36,6 +36,7 @@ import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -51,6 +52,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller("controladorDesAsignacionCursos")
 @RequestMapping(value="desAsignacionCursos.htm")
+@Scope(value="session")
 public class ControladorDesAsignacionCursos {
 //______________________________________________________________________________
     private static Logger log = Logger.getLogger(ControladorDesAsignacionCursos.class);

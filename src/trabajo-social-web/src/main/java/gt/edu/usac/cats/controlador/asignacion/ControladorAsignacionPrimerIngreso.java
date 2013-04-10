@@ -22,7 +22,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -40,7 +39,7 @@ import org.springframework.dao.DataAccessException;
  * @version 1.0
  */
 @Controller("controladorAsignacionPrimerIngreso")
-@Scope(value="session", proxyMode=ScopedProxyMode.TARGET_CLASS)
+@Scope(value="session")
 public class ControladorAsignacionPrimerIngreso {
 //______________________________________________________________________________
     private static Logger log = Logger.getLogger(ControladorAsignacionPrimerIngreso.class);
