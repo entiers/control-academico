@@ -8,6 +8,7 @@ package gt.edu.usac.cats.dominio.wrapper;
 import gt.edu.usac.cats.dominio.Catedratico;
 import gt.edu.usac.cats.dominio.Estudiante;
 import gt.edu.usac.cats.dominio.Persona;
+import java.io.Serializable;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
@@ -19,7 +20,7 @@ import org.hibernate.validator.constraints.NotEmpty;
  *
  * @version 1.0
  */
-public class WrapperDatosPersonales {
+public class WrapperDatosPersonales implements Serializable{
 //______________________________________________________________________________
     @Size(max = 200, message = "{validacion.caracteresMaximos}")
     private String direccion;

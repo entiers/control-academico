@@ -53,6 +53,7 @@ public class DetalleAsignacion implements java.io.Serializable {
         this.zona = 0;
         this.laboratorio = 0;
         this.examenFinal = 0;
+        this.idDetalleAsignacion = 0;
     }
 
     public DetalleAsignacion(int idDetalleAsignacion, Asignacion asignacion, Horario horario, short zona,

@@ -6,13 +6,14 @@
 
 package gt.edu.usac.cats.dominio.wrapper;
 
+import java.io.Serializable;
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  *
  * @author Carlos Solorzano
  */
-public class WrapperCambioContrasenia {
+public class WrapperCambioContrasenia implements Serializable{
     //______________________________________________________________________________
     @NotEmpty(message="{validacion.campoObligatorio}")
     private String nombreUsuario;

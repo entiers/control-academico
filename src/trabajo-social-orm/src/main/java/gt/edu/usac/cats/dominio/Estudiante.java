@@ -18,7 +18,6 @@ package gt.edu.usac.cats.dominio;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -47,7 +46,7 @@ import javax.persistence.UniqueConstraint;
     }
 )
 public class Estudiante implements java.io.Serializable {
-    private int idEstudiante;
+    private Integer idEstudiante;
      private Nacionalidad nacionalidad;
      private LugarNacimiento lugarNacimiento;
      private Usuario usuario;
@@ -78,11 +77,11 @@ public class Estudiante implements java.io.Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 @Column(name="id_estudiante", unique=true, nullable=false)
-    public int getIdEstudiante() {
+    public Integer getIdEstudiante() {
         return this.idEstudiante;
     }
 
-    public void setIdEstudiante(int idEstudiante) {
+    public void setIdEstudiante(Integer idEstudiante) {
         this.idEstudiante = idEstudiante;
     }
 @ManyToOne(fetch=FetchType.LAZY)

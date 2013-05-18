@@ -7,12 +7,13 @@ package gt.edu.usac.cats.dominio.busqueda;
 
 import gt.edu.usac.cats.dominio.Horario;
 import gt.edu.usac.cats.enums.TipoHorario;
+import java.io.Serializable;
 
 /**
  *
  * @author cats
  */
-public class DatosIngresoNota {
+public class DatosIngresoNota implements Serializable{
 //______________________________________________________________________________
     private TipoHorario tipoHorario;
 //______________________________________________________________________________

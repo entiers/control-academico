@@ -54,7 +54,7 @@ import org.hibernate.annotations.Type;
     schema = "control"
 )
 public class Horario implements java.io.Serializable {
-    private int idHorario;
+    private Integer idHorario;
      private Semestre semestre;
      private AsignacionCursoPensum asignacionCursoPensum;
      private Salon salon;
@@ -77,11 +77,11 @@ public class Horario implements java.io.Serializable {
         unique = true,
         nullable = false
     )
-    public int getIdHorario() {
+    public Integer getIdHorario() {
         return this.idHorario;
     }
 
-    public void setIdHorario(int idHorario) {
+    public void setIdHorario(Integer idHorario) {
         this.idHorario = idHorario;
     }
 

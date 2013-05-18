@@ -60,7 +60,9 @@ public class Usuario implements java.io.Serializable {
 
     private Persona persona;
 
-    public Usuario() {}
+    public Usuario() {
+        this.idUsuario = 0;
+    }
 
     public Usuario(int idUsuario, String nombreUsuario, String password, boolean habilitado) {
         this.idUsuario = idUsuario;

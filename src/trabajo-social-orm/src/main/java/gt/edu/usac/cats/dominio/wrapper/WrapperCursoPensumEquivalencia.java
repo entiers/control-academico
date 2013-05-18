@@ -7,13 +7,14 @@ package gt.edu.usac.cats.dominio.wrapper;
 
 import gt.edu.usac.cats.dominio.Curso;
 import gt.edu.usac.cats.dominio.Pensum;
+import java.io.Serializable;
 
 /**
  *
  * @author Mario Batres
  * @version 1.0
  */
-public class WrapperCursoPensumEquivalencia {
+public class WrapperCursoPensumEquivalencia implements Serializable{
 
     private Pensum pensumOriginal;
 
@@ -23,6 +24,15 @@ public class WrapperCursoPensumEquivalencia {
 
     private Curso cursoEquivalente;
 
+    
+    public WrapperCursoPensumEquivalencia() {
+        this.pensumEquivalente = new Pensum();
+        this.pensumOriginal = new Pensum();
+        this.cursoEquivalente = new Curso();
+        this.cursoOriginal = new Curso();
+    }
+
+    
     
     /**
      * @return the pensumOriginal

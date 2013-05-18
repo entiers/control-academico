@@ -41,7 +41,9 @@ public class CursoExtra implements java.io.Serializable {
     private String nombre;
     private boolean tipo;
 
-    public CursoExtra() {}
+    public CursoExtra() {
+        this.idCursoExtra = 0;
+    }
 
     public CursoExtra(int idCursoExtra, Estudiante estudiante, String nombre, boolean tipo, short horas,
                       short creditos) {

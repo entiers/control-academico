@@ -3,18 +3,19 @@ package gt.edu.usac.cats.dominio.wrapper;
 
 import gt.edu.usac.cats.dominio.CursoAprobado;
 import gt.edu.usac.cats.enums.TipoAsignacion;
+import java.io.Serializable;
 import java.util.Date;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 
 /**
  * @author Carlos Solorzano
  * @version 1.0
  */
-public class WrapperCursoAprobado {
+public class WrapperCursoAprobado implements Serializable{
 //______________________________________________________________________________
     @NotNull(message = "{validacion.campoObligatorio}")
     @DateTimeFormat(pattern = "dd-MM-yyyy")    

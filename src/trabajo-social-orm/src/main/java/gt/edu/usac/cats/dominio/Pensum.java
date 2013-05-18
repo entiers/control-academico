@@ -47,7 +47,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     uniqueConstraints=@UniqueConstraint(columnNames="codigo", name="pensum_codigo_uk")
 )
 public class Pensum implements java.io.Serializable {
-     private short idPensum;
+     private Short idPensum;
      private Carrera carrera;
      private String codigo;
      private Date fechaInicio;
@@ -56,16 +56,19 @@ public class Pensum implements java.io.Serializable {
      private Set<AsignacionCursoPensum> asignacionCursoPensums = new HashSet<AsignacionCursoPensum>(0);
      private Set<PensumEstudianteCarrera> pensumEstudianteCarreras = new HashSet<PensumEstudianteCarrera>(0);
 
-    public Pensum() {}
+    public Pensum() {
+        this.idPensum = 0;
+        
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id_pensum", unique=true, nullable=false)
-    public short getIdPensum() {
+    public Short getIdPensum() {
         return this.idPensum;
     }
 
-    public void setIdPensum(short idPensum) {
+    public void setIdPensum(Short idPensum) {
         this.idPensum = idPensum;
     }
 @ManyToOne(fetch=FetchType.LAZY)

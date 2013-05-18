@@ -7,6 +7,7 @@
 package gt.edu.usac.cats.dominio.wrapper;
 
 import gt.edu.usac.cats.dominio.Rol;
+import java.io.Serializable;
 import javax.validation.constraints.Size;
 
 /**
@@ -17,7 +18,7 @@ import javax.validation.constraints.Size;
  * @author Mario Batres
  * @version 1.0
  */
-public class WrapperRol {
+public class WrapperRol implements Serializable {
     private String nombre;
 
     @Size(max = 250, message = "{validacion.caracteresMaximos}")

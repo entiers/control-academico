@@ -34,6 +34,7 @@ public class DetalleAsignacionPrimerIngreso implements Serializable {
 
     public DetalleAsignacionPrimerIngreso() {
         this.asignado = true;
+        this.idDetalleAsignacionPrimerIngreso = 0;
     }
 
     @Id

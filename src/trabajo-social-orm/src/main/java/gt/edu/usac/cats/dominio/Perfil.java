@@ -43,7 +43,9 @@ public class Perfil implements java.io.Serializable {
     private short idPerfil;
     private String nombre;
 
-    public Perfil() {}
+    public Perfil() {
+        this.idPerfil = 0;
+    }
 
     public Perfil(short idPerfil, String nombre) {
         this.idPerfil = idPerfil;

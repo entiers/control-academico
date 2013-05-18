@@ -44,13 +44,15 @@ public class CalendarioActividades implements java.io.Serializable {
     private String actividad;
     private Date fechaFin;
     private Date fechaInicio;
-    private short idCalendarioActividades;
+    private Short idCalendarioActividades;
     private Semestre semestre;
     private TipoActividad tipoActividad;
 
-    public CalendarioActividades() {}
+    public CalendarioActividades() {
+        this.idCalendarioActividades = 0;
+    }
 
-    public CalendarioActividades(short idCalendarioActividades, Semestre semestre, Date fechaInicio, Date fechaFin,
+    public CalendarioActividades(Short idCalendarioActividades, Semestre semestre, Date fechaInicio, Date fechaFin,
                                  String actividad) {
         this.idCalendarioActividades = idCalendarioActividades;
         this.semestre = semestre;
@@ -66,11 +68,11 @@ public class CalendarioActividades implements java.io.Serializable {
         unique = true,
         nullable = false
     )
-    public short getIdCalendarioActividades() {
+    public Short getIdCalendarioActividades() {
         return this.idCalendarioActividades;
     }
 
-    public void setIdCalendarioActividades(short idCalendarioActividades) {
+    public void setIdCalendarioActividades(Short idCalendarioActividades) {
         this.idCalendarioActividades = idCalendarioActividades;
     }
 

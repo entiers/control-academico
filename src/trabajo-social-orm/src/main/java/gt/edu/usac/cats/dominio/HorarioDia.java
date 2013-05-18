@@ -23,6 +23,7 @@ public class HorarioDia implements java.io.Serializable {
     private int numeroDia;
 
     public HorarioDia() {
+        this.idHorarioDia = 0;
     }
 
     public HorarioDia(Horario horario, int numeroDia) {

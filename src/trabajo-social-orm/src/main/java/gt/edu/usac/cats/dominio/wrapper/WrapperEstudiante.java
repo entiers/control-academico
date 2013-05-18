@@ -10,6 +10,7 @@ package gt.edu.usac.cats.dominio.wrapper;
 import gt.edu.usac.cats.dominio.Estudiante;
 import gt.edu.usac.cats.dominio.LugarNacimiento;
 import gt.edu.usac.cats.dominio.Nacionalidad;
+import java.io.Serializable;
 import java.util.Date;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -25,7 +26,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  *
  * @version 3.0
  */
-public class WrapperEstudiante {
+public class WrapperEstudiante implements Serializable{
 
     @NotEmpty(message = "{validacion.campoObligatorio}")
     @Pattern(regexp = "|[0-9]{5,9}", message = "{validacion.carneInvalido}")

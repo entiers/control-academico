@@ -47,6 +47,7 @@ public class AsignacionPrimerIngreso implements java.io.Serializable {
 
     public AsignacionPrimerIngreso() {
         this.fechaInicio = new Date();
+        this.idAsignacionPrimerIngreso = 0;
     }
 
     @Id

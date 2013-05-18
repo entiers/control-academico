@@ -9,6 +9,7 @@ package gt.edu.usac.cats.dominio.busqueda;
 import gt.edu.usac.cats.enums.TipoAsignacion;
 import gt.edu.usac.cats.enums.TipoHorario;
 import gt.edu.usac.cats.enums.TipoRubro;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -18,7 +19,7 @@ import org.hibernate.validator.constraints.NotEmpty;
  * @author Carlos Solorzano
  * @version 1.0
  */
-public class DatosAsignacion {
+public class DatosAsignacion implements Serializable {
     private TipoAsignacion tipoAsignacion;
     private TipoHorario tipoHorario;
     private TipoRubro tipoRubro;

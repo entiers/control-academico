@@ -5,6 +5,7 @@
 
 package gt.edu.usac.cats.dominio.busqueda;
 
+import java.io.Serializable;
 import javax.validation.constraints.Size;
 
 /**
@@ -12,7 +13,7 @@ import javax.validation.constraints.Size;
  * @author Mario Batres
  * @version 1.0
  */
-public class DatosBusquedaPersona {
+public class DatosBusquedaPersona implements Serializable {
     @Size(max = 100, message = "{validacion.caracteresMaximos}")
     private String registroPersonal;
 

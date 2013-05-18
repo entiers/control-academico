@@ -6,6 +6,7 @@
 
 package gt.edu.usac.cats.dominio.wrapper;
 
+import java.io.Serializable;
 import javax.validation.constraints.Min;
 
 
@@ -13,7 +14,7 @@ import javax.validation.constraints.Min;
  *
  * @author Daniel Castillo
  */
-public class WrapperCursoPensum {
+public class WrapperCursoPensum implements Serializable{
 
     @Min(value = 1, message = "{validacion.seleccion}")
     private short idCurso;

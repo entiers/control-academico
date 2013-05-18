@@ -8,6 +8,7 @@ package gt.edu.usac.cats.dominio.busqueda;
 
 import gt.edu.usac.cats.dominio.CalendarioActividades;
 import gt.edu.usac.cats.dominio.Semestre;
+import java.io.Serializable;
 
 /**
  * <p>Contiene los atributos de busqueda para Calendario de Actividades.  Se utiliza
@@ -20,7 +21,7 @@ import gt.edu.usac.cats.dominio.Semestre;
  * @author Mario Batres
  * @version 1.0
  */
-public class DatosBusquedaCalendarioActividades{
+public class DatosBusquedaCalendarioActividades implements Serializable{
 //______________________________________________________________________________
     private Semestre semestre;
 //______________________________________________________________________________

@@ -9,18 +9,24 @@ package gt.edu.usac.cats.dominio.wrapper;
 
 import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
 import gt.edu.usac.cats.enums.TipoHorario;
+import java.io.Serializable;
 
 /**
  *
  * @author Carlos Solorzano
  * @version 1.0
  */
-public class WrapperAsignacionCursosExtemporaneas {
+public class WrapperAsignacionCursosExtemporaneas implements Serializable{
 //______________________________________________________________________________
     private TipoHorario tipoHorario;
 //______________________________________________________________________________
     private AsignacionEstudianteCarrera asignacionEstudianteCarrera;
 //______________________________________________________________________________
+
+    public WrapperAsignacionCursosExtemporaneas() {
+        this.asignacionEstudianteCarrera = new AsignacionEstudianteCarrera();
+    }
+    
     public AsignacionEstudianteCarrera getAsignacionEstudianteCarrera() {
         return asignacionEstudianteCarrera;
     }

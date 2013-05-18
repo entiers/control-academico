@@ -47,6 +47,7 @@ public class BoletaBanco  implements java.io.Serializable {
     private Double monto;
 
     public BoletaBanco() {
+        this.idBoletaBanco = 0;
     }
 
     public BoletaBanco(int idBoletaBanco, Semestre semestre, Estudiante estudiante, AsignacionCursoPensum asignacionCursoPensum, int ordenPago, int numeroBoleta, 

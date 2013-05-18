@@ -6,6 +6,7 @@
 
 package gt.edu.usac.cats.dominio.busqueda;
 
+import java.io.Serializable;
 import java.util.Date;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -19,7 +20,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author Carlos Solórzano
  * @version 1.0
  */
-public class DatosRptAsignacionPrimerIngreso {
+public class DatosRptAsignacionPrimerIngreso implements Serializable{
 
     @Pattern(regexp = "[A-Za-z0-9]*(._-)*", message = "{validacion.nombreUsuarioInvalido}")
     @Size (max=256)

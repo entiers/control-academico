@@ -45,7 +45,9 @@ public class CuentaCorriente implements java.io.Serializable {
     private Estudiante estudiante;
     private int idCuentaCorriente;
 
-    public CuentaCorriente() {}
+    public CuentaCorriente() {
+        this.idCuentaCorriente = 0;
+    }
 
     
     @Id

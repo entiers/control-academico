@@ -9,6 +9,7 @@ package gt.edu.usac.cats.dominio.wrapper;
 import gt.edu.usac.cats.dominio.HistorialAsignacionEstudianteCarrera;
 import gt.edu.usac.cats.dominio.Semestre;
 import gt.edu.usac.cats.dominio.Situacion;
+import java.io.Serializable;
 import java.util.Date;
 import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -21,7 +22,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author Mario Batres
  * @version 1.0
  */
-public class WrapperHistorialAsignacionEstudianteCarrera {
+public class WrapperHistorialAsignacionEstudianteCarrera implements Serializable {
 //______________________________________________________________________________
     @NotNull(message = "{validacion.campoObligatorio}")
     @DateTimeFormat(pattern = "dd-MM-yyyy")
@@ -35,6 +36,8 @@ public class WrapperHistorialAsignacionEstudianteCarrera {
 
     public WrapperHistorialAsignacionEstudianteCarrera() {
         this.fechaInscripcion = new Date();
+        this.semestre = new Semestre();
+        this.situacion = new Situacion();
     }
 
     /**

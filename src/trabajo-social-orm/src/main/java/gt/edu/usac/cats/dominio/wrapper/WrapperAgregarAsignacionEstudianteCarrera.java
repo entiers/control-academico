@@ -10,6 +10,7 @@ package gt.edu.usac.cats.dominio.wrapper;
 import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
 import gt.edu.usac.cats.dominio.Carrera;
 import gt.edu.usac.cats.dominio.HistorialAsignacionEstudianteCarrera;
+import java.io.Serializable;
 import javax.validation.Valid;
 
 /**
@@ -19,7 +20,7 @@ import javax.validation.Valid;
  * @author Mario Batres
  * @version 1.0
  */
-public class WrapperAgregarAsignacionEstudianteCarrera {
+public class WrapperAgregarAsignacionEstudianteCarrera implements Serializable{
 
 //______________________________________________________________________________
     private Carrera carrera;
@@ -35,6 +36,7 @@ public class WrapperAgregarAsignacionEstudianteCarrera {
     public WrapperAgregarAsignacionEstudianteCarrera() {
         wrapperHistorialAsignacionEstudianteCarrera = new  WrapperHistorialAsignacionEstudianteCarrera();
         this.inscrito = false;
+        this.carrera = new Carrera();
     }
 
 //______________________________________________________________________________

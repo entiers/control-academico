@@ -7,6 +7,7 @@
 package gt.edu.usac.cats.dominio.busqueda;
 
 //import gt.edu.usac.trabajosocial.util.BotonesPaginacion;
+import java.io.Serializable;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -17,7 +18,7 @@ import javax.validation.constraints.Size;
  * @author Daniel Castillo
  * @version 1.0
  */
-public class DatosBusquedaCatedratico {
+public class DatosBusquedaCatedratico implements Serializable{
 
     @Pattern(regexp = "|[0-9]{9}", message = "{validacion.codigoCatedraticoInvalido}")
     private String codigoBusqueda;

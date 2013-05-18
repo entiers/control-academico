@@ -7,6 +7,7 @@ package gt.edu.usac.cats.dominio.wrapper;
 
 import gt.edu.usac.cats.dominio.Persona;
 import gt.edu.usac.cats.dominio.Usuario;
+import java.io.Serializable;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
@@ -21,7 +22,7 @@ import org.hibernate.validator.constraints.NotEmpty;
  * @author Mario Batres
  * @version 1.0
  */
-public class WrapperPersona {
+public class WrapperPersona implements Serializable{
     @NotEmpty(message="{validacion.campoObligatorio}")
     @Size(max = 100, message = "{validacion.caracteresMaximos}")
      private String nombre;

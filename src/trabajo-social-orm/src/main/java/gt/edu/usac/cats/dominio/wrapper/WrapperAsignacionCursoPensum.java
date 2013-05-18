@@ -7,6 +7,7 @@ package gt.edu.usac.cats.dominio.wrapper;
 import gt.edu.usac.cats.dominio.AsignacionCursoPensum;
 import gt.edu.usac.cats.dominio.Curso;
 import gt.edu.usac.cats.dominio.Pensum;
+import java.io.Serializable;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 
@@ -17,7 +18,7 @@ import javax.validation.constraints.Min;
  * @author Mario Batres
  * @version 1.0
  */
-public class WrapperAsignacionCursoPensum {
+public class WrapperAsignacionCursoPensum implements Serializable{
 
     private Curso curso;
     private Pensum pensum;
@@ -49,7 +50,9 @@ public class WrapperAsignacionCursoPensum {
         this.creditosTeoricos = (short) 0;
         this.zona = (short) 0;
         this.laboratorio = (short) 0;
-        this.examenFinal = (short) 0;        
+        this.examenFinal = (short) 0;     
+        this.curso = new Curso();
+        this.pensum = new Pensum();
     }
 //______________________________________________________________________________
 

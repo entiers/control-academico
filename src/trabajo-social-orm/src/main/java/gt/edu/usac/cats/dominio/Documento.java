@@ -42,7 +42,9 @@ public class Documento implements java.io.Serializable {
     private short idDocumento;
     private String nombre;
 
-    public Documento() {}
+    public Documento() {
+        this.idDocumento = 0;
+    }
 
     public Documento(short idDocumento, String nombre) {
         this.idDocumento = idDocumento;

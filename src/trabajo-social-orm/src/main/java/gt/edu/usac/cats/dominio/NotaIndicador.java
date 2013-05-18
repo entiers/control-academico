@@ -35,6 +35,7 @@ public class NotaIndicador implements java.io.Serializable {
     private short nota;
     
     public NotaIndicador() {
+        this.idNotaIndicador = 0;
     }
     
     public NotaIndicador(int idNotaIndicador, Indicador indicador, DetalleAsignacion detalleAsignacion,

@@ -47,7 +47,9 @@ public class Indicador implements java.io.Serializable {
     private String nombre;
     private AreaEstudio areaEstudio;
 
-    public Indicador() {}
+    public Indicador() {
+        this.idIndicador = 0;
+    }
 
     public Indicador(short idIndicador, short codigo, String nombre) {
         this.idIndicador = idIndicador;

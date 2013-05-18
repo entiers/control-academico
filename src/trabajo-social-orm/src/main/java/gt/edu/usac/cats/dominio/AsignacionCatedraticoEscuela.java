@@ -42,11 +42,13 @@ public class AsignacionCatedraticoEscuela implements java.io.Serializable {
     private Escuela escuela;
     private Date fechaFin;
     private Date fechaInicio;
-    private short idAsignacionCatedraticoEscuela;
+    private Short idAsignacionCatedraticoEscuela;
 
-    public AsignacionCatedraticoEscuela() {}
+    public AsignacionCatedraticoEscuela() {
+        this.idAsignacionCatedraticoEscuela = 0;
+    }
 
-    public AsignacionCatedraticoEscuela(short idAsignacionCatedraticoEscuela, Escuela escuela, Catedratico catedratico,
+    public AsignacionCatedraticoEscuela(Short idAsignacionCatedraticoEscuela, Escuela escuela, Catedratico catedratico,
             Date fechaInicio) {
         this.idAsignacionCatedraticoEscuela = idAsignacionCatedraticoEscuela;
         this.escuela = escuela;

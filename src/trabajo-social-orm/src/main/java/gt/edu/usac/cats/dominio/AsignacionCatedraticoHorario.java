@@ -38,7 +38,9 @@ public class AsignacionCatedraticoHorario implements java.io.Serializable {
     private Horario horario;
     private int idAsignacionCatedraticoHorario;
 
-    public AsignacionCatedraticoHorario() {}
+    public AsignacionCatedraticoHorario() {
+        this.idAsignacionCatedraticoHorario = 0;
+    }
 
     public AsignacionCatedraticoHorario(int idAsignacionCatedraticoHorario, Horario horario, Catedratico catedratico) {
         this.idAsignacionCatedraticoHorario = idAsignacionCatedraticoHorario;

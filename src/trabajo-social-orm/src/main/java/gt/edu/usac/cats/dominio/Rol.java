@@ -42,7 +42,9 @@ public class Rol implements java.io.Serializable {
     private short idRol;
     private String nombre;
 
-    public Rol() {}
+    public Rol() {
+        this.idRol = 0;
+    }
 
     public Rol(short idRol, String nombre) {
         this.idRol = idRol;

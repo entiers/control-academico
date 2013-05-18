@@ -7,6 +7,7 @@
 package gt.edu.usac.cats.dominio.busqueda;
 
 import gt.edu.usac.cats.enums.TipoAsignacion;
+import java.io.Serializable;
 import javax.validation.constraints.Min;
 
 /**
@@ -16,7 +17,7 @@ import javax.validation.constraints.Min;
  * @author Carlos Solórzano
  * @version 1.0
  */
-public class DatosBusquedaAsignacion {
+public class DatosBusquedaAsignacion implements Serializable {
 
     @Min(value=2000, message="{validacion.minimo}")
     private Integer anio;

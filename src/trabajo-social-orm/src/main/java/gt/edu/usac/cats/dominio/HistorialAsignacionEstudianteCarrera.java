@@ -40,7 +40,14 @@ public class HistorialAsignacionEstudianteCarrera implements java.io.Serializabl
      private Semestre semestre;
      private AsignacionEstudianteCarrera asignacionEstudianteCarrera;
      private Date fechaInscripcion;
+
+    public HistorialAsignacionEstudianteCarrera() {
     
+        this.idHistorialAsignacionEstudianteCarrera = 0;
+                
+    }
+    
+      
 //______________________________________________________________________________
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

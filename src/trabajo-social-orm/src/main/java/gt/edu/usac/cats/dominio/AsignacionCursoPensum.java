@@ -40,7 +40,7 @@ uniqueConstraints =
 @UniqueConstraint(columnNames = {"id_curso", "id_pensum"}, name = "asignacion_curso_pensum_uk"))
 public class AsignacionCursoPensum implements java.io.Serializable {
 
-    private short idAsignacionCursoPensum;
+    private Short idAsignacionCursoPensum;
     private Curso curso;
     private Pensum pensum;
     private boolean obligatorio;
@@ -61,16 +61,17 @@ public class AsignacionCursoPensum implements java.io.Serializable {
     private Set<BoletaBanco> boletaBancos = new HashSet<BoletaBanco>(0);
 
     public AsignacionCursoPensum() {
+        this.idAsignacionCursoPensum = 0;
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_asignacion_curso_pensum", unique = true, nullable = false)
-    public short getIdAsignacionCursoPensum() {
+    public Short getIdAsignacionCursoPensum() {
         return this.idAsignacionCursoPensum;
     }
 
-    public void setIdAsignacionCursoPensum(short idAsignacionCursoPensum) {
+    public void setIdAsignacionCursoPensum(Short idAsignacionCursoPensum) {
         this.idAsignacionCursoPensum = idAsignacionCursoPensum;
     }
 
