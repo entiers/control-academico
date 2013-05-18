@@ -45,7 +45,9 @@ public class Log implements java.io.Serializable {
     private String prioridad;
     private Usuario usuario;
 
-    public Log() {}
+    public Log() {
+        this.idLog = 0;
+    }
 
     public Log(int idLog, Usuario usuario, Date fecha) {
         this.idLog = idLog;

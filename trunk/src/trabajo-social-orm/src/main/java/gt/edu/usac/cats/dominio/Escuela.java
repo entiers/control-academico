@@ -49,7 +49,9 @@ public class Escuela implements java.io.Serializable {
     private short idEscuela;
     private String nombre;
 
-    public Escuela() {}
+    public Escuela() {
+        this.idEscuela = 0;
+    }
 
     public Escuela(short idEscuela, String codigo, String nombre) {
         this.idEscuela = idEscuela;

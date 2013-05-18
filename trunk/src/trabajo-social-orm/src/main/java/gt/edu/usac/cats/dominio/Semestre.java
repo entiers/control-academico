@@ -42,7 +42,7 @@ import javax.persistence.UniqueConstraint;
     }
 )
 public class Semestre implements java.io.Serializable {
-     private short idSemestre;
+     private Short idSemestre;
      private short anio;
      private char numero;
      private String observacion;
@@ -51,7 +51,9 @@ public class Semestre implements java.io.Serializable {
      private Set<HistorialAsignacionEstudianteCarrera> historialAsignacionEstudianteCarreras = new HashSet<HistorialAsignacionEstudianteCarrera>(0);
      private Set<Horario> horarios = new HashSet<Horario>(0);
 
-    public Semestre() {}
+    public Semestre() {
+        this.idSemestre = 0;
+    }
 
     public Semestre(short anio, char numero) {        
         this.anio = anio;
@@ -65,11 +67,11 @@ public class Semestre implements java.io.Serializable {
         unique = true,
         nullable = false
     )
-    public short getIdSemestre() {
+    public Short getIdSemestre() {
         return this.idSemestre;
     }
 
-    public void setIdSemestre(short idSemestre) {
+    public void setIdSemestre(Short idSemestre) {
         this.idSemestre = idSemestre;
     }
 

@@ -6,6 +6,7 @@ package gt.edu.usac.cats.dominio.wrapper;
 
 import gt.edu.usac.cats.dominio.AsignacionEquivalencia;
 import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
+import java.io.Serializable;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -14,7 +15,7 @@ import org.hibernate.validator.constraints.NotEmpty;
  * @author Mario Batres
  * @version 1.0
  */
-public class WrapperAsignacionEquivalencia {
+public class WrapperAsignacionEquivalencia implements Serializable{
 
 //______________________________________________________________________________
     @NotEmpty(message = "{validacion.campoObligatorio}")
@@ -31,6 +32,7 @@ public class WrapperAsignacionEquivalencia {
     public WrapperAsignacionEquivalencia() {
         this.acuerdoNumero = "";
         this.observaciones = "";
+        this.asignacionEstudianteCarrera = new AsignacionEstudianteCarrera();
     }
 
     public WrapperAsignacionEquivalencia(AsignacionEstudianteCarrera asignacionEstudianteCarrera) {

@@ -11,6 +11,7 @@ import gt.edu.usac.cats.dominio.Horario;
 import gt.edu.usac.cats.dominio.Salon;
 import gt.edu.usac.cats.dominio.Semestre;
 import gt.edu.usac.cats.enums.TipoHorario;
+import java.io.Serializable;
 import java.util.Date;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -24,7 +25,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author Mario Batres
  * @version 1.0
  */
-public class WrapperHorario {
+public class WrapperHorario implements Serializable{
     
 //______________________________________________________________________________
     private boolean habilitado;
@@ -58,7 +59,10 @@ public class WrapperHorario {
     public WrapperHorario() {        
         this.habilitado = true;
         this.horaFin = new Date();
-        this.horaInicio = new Date();        
+        this.horaInicio = new Date();     
+        this.semestre = new Semestre();
+        this.salon = new Salon();
+        this.asignacionCursoPensum = new AsignacionCursoPensum();
     }
 
 //______________________________________________________________________________

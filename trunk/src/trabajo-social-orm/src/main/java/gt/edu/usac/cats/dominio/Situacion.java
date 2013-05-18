@@ -43,7 +43,9 @@ public class Situacion implements java.io.Serializable {
     private Set<HistorialAsignacionEstudianteCarrera> historialAsignacionEstudianteCarreras = new HashSet<HistorialAsignacionEstudianteCarrera>(0);
 
 
-    public Situacion(){}
+    public Situacion(){
+        this.idSituacion = 0;
+    }
 //______________________________________________________________________________
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

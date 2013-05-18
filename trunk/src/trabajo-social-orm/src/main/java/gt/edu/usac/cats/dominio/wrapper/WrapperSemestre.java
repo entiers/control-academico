@@ -7,6 +7,7 @@
 package gt.edu.usac.cats.dominio.wrapper;
 
 import gt.edu.usac.cats.dominio.Semestre;
+import java.io.Serializable;
 import java.util.Calendar;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
@@ -18,7 +19,7 @@ import javax.validation.constraints.Size;
  * @author Mario Batres
  * @version 1.0
  */
-public class WrapperSemestre {
+public class WrapperSemestre implements Serializable{
 //______________________________________________________________________________
     private static Calendar calendar;
 

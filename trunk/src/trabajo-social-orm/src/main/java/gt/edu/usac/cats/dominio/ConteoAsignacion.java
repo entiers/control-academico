@@ -39,7 +39,9 @@ public class ConteoAsignacion implements java.io.Serializable {
     private Estudiante estudiante;
     private int idConteoAsignacion;
 
-    public ConteoAsignacion() {}
+    public ConteoAsignacion() {
+        this.idConteoAsignacion = 0;
+    }
 
     public ConteoAsignacion(int idConteoAsignacion, Estudiante estudiante, Curso curso, short cantidadAsignaciones) {
         this.idConteoAsignacion = idConteoAsignacion;

@@ -8,6 +8,7 @@ package gt.edu.usac.cats.dominio.wrapper;
 //import gt.edu.usac.trabajosocial.anotacion.CodigoPensumValidador;
 import gt.edu.usac.cats.dominio.Carrera;
 import gt.edu.usac.cats.dominio.Pensum;
+import java.io.Serializable;
 import java.util.Date;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -18,7 +19,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author Daniel Castillo
  * @version 1.0
  */
-public class WrapperPensum {
+public class WrapperPensum implements Serializable{
 
     @NotEmpty(message = "{validacion.campoObligatorio}")
     @Size(max = 15, message = "{validacion.caracteresMaximos}")
@@ -40,6 +41,8 @@ public class WrapperPensum {
         this.fechaFin = new Date();
         this.fechaInicio = this.fechaFin;
         this.estado = (short) 0;
+        this.carrera = new Carrera();
+        this.carrera.setIdCarrera(new Short("0"));
     }
 //______________________________________________________________________________
 

@@ -26,6 +26,7 @@ public class AsignacionEquivalencia implements java.io.Serializable {
     private Set<Asignacion> asignacions = new HashSet<Asignacion>(0);
 
     public AsignacionEquivalencia() {
+        this.idAsignacionEquivalencia = 0;
     }
 
     public AsignacionEquivalencia(int idAsignacionEquivalencia, String acuerdoNumero) {

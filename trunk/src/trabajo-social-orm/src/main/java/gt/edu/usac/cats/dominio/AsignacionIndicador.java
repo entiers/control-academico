@@ -44,6 +44,7 @@ public class AsignacionIndicador implements java.io.Serializable {
         this.idAsignacionIndicador = idAsignacionIndicador;
         this.indicador = indicador;
         this.programaCurso = programaCurso;
+        this.idAsignacionIndicador = 0;
     }
 
     @Id

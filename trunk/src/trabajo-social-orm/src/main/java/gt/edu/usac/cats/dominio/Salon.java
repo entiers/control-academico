@@ -41,19 +41,21 @@ public class Salon implements java.io.Serializable {
     private Set<Horario> horarios = new HashSet<Horario>(0);
     private short capacidad;
     private String edificio;
-    private short idSalon;
+    private Short idSalon;
     private short numero;
 
-    public Salon() {}
+    public Salon() {
+        this.idSalon = 0;
+    }
 
-    public Salon(short idSalon, short numero, String edificio, short capacidad) {
+    public Salon(Short idSalon, short numero, String edificio, short capacidad) {
         this.idSalon = idSalon;
         this.numero = numero;
         this.edificio = edificio;
         this.capacidad = capacidad;
     }
 
-    public Salon(short idSalon, short numero, String edificio, short capacidad, Set<Horario> horarios) {
+    public Salon(Short idSalon, short numero, String edificio, short capacidad, Set<Horario> horarios) {
         this.idSalon = idSalon;
         this.numero = numero;
         this.edificio = edificio;
@@ -68,7 +70,7 @@ public class Salon implements java.io.Serializable {
         unique = true,
         nullable = false
     )
-    public short getIdSalon() {
+    public Short getIdSalon() {
         return this.idSalon;
     }
 

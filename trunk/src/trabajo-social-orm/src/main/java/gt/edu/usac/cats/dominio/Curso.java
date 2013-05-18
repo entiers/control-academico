@@ -46,7 +46,10 @@ public class Curso implements java.io.Serializable {
      private Set<AsignacionCursoPensum> asignacionCursoPensums = new HashSet<AsignacionCursoPensum>(0);     
      private Set<ConteoAsignacion> conteoAsignacions = new HashSet<ConteoAsignacion>(0);
 
-
+    public Curso() {
+        this.idCurso = 0;
+    }
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id_curso", unique=true, nullable=false)

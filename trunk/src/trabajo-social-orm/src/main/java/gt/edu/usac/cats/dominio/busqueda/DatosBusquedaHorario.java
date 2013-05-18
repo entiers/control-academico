@@ -8,6 +8,7 @@ package gt.edu.usac.cats.dominio.busqueda;
 import gt.edu.usac.cats.dominio.AsignacionCursoPensum;
 import gt.edu.usac.cats.dominio.Salon;
 import gt.edu.usac.cats.dominio.Semestre;
+import java.io.Serializable;
 
 /**
  * <p>Contiene los atributos de busqueda de horarios. Se utiliza en la pagina
@@ -19,7 +20,7 @@ import gt.edu.usac.cats.dominio.Semestre;
  * @author Mario Batres
  * @version 1.0
  */
-public class DatosBusquedaHorario {
+public class DatosBusquedaHorario implements Serializable{
 //______________________________________________________________________________
     private Salon salon;
 //______________________________________________________________________________

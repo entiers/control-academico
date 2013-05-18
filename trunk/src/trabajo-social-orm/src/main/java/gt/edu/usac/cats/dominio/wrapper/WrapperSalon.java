@@ -7,6 +7,7 @@
 package gt.edu.usac.cats.dominio.wrapper;
 
 import gt.edu.usac.cats.dominio.Salon;
+import java.io.Serializable;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
@@ -20,7 +21,7 @@ import org.hibernate.validator.constraints.NotEmpty;
  * @author Mario Batres
  * @version 1.0
  */
-public class WrapperSalon {
+public class WrapperSalon implements Serializable{
 //______________________________________________________________________________
     @Max(value = 50, message="{validacion.maximo}")
     @Min(value = 1, message="{validacion.minimo}")

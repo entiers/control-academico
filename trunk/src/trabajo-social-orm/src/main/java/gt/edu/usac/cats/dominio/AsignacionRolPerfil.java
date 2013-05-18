@@ -38,7 +38,9 @@ public class AsignacionRolPerfil implements java.io.Serializable {
     private Perfil perfil;
     private Rol rol;
 
-    public AsignacionRolPerfil() {}
+    public AsignacionRolPerfil() {
+        this.idAsignacionRolPerfil = 0;
+    }
 
     public AsignacionRolPerfil(int idAsignacionRolPerfil, Rol rol, Perfil perfil) {
         this.idAsignacionRolPerfil = idAsignacionRolPerfil;

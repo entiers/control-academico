@@ -49,11 +49,13 @@ public class Carrera implements java.io.Serializable {
     private String codigo;
     private String descripcion;
     private Escuela escuela;
-    private short idCarrera;
+    private Short idCarrera;
     private String nombre;
     private short nivel;
 
-    public Carrera() {}
+    public Carrera() {
+        this.idCarrera = 0;
+    }
 
     public Carrera(Escuela escuela, String codigo, String nombre) {        
         this.escuela = escuela;
@@ -68,11 +70,11 @@ public class Carrera implements java.io.Serializable {
         unique = true,
         nullable = false
     )
-    public short getIdCarrera() {
+    public Short getIdCarrera() {
         return this.idCarrera;
     }
 
-    public void setIdCarrera(short idCarrera) {
+    public void setIdCarrera(Short idCarrera) {
         this.idCarrera = idCarrera;
     }
 

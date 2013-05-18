@@ -32,6 +32,7 @@ public class Nacionalidad  implements java.io.Serializable {
      private Set<Estudiante> estudiantes = new HashSet<Estudiante>(0);
 
     public Nacionalidad() {
+        this.idNacionalidad = 0;
     }
 
 

@@ -8,6 +8,7 @@ package gt.edu.usac.cats.dominio.wrapper;
 import gt.edu.usac.cats.dominio.CalendarioActividades;
 import gt.edu.usac.cats.dominio.Semestre;
 import gt.edu.usac.cats.enums.TipoActividad;
+import java.io.Serializable;
 import java.util.Date;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -22,7 +23,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author Mario Batres
  * @version 1.0
  */
-public class WrapperCalendarioActividades {
+public class WrapperCalendarioActividades implements Serializable{
 //______________________________________________________________________________
     @NotEmpty(message = "{validacion.campoObligatorio}")
     private String actividad;
@@ -49,6 +50,7 @@ public class WrapperCalendarioActividades {
         this.actividad = "";
         this.fechaFin = new Date();
         this.fechaInicio = new Date();
+        this.semestre = new Semestre();
     }
 //______________________________________________________________________________
     /**

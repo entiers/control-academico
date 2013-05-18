@@ -40,7 +40,7 @@ import org.hibernate.annotations.Type;
 @UniqueConstraint(columnNames = "id_asignacion_equivalencia"))
 public class Asignacion implements java.io.Serializable {
 
-    private int idAsignacion;
+    private Integer idAsignacion;
     private AsignacionEquivalencia asignacionEquivalencia;
     private AsignacionEstudianteCarrera asignacionEstudianteCarrera;
     private AsignacionPrimerIngreso asignacionPrimerIngreso;
@@ -51,6 +51,7 @@ public class Asignacion implements java.io.Serializable {
     private Set<CursoAprobado> cursoAprobados = new HashSet<CursoAprobado>(0);
 
     public Asignacion() {
+        this.idAsignacion = 0;
         this.fecha = new Date();
     }
 
@@ -59,11 +60,11 @@ public class Asignacion implements java.io.Serializable {
     @Column(name = "id_asignacion",
     unique = true,
     nullable = false)
-    public int getIdAsignacion() {
+    public Integer getIdAsignacion() {
         return this.idAsignacion;
     }
 
-    public void setIdAsignacion(int idAsignacion) {
+    public void setIdAsignacion(Integer idAsignacion) {
         this.idAsignacion = idAsignacion;
     }
 

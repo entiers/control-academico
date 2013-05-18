@@ -32,6 +32,7 @@ public class LugarNacimiento  implements java.io.Serializable {
      private Set<Estudiante> estudiantes = new HashSet<Estudiante>(0);
 
     public LugarNacimiento() {
+        this.idLugarNacimiento = 0;
     }
 
 

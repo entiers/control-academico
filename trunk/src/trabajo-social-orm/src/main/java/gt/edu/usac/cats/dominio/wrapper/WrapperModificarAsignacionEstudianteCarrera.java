@@ -7,6 +7,7 @@
 package gt.edu.usac.cats.dominio.wrapper;
 
 import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
+import java.io.Serializable;
 import java.util.Date;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -17,7 +18,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author Mario Batres
  * @version 1.0
  */
-public class WrapperModificarAsignacionEstudianteCarrera {
+public class WrapperModificarAsignacionEstudianteCarrera implements Serializable{
 //______________________________________________________________________________
     private Integer idAsignacionEstudianteCarrera;
 //______________________________________________________________________________    
@@ -33,6 +34,7 @@ public class WrapperModificarAsignacionEstudianteCarrera {
     public WrapperModificarAsignacionEstudianteCarrera() {
         this.fechaCierre = new Date();
         this.inscrito = true;
+        this.idAsignacionEstudianteCarrera = 0;
     }
 //______________________________________________________________________________
     /**

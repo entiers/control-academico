@@ -49,6 +49,7 @@ public class CursoAprobado implements java.io.Serializable {
 
     public CursoAprobado() {
         this.ingresoManual = false;
+        this.idCursoAprobado = 0;
     }
 
     @Id

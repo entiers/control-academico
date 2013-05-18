@@ -5,6 +5,7 @@
 
 package gt.edu.usac.cats.dominio.busqueda;
 
+import java.io.Serializable;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -17,7 +18,7 @@ import org.hibernate.validator.constraints.NotEmpty;
  * @author Mario Batres
  * @version 1.0
  */
-public class DatosBusquedaCurso {
+public class DatosBusquedaCurso implements Serializable{
 
     @NotEmpty(message = "{validacion.campoObligatorio}")
     @Size(max = 15, message = "{validacion.caracteresMaximos}")

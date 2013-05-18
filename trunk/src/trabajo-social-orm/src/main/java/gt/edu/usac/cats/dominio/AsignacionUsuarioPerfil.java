@@ -42,7 +42,9 @@ public class AsignacionUsuarioPerfil implements java.io.Serializable {
     private Usuario usuario;
     private Perfil perfil;    
 
-    public AsignacionUsuarioPerfil() {}
+    public AsignacionUsuarioPerfil() {
+        this.idAsignacionUsuarioPerfil = 0;
+    }
 
     public AsignacionUsuarioPerfil(Usuario usuario, Perfil perfil) {        
         this.usuario = usuario;

@@ -48,7 +48,9 @@ public class ProgramaCurso implements java.io.Serializable {
     private Date fechaAprobacion;
     private short idProgramaCurso;
 
-    public ProgramaCurso() {}
+    public ProgramaCurso() {
+        this.idProgramaCurso = 0;
+    }
 
     public ProgramaCurso(short idProgramaCurso, Curso curso, Date fechaAprobacion) {
         this.idProgramaCurso = idProgramaCurso;

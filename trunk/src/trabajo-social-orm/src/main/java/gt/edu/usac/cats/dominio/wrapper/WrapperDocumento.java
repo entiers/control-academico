@@ -7,6 +7,7 @@
 package gt.edu.usac.cats.dominio.wrapper;
 
 import gt.edu.usac.cats.dominio.Documento;
+import java.io.Serializable;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -18,7 +19,7 @@ import org.hibernate.validator.constraints.NotEmpty;
  * @author Carlos Solorzano
  * @version 1.0
  */
-public class WrapperDocumento {
+public class WrapperDocumento implements Serializable{
 //______________________________________________________________________________
     @NotEmpty(message = "{validacion.campoObligatorio}")
     @Size(max = 150, message = "{validacion.caracteresMaximos}")

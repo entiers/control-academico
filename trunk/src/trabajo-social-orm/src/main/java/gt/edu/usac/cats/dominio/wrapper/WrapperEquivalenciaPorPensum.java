@@ -8,18 +8,23 @@ package gt.edu.usac.cats.dominio.wrapper;
 
 import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
 import gt.edu.usac.cats.dominio.Pensum;
+import java.io.Serializable;
 
 /**
  *
  * @author Mario Batres
  * @version 1.0
  */
-public class WrapperEquivalenciaPorPensum {
+public class WrapperEquivalenciaPorPensum implements Serializable{
     private AsignacionEstudianteCarrera asignacionEstudianteCarrera;
     private Pensum pensumOriginal;
     private Pensum pensumEquivalencia;
 
-    public WrapperEquivalenciaPorPensum() {}
+    public WrapperEquivalenciaPorPensum() {
+        this.asignacionEstudianteCarrera = new AsignacionEstudianteCarrera();
+        this.pensumEquivalencia = new Pensum();
+        this.pensumOriginal = new Pensum();
+    }
 
 
     public WrapperEquivalenciaPorPensum(AsignacionEstudianteCarrera asignacionEstudianteCarrera,

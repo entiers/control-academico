@@ -34,6 +34,7 @@ public class PensumEstudianteCarrera implements java.io.Serializable {
     private Date fechaFin;
 
     public PensumEstudianteCarrera() {
+        this.idPensumEstudianteCarrera = 0;
     }
 
     @Id

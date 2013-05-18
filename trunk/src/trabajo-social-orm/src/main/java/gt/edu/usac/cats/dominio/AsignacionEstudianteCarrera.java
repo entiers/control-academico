@@ -54,6 +54,7 @@ public class AsignacionEstudianteCarrera implements java.io.Serializable {
 
     public AsignacionEstudianteCarrera() {
         this.estado = true;
+        this.idAsignacionEstudianteCarrera = 0;
     }
 //______________________________________________________________________________
 

@@ -5,18 +5,22 @@
 package gt.edu.usac.cats.dominio.wrapper;
 
 import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
+import java.io.Serializable;
 
 /**
  *
  * @author Mario Batres
  * @version 1.0
  */
-public class WrapperEquivalenciaPorCarrera {
+public class WrapperEquivalenciaPorCarrera implements Serializable{
     
     private AsignacionEstudianteCarrera asignacionEstudianteCarreraOriginal;
     private AsignacionEstudianteCarrera asignacionEstudianteCarreraEquivalencia;
 
-    public WrapperEquivalenciaPorCarrera() {}
+    public WrapperEquivalenciaPorCarrera() {
+        this.asignacionEstudianteCarreraEquivalencia = new AsignacionEstudianteCarrera();
+        this.asignacionEstudianteCarreraOriginal = new AsignacionEstudianteCarrera();
+    }
 
     /**
      * @return the asignacionEstudianteCarreraOriginal

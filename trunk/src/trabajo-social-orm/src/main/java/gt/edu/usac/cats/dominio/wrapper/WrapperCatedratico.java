@@ -8,6 +8,7 @@ package gt.edu.usac.cats.dominio.wrapper;
 
 //import gt.edu.usac.trabajosocial.anotacion.CodigoCatedraticoValidador;
 import gt.edu.usac.cats.dominio.Catedratico;
+import java.io.Serializable;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -19,7 +20,7 @@ import org.hibernate.validator.constraints.NotEmpty;
  * @author Daniel Castillo
  * @version 1.0
  */
-public class WrapperCatedratico {
+public class WrapperCatedratico implements Serializable{
 
     @NotEmpty(message = "{validacion.campoObligatorio}")
     @Pattern(regexp = "|[0-9]{9}", message = "{validacion.codigoCatedraticoInvalido}")

@@ -37,6 +37,7 @@ public class Persona  implements java.io.Serializable {
      private boolean habilitado;
 
     public Persona() {
+        this.idPersona = 0;
     }
 
 

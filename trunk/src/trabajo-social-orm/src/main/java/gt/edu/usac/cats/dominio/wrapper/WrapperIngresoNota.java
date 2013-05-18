@@ -6,6 +6,8 @@
 
 package gt.edu.usac.cats.dominio.wrapper;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,7 +15,7 @@ import java.util.List;
  * @author Carlos Solorzano
  * @version 1.0
  */
-public class WrapperIngresoNota {
+public class WrapperIngresoNota implements Serializable {
 //______________________________________________________________________________
     private List listZona;
 //______________________________________________________________________________
@@ -25,6 +27,9 @@ public class WrapperIngresoNota {
 //______________________________________________________________________________
     public WrapperIngresoNota() {
         oficializar = false;
+        this.listFinal = new ArrayList();
+        this.listLaboratorio = new ArrayList();
+        this.listZona = new ArrayList();
     }
     
 //______________________________________________________________________________

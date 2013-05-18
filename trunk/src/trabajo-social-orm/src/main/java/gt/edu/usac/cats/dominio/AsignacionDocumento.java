@@ -38,7 +38,9 @@ public class AsignacionDocumento implements java.io.Serializable {
     private Estudiante estudiante;
     private short idAsignacionDocumento;
 
-    public AsignacionDocumento() {}
+    public AsignacionDocumento() {
+        this.idAsignacionDocumento = 0;
+    }
 
     public AsignacionDocumento(short idAsignacionDocumento, Documento documento, Estudiante estudiante) {
         this.idAsignacionDocumento = idAsignacionDocumento;

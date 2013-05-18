@@ -39,10 +39,12 @@ import javax.persistence.Table;
 public class AreaEstudio implements java.io.Serializable {
     private Set<Indicador> indicadores = new HashSet<Indicador>(0);
     private String descripcion;
-    private short idAreaEstudio;
+    private Short idAreaEstudio;
     private String nombre;
 
-    public AreaEstudio() {}
+    public AreaEstudio() {
+        this.idAreaEstudio = 0;
+    }
 
     public AreaEstudio(short idAreaEstudio, String nombre) {
         this.idAreaEstudio = idAreaEstudio;
@@ -64,11 +66,11 @@ public class AreaEstudio implements java.io.Serializable {
         unique = true,
         nullable = false
     )
-    public short getIdAreaEstudio() {
+    public Short getIdAreaEstudio() {
         return this.idAreaEstudio;
     }
 
-    public void setIdAreaEstudio(short idAreaEstudio) {
+    public void setIdAreaEstudio(Short idAreaEstudio) {
         this.idAreaEstudio = idAreaEstudio;
     }
 

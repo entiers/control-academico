@@ -56,7 +56,9 @@ public class Catedratico implements java.io.Serializable {
     private Usuario usuario;
     private String password;
 //______________________________________________________________________________
-    public Catedratico() {}
+    public Catedratico() {
+        this.idCatedratico = 0;
+    }
 //______________________________________________________________________________
     public Catedratico(short idCatedratico, Usuario usuario, String codigo, String nombre, String apellido,
                        String profesion) {
