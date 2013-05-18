@@ -36,11 +36,11 @@
     ········································································ -->
     <repositories>
         <!-- repositorio para jee6 -->
-        <repository>
+        <!--<repository>
             <id>java.net2</id>
             <name>Repositorio de jee6</name>
             <url>http://download.java.net/maven/2</url>
-        </repository>
+        </repository>-->
 
         <!--
         Repositorio general, este repositorio contiene una biblioteca de librerias
@@ -95,7 +95,7 @@
         </repository>-->
 
 
-         <repository>
+        <repository>
             <id>repo.enonic.com</id>
             <name>Repositorios para captcha 2</name>
             <url>http://repo.enonic.com/artifactory/public/</url>
@@ -196,7 +196,7 @@
             <version>1.5.5</version>
             <scope>compile</scope>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>asm</groupId>
             <artifactId>asm-attrs</artifactId>
             <version>1.5.3</version>
@@ -205,9 +205,9 @@
         <dependency>
             <groupId>asm</groupId>
             <artifactId>asm</artifactId>
-            <version>1.5.3</version>
+            <version>3.0</version>
             <scope>compile</scope>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-mapper-asl</artifactId>
@@ -275,75 +275,81 @@
             <version>4.0.2.GA</version>
             <scope>compile</scope>
         </dependency>
+        
+         <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+            <version>3.0</version>
+         </dependency>
 
         <!-- ········ dependencias necesarias para SPRING FRAMEWORK ········ -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-aop</artifactId>
-            <version>3.0.2.RELEASE</version>
+            <version>3.2.2.RELEASE</version>
             <scope>compile</scope>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-asm</artifactId>
-            <version>3.0.2.RELEASE</version>
-            <scope>compile</scope>
-        </dependency>
-
+        <!--     <dependency>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-asm</artifactId>
+                    <version>3.1.4.RELEASE</version>
+                    <scope>compile</scope>
+                </dependency>
+        -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-beans</artifactId>
-            <version>3.0.2.RELEASE</version>
+            <version>3.2.2.RELEASE</version>
             <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-            <version>3.0.2.RELEASE</version>
+            <version>3.2.2.RELEASE</version>
             <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
-            <version>3.0.2.RELEASE</version>
+            <version>3.2.2.RELEASE</version>
             <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
-            <version>3.0.2.RELEASE</version>
+            <version>3.2.2.RELEASE</version>
             <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-expression</artifactId>
-            <version>3.0.2.RELEASE</version>
+            <version>3.2.2.RELEASE</version>
             <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
-            <version>3.0.2.RELEASE</version>
+            <version>3.2.2.RELEASE</version>
             <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
-            <version>3.0.2.RELEASE</version>
+            <version>3.2.2.RELEASE</version>
             <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-tx</artifactId>
-            <version>3.0.2.RELEASE</version>
+            <version>3.2.2.RELEASE</version>
             <scope>compile</scope>
         </dependency>
 
@@ -351,14 +357,14 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
-            <version>3.0.2.RELEASE</version>
+            <version>3.2.2.RELEASE</version>
             <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
-            <version>3.0.2.RELEASE</version>
+            <version>3.2.2.RELEASE</version>
             <scope>compile</scope>
         </dependency>
 
@@ -420,35 +426,35 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-core</artifactId>
-            <version>3.0.2.RELEASE</version>
+            <version>3.1.3.RELEASE</version>
             <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
-            <version>3.0.2.RELEASE</version>
+            <version>3.1.3.RELEASE</version>
             <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
-            <version>3.0.2.RELEASE</version>
+            <version>3.1.3.RELEASE</version>
             <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-taglibs</artifactId>
-            <version>3.0.2.RELEASE</version>
+            <version>3.1.3.RELEASE</version>
             <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-acl</artifactId>
-            <version>3.0.2.RELEASE</version>
+            <version>3.1.3.RELEASE</version>
             <scope>compile</scope>
         </dependency>
 
@@ -476,7 +482,19 @@
             <scope>compile</scope>
         </dependency>
 
-        <!-- ············· dependencias necesarias para JUNIT ·············· -->
+        <!-- AspectJ -->
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjrt</artifactId>
+            <version>1.6.11</version>
+        </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>1.6.11</version>
+        </dependency>
+        
+        <!-- ······�······ dependencias necesarias para JUNIT ·············· -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -581,10 +599,10 @@
                         <version>2.0.2</version>
                         <configuration>
                             <!-- javaee6 contains upgrades of APIs contained within the JDK itself.
-                                 As such these need to be placed on the bootclasspath, rather than classpath of the
-                                 compiler.
-                                 If you don't make use of these new updated API, you can delete the profile.
-                                 On non-SUN jdk, you will need to create a similar profile for your jdk, with the similar property as sun.boot.class.path in Sun's JDK.-->
+                            As such these need to be placed on the bootclasspath, rather than classpath of the
+                            compiler.
+                            If you don't make use of these new updated API, you can delete the profile.
+                            On non-SUN jdk, you will need to create a similar profile for your jdk, with the similar property as sun.boot.class.path in Sun's JDK.-->
                             <compilerArguments>
                                 <bootclasspath>${settings.localRepository}/javax/javaee-endorsed-api/6.0/javaee-endorsed-api-6.0.jar${path.separator}${sun.boot.class.path}</bootclasspath>
                             </compilerArguments>

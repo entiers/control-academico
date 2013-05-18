@@ -15,6 +15,7 @@ import gt.edu.usac.cats.servicio.ServicioGeneral;
 import gt.edu.usac.cats.servicio.ServicioHorario;
 import gt.edu.usac.cats.util.Mensajes;
 import gt.edu.usac.cats.util.RequestUtil;
+import java.io.Serializable;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +28,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.context.WebApplicationContext;
 
 /**
  * Esta clase es el controlador que se encarga de la llamada al la solicitud del cambio
@@ -35,9 +38,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @author Carlos Solorzano
  * @version 1.0
  */
-@Controller("controladorCambioCierreSeccion")
-@Scope(value="session")
-public class ControladorCambioCierreSeccion {
+@Controller
+@Scope(value = WebApplicationContext.SCOPE_SESSION)
+@SessionAttributes(value={"horario"}) 
+public class ControladorCambioCierreSeccion implements Serializable {
 //______________________________________________________________________________
     private static Logger log = Logger.getLogger(ControladorCambioCierreSeccion.class);
 //_____________________________________________________________________________

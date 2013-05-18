@@ -7,11 +7,14 @@ package gt.edu.usac.cats.controlador.pensum;
 
 import gt.edu.usac.cats.dominio.Pensum;
 import gt.edu.usac.cats.enums.ControlReporte;
+import java.io.Serializable;
 import java.util.List;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.context.WebApplicationContext;
 
 /**
  * Esta clase se encarga de la busqueda de Pensums en la BD
@@ -22,7 +25,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 @RequestMapping(value = "buscarPensum.htm")
-public class ControladorBuscarPensum extends ControladorAbstractoPensum {
+@Scope(value = WebApplicationContext.SCOPE_SESSION)
+public class ControladorBuscarPensum extends ControladorAbstractoPensum implements Serializable{
     
 //______________________________________________________________________________
 

@@ -12,9 +12,11 @@ import gt.edu.usac.cats.dominio.wrapper.WrapperHistorialAsignacionEstudianteCarr
 import gt.edu.usac.cats.dominio.wrapper.WrapperModificarHistorialAsignacionEstudianteCarrera;
 import gt.edu.usac.cats.util.Mensajes;
 import gt.edu.usac.cats.util.RequestUtil;
+import java.io.Serializable;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
+import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
@@ -22,6 +24,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.context.WebApplicationContext;
 
 /**
  * <p>Este controlador lleva el manejo de las vistas <code>mostrarHistorialAsignacionEstudianteCarrera.htm</code>
@@ -37,8 +41,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @version 1.0
  */
 @Controller
+@Scope(value = WebApplicationContext.SCOPE_SESSION)
+@SessionAttributes(value={"asignacionEstudianteCarrera"})
 public class ControladorMostrarHistorialAsignacionEstudianteCarrera
-        extends ControladorAbstractoAsignacionEstudianteCarrera {
+        extends ControladorAbstractoAsignacionEstudianteCarrera implements Serializable {
+//______________________________________________________________________________
+  
+    /**
+     * Objeto de tipo {@link AsignacionEstudianteEstudiante} que ha sido seleccionado.
+     */
+    private AsignacionEstudianteCarrera asignacionEstudianteCarrera;
+    
 //______________________________________________________________________________
     /**
      * <p>Matiene una bitacora de lo realizado por esta clase.</p>
@@ -81,13 +94,11 @@ public class ControladorMostrarHistorialAsignacionEstudianteCarrera
             return "redirect:buscarEstudiante.htm";
         }
 
-        this.estudiante = asignacionEstudianteCarrera.getEstudiante();
-
         this.agregarAtributosDefaultHistorial(modelo,
                 null,
                 new WrapperHistorialAsignacionEstudianteCarrera(),
                 false,
-                new WrapperModificarHistorialAsignacionEstudianteCarrera(), false, true);
+                new WrapperModificarHistorialAsignacionEstudianteCarrera(), false, true, asignacionEstudianteCarrera);
 
         return "asignacionEstudianteCarrera/mostrarHistorialAsignacionEstudianteCarrera";
     }
@@ -134,17 +145,17 @@ public class ControladorMostrarHistorialAsignacionEstudianteCarrera
                 log.error(Mensajes.DATA_INTEGRITY_VIOLATION_EXCEPTION, e);
 
                 this.agregarAtributosDefaultHistorial(modelo, null, wrapperHistorialAsignacionEstudianteCarrera, true,
-                        new WrapperModificarHistorialAsignacionEstudianteCarrera(), false, false);
+                        new WrapperModificarHistorialAsignacionEstudianteCarrera(), false, false, this.asignacionEstudianteCarrera);
             } catch (DataAccessException e) {
                 RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE_AGREGAR, "dataAccessException", false);
                 log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
 
                 this.agregarAtributosDefaultHistorial(modelo, null, wrapperHistorialAsignacionEstudianteCarrera, true,
-                        new WrapperModificarHistorialAsignacionEstudianteCarrera(), false, false);
+                        new WrapperModificarHistorialAsignacionEstudianteCarrera(), false, false, this.asignacionEstudianteCarrera);
             }
         } else {
             this.agregarAtributosDefaultHistorial(modelo, null, wrapperHistorialAsignacionEstudianteCarrera, true,
-                    new WrapperModificarHistorialAsignacionEstudianteCarrera(), false, false);
+                    new WrapperModificarHistorialAsignacionEstudianteCarrera(), false, false, this.asignacionEstudianteCarrera);
         }
 
         return "asignacionEstudianteCarrera/mostrarHistorialAsignacionEstudianteCarrera";
@@ -195,17 +206,17 @@ public class ControladorMostrarHistorialAsignacionEstudianteCarrera
                 log.error(Mensajes.DATA_INTEGRITY_VIOLATION_EXCEPTION, e);
 
                 this.agregarAtributosDefaultHistorial(modelo, idHistorialAsignacionEstudianteCarrera, new WrapperHistorialAsignacionEstudianteCarrera(), false,
-                        wrapperModificarHistorialAsignacionEstudianteCarrera, true, false);
+                        wrapperModificarHistorialAsignacionEstudianteCarrera, true, false, this.asignacionEstudianteCarrera);
             } catch (DataAccessException e) {
                 RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE_MODIFICAR, "dataAccessException", false);
                 log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
 
                 this.agregarAtributosDefaultHistorial(modelo, idHistorialAsignacionEstudianteCarrera,
-                        new WrapperHistorialAsignacionEstudianteCarrera(), false, wrapperModificarHistorialAsignacionEstudianteCarrera, true, false);
+                        new WrapperHistorialAsignacionEstudianteCarrera(), false, wrapperModificarHistorialAsignacionEstudianteCarrera, true, false, this.asignacionEstudianteCarrera);
             }
         } else {
             this.agregarAtributosDefaultHistorial(modelo, idHistorialAsignacionEstudianteCarrera, new WrapperHistorialAsignacionEstudianteCarrera(),
-                    false, wrapperModificarHistorialAsignacionEstudianteCarrera, true, false);
+                    false, wrapperModificarHistorialAsignacionEstudianteCarrera, true, false, this.asignacionEstudianteCarrera);
         }
 
         return "asignacionEstudianteCarrera/mostrarHistorialAsignacionEstudianteCarrera";

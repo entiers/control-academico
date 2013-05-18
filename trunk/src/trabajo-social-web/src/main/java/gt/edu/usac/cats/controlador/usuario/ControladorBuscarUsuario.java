@@ -9,8 +9,9 @@ package gt.edu.usac.cats.controlador.usuario;
 import gt.edu.usac.cats.dominio.Usuario;
 import gt.edu.usac.cats.dominio.busqueda.DatosBusquedaUsuario;
 import gt.edu.usac.cats.servicio.ServicioUsuario;
-import gt.edu.usac.cats.util.RequestUtil;
 import gt.edu.usac.cats.util.Mensajes;
+import gt.edu.usac.cats.util.RequestUtil;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Resource;
@@ -18,11 +19,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.context.WebApplicationContext;
 
 /**
  * <p>Esta clase se encuentra registrada en Spring como un controlador. Este
@@ -53,7 +57,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @version 1.0
  */
 @Controller
-public class ControladorBuscarUsuario {
+@Scope(value = WebApplicationContext.SCOPE_SESSION)
+@SessionAttributes(value = {"listadoUsuarios", "datosBusquedaUsuario", "rowCount"})
+public class ControladorBuscarUsuario implements Serializable {
 /**
      * <p>Lleva el nombre del titulo para el mensaje en la pagina.</p>
      */
@@ -141,9 +147,9 @@ public class ControladorBuscarUsuario {
         this.datosBusquedaUsuario = datosBusquedaUsuario;
 
         // los parametros de busqueda no cumplen las reglas de validacion
-        if(bindingResult.hasErrors())
+        if(bindingResult.hasErrors()){
             return "usuario/buscarUsuario";
-
+        }
         this.datosBusquedaUsuario.inicializarPrimerRegistro();
         return this.realizarBusqueda(modelo, request, true);
     }
@@ -223,16 +229,17 @@ public class ControladorBuscarUsuario {
 
         try {
             // se trata de obtener el total de registros de la consulta
-            if(obtenerRowCount)
+            if(obtenerRowCount) {
                 this.rowCount = this.servicioUsuarioImpl.rowCount(datosBusquedaUsuario);
-
+            }
+            
             // se trata de hacer la busqueda
             List<Usuario> listado = this.servicioUsuarioImpl.getListadoUsuarios(this.datosBusquedaUsuario);
-            if(listado.isEmpty())
+            if(listado.isEmpty()) {
                 RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "buscarUsuario.sinResultados", true);
-            else
+            } else {
                 this.listadoUsuarios.addAll(listado);
-
+            }
             // se configuran los botones de la paginacion
             RequestUtil.configurarPaginacion(request, this.datosBusquedaUsuario.getPrimerRegistro(), this.rowCount);
 

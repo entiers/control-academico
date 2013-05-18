@@ -5,22 +5,26 @@
  */
 package gt.edu.usac.cats.controlador.usuario;
 
-import org.springframework.stereotype.Controller;
 import gt.edu.usac.cats.dominio.Usuario;
 import gt.edu.usac.cats.dominio.wrapper.WrapperContrasenia;
 import gt.edu.usac.cats.servicio.ServicioGeneral;
 import gt.edu.usac.cats.servicio.ServicioUsuario;
 import gt.edu.usac.cats.util.Mensajes;
 import gt.edu.usac.cats.util.RequestUtil;
+import java.io.Serializable;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
+import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.context.WebApplicationContext;
 
 /**
  *
@@ -28,7 +32,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 @RequestMapping(value = "reiCont.htm")
-public class ControladorReiniciarContrasenia {
+@Scope(value = WebApplicationContext.SCOPE_SESSION)
+@SessionAttributes(value = {"usuario"})
+public class ControladorReiniciarContrasenia implements Serializable{
         private static Logger log = Logger.getLogger(ControladorAsignarPerfilUsuario.class);
 //______________________________________________________________________________
     private static final String TITULO_MENSAJE = "modificarContrasenia.titulo";

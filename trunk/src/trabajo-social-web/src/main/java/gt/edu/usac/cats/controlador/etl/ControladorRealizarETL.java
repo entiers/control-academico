@@ -16,15 +16,18 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -34,8 +37,9 @@ import org.springframework.web.multipart.MultipartFile;
  * @author Mario Batres
  * @version 1.0
  */
-@Controller("controladorRealizarETL")
-public class ControladorRealizarETL {
+@Controller
+@Scope(value = WebApplicationContext.SCOPE_SESSION)
+public class ControladorRealizarETL implements Serializable {
 //______________________________________________________________________________
     
     private static final String CONTEXT_REGISTRO_CSV = "/registrocsv/etlregistrocsv_0_1/contexts/Default.properties";

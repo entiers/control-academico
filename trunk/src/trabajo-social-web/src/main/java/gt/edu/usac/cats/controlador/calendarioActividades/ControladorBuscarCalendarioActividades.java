@@ -9,18 +9,22 @@ import gt.edu.usac.cats.dominio.CalendarioActividades;
 import gt.edu.usac.cats.dominio.Semestre;
 import gt.edu.usac.cats.dominio.busqueda.DatosBusquedaCalendarioActividades;
 import gt.edu.usac.cats.enums.ControlReporte;
-import gt.edu.usac.cats.util.RequestUtil;
 import gt.edu.usac.cats.util.Mensajes;
+import gt.edu.usac.cats.util.RequestUtil;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
+import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.context.WebApplicationContext;
 
 /**
  * Esta clase se encarga de la busqueda de Calendarios de Actividades en la BD
@@ -30,9 +34,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @version 1.0
  */
 @Controller
+@Scope(value = WebApplicationContext.SCOPE_SESSION)
+@SessionAttributes(value={"listadoSemestres", "listadoCalendarioActividades"}) 
 public class ControladorBuscarCalendarioActividades extends ControladorAbstractoCalendarioActividades {
-//_____________________________________________________________________________
-
+//______________________________________________________________________________
+    /**
+     * <p>Listado de todas las semestres disponibles.</p>
+     */
+    private List <Semestre> listadoSemestres;
+//______________________________________________________________________________    
     /**
      * <p>
      * Lleva el nombre del titulo para el mensaje en la pagina
@@ -93,7 +103,11 @@ public class ControladorBuscarCalendarioActividades extends ControladorAbstracto
 
         modelo.addAttribute("datosBusquedaCalendarioActividades", datosBusquedaCalendarioActividades);
         modelo.addAttribute("listadoSemestres", this.listadoSemestres);
-        modelo.addAttribute("listadoCalendarioActividades", this.listadoCalendarioActividades);
+        
+        if (this.listadoCalendarioActividades != null) {
+            modelo.addAttribute("listadoCalendarioActividades", this.listadoCalendarioActividades);
+        }
+        
         modelo.addAttribute("nombreControlReporte", ControlReporte.CALENDARIO_ACTIVIDADES);
     }
 

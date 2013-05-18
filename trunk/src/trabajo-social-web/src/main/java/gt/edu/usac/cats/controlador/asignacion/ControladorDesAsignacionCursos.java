@@ -29,6 +29,7 @@ import gt.edu.usac.cats.velocity.FabricaTemplateVelocity;
 import gt.edu.usac.cats.velocity.contexto.DesasignacionEstudianteCurso;
 import gt.edu.usac.cats.velocity.contexto.extras.HorarioCurso;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Resource;
@@ -44,6 +45,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.context.WebApplicationContext;
 
 /**
  *
@@ -52,8 +55,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller("controladorDesAsignacionCursos")
 @RequestMapping(value="desAsignacionCursos.htm")
-@Scope(value="session")
-public class ControladorDesAsignacionCursos {
+@Scope(value = WebApplicationContext.SCOPE_SESSION)
+@SessionAttributes(value={"semestre", "estudiante"}) 
+public class ControladorDesAsignacionCursos implements Serializable{
 //______________________________________________________________________________
     private static Logger log = Logger.getLogger(ControladorDesAsignacionCursos.class);
 //______________________________________________________________________________

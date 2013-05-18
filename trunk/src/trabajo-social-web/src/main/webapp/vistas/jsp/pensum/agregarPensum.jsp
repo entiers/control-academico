@@ -29,6 +29,7 @@
                 <%-- se importan los demas campos --%>
                 <%@include file="../../jspf/formularios/formularioPensum.jspf" %>
 
+                
                 <%-- boton --%>
                 <input type="submit" value='<fmt:message key="btnAgregar"/>' />
             </fieldset>

@@ -7,31 +7,37 @@
 package gt.edu.usac.cats.controlador.usuario;
 
 import gt.edu.usac.cats.dominio.Catedratico;
-import org.springframework.stereotype.Controller;
 import gt.edu.usac.cats.dominio.Estudiante;
 import gt.edu.usac.cats.dominio.Usuario;
 import gt.edu.usac.cats.dominio.wrapper.WrapperContrasenia;
 import gt.edu.usac.cats.servicio.ServicioUsuario;
 import gt.edu.usac.cats.util.Mensajes;
 import gt.edu.usac.cats.util.RequestUtil;
+import java.io.Serializable;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
+import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.context.WebApplicationContext;
 
 /**
  *
  * @author Carlos Solorzano
  */
 @Controller
-public class ControladorModificarContrasenia {
+@Scope(value = WebApplicationContext.SCOPE_SESSION)
+@SessionAttributes(value = {"usuario", "estudiante", "catedratico"})
+public class ControladorModificarContrasenia implements Serializable{
     private static Logger log = Logger.getLogger(ControladorAsignarPerfilUsuario.class);
 //______________________________________________________________________________
     private static final String TITULO_MENSAJE = "modificarContrasenia.titulo";
@@ -78,11 +84,11 @@ public class ControladorModificarContrasenia {
 
         // se agregan los objetos que se usaran en la pagina
         modelo.addAttribute("tipoEntidad", tipoEntidad);
-        if (tipoEntidad.equals("estudiante"))
+        if (tipoEntidad.equals("estudiante")) {
             modelo.addAttribute("estudiante", this.estudiante);
-        else if (tipoEntidad.equals("catedratico"))
+        } else if (tipoEntidad.equals("catedratico")) {
             modelo.addAttribute("catedratico", this.catedratico);
-
+        }
         modelo.addAttribute("wrapperContrasenia", new WrapperContrasenia());
         return "usuario/modificarContrasenia";
     }

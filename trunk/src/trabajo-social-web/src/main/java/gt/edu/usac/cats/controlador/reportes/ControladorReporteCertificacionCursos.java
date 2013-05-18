@@ -10,16 +10,15 @@ package gt.edu.usac.cats.controlador.reportes;
 import gt.edu.usac.cats.dominio.Carrera;
 import gt.edu.usac.cats.enums.ControlReporte;
 import gt.edu.usac.cats.servicio.ServicioGeneral;
+import java.io.Serializable;
 import javax.annotation.Resource;
-
-import org.apache.log4j.Logger;
-
+import javax.servlet.http.HttpServletRequest;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import javax.servlet.http.HttpServletRequest;
+import org.springframework.web.context.WebApplicationContext;
 
 /**
  * Esta clase es el controlador que se encarga de la llamada al reporte certificaciones de cursos
@@ -27,12 +26,9 @@ import javax.servlet.http.HttpServletRequest;
  * @author Ing. Carlos Solorzano
  */
 
-@Controller("controladorReporteCertificacionCursos")
-public class ControladorReporteCertificacionCursos {
-//______________________________________________________________________________
-    private static String TITULO_MENSAJE = "rptCertificacionCursos.titulo";
-//______________________________________________________________________________
-    private static Logger log = Logger.getLogger(ControladorReporteCertificacionCursos.class);
+@Controller
+@Scope(value = WebApplicationContext.SCOPE_SESSION)
+public class ControladorReporteCertificacionCursos implements Serializable{
 //  _____________________________________________________________________________
     @Resource
     private ServicioGeneral servicioGeneralImpl;

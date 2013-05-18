@@ -8,13 +8,16 @@ package gt.edu.usac.cats.controlador.asignacionEstudianteCarrera;
 import gt.edu.usac.cats.dominio.HistorialAsignacionEstudianteCarrera;
 import gt.edu.usac.cats.util.Mensajes;
 import gt.edu.usac.cats.util.RequestUtil;
+import java.io.Serializable;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
+import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.context.WebApplicationContext;
 
 /**
  * <p>Controlador que se encarga de eliminar un historial de asignaci&oacute;n de carrera
@@ -27,7 +30,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @version 1.0
  */
 @Controller
-public class ControladorEliminarHistorialAsignacionEstudianteCarrera extends ControladorAbstractoAsignacionEstudianteCarrera {
+@Scope(value = WebApplicationContext.SCOPE_SESSION)
+public class ControladorEliminarHistorialAsignacionEstudianteCarrera extends ControladorAbstractoAsignacionEstudianteCarrera implements Serializable{
 
 //______________________________________________________________________________
     /**

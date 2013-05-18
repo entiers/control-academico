@@ -8,9 +8,11 @@ import gt.edu.usac.cats.dominio.Pensum;
 import gt.edu.usac.cats.dominio.wrapper.WrapperPensum;
 import gt.edu.usac.cats.util.Mensajes;
 import gt.edu.usac.cats.util.RequestUtil;
+import java.io.Serializable;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
+import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
@@ -18,6 +20,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.context.WebApplicationContext;
 
 /**
  *
@@ -26,8 +30,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 @RequestMapping(value = "agregarPensum.htm")
-public class ControladorAgregarPensum extends ControladorAbstractoPensum {
-    //______________________________________________________________________________
+@Scope(value = WebApplicationContext.SCOPE_SESSION)
+@SessionAttributes(value = {"pensum"})
+public class ControladorAgregarPensum extends ControladorAbstractoPensum implements Serializable {
+//______________________________________________________________________________
+    /**
+     * <p>Se utiliza para mantener todos los datos del pensum que se
+     * encontro en la busqueda.</p>
+     */
+    private Pensum pensum;
+
+    
+//______________________________________________________________________________
 
     /**
      * <p>Lleva el nombre del titulo para el mensaje en la pagina.<p>
@@ -50,9 +64,8 @@ public class ControladorAgregarPensum extends ControladorAbstractoPensum {
      * @return String Contiene el nombre de la vista a mostrar
      */
     @RequestMapping(method = RequestMethod.GET)
-    public String crearFormulario(Model modelo) {
-        this.agregarAtributosDefault(modelo, new WrapperPensum());
-
+    public String crearFormulario(Model modelo) {        
+        this.agregarAtributosDefault(modelo, new WrapperPensum());        
         return "pensum/agregarPensum";
     }
 //______________________________________________________________________________

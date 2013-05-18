@@ -6,6 +6,7 @@ package gt.edu.usac.cats.controlador.asignacionCursoPensum;
 
 import gt.edu.usac.cats.controlador.pensum.ControladorAbstractoPensum;
 import gt.edu.usac.cats.dominio.AsignacionCursoPensum;
+import gt.edu.usac.cats.dominio.Pensum;
 import gt.edu.usac.cats.dominio.wrapper.WrapperAsignacionCursoPensum;
 import gt.edu.usac.cats.util.Mensajes;
 import gt.edu.usac.cats.util.RequestUtil;
@@ -25,27 +26,43 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import gt.edu.usac.cats.enums.ControlReporte;
+import java.io.Serializable;
+import org.springframework.context.annotation.Scope;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.context.WebApplicationContext;
 
 /**
- * <p>
- * Este controlador lleva el manejo del todo lo relacionado con la asignaci&oacute;n
- * de cursos a un pensum, agregaci&oacute;n, actualizaci&oacute;n y eliminaci&oacute;n
- * de cursos al pensum; as&iacute; tambi&eacute;n el manejo de prerrequisitos.
- * </p>
- * <p>
- * Se hizo todo en este controlador ya que todo tiene relacionado  un pensum
- * que se selecciona en la p&aacute;gina <code>buscarPensum.htm</code>.  Si se hubiera
- * hecho en controladores diferentes se tendr&iacute;a que buscar el pensum por cada
- * llamada a esos controladores.
- * </p>
+ * <p> Este controlador lleva el manejo del todo lo relacionado con la
+ * asignaci&oacute;n de cursos a un pensum, agregaci&oacute;n,
+ * actualizaci&oacute;n y eliminaci&oacute;n de cursos al pensum; as&iacute;
+ * tambi&eacute;n el manejo de prerrequisitos. </p> <p> Se hizo todo en este
+ * controlador ya que todo tiene relacionado un pensum que se selecciona en la
+ * p&aacute;gina
+ * <code>buscarPensum.htm</code>. Si se hubiera hecho en controladores
+ * diferentes se tendr&iacute;a que buscar el pensum por cada llamada a esos
+ * controladores. </p>
  *
  *
  * @author Mario Batres
  * @version 1.0
  */
 @Controller
-public class ControladorAsignacionCursoPensum extends ControladorAbstractoPensum {
+@Scope(value = WebApplicationContext.SCOPE_SESSION)
+@SessionAttributes(value={"pensum", "asignacionCursoPensum"})
+public class ControladorAsignacionCursoPensum extends ControladorAbstractoPensum implements Serializable {
+//______________________________________________________________________________
 
+    /**
+     * <p>Se utiliza para mantener todos los datos del pensum que se encontro en
+     * la busqueda.</p>
+     */
+    private Pensum pensum;
+//______________________________________________________________________________
+    /**
+     * <p>Se utiliza para mantener todos los datos de la asignacion curso pensum
+     * que se encontro en la busqueda.</p>
+     */
+    private AsignacionCursoPensum asignacionCursoPensum;
 //______________________________________________________________________________
     /**
      * <p>Matiene una bitaacutecora de lo realizado por esta clase.</p>
@@ -54,7 +71,8 @@ public class ControladorAsignacionCursoPensum extends ControladorAbstractoPensum
 
 //______________________________________________________________________________
     /**
-     * Este m&eacute;todo se activa con la petici&oacute;n GET desde la p&aacute;gina
+     * Este m&eacute;todo se activa con la petici&oacute;n GET desde la
+     * p&aacute;gina
      * <code>asignarCursoPensum.htm<code>. Que tiene como fin mostrar los cursos
      * asignados al pensum que se est&aacute; seleccionando. Se v&aacute;lida que el id y la existencia del
      * pensum para poder mostrar la p&aacute;gina de lo contrario regresa a la p&aacute;gina
@@ -67,7 +85,7 @@ public class ControladorAsignacionCursoPensum extends ControladorAbstractoPensum
      */
     @RequestMapping(value = "asignarCursoPensum.htm", method = RequestMethod.GET)
     public String asignarCursoPensum(Model modelo, Short idPensum) {
-        if (!this.validarPensum(idPensum)) {
+        if (!this.validarPensum(idPensum, this.pensum)) {
             return "redirect:buscarPensum.htm";
         }
 
@@ -77,14 +95,14 @@ public class ControladorAsignacionCursoPensum extends ControladorAbstractoPensum
 
 //______________________________________________________________________________
     @RequestMapping(value = "asignarCursoPensumPag.htm", method = RequestMethod.GET)
-    public String asignarCursoPensumPag(Model modelo){
-        this.validarPensum(this.pensum.getIdPensum());
+    public String asignarCursoPensumPag(Model modelo) {
+        this.validarPensum(this.pensum.getIdPensum(), this.pensum);
         this.agregarAtributosDefault(modelo);
         return "pensum/asignarCursoPensum";
     }
 
 //______________________________________________________________________________
-    public void agregarAtributosDefault(Model modelo){
+    public void agregarAtributosDefault(Model modelo) {
         //El pensum es asigando el metodo anterior
         modelo.addAttribute("pensum", this.pensum);
         modelo.addAttribute("nombreControlReporte", ControlReporte.PENSUM_ESTUDIO);
@@ -92,10 +110,13 @@ public class ControladorAsignacionCursoPensum extends ControladorAbstractoPensum
 
 //______________________________________________________________________________
     /**
-     * Este m&eacute;todo se activa con la petici&oacute;n GET a la p&aacute;gina <code>agregarCursoAPensum.htm</code>.
-     * Tienen como objetivo agregar los atributos necesarios para mostrar en la p&aacute;gina para poder agregar
-     * un curso al pensum que ha sido seleccionando en la p&aacute;gina <code>buscarPensum.htm</code>
-     * y que ha pasado por <code>asignarCursoPensum.htm</code>.
+     * Este m&eacute;todo se activa con la petici&oacute;n GET a la
+     * p&aacute;gina
+     * <code>agregarCursoAPensum.htm</code>. Tienen como objetivo agregar los
+     * atributos necesarios para mostrar en la p&aacute;gina para poder agregar
+     * un curso al pensum que ha sido seleccionando en la p&aacute;gina
+     * <code>buscarPensum.htm</code> y que ha pasado por
+     * <code>asignarCursoPensum.htm</code>.
      *
      * @param modelo Objeto de tipo {@link Model}
      *
@@ -108,17 +129,22 @@ public class ControladorAsignacionCursoPensum extends ControladorAbstractoPensum
             return "redirect:buscarPensum.htm";
         }
 
-        this.agregarAtributosDefaultAsignacionCursoPensum(modelo, new WrapperAsignacionCursoPensum());
+        this.agregarAtributosDefaultAsignacionCursoPensum(modelo,
+                pensum,
+                new WrapperAsignacionCursoPensum());
         return "pensum/agregarCursoAPensum";
     }
 
 //______________________________________________________________________________
     /**
-     * Este m&eacute;todo se activa con la petici&oacute;n POST a la p&aacute;gina <code>agregarCursoAPensum.htm</code>.
-     * Tiene como finalidad agregar un curso al pensum que ha sido seleccionado previamente.
+     * Este m&eacute;todo se activa con la petici&oacute;n POST a la
+     * p&aacute;gina
+     * <code>agregarCursoAPensum.htm</code>. Tiene como finalidad agregar un
+     * curso al pensum que ha sido seleccionado previamente.
      *
      * @param modelo Objeto de tipo {@link Model}
-     * @param wrapperAsignacionCursoPensum Objeto de tipo {@link WrapperAsignacionCursoPensum}
+     * @param wrapperAsignacionCursoPensum Objeto de tipo
+     * {@link WrapperAsignacionCursoPensum}
      * @param bindingResult Objeto de tipo {@link BindingResult}
      * @param request Objeto de tipo {@link HttpServletRequest}
      *
@@ -152,18 +178,22 @@ public class ControladorAsignacionCursoPensum extends ControladorAbstractoPensum
                 log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
             }
         }
-        this.agregarAtributosDefaultAsignacionCursoPensum(modelo, wrapperAsignacionCursoPensum);
+        this.agregarAtributosDefaultAsignacionCursoPensum(modelo,
+                this.pensum, wrapperAsignacionCursoPensum);
         return "pensum/agregarCursoAPensum";
     }
 
 //______________________________________________________________________________
     /**
-     * Este m&eacute;todo se activa con la petici&oacute;n GET a la p&aacute;gina <code>eliminarCursoDePensum.htm</code>.
-     * Tiene como fin eliminar una asignaci&oacute;n de un curso al pensum previamente seleccionado.
-     * Se valida que la asignaci&oacute;n exista y pertenezca al pensum.
-     * .
+     * Este m&eacute;todo se activa con la petici&oacute;n GET a la
+     * p&aacute;gina
+     * <code>eliminarCursoDePensum.htm</code>. Tiene como fin eliminar una
+     * asignaci&oacute;n de un curso al pensum previamente seleccionado. Se
+     * valida que la asignaci&oacute;n exista y pertenezca al pensum. .
+     *
      * @param modelo Objeto de tipo {@link Model}
-     * @param idAsignacionCursoPensum Id de la asignaci&oacute;n del curso con el pensum.
+     * @param idAsignacionCursoPensum Id de la asignaci&oacute;n del curso con
+     * el pensum.
      * @param request Objeto de tipo {@link HttpServletRequest}
      *
      * @return El nombre de la vista a mostrar.
@@ -171,7 +201,7 @@ public class ControladorAsignacionCursoPensum extends ControladorAbstractoPensum
     @RequestMapping(value = "eliminarCursoDePensum.htm", method = RequestMethod.GET)
     public String eliminarCursoDePensum(Model modelo, Short idAsignacionCursoPensum,
             HttpServletRequest request) {
-        if (!this.validarAsignacionCursoPensum(idAsignacionCursoPensum)) {
+        if (!this.validarAsignacionCursoPensum(idAsignacionCursoPensum, this.asignacionCursoPensum)) {
             return "redirect:buscarPensum.htm";
         }
 
@@ -200,40 +230,46 @@ public class ControladorAsignacionCursoPensum extends ControladorAbstractoPensum
 
 //______________________________________________________________________________
     /**
-     * Este m&eacute;todo se activa con la petici&oacute;n GET a la p&aacute;gina <code>eliminarCursoDePensum.htm</code>.
-     * Tiene como fin agregar los atributos para mostrar en la p&aacute;gina para que se pueda editar
-     * un curso asignado al pensum previsamente seleccionado.  Se valida que la asignaci&oacute;n
-     * del curso exista y qu&eacute; peterneza cal pensum.
+     * Este m&eacute;todo se activa con la petici&oacute;n GET a la
+     * p&aacute;gina
+     * <code>eliminarCursoDePensum.htm</code>. Tiene como fin agregar los
+     * atributos para mostrar en la p&aacute;gina para que se pueda editar un
+     * curso asignado al pensum previsamente seleccionado. Se valida que la
+     * asignaci&oacute;n del curso exista y qu&eacute; peterneza cal pensum.
      *
      * @param modelo Objeto de tipo {@link Model}
-     * @param idAsignacionCursoPensum Id de la asignaci&oacute;n del curso con el pensum.
+     * @param idAsignacionCursoPensum Id de la asignaci&oacute;n del curso con
+     * el pensum.
      *
      * @return El nombre de la vista a mostrar.
      */
     @RequestMapping(value = "editarCursoDePensum.htm", method = RequestMethod.GET)
     public String editarCursoDePensum(Model modelo, Short idAsignacionCursoPensum) {
-        if (!this.validarAsignacionCursoPensum(idAsignacionCursoPensum)) {
+        if (!this.validarAsignacionCursoPensum(idAsignacionCursoPensum, this.asignacionCursoPensum)) {
             return "redirect:buscarPensum.htm";
         }
 
         WrapperAsignacionCursoPensum wrapperAsignacionCursoPensum = new WrapperAsignacionCursoPensum();
         wrapperAsignacionCursoPensum.agregarWrapper(this.asignacionCursoPensum);
 
-        this.agregarAtributosDefaultAsignacionCursoPensum(modelo, wrapperAsignacionCursoPensum);
+        this.agregarAtributosDefaultAsignacionCursoPensum(modelo, this.pensum, wrapperAsignacionCursoPensum);
         return "pensum/editarCursoDePensum";
     }
 
 //______________________________________________________________________________
     /**
-     * Este m&eacute;todo se activa con la petici&oacute;n POST a la p&aacute;gina <code>eliminarCursoDePensum.htm</code>.
-     * Tiene como fin actualizar un la informaci&oacute;n de la asignaci&oacute;n del curso al pensum que
-     * fue seleccionado anteriormente.
+     * Este m&eacute;todo se activa con la petici&oacute;n POST a la
+     * p&aacute;gina
+     * <code>eliminarCursoDePensum.htm</code>. Tiene como fin actualizar un la
+     * informaci&oacute;n de la asignaci&oacute;n del curso al pensum que fue
+     * seleccionado anteriormente.
      *
      * @param modelo Objeto de tipo {@link Model}
-     * @param wrapperAsignacionCursoPensum Objeto de tipo {@link WrapperAsignacionCursoPensum}
+     * @param wrapperAsignacionCursoPensum Objeto de tipo
+     * {@link WrapperAsignacionCursoPensum}
      * @param bindingResult Objeto de tipo {@link BindingResult}
      * @param request Objeto de tipo {@link HttpServletRequest}
-     * 
+     *
      * @return El nombre de la vista a mostrar.
      */
     @RequestMapping(value = "editarCursoDePensum.htm", method = RequestMethod.POST)
@@ -260,40 +296,46 @@ public class ControladorAsignacionCursoPensum extends ControladorAbstractoPensum
                 log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
             }
         }
-        this.agregarAtributosDefaultAsignacionCursoPensum(modelo, wrapperAsignacionCursoPensum);
+        this.agregarAtributosDefaultAsignacionCursoPensum(modelo, this.pensum, wrapperAsignacionCursoPensum);
         return "pensum/editarCursoDePensum";
     }
 
 //______________________________________________________________________________
     /**
-     * Este m&eacute;todo se activa con la petici&oacute;n GET a la p&aacute;gina <code>administrarPrerrequisitos.htm</code>.
-     * Tiene como fin agregar los atributos para poder actualizar los prerrequisitos de un curso en
-     * el pensum previamente seleccionado.
+     * Este m&eacute;todo se activa con la petici&oacute;n GET a la
+     * p&aacute;gina
+     * <code>administrarPrerrequisitos.htm</code>. Tiene como fin agregar los
+     * atributos para poder actualizar los prerrequisitos de un curso en el
+     * pensum previamente seleccionado.
      *
      * @param modelo Objeto de tipo {@link Model}
-     * @param idAsignacionCursoPensum Id de la asignaci&oacute;n del curso con el pensum.
-     * 
+     * @param idAsignacionCursoPensum Id de la asignaci&oacute;n del curso con
+     * el pensum.
+     *
      * @return El nombre de la vista a mostrar.
      */
     @RequestMapping(value = "administrarPrerrequisitos.htm", method = RequestMethod.GET)
     public String administrarPrerrequisitos(Model modelo, Short idAsignacionCursoPensum) {
-        if (!this.validarAsignacionCursoPensum(idAsignacionCursoPensum)) {
+        if (!this.validarAsignacionCursoPensum(idAsignacionCursoPensum, this.asignacionCursoPensum)) {
             return "redirect:buscarPensum.htm";
         }
 
-        this.agregarAtributosDefaultAdministracionPrerrequisitos(modelo);
+        this.agregarAtributosDefaultAdministracionPrerrequisitos(modelo, this.pensum, this.asignacionCursoPensum);
         return "pensum/administrarPrerrequisitos";
     }
 
 //______________________________________________________________________________
     /**
-     * Este m&eacute;todo se activa con la petici&oacute;n POST a la p&aacute;gina <code>administrarPrerrequisitos.htm</code>.
-     * Actualiza los prerrequisitos de un curso de un pensum que han sido seleccionado previamente.
-     * Se env&iacute;a un arreglo con los ids de los prerrequisitos para luego buscarlos y asignarlos al curso.
+     * Este m&eacute;todo se activa con la petici&oacute;n POST a la
+     * p&aacute;gina
+     * <code>administrarPrerrequisitos.htm</code>. Actualiza los prerrequisitos
+     * de un curso de un pensum que han sido seleccionado previamente. Se
+     * env&iacute;a un arreglo con los ids de los prerrequisitos para luego
+     * buscarlos y asignarlos al curso.
      *
      * @param modelo Objeto de tipo {@link Model}
-     * @param asignacionCursoPensumsForIdCursoPensumPrerequisito Arreglo de string que contienen
-     * los id de los prerrequisitos del curso.
+     * @param asignacionCursoPensumsForIdCursoPensumPrerequisito Arreglo de
+     * string que contienen los id de los prerrequisitos del curso.
      *
      * @return El nombre de la vista a mostrar.
      */
@@ -325,16 +367,18 @@ public class ControladorAsignacionCursoPensum extends ControladorAbstractoPensum
         }
 
 
-        this.agregarAtributosDefaultAdministracionPrerrequisitos(modelo);
+        this.agregarAtributosDefaultAdministracionPrerrequisitos(modelo, this.pensum, this.asignacionCursoPensum);
         return "pensum/administrarPrerrequisitos";
     }
 
 //______________________________________________________________________________
     /**
-     * Este metodo se activa al rendereizar la p&aacute;gina <code>administrarPrerrequisitos.htm</code>.
-     * Se encarga de convertir los el set de prerrequisitos a cadena de caracteras para
-     * poder ser utilizado en el tag <code>form:checkboxex</code>.  Sin este m&eacute;todo
-     * se ejecuta una excepci&oacute;n que no permite el correcto funcionamiento.
+     * Este metodo se activa al rendereizar la p&aacute;gina
+     * <code>administrarPrerrequisitos.htm</code>. Se encarga de convertir los
+     * el set de prerrequisitos a cadena de caracteras para poder ser utilizado
+     * en el tag
+     * <code>form:checkboxex</code>. Sin este m&eacute;todo se ejecuta una
+     * excepci&oacute;n que no permite el correcto funcionamiento.
      *
      * @param binde Objeto de tipo {@link WebDataBinder}
      */

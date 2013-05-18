@@ -8,12 +8,16 @@ package gt.edu.usac.cats.controlador.rol;
 
 import gt.edu.usac.cats.dominio.Rol;
 import gt.edu.usac.cats.servicio.ServicioGeneral;
+import java.io.Serializable;
 import java.util.List;
 import javax.annotation.Resource;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.context.WebApplicationContext;
 
 /**
  * Esta clase se encarga de almacenar los salones en la BD.
@@ -25,7 +29,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 @RequestMapping(value="buscarRol.htm")
-public class ControladorBuscarRol {
+@Scope(value = WebApplicationContext.SCOPE_SESSION)
+@SessionAttributes(value = {"listadoRol"})
+public class ControladorBuscarRol implements Serializable{
 /**
      * <p>Listado de todas las roles disponibles.</p>
      */

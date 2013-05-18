@@ -49,7 +49,7 @@ public abstract class ControladorAbstractoAsignacion {
 //______________________________________________________________________________
     private static Logger log = Logger.getLogger(ControladorAbstractoAsignacion.class);
 //_____________________________________________________________________________
-    protected PensumEstudianteCarrera pensumEstudianteCarrera;
+  /*  protected PensumEstudianteCarrera pensumEstudianteCarrera;
 //_____________________________________________________________________________
     protected AsignacionEstudianteCarrera asignacionEstudianteCarrera;
 //_____________________________________________________________________________
@@ -65,7 +65,8 @@ public abstract class ControladorAbstractoAsignacion {
 //_____________________________________________________________________________
     protected List<AsignacionCursoPensum> listaAsignacionCursoPensum;
 //_____________________________________________________________________________
-    protected List<Horario> listaHorario;
+    protected List<Horario> listaHorario;*/
+    
 //_____________________________________________________________________________
     @Resource
     protected ServicioUsuario servicioUsuarioImpl;
@@ -109,7 +110,7 @@ public abstract class ControladorAbstractoAsignacion {
     @Resource
     protected EmailSenderVelocity emailSenderVelocity;
 //_____________________________________________________________________________
-    protected void enviarEmail(List<DetalleAsignacion> listaAsignacion) throws IOException {
+    protected void enviarEmail(List<DetalleAsignacion> listaAsignacion, AsignacionEstudianteCarrera asignacionEstudianteCarrera) throws IOException {
 
         Estudiante estudiante2 = asignacionEstudianteCarrera.getEstudiante();
         Asignacion asignacion = listaAsignacion.get(0).getAsignacion();

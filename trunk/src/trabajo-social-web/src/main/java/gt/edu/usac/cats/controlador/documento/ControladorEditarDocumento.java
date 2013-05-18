@@ -11,25 +11,31 @@ import gt.edu.usac.cats.dominio.wrapper.WrapperDocumento;
 import gt.edu.usac.cats.servicio.ServicioGeneral;
 import gt.edu.usac.cats.util.Mensajes;
 import gt.edu.usac.cats.util.RequestUtil;
+import java.io.Serializable;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
+import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.context.WebApplicationContext;
 
 /**
  *
  * @author Carlos Solorzano
  * @version 1.0
  */
-@Controller("controladorEditarDocumento")
+@Controller
 @RequestMapping(value="editarDocumento.htm")
-public class ControladorEditarDocumento {
+@Scope(value = WebApplicationContext.SCOPE_SESSION)
+@SessionAttributes(value = {"documento"})
+public class ControladorEditarDocumento implements Serializable{
 //______________________________________________________________________________
     private static String TITULO_MENSAJE = "editarDocumento.titulo";
 //______________________________________________________________________________

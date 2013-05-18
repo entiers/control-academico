@@ -6,19 +6,26 @@
 package gt.edu.usac.cats.controlador.horario;
 
 
+import gt.edu.usac.cats.dominio.AsignacionCursoPensum;
 import gt.edu.usac.cats.dominio.Horario;
+import gt.edu.usac.cats.dominio.Salon;
+import gt.edu.usac.cats.dominio.Semestre;
 import gt.edu.usac.cats.dominio.wrapper.WrapperHorario;
-import gt.edu.usac.cats.util.RequestUtil;
 import gt.edu.usac.cats.util.Mensajes;
+import gt.edu.usac.cats.util.RequestUtil;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
+import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.context.WebApplicationContext;
 
 /**
  *Esta clase se encarga de modficar un horario existente en la BD.
@@ -29,7 +36,25 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller("controladorEditarHorario")
 @RequestMapping(value = "editarHorario.htm")
+@Scope(value = WebApplicationContext.SCOPE_SESSION)
+@SessionAttributes(value={"listadoSemestres", "listadoSalones", "listadoCursos"}) 
 public class ControladorEditarHorario extends ControladorAbstractoHorario {
+//______________________________________________________________________________
+
+    /**
+     * <p>Listado de todas las cursos disponibles.</p>
+     */
+    private List<Semestre> listadoSemestres;
+//______________________________________________________________________________
+    /**
+     * <p>Listado de todas las salones disponibles.</p>
+     */
+    private List<Salon> listadoSalones;
+//______________________________________________________________________________
+    /**
+     * <p>Listado de todas las cursos disponibles.</p>
+     */
+    private List<AsignacionCursoPensum> listadoCursos;     
 //_____________________________________________________________________________
 
     /**
@@ -78,7 +103,7 @@ public class ControladorEditarHorario extends ControladorAbstractoHorario {
         wrapperHorario.agregarWrapper(this.horario);
         modelo.addAttribute("wrapperHorario", wrapperHorario);
 
-        this.agregarAtributosDefault(modelo, wrapperHorario, true);
+        this.agregarAtributosDefault(modelo, listadoCursos, listadoSalones, listadoSemestres, wrapperHorario, true);
         return "horario/editarHorario";
     }
 
@@ -131,7 +156,7 @@ public class ControladorEditarHorario extends ControladorAbstractoHorario {
             }
         }
 
-        this.agregarAtributosDefault(modelo, wrapperHorario, false);
+        this.agregarAtributosDefault(modelo, listadoCursos, listadoSalones, listadoSemestres, wrapperHorario, false);
         return "horario/editarHorario";
     }
 }

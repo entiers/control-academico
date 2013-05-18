@@ -9,12 +9,15 @@ import gt.edu.usac.cats.dominio.AsignacionCursoPensum;
 import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
 import gt.edu.usac.cats.dominio.DetalleAsignacion;
 import gt.edu.usac.cats.dominio.Horario;
+import gt.edu.usac.cats.dominio.PensumEstudianteCarrera;
+import gt.edu.usac.cats.dominio.Semestre;
 import gt.edu.usac.cats.dominio.busqueda.DatosAsignacion;
 import gt.edu.usac.cats.enums.TipoAsignacion;
 import gt.edu.usac.cats.enums.TipoHorario;
 import gt.edu.usac.cats.util.Mensajes;
 import gt.edu.usac.cats.util.RequestUtil;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +30,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.context.WebApplicationContext;
 
 /**
  * Esta clase es el controlador que se encarga de la llamada al proceso de asignacion
@@ -35,18 +40,29 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @author Carlos Solorzano
  * @version 1.0
  */
-@Controller("controladorAsignacionSemestre")
-@Scope(value="session")
-public class ControladorAsignacionSemestre extends ControladorAbstractoAsignacion {
+@Controller
+@Scope(value = WebApplicationContext.SCOPE_SESSION)
+@SessionAttributes(value={"listaAsignacion", "listaHorarioAsignacion", "asignacionEstudianteCarrera", 
+    "semestre", "pensumEstudianteCarrera", "listaHorario", "listaAsignacionCursoPensum"}) 
+public class ControladorAsignacionSemestre extends ControladorAbstractoAsignacion implements Serializable{
 //______________________________________________________________________________
     private static Logger log = Logger.getLogger(ControladorAsignacionSemestre.class);
-//_______________________________________________________________________________
+//______________________________________________________________________________
     private static final String TITULO_MENSAJE = "miscursos.asignacionCursos.titulo";
-//_______________________________________________________________________________
+//______________________________________________________________________________
     private List<DetalleAsignacion> listaAsignacion;
-//_______________________________________________________________________________
+//______________________________________________________________________________
     private List<Horario> listaHorarioAsignacion;
-//_______________________________________________________________________________
+//______________________________________________________________________________
+    private AsignacionEstudianteCarrera asignacionEstudianteCarrera;
+//______________________________________________________________________________
+    private Semestre semestre;
+//______________________________________________________________________________
+    private List <Horario> listaHorario;
+//______________________________________________________________________________
+    private List<AsignacionCursoPensum> listaAsignacionCursoPensum;
+//______________________________________________________________________________    
+    private PensumEstudianteCarrera pensumEstudianteCarrera;
     /**
      * <p>Este metodo se ejecuta cada vez que se realiza una solicitud del tipo
      * POST de la pagina <code>agregarHorarioAsignacionSemestre.htm</code>. El metodo
@@ -186,7 +202,7 @@ public class ControladorAsignacionSemestre extends ControladorAbstractoAsignacio
             //Realizando asignacion de cursos
             this.listaAsignacion = servicioAsignacionImpl.realizarAsignacionCursos(this.asignacionEstudianteCarrera, this.listaHorarioAsignacion,datosAsignacion.getTipoAsignacion());
             if (!this.listaAsignacion.isEmpty()) {
-                this.enviarEmail(this.listaAsignacion);
+                this.enviarEmail(this.listaAsignacion, this.asignacionEstudianteCarrera);
                 listaHorarioAsignacion.clear();
                 return "redirect:asignacionExitosa.htm?iascsvr=" + this.listaAsignacion.get(0).getAsignacion().getIdAsignacion();
             }

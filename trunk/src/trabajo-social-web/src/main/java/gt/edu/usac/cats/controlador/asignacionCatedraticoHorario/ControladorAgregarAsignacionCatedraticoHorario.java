@@ -10,14 +10,17 @@ package gt.edu.usac.cats.controlador.asignacionCatedraticoHorario;
 import gt.edu.usac.cats.dominio.AsignacionCatedraticoHorario;
 import gt.edu.usac.cats.dominio.Catedratico;
 import gt.edu.usac.cats.dominio.Horario;
+import gt.edu.usac.cats.dominio.Semestre;
 import gt.edu.usac.cats.dominio.busqueda.DatosIngresoNota;
 import gt.edu.usac.cats.enums.TipoHorario;
 import gt.edu.usac.cats.util.Mensajes;
 import gt.edu.usac.cats.util.RequestUtil;
+import java.io.Serializable;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,6 +28,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.context.WebApplicationContext;
 
 /**
  * Controlador encargado de manejar las peticiones GET y POST de la p�gina 
@@ -34,8 +39,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @author Carlos Solorzano
  * @version 1.0
  */
-@Controller("controladorAgregarAsignacionCatedraticoHorario")
-public class ControladorAgregarAsignacionCatedraticoHorario extends ControladorAbstractoAsignacionCatedraticoHorario{
+@Controller
+@Scope(value = WebApplicationContext.SCOPE_SESSION)
+@SessionAttributes(value={"semestre", "catedratico", "listadoHorario"}) 
+public class ControladorAgregarAsignacionCatedraticoHorario extends ControladorAbstractoAsignacionCatedraticoHorario implements Serializable{
 //______________________________________________________________________________       
     private static Logger log = Logger.getLogger(ControladorAgregarAsignacionCatedraticoHorario.class);
 //_____________________________________________________________________________
@@ -43,6 +50,11 @@ public class ControladorAgregarAsignacionCatedraticoHorario extends ControladorA
 //______________________________________________________________________________    
     private List<Horario> listadoHorario;
 //______________________________________________________________________________    
+    private Catedratico catedratico;
+//______________________________________________________________________________
+    private Semestre semestre;
+//______________________________________________________________________________
+    
     /**
      * Metodo encargado de resolver las peticiones de tipo GET de la p�gina 
      * <p>agregarAsignacionCatedraticoHorario.htm</p> asi como de buscar al catedratico 
@@ -63,8 +75,8 @@ public class ControladorAgregarAsignacionCatedraticoHorario extends ControladorA
             return "asignacionCatedraticoHorario/agregarAsignacionCatedraticoHorario";
         }
         try {
-            super.catedratico = super.servicioGeneralImpl.cargarEntidadPorID(Catedratico.class, Short.parseShort(idCatedratico.toString()) );
-            super.semestre = super.servicioSemestreImpl.getSemestreActivo();
+            this.catedratico = super.servicioGeneralImpl.cargarEntidadPorID(Catedratico.class, Short.parseShort(idCatedratico.toString()) );
+            this.semestre = super.servicioSemestreImpl.getSemestreActivo();
             this.listadoHorario = this.servicioAsignacionCatedraticoHorarioImpl.getHorarioDiponibleCatedratico(this.semestre, TipoHorario.values()[0]);
             this.crearModelo(modelo);
         }
@@ -97,7 +109,7 @@ public class ControladorAgregarAsignacionCatedraticoHorario extends ControladorA
 
         try{
             AsignacionCatedraticoHorario aCH = new AsignacionCatedraticoHorario();
-            aCH.setCatedratico(super.catedratico);
+            aCH.setCatedratico(this.catedratico);
             aCH.setHorario(datosIngresoNota.getHorario());
             super.servicioGeneralImpl.agregar(aCH);
             this.crearModelo(modelo);
@@ -118,7 +130,7 @@ public class ControladorAgregarAsignacionCatedraticoHorario extends ControladorA
     
     private void crearModelo(Model modelo){
         modelo.addAttribute("datosIngresoNota", new DatosIngresoNota());
-        modelo.addAttribute("catedratico", super.catedratico);
+        modelo.addAttribute("catedratico", this.catedratico);
         modelo.addAttribute("listaTipoHorario",TipoHorario.values());
         modelo.addAttribute("listaHorario",this.listadoHorario);
         modelo.addAttribute("modeloOK",true);

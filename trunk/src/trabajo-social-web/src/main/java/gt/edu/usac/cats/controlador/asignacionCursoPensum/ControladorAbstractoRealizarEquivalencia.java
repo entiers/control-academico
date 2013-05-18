@@ -13,13 +13,10 @@ import gt.edu.usac.cats.util.RequestUtil;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.dao.DataAccessException;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  *
@@ -30,22 +27,22 @@ public abstract class ControladorAbstractoRealizarEquivalencia {
 
     @Resource
     protected ServicioAsignacionCursoPensum servicioAsignacionCursoPensumImpl;
-    protected List<AsignacionCursoPensum> listadoEquivalencias;
     private Logger log = Logger.getLogger(ControladorAbstractoRealizarEquivalencia.class);
-    protected String nombreAction;
-    protected String linkRegresar;
 
     /**
      * @param modelo
      * @param wrapperAsignacionEquivalencia
      */
     protected void agregarAtributosDefault(Model modelo,
-            WrapperAsignacionEquivalencia wrapperAsignacionEquivalencia) {
+            WrapperAsignacionEquivalencia wrapperAsignacionEquivalencia,
+            List<AsignacionCursoPensum> listadoEquivalencias,
+            String nombreAction,
+            String linkRegresar) {
 
-        modelo.addAttribute("listadoEquivalencias", this.listadoEquivalencias);
+        modelo.addAttribute("listadoEquivalencias", listadoEquivalencias);
         modelo.addAttribute("wrapperAsignacionEquivalencia", wrapperAsignacionEquivalencia);
-		  modelo.addAttribute("nombreAction", this.nombreAction);
-		  modelo.addAttribute("linkRegresar", this.linkRegresar);
+        modelo.addAttribute("nombreAction", nombreAction);
+        modelo.addAttribute("linkRegresar", linkRegresar);
     }
 
     /**
@@ -54,22 +51,26 @@ public abstract class ControladorAbstractoRealizarEquivalencia {
      * @param modelo
      * @param request
      */
-    protected  String realizarEquivalencia(WrapperAsignacionEquivalencia wrapperAsignacionEquivalencia,
+    protected String realizarEquivalencia(WrapperAsignacionEquivalencia wrapperAsignacionEquivalencia,
             BindingResult bindingResult, Model modelo, HttpServletRequest request) {
+
+        List<AsignacionCursoPensum> listadoEquivalencias = null;
 
         if (!bindingResult.hasErrors()) {
             AsignacionEquivalencia asignacionEquivalencia = new AsignacionEquivalencia();
             wrapperAsignacionEquivalencia.quitarWrapper(asignacionEquivalencia);
 
+
+
             try {
                 this.servicioAsignacionCursoPensumImpl.realizarEquivalencias(
                         wrapperAsignacionEquivalencia.getAsignacionEstudianteCarrera(),
-                        asignacionEquivalencia, this.listadoEquivalencias);
+                        asignacionEquivalencia, listadoEquivalencias);
 
                 RequestUtil.crearMensajeRespuesta(request, "cursoPensum.titulo.realizarEquivalencia",
                         "cursoPensum.realizarEquivalencias.exito", true);
 
-                this.listadoEquivalencias = null;
+                listadoEquivalencias = null;
 
             } catch (DataAccessException e) {
                 // error de acceso a datos
@@ -79,7 +80,7 @@ public abstract class ControladorAbstractoRealizarEquivalencia {
             }
 
         }
-        this.agregarAtributosDefault(modelo, wrapperAsignacionEquivalencia);
+        agregarAtributosDefault(modelo, wrapperAsignacionEquivalencia, listadoEquivalencias, "", "");
         return "cursoPensum/mostrarParaRealizarEquivalencia";
     }
 }

@@ -9,8 +9,9 @@ package gt.edu.usac.cats.controlador.catedratico;
 import gt.edu.usac.cats.dominio.Catedratico;
 import gt.edu.usac.cats.dominio.busqueda.DatosBusquedaCatedratico;
 import gt.edu.usac.cats.servicio.ServicioCatedratico;
-import gt.edu.usac.cats.util.RequestUtil;
 import gt.edu.usac.cats.util.Mensajes;
+import gt.edu.usac.cats.util.RequestUtil;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Resource;
@@ -18,11 +19,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.context.WebApplicationContext;
 
 /**
  * <p>Esta clase se encuentra registrada en Spring como un controlador. Este
@@ -52,8 +56,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @author Daniel Castillo
  * @version 1.0
  */
-@Controller("controladorBuscarCatedratico")
-public class ControladorBuscarCatedratico {
+@Controller
+@Scope(value = WebApplicationContext.SCOPE_SESSION)
+@SessionAttributes(value={"listadoCatedraticos", "datosBusquedaCatedratico", "rowCount"})
+public class ControladorBuscarCatedratico implements Serializable {
 
     /**
      * <p>Lleva el nombre del titulo para el mensaje en la pagina.</p>
@@ -142,13 +148,15 @@ public class ControladorBuscarCatedratico {
         this.datosBusquedaCatedratico = datosBusquedaCatedratico;
 
         // no se enviaron parametros de busqueda
-        if(this.datosBusquedaCatedratico.isEmpty())
+        if(this.datosBusquedaCatedratico.isEmpty()){
             return "catedratico/buscarCatedratico";
+        }
 
         // los parametros de busqueda no cumplen las reglas de validacion
-        if(bindingResult.hasErrors())
+        if(bindingResult.hasErrors()){
             return "catedratico/buscarCatedratico";
-
+        }
+        
         this.datosBusquedaCatedratico.inicializarPrimerRegistro();
         return this.realizarBusqueda(modelo, request, true);
     }
@@ -228,16 +236,16 @@ public class ControladorBuscarCatedratico {
 
         try {
             // se trata de obtener el total de registros de la consulta
-            if(obtenerRowCount)
+            if(obtenerRowCount){
                 this.rowCount = this.servicioCatedraticoImpl.rowCount(datosBusquedaCatedratico);
-
+            }
             // se trata de hacer la busqueda
             List<Catedratico> listado = this.servicioCatedraticoImpl.getListadoCatedraticos(this.datosBusquedaCatedratico);
-            if(listado.isEmpty())
+            if(listado.isEmpty()){
                 RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "buscarCatedratico.sinResultados", true);
-            else
+            } else {
                 this.listadoCatedraticos.addAll(listado);
-
+            }
             // se configuran los botones de la paginacion
             RequestUtil.configurarPaginacion(request, this.datosBusquedaCatedratico.getPrimerRegistro(), this.rowCount);
 

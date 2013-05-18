@@ -17,12 +17,14 @@ import gt.edu.usac.cats.util.Mensajes;
 import gt.edu.usac.cats.velocity.FabricaTemplateVelocity;
 import gt.edu.usac.cats.velocity.contexto.NuevoUsuario;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
+import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
 import org.springframework.mail.MailException;
 import org.springframework.stereotype.Controller;
@@ -30,6 +32,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.context.WebApplicationContext;
 
 /**
  * <p>Esta clase se encuentra registrada en Spring como un controlador. Este
@@ -53,9 +57,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @author Daniel Castillo
  * @version 1.0
  */
-@Controller("controladorAgregarCatedratico")
+@Controller
 @RequestMapping(value = "agregarCatedratico.htm")
-public class ControladorAgregarCatedratico {
+@Scope(value = WebApplicationContext.SCOPE_SESSION)
+@SessionAttributes(value={"listadoEscuelas"})
+public class ControladorAgregarCatedratico implements Serializable{
 
     /**
      * <p>Lleva el nombre del titulo para el mensaje en la pagina.</p>
