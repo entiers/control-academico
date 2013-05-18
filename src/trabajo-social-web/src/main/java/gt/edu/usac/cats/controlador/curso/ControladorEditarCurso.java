@@ -10,18 +10,22 @@ import gt.edu.usac.cats.dominio.Curso;
 import gt.edu.usac.cats.dominio.busqueda.DatosBusquedaCurso;
 import gt.edu.usac.cats.dominio.wrapper.WrapperCurso;
 import gt.edu.usac.cats.servicio.ServicioCurso;
-import gt.edu.usac.cats.util.RequestUtil;
 import gt.edu.usac.cats.util.Mensajes;
+import gt.edu.usac.cats.util.RequestUtil;
+import java.io.Serializable;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
+import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.context.WebApplicationContext;
 
 /**
  * Esta clase se encarga de buscar y modficar un curso existente en la BD.
@@ -32,8 +36,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @version 1.0
  */
 
-@Controller("controladorEditarCurso")
-public class ControladorEditarCurso {
+@Controller
+@Scope(value = WebApplicationContext.SCOPE_SESSION)
+@SessionAttributes(value={"curso"})
+public class ControladorEditarCurso implements Serializable {
 
     /**
      * <p>
@@ -114,18 +120,18 @@ public class ControladorEditarCurso {
         // se obtiene el carne ingresado para realizar la busqueda
         String codigo = datosBusquedaCurso.getCodigo();
 
-        if(codigo.isEmpty() || bindingResult.hasErrors())
+        if(codigo.isEmpty() || bindingResult.hasErrors()){
             return "curso/editarCurso";
-
+        }
         try {
             // se realiza la busqueda del curso
             this.curso = this.servicioCursoImpl.buscarCursoPorCodigo(codigo);
 
-            if(this.curso == null)
+            if(this.curso == null) {
                 RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "editarCurso.sinResultados", true);
-            else
+            } else {
                 wrapperCurso.agregarWrapper(this.curso);
-
+            }
         } catch (DataAccessException e) {
             // error de acceso a datos
             RequestUtil.crearMensajeRespuesta(request, null, "dataAccessException", false);
@@ -161,9 +167,10 @@ public class ControladorEditarCurso {
         // se validan los campos ingresados en el formulario, si existen errores
         // se regresa al formulario para que se muestren los mensajes correspondientes
 
-        if(bindingResult.hasErrors())
+        if(bindingResult.hasErrors()) {
             return "curso/editarCurso";
-
+        }
+        
         try {
             // se quita el envoltorio y se trata de actualizar al curso
             wrapperCurso.quitarWrapper(this.curso);

@@ -18,21 +18,22 @@ import gt.edu.usac.cats.servicio.ServicioSemestre;
 import gt.edu.usac.cats.servicio.ServicioUsuario;
 import gt.edu.usac.cats.util.Mensajes;
 import gt.edu.usac.cats.util.RequestUtil;
+import java.io.Serializable;
 import java.util.List;
 import javax.annotation.Resource;
-
+import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
-
+import org.springframework.context.annotation.Scope;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import javax.servlet.http.HttpServletRequest;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.context.WebApplicationContext;
 
 /**
  * Esta clase es el controlador que se encarga de la llamada al reporte de asignaciones
@@ -41,8 +42,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @author Carlos Solorzano
  */
 
-@Controller("controladorReporteAsignacionesYNotasCurso")
-public class ControladorReporteAsignacionesYNotasCurso {
+@Controller
+@Scope(value = WebApplicationContext.SCOPE_SESSION)
+@SessionAttributes(value = {"usuario", "catedratico", "semestre"})
+public class ControladorReporteAsignacionesYNotasCurso implements Serializable {
 //______________________________________________________________________________
     private static String TITULO_MENSAJE = "rptAsignacionCurso.titulo";
 //______________________________________________________________________________
@@ -51,6 +54,7 @@ public class ControladorReporteAsignacionesYNotasCurso {
     private Usuario usuario;
 //______________________________________________________________________________
     private Catedratico catedratico;
+//______________________________________________________________________________    
     private Semestre semestre;
 //______________________________________________________________________________
     @Resource
@@ -113,11 +117,13 @@ public class ControladorReporteAsignacionesYNotasCurso {
         List<Horario> listadoHorario;
         try {
             TipoHorario tipoHorario = TipoHorario.fromInt(idTipoHorario);
-            if(this.catedratico == null)
+            if(this.catedratico == null){
                 listadoHorario = this.servicioHorarioImpl.getHorario(this.semestre, tipoHorario);
-            else
+            } else {
                 listadoHorario = this.servicioHorarioImpl.getHorario(this.semestre, this.catedratico,
                                     tipoHorario);
+            }
+            
             for (Horario horario : listadoHorario){
                 strOptions += "<option value=\"" + horario.getIdHorario() + "\">" +
                         horario.getAsignacionCursoPensum().getCurso().getNombre() + " - " + horario.getSeccion() +
@@ -152,10 +158,10 @@ public class ControladorReporteAsignacionesYNotasCurso {
                 modelo.addAttribute("listadoHorario", servicioHorarioImpl.
                     getHorario(this.semestre, this.catedratico, TipoHorario.SEMESTRE));
             }
-            else
+            else {
                 modelo.addAttribute("listadoHorario", servicioHorarioImpl.
                     getHorario(this.semestre, TipoHorario.SEMESTRE));
-
+            }
         }
         catch(Exception ex){
             RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "dataAccessException", false);

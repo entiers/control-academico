@@ -7,13 +7,16 @@
 package gt.edu.usac.cats.controlador.asignacionEstudianteCarrera;
 
 import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
+import gt.edu.usac.cats.dominio.Estudiante;
 import gt.edu.usac.cats.dominio.HistorialAsignacionEstudianteCarrera;
 import gt.edu.usac.cats.dominio.wrapper.WrapperAgregarAsignacionEstudianteCarrera;
 import gt.edu.usac.cats.util.Mensajes;
 import gt.edu.usac.cats.util.RequestUtil;
+import java.io.Serializable;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
+import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
@@ -21,6 +24,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.context.WebApplicationContext;
 
 /**
  * <p>Este controlador lleva el manejo de la vista<code>cambiarAsignacionEstudianteCarrera.htm</code>
@@ -32,7 +37,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 @RequestMapping(value = "cambiarAsignacionEstudianteCarrera.htm")
-public class ControladorCambiarAsignacionEstudianteCarrera extends ControladorAbstractoAsignacionEstudianteCarrera {
+@Scope(value = WebApplicationContext.SCOPE_SESSION)
+@SessionAttributes(value={"estudiante", "asignacionEstudianteCarrera"})
+public class ControladorCambiarAsignacionEstudianteCarrera extends ControladorAbstractoAsignacionEstudianteCarrera implements Serializable{
+    //______________________________________________________________________________
+    /**
+     * Objeto de tipo {@link Estudiante} que ha sido seleccionado.
+     */
+    protected Estudiante estudiante;
+//______________________________________________________________________________
+    /**
+     * Objeto de tipo {@link AsignacionEstudianteEstudiante} que ha sido seleccionado.
+     */
+    protected AsignacionEstudianteCarrera asignacionEstudianteCarrera;
 //______________________________________________________________________________
     /**
      * <p>Lleva el nombre del titulo para el mensaje en la pagina </p>
@@ -67,8 +84,8 @@ public class ControladorCambiarAsignacionEstudianteCarrera extends ControladorAb
         if (this.asignacionEstudianteCarrera == null) {
             return "redirect:buscarEstudiante.htm";
         }
-
-        this.agregarAtributosDefaultCambiarAsignacion(modelo, new WrapperAgregarAsignacionEstudianteCarrera(), true);
+        this.estudiante = asignacionEstudianteCarrera.getEstudiante();
+        this.agregarAtributosDefaultCambiarAsignacion(modelo, new WrapperAgregarAsignacionEstudianteCarrera(), true, this.asignacionEstudianteCarrera);
         return "asignacionEstudianteCarrera/cambiarAsignacionEstudianteCarrera";
     }
 //______________________________________________________________________________
@@ -90,7 +107,9 @@ public class ControladorCambiarAsignacionEstudianteCarrera extends ControladorAb
             @Valid WrapperAgregarAsignacionEstudianteCarrera wrapperAgregarAsignacionEstudianteCarrera,
             BindingResult bindingResult,
             HttpServletRequest request) {
-
+        
+        this.estudiante = this.asignacionEstudianteCarrera.getEstudiante();
+        
         if (!bindingResult.hasErrors()) {
             try {
                 AsignacionEstudianteCarrera asignacionEstudianteCarreraNueva =
@@ -119,22 +138,22 @@ public class ControladorCambiarAsignacionEstudianteCarrera extends ControladorAb
             } catch (DataIntegrityViolationException e) {
                 RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "dataIntegrityViolationException", false);
                 log.error(Mensajes.DATA_INTEGRITY_VIOLATION_EXCEPTION, e);
-
+                
                 this.agregarAtributosDefaultCambiarAsignacion(modelo,
                         new WrapperAgregarAsignacionEstudianteCarrera(),
-                        false);
+                        false, this.asignacionEstudianteCarrera);
             } catch (DataAccessException e) {
                 RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "dataAccessException", false);
                 log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
 
                 this.agregarAtributosDefaultCambiarAsignacion(modelo,
                         new WrapperAgregarAsignacionEstudianteCarrera(),
-                        false);
+                        false, this.asignacionEstudianteCarrera);
             }
         } else {
             this.agregarAtributosDefaultCambiarAsignacion(modelo,
                     wrapperAgregarAsignacionEstudianteCarrera,
-                    false);
+                    false, this.asignacionEstudianteCarrera);
         }
         return "asignacionEstudianteCarrera/cambiarAsignacionEstudianteCarrera";
     }

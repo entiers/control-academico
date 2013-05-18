@@ -9,15 +9,19 @@ import gt.edu.usac.cats.dominio.Semestre;
 import gt.edu.usac.cats.dominio.wrapper.WrapperSemestre;
 import gt.edu.usac.cats.util.Mensajes;
 import gt.edu.usac.cats.util.RequestUtil;
+import java.io.Serializable;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
+import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.context.WebApplicationContext;
 
 /**
  * Esta clase se encarga de editar o modificar un semestre en la base de datos.
@@ -27,7 +31,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 @RequestMapping(value = "editarSemestre.htm")
-public class ControladorEditarSemestre extends ControladorAbstractoSemestre{
+@Scope(value = WebApplicationContext.SCOPE_SESSION)
+@SessionAttributes(value = {"semestre"})
+public class ControladorEditarSemestre extends ControladorAbstractoSemestre implements Serializable{
     /**
      * <p>Lleva el nombre del titulo para el mensaje en la pagina.<p>
      */

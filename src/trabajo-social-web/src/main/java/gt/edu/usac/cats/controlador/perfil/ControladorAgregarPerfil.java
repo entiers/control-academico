@@ -11,16 +11,19 @@ import gt.edu.usac.cats.dominio.wrapper.WrapperPerfil;
 import gt.edu.usac.cats.servicio.ServicioGeneral;
 import gt.edu.usac.cats.util.Mensajes;
 import gt.edu.usac.cats.util.RequestUtil;
+import java.io.Serializable;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
+import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.context.WebApplicationContext;
 
 /**
  * Esta clase se encarga de almacenar los perfiles en la BD.
@@ -32,7 +35,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 @RequestMapping(value="agregarPerfil.htm")
-public class ControladorAgregarPerfil {
+@Scope(value = WebApplicationContext.SCOPE_SESSION)
+public class ControladorAgregarPerfil implements Serializable{
 //______________________________________________________________________________
     /**
      * <p>Lleva el nombre del titulo para el mensaje en la pagina.<p>
@@ -105,9 +109,10 @@ public class ControladorAgregarPerfil {
             Model modelo, HttpServletRequest request) {
         // se validan los campos ingresados en el formulario, si existen errores
         // se regresa al formulario para que se muestren los mensajes correspondientes
-        if(bindingResult.hasErrors())
+        if(bindingResult.hasErrors()) {
             return "perfil/agregarPerfil";
-
+        }
+        
         try {
 
             // se quita el envoltorio y se trata de agregar al perfil

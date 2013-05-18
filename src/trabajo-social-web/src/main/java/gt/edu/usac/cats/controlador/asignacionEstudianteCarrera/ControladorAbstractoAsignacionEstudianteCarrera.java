@@ -16,13 +16,14 @@ import gt.edu.usac.cats.dominio.wrapper.WrapperHistorialAsignacionEstudianteCarr
 import gt.edu.usac.cats.servicio.ServicioAsignacionEstudianteCarrera;
 import gt.edu.usac.cats.servicio.ServicioSemestre;
 import gt.edu.usac.cats.dominio.wrapper.WrapperModificarAsignacionEstudianteCarrera;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Resource;
 import org.springframework.ui.Model;
 
 /**
- * Clase abstracta que lleva el control de m&eacute;dos y atributos que son utilizados
- * en los controladores {@link ControladorCambiarAsignacionEstudianteCarrera }, *
+ * Clase abstracta que lleva el control de m&eacute;dos y atributos que son
+ * utilizados en los controladores {@link ControladorCambiarAsignacionEstudianteCarrera }, *
  * {@link ControladorEliminarHistorialAsignacionEstudianteCarrera},
  * {@link ControladorMostrarAsignacionEstudianteCarrera } y
  * {@link ControladorMostrarHistorialAsignacionEstudianteCarrera}.
@@ -34,115 +35,78 @@ public abstract class ControladorAbstractoAsignacionEstudianteCarrera {
 //______________________________________________________________________________
 
     /**
-     * <p>Contiene metodos que permiten el manejo de la informaci&oacute;n relacionada
-     * con el con el objeto de tipo {@link AsignacionEstudianteCarrera} en la base
-     * de datos. Este objeto se encuentra registrado como un bean de servicio
-     * en Spring, por lo que este es el encargado de
-     * inyectar la dependencia.</p>
+     * <p>Contiene metodos que permiten el manejo de la informaci&oacute;n
+     * relacionada con el con el objeto de tipo
+     * {@link AsignacionEstudianteCarrera} en la base de datos. Este objeto se
+     * encuentra registrado como un bean de servicio en Spring, por lo que este
+     * es el encargado de inyectar la dependencia.</p>
      */
     @Resource
     protected ServicioAsignacionEstudianteCarrera servicioAsignacionEstudianteCarreraImpl;
 //______________________________________________________________________________
     /**
-     * <p>Contiene metodos que permiten el manejo de la informaci&oacute;n relacionada
-     * con el con el objeto de tipo {@link Semestre} en la base
-     * de datos. Este objeto se encuentra registrado como un bean de servicio
-     * en Spring, por lo que este es el encargado de
-     * inyectar la dependencia.</p>
+     * <p>Contiene metodos que permiten el manejo de la informaci&oacute;n
+     * relacionada con el con el objeto de tipo {@link Semestre} en la base de
+     * datos. Este objeto se encuentra registrado como un bean de servicio en
+     * Spring, por lo que este es el encargado de inyectar la dependencia.</p>
      */
     @Resource
     protected ServicioSemestre servicioSemestreImpl;
-//______________________________________________________________________________
-    /**
-     * Objeto de tipo {@link Estudiante} que ha sido seleccionado.
-     */
-    protected Estudiante estudiante;
-//______________________________________________________________________________
-    /**
-     * Objeto de tipo {@link AsignacionEstudianteEstudiante} que ha sido seleccionado.
-     */
-    protected AsignacionEstudianteCarrera asignacionEstudianteCarrera;
-//______________________________________________________________________________
-    /**
-     * Lista de objetos de tipo {@link Carrera} que mantiene
-     * los resultados de las b&uacute;squeda de las carreras no asignadas
-     * del estudiante que ha sido seleccinado.
-     */
-    private List<Carrera> listadoCarrerasNoAsignadas;
-//______________________________________________________________________________
-    /**
-     * Lista de objetos de tipo {@link AsignacionEstudianteCarrera} que mantiene
-     * los resultados de las b&uacute;squeda de las asignaciones de estudiante
-     * y carrera
-     */
-    private List<AsignacionEstudianteCarrera> listadoAsignacionEstudianteCarrera;
-//______________________________________________________________________________
-    /**
-     * Lista de objetos de tipo {@link AsignacionEstudianteCarrera} que mantiene
-     * los resultados de las b&uacute;squeda de las no asignaciones de estudiante
-     * y carrera
-     */
-    private List<AsignacionEstudianteCarrera> listadoAsignacionEstudianteCarreraNoAsignadas;
-//______________________________________________________________________________
-    /**
-     * Lista de objetos de tipo {@link Situacion} que mantiene
-     * los resultados de las b&uacute;squeda en la base de datos.
-     */
-    private List<Situacion> listadoSituaciones;
-//______________________________________________________________________________
-    /**
-     * Lista de objetos de tipo {@link Semestre} que mantiene
-     * los resultados de las b&uacute;squeda en la base de datos.
-     */
-    private List<Semestre> listadoSemestres;
 
 //______________________________________________________________________________
     /**
-     * Lista los atributos que son necesarios para agregar o modificar
-     * un objeto de tipo {@link HistorialAsignacionEstudianteCarrera}
-     */
-    private void listarAtributosDeHistorial() {
-        this.listadoSituaciones = this.servicioAsignacionEstudianteCarreraImpl.cargarEntidades(Situacion.class);
-        this.listadoSemestres = this.servicioSemestreImpl.listarSemestresParaBusqueda();
-    }
-
-//______________________________________________________________________________
-    /**
-     * Busca y agrega los atributos necesarios para la creaci&oacute;n de los
-     * componentes en la vista <code>mostrarAsignacionEstudianteCarrera.htm</code>.
-     * Es utilizado en el controlador {@link ControladorMostrarAsignacionEstudianteCarrera}.
+     * Lista los atributos que son necesarios para agregar o modificar un objeto
+     * de tipo {@link HistorialAsignacionEstudianteCarrera}
+     *
+     * private void listarAtributosDeHistorial() { this.listadoSituaciones =
+     * this.servicioAsignacionEstudianteCarreraImpl.cargarEntidades(Situacion.class);
+     * this.listadoSemestres =
+     * this.servicioSemestreImpl.listarSemestresParaBusqueda(); }
+     *
+     * //______________________________________________________________________________
+     * /** Busca y agrega los atributos necesarios para la creaci&oacute;n de
+     * los componentes en la vista
+     * <code>mostrarAsignacionEstudianteCarrera.htm</code>. Es utilizado en el
+     * controlador {@link ControladorMostrarAsignacionEstudianteCarrera}.
      *
      * @param modelo Objeto de tipo {@link Model}
-     * @param wrapperAgregarAsignacionEstudianteCarrera
-     * Objeto de tipo {@link WrapperAgregarAsignacionEstudianteCarrera}
+     * @param wrapperAgregarAsignacionEstudianteCarrera Objeto de tipo
+     * {@link WrapperAgregarAsignacionEstudianteCarrera}
      * @param autoOpenDialog Indica si se habilita o no el dialogo para agregar
      * un objeto de tipo {@link AsignacionEstudianteCarrera}
-     * @param wrapperModificarAsignacionEstudianteCarrera
-     * Objeto de tipo {@link WrapperModificarAsignacionEstudianteCarrera}
-     * @param autoOpenDialogModificar Indica si se habilita o no el dialogo para modificar
-     * un objeto de tipo {@link AsignacionEstudianteCarrera}
-     * @param realizarBusqueda Indica si se realiza la b&uacute;squeda o no de algunos
-     * atributos.
+     * @param wrapperModificarAsignacionEstudianteCarrera Objeto de tipo
+     * {@link WrapperModificarAsignacionEstudianteCarrera}
+     * @param autoOpenDialogModificar Indica si se habilita o no el dialogo para
+     * modificar un objeto de tipo {@link AsignacionEstudianteCarrera}
+     * @param realizarBusqueda Indica si se realiza la b&uacute;squeda o no de
+     * algunos atributos.
      */
     protected void agregarAtributosDefault(Model modelo,
             WrapperAgregarAsignacionEstudianteCarrera wrapperAgregarAsignacionEstudianteCarrera,
             boolean autoOpenDialog,
             WrapperModificarAsignacionEstudianteCarrera wrapperModificarAsignacionEstudianteCarrera,
-            boolean autoOpenDialogModificar, 
+            boolean autoOpenDialogModificar,
             boolean realizarBusqueda,
-            WrapperEquivalenciaPorCarrera wrapperEquivalenciaPorCarrera) {
+            WrapperEquivalenciaPorCarrera wrapperEquivalenciaPorCarrera, Estudiante estudiante) {
+
+        List<Carrera> listadoCarrerasNoAsignadas = (List<Carrera>) modelo.asMap().get("listadoCarrerasNoAsignadas");
+        List<AsignacionEstudianteCarrera> listadoAsignacionEstudianteCarrera = (List<AsignacionEstudianteCarrera>) modelo.asMap().get("listadoAsignacionEstudianteCarrera");
+        List<AsignacionEstudianteCarrera> listadoAsignacionEstudianteCarreraNoAsignadas = (List<AsignacionEstudianteCarrera>) modelo.asMap().get("listadoAsignacionEstudianteCarreraNoAsignadas");
+        List<Situacion> listadoSituaciones = (List<Situacion>) modelo.asMap().get("listadoSituaciones");
+        List<Semestre> listadoSemestres = (List<Semestre>) modelo.asMap().get("listadoSemestres");
 
         if (realizarBusqueda) {
-            this.listadoCarrerasNoAsignadas =
-                    this.servicioAsignacionEstudianteCarreraImpl.getListadoCarrerasNoAsignadasPorEstudiante(this.estudiante);
+            listadoCarrerasNoAsignadas =
+                    this.servicioAsignacionEstudianteCarreraImpl.getListadoCarrerasNoAsignadasPorEstudiante(estudiante);
 
-            this.listadoAsignacionEstudianteCarrera =
+            listadoAsignacionEstudianteCarrera =
                     this.servicioAsignacionEstudianteCarreraImpl.getAsignacionEstudianteCarrera(estudiante, true);
 
-            this.listadoAsignacionEstudianteCarreraNoAsignadas =
+            listadoAsignacionEstudianteCarreraNoAsignadas =
                     this.servicioAsignacionEstudianteCarreraImpl.getAsignacionEstudianteCarrera(estudiante, false);
 
-            this.listarAtributosDeHistorial();
+            listadoSituaciones = this.servicioAsignacionEstudianteCarreraImpl.cargarEntidades(Situacion.class);
+            listadoSemestres = this.servicioSemestreImpl.listarSemestresParaBusqueda();
 
             Semestre semestreActivo = this.servicioSemestreImpl.getSemestreActivo();
             wrapperAgregarAsignacionEstudianteCarrera.getWrapperHistorialAsignacionEstudianteCarrera().setSemestre(semestreActivo);
@@ -150,15 +114,15 @@ public abstract class ControladorAbstractoAsignacionEstudianteCarrera {
 
         modelo.addAttribute("autoOpenDialog", autoOpenDialog);
         modelo.addAttribute("autoOpenDialogModificar", autoOpenDialogModificar);
-        modelo.addAttribute("estudiante", this.estudiante);
-        modelo.addAttribute("listadoAsignacionEstudianteCarrera", this.listadoAsignacionEstudianteCarrera);
-        modelo.addAttribute("listadoAsignacionEstudianteCarreraNoAsignadas", this.listadoAsignacionEstudianteCarreraNoAsignadas);
+        modelo.addAttribute("estudiante", estudiante);
+        modelo.addAttribute("listadoAsignacionEstudianteCarrera", listadoAsignacionEstudianteCarrera);
+        modelo.addAttribute("listadoAsignacionEstudianteCarreraNoAsignadas", listadoAsignacionEstudianteCarreraNoAsignadas);
         modelo.addAttribute("wrapperAgregarAsignacionEstudianteCarrera", wrapperAgregarAsignacionEstudianteCarrera);
         modelo.addAttribute("wrapperEquivalenciaPorCarrera", wrapperEquivalenciaPorCarrera);
-        modelo.addAttribute("listadoCarrerasNoAsignadas", this.listadoCarrerasNoAsignadas);
-        modelo.addAttribute("listadoSituaciones", this.listadoSituaciones);
-        modelo.addAttribute("listadoSemestres", this.listadoSemestres);
-        if (this.listadoAsignacionEstudianteCarrera == null || this.listadoAsignacionEstudianteCarrera.size() < 2) {
+        modelo.addAttribute("listadoCarrerasNoAsignadas", listadoCarrerasNoAsignadas);
+        modelo.addAttribute("listadoSituaciones", listadoSituaciones);
+        modelo.addAttribute("listadoSemestres", listadoSemestres);
+        if (listadoAsignacionEstudianteCarrera == null || listadoAsignacionEstudianteCarrera.size() < 2) {
             modelo.addAttribute("habilitarFormulario", true);
         }
 
@@ -170,56 +134,68 @@ public abstract class ControladorAbstractoAsignacionEstudianteCarrera {
 //______________________________________________________________________________
     /**
      * Busca y agrega los atributos necesarios para la creaci&oacute;n de los
-     * componentes en la vista <code>cambiarAsignacionEstudianteCarrera.htm</code>.
-     * Es utilizado en el controlador {@link ControladorCambiarAsignacionEstudianteCarrera}.
+     * componentes en la vista
+     * <code>cambiarAsignacionEstudianteCarrera.htm</code>. Es utilizado en el
+     * controlador {@link ControladorCambiarAsignacionEstudianteCarrera}.
      *
      * @param modelo Objeto de tipo {@link Model}
-     * @param wrapperAgregarAsignacionEstudianteCarrera  Objeto de tipo {@link WrapperAgregarAsignacionEstudianteCarrera}
+     * @param wrapperAgregarAsignacionEstudianteCarrera Objeto de tipo
+     * {@link WrapperAgregarAsignacionEstudianteCarrera}
      * @param realizarBusqueda
      */
     protected void agregarAtributosDefaultCambiarAsignacion(Model modelo,
             WrapperAgregarAsignacionEstudianteCarrera wrapperAgregarAsignacionEstudianteCarrera,
-            boolean realizarBusqueda) {
+            boolean realizarBusqueda, AsignacionEstudianteCarrera asignacionEstudianteCarrera) {
 
-        modelo.addAttribute("asignacionEstudianteCarrera", this.asignacionEstudianteCarrera);
+        modelo.addAttribute("asignacionEstudianteCarrera", asignacionEstudianteCarrera);
 
-        this.estudiante = this.asignacionEstudianteCarrera.getEstudiante();
+        Estudiante estudiante = asignacionEstudianteCarrera.getEstudiante();
         this.agregarAtributosDefault(modelo, wrapperAgregarAsignacionEstudianteCarrera,
-                false, null, false, realizarBusqueda,null);
+                false, null, false, realizarBusqueda, null, estudiante);
 
     }
 
 //______________________________________________________________________________
     /**
-     * Busca y agrega los atributos necesarios para la creaci&oacute;n de los 
-     * componentes en la vista <code>mostrarHistorialAsignacionEstudianteCarrera.htm</code>.
-     * Es utilizado en el controlador {@link ControladorMostrarHistorialAsignacionEstudianteCarrera}.
+     * Busca y agrega los atributos necesarios para la creaci&oacute;n de los
+     * componentes en la vista
+     * <code>mostrarHistorialAsignacionEstudianteCarrera.htm</code>. Es
+     * utilizado en el controlador
+     * {@link ControladorMostrarHistorialAsignacionEstudianteCarrera}.
      *
      * @param modelo Objeto de tipo {@link Model}
      * @param idHistorialAsignacionEstudianteCarrera
-     * @param wrapperHistorialAsignacionEstudianteCarrera Objeto de tipo {@link WrapperHistorialAsignacionEstudianteCarrera}
-     * @param autoOpenDialog  Indica si se habilita o no el dialogo para agregar
+     * @param wrapperHistorialAsignacionEstudianteCarrera Objeto de tipo
+     * {@link WrapperHistorialAsignacionEstudianteCarrera}
+     * @param autoOpenDialog Indica si se habilita o no el dialogo para agregar
      * objeto de tipo {@link HistorialAsignacionEstudianteCarrera}
-     * @param wrapperModificarHistorialAsignacionEstudianteCarrera Objeto de tipo {@link WrapperHistorialAsignacionEstudianteCarrera}
-     * @param autoOpenDialogModificar Indica si se habilita o no el dialgo para modificar
-     * objeto de tipo {@link HistorialAsignacionEstudianteCarrera}
-     * @param realizarBusqueda Indica si se realiza la b&uacute;squeda o no de algunos
-     * atributos.
+     * @param wrapperModificarHistorialAsignacionEstudianteCarrera Objeto de
+     * tipo {@link WrapperHistorialAsignacionEstudianteCarrera}
+     * @param autoOpenDialogModificar Indica si se habilita o no el dialgo para
+     * modificar objeto de tipo {@link HistorialAsignacionEstudianteCarrera}
+     * @param realizarBusqueda Indica si se realiza la b&uacute;squeda o no de
+     * algunos atributos.
      */
-    protected void agregarAtributosDefaultHistorial(Model modelo, Integer idHistorialAsignacionEstudianteCarrera,
+    protected void agregarAtributosDefaultHistorial(Model modelo,
+            Integer idHistorialAsignacionEstudianteCarrera,
             WrapperHistorialAsignacionEstudianteCarrera wrapperHistorialAsignacionEstudianteCarrera,
             boolean autoOpenDialog,
             WrapperHistorialAsignacionEstudianteCarrera wrapperModificarHistorialAsignacionEstudianteCarrera,
-            boolean autoOpenDialogModificar, boolean realizarBusqueda) {
+            boolean autoOpenDialogModificar, boolean realizarBusqueda, AsignacionEstudianteCarrera asignacionEstudianteCarrera) {
+
+        List<Situacion> listadoSituaciones = (List<Situacion>) modelo.asMap().get("listadoSituaciones");
+        List<Semestre> listadoSemestres = (List<Semestre>) modelo.asMap().get("listadoSemestres");
 
         if (realizarBusqueda) {
-            this.listarAtributosDeHistorial();
+            listadoSituaciones = this.servicioAsignacionEstudianteCarreraImpl.cargarEntidades(Situacion.class);
+            listadoSemestres = this.servicioSemestreImpl.listarSemestresParaBusqueda();
         }
 
-        modelo.addAttribute("listadoSituaciones", this.listadoSituaciones);
-        modelo.addAttribute("listadoSemestres", this.listadoSemestres);
-        modelo.addAttribute("estudiante", this.estudiante);
-        modelo.addAttribute("asignacionEstudianteCarrera", this.asignacionEstudianteCarrera);
+
+        modelo.addAttribute("listadoSituaciones", listadoSituaciones);
+        modelo.addAttribute("listadoSemestres", listadoSemestres);
+        modelo.addAttribute("estudiante", asignacionEstudianteCarrera.getEstudiante());
+        modelo.addAttribute("asignacionEstudianteCarrera", asignacionEstudianteCarrera);
         modelo.addAttribute("wrapperHistorialAsignacionEstudianteCarrera", wrapperHistorialAsignacionEstudianteCarrera);
         modelo.addAttribute("wrapperModificarHistorialAsignacionEstudianteCarrera", wrapperModificarHistorialAsignacionEstudianteCarrera);
         modelo.addAttribute("autoOpenDialog", autoOpenDialog);

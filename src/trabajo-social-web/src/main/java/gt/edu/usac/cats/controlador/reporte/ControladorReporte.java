@@ -9,6 +9,7 @@ import gt.edu.usac.cats.enums.ControlReporte;
 import gt.edu.usac.cats.servicio.ServicioGeneral;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -21,6 +22,7 @@ import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
+import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,7 +36,8 @@ import org.springframework.web.context.WebApplicationContext;
  * @version 1.0
  */
 @Controller
-public class ControladorReporte {
+@Scope(value = WebApplicationContext.SCOPE_SESSION)
+public class ControladorReporte implements Serializable{
 
 //______________________________________________________________________________
     @Resource

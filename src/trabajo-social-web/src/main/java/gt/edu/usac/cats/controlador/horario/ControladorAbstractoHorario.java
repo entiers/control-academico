@@ -5,7 +5,6 @@
 package gt.edu.usac.cats.controlador.horario;
 
 import gt.edu.usac.cats.dominio.AsignacionCursoPensum;
-import gt.edu.usac.cats.dominio.Curso;
 import gt.edu.usac.cats.dominio.Salon;
 import gt.edu.usac.cats.dominio.Semestre;
 import gt.edu.usac.cats.dominio.wrapper.WrapperHorario;
@@ -13,6 +12,7 @@ import gt.edu.usac.cats.enums.Dia;
 import gt.edu.usac.cats.enums.TipoHorario;
 import gt.edu.usac.cats.servicio.ServicioHorario;
 import gt.edu.usac.cats.servicio.ServicioSemestre;
+import java.io.Serializable;
 import java.util.List;
 import javax.annotation.Resource;
 import org.springframework.ui.Model;
@@ -22,23 +22,7 @@ import org.springframework.ui.Model;
  * @author Mario Batres
  * @version 1.0
  */
-public abstract class ControladorAbstractoHorario {
-//______________________________________________________________________________
-
-    /**
-     * <p>Listado de todas las cursos disponibles.</p>
-     */
-    protected List<Semestre> listadoSemestres;
-//______________________________________________________________________________
-    /**
-     * <p>Listado de todas las salones disponibles.</p>
-     */
-    protected List<Salon> listadoSalones;
-//______________________________________________________________________________
-    /**
-     * <p>Listado de todas las cursos disponibles.</p>
-     */
-    protected List<AsignacionCursoPensum> listadoCursos;
+public abstract class ControladorAbstractoHorario implements Serializable{
 //______________________________________________________________________________
     /**
      * <p>Contiene metodos que permiten el manejo de la informacion relacionada
@@ -53,29 +37,34 @@ public abstract class ControladorAbstractoHorario {
     protected ServicioSemestre servicioSemestreImpl;
 
 //______________________________________________________________________________
-    protected void agregarAtributosDefault(Model modelo, WrapperHorario wrapperHorario, boolean buscar) {
+    protected void agregarAtributosDefault(Model modelo, 
+            List<AsignacionCursoPensum> listadoCursos,
+            List<Salon> listadoSalones, 
+            List<Semestre> listadoSemestres,
+            WrapperHorario wrapperHorario, boolean buscar) {
         modelo.addAttribute("wrapperHorario", wrapperHorario);
 
         if (buscar) {
-            this.listadoCursos = this.servicioHorarioImpl.listarEntidad(AsignacionCursoPensum.class,true,"pensum");
+            listadoCursos = this.servicioHorarioImpl.listarEntidad(AsignacionCursoPensum.class,true,"pensum");
         }
 
-        modelo.addAttribute("listadoCursos", this.listadoCursos);
+        modelo.addAttribute("listadoCursos", listadoCursos);
 
         modelo.addAttribute("listadoDias", Dia.values());
         
         modelo.addAttribute("listaTipoHorario", TipoHorario.values());
 
-        this.agregarAtributosDefault(modelo, buscar);
+        agregarAtributosDefault(modelo, listadoSalones, listadoSemestres, buscar);
     }
 
 //______________________________________________________________________________
-    protected void agregarAtributosDefault(Model modelo, boolean buscar) {
+    protected void agregarAtributosDefault(Model modelo, List<Salon> listadoSalones, 
+            List<Semestre> listadoSemestres, boolean buscar) {
         if (buscar) {
-            this.listadoSalones = this.servicioHorarioImpl.listarEntidad(Salon.class);
-            this.listadoSemestres = this.servicioSemestreImpl.listarSemestresParaBusqueda();
+            listadoSalones = this.servicioHorarioImpl.listarEntidad(Salon.class);
+            listadoSemestres = this.servicioSemestreImpl.listarSemestresParaBusqueda();
         }
-        modelo.addAttribute("listadoSalones", this.listadoSalones);
-        modelo.addAttribute("listadoSemestres", this.listadoSemestres);
+        modelo.addAttribute("listadoSalones", listadoSalones);
+        modelo.addAttribute("listadoSemestres", listadoSemestres);
     }
 }

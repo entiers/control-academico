@@ -34,32 +34,6 @@ public abstract class ControladorAbstractoPensumEstudianteCarrera {
      */
     @Resource
     protected ServicioPensumEstudianteCarrera servicioPensumEstudianteCarreraImpl;
-//______________________________________________________________________________
-    /**
-     * Objeto de tipo {@link AsignacionEstudianteCarrera} que ha sido seleccionado
-     */
-    protected AsignacionEstudianteCarrera asignacionEstudianteCarrera;
-//______________________________________________________________________________
-    /**
-     * Objeto de tipo {@link Pensum} que ha sido seleccionado
-     */
-    protected Pensum pensum;
-//______________________________________________________________________________
-    /**
-     * Listado de objetos de tipo {@link PensumEstudianteCarrera} que mantienen
-     * los resultados de las b&uacute;squedas que se realizan.
-     */
-    private List<PensumEstudianteCarrera> listadoPensumEstudianteCarreraNoValidos;
-//______________________________________________________________________________
-    /**
-     * Listado de objetos de tipo {@link Pensum} que mantienen los resultados de
-     * las b&uacute;squedas que se realizan.
-     */
-    private List<Pensum> listadoPensumsNoAsignadosAEsutudianteCarrera;
-
-//______________________________________________________________________________
-    protected WrapperEquivalenciaPorPensum wrapperEquivalenciaPorPensum;
-//______________________________________________________________________________
 
     /**
      * Agrega los atributos default en la pa&acute;gina de <code>mostrarPensumEstudianteCarrera.htm</code>.
@@ -73,17 +47,22 @@ public abstract class ControladorAbstractoPensumEstudianteCarrera {
      *
      */
     protected void agregarAtributosDefault(Model modelo,
+            Pensum pensum,
+            AsignacionEstudianteCarrera asignacionEstudianteCarrera,
             PensumEstudianteCarrera pensumEstudianteCarrera,
+            List<PensumEstudianteCarrera> listadoPensumEstudianteCarreraNoValidos,
+            List<Pensum> listadoPensumsNoAsignadosAEsutudianteCarrera,
+            WrapperEquivalenciaPorPensum wrapperEquivalenciaPorPensum,
             boolean autoOpenDialogAsignar,
             boolean realizarBusqueda) {
 
         if (realizarBusqueda) {
             //Se obtiene los no validos
-            this.listadoPensumEstudianteCarreraNoValidos =
+            listadoPensumEstudianteCarreraNoValidos =
                     this.servicioPensumEstudianteCarreraImpl.getListadoPensumEstudianteCarreraNoValidos(asignacionEstudianteCarrera);
 
 
-            this.listadoPensumsNoAsignadosAEsutudianteCarrera =
+            listadoPensumsNoAsignadosAEsutudianteCarrera =
                     this.servicioPensumEstudianteCarreraImpl.getPensumsNoAsignadosAEstudianteCarrera(asignacionEstudianteCarrera);
         }
 

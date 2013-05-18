@@ -17,12 +17,14 @@ import gt.edu.usac.cats.servicio.ServicioCursoAprobado;
 import gt.edu.usac.cats.servicio.ServicioDetalleAsignacion;
 import gt.edu.usac.cats.util.Mensajes;
 import gt.edu.usac.cats.util.RequestUtil;
+import java.io.Serializable;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,14 +32,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.context.WebApplicationContext;
 
 /**
  * @author Carlos Solorzano
  * @version 1.0
  */
 
-@Controller("controladorAgregarCursoAprobado")
-public class ControladorAgregarCursoAprobado {
+@Controller
+@Scope(value = WebApplicationContext.SCOPE_SESSION)
+@SessionAttributes(value={"estudiante", "listaAEC", "listaACP"})
+public class ControladorAgregarCursoAprobado implements Serializable{
 
     private static String TITULO_MENSAJE = "admin.agregarCursoAprobado.titulo";
 //______________________________________________________________________________    

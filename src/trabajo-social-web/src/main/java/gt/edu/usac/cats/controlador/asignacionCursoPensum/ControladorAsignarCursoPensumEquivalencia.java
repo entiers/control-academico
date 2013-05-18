@@ -4,7 +4,6 @@
  */
 package gt.edu.usac.cats.controlador.asignacionCursoPensum;
 
-import gt.edu.usac.cats.controlador.asignacionCursoPensum.ControladorAbstractoCursoPensumEquivalencia;
 import gt.edu.usac.cats.dominio.AsignacionCursoPensum;
 import gt.edu.usac.cats.dominio.Curso;
 import gt.edu.usac.cats.dominio.Pensum;
@@ -12,6 +11,7 @@ import gt.edu.usac.cats.dominio.wrapper.WrapperCursoPensumEquivalencia;
 import gt.edu.usac.cats.servicio.ServicioPensum;
 import gt.edu.usac.cats.util.Mensajes;
 import gt.edu.usac.cats.util.RequestUtil;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 import javax.annotation.Resource;
@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.WebApplicationContext;
 
 /**
  *
@@ -35,7 +37,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @version 1.0
  */
 @Controller
-public class ControladorAsignarCursoPensumEquivalencia extends ControladorAbstractoCursoPensumEquivalencia {
+@Scope(value = WebApplicationContext.SCOPE_SESSION)
+public class ControladorAsignarCursoPensumEquivalencia extends ControladorAbstractoCursoPensumEquivalencia implements Serializable{
 
 //______________________________________________________________________________
     /**

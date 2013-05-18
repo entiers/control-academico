@@ -12,16 +12,20 @@ import gt.edu.usac.cats.dominio.wrapper.WrapperSalon;
 import gt.edu.usac.cats.servicio.ServicioHorario;
 import gt.edu.usac.cats.util.RequestUtil;
 import gt.edu.usac.cats.util.Mensajes;
+import java.io.Serializable;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
+import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.context.WebApplicationContext;
 
 /**
  * Esta clase se encarga de buscar y modficar un salon existente en la BD.
@@ -31,8 +35,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @author Mario Batres
  * @version 1.0
  */
-@Controller("controladorEditarSalon")
-public class ControladorEditarSalon {
+@Controller
+@Scope(value = WebApplicationContext.SCOPE_SESSION)
+@SessionAttributes(value = {"salon"})
+public class ControladorEditarSalon implements Serializable {
     
     /**
      * <p>Lleva el nombre del titulo para el mensaje en la pagina.<p>

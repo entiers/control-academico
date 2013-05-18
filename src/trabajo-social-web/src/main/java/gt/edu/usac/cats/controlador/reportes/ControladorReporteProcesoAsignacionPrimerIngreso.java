@@ -13,19 +13,19 @@ import gt.edu.usac.cats.enums.ControlReporte;
 import gt.edu.usac.cats.servicio.ServicioAsignacionPrimerIngreso;
 import gt.edu.usac.cats.util.Mensajes;
 import gt.edu.usac.cats.util.RequestUtil;
+import java.io.Serializable;
 import javax.annotation.Resource;
-
-import org.apache.log4j.Logger;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import org.apache.log4j.Logger;
+import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.context.WebApplicationContext;
 
 /**
  * Esta clase es el controlador que se encarga de la llamada al reporte del proceso de
@@ -34,8 +34,9 @@ import org.springframework.validation.BindingResult;
  * @author Carlos Solorzano
  */
 
-@Controller("controladorReporteProcesoAsignacionPrimerIngreso")
-public class ControladorReporteProcesoAsignacionPrimerIngreso {
+@Controller
+@Scope(value = WebApplicationContext.SCOPE_SESSION)
+public class ControladorReporteProcesoAsignacionPrimerIngreso implements Serializable{
 //______________________________________________________________________________
     private static String TITULO_MENSAJE = "agregarCurso.titulo";
 //______________________________________________________________________________

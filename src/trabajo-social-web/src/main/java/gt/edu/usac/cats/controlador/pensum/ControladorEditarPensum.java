@@ -9,9 +9,11 @@ import gt.edu.usac.cats.dominio.Pensum;
 import gt.edu.usac.cats.dominio.wrapper.WrapperPensum;
 import gt.edu.usac.cats.util.Mensajes;
 import gt.edu.usac.cats.util.RequestUtil;
+import java.io.Serializable;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
+import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
@@ -19,6 +21,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.context.WebApplicationContext;
 
 /**
  *
@@ -27,7 +31,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 @RequestMapping(value="editarPensum.htm")
-public class ControladorEditarPensum extends ControladorAbstractoPensum{
+@Scope(value = WebApplicationContext.SCOPE_SESSION)
+@SessionAttributes(value = {"pensum"})
+public class ControladorEditarPensum extends ControladorAbstractoPensum implements Serializable{
+//______________________________________________________________________________
+    /**
+     * <p>Se utiliza para mantener todos los datos del pensum que se
+     * encontro en la busqueda.</p>
+     */
+    private Pensum pensum;
 
     //_____________________________________________________________________________
 
@@ -57,7 +69,7 @@ public class ControladorEditarPensum extends ControladorAbstractoPensum{
     @RequestMapping(method = RequestMethod.GET)
     public String crearFormularioEditar(Model modelo, Short idPensum, HttpServletRequest request) {
 
-        if (!this.validarPensum(idPensum)) {
+        if (!this.validarPensum(idPensum, this.pensum)) {
             return "redirect:buscarPensum.htm";
         }        
 

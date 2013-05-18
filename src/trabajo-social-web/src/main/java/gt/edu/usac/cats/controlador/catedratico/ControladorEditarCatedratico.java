@@ -11,18 +11,22 @@ import gt.edu.usac.cats.dominio.busqueda.DatosBusquedaCatedratico;
 import gt.edu.usac.cats.dominio.wrapper.WrapperCatedratico;
 import gt.edu.usac.cats.servicio.ServicioCatedratico;
 import gt.edu.usac.cats.servicio.ServicioUsuario;
-import gt.edu.usac.cats.util.RequestUtil;
 import gt.edu.usac.cats.util.Mensajes;
+import gt.edu.usac.cats.util.RequestUtil;
+import java.io.Serializable;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
+import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.context.WebApplicationContext;
 
 /**
  * <p>Esta clase se encuentra registrada en Spring como un controlador. Este
@@ -52,8 +56,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @author Daniel Castillo
  * @version 1.0
  */
-@Controller("controladorEditarCatedratico")
-public class ControladorEditarCatedratico {
+@Controller
+@Scope(value = WebApplicationContext.SCOPE_SESSION)
+@SessionAttributes(value={"catedratico"})
+public class ControladorEditarCatedratico implements Serializable{
 
     /**
      * <p>Lleva el nombre del titulo para el mensaje en la pagina.</p>
@@ -143,9 +149,9 @@ public class ControladorEditarCatedratico {
         // se obtiene el carne ingresado para realizar la busqueda
         String codigo = datosBusquedaCatedratico.getCodigoBusqueda();
 
-        if(codigo.isEmpty() || bindingResult.hasErrors())
+        if(codigo.isEmpty() || bindingResult.hasErrors()){
             return "catedratico/editarCatedratico";
-
+        }
         try {
             // se realiza la busqueda del catedratico
             this.catedratico = this.servicioCatedraticoImpl.buscarCatedraticoPorCodigo(codigo);
@@ -154,11 +160,11 @@ public class ControladorEditarCatedratico {
             request.setAttribute("funcionDeshabilitar", true);
             request.setAttribute("estaHabilitado", this.catedratico.getUsuario().isHabilitado());
 
-            if(this.catedratico == null)
+            if(this.catedratico == null){
                 RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "editarCatedratico.sinResultados", true);
-            else
+            } else {
                 wrapperCatedratico.agregarWrapper(this.catedratico);
-
+            }
         } catch (DataAccessException e) {
             // error de acceso a datos
             RequestUtil.crearMensajeRespuesta(request, null, "dataAccessException", false);
@@ -197,9 +203,9 @@ public class ControladorEditarCatedratico {
         // asignacion de codigo de personal, por lo tanto no se utiliza el campo
         // codigo ni el campo idEscuela y como estos tiene asociado un validador
         // entonces siempre daran error
-        if(bindingResult.hasErrors() && bindingResult.getErrorCount() > 2)
+        if(bindingResult.hasErrors() && bindingResult.getErrorCount() > 2){
             return "catedratico/editarCatedratico";
-
+        }
         try {
             
             //Validando correo unico por usuario

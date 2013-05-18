@@ -6,6 +6,7 @@
 
 package gt.edu.usac.cats.controlador.asignacionCursoPensum;
 
+import gt.edu.usac.cats.dominio.AsignacionCursoPensum;
 import gt.edu.usac.cats.dominio.wrapper.WrapperAsignacionEquivalencia;
 import gt.edu.usac.cats.dominio.wrapper.WrapperEquivalenciaPorPensum;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.validation.Valid;
 import org.springframework.validation.BindingResult;
 import gt.edu.usac.cats.dominio.wrapper.WrapperAsignacionEquivalencia;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -29,7 +31,7 @@ public class ControladorRealizarEquivalenciaPorPensums extends ControladorAbstra
     public String mostrarParaRealizarEquivalencia(WrapperEquivalenciaPorPensum wrapperEquivalenciaPorPensum,
             Model modelo) {
 
-        this.listadoEquivalencias = this.servicioAsignacionCursoPensumImpl.getEquivalenciasPorPensums(
+        List<AsignacionCursoPensum> listadoEquivalencias = this.servicioAsignacionCursoPensumImpl.getEquivalenciasPorPensums(
                 wrapperEquivalenciaPorPensum.getAsignacionEstudianteCarrera(),
                 wrapperEquivalenciaPorPensum.getPensumOriginal(),
                 wrapperEquivalenciaPorPensum.getPensumEquivalencia());
@@ -38,10 +40,10 @@ public class ControladorRealizarEquivalenciaPorPensums extends ControladorAbstra
                 new WrapperAsignacionEquivalencia(
                 wrapperEquivalenciaPorPensum.getAsignacionEstudianteCarrera()   );
 
-		  this.nombreAction = "realizarEquivalenciaPorPensums.htm";
-		  this.linkRegresar = "mostrarPensumEstudianteCarrera.htm?idAsignacionEstudianteCarrera=" +
+		  String nombreAction = "realizarEquivalenciaPorPensums.htm";
+		  String linkRegresar = "mostrarPensumEstudianteCarrera.htm?idAsignacionEstudianteCarrera=" +
 		  		wrapperAsignacionEquivalencia.getAsignacionEstudianteCarrera().getIdAsignacionEstudianteCarrera();
-        this.agregarAtributosDefault(modelo, wrapperAsignacionEquivalencia);
+        this.agregarAtributosDefault(modelo, wrapperAsignacionEquivalencia, listadoEquivalencias, nombreAction, linkRegresar);
 		  
         return "cursoPensum/mostrarParaRealizarEquivalencia";
     }

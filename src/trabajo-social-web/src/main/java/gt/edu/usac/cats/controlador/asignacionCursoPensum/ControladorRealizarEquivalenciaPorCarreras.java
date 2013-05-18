@@ -5,6 +5,7 @@
  */
 package gt.edu.usac.cats.controlador.asignacionCursoPensum;
 
+import gt.edu.usac.cats.dominio.AsignacionCursoPensum;
 import gt.edu.usac.cats.dominio.PensumEstudianteCarrera;
 import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
 import gt.edu.usac.cats.dominio.wrapper.WrapperAsignacionEquivalencia;
@@ -18,8 +19,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.validation.Valid;
 import org.springframework.validation.BindingResult;
 import gt.edu.usac.cats.dominio.wrapper.WrapperAsignacionEquivalencia;
+import java.io.Serializable;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
-
+import org.springframework.context.annotation.Scope;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.context.WebApplicationContext;
 
 /**
  *
@@ -27,7 +32,9 @@ import javax.servlet.http.HttpServletRequest;
  * @version 1.0
  */
 @Controller
-public class ControladorRealizarEquivalenciaPorCarreras extends ControladorAbstractoRealizarEquivalencia {
+@Scope(value = WebApplicationContext.SCOPE_SESSION)
+@SessionAttributes(value = {"catedratico"})
+public class ControladorRealizarEquivalenciaPorCarreras extends ControladorAbstractoRealizarEquivalencia implements Serializable{
 
     @Resource
     private ServicioPensumEstudianteCarrera servicioPensumEstudianteCarreraImpl;
@@ -36,41 +43,36 @@ public class ControladorRealizarEquivalenciaPorCarreras extends ControladorAbstr
     public String mostrarParaRealizarEquivalencia(WrapperEquivalenciaPorCarrera wrapperEquivalenciaPorCarrera,
             Model modelo) {
 
-		 //Cargando todo los datos para poder obtener la carrera en el metodo del servicio que busca la
-		 //asignacion a pensum valido
-	 	 AsignacionEstudianteCarrera asignacionEstudianteCarreraOriginal = 
-	 	 		this.servicioPensumEstudianteCarreraImpl.cargarEntidadPorID(AsignacionEstudianteCarrera.class, 
-	 	 		wrapperEquivalenciaPorCarrera.getAsignacionEstudianteCarreraOriginal().getIdAsignacionEstudianteCarrera());
-
-		 AsignacionEstudianteCarrera asignacionEstudianteCarreraEquivalencia = 
-	 	 		this.servicioPensumEstudianteCarreraImpl.cargarEntidadPorID(AsignacionEstudianteCarrera.class,
-	 	 		wrapperEquivalenciaPorCarrera.getAsignacionEstudianteCarreraEquivalencia().getIdAsignacionEstudianteCarrera());        
+        //Cargando todo los datos para poder obtener la carrera en el metodo del servicio que busca la
+        //asignacion a pensum valido
+        AsignacionEstudianteCarrera asignacionEstudianteCarreraOriginal =
+                this.servicioPensumEstudianteCarreraImpl.cargarEntidadPorID(AsignacionEstudianteCarrera.class,
+                wrapperEquivalenciaPorCarrera.getAsignacionEstudianteCarreraOriginal().getIdAsignacionEstudianteCarrera());
+        AsignacionEstudianteCarrera asignacionEstudianteCarreraEquivalencia =
+                this.servicioPensumEstudianteCarreraImpl.cargarEntidadPorID(AsignacionEstudianteCarrera.class,
+                wrapperEquivalenciaPorCarrera.getAsignacionEstudianteCarreraEquivalencia().getIdAsignacionEstudianteCarrera());
         //------------------------------------------------------
         PensumEstudianteCarrera pecOriginal = this.servicioPensumEstudianteCarreraImpl.getPensumEstudianteCarreraValido(
                 asignacionEstudianteCarreraOriginal);
-
         PensumEstudianteCarrera pecEquivalencia = this.servicioPensumEstudianteCarreraImpl.getPensumEstudianteCarreraValido(
                 asignacionEstudianteCarreraEquivalencia);
-
-        this.listadoEquivalencias = this.servicioAsignacionCursoPensumImpl.getEquivalenciasPorCarreras(
+        
+        List<AsignacionCursoPensum> listadoEquivalencias = this.servicioAsignacionCursoPensumImpl.getEquivalenciasPorCarreras(
                 pecOriginal, pecEquivalencia);
-
-	
         WrapperAsignacionEquivalencia wrapperAsignacionEquivalencia =
                 new WrapperAsignacionEquivalencia(asignacionEstudianteCarreraEquivalencia);
+        String nombreAction = "realizarEquivalenciaPorCarreras.htm";
+        String linkRegresar = "mostrarAsignacionEstudianteCarrera.htm?idEstudiante="
+                + asignacionEstudianteCarreraEquivalencia.getEstudiante().getIdEstudiante();
 
-		 this.nombreAction = "realizarEquivalenciaPorCarreras.htm";
-		 this.linkRegresar = "mostrarAsignacionEstudianteCarrera.htm?idEstudiante=" +
-		 		asignacionEstudianteCarreraEquivalencia.getEstudiante().getIdEstudiante();
-        this.agregarAtributosDefault(modelo, wrapperAsignacionEquivalencia);
+        this.agregarAtributosDefault(modelo, wrapperAsignacionEquivalencia, listadoEquivalencias, nombreAction, linkRegresar);
 
-		  
         return "cursoPensum/mostrarParaRealizarEquivalencia";
     }
 
     @RequestMapping(value = "realizarEquivalenciaPorCarreras.htm", method = RequestMethod.POST)
-	public String realizarEquivalenciaPorCarreras(@Valid WrapperAsignacionEquivalencia wrapperAsignacionEquivalencia,
-						     BindingResult bindingResult, Model modelo, HttpServletRequest request){
-	return this.realizarEquivalencia(wrapperAsignacionEquivalencia, bindingResult,modelo,request);
+    public String realizarEquivalenciaPorCarreras(@Valid WrapperAsignacionEquivalencia wrapperAsignacionEquivalencia,
+            BindingResult bindingResult, Model modelo, HttpServletRequest request) {
+        return this.realizarEquivalencia(wrapperAsignacionEquivalencia,  bindingResult, modelo, request);
     }
 }

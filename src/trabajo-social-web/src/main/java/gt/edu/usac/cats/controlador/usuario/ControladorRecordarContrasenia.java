@@ -14,19 +14,23 @@ import gt.edu.usac.cats.util.RequestUtil;
 import gt.edu.usac.cats.velocity.FabricaTemplateVelocity;
 import gt.edu.usac.cats.velocity.contexto.RecordatorioContrasenya;
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.URISyntaxException;
 import javax.annotation.Resource;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import nl.captcha.Captcha;
 import org.apache.log4j.Logger;
+import org.springframework.context.annotation.Scope;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import nl.captcha.Captcha;
-import org.springframework.dao.DataAccessException;
-import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.context.WebApplicationContext;
 
 /**
  *
@@ -34,7 +38,10 @@ import org.springframework.validation.BindingResult;
  */
 @Controller
 @RequestMapping(value = "recordarContrasenia.htm")
-public class ControladorRecordarContrasenia {
+@Scope(value = WebApplicationContext.SCOPE_SESSION)
+@SessionAttributes(value = {"usuario"})
+
+public class ControladorRecordarContrasenia implements Serializable{
     private static Logger log = Logger.getLogger(ControladorRecordarContrasenia.class);
 //______________________________________________________________________________
     private static final String TITULO_MENSAJE = "recordarContrasenia.titulo";
@@ -75,9 +82,9 @@ public class ControladorRecordarContrasenia {
         Captcha captcha = (Captcha) request.getSession().getAttribute(Captcha.NAME);
 
         //Validar que el formulario no tenga errores
-        if(bindingResult.hasErrors())
+        if(bindingResult.hasErrors()) {
             return "usuario/recordarContrasenia";
-
+        }
         //Validar captcha
         if(!captcha.isCorrect(wrapperRecordarContrasenia.getCaptcha())){
             RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "recordarContrasenia.errorCaptcha",false);

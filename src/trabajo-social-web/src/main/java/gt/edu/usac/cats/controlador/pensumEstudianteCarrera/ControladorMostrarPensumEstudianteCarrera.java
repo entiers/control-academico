@@ -6,13 +6,17 @@
 package gt.edu.usac.cats.controlador.pensumEstudianteCarrera;
 
 import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
+import gt.edu.usac.cats.dominio.Pensum;
 import gt.edu.usac.cats.dominio.PensumEstudianteCarrera;
 import gt.edu.usac.cats.dominio.wrapper.WrapperEquivalenciaPorPensum;
 import gt.edu.usac.cats.util.Mensajes;
 import gt.edu.usac.cats.util.RequestUtil;
+import java.io.Serializable;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
+import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
@@ -20,6 +24,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.context.WebApplicationContext;
 
 /**
  * Este controlador lleva el manejo de las vistas <code>mostrarPensumEstudianteCarrera.htm</code>
@@ -30,7 +36,36 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @version 1.0
  */
 @Controller
-public class ControladorMostrarPensumEstudianteCarrera extends ControladorAbstractoPensumEstudianteCarrera {
+@Scope(value = WebApplicationContext.SCOPE_SESSION)
+@SessionAttributes(value = {"pensum", "asignacionEstudianteCarrera",
+    "listadoPensumEstudianteCarreraNoValidos", "listadoPensumsNoAsignadosAEsutudianteCarrera",
+    "wrapperEquivalenciaPorPensum"})
+public class ControladorMostrarPensumEstudianteCarrera extends ControladorAbstractoPensumEstudianteCarrera implements Serializable{
+//______________________________________________________________________________
+    /**
+     * Objeto de tipo {@link AsignacionEstudianteCarrera} que ha sido seleccionado
+     */
+    private AsignacionEstudianteCarrera asignacionEstudianteCarrera;
+//______________________________________________________________________________
+    /**
+     * Objeto de tipo {@link Pensum} que ha sido seleccionado
+     */
+    private Pensum pensum;
+//______________________________________________________________________________
+    /**
+     * Listado de objetos de tipo {@link PensumEstudianteCarrera} que mantienen
+     * los resultados de las b&uacute;squedas que se realizan.
+     */
+    private List<PensumEstudianteCarrera> listadoPensumEstudianteCarreraNoValidos;
+//______________________________________________________________________________
+    /**
+     * Listado de objetos de tipo {@link Pensum} que mantienen los resultados de
+     * las b&uacute;squedas que se realizan.
+     */
+    private List<Pensum> listadoPensumsNoAsignadosAEsutudianteCarrera;
+
+//______________________________________________________________________________
+    private WrapperEquivalenciaPorPensum wrapperEquivalenciaPorPensum;    
 //______________________________________________________________________________
 
     /**
@@ -85,8 +120,11 @@ public class ControladorMostrarPensumEstudianteCarrera extends ControladorAbstra
         request.setAttribute("aec", this.asignacionEstudianteCarrera);
 
 
-        this.agregarAtributosDefault(modelo, new PensumEstudianteCarrera(), false, true);
-
+        //this.agregarAtributosDefault(modelo, new PensumEstudianteCarrera(), false, true);
+        this.agregarAtributosDefault(modelo, pensum, asignacionEstudianteCarrera, pensumEstudianteCarreraValido, 
+                listadoPensumEstudianteCarreraNoValidos, listadoPensumsNoAsignadosAEsutudianteCarrera, 
+                wrapperEquivalenciaPorPensum, false, true);
+        
         return "pensumEstudianteCarrera/mostrarPensumEstudianteCarrera";
     }
 
@@ -122,14 +160,18 @@ public class ControladorMostrarPensumEstudianteCarrera extends ControladorAbstra
             } catch (DataIntegrityViolationException e) {
                 RequestUtil.crearMensajeRespuesta(request, "asignarPensumEstudianteCarrera.titulo", "dataIntegrityViolatioException", false);
                 log.error(Mensajes.DATA_INTEGRITY_VIOLATION_EXCEPTION, e);
-                this.agregarAtributosDefault(modelo, pensumEstudianteCarrera, false, false);
+                //this.agregarAtributosDefault(modelo, pensumEstudianteCarrera, false, false);
+                this.agregarAtributosDefault(modelo, pensum, asignacionEstudianteCarrera, pensumEstudianteCarrera, listadoPensumEstudianteCarreraNoValidos,
+                        listadoPensumsNoAsignadosAEsutudianteCarrera, wrapperEquivalenciaPorPensum, false, false);
             } catch (DataAccessException e) {
                 RequestUtil.crearMensajeRespuesta(request, "asignarPensumEstudianteCarrera.titulo", "dataAccessException", false);
                 log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
-                this.agregarAtributosDefault(modelo, pensumEstudianteCarrera, false, false);
+                this.agregarAtributosDefault(modelo, pensum, asignacionEstudianteCarrera, pensumEstudianteCarrera, listadoPensumEstudianteCarreraNoValidos,
+                        listadoPensumsNoAsignadosAEsutudianteCarrera, wrapperEquivalenciaPorPensum, false, false);
             }
         } else {
-            this.agregarAtributosDefault(modelo, pensumEstudianteCarrera, false, false);
+            this.agregarAtributosDefault(modelo, pensum, asignacionEstudianteCarrera, pensumEstudianteCarrera, listadoPensumEstudianteCarreraNoValidos,
+                        listadoPensumsNoAsignadosAEsutudianteCarrera, wrapperEquivalenciaPorPensum, false, false);
         }
 
         return "pensumEstudianteCarrera/mostrarPensumEstudianteCarrera";

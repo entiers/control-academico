@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package gt.edu.usac.cats.controlador.estudiante;
 
 import gt.edu.usac.cats.dominio.LugarNacimiento;
@@ -24,36 +23,19 @@ public abstract class ControladorEstudianteAbstracto {
 //______________________________________________________________________________
     @Resource
     private ServicioNacionalidad servicioNacionalidadImpl;
-
 //______________________________________________________________________________
     @Resource
     private ServicioLugarNacimiento servicioLugarNacimientoImpl;
-
 //______________________________________________________________________________
-
     @Resource
     protected ServicioEstudiante servicioEstudianteImpl;
-    
-//______________________________________________________________________________
 
-    protected List <Nacionalidad> listadoNacionalidades;
+    protected void agregarAlModeloListadoEntidades(Model modelo) {
+        List <LugarNacimiento> listadoLugaresNacimiento = this.servicioLugarNacimientoImpl.listar();
+        List <Nacionalidad> listadoNacionalidades = this.servicioNacionalidadImpl.listar();
 
-//______________________________________________________________________________
 
-    protected List <LugarNacimiento> listadoLugaresNacimiento;
-
-//______________________________________________________________________________
-
-    protected void listarEntidades(Model modelo){
-        this.listadoLugaresNacimiento = this.servicioLugarNacimientoImpl.listar();
-        this.listadoNacionalidades = this.servicioNacionalidadImpl.listar();
-
-        this.agregarAlModeloListadoEntidades(modelo);
+        modelo.addAttribute("listadoNacionalidades", listadoNacionalidades);
+        modelo.addAttribute("listadoLugaresNacimiento", listadoLugaresNacimiento);
     }
-    
-    protected void agregarAlModeloListadoEntidades(Model modelo){
-        modelo.addAttribute("listadoNacionalidades", this.listadoNacionalidades);
-        modelo.addAttribute("listadoLugaresNacimiento", this.listadoLugaresNacimiento);
-    }
-    
 }

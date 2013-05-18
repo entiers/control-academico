@@ -15,15 +15,19 @@ import gt.edu.usac.cats.util.EmailSenderVelocity;
 import gt.edu.usac.cats.util.Mensajes;
 import gt.edu.usac.cats.util.RequestUtil;
 import gt.edu.usac.cats.velocity.FabricaTemplateVelocity;
+import java.io.Serializable;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
+import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.context.WebApplicationContext;
 
 /**
  *
@@ -31,7 +35,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 @RequestMapping(value = "recordarUsuario.htm")
-public class ControladorRecordarUsuario {
+@Scope(value = WebApplicationContext.SCOPE_SESSION)
+@SessionAttributes(value = {"usuario"})
+
+public class ControladorRecordarUsuario implements Serializable{
 
     private static Logger log = Logger.getLogger(ControladorAsignarPerfilUsuario.class);
 //______________________________________________________________________________

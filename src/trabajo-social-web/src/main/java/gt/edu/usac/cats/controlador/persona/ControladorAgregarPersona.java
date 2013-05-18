@@ -10,11 +10,13 @@ import gt.edu.usac.cats.dominio.wrapper.WrapperPersona;
 import gt.edu.usac.cats.util.Mensajes;
 import gt.edu.usac.cats.util.RequestUtil;
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.URISyntaxException;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
+import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.mail.MailException;
@@ -23,6 +25,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.context.WebApplicationContext;
 
 /**
  *
@@ -31,7 +35,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 @RequestMapping(value = "agregarPersona.htm")
-public class ControladorAgregarPersona extends ControladorAbstractoPersona {
+@Scope(value = WebApplicationContext.SCOPE_SESSION)
+@SessionAttributes(value = {"listadoPerfil"})
+public class ControladorAgregarPersona extends ControladorAbstractoPersona implements Serializable{
 //______________________________________________________________________________
 
     /**
@@ -66,7 +72,7 @@ public class ControladorAgregarPersona extends ControladorAbstractoPersona {
             }
             
             //Validar email unico
-            if(super.servicioUsuarioImpl.getUsuarioPorEmail(wrapperPersona.getEmail())!=null){
+            if(this.servicioUsuarioImpl.getUsuarioPorEmail(wrapperPersona.getEmail())!=null){
                 RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "usuario.correoYaExiste", false);
                 return "persona/agregarPersona";
             }

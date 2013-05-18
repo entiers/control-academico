@@ -12,28 +12,35 @@ import gt.edu.usac.cats.dominio.Pensum;
 import gt.edu.usac.cats.dominio.wrapper.WrapperCursoPensum;
 import gt.edu.usac.cats.dominio.wrapper.WrapperPensum;
 import gt.edu.usac.cats.servicio.ServicioCarrera;
-import gt.edu.usac.cats.util.RequestUtil;
 import gt.edu.usac.cats.util.Mensajes;
+import gt.edu.usac.cats.util.RequestUtil;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
+import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.context.WebApplicationContext;
 
 /**
  *
  * @author Daniel Castillo
  * @version 1.0
  */
-@Controller("ControladorControlPensum")
-public class ControladorControlPensum {
+@Controller
+@Scope(value = WebApplicationContext.SCOPE_SESSION)
+@SessionAttributes(value = {"listadoPensum", "listadoCarreras", "listadoCursos",
+"pensumSeleccionado"})
+public class ControladorControlPensum implements Serializable{
 
     /**
      * <p>Lleva el nombre del titulo para el mensaje en la página.</p>
@@ -197,9 +204,9 @@ public class ControladorControlPensum {
                 RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "controlPensum.borrarExito", true);
                 String msg = Mensajes.EXITO_BORRAR + "Pensum, codigo " + pensum.getCodigo();
                 log.info(msg);
-            } else
+            } else {
                 RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "controlPensum.borrarError", true);
-
+            }
         } catch (DataAccessException e) {
             // error de acceso a datos
             RequestUtil.crearMensajeRespuesta(request, null, "dataAccessException", false);
@@ -233,9 +240,9 @@ public class ControladorControlPensum {
                 RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "controlPensum.activarExito", true);
                 String msg = Mensajes.EXITO_ACTIVAR + "Pensum, codigo " + pensum.getCodigo();
                 log.info(msg);
-            } else 
+            } else {
                 RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "controlPensum.activarError", true);
-            
+            }
         } catch (DataAccessException e) {
             // error de acceso a datos
             RequestUtil.crearMensajeRespuesta(request, null, "dataAccessException", false);
@@ -269,9 +276,9 @@ public class ControladorControlPensum {
                 RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "controlPensum.caducarExito", true);
                 String msg = Mensajes.EXITO_CADUCAR + "Pensum, codigo " + pensum.getCodigo();
                 log.info(msg);
-            } else
+            } else {
                 RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "controlPensum.caducarError", true);
-
+            }
         } catch (DataAccessException e) {
             // error de acceso a datos
             RequestUtil.crearMensajeRespuesta(request, null, "dataAccessException", false);
@@ -395,8 +402,9 @@ public class ControladorControlPensum {
      */
     private Carrera getCarreraSeleccionada(short idCarrera) {
         for(Carrera carrera : this.listadoCarreras) {
-            if(carrera.getIdCarrera() == idCarrera)
+            if(carrera.getIdCarrera() == idCarrera) {
                 return carrera;
+            }
         }
         return null;
     }
@@ -411,8 +419,9 @@ public class ControladorControlPensum {
     private Pensum getPensumSeleccionado(String idPensum) {
         short id = Short.parseShort(idPensum);
         for(Pensum p : this.listadoPensum) {
-            if(p.getIdPensum() == id)
+            if(p.getIdPensum() == id) {
                 return p;
+            }
         }
         return null;
     }
@@ -426,8 +435,9 @@ public class ControladorControlPensum {
      */
     private Curso getCursoSeleccionado(short idCurso) {
         for(Curso c : this.listadoCursos) {
-            if(c.getIdCurso() == idCurso)
+            if(c.getIdCurso() == idCurso) {
                 return c;
+            }
         }
         return null;
     }

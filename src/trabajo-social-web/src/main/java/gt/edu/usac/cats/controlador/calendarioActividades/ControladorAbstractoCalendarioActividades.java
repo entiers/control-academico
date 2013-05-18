@@ -8,6 +8,7 @@ package gt.edu.usac.cats.controlador.calendarioActividades;
 import gt.edu.usac.cats.dominio.Semestre;
 import gt.edu.usac.cats.servicio.ServicioCalendarioActividades;
 import gt.edu.usac.cats.servicio.ServicioSemestre;
+import java.io.Serializable;
 import java.util.List;
 import javax.annotation.Resource;
 
@@ -16,7 +17,7 @@ import javax.annotation.Resource;
  * @author Mario Batres
  * @version 1.0
  */
-public abstract class ControladorAbstractoCalendarioActividades {
+public abstract class ControladorAbstractoCalendarioActividades implements Serializable {
 
     //______________________________________________________________________________
     /**
@@ -32,10 +33,6 @@ public abstract class ControladorAbstractoCalendarioActividades {
      */
     @Resource
     protected ServicioSemestre servicioSemestreImpl;
-//______________________________________________________________________________
-    /**
-     * <p>Listado de todas las semestres disponibles.</p>
-     */
-    protected List <Semestre> listadoSemestres;
+
 
 }

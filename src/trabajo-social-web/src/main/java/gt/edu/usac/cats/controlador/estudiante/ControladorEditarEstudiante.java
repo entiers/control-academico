@@ -11,18 +11,22 @@ import gt.edu.usac.cats.dominio.busqueda.DatosBusquedaEstudiante;
 import gt.edu.usac.cats.dominio.wrapper.WrapperEstudiante;
 import gt.edu.usac.cats.servicio.ServicioEstudiante;
 import gt.edu.usac.cats.servicio.ServicioUsuario;
-import gt.edu.usac.cats.util.RequestUtil;
 import gt.edu.usac.cats.util.Mensajes;
+import gt.edu.usac.cats.util.RequestUtil;
+import java.io.Serializable;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
+import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.context.WebApplicationContext;
 
 /**
  * <p>Esta clase se encuentra registrada en Spring como un controlador. Este
@@ -52,8 +56,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @author Daniel Castillo
  * @version 1.0
  */
-@Controller("controladorEditarEstudiante")
-public class ControladorEditarEstudiante extends ControladorEstudianteAbstracto {
+@Controller
+@Scope(value = WebApplicationContext.SCOPE_SESSION)
+@SessionAttributes(value = {"estudiante"})
+public class ControladorEditarEstudiante extends ControladorEstudianteAbstracto implements Serializable {
 
     /**
      * <p>Lleva el nombre del titulo para el mensaje en la pagina</p>
@@ -64,15 +70,7 @@ public class ControladorEditarEstudiante extends ControladorEstudianteAbstracto 
      * <p>Matiene una bitacora de lo realizado por esta clase.</p>
      */
     private static Logger log = Logger.getLogger(ControladorEditarEstudiante.class);
-//______________________________________________________________________________
-    /**
-     * <p>Contiene metodos que permiten el manejo de la informacion relacionada
-     * con el estudiante en la base de datos. Este objeto se encuentra registrado
-     * como un bean de servicio en Spring, por lo que este es el encargado de
-     * inyectar la dependencia.</p>
-     */
-    @Resource
-    protected ServicioEstudiante servicioEstudianteImpl;
+
 //______________________________________________________________________________
     /**
      * <p>Se utiliza para mantener todos los datos del estudiante que se
@@ -139,7 +137,7 @@ public class ControladorEditarEstudiante extends ControladorEstudianteAbstracto 
     public String buscarEstudiante(@Valid DatosBusquedaEstudiante datosBusquedaEstudiante,
             BindingResult bindingResult, Model modelo, HttpServletRequest request) {
 
-        this.listarEntidades(modelo);
+        this.agregarAlModeloListadoEntidades(modelo);
         
         // se crea el envoltorio para el estudiante
         WrapperEstudiante wrapperEstudiante = new WrapperEstudiante();
@@ -148,9 +146,10 @@ public class ControladorEditarEstudiante extends ControladorEstudianteAbstracto 
         // se obtiene el carne ingresado para realizar la busqueda
         String carne = datosBusquedaEstudiante.getCarneBusqueda();
 
-        if(carne.isEmpty() || bindingResult.hasErrors())
+        if(carne.isEmpty() || bindingResult.hasErrors()) {
             return "estudiante/editarEstudiante";
-
+        }
+        
         try {
             // se realiza la busqueda del estudiante
             this.estudiante = this.servicioEstudianteImpl.buscarEstudiantePorCarne(carne);
@@ -159,11 +158,11 @@ public class ControladorEditarEstudiante extends ControladorEstudianteAbstracto 
             request.setAttribute("funcionDeshabilitar", true);
             request.setAttribute("estaHabilitado", this.estudiante.getUsuario().isHabilitado());
 
-            if(this.estudiante == null)
+            if(this.estudiante == null){
                 RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "editarEstudiante.sinResultados", true);
-            else
+            } else {
                 wrapperEstudiante.agregarWrapper(this.estudiante);
-
+            }
         } catch (DataAccessException e) {
             // error de acceso a datos
             RequestUtil.crearMensajeRespuesta(request, null, "dataAccessException", false);
@@ -201,9 +200,10 @@ public class ControladorEditarEstudiante extends ControladorEstudianteAbstracto 
         // asignacion de carne, por lo tanto no se utiliza el campo carne ni el
         // campo idCarrera y como estos tiene asociado un validador entonces
         // siempre daran error
-        if(bindingResult.hasErrors() && bindingResult.getErrorCount() > 2)
+        if(bindingResult.hasErrors() && bindingResult.getErrorCount() > 2) {
             return "estudiante/editarEstudiante";
-
+        }
+        
         try {
             //Validando correo unico por usuario
             if(!this.estudiante.getEmail().equals(wrapperEstudiante.getEmail())){

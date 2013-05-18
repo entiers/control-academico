@@ -18,6 +18,7 @@ import gt.edu.usac.cats.servicio.ServicioGeneral;
 import gt.edu.usac.cats.servicio.ServicioUsuario;
 import gt.edu.usac.cats.util.Mensajes;
 import gt.edu.usac.cats.util.RequestUtil;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -36,8 +37,11 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.context.WebApplicationContext;
 
 /**
  * Esta clase es el controlador que se encarga de la llamada a la consulta de cursos
@@ -45,8 +49,10 @@ import org.springframework.validation.BindingResult;
  *
  * @author Carlos Solorzano
  */
-@Controller("controladorBuscarAsignacionPorEstudiante")
-public class ControladorBuscarAsignacionPorEstudiante {
+@Controller
+@Scope(value = WebApplicationContext.SCOPE_SESSION)
+@SessionAttributes(value={"estudiante", "usuario"}) 
+public class ControladorBuscarAsignacionPorEstudiante implements Serializable{
 
 //  _____________________________________________________________________________
     private static final String TITULO_MENSAJE = "miscursos.asignados";

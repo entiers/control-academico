@@ -11,15 +11,19 @@ import gt.edu.usac.cats.dominio.AsignacionCatedraticoHorario;
 import gt.edu.usac.cats.dominio.Catedratico;
 import gt.edu.usac.cats.util.Mensajes;
 import gt.edu.usac.cats.util.RequestUtil;
+import java.io.Serializable;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.context.WebApplicationContext;
 
 /**
  * Controlador encargado de manejar las peticiones GET y POST de la p�gina 
@@ -30,12 +34,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @author Carlos Solorzano
  * @version 1.0
  */
-@Controller("controladorBuscarAsignacionCatedraticoHorario")
-public class ControladorBuscarAsignacionCatedraticoHorario extends ControladorAbstractoAsignacionCatedraticoHorario{
- //______________________________________________________________________________
+@Controller
+@Scope(value = WebApplicationContext.SCOPE_SESSION)
+@SessionAttributes(value={"catedratico"}) 
+public class ControladorBuscarAsignacionCatedraticoHorario extends ControladorAbstractoAsignacionCatedraticoHorario implements Serializable{
+//______________________________________________________________________________
     private static Logger log = Logger.getLogger(ControladorAgregarAsignacionCatedraticoHorario.class);
-//_____________________________________________________________________________
+//______________________________________________________________________________
     private static final String TITULO_MENSAJE = "asignacionHorarioCatedratico.titulo";
+//______________________________________________________________________________    
+    private Catedratico catedratico;
 //______________________________________________________________________________
     /**
      * Metodo encargado de resolver las peticiones tipo get de la pagina 
@@ -54,10 +62,10 @@ public class ControladorBuscarAsignacionCatedraticoHorario extends ControladorAb
 
         List<AsignacionCatedraticoHorario> listaACH;
         try{
-            super.catedratico = super.servicioGeneralImpl.cargarEntidadPorID(Catedratico.class, Short.parseShort(idCatedratico.toString()) );
+            this.catedratico = super.servicioGeneralImpl.cargarEntidadPorID(Catedratico.class, Short.parseShort(idCatedratico.toString()) );
             listaACH = super.servicioAsignacionCatedraticoHorarioImpl.getAsignacionCatedraticoHorario(
-                    super.servicioSemestreImpl.getSemestreActivo(), super.catedratico);
-            modelo.addAttribute("catedratico", super.catedratico);
+                    super.servicioSemestreImpl.getSemestreActivo(), this.catedratico);
+            modelo.addAttribute("catedratico", this.catedratico);
             modelo.addAttribute("listaACH", listaACH);
         }
         catch(org.hibernate.ObjectNotFoundException ex){

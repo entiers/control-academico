@@ -7,18 +7,23 @@
 package gt.edu.usac.cats.controlador.calendarioActividades;
 
 import gt.edu.usac.cats.dominio.CalendarioActividades;
+import gt.edu.usac.cats.dominio.Semestre;
 import gt.edu.usac.cats.dominio.wrapper.WrapperCalendarioActividades;
-import gt.edu.usac.cats.util.RequestUtil;
 import gt.edu.usac.cats.util.Mensajes;
+import gt.edu.usac.cats.util.RequestUtil;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
+import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.context.WebApplicationContext;
 
 /**
  * Esta clase se encarga de modificar un calendario de actividades existente en
@@ -30,7 +35,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller("controladorEditarCalendarioActividades")
 @RequestMapping("editarCalendarioActividades")
+@Scope(value = WebApplicationContext.SCOPE_SESSION)
+@SessionAttributes(value={"listadoSemestres"}) 
 public class ControladorEditarCalendarioActividades  extends ControladorAbstractoCalendarioActividades{
+//______________________________________________________________________________
+    /**
+     * <p>Listado de todas las semestres disponibles.</p>
+     */
+    private List <Semestre> listadoSemestres;    
 //_____________________________________________________________________________
     /**
      * <p>

@@ -22,10 +22,6 @@ public abstract class ControladorAbstractoIngresoNota {
 //______________________________________________________________________________
     protected static String TITULO_MENSAJE = "ingresoNota.titulo";
 //______________________________________________________________________________
-    protected List<DetalleAsignacion> listadoDetalleAsignacion;
-//______________________________________________________________________________
-    protected Usuario usuario;
-//______________________________________________________________________________
     @Resource
     protected ServicioDetalleAsignacion servicioDetalleAsignacionImpl;
 //______________________________________________________________________________
