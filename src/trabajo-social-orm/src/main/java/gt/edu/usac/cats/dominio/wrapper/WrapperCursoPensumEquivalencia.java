@@ -27,9 +27,13 @@ public class WrapperCursoPensumEquivalencia implements Serializable{
     
     public WrapperCursoPensumEquivalencia() {
         this.pensumEquivalente = new Pensum();
+        this.pensumEquivalente.setIdPensum((short) 0);
         this.pensumOriginal = new Pensum();
+        this.pensumOriginal.setIdPensum((short) 0);
         this.cursoEquivalente = new Curso();
+        this.cursoEquivalente.setIdCurso((short) 0);
         this.cursoOriginal = new Curso();
+        this.cursoOriginal.setIdCurso((short) 0);
     }
 
     

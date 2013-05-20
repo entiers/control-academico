@@ -39,7 +39,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     schema = "control"
 )
 public class Curso implements java.io.Serializable {
-      private short idCurso;
+      private Short idCurso;
      private String codigo;
      private String nombre;
      private Set<ProgramaCurso> programaCursos = new HashSet<ProgramaCurso>(0);
@@ -53,11 +53,11 @@ public class Curso implements java.io.Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id_curso", unique=true, nullable=false)
-    public short getIdCurso() {
+    public Short getIdCurso() {
         return this.idCurso;
     }
 
-    public void setIdCurso(short idCurso) {
+    public void setIdCurso(Short idCurso) {
         this.idCurso = idCurso;
     }
 
