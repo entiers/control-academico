@@ -69,7 +69,9 @@ public class ControladorEditarPensum extends ControladorAbstractoPensum implemen
     @RequestMapping(method = RequestMethod.GET)
     public String crearFormularioEditar(Model modelo, Short idPensum, HttpServletRequest request) {
 
-        if (!this.validarPensum(idPensum, this.pensum)) {
+        this.pensum = this.validarPensum(idPensum);
+        
+        if (pensum == null) {
             return "redirect:buscarPensum.htm";
         }        
 

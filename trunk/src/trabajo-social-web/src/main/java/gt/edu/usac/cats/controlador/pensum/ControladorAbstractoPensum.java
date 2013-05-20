@@ -63,19 +63,15 @@ public abstract class ControladorAbstractoPensum {
      * @return <ul><li><b><em>true</em></b> Si es v&aacute;lido</li>
      * <li><b><em>false</em></b> Si no es v&aacute;lido</li></ul>
      */
-    protected boolean validarPensum(Short idPensum, Pensum pensum) {
+    protected Pensum validarPensum(Short idPensum) {
 
         if (idPensum == null) {
-            return false;
+            return null;
         }
 
-        pensum = this.servicioPensumImpl.cargarEntidadPorID(Pensum.class, idPensum);
+        Pensum pensum = this.servicioPensumImpl.cargarEntidadPorID(Pensum.class, idPensum);
 
-        if (pensum == null) {
-            return false;
-        }
-
-        return true;
+        return pensum;
     }
 //______________________________________________________________________________
 
@@ -91,18 +87,14 @@ public abstract class ControladorAbstractoPensum {
      * @return <ul><li><b><em>true</em></b> Si es v&aacute;lido</li>
      * <li><b><em>false</em></b> Si no es v&aacute;lido</li></ul>
      */
-    protected boolean validarAsignacionCursoPensum(Short idAsignacionCursoPensum,
-            AsignacionCursoPensum asignacionCursoPensum) {
+    protected AsignacionCursoPensum validarAsignacionCursoPensum(Short idAsignacionCursoPensum) {
         if (idAsignacionCursoPensum == null) {
-            return false;
+            return null;
         }
 
-        asignacionCursoPensum = this.servicioPensumImpl.cargarEntidadPorID(AsignacionCursoPensum.class, idAsignacionCursoPensum);
-
-        if (asignacionCursoPensum == null) {
-            return false;
-        }
-        return true;
+        AsignacionCursoPensum asignacionCursoPensum = 
+                this.servicioPensumImpl.cargarEntidadPorID(AsignacionCursoPensum.class, idAsignacionCursoPensum);
+        return asignacionCursoPensum;
     }
 
 //______________________________________________________________________________
