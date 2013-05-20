@@ -85,7 +85,8 @@ public class ControladorAsignacionCursoPensum extends ControladorAbstractoPensum
      */
     @RequestMapping(value = "asignarCursoPensum.htm", method = RequestMethod.GET)
     public String asignarCursoPensum(Model modelo, Short idPensum) {
-        if (!this.validarPensum(idPensum, this.pensum)) {
+        this.pensum = this.validarPensum(idPensum); 
+        if (this.pensum == null) {
             return "redirect:buscarPensum.htm";
         }
 
@@ -96,7 +97,7 @@ public class ControladorAsignacionCursoPensum extends ControladorAbstractoPensum
 //______________________________________________________________________________
     @RequestMapping(value = "asignarCursoPensumPag.htm", method = RequestMethod.GET)
     public String asignarCursoPensumPag(Model modelo) {
-        this.validarPensum(this.pensum.getIdPensum(), this.pensum);
+        this.pensum = this.validarPensum(this.pensum.getIdPensum());
         this.agregarAtributosDefault(modelo);
         return "pensum/asignarCursoPensum";
     }
@@ -201,7 +202,8 @@ public class ControladorAsignacionCursoPensum extends ControladorAbstractoPensum
     @RequestMapping(value = "eliminarCursoDePensum.htm", method = RequestMethod.GET)
     public String eliminarCursoDePensum(Model modelo, Short idAsignacionCursoPensum,
             HttpServletRequest request) {
-        if (!this.validarAsignacionCursoPensum(idAsignacionCursoPensum, this.asignacionCursoPensum)) {
+        this.asignacionCursoPensum = this.validarAsignacionCursoPensum(idAsignacionCursoPensum);
+        if (this.asignacionCursoPensum == null) {
             return "redirect:buscarPensum.htm";
         }
 
@@ -245,7 +247,8 @@ public class ControladorAsignacionCursoPensum extends ControladorAbstractoPensum
      */
     @RequestMapping(value = "editarCursoDePensum.htm", method = RequestMethod.GET)
     public String editarCursoDePensum(Model modelo, Short idAsignacionCursoPensum) {
-        if (!this.validarAsignacionCursoPensum(idAsignacionCursoPensum, this.asignacionCursoPensum)) {
+        this.asignacionCursoPensum = this.validarAsignacionCursoPensum(idAsignacionCursoPensum);
+        if (this.asignacionCursoPensum == null) {
             return "redirect:buscarPensum.htm";
         }
 
@@ -316,7 +319,8 @@ public class ControladorAsignacionCursoPensum extends ControladorAbstractoPensum
      */
     @RequestMapping(value = "administrarPrerrequisitos.htm", method = RequestMethod.GET)
     public String administrarPrerrequisitos(Model modelo, Short idAsignacionCursoPensum) {
-        if (!this.validarAsignacionCursoPensum(idAsignacionCursoPensum, this.asignacionCursoPensum)) {
+        this.asignacionCursoPensum = this.validarAsignacionCursoPensum(idAsignacionCursoPensum);
+        if (this.asignacionCursoPensum == null) {
             return "redirect:buscarPensum.htm";
         }
 

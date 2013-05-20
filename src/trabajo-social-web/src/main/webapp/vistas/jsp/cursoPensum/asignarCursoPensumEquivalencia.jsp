@@ -53,7 +53,8 @@
                     <form:label for="pensumEquivalente.idPensum" path="pensumEquivalente.idPensum">
                         <fmt:message key="cursoPensum.label.pensumEquivalente"/>: *
                     </form:label>
-                    <form:select id="slcPensumEquivalente" path="pensumEquivalente.idPensum" cssStyle="width: 250px;" disabled="true" cssClass="classDisabled" >
+                    <form:select id="slcPensumEquivalente" path="pensumEquivalente.idPensum" 
+                                 cssStyle="width: 250px;" disabled="true" cssClass="classDisabled" >
                         <form:option  value="0" label="Seleccionar un valor" />
                     </form:select>
 
@@ -64,7 +65,8 @@
                     <form:label for="cursoEquivalente.idCurso" path="cursoEquivalente.idCurso">
                         <fmt:message key="cursoPensum.label.cursoEquivalente"/>: *
                     </form:label>
-                    <form:select id="slcCursoEquivalente" path="cursoEquivalente.idCurso" cssStyle="width: 250px;" disabled="true" cssClass="classDisabled">
+                    <form:select id="slcCursoEquivalente" path="cursoEquivalente.idCurso" 
+                                 cssStyle="width: 250px;" disabled="true" cssClass="classDisabled">
                         <form:option  value="" label="Seleccionar un valor" />
                     </form:select>
 

@@ -27,11 +27,9 @@ public class ControladorAbstractoCursoPensumEquivalencia {
     protected void agregarAtributosDefault(Model modelo,
             WrapperCursoPensumEquivalencia wrapperCursoPensumEquivalencia,
             boolean buscar ){
-        List <Pensum> listadoPensums = new ArrayList <Pensum> () ;
-        if(buscar){
-            listadoPensums =
+        List <Pensum> listadoPensums =
                     this.servicioAsignacionCursoPensum.listarEntidad(Pensum.class, true, "codigo");
-        }
+        
 
         modelo.addAttribute("listadoPensums", listadoPensums);
         modelo.addAttribute("wrapperCursoPensumEquivalencia", wrapperCursoPensumEquivalencia);
