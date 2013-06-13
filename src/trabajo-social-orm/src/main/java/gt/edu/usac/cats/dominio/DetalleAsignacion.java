@@ -48,12 +48,14 @@ public class DetalleAsignacion implements java.io.Serializable {
     private short laboratorio;
     private short zona;
     private boolean oficializado;
+    private String excusa;
 
     public DetalleAsignacion() {
         this.zona = 0;
         this.laboratorio = 0;
         this.examenFinal = 0;
         this.idDetalleAsignacion = 0;
+        excusa = "";
     }
 
     public DetalleAsignacion(int idDetalleAsignacion, Asignacion asignacion, Horario horario, short zona,
@@ -190,6 +192,21 @@ public class DetalleAsignacion implements java.io.Serializable {
 
     public void setOficializado(boolean oficializado) {
         this.oficializado = oficializado;
+    }
+
+    @Column(
+        name = "excusa",
+        nullable = false
+    )
+    public String getExcusa() {
+        return excusa;
+    }
+
+    /**
+     * @param excusa the excusa to set
+     */
+    public void setExcusa(String excusa) {
+        this.excusa = excusa;
     }
 
 }

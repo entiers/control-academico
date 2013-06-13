@@ -23,7 +23,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class WrapperCatedratico implements Serializable{
 
     @NotEmpty(message = "{validacion.campoObligatorio}")
-    @Pattern(regexp = "|[0-9]{9}", message = "{validacion.codigoCatedraticoInvalido}")
+    @Pattern(regexp = "|[0-9]{2,15}", message = "{validacion.codigoCatedraticoInvalido}")
 //    @CodigoCatedraticoValidador
     private String codigo;
 //______________________________________________________________________________
