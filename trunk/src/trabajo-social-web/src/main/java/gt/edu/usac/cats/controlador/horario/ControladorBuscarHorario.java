@@ -96,7 +96,9 @@ public class ControladorBuscarHorario extends ControladorAbstractoHorario {
 
     //______________________________________________________________________________
     protected void agregarAtributosDefaultBusqueda(Model modelo, DatosBusquedaHorario datosBusquedaHorario, boolean buscar) {
-        modelo.addAttribute("datosBusquedaHorario", datosBusquedaHorario);
+        if (datosBusquedaHorario!= null){
+            modelo.addAttribute("datosBusquedaHorario", datosBusquedaHorario);
+        }
         modelo.addAttribute("nombreControlReporte", ControlReporte.HORARIO);
         modelo.addAttribute("listadoHorarios", this.listadoHorarios);
         this.agregarAtributosDefault(modelo, listadoSalones, listadoSemestres, buscar);
