@@ -20,7 +20,7 @@ import javax.validation.constraints.Size;
  */
 public class DatosBusquedaCatedratico implements Serializable{
 
-    @Pattern(regexp = "|[0-9]{9}", message = "{validacion.codigoCatedraticoInvalido}")
+    @Pattern(regexp = "|[0-9]{2,15}", message = "{validacion.codigoCatedraticoInvalido}")
     private String codigoBusqueda;
 
     @Size(max = 50, message = "{validacion.caracteresMaximos}")
