@@ -11,6 +11,7 @@ import gt.edu.usac.cats.dominio.DetalleAsignacion;
 import gt.edu.usac.cats.dominio.Horario;
 import gt.edu.usac.cats.dominio.Semestre;
 import gt.edu.usac.cats.dominio.Usuario;
+import gt.edu.usac.cats.dominio.busqueda.DatosBusquedaEstudiante;
 import gt.edu.usac.cats.dominio.busqueda.DatosIngresoNota;
 import gt.edu.usac.cats.dominio.wrapper.WrapperIngresoNota;
 import gt.edu.usac.cats.enums.TipoActividad;
@@ -49,9 +50,8 @@ import org.springframework.web.context.WebApplicationContext;
  */
 @Controller
 @Scope(value = WebApplicationContext.SCOPE_SESSION)
-@SessionAttributes(value={"catedratico", "semestre", "listadoHorario", "esAdministrativo"
-, "listadoDetalleAsignacion", "usuario"})
-public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota implements Serializable{
+@SessionAttributes(value = {"catedratico", "semestre", "listadoHorario", "esAdministrativo", "listadoDetalleAsignacion", "usuario", "horarioActual"})
+public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota implements Serializable {
 //______________________________________________________________________________
 
     private static Logger log = Logger.getLogger(ControladorIngresoNotas.class);
@@ -67,6 +67,8 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota imp
     private List<DetalleAsignacion> listadoDetalleAsignacion;
 //______________________________________________________________________________
     private Usuario usuario;
+    
+    private Horario horarioActual;
 //______________________________________________________________________________
     @Resource
     private ServicioCalendarioActividades servicioCalendarioActividadesImpl;
@@ -92,7 +94,7 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota imp
      * actual</li> </p>
      */
     @RequestMapping(value = "ingresoNota.htm", method = RequestMethod.GET)
-    public String buscarEstudiantes(Model modelo, HttpServletRequest request) {
+    public String buscarEstudiantingresoes(Model modelo, HttpServletRequest request) {
 
         this.esAdministrativo = false;
         try {
@@ -161,6 +163,7 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota imp
         }
 
         this.setModelo(modelo, false, new DatosIngresoNota());
+
         return "detalleAsignacion/ingresoNota";
     }
 
@@ -177,6 +180,7 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota imp
             datosIngresoNota.setHorario(this.servicioHorarioImpl.cargarEntidadPorID(Horario.class, datosIngresoNota.getHorario().getIdHorario()));
             this.listadoDetalleAsignacion = this.servicioDetalleAsignacionImpl.
                     getListadoDetalleAsignacion(datosIngresoNota.getHorario().getIdHorario());
+            this.horarioActual = datosIngresoNota.getHorario();
         } catch (Exception ex) {
             // error de acceso a datos
             RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "dataAccessException", false);
@@ -201,20 +205,44 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota imp
     @RequestMapping(value = "guardarOficializar.htm", method = RequestMethod.POST)
     public String metodoPost(@Valid WrapperIngresoNota wrapperIngresoNota, BindingResult bindingResult,
             Model modelo, HttpServletRequest request) {
-
+        
+        System.out.println(">>>>>>> metodoPost" + this.listadoDetalleAsignacion.size());
+        String pag = request.getParameter("linkValue");
+        int pagina = pag ==null?1:getPageNumber(pag);
+        if (pagina == -1){ // es la ultima
+            int inicio = listadoDetalleAsignacion.size()%10;
+            
+        }
         short notaFinal, zona, laboratorio, examenFinal;
         this.setModelo(modelo, false, new DatosIngresoNota());
         try {
             int i = 0;
-            for (DetalleAsignacion detAsign : this.listadoDetalleAsignacion) {
+            int pagActual = pagina!= -1?pagina-1:(this.listadoDetalleAsignacion.size()/10)+1;
+            System.out.println(">>> pagActual: "+pagActual);
+            List<DetalleAsignacion> temp;
+            if (pagina >=1){
+                temp = this.listadoDetalleAsignacion.subList((pagActual-1)*10, (pagActual*10)-1);
+                System.out.println("Rango: "+((pagActual-1)*10)+"-"+((pagActual*10)-1));
+           }else{
+                temp = this.listadoDetalleAsignacion.subList((pagActual-1)*10, this.listadoDetalleAsignacion.size()-1);
+                 System.out.println("Rango*: "+((pagActual-1)*10)+"-"+(this.listadoDetalleAsignacion.size()-1));
+            }
+            
+            //for (DetalleAsignacion detAsign : this.listadoDetalleAsignacion) {
+            for (DetalleAsignacion detAsign : temp) {
+                if (i >= wrapperIngresoNota.getListZona().size()) {
+                    break;
+                }
                 zona = Short.valueOf(wrapperIngresoNota.getListZona().get(i).toString());
-                laboratorio = Short.valueOf(wrapperIngresoNota.getListLaboratorio().get(i).toString());
+                //laboratorio = Short.valueOf(wrapperIngresoNota.getListLaboratorio().get(i).toString());
                 examenFinal = Short.valueOf(wrapperIngresoNota.getListFinal().get(i).toString());
                 notaFinal = (short) (zona + examenFinal);
                 detAsign.setZona(zona);
-                detAsign.setLaboratorio(laboratorio);
+                //detAsign.setLaboratorio(laboratorio);
+                detAsign.setLaboratorio((short) 0);
                 detAsign.setExamenFinal(examenFinal);
                 detAsign.setOficializado(wrapperIngresoNota.getOficializar());
+                //System.out.println("actualizar: "+detAsign.getAsignacion().getAsignacionEstudianteCarrera().getEstudiante().getCarne());
                 super.servicioDetalleAsignacionImpl.actualizar(detAsign);
 
                 if (wrapperIngresoNota.getOficializar()) {
@@ -226,7 +254,7 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota imp
                         cursoAprobado.setAsignacionCursoPensum(detAsign.getHorario().getAsignacionCursoPensum());
                         cursoAprobado.setExamenFinal(examenFinal);
                         cursoAprobado.setFechaAprobacion(new Date());
-                        cursoAprobado.setLaboratorio(laboratorio);
+                        cursoAprobado.setLaboratorio((short) 0);
                         cursoAprobado.setZona(zona);
                         super.servicioUsuarioImpl.agregar(cursoAprobado);
                     }
@@ -245,12 +273,22 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota imp
             log.error(Mensajes.DATA_ACCESS_EXCEPTION, ex);
         }
 
-        if (this.esAdministrativo) {
-            RequestUtil.agregarRedirect(request, "ingresoNotaAdmin.htm");
-        } else {
-            RequestUtil.agregarRedirect(request, "ingresoNota.htm");
-        }
-        return "detalleAsignacion/ingresoNota";
+//        if (this.esAdministrativo) {
+//            RequestUtil.agregarRedirect(request, "ingresoNotaAdmin.htm");
+//        } else {
+//            RequestUtil.agregarRedirect(request, "ingresoNota.htm");
+//        }
+        
+//       return "detalleAsignacion/ingresoNota";
+        DatosIngresoNota din = new DatosIngresoNota();
+        din.setHorario(horarioActual);
+        System.out.println(">>>>>> parampage: "+request.getParameter("linkValue"));
+        String link = request.getParameter("linkValue");
+        link.indexOf("-p=");
+        
+        return paginarNotasPag(modelo, din, request);
+
+        
     }
 //  _____________________________________________________________________________
 
@@ -296,11 +334,12 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota imp
      * @param mostrarAsignaciones
      */
     private void setModelo(Model modelo, boolean mostrarAsignaciones, DatosIngresoNota datosIngresoNota) {
-
         modelo.addAttribute("datosIngresoNota", datosIngresoNota);
         modelo.addAttribute("listaTipoHorario", TipoHorario.values());
         modelo.addAttribute("listaHorario", this.listadoHorario);
-        modelo.addAttribute("listadoDetalleAsignacion", this.listadoDetalleAsignacion);
+        if (this.listadoDetalleAsignacion != null) {
+            modelo.addAttribute("listadoDetalleAsignacion", this.listadoDetalleAsignacion);
+        }
         modelo.addAttribute("mostrarEstudiantes", mostrarAsignaciones);
         modelo.addAttribute("validacionesOK", true);
         modelo.addAttribute("esAdministrativo", this.esAdministrativo);
@@ -312,5 +351,59 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota imp
             modelo.addAttribute("limiteZona", 0);
             modelo.addAttribute("limiteExamenFinal", 0);
         }
+
+    }
+    
+
+    @RequestMapping(value = "paginarNotasPag.htm", method = RequestMethod.GET)
+    public String paginarNotasPag(Model modelo, DatosIngresoNota datosIngresoNota, 
+            HttpServletRequest request) {
+        modelo.addAttribute("pageSize", 10);
+        modelo.addAttribute("listaTipoHorario", TipoHorario.values());
+        modelo.addAttribute("listaHorario", this.listadoHorario);
+        this.listadoDetalleAsignacion = this.servicioDetalleAsignacionImpl.
+                getListadoDetalleAsignacion(datosIngresoNota.getHorario().getIdHorario());
+        if (this.listadoDetalleAsignacion != null) {
+            modelo.addAttribute("listadoDetalleAsignacion", this.listadoDetalleAsignacion);
+        }
+        modelo.addAttribute("mostrarEstudiantes", true);
+        modelo.addAttribute("validacionesOK", true);
+        modelo.addAttribute("esAdministrativo", this.esAdministrativo);
+        modelo.addAttribute("wrapperIngresoNota", new WrapperIngresoNota());
+//        modelo.addAttribute("limiteZona", datosIngresoNota.getHorario().getAsignacionCursoPensum().getZona());
+//        modelo.addAttribute("limiteExamenFinal", datosIngresoNota.getHorario().getAsignacionCursoPensum().getExamenFinal());
+       modelo.addAttribute("limiteZona", 0);
+        modelo.addAttribute("limiteExamenFinal", 0);
+
+        RequestUtil.agregarRedirect(request, request.getParameter("linkValue"));
+        return "detalleAsignacion/ingresoNota";
+    }
+
+    /**
+     * @return the horarioActual
+     */
+    public Horario getHorarioActual() {
+        return horarioActual;
+    }
+
+    /**
+     * @param horarioActual the horarioActual to set
+     */
+    public void setHorarioActual(Horario horarioActual) {
+        this.horarioActual = horarioActual;
+    }
+    
+    private int getPageNumber(String url){
+        String value = url;//"paginarNotasPag.htm?d-3585356-p=2&horario.idHorario=4498&tipoHorario=SEMESTRE";
+        int init = value.indexOf("-p=");
+        if (init != -1){
+            value = value.substring(init);
+          int end = value.indexOf("&");
+          //System.out.println(value.substring(value.indexOf("=")+1, end));
+          return Integer.parseInt(value.substring(value.indexOf("=")+1, end));          
+        }else{
+            return -1;
+        }
+
     }
 }
