@@ -12,6 +12,7 @@ import gt.edu.usac.cats.dominio.Horario;
 import gt.edu.usac.cats.dominio.Semestre;
 import gt.edu.usac.cats.enums.TipoHorario;
 import gt.edu.usac.cats.servicio.ServicioAsignacionCatedraticoHorario;
+import java.io.Serializable;
 import java.util.List;
 import org.hibernate.Query;
 import org.springframework.dao.DataAccessException;
@@ -23,7 +24,7 @@ import org.springframework.stereotype.Service;
  * @version 1.0
  */
 @Service("servicioAsignacionCatedraticoHorarioImpl")
-public class ServicioAsignacionCatedraticoHorarioImpl extends ServicioGeneralImpl implements ServicioAsignacionCatedraticoHorario {
+public class ServicioAsignacionCatedraticoHorarioImpl extends ServicioGeneralImpl implements ServicioAsignacionCatedraticoHorario, Serializable {
 //______________________________________________________________________________
     /**
      * <p>Este metodo se encarga de retornar un listado de 

@@ -15,6 +15,7 @@ import gt.edu.usac.cats.dominio.Pensum;
 import gt.edu.usac.cats.dominio.PensumEstudianteCarrera;
 import gt.edu.usac.cats.enums.TipoAsignacion;
 import gt.edu.usac.cats.servicio.ServicioAsignacionCursoPensum;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -35,7 +36,7 @@ import org.springframework.stereotype.Service;
  * @version 1.0
  */
 @Service("ServicioAsignacionCursoPensumImpl")
-public class ServicioAsignacionCursoPensumImpl extends ServicioGeneralImpl implements ServicioAsignacionCursoPensum {
+public class ServicioAsignacionCursoPensumImpl extends ServicioGeneralImpl implements ServicioAsignacionCursoPensum, Serializable {
 
     @Override
     public List<AsignacionCursoPensum> getListadoAsignacionCursoPensum(AsignacionCursoPensum asignacionCursoPensum, Pensum pensum) throws DataAccessException {
