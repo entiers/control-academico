@@ -11,6 +11,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib prefix="display" uri="http://displaytag.sf.net"%>
+
 
 <html>
     <head>
@@ -55,7 +57,8 @@
                 });
             });
 
-            function guardar(value){
+            function guardar(value, url, pagina){
+                alert(url);
                 var zona = ${limiteZona};
                 var examenFinal = ${limiteExamenFinal};                
                 $("#hdOficializar").val(value);
@@ -91,9 +94,18 @@
                         return false;
                     }                    
                 });
+                
+                $("#linkValue").val(url);
+                $("#pagina").val(pagina);
                 $("#frmGuardar").submit();
+
             }
         </script>
+                        
+
+
+                      
+                        
         <title><fmt:message key="ingresoNota.titulo"/></title>
     </head>
     <body>
@@ -106,7 +118,7 @@
                         <form:label for="tipoHorario" path="tipoHorario"><fmt:message key="agregarHorario.tipo"/>:</form:label>
                         <form:select path="tipoHorario"
                                      id="slcTipoHorario"
-                                     items="${listaTipoHorario}"
+                                     items="${listaTipoHorario}" 
                                      itemLabel="descripcion"/>
                         
                     </div>

@@ -5,21 +5,10 @@
             <h3><fmt:message key="curso.menu"/>: ${nombreCurso}</h3>
             <display:table  class="ui-widget ui-widget-content" name="listadoDetalleAsignacion"
                            id="detAsigna" requestURI="paginarNotasPag.htm" pagesize="${pageSize}">
-                 
-                <display:setProperty name="paging.banner.full">
-                    <span class="pagelinks">
-                    [<a href="{1}">Primera</a>/<a href="{2}">Atras</a>]
-                    {0}
-                    [<a href="javascript:void(guardar(false, &#39;{3}&#39;))">Grabar y Seguir</a>/<a href="{4}">Ultima</a>]
-                    </span>
-                 </display:setProperty>
-                 
-                 <display:setProperty name="paging.banner.last">
-                    <span class="pagelinks">[<a href="{1}">Primera</a>/<a href="{2}">Anterior</a>]{0} [Siguiente/Ultima]</span>
-                </display:setProperty>
-                  <display:setProperty name="paging.banner.first">
-                     	<span class="pagelinks">[Inicio/Anterior] {0}[<a href="javascript:void(guardar(false, &#39;{3}&#39;))">Guardar y Seguir</a>/<a href="{4}">Ultimo</a>]</span>
-                </display:setProperty>                
+                 <display:setProperty name="paging.banner.page.link"> 
+   <a href="javascript:void(guardar(&#39;{1}&#39;))" title="Ir a pagina {0}">{0}</a> 
+ </display:setProperty>   
+                
                 <display:column property="asignacion.asignacionEstudianteCarrera.estudiante.carne" titleKey="agregarEstudiante.carne"  />
                 <display:column property="asignacion.asignacionEstudianteCarrera.estudiante.nombre" titleKey="agregarEstudiante.nombre"  />
                 <c:choose>
@@ -34,7 +23,6 @@
                                         cssStyle="width:50px;"
                                         name="examenFinal"/>
                         </display:column>        
-                                      
                         <display:column titleKey="ingresoNota.excusa"  >
                             <form:radiobutton path="listExcusa" value="NSP" label="NSP" />
                             <form:radiobutton path="listExcusa" value="SDE" label="SDE" />
@@ -56,12 +44,7 @@
                                     disabled="${detAsigna.oficializado}"
                                     name="examenFinal"/>
                      </display:column> 
-                        <display:column titleKey="ingresoNota.excusa"  >
-                            <form:radiobutton path="listExcusa" value="NSP" label="NSP" />
-                            <form:radiobutton path="listExcusa" value="SDE" label="SDE" />
-                            <form:radiobutton path="listExcusa" value="SZM" label="SZM" />
-                            <form:radiobutton path="listExcusa" value="AC" label="AC" />
-                        </display:column>                                    
+                     <display:column  titleKey="ingresoNota.excusa"  />                                    
                     </c:otherwise>
                 </c:choose>                            
 
@@ -69,9 +52,8 @@
             </display:table>    
           <br/>
             <form:hidden path="oficializar" id="hdOficializar" />
-            <form:hidden path="linkValue" id="linkValue" />
-            <input type="button" value='<fmt:message key="ingresoNota.btnGuardar"/>' onclick="javascript:guardar(false, '',-1);" />
-            <input type="button" value='<fmt:message key="ingresoNota.btnOficializar"/>' onclick="javascript:guardar(true,'',-1);" />
+            <input type="button" value='<fmt:message key="ingresoNota.btnGuardar"/>' onclick="javascript:guardar(false);" />
+            <input type="button" value='<fmt:message key="ingresoNota.btnOficializar"/>' onclick="javascript:guardar(true);" />
         </fieldset>
     </c:when>
     <c:otherwise>
