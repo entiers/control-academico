@@ -27,41 +27,68 @@
                         <display:column  titleKey="ingresoNota.zona">                            
                             <form:input path="listZona" value="${detAsigna.zona}"
                                         cssStyle="width:50px;"
-                                        name="zona"/>
+                                        />
                         </display:column>                
                         <display:column titleKey="ingresoNota.final">                            
                             <form:input path="listFinal" value="${detAsigna.examenFinal}"
                                         cssStyle="width:50px;"
-                                        name="examenFinal"/>
+                                        />
                         </display:column>        
-                                      
-                        <display:column titleKey="ingresoNota.excusa"  >
-                            <form:radiobutton path="listExcusa" value="NSP" label="NSP" />
-                            <form:radiobutton path="listExcusa" value="SDE" label="SDE" />
-                            <form:radiobutton path="listExcusa" value="SZM" label="SZM" />
-                            <form:radiobutton path="listExcusa" value="AC" label="AC" />
-                        </display:column> 
+                      
+                        <display:column titleKey="agregarEstudiante.estadistica"  >
+                            <form:select path="listExcusa">
+                            <c:forEach var="item" items="${excusasList}">
+                                <c:choose>
+                                    <c:when test="${detAsigna.excusa==item}">
+                                        <form:option selected="true" value="${item}" label="${item}" />
+                                        
+                                    </c:when>
+
+                                    <c:otherwise>
+                                        <form:option  value="${item}" label="${item}" />
+                                          
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:forEach>
+                            </form:select>
+
+                        </display:column>  
+                       
                     </c:when>
                     <c:otherwise>
                     <display:column  titleKey="ingresoNota.zona">                            
                         <form:input path="listZona" value="${detAsigna.zona}"
                                     cssStyle="width:50px;"
                                     disabled="${detAsigna.oficializado}"
-                                    name="zona"/>
+                                    />
                      </display:column> 
 
                         <display:column  titleKey="ingresoNota.final">                            
                         <form:input path="listFinal" value="${detAsigna.examenFinal}"
                                     cssStyle="width:50px;"
                                     disabled="${detAsigna.oficializado}"
-                                    name="examenFinal"/>
+                                   />
                      </display:column> 
-                        <display:column titleKey="ingresoNota.excusa"  >
-                            <form:radiobutton path="listExcusa" value="NSP" label="NSP" />
-                            <form:radiobutton path="listExcusa" value="SDE" label="SDE" />
-                            <form:radiobutton path="listExcusa" value="SZM" label="SZM" />
-                            <form:radiobutton path="listExcusa" value="AC" label="AC" />
-                        </display:column>                                    
+              
+                       
+                      <display:column titleKey="agregarEstudiante.estadistica"  >
+                            <form:select path="listExcusa">
+                            <c:forEach var="item" items="${excusasList}">
+                                <c:choose>
+                                    <c:when test="${detAsigna.excusa==item}">
+                                        <form:option selected="true" value="${item}" label="${item}" />
+                                        
+                                    </c:when>
+
+                                    <c:otherwise>
+                                        <form:option  value="${item}" label="${item}" />
+                                          
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:forEach>
+                            </form:select>
+
+                        </display:column>                                 
                     </c:otherwise>
                 </c:choose>                            
 
