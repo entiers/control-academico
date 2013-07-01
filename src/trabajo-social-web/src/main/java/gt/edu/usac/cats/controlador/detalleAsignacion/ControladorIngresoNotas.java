@@ -24,7 +24,9 @@ import gt.edu.usac.cats.servicio.ServicioSemestre;
 import gt.edu.usac.cats.util.Mensajes;
 import gt.edu.usac.cats.util.RequestUtil;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -50,7 +52,7 @@ import org.springframework.web.context.WebApplicationContext;
  */
 @Controller
 @Scope(value = WebApplicationContext.SCOPE_SESSION)
-@SessionAttributes(value = {"catedratico", "semestre", "listadoHorario", "esAdministrativo", "listadoDetalleAsignacion", "usuario", "horarioActual"})
+@SessionAttributes(value = {"catedratico", "semestre", "listadoHorario", "esAdministrativo", "listadoDetalleAsignacion", "usuario", "horarioActual","excusasMap"})
 public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota implements Serializable {
 //______________________________________________________________________________
 
@@ -86,6 +88,8 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota imp
     private ServicioCursoAprobado servicioCursoAprobadoImpl;
 //______________________________________________________________________________
 
+    private HashMap<String, ArrayList<String>> excusasMap;
+    
     /**
      * <p>Metodo que intercepta la peticion GET de la pagina ingresoNota.htm. Se
      * encarga de validar: <li>Usuario logueado sea un catedratico</li>
@@ -131,7 +135,14 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota imp
 
             this.listadoHorario = this.servicioHorarioImpl.getHorario(semestre, catedratico,
                     TipoHorario.values()[0]);
-
+            excusasMap = new HashMap();
+            ArrayList excusas =  new ArrayList();
+            excusas.add("N/A");
+            excusas.add("NSP");
+            excusas.add("SDE");
+           excusas.add("SZM");
+            excusas.add("AC");
+            excusasMap.put("listaEx", excusas);
         } catch (Exception ex) {
             RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "dataAccessException", false);
             log.error(Mensajes.DATA_ACCESS_EXCEPTION, ex);
@@ -187,10 +198,14 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota imp
             log.error(Mensajes.DATA_ACCESS_EXCEPTION, ex);
         }
 
+        WrapperIngresoNota win = new WrapperIngresoNota();
+        for (int i=0; i < 10; i++){
+            win.getListExcusa().add("XXX");
+        } 
         modelo.addAttribute("wrapperIngresoNota", new WrapperIngresoNota());
 
 
-        if (!this.listadoDetalleAsignacion.isEmpty()) {
+        if (listadoDetalleAsignacion!=null && !this.listadoDetalleAsignacion.isEmpty()) {
             modelo.addAttribute("nombreCurso", this.listadoDetalleAsignacion.get(0).getHorario().getAsignacionCursoPensum().getCurso().getNombre());
         }
         this.setModelo(modelo, true, datosIngresoNota);
@@ -206,7 +221,7 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota imp
     public String metodoPost(@Valid WrapperIngresoNota wrapperIngresoNota, BindingResult bindingResult,
             Model modelo, HttpServletRequest request) {
         
-        System.out.println(">>>>>>> metodoPost" + this.listadoDetalleAsignacion.size());
+
         String pag = request.getParameter("linkValue");
         int pagina = pag ==null?1:getPageNumber(pag);
         if (pagina == -1){ // es la ultima
@@ -218,18 +233,32 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota imp
         try {
             int i = 0;
             int pagActual = pagina!= -1?pagina-1:(this.listadoDetalleAsignacion.size()/10)+1;
-            System.out.println(">>> pagActual: "+pagActual);
-            List<DetalleAsignacion> temp;
-            if (pagina >=1){
-                temp = this.listadoDetalleAsignacion.subList((pagActual-1)*10, (pagActual*10)-1);
-                System.out.println("Rango: "+((pagActual-1)*10)+"-"+((pagActual*10)-1));
-           }else{
-                temp = this.listadoDetalleAsignacion.subList((pagActual-1)*10, this.listadoDetalleAsignacion.size()-1);
-                 System.out.println("Rango*: "+((pagActual-1)*10)+"-"+(this.listadoDetalleAsignacion.size()-1));
+            List<DetalleAsignacion> temp; 
+//            System.out.println("%%%% pagina:"+pagina);
+//            System.out.println("%%%% pagActual:"+pagActual);
+//            System.out.println("%%%% listado:"+this.listadoDetalleAsignacion.size());
+           
+            if (pagina!=-1 && pagActual >=1){
+                temp = this.listadoDetalleAsignacion.subList((pagActual-1)*10, (pagActual*10));
+//                System.out.println("%%% rango ini: "+(pagActual-1)*10);
+//            System.out.println("%%% rango final: "+((pagActual*10)-1));
+           }else {
+                temp = this.listadoDetalleAsignacion.subList((pagActual-1)*10, this.listadoDetalleAsignacion.size());
+//                System.out.println("%%% rango ini&: "+(pagActual-1)*10);
+//                System.out.println("%%% rango final&: "+(this.listadoDetalleAsignacion.size()));
+                
             }
+            //System.out.println("%%% temp: "+temp.size());
+            
             
             //for (DetalleAsignacion detAsign : this.listadoDetalleAsignacion) {
+            
             for (DetalleAsignacion detAsign : temp) {
+                int sizeZona = wrapperIngresoNota.getListZona().size();
+//                System.out.println("%%% i: "+i);
+//                System.out.println("%%%%%%%%% listZona.size "+sizeZona);
+//                System.out.println("%%%%%%%%% listZona.ultimo "+wrapperIngresoNota.getListZona().get(sizeZona-1));
+//                System.out.println("%%%%%%%%% listZona.ultimo "+wrapperIngresoNota.getListZona().get(i));
                 if (i >= wrapperIngresoNota.getListZona().size()) {
                     break;
                 }
@@ -242,6 +271,8 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota imp
                 detAsign.setLaboratorio((short) 0);
                 detAsign.setExamenFinal(examenFinal);
                 detAsign.setOficializado(wrapperIngresoNota.getOficializar());
+                detAsign.setExcusa(wrapperIngresoNota.getListExcusa().get(i).toString());
+                
                 //System.out.println("actualizar: "+detAsign.getAsignacion().getAsignacionEstudianteCarrera().getEstudiante().getCarne());
                 super.servicioDetalleAsignacionImpl.actualizar(detAsign);
 
@@ -282,11 +313,17 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota imp
 //       return "detalleAsignacion/ingresoNota";
         DatosIngresoNota din = new DatosIngresoNota();
         din.setHorario(horarioActual);
-        System.out.println(">>>>>> parampage: "+request.getParameter("linkValue"));
-        String link = request.getParameter("linkValue");
-        link.indexOf("-p=");
         
-        return paginarNotasPag(modelo, din, request);
+        if (pagina != -1){
+             return paginarNotasPag(modelo, din, request);
+        }
+        if (this.esAdministrativo) {
+            RequestUtil.agregarRedirect(request, "ingresoNotaAdmin.htm");
+        } else {
+            RequestUtil.agregarRedirect(request, "ingresoNota.htm");
+        }
+        return "detalleAsignacion/ingresoNota";
+        
 
         
     }
@@ -334,6 +371,17 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota imp
      * @param mostrarAsignaciones
      */
     private void setModelo(Model modelo, boolean mostrarAsignaciones, DatosIngresoNota datosIngresoNota) {
+        if (excusasMap == null){
+            excusasMap = new HashMap();
+            ArrayList excusas =  new ArrayList();
+             excusas.add("N/A");
+            excusas.add("NSP");
+            excusas.add("SDE");
+           excusas.add("SZM");
+            excusas.add("AC");
+            excusasMap.put("listaEx", excusas);
+        }
+        modelo.addAttribute("excusasList", excusasMap.get("listaEx"));
         modelo.addAttribute("datosIngresoNota", datosIngresoNota);
         modelo.addAttribute("listaTipoHorario", TipoHorario.values());
         modelo.addAttribute("listaHorario", this.listadoHorario);
@@ -370,11 +418,21 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota imp
         modelo.addAttribute("validacionesOK", true);
         modelo.addAttribute("esAdministrativo", this.esAdministrativo);
         modelo.addAttribute("wrapperIngresoNota", new WrapperIngresoNota());
-//        modelo.addAttribute("limiteZona", datosIngresoNota.getHorario().getAsignacionCursoPensum().getZona());
-//        modelo.addAttribute("limiteExamenFinal", datosIngresoNota.getHorario().getAsignacionCursoPensum().getExamenFinal());
-       modelo.addAttribute("limiteZona", 0);
-        modelo.addAttribute("limiteExamenFinal", 0);
+        modelo.addAttribute("limiteZona", horarioActual.getAsignacionCursoPensum().getZona());
+        modelo.addAttribute("limiteExamenFinal", horarioActual.getAsignacionCursoPensum().getExamenFinal());
 
+                if (excusasMap == null){
+            excusasMap = new HashMap();
+            ArrayList excusas =  new ArrayList();
+             excusas.add("N/A");
+            excusas.add("NSP");
+            excusas.add("SDE");
+           excusas.add("SZM");
+            excusas.add("AC");
+            excusasMap.put("listaEx", excusas);
+        }
+        modelo.addAttribute("excusasList", excusasMap.get("listaEx"));
+        
         RequestUtil.agregarRedirect(request, request.getParameter("linkValue"));
         return "detalleAsignacion/ingresoNota";
     }
@@ -406,4 +464,20 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota imp
         }
 
     }
+
+    /**
+     * @return the excusasMap
+     */
+    public HashMap<String, ArrayList<String>> getExcusasMap() {
+        return excusasMap;
+    }
+
+    /**
+     * @param excusasMap the excusasMap to set
+     */
+    public void setExcusasMap(HashMap<String, ArrayList<String>> excusasMap) {
+        this.excusasMap = excusasMap;
+    }
+
+
 }
