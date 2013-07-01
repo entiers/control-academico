@@ -1,4 +1,5 @@
 <%-- 
+
     Document   : ingresoNota
     Created on : 17/05/2011, 05:37:10 PM
     Author     : Carlos Solorzano
@@ -58,48 +59,55 @@
             });
 
             function guardar(value, url, pagina){
-                alert(url);
+               
                 var zona = ${limiteZona};
-                var examenFinal = ${limiteExamenFinal};                
+
+                var examenFinal = ${limiteExamenFinal}; 
+                var isOk = true;
                 $("#hdOficializar").val(value);
-                $.each($('#frmGuardar input:text'),function(index,item){                    
+                $('#frmGuardar input:text').each(function(index,item){                    
                     if(isNaN(item.value)){
                         alert('<fmt:message key="ingresoNota.validaciones.notasNumericas"/>');
                         item.focus();
+                        isOk = false;
                         return false;
                     }
                 });                
-                $.each($('input[name="zona"]'),function(index,item){                    
+                $('#frmGuardar input[name="listZona"]').each(function(i,item){                    
+                    
+                    
                     if(item.value<0 | item.value>zona){
                         alert('<fmt:message key="ingresoNota.validaciones.rango.zona"/> ' + 
                             zona + 
                             ' <fmt:message key="ingresoNota.validaciones.puntos"/>');
                         item.focus();
+                        isOk = false;
                         return false;
                     }                    
                 });
-                $.each($('input[name="laboratorio"]'),function(index,item){                    
-                    if(item.value<0 | item.value>100){
-                        alert('<fmt:message key="ingresoNota.validaciones.rango.laboratorio"/>');
-                        item.focus();
-                        return false;
-                    }                    
-                });
-                $.each($('input[name="examenFinal"]'),function(index,item){                    
+
+                $('#frmGuardar input[name="listFinal"]').each(function(index,item){                    
                     if(item.value<0 | item.value>examenFinal){
                         alert('<fmt:message key="ingresoNota.validaciones.rango.examenFinal"/> ' + 
                             examenFinal +
                             ' <fmt:message key="ingresoNota.validaciones.puntos"/>');
                         item.focus();
+                        isOk = false;
                         return false;
                     }                    
                 });
                 
-                $("#linkValue").val(url);
-                $("#pagina").val(pagina);
-                $("#frmGuardar").submit();
+                if (isOk){
+                    $("#linkValue").val(url);
+                    $("#pagina").val(pagina);
+                    $("#frmGuardar").submit();
+                }else{
+                    return false;
+                }
 
             }
+  
+            
         </script>
                         
 

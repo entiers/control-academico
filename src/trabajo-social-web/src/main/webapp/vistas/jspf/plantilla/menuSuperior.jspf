@@ -312,6 +312,10 @@
                     <sec:authorize access="hasRole('ROLE_REPORTE_NOTAS_CURSOS_ASIGNADOS')">
                         <li><a href="rptNotasCursosAsignados.htm"><fmt:message key="rptNotasCursosAsignados.titulo"/></a></li>
                     </sec:authorize>
+                    <%--Acta de Notas--%>
+                    <sec:authorize access="hasRole('ROLE_REPORTE_ACTA_CURSOS')">
+                        <li><a href="rptActaCursos.htm"><fmt:message key="rptActaCursos.titulo"/></a></li>
+                    </sec:authorize>
                 </ul>
             </li>
         </sec:authorize>
