@@ -29,6 +29,7 @@ public class WrapperIngresoNota implements Serializable {
     
     private Integer pagina;
     
+    
     private List listExcusa;
 //______________________________________________________________________________
     public WrapperIngresoNota() {
@@ -37,8 +38,17 @@ public class WrapperIngresoNota implements Serializable {
         this.listLaboratorio = new ArrayList();
         this.listZona = new ArrayList();
         listExcusa = new ArrayList();
+        
+        //initListExcusa();
         linkValue="";
     }
+    
+////    private void initListExcusa(){
+////        for (int i=0; i<10; i++){
+////            listExcusa.add("");
+////        }
+////       
+////    }
     
 //______________________________________________________________________________
     public List getListFinal() {

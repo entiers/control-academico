@@ -49,13 +49,14 @@ public class DetalleAsignacion implements java.io.Serializable {
     private short zona;
     private boolean oficializado;
     private String excusa;
+   
 
     public DetalleAsignacion() {
         this.zona = 0;
         this.laboratorio = 0;
         this.examenFinal = 0;
         this.idDetalleAsignacion = 0;
-        excusa = "";
+        excusa = "N/A";
     }
 
     public DetalleAsignacion(int idDetalleAsignacion, Asignacion asignacion, Horario horario, short zona,
