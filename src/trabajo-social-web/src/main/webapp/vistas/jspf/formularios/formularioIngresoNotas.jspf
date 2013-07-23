@@ -1,24 +1,25 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:choose>
     <c:when test="${not empty listadoDetalleAsignacion}">
         <fieldset>
             <legend><fmt:message key="ingresoNota.asignaciones"/></legend>
             <h3><fmt:message key="curso.menu"/>: ${nombreCurso}</h3>
             <display:table  class="ui-widget ui-widget-content" name="listadoDetalleAsignacion"
-                           id="detAsigna" requestURI="paginarNotasPag.htm" pagesize="${pageSize}">
-                 
+                            id="detAsigna" requestURI="paginarNotasPag.htm" pagesize="${pageSize}">
+
                 <display:setProperty name="paging.banner.full">
                     <span class="pagelinks">
-                    [<a href="{1}">Primera</a>/<a href="{2}">Atras</a>]
-                    {0}
-                    [<a href="javascript:void(guardar(false, &#39;{3}&#39;))">Grabar y Seguir</a>/<a href="{4}">Ultima</a>]
+                        [<a href="{1}">Primera</a>/<a href="{2}">Atras</a>]
+                        {0}
+                        [<a href="javascript:void(guardar(false, &#39;{3}&#39;))">Grabar y Seguir</a>/<a href="{4}">Ultima</a>]
                     </span>
-                 </display:setProperty>
-                 
-                 <display:setProperty name="paging.banner.last">
+                </display:setProperty>
+
+                <display:setProperty name="paging.banner.last">
                     <span class="pagelinks">[<a href="{1}">Primera</a>/<a href="{2}">Anterior</a>]{0} [Siguiente/Ultima]</span>
                 </display:setProperty>
-                  <display:setProperty name="paging.banner.first">
-                     	<span class="pagelinks">[Inicio/Anterior] {0}[<a href="javascript:void(guardar(false, &#39;{3}&#39;))">Guardar y Seguir</a>/<a href="{4}">Ultimo</a>]</span>
+                <display:setProperty name="paging.banner.first">
+                    <span class="pagelinks">[Inicio/Anterior] {0}[<a href="javascript:void(guardar(false, &#39;{3}&#39;))">Guardar y Seguir</a>/<a href="{4}">Ultimo</a>]</span>
                 </display:setProperty>                
                 <display:column property="asignacion.asignacionEstudianteCarrera.estudiante.carne" titleKey="agregarEstudiante.carne"  />
                 <display:column property="asignacion.asignacionEstudianteCarrera.estudiante.nombre" titleKey="agregarEstudiante.nombre"  />
@@ -34,71 +35,95 @@
                                         cssStyle="width:50px;"
                                         />
                         </display:column>        
-                      
+
                         <display:column titleKey="agregarEstudiante.estadistica"  >
                             <form:select path="listExcusa">
-                            <c:forEach var="item" items="${excusasList}">
-                                <c:choose>
-                                    <c:when test="${detAsigna.excusa==item}">
-                                        <form:option selected="true" value="${item}" label="${item}" />
-                                        
-                                    </c:when>
 
+                                <c:choose>
+                                    <c:when test="${empty detAsigna.excusa}">
+                                        <c:forEach var="item" items="${excusasList}" varStatus="indice">
+                                            <c:choose>
+                                                <c:when test="${indice.index == 0}">
+                                                    <form:option selected="true" value="${item}" label="${item}" />
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <form:option  value="${item}" label="${item}" />
+
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </c:forEach>  
+                                    </c:when>
                                     <c:otherwise>
-                                        <form:option  value="${item}" label="${item}" />
-                                          
+                                        <c:forEach var="item" items="${excusasList}">
+                                            <c:choose>
+                                                <c:when test="${detAsigna.excusa==item}">
+                                                    <form:option selected="true" value="${item}" label="${item}" />
+
+                                                </c:when>
+
+                                                <c:otherwise>
+                                                    <form:option  value="${item}" label="${item}" />
+
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </c:forEach>         
                                     </c:otherwise>
+
                                 </c:choose>
-                            </c:forEach>
+
+
+
+
+
                             </form:select>
 
                         </display:column>  
-                       
+
                     </c:when>
                     <c:otherwise>
-                    <display:column  titleKey="ingresoNota.zona">                            
-                        <form:input path="listZona" value="${detAsigna.zona}"
-                                    cssStyle="width:50px;"
-                                    disabled="${detAsigna.oficializado}"
-                                    />
-                     </display:column> 
+                        <display:column  titleKey="ingresoNota.zona">                            
+                            <form:input path="listZona" value="${detAsigna.zona}"
+                                        cssStyle="width:50px;"
+                                        disabled="${detAsigna.oficializado}"
+                                        />
+                        </display:column> 
 
                         <display:column  titleKey="ingresoNota.final">                            
-                        <form:input path="listFinal" value="${detAsigna.examenFinal}"
-                                    cssStyle="width:50px;"
-                                    disabled="${detAsigna.oficializado}"
-                                   />
-                     </display:column> 
-              
-                       
-                      <display:column titleKey="agregarEstudiante.estadistica"  >
-                            <form:select path="listExcusa">
-                            <c:forEach var="item" items="${excusasList}">
-                                <c:choose>
-                                    <c:when test="${detAsigna.excusa==item}">
-                                        <form:option selected="true" value="${item}" label="${item}" />
-                                        
-                                    </c:when>
+                            <form:input path="listFinal" value="${detAsigna.examenFinal}"
+                                        cssStyle="width:50px;"
+                                        disabled="${detAsigna.oficializado}"
+                                        />
+                        </display:column> 
 
-                                    <c:otherwise>
-                                        <form:option  value="${item}" label="${item}" />
-                                          
-                                    </c:otherwise>
-                                </c:choose>
-                            </c:forEach>
+
+                        <display:column titleKey="agregarEstudiante.estadistica"  >
+                            <form:select path="listExcusa">
+                                <c:forEach var="item" items="${excusasList}">
+                                    <c:choose>
+                                        <c:when test="${detAsigna.excusa==item}">
+                                            <form:option selected="true" value="${item}" label="${item}" />
+
+                                        </c:when>
+
+                                        <c:otherwise>
+                                            <form:option  value="${item}" label="${item}" />
+
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
                             </form:select>
 
                         </display:column>                                 
                     </c:otherwise>
                 </c:choose>                            
 
-                
+
             </display:table>    
-          <br/>
+            <br/>
             <form:hidden path="oficializar" id="hdOficializar" />
             <form:hidden path="linkValue" id="linkValue" />
-            <input type="button" value='<fmt:message key="ingresoNota.btnGuardar"/>' onclick="javascript:guardar(false, '',-1);" />
-            <input type="button" value='<fmt:message key="ingresoNota.btnOficializar"/>' onclick="javascript:guardar(true,'',-1);" />
+            <input type="button" value='<fmt:message key="ingresoNota.btnGuardar"/>' onclick="javascript:guardar(false, '', -1);" />
+            <input type="button" value='<fmt:message key="ingresoNota.btnOficializar"/>' onclick="javascript:guardar(true, '', -1);" />
         </fieldset>
     </c:when>
     <c:otherwise>
