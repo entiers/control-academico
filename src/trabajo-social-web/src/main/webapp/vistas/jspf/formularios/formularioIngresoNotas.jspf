@@ -35,9 +35,7 @@
                                         cssStyle="width:50px;"
                                         />
                         </display:column>        
-                                              
-                            
-                        </display:column>    
+                          
                         <display:column titleKey="agregarEstudiante.estadistica"  >
                             <form:select path="listExcusa">
 
