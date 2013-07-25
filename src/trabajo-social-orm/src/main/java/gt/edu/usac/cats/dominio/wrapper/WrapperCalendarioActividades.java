@@ -51,6 +51,7 @@ public class WrapperCalendarioActividades implements Serializable{
         this.fechaFin = new Date();
         this.fechaInicio = new Date();
         this.semestre = new Semestre();
+        this.tipoActividad = TipoActividad.ASIGNACION_SEMESTRE;
     }
 //______________________________________________________________________________
     /**

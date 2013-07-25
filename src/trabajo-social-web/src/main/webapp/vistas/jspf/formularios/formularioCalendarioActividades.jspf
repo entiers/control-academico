@@ -33,3 +33,17 @@
     </form:select>
     <form:errors path="semestre.idSemestre" cssClass="claseError" />
 </div>
+
+
+<div id="divCampos">
+    <form:label for="tipoActividad" path="tipoActividad">
+        <fmt:message key="agregarCalendarioActividades.tipoActividad"/>:
+    </form:label>
+
+    <form:select path="tipoActividad" cssStyle="width: 250px;">
+        <form:option  value="" label="Seleccionar un valor" />
+        <form:options items="${listadoTipoActividades}" itemLabel="descripcion" />
+    </form:select>
+
+    <form:errors path="tipoActividad" cssClass="claseError" />
+</div>
