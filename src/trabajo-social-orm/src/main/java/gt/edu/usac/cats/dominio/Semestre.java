@@ -6,15 +6,10 @@
  * Control Academico
  *
  */
-
-
-
 package gt.edu.usac.cats.dominio;
 
 //Generated 16/03/2010 06:31:00 PM by Hibernate Tools 3.2.1.GA
-
 //~--- JDK imports ------------------------------------------------------------
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -36,37 +31,36 @@ import javax.persistence.UniqueConstraint;
 @Entity
 @Table(
     name = "semestre",
-    schema = "control",
-    uniqueConstraints={
-        @UniqueConstraint(name = "semestre_anio_numero_uk",columnNames = {"anio", "numero"})
-    }
-)
+schema = "control",
+uniqueConstraints = {
+    @UniqueConstraint(name = "semestre_anio_numero_uk", columnNames = {"anio", "numero"})
+})
 public class Semestre implements java.io.Serializable {
-     private Short idSemestre;
-     private short anio;
-     private char numero;
-     private String observacion;
-     private boolean activo;
-     private Set<CalendarioActividades> calendarioActividadeses = new HashSet<CalendarioActividades>(0);
-     private Set<HistorialAsignacionEstudianteCarrera> historialAsignacionEstudianteCarreras = new HashSet<HistorialAsignacionEstudianteCarrera>(0);
-     private Set<Horario> horarios = new HashSet<Horario>(0);
+
+    private Short idSemestre;
+    private short anio;
+    private char numero;
+    private String observacion;
+    private boolean activo;
+    private Set<CalendarioActividades> calendarioActividadeses = new HashSet<CalendarioActividades>(0);
+    private Set<HistorialAsignacionEstudianteCarrera> historialAsignacionEstudianteCarreras = new HashSet<HistorialAsignacionEstudianteCarrera>(0);
+    private Set<Horario> horarios = new HashSet<Horario>(0);
 
     public Semestre() {
         this.idSemestre = 0;
     }
 
-    public Semestre(short anio, char numero) {        
+    public Semestre(short anio, char numero) {
         this.anio = anio;
         this.numero = numero;
-    }    
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(
         name = "id_semestre",
-        unique = true,
-        nullable = false
-    )
+    unique = true,
+    nullable = false)
     public Short getIdSemestre() {
         return this.idSemestre;
     }
@@ -77,8 +71,7 @@ public class Semestre implements java.io.Serializable {
 
     @Column(
         name = "anio",
-        nullable = false
-    )
+    nullable = false)
     public short getAnio() {
         return this.anio;
     }
@@ -89,9 +82,8 @@ public class Semestre implements java.io.Serializable {
 
     @Column(
         name = "numero",
-        nullable = false,
-        length = 1
-    )
+    nullable = false,
+    length = 1)
     public char getNumero() {
         return this.numero;
     }
@@ -100,12 +92,11 @@ public class Semestre implements java.io.Serializable {
         this.numero = numero;
     }
 //______________________________________________________________________________    
-    @Column(
-        name = "observacion",        
-        length = 1000,
-        nullable= true
-    )
 
+    @Column(
+        name = "observacion",
+    length = 1000,
+    nullable = true)
     public String getObservacion() {
         return observacion;
     }
@@ -114,11 +105,11 @@ public class Semestre implements java.io.Serializable {
         this.observacion = observacion;
     }
 //______________________________________________________________________________
+
     @OneToMany(
         cascade = CascadeType.ALL,
-        fetch = FetchType.LAZY,
-        mappedBy = "semestre"
-    )
+    fetch = FetchType.LAZY,
+    mappedBy = "semestre")
     public Set<CalendarioActividades> getCalendarioActividadeses() {
         return this.calendarioActividadeses;
     }
@@ -127,11 +118,11 @@ public class Semestre implements java.io.Serializable {
         this.calendarioActividadeses = calendarioActividadeses;
     }
 //______________________________________________________________________________
+
     @OneToMany(
         cascade = CascadeType.ALL,
-        fetch = FetchType.LAZY,
-        mappedBy = "semestre"
-    )
+    fetch = FetchType.LAZY,
+    mappedBy = "semestre")
     public Set<Horario> getHorarios() {
         return this.horarios;
     }
@@ -140,7 +131,8 @@ public class Semestre implements java.io.Serializable {
         this.horarios = horarios;
     }
 //______________________________________________________________________________
-    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="semestre")
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "semestre")
     public Set<HistorialAsignacionEstudianteCarrera> getHistorialAsignacionEstudianteCarreras() {
         return this.historialAsignacionEstudianteCarreras;
     }
@@ -151,10 +143,9 @@ public class Semestre implements java.io.Serializable {
 
 //______________________________________________________________________________
     @Column(
-        columnDefinition="default true",
-        name="activo",
-        nullable=false
-    )
+        columnDefinition = "default true",
+    name = "activo",
+    nullable = false)
     public boolean isActivo() {
         return activo;
     }
@@ -165,7 +156,7 @@ public class Semestre implements java.io.Serializable {
 
     //______________________________________________________________________________
     @Transient
-    public String getAnyoNumero(){
+    public String getAnyoNumero() {
         return this.anio + " - " + this.numero;
     }
 
@@ -180,10 +171,6 @@ public class Semestre implements java.io.Serializable {
 
         return super.toString();
     }
-
-
-
-
 }
 
 //~ Formatted by Jindent --- http://www.jindent.com

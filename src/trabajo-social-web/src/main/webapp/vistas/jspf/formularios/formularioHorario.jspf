@@ -8,7 +8,7 @@
         <form:label for="horarioDiasWrapper" path="horarioDiasWrapper">
             <fmt:message key="agregarHorario.dia"/>: *
         </form:label>
-            
+
     </div>
     <div style="font-size: small;margin-left: 35%; position: absolute;">
         <form:checkboxes path="horarioDiasWrapper" items="${listadoDias}"
@@ -59,11 +59,11 @@
         <fmt:message key="agregarHorario.salon"/>: *
     </form:label>
 
-    <form:select path="salon.idSalon" cssStyle="width: 250px;">
+    <form:select path="idSalon" cssStyle="width: 250px;">
         <form:option  value="" label="Seleccionar un valor" />
         <form:options items="${listadoSalones}" itemValue="idSalon" itemLabel="numeroEdificio" />
     </form:select>
-    <form:errors path="salon.idSalon" cssClass="claseError" />
+    <form:errors path="idSalon" cssClass="claseError" />
 </div>
 
 <div id="divCampos">
@@ -72,8 +72,10 @@
     </form:label>
 
     <form:select path="semestre.idSemestre" cssStyle="width: 250px;">
-        <form:option  value="" label="Seleccionar un valor" />
-        <form:options items="${listadoSemestres}" itemLabel="anyoNumero" itemValue="idSemestre" />
+        <form:option  value="0" label="Seleccionar un valor" />
+        <form:options items="${listadoSemestres}" 
+                      itemLabel="anyoNumero" 
+                      itemValue="idSemestre" />
     </form:select>
     <form:errors path="semestre.idSemestre" cssClass="claseError" />
 </div>
@@ -81,9 +83,9 @@
 <div id="divCampos">
     <form:label for="tipoHorario" path="tipoHorario"><fmt:message key="agregarHorario.tipo"/>:</form:label>
     <form:select path="tipoHorario"
-                    id="slcTipoHorario"
-                    items="${listaTipoHorario}"
-                    itemLabel="descripcion"/>
+                 id="slcTipoHorario"
+                 items="${listaTipoHorario}"
+                 itemLabel="descripcion"/>
 
 </div>
 

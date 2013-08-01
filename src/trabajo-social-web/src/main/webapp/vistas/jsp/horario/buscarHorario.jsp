@@ -61,19 +61,21 @@
             <button id="botonVerReporte"> <fmt:message key="horario.verReporte" /></button>
         </div>
 
-
+        <br/>
+        <br/>
+        <br/>
 
         <%-- formulario para ingresar los datos del horario --%>
         <form:form modelAttribute="datosBusquedaHorario" method="post">
             <fieldset>
                 <legend><fmt:message key="legendaFormularioBusqueda" /></legend>
                 <div id="divCampos">
-                    <form:label for="salon.idSalon" path="salon.idSalon">
+                    <form:label for="idSalon" path="salon.idSalon">
                         <fmt:message key="agregarHorario.salon"/>: *
                     </form:label>
 
-                    <form:select path="salon.idSalon" cssStyle="width: 250px;">
-                        <form:option  value="" label="Seleccionar un valor" />
+                    <form:select path="idSalon" cssStyle="width: 250px;">
+                        <form:option  value="0" label="Seleccionar un valor" />
                         <form:options items="${listadoSalones}" itemValue="idSalon" itemLabel="numeroEdificio" />
                     </form:select>
                     <form:errors path="salon.idSalon" cssClass="claseError" />

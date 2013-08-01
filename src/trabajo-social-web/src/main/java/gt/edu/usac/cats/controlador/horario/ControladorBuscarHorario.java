@@ -12,6 +12,7 @@ import gt.edu.usac.cats.dominio.busqueda.DatosBusquedaHorario;
 import gt.edu.usac.cats.enums.ControlReporte;
 import gt.edu.usac.cats.util.Mensajes;
 import gt.edu.usac.cats.util.RequestUtil;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -77,8 +78,8 @@ public class ControladorBuscarHorario extends ControladorAbstractoHorario {
      */
     @RequestMapping(value = "buscarHorario.htm", method = RequestMethod.GET)
     public String crearFormulario(Model modelo) {
-        this.listadoHorarios = null;
-        this.agregarAtributosDefaultBusqueda(modelo, new DatosBusquedaHorario(), true);
+        this.listadoHorarios = new ArrayList(0);
+        this.agregarAtributosDefaultBusqueda(modelo, new DatosBusquedaHorario());
         return "horario/buscarHorario";
     }
 //______________________________________________________________________________
@@ -90,18 +91,18 @@ public class ControladorBuscarHorario extends ControladorAbstractoHorario {
         //para evitar error de LAZY, se vuelve a buscar, SE DEBE DE ENCONTRAR OTRA FORMA
         this.realizarBusqueda(datosBusquedaHorario, request);
 
-        this.agregarAtributosDefaultBusqueda(modelo, datosBusquedaHorario, false);
+        this.agregarAtributosDefaultBusqueda(modelo, datosBusquedaHorario);
         return "horario/buscarHorario";
     }
 
     //______________________________________________________________________________
-    protected void agregarAtributosDefaultBusqueda(Model modelo, DatosBusquedaHorario datosBusquedaHorario, boolean buscar) {
+    protected void agregarAtributosDefaultBusqueda(Model modelo, DatosBusquedaHorario datosBusquedaHorario) {
         if (datosBusquedaHorario!= null){
             modelo.addAttribute("datosBusquedaHorario", datosBusquedaHorario);
         }
         modelo.addAttribute("nombreControlReporte", ControlReporte.HORARIO);
         modelo.addAttribute("listadoHorarios", this.listadoHorarios);
-        this.agregarAtributosDefault(modelo, listadoSalones, listadoSemestres, buscar);
+        this.agregarAtributosDefault(modelo, listadoSalones, listadoSemestres);
 
     }
 //______________________________________________________________________________
@@ -130,10 +131,11 @@ public class ControladorBuscarHorario extends ControladorAbstractoHorario {
             Model modelo, HttpServletRequest request) {
 
         if (!bindingResult.hasErrors()) {
+            System.out.println("idSalon " + datosBusquedaHorario.getSalon().getIdSalon());
            this.realizarBusqueda(datosBusquedaHorario, request);
         }
 
-        this.agregarAtributosDefaultBusqueda(modelo, datosBusquedaHorario, false);
+        this.agregarAtributosDefaultBusqueda(modelo, datosBusquedaHorario);
         return "horario/buscarHorario";
     }
 

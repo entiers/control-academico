@@ -21,6 +21,7 @@ import java.io.Serializable;
  * @version 1.0
  */
 public class DatosBusquedaHorario implements Serializable{
+    private short idSalon;
 //______________________________________________________________________________
     private Salon salon;
 //______________________________________________________________________________
@@ -69,5 +70,17 @@ public class DatosBusquedaHorario implements Serializable{
     public void setAsignacionCursoPensum(AsignacionCursoPensum asignacionCursoPensum) {
         this.asignacionCursoPensum = asignacionCursoPensum;
     }
+
+    public short getIdSalon() {
+        return idSalon;
+    }
+
+    public void setIdSalon(short idSalon) {
+        this.idSalon = idSalon;
+        this.salon = new Salon();
+        this.salon.setIdSalon(idSalon);
+    }
+    
+    
 
 }
