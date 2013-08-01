@@ -103,7 +103,7 @@ public class ControladorEditarHorario extends ControladorAbstractoHorario {
         wrapperHorario.agregarWrapper(this.horario);
         modelo.addAttribute("wrapperHorario", wrapperHorario);
 
-        this.agregarAtributosDefault(modelo, listadoCursos, listadoSalones, listadoSemestres, wrapperHorario, true);
+        this.agregarAtributosDefault(modelo, listadoCursos, listadoSalones, listadoSemestres, wrapperHorario);
         return "horario/editarHorario";
     }
 
@@ -156,7 +156,7 @@ public class ControladorEditarHorario extends ControladorAbstractoHorario {
             }
         }
 
-        this.agregarAtributosDefault(modelo, listadoCursos, listadoSalones, listadoSemestres, wrapperHorario, false);
+        this.agregarAtributosDefault(modelo, listadoCursos, listadoSalones, listadoSemestres, wrapperHorario);
         return "horario/editarHorario";
     }
 }

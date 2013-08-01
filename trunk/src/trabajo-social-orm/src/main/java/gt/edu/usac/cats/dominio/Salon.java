@@ -6,15 +6,10 @@
  * Control Academico
  *
  */
-
-
-
 package gt.edu.usac.cats.dominio;
 
 //Generated 16/03/2010 06:31:00 PM by Hibernate Tools 3.2.1.GA
-
 //~--- JDK imports ------------------------------------------------------------
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -35,41 +30,25 @@ import javax.persistence.Transient;
 @Entity
 @Table(
     name = "salon",
-    schema = "control"
-)
+schema = "control")
 public class Salon implements java.io.Serializable {
+
+    private Short idSalon;
     private Set<Horario> horarios = new HashSet<Horario>(0);
     private short capacidad;
     private String edificio;
-    private Short idSalon;
     private short numero;
 
     public Salon() {
         this.idSalon = 0;
     }
 
-    public Salon(Short idSalon, short numero, String edificio, short capacidad) {
-        this.idSalon = idSalon;
-        this.numero = numero;
-        this.edificio = edificio;
-        this.capacidad = capacidad;
-    }
-
-    public Salon(Short idSalon, short numero, String edificio, short capacidad, Set<Horario> horarios) {
-        this.idSalon = idSalon;
-        this.numero = numero;
-        this.edificio = edificio;
-        this.capacidad = capacidad;
-        this.horarios = horarios;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(
         name = "id_salon",
-        unique = true,
-        nullable = false
-    )
+    unique = true,
+    nullable = false)
     public Short getIdSalon() {
         return this.idSalon;
     }
@@ -80,8 +59,7 @@ public class Salon implements java.io.Serializable {
 
     @Column(
         name = "numero",
-        nullable = false
-    )
+    nullable = false)
     public short getNumero() {
         return this.numero;
     }
@@ -92,9 +70,8 @@ public class Salon implements java.io.Serializable {
 
     @Column(
         name = "edificio",
-        nullable = false,
-        length = 3
-    )
+    nullable = false,
+    length = 3)
     public String getEdificio() {
         return this.edificio;
     }
@@ -105,8 +82,7 @@ public class Salon implements java.io.Serializable {
 
     @Column(
         name = "capacidad",
-        nullable = false
-    )
+    nullable = false)
     public short getCapacidad() {
         return this.capacidad;
     }
@@ -117,9 +93,8 @@ public class Salon implements java.io.Serializable {
 
     @OneToMany(
         cascade = CascadeType.ALL,
-        fetch = FetchType.LAZY,
-        mappedBy = "salon"
-    )
+    fetch = FetchType.LAZY,
+    mappedBy = "salon")
     public Set<Horario> getHorarios() {
         return this.horarios;
     }
@@ -128,9 +103,8 @@ public class Salon implements java.io.Serializable {
         this.horarios = horarios;
     }
 
-
     @Transient
-    public String getNumeroEdificio(){
+    public String getNumeroEdificio() {
         return this.numero + " (" + this.edificio + ")";
     }
 }

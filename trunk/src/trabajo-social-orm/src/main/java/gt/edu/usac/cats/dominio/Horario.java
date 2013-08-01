@@ -39,7 +39,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
-
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
@@ -67,7 +66,9 @@ public class Horario implements java.io.Serializable {
      private Set<HorarioDia> horarioDias = new HashSet<HorarioDia>(0);
      private Set<DetalleAsignacion> detalleAsignacions = new HashSet<DetalleAsignacion>(0);
 
-    public Horario() {}
+    public Horario() {
+        this.idHorario = 0;
+    }
 
 
     @Id

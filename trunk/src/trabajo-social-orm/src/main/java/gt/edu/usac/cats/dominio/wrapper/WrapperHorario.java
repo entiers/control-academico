@@ -3,7 +3,6 @@
  * Escuela de Trabajo Social
  * Universidad de San Carlos de Guatemala
  */
-
 package gt.edu.usac.cats.dominio.wrapper;
 
 import gt.edu.usac.cats.dominio.AsignacionCursoPensum;
@@ -15,18 +14,20 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
- * Contiene los atributos del Horario que seran ingresados
- * o actualizado a la BD. El wrapper se utiliza en las paginas de
- * <code>agregarHorario.htm</code> y <code>editarHorario.htm</code>.
+ * Contiene los atributos del Horario que seran ingresados o actualizado a la
+ * BD. El wrapper se utiliza en las paginas de
+ * <code>agregarHorario.htm</code> y
+ * <code>editarHorario.htm</code>.
  *
  * @author Mario Batres
  * @version 1.0
  */
-public class WrapperHorario implements Serializable{
-    
+public class WrapperHorario implements Serializable {
+
 //______________________________________________________________________________
     private boolean habilitado;
 //______________________________________________________________________________
@@ -38,30 +39,37 @@ public class WrapperHorario implements Serializable{
 //______________________________________________________________________________
     @NotEmpty(message = "{validacion.campoObligatorio}")
     @Size(max = 2, message = "{validacion.caracteresMaximos}")
-    private String seccion;    
+    private String seccion;
 //______________________________________________________________________________
-    
+    @NotNull(message = "{validacion.campoObligatorio}")
     private AsignacionCursoPensum asignacionCursoPensum;
 //______________________________________________________________________________
+    @NotNull(message = "{validacion.campoObligatorio}")
     private Salon salon;
 //______________________________________________________________________________
+    @NotNull(message = "{validacion.campoObligatorio}")
     private Semestre semestre;
 //______________________________________________________________________________
-
-    private String [] horarioDiasWrapper;
-    
+    @NotNull(message = "{validacion.campoObligatorio}")
+    private String[] horarioDiasWrapper;
+    @NotNull(message = "{validacion.campoObligatorio}")
     private TipoHorario tipoHorario;
+    
+    private Short idSalon;
 
-     /**
+    /**
      * Constructor del wrapper, se inicializan los atributos a mostrar en las
-     * paginas de <code>agregarHorario.htm</code> y <code>editarHorario.htm</code>.
+     * paginas de
+     * <code>agregarHorario.htm</code> y
+     * <code>editarHorario.htm</code>.
      */
-    public WrapperHorario() {        
+    public WrapperHorario() {
         this.habilitado = true;
         this.horaFin = new Date();
-        this.horaInicio = new Date();     
+        this.horaInicio = new Date();
         this.semestre = new Semestre();
         this.salon = new Salon();
+        this.idSalon = 0;
         this.asignacionCursoPensum = new AsignacionCursoPensum();
     }
 
@@ -71,35 +79,41 @@ public class WrapperHorario implements Serializable{
      *
      * @param horario Pojo de tipo {@link Horario}
      */
-    public void agregarWrapper(Horario horario){        
+    public void agregarWrapper(Horario horario) {
         this.asignacionCursoPensum = horario.getAsignacionCursoPensum();
         this.habilitado = horario.isHabilitado();
         this.horaFin = horario.getHoraFin();
         this.horaInicio = horario.getHoraInicio();
         this.salon = horario.getSalon();
         this.seccion = horario.getSeccion();
-        this.semestre = horario.getSemestre();        
+        this.semestre = horario.getSemestre();
         this.horarioDiasWrapper = horario.getHorarioDiasNumeroAsArrayString();
         this.setTipoHorario(horario.getTipo());
+        this.idSalon = horario.getSalon().getIdSalon();
     }
 //______________________________________________________________________________
+
     /**
      * Se agrega la informacion del pojo de tipo {@link Horario} al wrapper.
      *
      * @param horario Pojo de tipo {@link Horario}
      */
-    public void quitarWrapper(Horario horario){
+    public void quitarWrapper(Horario horario) {
         horario.setAsignacionCursoPensum(this.asignacionCursoPensum);
         horario.setHabilitado(this.habilitado);
         horario.setHoraFin(this.horaFin);
         horario.setHoraInicio(this.horaInicio);
         horario.setSalon(this.salon);
         horario.setSeccion(this.seccion);
-        horario.setSemestre(this.semestre);        
+        horario.setSemestre(this.semestre);
         //horario.setHorarioDias(this.horarioDias);
         horario.setTipo(getTipoHorario());
+        if(horario.getSalon().getIdSalon() == 0){
+            horario.getSalon().setIdSalon(idSalon);
+        }
     }
 //______________________________________________________________________________
+
     /**
      * @return El estado del horario
      */
@@ -114,6 +128,7 @@ public class WrapperHorario implements Serializable{
         this.habilitado = habilitado;
     }
 //______________________________________________________________________________
+
     /**
      * @return La hora de finalizacion del curso
      */
@@ -128,6 +143,7 @@ public class WrapperHorario implements Serializable{
         this.horaFin = horaFin;
     }
 //______________________________________________________________________________
+
     /**
      * @return La hora de inicio del curso
      */
@@ -142,6 +158,7 @@ public class WrapperHorario implements Serializable{
         this.horaInicio = horaInicio;
     }
 //______________________________________________________________________________
+
     /**
      * @return La seccion del curso en el horario.
      */
@@ -156,6 +173,7 @@ public class WrapperHorario implements Serializable{
         this.seccion = seccion;
     }
 //______________________________________________________________________________
+
     /**
      * @return pojo de tipo {@link AsignacionCursoPensum}
      */
@@ -170,6 +188,7 @@ public class WrapperHorario implements Serializable{
         this.asignacionCursoPensum = asignacionCursoPensum;
     }
 //______________________________________________________________________________
+
     /**
      * @return pojo de tipo {@link Salon}
      */
@@ -184,6 +203,7 @@ public class WrapperHorario implements Serializable{
         this.salon = salon;
     }
 //______________________________________________________________________________
+
     /**
      * @return pojo de tipo {@link Semestre}
      */
@@ -201,14 +221,14 @@ public class WrapperHorario implements Serializable{
     /**
      * @return the horarioDias
      */
-    public String [] getHorarioDiasWrapper() {
+    public String[] getHorarioDiasWrapper() {
         return horarioDiasWrapper;
     }
 
     /**
      * @param horarioDias the horarioDias to set
      */
-    public void setHorarioDiasWrapper(String [] horarioDiasWrapper) {
+    public void setHorarioDiasWrapper(String[] horarioDiasWrapper) {
         this.horarioDiasWrapper = horarioDiasWrapper;
     }
 
@@ -224,6 +244,15 @@ public class WrapperHorario implements Serializable{
      */
     public void setTipoHorario(TipoHorario tipoHorario) {
         this.tipoHorario = tipoHorario;
+    }
+
+    public Short getIdSalon() {
+        return idSalon;
+    }
+
+    public void setIdSalon(Short idSalon) {
+        this.idSalon = idSalon;
+        this.salon.setIdSalon(idSalon);
     }
 
 }

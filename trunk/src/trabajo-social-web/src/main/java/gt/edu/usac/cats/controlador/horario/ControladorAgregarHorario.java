@@ -28,8 +28,9 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.context.WebApplicationContext;
 
 /**
- * Esta clase se encarga de almacenar horarios en la BD.
- * La informacion se pide en la pagina de <code>agregarHorario.htm</code>.
+ * Esta clase se encarga de almacenar horarios en la BD. La informacion se pide
+ * en la pagina de
+ * <code>agregarHorario.htm</code>.
  *
  * @author Mario Batres
  * @version 1.0
@@ -37,7 +38,7 @@ import org.springframework.web.context.WebApplicationContext;
 @Controller("controladorAgregarHorario")
 @RequestMapping(value = "agregarHorario.htm")
 @Scope(value = WebApplicationContext.SCOPE_SESSION)
-@SessionAttributes(value={"listadoSemestres", "listadoSalones", "listadoCursos"}) 
+@SessionAttributes(value = {"listadoSemestres", "listadoSalones", "listadoCursos"})
 public class ControladorAgregarHorario extends ControladorAbstractoHorario {
 //______________________________________________________________________________
 
@@ -54,9 +55,8 @@ public class ControladorAgregarHorario extends ControladorAbstractoHorario {
     /**
      * <p>Listado de todas las cursos disponibles.</p>
      */
-    private List<AsignacionCursoPensum> listadoCursos;    
+    private List<AsignacionCursoPensum> listadoCursos;
 //______________________________________________________________________________
-
     /**
      * <p>Lleva el nombre del titulo para el mensaje en la pagina.<p>
      */
@@ -70,47 +70,47 @@ public class ControladorAgregarHorario extends ControladorAbstractoHorario {
 
     /**
      * <p>Este metodo se ejecuta cada vez que se realiza una solicitud del tipo
-     * GET de la pagina <code>agregarHorario.htm</code>. El metodo se encarga
-     * de iniciar los objetos que se usaran en la pagina.</p>
+     * GET de la pagina
+     * <code>agregarHorario.htm</code>. El metodo se encarga de iniciar los
+     * objetos que se usaran en la pagina.</p>
      *
      * @param modelo Objeto {@link Model} que contiene todos los objetos que
-     *        seran usados en la pagina
+     * seran usados en la pagina
      * @return String Contiene el nombre de la vista a mostrar
      */
     @RequestMapping(method = RequestMethod.GET)
     public String crearFormulario(Model modelo) {
-        this.agregarAtributosDefault(modelo, listadoCursos, listadoSalones, listadoSemestres, new WrapperHorario(), true);
+        this.agregarAtributosDefault(modelo, listadoCursos, listadoSalones, listadoSemestres, new WrapperHorario());
         return "horario/agregarHorario";
     }
 //______________________________________________________________________________
 
     /**
      * <p>Este metodo es llamado cuando se realiza un SUBMIT desde la pagina de
-     * agregar horario <code>agregarHorario.htm</code>. El metodo se encarga de
-     * agregar la informacion ingresada en el formulario de la pagina en la
-     * base de datos, el procedimiento
-     * que sigue el metodo es el siguiente:
-     * <ul>
-     * <li>Se realiza la validacion de datos ingresados, si algun dato no cumple
-     * con las reglas de validacion se retorna a la pagina para que se muestren
-     * los mensajes de error</li>
-     * <li>Si la validacion tuvo exito se trata de agregar la informacion a la
-     * base de datos por medio de {@link ServicioHorario}</li>
+     * agregar horario
+     * <code>agregarHorario.htm</code>. El metodo se encarga de agregar la
+     * informacion ingresada en el formulario de la pagina en la base de datos,
+     * el procedimiento que sigue el metodo es el siguiente: <ul> <li>Se realiza
+     * la validacion de datos ingresados, si algun dato no cumple con las reglas
+     * de validacion se retorna a la pagina para que se muestren los mensajes de
+     * error</li> <li>Si la validacion tuvo exito se trata de agregar la
+     * informacion a la base de datos por medio de {@link ServicioHorario}</li>
      * <li>Se procesa el resultado de la operacion y se le indica a la pagina el
      * mensaje de respuesta que debe de mostrar, el mensaje puede ser de exito o
-     * de error</li>
-     * </ul></p>
+     * de error</li> </ul></p>
      *
      * @param horario Pojo del tipo {@link Horario}
      * @param resultado Objeto {@link BindingResult}, contiene el resultado de
-     *        las validaciones
+     * las validaciones
      * @param modelo Objeto {@link Model} que contiene todos los objetos que
-     *        seran usados en la pagina
+     * seran usados en la pagina
      * @param request Objeto {@link HttpServletRequest}
      * @return String Con la url de la pagina a mostrar
      */
     @RequestMapping(method = RequestMethod.POST)
-    public String submit(Model modelo, @Valid WrapperHorario wrapperHorario, BindingResult bindingResult,
+    public String submit(Model modelo,
+            @Valid WrapperHorario wrapperHorario,
+            BindingResult bindingResult,
             HttpServletRequest request) {
 
         // se validan los campos ingresados en el formulario, si existen errores
@@ -118,14 +118,15 @@ public class ControladorAgregarHorario extends ControladorAbstractoHorario {
         if (!bindingResult.hasErrors()) {
             try {
                 Horario horario = new Horario();
-                wrapperHorario.quitarWrapper(horario);
+                System.out.println("Hannah is here:  " + wrapperHorario.getIdSalon());
                 
+                wrapperHorario.quitarWrapper(horario);
                 this.servicioHorarioImpl.agregarHorario(horario, wrapperHorario.getHorarioDiasWrapper());
 
-                
+
                 wrapperHorario = new WrapperHorario();
                 // se registra el evento
-                RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "agregarHorario.exito", true);                
+                RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "agregarHorario.exito", true);
                 log.info(Mensajes.EXITO_AGREGAR + "Horario, id " + horario.getIdHorario());
 
             } catch (DataAccessException e) {
@@ -135,9 +136,13 @@ public class ControladorAgregarHorario extends ControladorAbstractoHorario {
             } catch (NullPointerException e) {
                 RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "agregarHorario.noDias", false);
                 log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
+            } catch (Exception e) {
+                RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "generalException", false);
+                log.error(e.getMessage(), e);
             }
         }
-        this.agregarAtributosDefault(modelo, listadoCursos, listadoSalones, listadoSemestres,  wrapperHorario, false);
+        System.out.println("hannah is here");
+        this.agregarAtributosDefault(modelo, listadoCursos, listadoSalones, listadoSemestres, wrapperHorario);
         return "horario/agregarHorario";
     }
 }
