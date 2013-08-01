@@ -73,7 +73,7 @@ public class ControladorBuscarCalendarioActividades extends ControladorAbstracto
     @RequestMapping(value = "buscarCalendarioActividades.htm", method = RequestMethod.GET)
     public String crearFormulario(Model modelo) {
         this.listadoSemestres = this.servicioSemestreImpl.listarSemestresParaBusqueda();
-        this.listadoCalendarioActividades = null;
+        this.listadoCalendarioActividades = new ArrayList<CalendarioActividades>();
 
         this.agregarAtributosDefault(modelo, new DatosBusquedaCalendarioActividades());
         return "calendarioActividades/buscarCalendarioActividades";
