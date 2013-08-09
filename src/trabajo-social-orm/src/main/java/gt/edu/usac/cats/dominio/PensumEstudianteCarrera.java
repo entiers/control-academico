@@ -27,7 +27,7 @@ import javax.persistence.UniqueConstraint;
 @UniqueConstraint(name = "pensum_estudiante_carrera_uk", columnNames = {"id_asignacion_estudiante_carrera", "id_pensum"}))
 public class PensumEstudianteCarrera implements java.io.Serializable {
 
-    private int idPensumEstudianteCarrera;
+    private Integer idPensumEstudianteCarrera;
     private AsignacionEstudianteCarrera asignacionEstudianteCarrera;
     private Pensum pensum;
     private boolean valido;
@@ -40,11 +40,11 @@ public class PensumEstudianteCarrera implements java.io.Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_pensum_estudiante_carrera", unique = true, nullable = false)
-    public int getIdPensumEstudianteCarrera() {
+    public Integer getIdPensumEstudianteCarrera() {
         return this.idPensumEstudianteCarrera;
     }
 
-    public void setIdPensumEstudianteCarrera(int idPensumEstudianteCarrera) {
+    public void setIdPensumEstudianteCarrera(Integer idPensumEstudianteCarrera) {
         this.idPensumEstudianteCarrera = idPensumEstudianteCarrera;
     }
 

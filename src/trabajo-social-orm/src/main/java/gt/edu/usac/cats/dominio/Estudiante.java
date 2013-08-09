@@ -71,7 +71,9 @@ public class Estudiante implements java.io.Serializable {
     private String password;
     
 
-    public Estudiante() {}
+    public Estudiante() {
+        this.idEstudiante = 0;
+    }
     
 //______________________________________________________________________________
     @Id
