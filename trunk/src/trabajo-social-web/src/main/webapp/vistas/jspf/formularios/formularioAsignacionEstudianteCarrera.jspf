@@ -37,7 +37,7 @@
         <fmt:message key="historialAsignacionEstudianteCarrera.situacion"/>: *
     </form:label>
     <form:select path="wrapperHistorialAsignacionEstudianteCarrera.situacion.idSituacion" cssStyle="width: 250px;">
-        <form:option  value="" label="Seleccionar un valor" />
+        <form:option  value="0" label="Seleccionar un valor" />
         <form:options items="${listadoSituaciones}" itemValue="idSituacion" itemLabel="codigoNombre" />
     </form:select>
     <form:errors path="wrapperHistorialAsignacionEstudianteCarrera.situacion.idSituacion" cssClass="claseError" />
@@ -48,7 +48,7 @@
         <fmt:message key="historialAsignacionEstudianteCarrera.semestre"/>: *
     </form:label>
     <form:select path="wrapperHistorialAsignacionEstudianteCarrera.semestre.idSemestre" cssStyle="width: 250px;">
-        <form:option  value="" label="Seleccionar un valor" />
+        <form:option  value="0" label="Seleccionar un valor" />
         <form:options items="${listadoSemestres}" itemValue="idSemestre" itemLabel="anyoNumero" />
     </form:select>
     <form:errors path="wrapperHistorialAsignacionEstudianteCarrera.semestre.idSemestre" cssClass="claseError" />

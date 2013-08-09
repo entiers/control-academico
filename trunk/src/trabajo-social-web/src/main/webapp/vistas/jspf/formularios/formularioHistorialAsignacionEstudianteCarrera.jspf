@@ -15,7 +15,7 @@
         <fmt:message key="historialAsignacionEstudianteCarrera.situacion"/>: *
     </form:label>
     <form:select path="situacion.idSituacion" cssStyle="width: 250px;" id="situacion">
-        <form:option  value="" label="Seleccionar un valor" />
+        <form:option  value="0" label="Seleccionar un valor" />
         <form:options items="${listadoSituaciones}" itemValue="idSituacion" itemLabel="codigoNombre" />
     </form:select>
     <form:errors path="situacion.idSituacion" cssClass="claseError"  />

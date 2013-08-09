@@ -109,14 +109,16 @@ public class ControladorMostrarPensumEstudianteCarrera extends ControladorAbstra
         //Se obtiene las relaciones con el pensum valido
         if (pensumEstudianteCarreraValido != null) {
             this.pensum = pensumEstudianteCarreraValido.getPensum();
+            
             modelo.addAttribute("idPensumEstudianteCarreraValido",
                     pensumEstudianteCarreraValido.getIdPensumEstudianteCarrera());
 
             this.wrapperEquivalenciaPorPensum =
                     new WrapperEquivalenciaPorPensum(asignacionEstudianteCarrera, pensum);
 
+        } else {
+            this.wrapperEquivalenciaPorPensum = new WrapperEquivalenciaPorPensum();
         }
-
         request.setAttribute("aec", this.asignacionEstudianteCarrera);
 
 

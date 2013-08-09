@@ -152,6 +152,10 @@ public class ControladorMostrarAsignacionEstudianteCarrera extends ControladorAb
 
                 RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE_AGREGAR, "agregarAsignacionEstudianteCarrera.exito", true);
                 log.info(Mensajes.EXITO_AGREGAR + asignacionEstudianteCarrera.toString());
+                
+                this.agregarAtributosDefault(modelo, wrapperAgregarAsignacionEstudianteCarrera,
+                        true, new WrapperModificarAsignacionEstudianteCarrera(), false, true,
+                        new WrapperEquivalenciaPorCarrera(), this.estudiante);
 
 
             } catch (DataIntegrityViolationException e) {
