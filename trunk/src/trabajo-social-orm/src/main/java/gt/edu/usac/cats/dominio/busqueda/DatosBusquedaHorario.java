@@ -59,13 +59,13 @@ public class DatosBusquedaHorario implements Serializable{
     }
 //______________________________________________________________________________
     /**
-     * @return pojo de tipo {@link Curso}
+     * @return pojo de tipo {@link AsignacionCursoPensum}
      */
     public AsignacionCursoPensum getAsignacionCursoPensum() {
         return asignacionCursoPensum;
     }
     /**
-     * @param curso pojo de tipo {@link Curso}
+     * @param curso pojo de tipo {@link AsignacionCursoPensum}
      */
     public void setAsignacionCursoPensum(AsignacionCursoPensum asignacionCursoPensum) {
         this.asignacionCursoPensum = asignacionCursoPensum;

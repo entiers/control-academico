@@ -5,7 +5,7 @@
  */
 package gt.edu.usac.cats.controlador.asignacion;
 
-import gt.edu.usac.cats.dominio.Curso;
+import gt.edu.usac.cats.dominio.AsignacionCursoPensum;
 import gt.edu.usac.cats.dominio.Horario;
 import gt.edu.usac.cats.dominio.Semestre;
 import gt.edu.usac.cats.dominio.busqueda.DatosBusquedaHorario;
@@ -122,7 +122,7 @@ public class ControladorCambioCierreSeccion implements Serializable {
     private void setModelo(Model modelo,boolean post){
         modelo.addAttribute("post", post);
         modelo.addAttribute("listadoCursos",
-                        this.servicioGeneralImpl.listarEntidad(Curso.class,true,"nombre"));
+                        this.servicioHorarioImpl.listarEntidad(AsignacionCursoPensum.class));
         modelo.addAttribute("listadoSemestres",
                         this.servicioGeneralImpl.listarEntidad(Semestre.class));
     }
