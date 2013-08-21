@@ -42,7 +42,7 @@ uniqueConstraints = {
 })
 public class AsignacionEstudianteCarrera implements java.io.Serializable {
 
-    private int idAsignacionEstudianteCarrera;
+    private Integer idAsignacionEstudianteCarrera;
     private Estudiante estudiante;
     private Carrera carrera;
     private Date fechaCierre;
@@ -63,11 +63,11 @@ public class AsignacionEstudianteCarrera implements java.io.Serializable {
     @Column(name = "id_asignacion_estudiante_carrera",
     unique = true,
     nullable = false)
-    public int getIdAsignacionEstudianteCarrera() {
+    public Integer getIdAsignacionEstudianteCarrera() {
         return this.idAsignacionEstudianteCarrera;
     }
 
-    public void setIdAsignacionEstudianteCarrera(int idAsignacionEstudianteCarrera) {
+    public void setIdAsignacionEstudianteCarrera(Integer idAsignacionEstudianteCarrera) {
         this.idAsignacionEstudianteCarrera = idAsignacionEstudianteCarrera;
     }
 //______________________________________________________________________________

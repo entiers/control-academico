@@ -10,7 +10,9 @@
 
     <form:select id="slcCurso" path="idAsignacionCursoPensum" cssStyle="width: 250px;">
         <form:option  value="" label="Seleccionar un curso" />
-        <form:options items="${listaAsignacionCursoPensum}" itemValue="idAsignacionCursoPensum" itemLabel="curso.nombre" />
+        <form:options items="${listaAsignacionCursoPensum}" 
+                      itemValue="idAsignacionCursoPensum" 
+                      itemLabel="curso.nombre" />
     </form:select>
     <form:errors path="idAsignacionCursoPensum" cssClass="claseError" />
 </div>
