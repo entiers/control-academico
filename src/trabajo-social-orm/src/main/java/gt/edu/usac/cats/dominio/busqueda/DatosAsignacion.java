@@ -23,9 +23,9 @@ public class DatosAsignacion implements Serializable {
     private TipoAsignacion tipoAsignacion;
     private TipoHorario tipoHorario;
     private TipoRubro tipoRubro;
-    private int idAsignacionEstudianteCarrera;
-    private int idHorario;
-    private int idAsignacionCursoPensum;
+    private Integer idAsignacionEstudianteCarrera;
+    private Integer idHorario;
+    private Short idAsignacionCursoPensum;
     private int totalCursos;
     private List detalleAsignacion;
     @NotEmpty(message = "{validacion.campoObligatorio}")
@@ -35,27 +35,27 @@ public class DatosAsignacion implements Serializable {
         this.detalleAsignacion = new ArrayList();
     }
 
-    public int getIdAsignacionEstudianteCarrera() {
+    public Integer getIdAsignacionEstudianteCarrera() {
         return idAsignacionEstudianteCarrera;
     }
 
-    public void setIdAsignacionEstudianteCarrera(int idAsignacionEstudianteCarrera) {
+    public void setIdAsignacionEstudianteCarrera(Integer idAsignacionEstudianteCarrera) {
         this.idAsignacionEstudianteCarrera = idAsignacionEstudianteCarrera;
     }
 
-    public int getIdAsignacionCursoPensum() {
+    public Short getIdAsignacionCursoPensum() {
         return idAsignacionCursoPensum;
     }
 
-    public void setIdAsignacionCursoPensum(int idAsignacionCursoPensum) {
+    public void setIdAsignacionCursoPensum(Short idAsignacionCursoPensum) {
         this.idAsignacionCursoPensum = idAsignacionCursoPensum;
     }
 
-    public int getIdHorario() {
+    public Integer getIdHorario() {
         return idHorario;
     }
 
-    public void setIdHorario(int idHorario) {
+    public void setIdHorario(Integer idHorario) {
         this.idHorario = idHorario;
     }
 

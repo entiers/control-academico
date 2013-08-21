@@ -56,29 +56,20 @@ import org.springframework.web.context.WebApplicationContext;
 })
 public class ControladorAsignacionCursos extends ControladorAbstractoAsignacion implements Serializable {
 //______________________________________________________________________________    
-
-    @Autowired
     private Semestre semestre;
 //______________________________________________________________________________    
-    @Autowired
     private Usuario usuario;
 //______________________________________________________________________________    
-    @Autowired
     private Estudiante estudiante;
 //______________________________________________________________________________    
-    @Autowired
     private List<AsignacionEstudianteCarrera> listaAEC;
 //______________________________________________________________________________    
-    @Autowired
     private AsignacionEstudianteCarrera asignacionEstudianteCarrera;
 //______________________________________________________________________________    
-    @Autowired
     private PensumEstudianteCarrera pensumEstudianteCarrera;
 //______________________________________________________________________________    
-    @Autowired
     private List<AsignacionCursoPensum> listaAsignacionCursoPensum;
 //______________________________________________________________________________    
-    @Autowired
     private List<Horario> listaHorario;
 //______________________________________________________________________________
     private static Logger log = Logger.getLogger(ControladorAsignacionCursos.class);
