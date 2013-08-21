@@ -37,12 +37,14 @@
         <form:form modelAttribute="datosBusquedaHorario" method="POST">
             <fieldset>
                 <div id="divCampos">
-                    <form:label for="curso.idCurso" path="curso.idCurso"><fmt:message key="agregarHorario.curso"/>: *</form:label>
-                    <form:select path="curso.idCurso" cssStyle="width: 250px;"
+                    <form:label for="asignacionCursoPensum.idAsignacionCursoPensum" 
+                                path="asignacionCursoPensum.idAsignacionCursoPensum"><fmt:message key="agregarHorario.curso"/>: *</form:label>
+                    <form:select path="asignacionCursoPensum.idAsignacionCursoPensum" cssStyle="width: 250px;"
                             items="${listadoCursos}"
-                            itemLabel="nombre"
-                            itemValue="idCurso"/>
-                    <form:errors path="salon.idSalon" cssClass="claseError" />
+                            itemLabel="curso.codigoNombre"
+                            itemValue="idAsignacionCursoPensum"/>
+                    <form:errors path="asignacionCursoPensum.idAsignacionCursoPensum" 
+                                 cssClass="claseError" />
                 </div>
 
                 <div id="divCampos">
@@ -76,8 +78,8 @@
                         <tbody>
                             <c:forEach items="${listadoHorario}" var="horario">
                                 <tr>
-                                    <td>${horario.curso.codigo}</td>
-                                    <td>${horario.curso.nombre}</td>
+                                    <td>${horario.asignacionCursoPensum.curso.codigo}</td>
+                                    <td>${horario.asignacionCursoPensum.curso.nombre}</td>
                                     <td>${horario.seccion}</td>
                                     <td align="center">
                                         <a href="cambioCierreSeccion2.htm?idHorario=${horario.idHorario}">
