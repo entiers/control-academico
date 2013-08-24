@@ -285,10 +285,7 @@ public class ControladorAsignacionCursos extends ControladorAbstractoAsignacion 
     @ResponseBody
     public List getHorarioAsignacion(@RequestParam Short idAsignacionCursoPensum,
             @RequestParam String idTipoHorario, HttpServletRequest request) {
-        
-        System.out.println("Maria esta aqui. System.");
-        log.debug("Maria esta aqui.");
-
+       
         AsignacionCursoPensum asignacionCursoPensum = null;
         semestre = servicioSemestreImpl.getSemestreActivo();
         try {
