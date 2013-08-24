@@ -26,8 +26,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
-import org.codehaus.jackson.annotate.JsonIgnore;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.Authentication;
@@ -35,6 +33,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -51,11 +50,12 @@ import org.springframework.web.context.WebApplicationContext;
 @Scope(value = WebApplicationContext.SCOPE_SESSION)
 @SessionAttributes(value = {
     "semestre", "usuario", "estudiante", "listaAEC",
-    "asignacionEstudianteCarrera", "pensumEstudianteCarrera", "listaAsignacionCursoPensum", 
+    "asignacionEstudianteCarrera", "pensumEstudianteCarrera", "listaAsignacionCursoPensum",
     "listaHorario"
 })
 public class ControladorAsignacionCursos extends ControladorAbstractoAsignacion implements Serializable {
 //______________________________________________________________________________    
+
     private Semestre semestre;
 //______________________________________________________________________________    
     private Usuario usuario;
@@ -278,12 +278,17 @@ public class ControladorAsignacionCursos extends ControladorAbstractoAsignacion 
      * seran usados en la pagina
      * @return String Contiene el nombre de la vista a mostrar
      */
-    @RequestMapping(value = "getHorarioAsignacion.htm", method = RequestMethod.GET)
-    public @ResponseBody
-    @JsonIgnore
-    List<Horario> getHorarioAsignacion(@RequestParam Short idAsignacionCursoPensum,
-            @RequestParam String idTipoHorario,
-            HttpServletRequest request) {
+    @RequestMapping(
+            value = "getHorarioAsignacion.htm",
+    method = RequestMethod.GET,
+    produces = {"application/json"})
+    @ResponseBody
+    public List getHorarioAsignacion(@RequestParam Short idAsignacionCursoPensum,
+            @RequestParam String idTipoHorario, HttpServletRequest request) {
+        
+        System.out.println("Maria esta aqui. System.");
+        log.debug("Maria esta aqui.");
+
         AsignacionCursoPensum asignacionCursoPensum = null;
         semestre = servicioSemestreImpl.getSemestreActivo();
         try {

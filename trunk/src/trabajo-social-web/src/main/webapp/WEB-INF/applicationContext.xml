@@ -5,11 +5,11 @@
        xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="
             http://www.springframework.org/schema/beans
-            http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+            http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
             http://www.springframework.org/schema/context
-            http://www.springframework.org/schema/context/spring-context-3.2.xsd
+            http://www.springframework.org/schema/context/spring-context-3.1.xsd
             http://www.springframework.org/schema/aop 
-            http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
+            http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
 
 
     <!-- ·······································································
@@ -84,6 +84,9 @@
         <property name="maxUploadSize" value="10485760"/>
     </bean>
 
+    <aop:aspectj-autoproxy />  
+
+ 
    <!-- <aop:config proxy-target-class="true">
     
     </aop:config>
@@ -91,7 +94,7 @@
     <aop:aspectj-autoproxy proxy-target-class="true" />
     
     -->
-   <!-- ·······································································
+    <!-- ·······································································
     ··· Archivo de configuracion para Hibernate
     ········································································ -->
     <import resource="hibernate-config.xml" />
