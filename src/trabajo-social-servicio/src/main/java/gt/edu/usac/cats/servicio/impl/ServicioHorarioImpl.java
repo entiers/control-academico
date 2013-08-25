@@ -309,7 +309,8 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
     @Override
     public List<Horario> getHorario(Semestre semestre, TipoHorario tipoHorario) throws DataAccessException {
         StringBuilder builder = new StringBuilder();
-
+         System.out.println("&&& semestre: "+semestre.getIdSemestre());
+         System.out.println("&&& tipoHorario: "+tipoHorario.getId());
         builder.append(" select horario from Horario as horario")
                .append(" where horario.semestre = :semestre")
                .append(" and horario.tipo =:tipoHorario ")
@@ -321,14 +322,31 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
 
         return query.list();
     }
+    @Override
+    public List<Horario> getHorarioConNotas(Semestre semestre, TipoHorario tipoHorario) throws DataAccessException {
+        StringBuilder builder = new StringBuilder();
+         System.out.println("&&& semestre: "+semestre.getIdSemestre());
+         System.out.println("&&& tipoHorario: "+tipoHorario.getId());
+        builder.append(" select horario from Horario as horario")
+               .append(" where horario.semestre = :semestre")
+               .append(" and horario.tipo =:tipoHorario ")
+               .append(" and exists (from DetalleAsignacion da where da.horario.idHorario = horario.idHorario)")
+               .append(" order by horario.asignacionCursoPensum.curso.idCurso, horario.seccion");
+        
+        Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
+        query.setParameter("semestre", semestre);
+        query.setParameter("tipoHorario", tipoHorario);
+
+        return query.list();
+    }
 
     @Override
-    public List getSeccionesHorario(AsignacionCursoPensum asignacionCursoPensum, Semestre semestre, TipoHorario tipoHorario) throws DataAccessException {
+    public List<Horario> getSeccionesHorario(AsignacionCursoPensum asignacionCursoPensum, Semestre semestre, TipoHorario tipoHorario) throws DataAccessException {
         DetachedCriteria criteria = DetachedCriteria.forClass(Horario.class);
         criteria.add(Restrictions.eq("semestre", semestre));
         criteria.add(Restrictions.eq("tipo", tipoHorario));
         criteria.add(Restrictions.eq("asignacionCursoPensum", asignacionCursoPensum));
-        criteria.setProjection(Projections.groupProperty("seccion"));
+        //criteria.setProjection(Projections.groupProperty("seccion"));
         
         return this.daoGeneralImpl.find(criteria);
     }

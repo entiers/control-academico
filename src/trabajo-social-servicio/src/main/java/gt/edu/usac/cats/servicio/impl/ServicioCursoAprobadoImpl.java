@@ -51,7 +51,7 @@ public class ServicioCursoAprobadoImpl extends ServicioGeneralImpl implements Se
     @Override
     public List<Curso> getCursoPrerrequisitoPendiente(AsignacionEstudianteCarrera asignacionEstudianteCarrera, AsignacionCursoPensum asignacionCursoPensum) throws DataAccessException {
 
-
+                
         Pensum pensumValido = servicioPensumEstudianteCarreraImpl.
                 getPensumEstudianteCarreraValido(asignacionEstudianteCarrera).
                 getPensum();

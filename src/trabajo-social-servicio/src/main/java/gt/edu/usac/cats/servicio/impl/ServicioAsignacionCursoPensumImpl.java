@@ -11,9 +11,12 @@ import gt.edu.usac.cats.dominio.AsignacionEquivalencia;
 import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
 import gt.edu.usac.cats.dominio.Curso;
 import gt.edu.usac.cats.dominio.CursoAprobado;
+import gt.edu.usac.cats.dominio.Horario;
 import gt.edu.usac.cats.dominio.Pensum;
 import gt.edu.usac.cats.dominio.PensumEstudianteCarrera;
+import gt.edu.usac.cats.dominio.Semestre;
 import gt.edu.usac.cats.enums.TipoAsignacion;
+import gt.edu.usac.cats.enums.TipoHorario;
 import gt.edu.usac.cats.servicio.ServicioAsignacionCursoPensum;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -243,4 +246,6 @@ public class ServicioAsignacionCursoPensumImpl extends ServicioGeneralImpl imple
         
         return query.list();
     }
+    
+   
 }
