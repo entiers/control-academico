@@ -48,7 +48,7 @@ import org.springframework.web.context.WebApplicationContext;
     "semestre", "estudiante", "listaAEC", "asignacionEstudianteCarrera",
     "pensumEstudianteCarrera", "listaAsignacionCursoPensum", "listaAsignacion", "listaHorarioAsignacion", "listaHorario"
 })
-public class ControladorAsignacionExtemporanea extends ControladorAbstractoAsignacion implements Serializable{
+public class ControladorAsignacionExtemporanea extends ControladorAbstractoAsignacion implements Serializable {
 //______________________________________________________________________________    
 
     private Semestre semestre;
@@ -144,10 +144,20 @@ public class ControladorAsignacionExtemporanea extends ControladorAbstractoAsign
 
         modelo.addAttribute("estudiante", this.estudiante);
 
-        this.asignacionEstudianteCarrera = this.servicioGeneralImpl.cargarEntidadPorID(AsignacionEstudianteCarrera.class,
+        this.asignacionEstudianteCarrera = this.servicioGeneralImpl.
+                cargarEntidadPorID(
+                AsignacionEstudianteCarrera.class,
                 wrapperAsignacionCursosExtemporaneas.getAsignacionEstudianteCarrera().getIdAsignacionEstudianteCarrera());
 
         pensumEstudianteCarrera = servicioPensumEstudianteCarrera.getPensumEstudianteCarreraValido(asignacionEstudianteCarrera);
+
+        if (pensumEstudianteCarrera == null) {
+            RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "asignacionExtemporanea.pensumEstudianteCarrera.null", false);
+            modelo.addAttribute("listaTipoHorario", TipoHorario.values());
+            modelo.addAttribute("listadoAEC", this.listaAEC);
+
+            return "asignacion/asignacionCursosAdmin";
+        }
 
         //Validando estudiante inscrito
         if (!this.servicioAsignacionEstudianteCarreraImpl.estaEstudianteInscrito(
