@@ -11,9 +11,9 @@ import gt.edu.usac.cats.servicio.ServicioAsignacionCursoPensum;
 import gt.edu.usac.cats.util.Mensajes;
 import gt.edu.usac.cats.util.RequestUtil;
 import java.util.List;
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,7 +25,7 @@ import org.springframework.validation.BindingResult;
  */
 public abstract class ControladorAbstractoRealizarEquivalencia {
 
-    @Resource
+    @Autowired
     protected ServicioAsignacionCursoPensum servicioAsignacionCursoPensumImpl;
     private Logger log = Logger.getLogger(ControladorAbstractoRealizarEquivalencia.class);
 
@@ -39,7 +39,9 @@ public abstract class ControladorAbstractoRealizarEquivalencia {
             String nombreAction,
             String linkRegresar) {
 
-        modelo.addAttribute("listadoEquivalencias", listadoEquivalencias);
+        if (listadoEquivalencias != null) {
+            modelo.addAttribute("listadoEquivalencias", listadoEquivalencias);
+        }
         modelo.addAttribute("wrapperAsignacionEquivalencia", wrapperAsignacionEquivalencia);
         modelo.addAttribute("nombreAction", nombreAction);
         modelo.addAttribute("linkRegresar", linkRegresar);

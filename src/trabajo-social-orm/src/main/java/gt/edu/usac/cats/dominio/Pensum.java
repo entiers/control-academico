@@ -6,19 +6,13 @@
  * Control Academico
  *
  */
-
-
-
 package gt.edu.usac.cats.dominio;
 
 //Generated 16/03/2010 06:31:00 PM by Hibernate Tools 3.2.1.GA
-
 //~--- JDK imports ------------------------------------------------------------
-
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -43,27 +37,28 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @Entity
 @Table(
     name = "pensum",
-    schema = "control",
-    uniqueConstraints=@UniqueConstraint(columnNames="codigo", name="pensum_codigo_uk")
-)
+schema = "control",
+uniqueConstraints =
+@UniqueConstraint(columnNames = "codigo", name = "pensum_codigo_uk"))
 public class Pensum implements java.io.Serializable {
-     private Short idPensum;
-     private Carrera carrera;
-     private String codigo;
-     private Date fechaInicio;
-     private Date fechaFin;
-     private Short estado;
-     private Set<AsignacionCursoPensum> asignacionCursoPensums = new HashSet<AsignacionCursoPensum>(0);
-     private Set<PensumEstudianteCarrera> pensumEstudianteCarreras = new HashSet<PensumEstudianteCarrera>(0);
+
+    private Short idPensum;
+    private Carrera carrera;
+    private String codigo;
+    private Date fechaInicio;
+    private Date fechaFin;
+    private Short estado;
+    private Set<AsignacionCursoPensum> asignacionCursoPensums = new HashSet<AsignacionCursoPensum>(0);
+    private Set<PensumEstudianteCarrera> pensumEstudianteCarreras = new HashSet<PensumEstudianteCarrera>(0);
 
     public Pensum() {
         this.idPensum = 0;
-        
+
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id_pensum", unique=true, nullable=false)
+    @Column(name = "id_pensum", unique = true, nullable = false)
     public Short getIdPensum() {
         return this.idPensum;
     }
@@ -71,8 +66,9 @@ public class Pensum implements java.io.Serializable {
     public void setIdPensum(Short idPensum) {
         this.idPensum = idPensum;
     }
-@ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="id_carrera", nullable=false)
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_carrera", nullable = false)
     @JsonIgnore
     public Carrera getCarrera() {
         return this.carrera;
@@ -82,7 +78,7 @@ public class Pensum implements java.io.Serializable {
         this.carrera = carrera;
     }
 
-    @Column(name="codigo", nullable=false, length=20, unique=true)
+    @Column(name = "codigo", nullable = false, length = 20, unique = true)
     public String getCodigo() {
         return this.codigo;
     }
@@ -90,8 +86,9 @@ public class Pensum implements java.io.Serializable {
     public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
+
     @Temporal(TemporalType.DATE)
-    @Column(name="fecha_inicio", nullable=false, length=13)
+    @Column(name = "fecha_inicio", nullable = false, length = 13)
     public Date getFechaInicio() {
         return this.fechaInicio;
     }
@@ -99,8 +96,9 @@ public class Pensum implements java.io.Serializable {
     public void setFechaInicio(Date fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
+
     @Temporal(TemporalType.DATE)
-    @Column(name="fecha_fin", length=13)
+    @Column(name = "fecha_fin", length = 13)
     public Date getFechaFin() {
         return this.fechaFin;
     }
@@ -109,7 +107,7 @@ public class Pensum implements java.io.Serializable {
         this.fechaFin = fechaFin;
     }
 
-    @Column(name="estado")
+    @Column(name = "estado")
     public Short getEstado() {
         return this.estado;
     }
@@ -117,9 +115,10 @@ public class Pensum implements java.io.Serializable {
     public void setEstado(Short estado) {
         this.estado = estado;
     }
-@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="pensum")
-@OrderBy("numeroSemestre")
-@JsonIgnore
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "pensum")
+    @OrderBy("numeroSemestre")
+    @JsonIgnore
     public Set<AsignacionCursoPensum> getAsignacionCursoPensums() {
         return this.asignacionCursoPensums;
     }
@@ -127,7 +126,8 @@ public class Pensum implements java.io.Serializable {
     public void setAsignacionCursoPensums(Set<AsignacionCursoPensum> asignacionCursoPensums) {
         this.asignacionCursoPensums = asignacionCursoPensums;
     }
-    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="pensum")
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "pensum")
     @JsonIgnore
     public Set<PensumEstudianteCarrera> getPensumEstudianteCarreras() {
         return this.pensumEstudianteCarreras;
@@ -150,7 +150,7 @@ public class Pensum implements java.io.Serializable {
     }
 
     @Transient
-    public String getCodigoCarreraNombre(){
+    public String getCodigoCarreraNombre() {
         return this.codigo + " - " + this.carrera.getNombre();
     }
 }

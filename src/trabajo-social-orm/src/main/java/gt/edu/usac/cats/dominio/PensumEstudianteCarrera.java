@@ -6,6 +6,7 @@ package gt.edu.usac.cats.dominio;
 
 // Generated Mar 14, 2011 11:31:43 AM by Hibernate Tools 3.2.1.GA
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -48,7 +49,7 @@ public class PensumEstudianteCarrera implements java.io.Serializable {
         this.idPensumEstudianteCarrera = idPensumEstudianteCarrera;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade= CascadeType.ALL)
     @JoinColumn(name = "id_asignacion_estudiante_carrera", nullable = false)
     public AsignacionEstudianteCarrera getAsignacionEstudianteCarrera() {
         return this.asignacionEstudianteCarrera;
@@ -58,7 +59,7 @@ public class PensumEstudianteCarrera implements java.io.Serializable {
         this.asignacionEstudianteCarrera = asignacionEstudianteCarrera;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "id_pensum", nullable = false)
     public Pensum getPensum() {
         return this.pensum;
@@ -95,7 +96,4 @@ public class PensumEstudianteCarrera implements java.io.Serializable {
 
         return builder.toString();
     }
-
-
-
 }

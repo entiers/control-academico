@@ -23,10 +23,7 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.criterion.Subqueries;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
@@ -114,21 +111,21 @@ public class ServicioAsignacionCursoPensumImpl extends ServicioGeneralImpl imple
                 append("\n select acp2 from Asignacion as a").
                 append("\n inner join a.cursoAprobados as ca").
                 append("\n inner join ca.asignacionCursoPensum as acp2").
-                append("\n where acp2.pensum = :pensumEquivalencia and a.asignacionEstudianteCarrera = :asignacionEstudianteCarrera)").
+                append("\n where acp2.pensum.idPensum = :pensumEquivalencia and a.asignacionEstudianteCarrera.idAsignacionEstudianteCarrera = :asignacionEstudianteCarrera)").
                 append("\n and acp in (").
                 append("\n select acp3 from Asignacion as a").
                 append("\n inner join a.cursoAprobados as ca").
                 append("\n inner join ca.asignacionCursoPensum as acp3").
-                append("\n where acp3.pensum = :pensumOriginal and a.asignacionEstudianteCarrera = :asignacionEstudianteCarrera)").
-                append("\n and acp.pensum = :pensumOriginal and cpe.pensum = :pensumEquivalencia");
+                append("\n where acp3.pensum.idPensum = :pensumOriginal and a.asignacionEstudianteCarrera.idAsignacionEstudianteCarrera = :asignacionEstudianteCarrera)").
+                append("\n and acp.pensum.idPensum = :pensumOriginal and cpe.pensum.idPensum = :pensumEquivalencia");
 
         Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString()).
-                setParameter("asignacionEstudianteCarrera", asignacionEstudianteCarrera).
-                setParameter("pensumOriginal", pensumOriginal).
-                setParameter("pensumEquivalencia", pensumEquivalencia);
+                setParameter("asignacionEstudianteCarrera", asignacionEstudianteCarrera.getIdAsignacionEstudianteCarrera()).
+                setParameter("pensumOriginal", pensumOriginal.getIdPensum()).
+                setParameter("pensumEquivalencia", pensumEquivalencia.getIdPensum());
 
-
-        return query.list();
+        List <AsignacionCursoPensum> list = query.list();
+        return list;
     }
     
     //______________________________________________________________________________
@@ -217,8 +214,6 @@ public class ServicioAsignacionCursoPensumImpl extends ServicioGeneralImpl imple
         cursoAprobado.setAsignacion(asignacion);
 
         this.daoGeneralImpl.saveOrUpdateAll(entidades);
-
-
     }
 //______________________________________________________________________________
     /**

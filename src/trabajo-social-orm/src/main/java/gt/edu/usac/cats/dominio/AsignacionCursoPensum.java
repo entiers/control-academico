@@ -75,7 +75,7 @@ public class AsignacionCursoPensum implements java.io.Serializable {
         this.idAsignacionCursoPensum = idAsignacionCursoPensum;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade= CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_curso", nullable = false)
     @OrderBy("codigo")
     @JsonIgnore
@@ -87,7 +87,7 @@ public class AsignacionCursoPensum implements java.io.Serializable {
         this.curso = curso;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade= CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_pensum", nullable = false)
     @JsonIgnore
     public Pensum getPensum() {

@@ -132,7 +132,7 @@
                         <form:hidden path="pensumOriginal.idPensum" id="idPensumOriginal" />
                         <input type="text" readonly="true" id="codigoPensumOriginal" />
                         <c:set scope="session" var="estudiante" value="${estudiante}" />
-                        <form:hidden path="asignacionEstudianteCarrera.idAsignacionEstudianteCarrera" />
+                        <form:hidden path="asignacionEstudianteCarrera.idAsignacionEstudianteCarrera"/>
                         <form:hidden path="pensumEquivalencia.idPensum" />
                     </div>
                 </form:form>

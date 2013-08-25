@@ -6,23 +6,23 @@
 package gt.edu.usac.cats.controlador.asignacionCursoPensum;
 
 import gt.edu.usac.cats.dominio.AsignacionCursoPensum;
-import gt.edu.usac.cats.dominio.PensumEstudianteCarrera;
 import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
+import gt.edu.usac.cats.dominio.PensumEstudianteCarrera;
 import gt.edu.usac.cats.dominio.wrapper.WrapperAsignacionEquivalencia;
 import gt.edu.usac.cats.dominio.wrapper.WrapperEquivalenciaPorCarrera;
 import gt.edu.usac.cats.servicio.ServicioPensumEstudianteCarrera;
-import javax.annotation.Resource;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import javax.validation.Valid;
-import org.springframework.validation.BindingResult;
-import gt.edu.usac.cats.dominio.wrapper.WrapperAsignacionEquivalencia;
+import gt.edu.usac.cats.util.RequestUtil;
 import java.io.Serializable;
 import java.util.List;
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -34,14 +34,14 @@ import org.springframework.web.context.WebApplicationContext;
 @Controller
 @Scope(value = WebApplicationContext.SCOPE_SESSION)
 @SessionAttributes(value = {"catedratico"})
-public class ControladorRealizarEquivalenciaPorCarreras extends ControladorAbstractoRealizarEquivalencia implements Serializable{
+public class ControladorRealizarEquivalenciaPorCarreras extends ControladorAbstractoRealizarEquivalencia implements Serializable {
 
     @Resource
     private ServicioPensumEstudianteCarrera servicioPensumEstudianteCarreraImpl;
 
     @RequestMapping(value = "mostrarParaRealizarEquivalenciaPorCarreras.htm", method = RequestMethod.POST)
     public String mostrarParaRealizarEquivalencia(WrapperEquivalenciaPorCarrera wrapperEquivalenciaPorCarrera,
-            Model modelo) {
+            Model modelo, HttpServletRequest request) {
 
         //Cargando todo los datos para poder obtener la carrera en el metodo del servicio que busca la
         //asignacion a pensum valido
@@ -56,9 +56,13 @@ public class ControladorRealizarEquivalenciaPorCarreras extends ControladorAbstr
                 asignacionEstudianteCarreraOriginal);
         PensumEstudianteCarrera pecEquivalencia = this.servicioPensumEstudianteCarreraImpl.getPensumEstudianteCarreraValido(
                 asignacionEstudianteCarreraEquivalencia);
-        
-        List<AsignacionCursoPensum> listadoEquivalencias = this.servicioAsignacionCursoPensumImpl.getEquivalenciasPorCarreras(
-                pecOriginal, pecEquivalencia);
+        List<AsignacionCursoPensum> listadoEquivalencias = null;
+        if (pecOriginal != null && pecEquivalencia != null) {
+            listadoEquivalencias = this.servicioAsignacionCursoPensumImpl.getEquivalenciasPorCarreras(
+                    pecOriginal, pecEquivalencia);
+        } else {
+            RequestUtil.crearMensajeRespuesta(request, "pensum.equivalencia.title", "pensum.equivalencia.pensumsNull", false);
+        }
         WrapperAsignacionEquivalencia wrapperAsignacionEquivalencia =
                 new WrapperAsignacionEquivalencia(asignacionEstudianteCarreraEquivalencia);
         String nombreAction = "realizarEquivalenciaPorCarreras.htm";
@@ -73,6 +77,6 @@ public class ControladorRealizarEquivalenciaPorCarreras extends ControladorAbstr
     @RequestMapping(value = "realizarEquivalenciaPorCarreras.htm", method = RequestMethod.POST)
     public String realizarEquivalenciaPorCarreras(@Valid WrapperAsignacionEquivalencia wrapperAsignacionEquivalencia,
             BindingResult bindingResult, Model modelo, HttpServletRequest request) {
-        return this.realizarEquivalencia(wrapperAsignacionEquivalencia,  bindingResult, modelo, request);
+        return this.realizarEquivalencia(wrapperAsignacionEquivalencia, bindingResult, modelo, request);
     }
 }
