@@ -65,8 +65,7 @@ public class ControladorEliminarPensumEstudianteCarrera extends ControladorAbstr
 
         PensumEstudianteCarrera pensumEstudianteCarrera = this.servicioPensumEstudianteCarreraImpl.cargarEntidadPorID(PensumEstudianteCarrera.class,
                 idPensumEstudianteCarrera);
-
-
+        
         if (pensumEstudianteCarrera == null) {
             return "redirect:buscarEstudiante.htm";
         }
@@ -77,7 +76,6 @@ public class ControladorEliminarPensumEstudianteCarrera extends ControladorAbstr
         try {
 
             this.servicioPensumEstudianteCarreraImpl.borrar(pensumEstudianteCarrera);
-
             RequestUtil.agregarRedirect(request, "mostrarPensumEstudianteCarrera.htm?idAsignacionEstudianteCarrera="
                     + idAsignacionEstudianteCarrera);
 
