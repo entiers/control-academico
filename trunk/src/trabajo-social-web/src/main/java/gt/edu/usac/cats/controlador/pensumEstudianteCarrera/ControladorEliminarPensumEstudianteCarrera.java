@@ -94,7 +94,7 @@ public class ControladorEliminarPensumEstudianteCarrera extends ControladorAbstr
                 getPensumEstudianteCarreraValido(pensumEstudianteCarrera.getAsignacionEstudianteCarrera());
 
         Pensum pensum = null;
-        WrapperEquivalenciaPorPensum wrapperEquivalenciaPorPensum = null;
+        WrapperEquivalenciaPorPensum wrapperEquivalenciaPorPensum;
 
         //Se obtiene las relaciones con el pensum valido
         if (pensumEstudianteCarreraValido != null) {
