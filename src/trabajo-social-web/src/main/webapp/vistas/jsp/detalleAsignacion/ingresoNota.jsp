@@ -35,9 +35,13 @@
             });
 
             function getHorarios(valueTipoHorario) {
-                $.get("getHorarioCatedratico.htm", { idTipoHorario: valueTipoHorario}, function(options) {
-                    $('#slcHorario').html(options);
-                });
+                if (valueTipoHorario !== ""){
+                    $.get("getHorarioCatedratico.htm", { idTipoHorario: valueTipoHorario}, function(options, result, reqobj) {
+                       $('#slcHorario').html(options);
+                    });
+                }else{
+                    $('#slcHorario').html("");
+                }
             }
 
             $(function() {
@@ -122,20 +126,23 @@
             <form:form modelAttribute="datosIngresoNota" method="post" id="frmBusqueda" action="ingresoNota.htm">
                 <fieldset>
                     <legend><fmt:message key="ingresoNota.busquedaAsignaciones"/></legend>
-                    <div id="divCampos">
+                    <div id="divCampos1">
                         <form:label for="tipoHorario" path="tipoHorario"><fmt:message key="agregarHorario.tipo"/>:</form:label>
                         <form:select path="tipoHorario"
                                      id="slcTipoHorario"
-                                     items="${listaTipoHorario}" 
+                                    cssStyle="width: 350px;">
+                                    
+                              <form:option  value="" label="Seleccionar Tipo Horario" />
+                              <form:options items="${listaTipoHorario}" 
                                      itemLabel="descripcion"/>
+                        </form:select>
                         
+    
                     </div>
-                    <div id="divCampos">
+                    <div id="divCampos2">
                         <form:label for="horario.idHorario" path="horario.idHorario"><fmt:message key="horario.menu"/>:</form:label>
                         <form:select path="horario.idHorario" id="slcHorario">
-                            <c:forEach items="${listaHorario}" var="horario">
-                                <form:option value="${horario.idHorario}">${horario.asignacionCursoPensum.curso.nombre} - ${horario.seccion}</form:option>
-                            </c:forEach>
+                          
                         </form:select>
                         <span id="lblErrorHorario" class="claseError" />
                     </div>
