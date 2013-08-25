@@ -22,12 +22,12 @@ public class WrapperCursoAprobado implements Serializable{
     private Date fechaAprobacion;
 //______________________________________________________________________________    
     @Min(value = 0, message = "{validacion.minimo}")
-    @Max(value = 30, message = "{validacion.maximo}")
+    @Max(value = 70, message = "{validacion.maximo}")
     @NotNull(message = "{validacion.campoObligatorio}")
     private Short zona;    
 //______________________________________________________________________________    
     @Min(value = 0, message = "{validacion.minimo}")
-    @Max(value = 70, message = "{validacion.maximo}")
+    @Max(value = 30, message = "{validacion.maximo}")
     @NotNull(message = "{validacion.campoObligatorio}")
     private Short examenFinal;    
 //______________________________________________________________________________
