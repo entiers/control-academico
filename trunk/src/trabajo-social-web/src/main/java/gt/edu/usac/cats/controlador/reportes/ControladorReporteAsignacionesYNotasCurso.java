@@ -19,6 +19,7 @@ import gt.edu.usac.cats.servicio.ServicioUsuario;
 import gt.edu.usac.cats.util.Mensajes;
 import gt.edu.usac.cats.util.RequestUtil;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -65,6 +66,9 @@ public class ControladorReporteAsignacionesYNotasCurso implements Serializable {
 //______________________________________________________________________________
     @Resource
     private ServicioUsuario servicioUsuarioImpl;
+    
+    @Resource
+    private ServicioUsuario servicioAsignacionCursoPensumImpl;    
 //______________________________________________________________________________
     /**
      * * <p>Este metodo se ejecuta cada vez que se realiza una solicitud del tipo
@@ -160,7 +164,7 @@ public class ControladorReporteAsignacionesYNotasCurso implements Serializable {
             }
             else {
                 modelo.addAttribute("listadoHorario", servicioHorarioImpl.
-                    getHorario(this.semestre, TipoHorario.SEMESTRE));
+                    getHorarioConNotas(this.semestre, TipoHorario.SEMESTRE));
             }
         }
         catch(Exception ex){
@@ -168,6 +172,7 @@ public class ControladorReporteAsignacionesYNotasCurso implements Serializable {
             log.error(Mensajes.DATA_ACCESS_EXCEPTION, ex);
         }
     }
+   
 
 
 }
