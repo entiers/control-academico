@@ -49,7 +49,7 @@ public class PensumEstudianteCarrera implements java.io.Serializable {
         this.idPensumEstudianteCarrera = idPensumEstudianteCarrera;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade= CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_asignacion_estudiante_carrera", nullable = false)
     public AsignacionEstudianteCarrera getAsignacionEstudianteCarrera() {
         return this.asignacionEstudianteCarrera;
@@ -59,7 +59,7 @@ public class PensumEstudianteCarrera implements java.io.Serializable {
         this.asignacionEstudianteCarrera = asignacionEstudianteCarrera;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_pensum", nullable = false)
     public Pensum getPensum() {
         return this.pensum;
