@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="600" pageHeight="842" columnWidth="560" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="600" pageHeight="842" columnWidth="560" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1cee20ba-8ce3-4121-b876-3f2bb12001ef">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -20,6 +20,7 @@ from control.estudiante e
     inner join control.curso cur on cur.id_curso = acp.id_curso
     inner join control.carrera car on car.id_carrera = aec.id_carrera
 where e.carne = $P{carne}
+and det_asi.oficializado = true
 order by cur.codigo, asig.fecha;]]>
 	</queryString>
 	<field name="carne" class="java.lang.String"/>
@@ -41,21 +42,21 @@ order by cur.codigo, asig.fecha;]]>
 		<groupHeader>
 			<band height="88">
 				<staticText>
-					<reportElement x="0" y="34" width="89" height="17" forecolor="#010101"/>
+					<reportElement uuid="d5658158-a022-4aaf-91c8-8176a91828bf" x="0" y="34" width="89" height="17" forecolor="#010101"/>
 					<textElement>
 						<font size="10" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Carrera:]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="89" y="34" width="455" height="17"/>
+					<reportElement uuid="41668e8f-c6e5-487c-b64f-702b1fa67be8" x="89" y="34" width="455" height="17"/>
 					<textElement>
 						<font size="10"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{carrera}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="48" y="56" width="183" height="31"/>
+					<reportElement uuid="e8d9e3a8-8870-474c-93bc-c1ac2fb3f91c" x="48" y="56" width="183" height="31"/>
 					<box>
 						<topPen lineWidth="1.0" lineStyle="Double"/>
 						<bottomPen lineWidth="1.0" lineStyle="Double"/>
@@ -66,7 +67,7 @@ order by cur.codigo, asig.fecha;]]>
 					<text><![CDATA[	NOMBRE CURSO]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="0" y="56" width="48" height="31"/>
+					<reportElement uuid="38b94cf0-7057-4729-a090-691b9d3d8e93" x="0" y="56" width="48" height="31"/>
 					<box>
 						<topPen lineWidth="1.0" lineStyle="Double"/>
 						<bottomPen lineWidth="1.0" lineStyle="Double"/>
@@ -78,7 +79,7 @@ order by cur.codigo, asig.fecha;]]>
 CURSO]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="314" y="56" width="54" height="31"/>
+					<reportElement uuid="38b40e98-3476-400f-938a-a5d88318a251" x="314" y="56" width="54" height="31"/>
 					<box>
 						<topPen lineWidth="1.0" lineStyle="Double"/>
 						<bottomPen lineWidth="1.0" lineStyle="Double"/>
@@ -89,7 +90,7 @@ CURSO]]></text>
 					<text><![CDATA[ZONA]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="478" y="56" width="82" height="31"/>
+					<reportElement uuid="d98d4900-1733-4a48-b1dc-956020cc4308" x="478" y="56" width="82" height="31"/>
 					<box>
 						<topPen lineWidth="1.0" lineStyle="Double"/>
 						<bottomPen lineWidth="1.0" lineStyle="Double"/>
@@ -101,7 +102,7 @@ CURSO]]></text>
 ASIGNACIÓN]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="368" y="56" width="62" height="31"/>
+					<reportElement uuid="551957e7-3307-4861-bf9a-c90bbd2ab4aa" x="368" y="56" width="62" height="31"/>
 					<box>
 						<topPen lineWidth="1.0" lineStyle="Double"/>
 						<bottomPen lineWidth="1.0" lineStyle="Double"/>
@@ -113,7 +114,7 @@ ASIGNACIÓN]]></text>
 FINAL]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="231" y="56" width="83" height="31"/>
+					<reportElement uuid="920298e3-a226-4ec3-9af9-750301c1bc9b" x="231" y="56" width="83" height="31"/>
 					<box>
 						<topPen lineWidth="1.0" lineStyle="Double"/>
 						<bottomPen lineWidth="1.0" lineStyle="Double"/>
@@ -124,7 +125,7 @@ FINAL]]></text>
 					<text><![CDATA[LABORATORIO]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="430" y="56" width="48" height="31"/>
+					<reportElement uuid="dd682273-57ad-4fd1-86c8-569155178438" x="430" y="56" width="48" height="31"/>
 					<box>
 						<topPen lineWidth="1.0" lineStyle="Double"/>
 						<bottomPen lineWidth="1.0" lineStyle="Double"/>
@@ -135,35 +136,35 @@ FINAL]]></text>
 					<text><![CDATA[NOTA]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="0" y="17" width="89" height="17" forecolor="#010101"/>
+					<reportElement uuid="c04ae30b-9185-4768-aec6-f66b9ac59ce1" x="0" y="17" width="89" height="17" forecolor="#010101"/>
 					<textElement>
 						<font size="10" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Estudiante:]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="89" y="17" width="455" height="17"/>
+					<reportElement uuid="6511c88a-e75e-48af-8804-12a868cfebe2" x="89" y="17" width="455" height="17"/>
 					<textElement>
 						<font size="10"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{estudiante}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="89" y="0" width="127" height="17"/>
+					<reportElement uuid="2ec1c1ac-f5d5-4842-b872-0e81f66d3273" x="89" y="0" width="127" height="17"/>
 					<textElement>
 						<font size="10"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{carne}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="0" y="0" width="89" height="17" forecolor="#010101"/>
+					<reportElement uuid="c24bac34-d741-4db1-b8db-059a102af396" x="0" y="0" width="89" height="17" forecolor="#010101"/>
 					<textElement>
 						<font size="10" isBold="true"/>
 					</textElement>
 					<text><![CDATA[No. carné:]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="417" y="0" width="127" height="17"/>
+					<reportElement uuid="3a9ae062-5033-4c0d-aa5f-b984c6e9367d" x="417" y="0" width="127" height="17"/>
 					<textElement textAlignment="Right">
 						<font size="10" isBold="true"/>
 					</textElement>
@@ -174,34 +175,34 @@ FINAL]]></text>
 		<groupFooter>
 			<band height="44">
 				<staticText>
-					<reportElement x="0" y="4" width="156" height="17" forecolor="#010101"/>
+					<reportElement uuid="d5877bcc-70a8-4ba4-88ae-d34747819850" x="0" y="4" width="156" height="17" forecolor="#010101"/>
 					<textElement verticalAlignment="Middle">
 						<font size="10" isBold="true"/>
 					</textElement>
 					<text><![CDATA[TOTAL CURSOS ASIGNADOS:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="0" y="21" width="156" height="17" forecolor="#010101"/>
+					<reportElement uuid="4379dad9-fcc0-4b2b-b04b-5c7784728d99" x="0" y="21" width="156" height="17" forecolor="#010101"/>
 					<textElement verticalAlignment="Middle">
 						<font size="10" isBold="true"/>
 					</textElement>
 					<text><![CDATA[PROMEDIO:]]></text>
 				</staticText>
 				<line>
-					<reportElement x="0" y="42" width="560" height="1"/>
+					<reportElement uuid="5ee58e27-2282-469e-9453-6a4b9ac6ccd6" x="0" y="42" width="560" height="1"/>
 				</line>
 				<line>
-					<reportElement x="0" y="0" width="560" height="1"/>
+					<reportElement uuid="19fca79d-1f85-43c3-a526-e1b01347a5e0" x="0" y="0" width="560" height="1"/>
 				</line>
 				<textField>
-					<reportElement x="156" y="4" width="32" height="17"/>
+					<reportElement uuid="83cecf50-8c2a-4cde-a994-3a69ec9dcb26" x="156" y="4" width="32" height="17"/>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{carrera_COUNT}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="156" y="21" width="32" height="17"/>
+					<reportElement uuid="7cf52fe4-1e59-4b01-9095-4f8dde2ab49f" x="156" y="21" width="32" height="17"/>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font isBold="true"/>
 					</textElement>
@@ -216,23 +217,23 @@ FINAL]]></text>
 	<title>
 		<band height="67" splitType="Stretch">
 			<frame>
-				<reportElement mode="Opaque" x="0" y="0" width="560" height="66" backcolor="#006699"/>
+				<reportElement uuid="dda11761-a544-416f-951f-a737ed6c9164" mode="Opaque" x="0" y="0" width="560" height="66" backcolor="#006699"/>
 				<staticText>
-					<reportElement x="0" y="3" width="400" height="20" forecolor="#FFFFFF"/>
+					<reportElement uuid="bbff7d79-3030-4aa0-ae56-f73058be1b3c" x="0" y="3" width="400" height="20" forecolor="#FFFFFF"/>
 					<textElement>
 						<font size="14" isBold="true"/>
 					</textElement>
 					<text><![CDATA[UNIVERSIDAD DE SAN CARLOS DE GUATEMALA]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="0" y="23" width="378" height="18" forecolor="#FFFFFF"/>
+					<reportElement uuid="958a3e6f-3caf-4369-81cf-001eb71006cf" x="0" y="23" width="378" height="18" forecolor="#FFFFFF"/>
 					<textElement>
 						<font size="14" isBold="true"/>
 					</textElement>
 					<text><![CDATA[ESCUELA DE TRABAJO SOCIAL]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="0" y="41" width="378" height="25" forecolor="#FFFFFF"/>
+					<reportElement uuid="059e7618-b411-4828-91bc-0cb939c4e428" x="0" y="41" width="378" height="25" forecolor="#FFFFFF"/>
 					<textElement>
 						<font size="14" isBold="true"/>
 					</textElement>
@@ -244,40 +245,40 @@ FINAL]]></text>
 	<detail>
 		<band height="16" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="48" height="16"/>
+				<reportElement uuid="4dab9bbc-8af9-4d44-b763-45d8d5c5be25" x="0" y="0" width="48" height="16"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{codigo}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement x="48" y="0" width="183" height="16"/>
+				<reportElement uuid="8400a5c7-273b-427d-9db4-75f708e354bd" x="48" y="0" width="183" height="16"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{curso}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="231" y="0" width="83" height="16"/>
+				<reportElement uuid="7d0a3491-1b20-4b47-93eb-c1c18a6bdf25" x="231" y="0" width="83" height="16"/>
 				<box rightPadding="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{laboratorio}]]></textFieldExpression>
 			</textField>
 			<textField pattern="">
-				<reportElement x="478" y="0" width="82" height="16"/>
+				<reportElement uuid="830d1253-6b40-415b-96b8-8975f9cd7c1f" x="478" y="0" width="82" height="16"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{fecha_asignacion}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="314" y="0" width="54" height="16"/>
+				<reportElement uuid="98dd5e7d-be19-4782-ad4c-769ff9bb958f" x="314" y="0" width="54" height="16"/>
 				<box rightPadding="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{zona}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="368" y="0" width="61" height="16"/>
+				<reportElement uuid="99032c96-dbbf-4c39-843e-fee1f69dff0d" x="368" y="0" width="61" height="16"/>
 				<box rightPadding="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{examen_final}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="430" y="0" width="48" height="16"/>
+				<reportElement uuid="922583bf-d562-411d-9cb7-12012a516118" x="430" y="0" width="48" height="16"/>
 				<box rightPadding="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{nota}]]></textFieldExpression>
