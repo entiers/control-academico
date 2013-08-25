@@ -10,6 +10,7 @@ import gt.edu.usac.cats.dominio.CalendarioActividades;
 import gt.edu.usac.cats.dominio.Semestre;
 import gt.edu.usac.cats.enums.TipoActividad;
 import gt.edu.usac.cats.servicio.ServicioCalendarioActividades;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import org.hibernate.criterion.DetachedCriteria;
@@ -28,7 +29,7 @@ import org.springframework.stereotype.Service;
  * @version 1.0
  */
 @Service
-public class ServicioCalendarioActividadesImpl extends ServicioGeneralImpl implements ServicioCalendarioActividades {
+public class ServicioCalendarioActividadesImpl extends ServicioGeneralImpl implements ServicioCalendarioActividades, Serializable {
 
     /**
      * <p>Constructor predeterminado de la clase.</p>

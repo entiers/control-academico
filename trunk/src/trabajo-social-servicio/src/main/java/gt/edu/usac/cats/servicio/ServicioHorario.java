@@ -201,7 +201,7 @@ public interface ServicioHorario extends ServicioGeneral {
     /**
      * 
      */
-    List getSeccionesHorario(AsignacionCursoPensum asignacionCursoPensum, Semestre semestre, TipoHorario tipoHorario)
+    List<Horario> getSeccionesHorario(AsignacionCursoPensum asignacionCursoPensum, Semestre semestre, TipoHorario tipoHorario)
             throws DataAccessException;
     
     
@@ -213,4 +213,6 @@ public interface ServicioHorario extends ServicioGeneral {
             Semestre semestre, TipoHorario tipoHorario)
             throws DataAccessException;
 
+     public List<Horario> getHorarioConNotas(Semestre semestre, TipoHorario tipoHorario) 
+             throws DataAccessException;
 }

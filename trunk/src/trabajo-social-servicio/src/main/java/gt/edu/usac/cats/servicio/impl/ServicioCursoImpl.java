@@ -105,5 +105,27 @@ public class ServicioCursoImpl extends ServicioGeneralImpl implements ServicioCu
 
         return query.list();
     }
+    
+//    public List<AsignacionCursoPensum> getCursoAsignacion(Pensum pensum, Semestre semestre, TipoHorario tipoHorario) throws DataAccessException {
+//         StringBuilder builder = new StringBuilder();
+//
+//        builder.append("select distinct aCP from AsignacionCursoPensum as aCP ")
+//               .append("inner join aCP.horarios horario ")
+//               .append("where horario.semestre = :semestre ")
+//               .append("and aCP.pensum = :pensum ")
+//               .append("and horario.tipo = :tipoHorario ")
+//               .append("and horario.salon.capacidad > ( ")
+//               .append(" select count(*) from DetalleAsignacion det")
+//               .append(" where det.horario = horario")
+//               .append(")");
+//
+//        Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
+//        query.setParameter("pensum", pensum);
+//        query.setParameter("tipoHorario", tipoHorario);
+//        query.setParameter("semestre", semestre);
+//
+//
+//        return query.list();
+//    }
 
 }
