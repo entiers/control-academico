@@ -34,7 +34,8 @@ public class WrapperPensum implements Serializable{
     private Date fechaInicio;
 //______________________________________________________________________________
     private short estado;
-//______________________________________________________________________________
+    private Integer notaAprobacion;
+    private Integer zonaMinima;
 
     public WrapperPensum() {
         this.codigo = "";
@@ -43,6 +44,8 @@ public class WrapperPensum implements Serializable{
         this.estado = (short) 0;
         this.carrera = new Carrera();
         this.carrera.setIdCarrera(new Short("0"));
+        notaAprobacion = 0;
+        zonaMinima = 0;
     }
 //______________________________________________________________________________
 
@@ -52,6 +55,8 @@ public class WrapperPensum implements Serializable{
         this.setFechaInicio(pensum.getFechaInicio());
         this.setFechaFin(pensum.getFechaFin());
         this.setCarrera(pensum.getCarrera());
+        this.setNotaAprobacion(pensum.getNotaAprobacion());
+        this.setZonaMinima(pensum.getZonaMinima());
     }
 //______________________________________________________________________________
 
@@ -61,6 +66,8 @@ public class WrapperPensum implements Serializable{
         pensum.setFechaInicio(this.fechaInicio);
         pensum.setFechaFin(this.fechaFin);
         pensum.setCarrera(this.carrera);
+        pensum.setNotaAprobacion(notaAprobacion);
+        pensum.setZonaMinima(zonaMinima);
     }
 //______________________________________________________________________________
 
@@ -111,5 +118,33 @@ public class WrapperPensum implements Serializable{
 
     public void setEstado(short estado) {
         this.estado = estado;
+    }
+
+    /**
+     * @return the notaAprobacion
+     */
+    public Integer getNotaAprobacion() {
+        return notaAprobacion;
+    }
+
+    /**
+     * @param notaAprobacion the notaAprobacion to set
+     */
+    public void setNotaAprobacion(Integer notaAprobacion) {
+        this.notaAprobacion = notaAprobacion;
+    }
+
+    /**
+     * @return the zonaMinima
+     */
+    public Integer getZonaMinima() {
+        return zonaMinima;
+    }
+
+    /**
+     * @param zonaMinima the zonaMinima to set
+     */
+    public void setZonaMinima(Integer zonaMinima) {
+        this.zonaMinima = zonaMinima;
     }
 }
