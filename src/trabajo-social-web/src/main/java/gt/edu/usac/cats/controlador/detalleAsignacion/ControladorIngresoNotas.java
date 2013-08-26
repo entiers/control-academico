@@ -283,7 +283,7 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota imp
                     super.servicioDetalleAsignacionImpl.actualizar(detAsign);
 
                     if (wrapperIngresoNota.getOficializar()) {
-                        if (notaFinal >= detAsign.getHorario().getAsignacionCursoPensum().getNotaAprobacion()
+                        if (notaFinal >= detAsign.getHorario().getAsignacionCursoPensum().getPensum().getNotaAprobacion()
                                 && this.servicioCursoAprobadoImpl.getCursoAprobado(detAsign.getAsignacion(),
                                 detAsign.getHorario().getAsignacionCursoPensum()) == null) {
                             CursoAprobado cursoAprobado = new CursoAprobado();

@@ -133,7 +133,7 @@ public class ControladorAgregarCursoAprobado implements Serializable{
         
         //Validando nota de aprobacion
         if(wrapperCursoAprobado.getExamenFinal() + wrapperCursoAprobado.getZona() < 
-                acp.getNotaAprobacion()){
+                acp.getPensum().getNotaAprobacion()){
             RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, 
                     "admin.agregarCursoAprobado.notaAprobacionInvalida", false);
             return "cursoAprobado/agregarCursoAprobado";
