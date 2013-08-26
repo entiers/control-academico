@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="600" pageHeight="842" columnWidth="560" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1cee20ba-8ce3-4121-b876-3f2bb12001ef">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="5"/>
 	<parameter name="carne" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select  e.carne, e.nombre as estudiante, cur.codigo, cur.nombre as curso, 
@@ -122,7 +122,7 @@ FINAL]]></text>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font isBold="true"/>
 					</textElement>
-					<text><![CDATA[LABORATORIO]]></text>
+					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
 					<reportElement uuid="dd682273-57ad-4fd1-86c8-569155178438" x="430" y="56" width="48" height="31"/>
@@ -253,12 +253,6 @@ FINAL]]></text>
 				<reportElement uuid="8400a5c7-273b-427d-9db4-75f708e354bd" x="48" y="0" width="183" height="16"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{curso}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement uuid="7d0a3491-1b20-4b47-93eb-c1c18a6bdf25" x="231" y="0" width="83" height="16"/>
-				<box rightPadding="15"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{laboratorio}]]></textFieldExpression>
 			</textField>
 			<textField pattern="">
 				<reportElement uuid="830d1253-6b40-415b-96b8-8975f9cd7c1f" x="478" y="0" width="82" height="16"/>
