@@ -122,8 +122,11 @@
             <br/>
             <form:hidden path="oficializar" id="hdOficializar" />
             <form:hidden path="linkValue" id="linkValue" />
-            <input type="button" value='<fmt:message key="ingresoNota.btnGuardar"/>' onclick="javascript:guardar(false, '', -1);" />
-            <input type="button" value='<fmt:message key="ingresoNota.btnOficializar"/>' onclick="javascript:guardar(true, '', -1);" />
+           
+              
+                    <input type="button" value='<fmt:message key="ingresoNota.btnGuardar"/>' onclick="javascript:guardar(false, '', -1);" />
+              <input type="button" value='<fmt:message key="ingresoNota.btnOficializar"/>' onclick="javascript:guardar(true);" /> 
+               
         </fieldset>
     </c:when>
     <c:otherwise>
