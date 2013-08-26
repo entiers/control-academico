@@ -120,7 +120,15 @@ public abstract class ControladorAbstractoAsignacion {
         iae.setNombre(estudiante2.getNombre());
         iae.setFecha(asignacion.getFecha());
         iae.setTransaccion(asignacion.getTransaccion());
-
+        StringBuilder htable = new StringBuilder("<table border=1><tr><th>Curso</th><th>Seccion</th></tr>");
+        for (DetalleAsignacion det:listaAsignacion){
+            htable.append("<tr><td>").append(det.getHorario().getAsignacionCursoPensum().getCurso().getCodigo()).append(" ");
+            htable.append(det.getHorario().getAsignacionCursoPensum().getCurso().getNombre()).append("</td>");
+            htable.append("<td>").append(det.getHorario().getSeccion()).append("</td></tr>");
+          
+        }
+        htable.append("</table>");
+        iae.setDetalleHtmlAsignacion(htable.toString());
         
         try {
             // se trata de enviar el correo
