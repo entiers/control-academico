@@ -48,6 +48,8 @@ public class Pensum implements java.io.Serializable {
     private Date fechaInicio;
     private Date fechaFin;
     private Short estado;
+    private Integer notaAprobacion;
+    private Integer zonaMinima;
     private Set<AsignacionCursoPensum> asignacionCursoPensums = new HashSet<AsignacionCursoPensum>(0);
     private Set<PensumEstudianteCarrera> pensumEstudianteCarreras = new HashSet<PensumEstudianteCarrera>(0);
 
@@ -152,6 +154,36 @@ public class Pensum implements java.io.Serializable {
     @Transient
     public String getCodigoCarreraNombre() {
         return this.codigo + " - " + this.carrera.getNombre();
+    }
+
+    /**
+     * @return the notaAprobacion
+     */
+    @Column(name = "nota_aprobacion", nullable = true)
+    public Integer getNotaAprobacion() {
+        return notaAprobacion;
+    }
+
+    /**
+     * @param notaAprobacion the notaAprobacion to set
+     */
+    public void setNotaAprobacion(Integer notaAprobacion) {
+        this.notaAprobacion = notaAprobacion;
+    }
+
+    /**
+     * @return the zonaMinima
+     */
+     @Column(name = "zona_minima", nullable = true)
+    public Integer getZonaMinima() {
+        return zonaMinima;
+    }
+
+    /**
+     * @param zonaMinima the zonaMinima to set
+     */
+    public void setZonaMinima(Integer zonaMinima) {
+        this.zonaMinima = zonaMinima;
     }
 }
 
