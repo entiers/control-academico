@@ -68,7 +68,7 @@
                     $.getJSON("getHorarioAsignacion.htm", { idAsignacionCursoPensum: valueCurso, idTipoHorario: valueHorario}, function(lstHorario) {
                         var options = '';
                         $.each(lstHorario, function (index,value) {
-                            options += "<option value='" + value + "'>" + value+ "</option>";
+                            options += "<option value='" + value.seccion + "'>" + value.seccion+ "</option>";
                         });
                         $('#slcHorario').html(options);
                     });

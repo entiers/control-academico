@@ -33,3 +33,15 @@
     </form:select>
     <form:errors path="carrera.idCarrera" cssClass="claseError" />
 </div>
+
+<div id="divCampos">
+    <form:label for="zonaMinima" path="zonaMinima">Zona Minima: *</form:label>
+    <form:input path="zonaMinima" cssStyle="width: 50px;" />
+    <form:errors path="zonaMinima" cssClass="claseError" />
+</div>
+
+<div id="divCampos">
+    <form:label for="notaAprobacion" path="notaAprobacion">Nota Aprobacion: *</form:label>
+    <form:input path="notaAprobacion" cssStyle="width: 50px;" />
+    <form:errors path="notaAprobacion" cssClass="notaAprobacion" />
+</div>
