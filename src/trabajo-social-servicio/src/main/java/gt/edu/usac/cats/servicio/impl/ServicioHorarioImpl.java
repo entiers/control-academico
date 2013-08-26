@@ -275,6 +275,7 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
                .append(" where horario.asignacionCursoPensum = :asignacionCursoPensum ")
                .append(" and horario.semestre = :semestre")
                .append(" and horario.tipo = :tipoHorario")
+               .append(" and horario.habilitado = true ")
                .append(" and horario.salon.capacidad > (")
                .append("    select count(*) from DetalleAsignacion det")
                .append("    where det.horario = horario")
