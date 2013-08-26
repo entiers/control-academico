@@ -21,6 +21,7 @@ public class InformacionAsignacionEstudiante implements Serializable {
     private String nombre;
     private Date fecha;
     private String transaccion;
+    private String detalleHtmlAsignacion;
 
     public InformacionAsignacionEstudiante() {
         this.carnet = "";
@@ -100,6 +101,20 @@ public class InformacionAsignacionEstudiante implements Serializable {
     public String getFechaFormat(){
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         return dateFormat.format(this.fecha);
+    }
+
+    /**
+     * @return the detalleHtmlAsignacion
+     */
+    public String getDetalleHtmlAsignacion() {
+        return detalleHtmlAsignacion;
+    }
+
+    /**
+     * @param detalleHtmlAsignacion the detalleHtmlAsignacion to set
+     */
+    public void setDetalleHtmlAsignacion(String detalleHtmlAsignacion) {
+        this.detalleHtmlAsignacion = detalleHtmlAsignacion;
     }
 
 }
