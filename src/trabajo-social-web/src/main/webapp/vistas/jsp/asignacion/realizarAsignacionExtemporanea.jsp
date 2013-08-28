@@ -67,14 +67,22 @@
 
             });
 
-            function getHorarios(valueCurso,valueHorario) {
-                $.getJSON("getHorarioAsignacion.htm", { idCurso: valueCurso, idTipoHorario: valueHorario}, function(lstHorario) {
-                    var options = '';
-                    $.each(lstHorario, function (index,value) {
-                        options += "<option value='" + value.idHorario + "'>" + value.seccion + "</option>";
+
+            
+            // otro
+            function getHorarios(valueCurso,valueHorario) {   
+                if ($('#slcCurso').val() != ""){
+                    $.getJSON("getHorarioAsignacion.htm", { idAsignacionCursoPensum: valueCurso, idTipoHorario: valueHorario}, function(lstHorario) {
+                        var options = '';
+                        $.each(lstHorario, function (index,value) {
+                            options += "<option value='" + value.seccion + "'>" + value.seccion+ "</option>";
+                        });
+                        $('#slcHorario').html(options);
                     });
-                    $('#slcHorario').html(options);
-                });
+                } else {
+                    $('#slcHorario').html("");
+                }
+                
             }
         </script>
 
