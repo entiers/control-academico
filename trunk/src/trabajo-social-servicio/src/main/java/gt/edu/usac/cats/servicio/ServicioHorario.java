@@ -215,4 +215,7 @@ public interface ServicioHorario extends ServicioGeneral {
 
      public List<Horario> getHorarioConNotas(Semestre semestre, TipoHorario tipoHorario) 
              throws DataAccessException;
+     
+      public List<Horario> getHorario(AsignacionCursoPensum asignacionCursoPensum, Semestre semestre, String seccion)
+            throws DataAccessException;
 }
