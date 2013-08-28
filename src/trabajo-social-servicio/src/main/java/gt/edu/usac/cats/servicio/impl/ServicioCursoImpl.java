@@ -91,6 +91,7 @@ public class ServicioCursoImpl extends ServicioGeneralImpl implements ServicioCu
                .append("inner join aCP.horarios horario ")
                .append("where horario.semestre = :semestre ")
                .append("and aCP.pensum = :pensum ")
+               .append("and horario.habilitado = true ")
                .append("and horario.tipo = :tipoHorario ")
                .append("and horario.salon.capacidad > ( ")
                .append(" select count(*) from DetalleAsignacion det")

@@ -136,6 +136,19 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
 
         return this.daoGeneralImpl.find(criteria);
     }
+    
+        public List<Horario> getHorario(AsignacionCursoPensum asignacionCursoPensum, Semestre semestre, String seccion)
+            throws DataAccessException {
+        DetachedCriteria criteria = DetachedCriteria.forClass(Horario.class);
+
+        criteria.add(Restrictions.and(
+                Restrictions.eq("asignacionCursoPensum", asignacionCursoPensum),
+                Restrictions.and(Restrictions.eq("semestre", semestre),
+                                 Restrictions.eq("seccion",seccion)))
+                );
+
+        return this.daoGeneralImpl.find(criteria);
+    }
 //______________________________________________________________________________
     @Override
     public List<Horario> getHorarioCambioSeccion(Horario horario) throws DataAccessException {
