@@ -243,7 +243,6 @@ public class ServicioAsignacionCursoPensumImpl extends ServicioGeneralImpl imple
 
         Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString()).
                 setParameter("asignacionEstudianteCarrera", asignacionEstudianteCarrera);                
-        
         return query.list();
     }
     
