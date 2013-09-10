@@ -7,6 +7,7 @@ package gt.edu.usac.cats.controlador.asignacion;
 
 import gt.edu.usac.cats.dominio.AsignacionCursoPensum;
 import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
+import gt.edu.usac.cats.dominio.Curso;
 import gt.edu.usac.cats.dominio.DetalleAsignacion;
 import gt.edu.usac.cats.dominio.Horario;
 import gt.edu.usac.cats.dominio.PensumEstudianteCarrera;
@@ -172,13 +173,20 @@ public class ControladorAsignacionSemestre extends ControladorAbstractoAsignacio
             if (pensumEstudianteCarrera != null) {
                 for (Horario horario : this.listaHorarioAsignacion) {
                    //Validando prerrequisitos por curso
+                    System.out.println("valida prerrequisito: "+horario.getIdHorario()+ "seccion "+horario.getSeccion());
                     acp = (AsignacionCursoPensum) servicioAsignacionCursoPensumImpl.getListadoAsignacionCursoPensum(horario.getAsignacionCursoPensum(), pensumEstudianteCarrera.getPensum()).get(0);
-
-                    if (servicioCursoAprobadoImpl.getCursoPrerrequisitoPendiente(asignacionEstudianteCarrera, horario.getAsignacionCursoPensum()).isEmpty()
-                            & servicioCursoAprobadoImpl.getCreditosAprobados(asignacionEstudianteCarrera) < acp.getCreditosPrerrequisito()) {
-                        RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.prerrequisitoPendiente", false);
-                        return "asignacion/asignacionSemestre";
-                    }
+                    List<Curso> prerrequisitos = servicioCursoAprobadoImpl.getCursoPrerrequisitoPendiente(asignacionEstudianteCarrera, horario.getAsignacionCursoPensum());
+//                    System.out.println("prerrequisitos: "+prerrequisitos.size());
+                    int creditosAprob = servicioCursoAprobadoImpl.getCreditosAprobados(asignacionEstudianteCarrera);
+//                    System.out.println("Creditos Aprobados: "+creditosAprob);
+//                    System.out.println("Creditos prerrequisito: "+acp.getCreditosPrerrequisito());
+                    
+//MC VALIDACION PRERREQUISITO                    
+//                    if (!prerrequisitos.isEmpty()
+//                            | creditosAprob < acp.getCreditosPrerrequisito()) {
+//                        RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.prerrequisitoPendiente", false);
+//                        return "asignacion/asignacionSemestre";
+//                    }
 
                     //Validando asignaciones en semestre actual
                     if (!servicioDetalleAsignacionImpl.getListadoDetalleAsignacion(horario.getAsignacionCursoPensum(), semestre, asignacionEstudianteCarrera,TipoAsignacion.ASIGNACION_CURSOS_SEMESTRE).isEmpty()) {

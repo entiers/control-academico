@@ -116,11 +116,12 @@ public class ControladorAsignacionRetrasadas extends ControladorAbstractoAsignac
                         }
 
                         //Validando que el curso este pagado
-                        if(servicioBoletaBancoImpl.listadoBoletaBanco(asignacionEstudianteCarrera.getEstudiante(),
-                                                                    horario.getAsignacionCursoPensum(), semestre, datosAsignacion.getTipoRubro()).isEmpty()){
-                            RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.cursoNoCancelado", false);
-                            return "asignacion/asignacionRetrasada";
-                        }
+                        //MCTEMPORAL
+//                        if(servicioBoletaBancoImpl.listadoBoletaBanco(asignacionEstudianteCarrera.getEstudiante(),
+//                                                                    horario.getAsignacionCursoPensum(), semestre, datosAsignacion.getTipoRubro()).isEmpty()){
+//                            RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.cursoNoCancelado", false);
+//                            return "asignacion/asignacionRetrasada";
+//                        }
 
                         listaHorarioAsignacion.add(horario);
                     }

@@ -58,7 +58,7 @@ public abstract class ControladorAbstractoPensumEstudianteCarrera {
             WrapperEquivalenciaPorPensum wrapperEquivalenciaPorPensum,
             boolean autoOpenDialogAsignar,
             boolean realizarBusqueda) {
-
+        System.out.println("**** modelo: "+modelo.asMap().keySet());
         listadoPensumEstudianteCarreraNoValidos = (List<PensumEstudianteCarrera>) modelo.asMap().get("listadoPensumEstudianteCarreraNoValidos");
         listadoPensumsNoAsignadosAEsutudianteCarrera = (List<Pensum>) modelo.asMap().get("listadoPensumsNoAsignadosAEsutudianteCarrera");
 

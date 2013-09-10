@@ -133,7 +133,7 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota imp
             }
 
             this.listadoHorario = this.servicioHorarioImpl.getHorario(semestre, catedratico,
-                    TipoHorario.values()[0]);
+                    TipoHorario.values()[0], true);
             excusasMap = new HashMap();
             ArrayList excusas = new ArrayList();
             excusas.add("N/A");
@@ -167,7 +167,7 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota imp
             this.semestre = this.servicioSemestreImpl.getSemestreActivo();
             System.out.println("&& semestre: " + this.semestre.getIdSemestre());
 
-            this.listadoHorario = this.servicioHorarioImpl.getHorario(this.semestre, TipoHorario.values()[0]);
+            this.listadoHorario = this.servicioHorarioImpl.getHorario(this.semestre, TipoHorario.values()[0], true);
 
         } catch (Exception ex) {
             RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "dataAccessException", false);
@@ -282,20 +282,7 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota imp
 
                     super.servicioDetalleAsignacionImpl.actualizar(detAsign);
 
-                    if (wrapperIngresoNota.getOficializar()) {
-                        if (notaFinal >= detAsign.getHorario().getAsignacionCursoPensum().getPensum().getNotaAprobacion()
-                                && this.servicioCursoAprobadoImpl.getCursoAprobado(detAsign.getAsignacion(),
-                                detAsign.getHorario().getAsignacionCursoPensum()) == null) {
-                            CursoAprobado cursoAprobado = new CursoAprobado();
-                            cursoAprobado.setAsignacion(detAsign.getAsignacion());
-                            cursoAprobado.setAsignacionCursoPensum(detAsign.getHorario().getAsignacionCursoPensum());
-                            cursoAprobado.setExamenFinal(examenFinal);
-                            cursoAprobado.setFechaAprobacion(new Date());
-                            cursoAprobado.setLaboratorio((short) 0);
-                            cursoAprobado.setZona(zona);
-                            super.servicioUsuarioImpl.agregar(cursoAprobado);
-                        }
-                    }
+                   
                     i++;
                 }
             } else {
@@ -306,7 +293,11 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota imp
                     super.servicioDetalleAsignacionImpl.actualizar(detAsign);
 
                     if (wrapperIngresoNota.getOficializar()) {
-                        if (notaFinal >= detAsign.getHorario().getAsignacionCursoPensum().getNotaAprobacion()
+                        System.out.println("** notaFinal: "+notaFinal);
+                        System.out.println("** notaAprobacion: "+detAsign.getHorario().getAsignacionCursoPensum().getPensum().getNotaAprobacion());
+                        System.out.println("** ya esta aprobado: "+this.servicioCursoAprobadoImpl.getCursoAprobado(detAsign.getAsignacion(),
+                                detAsign.getHorario().getAsignacionCursoPensum()));
+                        if (notaFinal >= detAsign.getHorario().getAsignacionCursoPensum().getPensum().getNotaAprobacion()
                                 && this.servicioCursoAprobadoImpl.getCursoAprobado(detAsign.getAsignacion(),
                                 detAsign.getHorario().getAsignacionCursoPensum()) == null) {
                             CursoAprobado cursoAprobado = new CursoAprobado();
@@ -376,10 +367,10 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota imp
         try {
             TipoHorario tipoHorario = TipoHorario.valueOf(idTipoHorario);
             if (this.esAdministrativo) {
-                this.listadoHorario = this.servicioHorarioImpl.getHorario(this.semestre, tipoHorario);
+                this.listadoHorario = this.servicioHorarioImpl.getHorario(this.semestre, tipoHorario, true);
             } else {
                 this.listadoHorario = this.servicioHorarioImpl.getHorario(this.semestre, this.catedratico,
-                        tipoHorario);
+                        tipoHorario, true);
             }
 
             for (Horario horario : this.listadoHorario) {

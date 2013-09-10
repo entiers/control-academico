@@ -122,10 +122,10 @@ public class ControladorReporteAsignacionesYNotasCurso implements Serializable {
         try {
             TipoHorario tipoHorario = TipoHorario.fromInt(idTipoHorario);
             if(this.catedratico == null){
-                listadoHorario = this.servicioHorarioImpl.getHorario(this.semestre, tipoHorario);
+                listadoHorario = this.servicioHorarioImpl.getHorario(this.semestre, tipoHorario, true);
             } else {
                 listadoHorario = this.servicioHorarioImpl.getHorario(this.semestre, this.catedratico,
-                                    tipoHorario);
+                                    tipoHorario, true);
             }
             
             for (Horario horario : listadoHorario){
@@ -160,7 +160,7 @@ public class ControladorReporteAsignacionesYNotasCurso implements Serializable {
             if (this.usuario != null & this.usuario.getCatedraticos().toArray().length != 0){
                 this.catedratico = (Catedratico) this.usuario.getCatedraticos().toArray()[0];
                 modelo.addAttribute("listadoHorario", servicioHorarioImpl.
-                    getHorario(this.semestre, this.catedratico, TipoHorario.SEMESTRE));
+                    getHorario(this.semestre, this.catedratico, TipoHorario.SEMESTRE, true));
             }
             else {
                 modelo.addAttribute("listadoHorario", servicioHorarioImpl.

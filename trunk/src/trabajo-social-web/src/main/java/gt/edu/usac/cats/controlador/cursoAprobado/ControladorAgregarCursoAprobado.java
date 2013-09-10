@@ -84,6 +84,7 @@ public class ControladorAgregarCursoAprobado implements Serializable{
         if(this.estudiante != null){
             this.listaAEC = this.servicioAsignacionEstudianteCarreraImpl.getAsignacionEstudianteCarrera(estudiante, true);
             if(!this.listaAEC.isEmpty()){
+                System.out.println("&&& asignacionEstudianteCarrera "+listaAEC.get(0));
                 this.listaACP = this.servicioAsignacionCursoPensumImpl.cursosSinAprobarValidos(listaAEC.get(0));
                 if(listaACP.isEmpty()){
                     modelo.addAttribute("estudianteSinCursos", true);
@@ -172,6 +173,7 @@ public class ControladorAgregarCursoAprobado implements Serializable{
     @RequestMapping(value = "getListaCursosSinAprobarValidos.htm", method = RequestMethod.GET)
     public @ResponseBody @JsonIgnore List<AsignacionCursoPensum> getHorario(@RequestParam int idAEC,                                                            
                                                             HttpServletRequest request) {
+        
         AsignacionEstudianteCarrera aec = this.servicioAsignacionEstudianteCarreraImpl.
                 cargarEntidadPorID(AsignacionEstudianteCarrera.class, idAEC);
         return this.servicioAsignacionCursoPensumImpl.cursosSinAprobarValidos(aec);
