@@ -55,7 +55,7 @@ public class ServicioCursoAprobadoImpl extends ServicioGeneralImpl implements Se
         Pensum pensumValido = servicioPensumEstudianteCarreraImpl.
                 getPensumEstudianteCarreraValido(asignacionEstudianteCarrera).
                 getPensum();
-
+        
         StringBuilder builder = new StringBuilder();
         builder.append("\n select p2.curso from AsignacionCursoPensum as acp2").
                 append("\n inner join acp2.asignacionCursoPensumsForIdCursoPensumPrerequisito as p2").

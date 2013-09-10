@@ -93,6 +93,10 @@ public interface ServicioHorario extends ServicioGeneral {
     List<Horario> getHorario(AsignacionCursoPensum asignacionCursoPensum, Semestre semestre, TipoHorario tipoHorario)
             throws DataAccessException;
 
+   /**Obtiene los horarios que corresponden al mismo curso, pensum, semestre, tipo horario y seccion*/
+   List<Horario> getHorario(AsignacionCursoPensum asignacionCursoPensum, Semestre semestre, TipoHorario tipoHorario,
+           String seccion)
+            throws DataAccessException;
 
 //______________________________________________________________________________
     /**
@@ -180,8 +184,9 @@ public interface ServicioHorario extends ServicioGeneral {
      * @return List Listado de horarios
      * @throws HibernateException Si ocurrio un error de acceso a datos
      */
-    List<Horario> getHorario(Semestre semestre, Catedratico catedratico, TipoHorario tipoHorario)
+    List<Horario> getHorario(Semestre semestre, Catedratico catedratico, TipoHorario tipoHorario, boolean maestro)
             throws DataAccessException;
+
 
 //______________________________________________________________________________
     /**
@@ -193,7 +198,7 @@ public interface ServicioHorario extends ServicioGeneral {
      * @return List Listado de horarios
      * @throws DataAccessException
      */
-    List<Horario> getHorario(Semestre semestre, TipoHorario tipoHorario)
+    List<Horario> getHorario(Semestre semestre, TipoHorario tipoHorario, boolean maestro)
             throws DataAccessException;
     
     

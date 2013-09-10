@@ -137,14 +137,30 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
         return this.daoGeneralImpl.find(criteria);
     }
     
-        public List<Horario> getHorario(AsignacionCursoPensum asignacionCursoPensum, Semestre semestre, String seccion)
+    @Override
+    public List<Horario> getHorario(AsignacionCursoPensum asignacionCursoPensum, Semestre semestre, String seccion)
             throws DataAccessException {
         DetachedCriteria criteria = DetachedCriteria.forClass(Horario.class);
-
+        
         criteria.add(Restrictions.and(
                 Restrictions.eq("asignacionCursoPensum", asignacionCursoPensum),
                 Restrictions.and(Restrictions.eq("semestre", semestre),
                                  Restrictions.eq("seccion",seccion)))
+                );
+
+        return this.daoGeneralImpl.find(criteria);
+    }
+        
+    @Override
+    public List<Horario> getHorario(AsignacionCursoPensum asignacionCursoPensum, Semestre semestre, TipoHorario tipo, String seccion)
+            throws DataAccessException {
+        DetachedCriteria criteria = DetachedCriteria.forClass(Horario.class);
+        
+        criteria.add(Restrictions.and(
+                Restrictions.eq("asignacionCursoPensum", asignacionCursoPensum),
+                Restrictions.and(Restrictions.eq("semestre", semestre),
+                Restrictions.and(Restrictions.eq("seccion", seccion),
+                                 Restrictions.eq("tipo",tipo))))
                 );
 
         return this.daoGeneralImpl.find(criteria);
@@ -262,8 +278,9 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
     @Override
     public void agregarHorario(Horario horario, String [] horarioDiasWrapper) throws DataIntegrityViolationException,  DataAccessException {
         this.agregar(horario);
-
+        
         for (String numeroDia : horarioDiasWrapper) {
+            
             this.agregar(new HorarioDia(horario, Integer.parseInt(numeroDia)));
         }
 
@@ -303,14 +320,18 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
     }
 
     @Override
-    public List<Horario> getHorario(Semestre semestre, Catedratico catedratico, TipoHorario tipoHorario) throws DataAccessException {
+    public List<Horario> getHorario(Semestre semestre, Catedratico catedratico, TipoHorario tipoHorario, boolean maestro) throws DataAccessException {
         StringBuilder builder = new StringBuilder();
 
         builder.append(" select horario from Horario as horario")
                .append(" inner join horario.asignacionCatedraticoHorarios aCH")
                .append(" where horario.semestre = :semestre")
-               .append(" and horario.tipo =:tipoHorario")
-               .append(" and aCH.catedratico = :catedratico order by horario.asignacionCursoPensum.curso.nombre");
+               .append(" and horario.tipo =:tipoHorario");
+            if (maestro){
+               builder.append(" and horario.maestro = true ");
+           }
+            builder.append(" and aCH.catedratico = :catedratico order by horario.asignacionCursoPensum.curso.nombre");
+       
 
         Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
         query.setParameter("semestre", semestre);
@@ -321,14 +342,18 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
     }
 
     @Override
-    public List<Horario> getHorario(Semestre semestre, TipoHorario tipoHorario) throws DataAccessException {
+    public List<Horario> getHorario(Semestre semestre, TipoHorario tipoHorario, boolean maestro) throws DataAccessException {
         StringBuilder builder = new StringBuilder();
          System.out.println("&&& semestre: "+semestre.getIdSemestre());
          System.out.println("&&& tipoHorario: "+tipoHorario.getId());
         builder.append(" select horario from Horario as horario")
                .append(" where horario.semestre = :semestre")
-               .append(" and horario.tipo =:tipoHorario ")
-               .append(" order by horario.asignacionCursoPensum.curso.nombre");
+               .append(" and horario.tipo =:tipoHorario ");
+        if (maestro){
+            builder.append(" and horario.maestro = true");
+        }
+                
+        builder.append(" order by horario.asignacionCursoPensum.curso.nombre");
         
         Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
         query.setParameter("semestre", semestre);
@@ -378,6 +403,8 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
         
         return this.daoGeneralImpl.find(criteria);
     }
+
+   
  
 
 }
