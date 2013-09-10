@@ -55,7 +55,7 @@
                     <label><fmt:message key="horario.menu"/></label>
                     <select name="valorParametro" id="valorParametro">
                         <c:forEach items="${listadoHorario}" var="horario">
-                            <option value="${horario.idHorario}">[${horario.asignacionCursoPensum.curso.idCurso}] ${horario.asignacionCursoPensum.curso.nombre} - ${horario.seccion}</option>
+                            <option value="${horario.idHorario}">[${horario.asignacionCursoPensum.curso.codigo}] ${horario.asignacionCursoPensum.curso.nombre} - ${horario.seccion}</option>
                         </c:forEach>
                     </select>
                     <input type="hidden" name="tipoParametro" value="integer" />
