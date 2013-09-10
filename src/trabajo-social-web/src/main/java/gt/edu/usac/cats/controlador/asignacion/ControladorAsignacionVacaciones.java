@@ -195,11 +195,12 @@ public class ControladorAsignacionVacaciones extends ControladorAbstractoAsignac
                     }
 
                     //Validando que el curso este pagado
-                    if(servicioBoletaBancoImpl.listadoBoletaBanco(asignacionEstudianteCarrera.getEstudiante(),
-                                                                horario.getAsignacionCursoPensum(), semestre, datosAsignacion.getTipoRubro()).isEmpty()){
-                        RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.cursoNoCancelado", false);
-                        return "asignacion/asignacionVacaciones";
-                    }
+                    // MCTEMPORAL
+//                    if(servicioBoletaBancoImpl.listadoBoletaBanco(asignacionEstudianteCarrera.getEstudiante(),
+//                                                                horario.getAsignacionCursoPensum(), semestre, datosAsignacion.getTipoRubro()).isEmpty()){
+//                        RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.cursoNoCancelado", false);
+//                        return "asignacion/asignacionVacaciones";
+//                    }
                 }
             } else {
                 RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.estudianteSinPensum", false);

@@ -102,13 +102,16 @@ public class ControladorMostrarPensumEstudianteCarrera extends ControladorAbstra
             return "redirect:buscarEstudiante.htm";
         }
 
+        System.out.println("**** obtiene pensum estudiante carrera "+this.asignacionEstudianteCarrera.getIdAsignacionEstudianteCarrera());
         PensumEstudianteCarrera pensumEstudianteCarreraValido = this.servicioPensumEstudianteCarreraImpl.
                 getPensumEstudianteCarreraValido(this.asignacionEstudianteCarrera);
 
         this.pensum = null;
+        System.out.println("**** pensumEstudianteCarreraValido: "+pensumEstudianteCarreraValido);
         //Se obtiene las relaciones con el pensum valido
         if (pensumEstudianteCarreraValido != null) {
             this.pensum = pensumEstudianteCarreraValido.getPensum();
+            System.out.println("**** pensumEstudianteCarreraValido.pensum= "+pensumEstudianteCarreraValido.getPensum());
             
             modelo.addAttribute("idPensumEstudianteCarreraValido",
                     pensumEstudianteCarreraValido.getIdPensumEstudianteCarrera());

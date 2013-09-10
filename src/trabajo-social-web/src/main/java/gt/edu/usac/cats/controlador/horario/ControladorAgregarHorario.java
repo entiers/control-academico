@@ -118,10 +118,26 @@ public class ControladorAgregarHorario extends ControladorAbstractoHorario {
         if (!bindingResult.hasErrors()) {
             try {
                 Horario horario = new Horario();
-                System.out.println("Hannah is here:  " + wrapperHorario.getIdSalon());
+                System.out.println("Hannah is here:  " + wrapperHorario.getIdSalon()+ wrapperHorario.getSeccion());
                 
                 wrapperHorario.quitarWrapper(horario);
-                this.servicioHorarioImpl.agregarHorario(horario, wrapperHorario.getHorarioDiasWrapper());
+                System.out.println("**semestre: "+horario.getSemestre().getIdSemestre());
+                System.out.println("**seccion: "+horario.getSeccion());
+//                System.out.println("**curso: "+horario.getAsignacionCursoPensum().getCurso().getIdCurso());
+//                System.out.println("**pensum: "+horario.getAsignacionCursoPensum().getPensum().getIdPensum());
+                System.out.println("**idAsignacionCursoPensum: "+horario.getAsignacionCursoPensum().getIdAsignacionCursoPensum());
+                List<Horario> otros = this.servicioHorarioImpl.getHorario(horario.getAsignacionCursoPensum(), 
+                        horario.getSemestre(), horario.getTipo(), horario.getSeccion());
+                System.out.println("Existen otros: "+otros.size());
+                if (otros.isEmpty() == true){ // es primer horario para ese mismo curso, semestre y seccion
+                    // agrega banderita
+                    horario.setMaestro(true);
+                    this.servicioHorarioImpl.agregarHorario(horario, wrapperHorario.getHorarioDiasWrapper());
+                }else{// ya existen otros horarios para ese mismo curso en ese semestre y seccion
+                    horario.setMaestro(false);
+                    this.servicioHorarioImpl.agregarHorario(horario, wrapperHorario.getHorarioDiasWrapper());
+                }
+                
 
 
                 wrapperHorario = new WrapperHorario();
