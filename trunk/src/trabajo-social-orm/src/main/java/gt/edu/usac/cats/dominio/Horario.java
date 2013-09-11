@@ -62,12 +62,14 @@ public class Horario implements java.io.Serializable {
      private String seccion;     
      private boolean habilitado;
      private TipoHorario tipo;
+     private boolean maestro;
      private Set<AsignacionCatedraticoHorario> asignacionCatedraticoHorarios = new HashSet<AsignacionCatedraticoHorario>(0);
      private Set<HorarioDia> horarioDias = new HashSet<HorarioDia>(0);
      private Set<DetalleAsignacion> detalleAsignacions = new HashSet<DetalleAsignacion>(0);
 
     public Horario() {
         this.idHorario = 0;
+        this.maestro = false;
     }
 
 
@@ -315,6 +317,24 @@ public class Horario implements java.io.Serializable {
             return a;
         }
         return null;
+    }
+
+    @Column(
+        name = "maestro",
+        nullable = true
+    )
+    /**
+     * @return the maestro
+     */
+    public boolean isMaestro() {
+        return maestro;
+    }
+
+    /**
+     * @param maestro the maestro to set
+     */
+    public void setMaestro(boolean maestro) {
+        this.maestro = maestro;
     }
 }
 

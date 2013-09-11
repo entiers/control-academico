@@ -271,14 +271,14 @@ public class AsignacionCursoPensum implements java.io.Serializable {
         return builder.toString();
     }
     
-    @Column(name = "nota_aprobacion", nullable = false)
-    public short getNotaAprobacion() {
-        return this.notaAprobacion;
-    }
-
-    public void setNotaAprobacion(short notaAprobacion) {
-        this.zona = notaAprobacion;
-    }
+//    @Column(name = "nota_aprobacion", nullable = false)
+//    public short getNotaAprobacion() {
+//        return this.notaAprobacion;
+//    }
+//
+//    public void setNotaAprobacion(short notaAprobacion) {
+//        this.zona = notaAprobacion;
+//    }
 }
 
 
