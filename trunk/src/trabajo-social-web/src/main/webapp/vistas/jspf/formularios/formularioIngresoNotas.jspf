@@ -1,9 +1,27 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<script type="text/javascript">
+            $(document).ready(function() {
+                //Cambio combo curso
+              
+                    getHorarios($('#slcTipoHorario').val());
+
+            });
+
+            function getHorarios(valueTipoHorario) {
+                if (valueTipoHorario !== ""){
+                    $.get("getHorarioCatedratico.htm", { idTipoHorario: valueTipoHorario}, function(options, result, reqobj) {
+                       $('#slcHorario').html(options);
+                    });
+                }else{
+                    $('#slcHorario').html("");
+                }
+            }
+        </script>
 <c:choose>
     <c:when test="${not empty listadoDetalleAsignacion}">
         <fieldset>
             <legend><fmt:message key="ingresoNota.asignaciones"/></legend>
-            <h3><fmt:message key="curso.menu"/>: ${nombreCurso}</h3>
+            <h3><fmt:message key="curso.menu"/>: ${nombreCurso} Secci&oacute;n ${numeroSeccion}</h3>
             <display:table  class="ui-widget ui-widget-content" name="listadoDetalleAsignacion"
                             id="detAsigna" requestURI="paginarNotasPag.htm" pagesize="${pageSize}">
 
@@ -116,16 +134,15 @@
                         </display:column>                                 
                     </c:otherwise>
                 </c:choose>                            
-
+o
 
             </display:table>    
             <br/>
             <form:hidden path="oficializar" id="hdOficializar" />
             <form:hidden path="linkValue" id="linkValue" />
-           
-              
-                    <input type="button" value='<fmt:message key="ingresoNota.btnGuardar"/>' onclick="javascript:guardar(false, '', -1);" />
-              <input type="button" value='<fmt:message key="ingresoNota.btnOficializar"/>' onclick="javascript:guardar(true);" /> 
+
+            <input type="button" value='<fmt:message key="ingresoNota.btnGuardar"/>' onclick="javascript:guardar(false, '', -1);" />
+            <input type="button" value='<fmt:message key="ingresoNota.btnOficializar"/>' onclick="javascript:guardar(true);" /> 
                
         </fieldset>
     </c:when>

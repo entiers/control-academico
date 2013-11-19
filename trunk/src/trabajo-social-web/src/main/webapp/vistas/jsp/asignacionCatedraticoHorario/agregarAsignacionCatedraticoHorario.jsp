@@ -78,7 +78,7 @@
                         <form:label for="horario.idHorario" path="horario.idHorario"><fmt:message key="horario.menu"/>:</form:label>
                         <form:select path="horario.idHorario" id="slcHorario">
                             <c:forEach items="${listaHorario}" var="horario">
-                                <form:option value="${horario.idHorario}">${horario.asignacionCursoPensum.curso.nombre} - ${horario.seccion}</form:option>
+                                <form:option value="${horario.idHorario}">[${horario.asignacionCursoPensum.curso.codigo}] ${horario.asignacionCursoPensum.curso.nombre} - ${horario.seccion}</form:option>
                             </c:forEach>
                         </form:select>
                         <span id="lblErrorHorario" class="claseError" />

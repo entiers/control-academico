@@ -64,7 +64,7 @@
                                         <select name="valorParametro" id="valorParametro" style="width: 250px;" >
                                             <option value="">Seleccionar un valor</option>
                                             <c:forEach items="${listadoCarreras}" var="carrera">
-                                                <option value="${carrera.idCarrera}">${carrera.codigoNombre}</option>>
+                                                <option value="${carrera.idCarrera}">${carrera.codigoNombre}</option>
                                             </c:forEach>
                                         </select>
                                         <input type="hidden" name="tipoParametro" value="integer" />

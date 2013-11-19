@@ -53,14 +53,15 @@
 
         <%@include file="../../jspf/formularios/informacion/formularioInformacionEstudiante.jspf" %>
 
-        <c:if test="${not empty pensum}">
+        
+        <c:if test="${pensum.idPensum != 0}">
             <c:set scope="request" var="legendPensum" value="pensum.informacion.valido"/>
             <%@include file="../../jspf/formularios/informacion/formularioInformacionPensum.jspf" %>
         </c:if>
 
-
+        
         <div style="text-align:center; margin-bottom: 20px; ">
-            <sec:authorize access="hasRole('ROLE_AGREGAR_PENSUM_ESTUDIANTE_CARRERA')">
+          <sec:authorize access="hasRole('ROLE_AGREGAR_PENSUM_ESTUDIANTE_CARRERA')"> 
                 <c:if test="${not empty listadoPensumsNoAsignadosAEsutudianteCarrera}">
                     <c:if test="${not empty pensumEstudianteCarrera}">
                         <div id="divFormularioPopup" title="<fmt:message key='asignarPensumEstudianteCarrera.titulo' />" >
@@ -80,7 +81,7 @@
                         <button id="botonHabilitarFormularioPopup"><fmt:message key="mostrarPensumEstudianteCarrera.boton.asignarPensum" /></button>
                     </c:if>
                 </c:if>
-            </sec:authorize>
+          </sec:authorize> 
 
             <c:if test="${not empty pensum}">
                 <sec:authorize access="hasRole('ROLE_ELIMINAR_PENSUM_ESTUDIANTE_CARRERA')">
