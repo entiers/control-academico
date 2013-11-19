@@ -122,6 +122,7 @@
     </head>
     <body>
         <h1><fmt:message key="ingresoNota.titulo"/></h1>
+        
         <c:if test="${validacionesOK}">
             <form:form modelAttribute="datosIngresoNota" method="post" id="frmBusqueda" action="ingresoNota.htm">
                 <fieldset>
