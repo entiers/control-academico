@@ -6,7 +6,21 @@
                     getHorarios($('#slcTipoHorario').val());
 
             });
+            
 
+            function calculaNotaFinal(){
+                examenes = $('#frmGuardar input[name="listFinal"]').toArray();
+                notasf = $('#frmGuardar input[name="notaFinal"]').toArray();
+               $('#frmGuardar input[name="listZona"]').each(function(i,item){
+                   
+                   examen = examenes[i].value;
+                   //alert(item);
+                   notasf[i].value = parseFloat(examen)+parseFloat(item.value);
+                  
+                });
+                
+            }
+           
             function getHorarios(valueTipoHorario) {
                 if (valueTipoHorario !== ""){
                     $.get("getHorarioCatedratico.htm", { idTipoHorario: valueTipoHorario}, function(options, result, reqobj) {
@@ -44,7 +58,7 @@
                 <c:choose>
                     <c:when test="${esAdministrativo}">
                         <display:column  titleKey="ingresoNota.zona">                            
-                            <form:input path="listZona" value="${detAsigna.zona}"
+                            <form:input path="listZona"  value="${detAsigna.zona}"
                                         cssStyle="width:50px;"
                                         />
                         </display:column>                
@@ -52,8 +66,13 @@
                             <form:input path="listFinal" value="${detAsigna.examenFinal}"
                                         cssStyle="width:50px;"
                                         />
-                        </display:column>        
-                          
+                        </display:column>   
+                                        
+                        <display:column title="Nota Final">                            
+                            <form:input path="notaFinal" 
+                                        cssStyle="width:50px;"
+                                        />
+                        </display:column>    
                         <display:column titleKey="agregarEstudiante.estadistica"  >
                             <form:select path="listExcusa">
 
@@ -143,6 +162,7 @@ o
 
             <input type="button" value='<fmt:message key="ingresoNota.btnGuardar"/>' onclick="javascript:guardar(false, '', -1);" />
             <input type="button" value='<fmt:message key="ingresoNota.btnOficializar"/>' onclick="javascript:guardar(true);" /> 
+            <input type="button" value='Calcular Nota' onclick="javascript:calculaNotaFinal();" /> 
                
         </fieldset>
     </c:when>
