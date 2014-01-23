@@ -95,6 +95,7 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota imp
      * <li>Periodo valido de ingreso de notas</li> <li>Mostrar el listado de
      * cursos a los que el catedratico se encuentra asignado en el semestre
      * actual</li> </p>
+     * Se ejecuta al buscar ya con tipo horario y horario.
      */
     @RequestMapping(value = "ingresoNota.htm", method = RequestMethod.GET)
     public String buscarEstudiantingresoes(Model modelo, HttpServletRequest request) {
@@ -158,17 +159,18 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota imp
      * <li>Periodo valido de ingreso de notas</li> <li>Mostrar el listado de
      * cursos a los que el catedratico se encuentra asignado en el semestre
      * actual</li> </p>
+     * Se ejecuta la prmera vez que se muestra la pagina, cuando es root
      */
     @RequestMapping(value = "ingresoNotaAdmin.htm", method = RequestMethod.GET)
     public String getIngresoNotaAdmin(Model modelo, HttpServletRequest request) {
-
+        System.out.println("Entra aca....... MCNOV%");
         this.esAdministrativo = true;
         try {
             this.semestre = this.servicioSemestreImpl.getSemestreActivo();
             System.out.println("&& semestre: " + this.semestre.getIdSemestre());
 
             this.listadoHorario = this.servicioHorarioImpl.getHorario(this.semestre, TipoHorario.values()[0], true);
-
+            
         } catch (Exception ex) {
             RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "dataAccessException", false);
             log.error(Mensajes.DATA_ACCESS_EXCEPTION, ex);
@@ -208,7 +210,10 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota imp
 
 
         if (listadoDetalleAsignacion != null && !this.listadoDetalleAsignacion.isEmpty()) {
+            System.out.println("haoy alumnos MCNOV% metodo crearFormulario");
             modelo.addAttribute("nombreCurso", this.listadoDetalleAsignacion.get(0).getHorario().getAsignacionCursoPensum().getCurso().getNombre());
+            modelo.addAttribute("numeroSeccion", this.listadoDetalleAsignacion.get(0).getHorario().getSeccion());
+            modelo.addAttribute("ultimaPag", false);
         }
         this.setModelo(modelo, true, datosIngresoNota);
 
@@ -229,15 +234,18 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota imp
         int paginaSig = pag == null || pag.trim().isEmpty() ? -1 : getPageNumber(pag);
         System.out.println("*pagina= " + paginaSig);
         short notaFinal, zona, laboratorio, examenFinal;
+
         this.setModelo(modelo, false, new DatosIngresoNota());
         try {
             int i = 0;
             int pagActual;
             if (paginaSig != -1) {
                 pagActual = paginaSig - 1;
+                modelo.addAttribute("ultimaPag", false);
             } else { // ultima pagina
                 int division = (int) Math.ceil(this.listadoDetalleAsignacion.size() / 10.0);
                 pagActual = division;
+                modelo.addAttribute("ultimaPag", true);
             }
             //int pagActual = paginaSig!= -1?paginaSig-1:(this.listadoDetalleAsignacion.size()/10)+1;
 
@@ -294,7 +302,10 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota imp
 
                     if (wrapperIngresoNota.getOficializar()) {
                         System.out.println("** notaFinal: "+notaFinal);
-                        System.out.println("** notaAprobacion: "+detAsign.getHorario().getAsignacionCursoPensum().getPensum().getNotaAprobacion());
+                        System.out.println("** notaAprobacion horario: "+detAsign.getHorario());
+                        System.out.println("** notaAprobacion acp: "+detAsign.getHorario().getAsignacionCursoPensum());
+                        System.out.println("** notaAprobacion pensum: "+detAsign.getHorario().getAsignacionCursoPensum().getPensum());
+                        System.out.println("** notaAprobacion nota: "+detAsign.getHorario().getAsignacionCursoPensum().getPensum().getNotaAprobacion());
                         System.out.println("** ya esta aprobado: "+this.servicioCursoAprobadoImpl.getCursoAprobado(detAsign.getAsignacion(),
                                 detAsign.getHorario().getAsignacionCursoPensum()));
                         if (notaFinal >= detAsign.getHorario().getAsignacionCursoPensum().getPensum().getNotaAprobacion()
@@ -342,6 +353,8 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota imp
         } else {
             RequestUtil.agregarRedirect(request, "ingresoNota.htm");
         }
+
+
         return "detalleAsignacion/ingresoNota";
 
 
@@ -394,6 +407,7 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota imp
      *
      * @param modelo
      * @param mostrarAsignaciones
+     * Llamado cuando entra por primera vez.
      */
     private void setModelo(Model modelo, boolean mostrarAsignaciones, DatosIngresoNota datosIngresoNota) {
         if (excusasMap == null) {
@@ -406,6 +420,7 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota imp
             excusas.add("AC");
             excusasMap.put("listaEx", excusas);
         }
+        System.out.println("Hoario actual MCHOOY: "+this.horarioActual);
         modelo.addAttribute("excusasList", excusasMap.get("listaEx"));
         modelo.addAttribute("datosIngresoNota", datosIngresoNota);
         modelo.addAttribute("listaTipoHorario", TipoHorario.values());
@@ -436,10 +451,16 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota imp
         this.listadoDetalleAsignacion = this.servicioDetalleAsignacionImpl.
                 getListadoDetalleAsignacion(datosIngresoNota.getHorario().getIdHorario());
         if (this.listadoDetalleAsignacion != null) {
-            modelo.addAttribute("listadoDetalleAsignacion", this.listadoDetalleAsignacion);
+            modelo.addAttribute("listadoDetalleAsignacion", this.listadoDetalleAsignacion);        if (listadoDetalleAsignacion != null && !this.listadoDetalleAsignacion.isEmpty()) {
+            modelo.addAttribute("nombreCurso", this.listadoDetalleAsignacion.get(0).getHorario().getAsignacionCursoPensum().getCurso().getNombre());
+            modelo.addAttribute("numeroSeccion", this.listadoDetalleAsignacion.get(0).getHorario().getSeccion());
+            
+        }
+
+            
         }
         modelo.addAttribute("mostrarEstudiantes", true);
-        modelo.addAttribute("validacionesOK", true);
+        modelo.addAttribute("validacionesOK", false);
         modelo.addAttribute("esAdministrativo", this.esAdministrativo);
 
         WrapperIngresoNota win = new WrapperIngresoNota();

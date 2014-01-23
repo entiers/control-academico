@@ -196,7 +196,7 @@ public class ControladorAsignacionExtemporanea extends ControladorAbstractoAsign
         this.listaAsignacionCursoPensum = this.servicioCursoImpl.getCursoAsignacion(pensumEstudianteCarrera.getPensum(),
                 this.semestre, datosAsignacion.getTipoHorario());
 
-//        System.out.println("**** listaAsignacionCursoPensum.size"+this.listaAsignacionCursoPensum.size());
+        System.out.println("**** listaAsignacionCursoPensum.size"+this.listaAsignacionCursoPensum.size());
         if (this.listaAsignacionCursoPensum.isEmpty()) {
             modelo.addAttribute("wrapperAsignacionCursosExtemporaneas", wrapperAsignacionCursosExtemporaneas);
             modelo.addAttribute("listaTipoHorario", TipoHorario.values());
@@ -315,7 +315,8 @@ public class ControladorAsignacionExtemporanea extends ControladorAbstractoAsign
 
         try {
 
-            //Validando traslape de cursos
+              
+            //Validando traslape de cursos recien agregados
             if (servicioHorarioImpl.existeTraslape(listaHorarioAsignacion)
                     & (datosAsignacion.getTipoHorario() == TipoHorario.SEMESTRE | datosAsignacion.getTipoHorario() == TipoHorario.VACACIONES)) {
                 RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.existeTraslape", false);
@@ -323,6 +324,15 @@ public class ControladorAsignacionExtemporanea extends ControladorAbstractoAsign
             }
 
             asignacionEstudianteCarrera = servicioGeneralImpl.cargarEntidadPorID(AsignacionEstudianteCarrera.class, datosAsignacion.getIdAsignacionEstudianteCarrera());
+           // validando traslape con cursos asignados en el mismo semestre pero en diferente transaccion
+            List<Horario> listaHorariosOtrasTrx = servicioHorarioImpl.getHorariosAsignados(asignacionEstudianteCarrera, semestre, datosAsignacion.getTipoHorario());
+            if (servicioHorarioImpl.existeTraslape(listaHorariosOtrasTrx)
+                    & (datosAsignacion.getTipoHorario() == TipoHorario.SEMESTRE | datosAsignacion.getTipoHorario() == TipoHorario.VACACIONES)) {
+                RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.existeTraslape", false);
+                return "asignacion/realizarAsignacionExtemporanea";
+            }
+            
+            
             Pensum pensum = this.servicioPensumEstudianteCarrera.getPensumEstudianteCarreraValido(
                     asignacionEstudianteCarrera).getPensum();
 

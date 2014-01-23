@@ -96,6 +96,7 @@ public class ControladorVerDetalleAsignacion extends ControladorAbstractoAsignac
 
         if (!this.asignacion.getDetalleAsignacions().isEmpty()) {
             Semestre semestreAsignacion = this.asignacion.getDetalleAsignacions().iterator().next().getHorario().getSemestre();
+            
             this.periodoAsignacion = semestreAsignacion.equals(this.semestre);
         } else {
             modelo.addAttribute("errorAsignacionSinDetalle", true);

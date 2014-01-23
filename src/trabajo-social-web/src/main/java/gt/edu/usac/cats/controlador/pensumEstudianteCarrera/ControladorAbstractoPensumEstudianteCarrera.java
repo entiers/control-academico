@@ -67,9 +67,10 @@ public abstract class ControladorAbstractoPensumEstudianteCarrera {
             listadoPensumEstudianteCarreraNoValidos =
                     this.servicioPensumEstudianteCarreraImpl.getListadoPensumEstudianteCarreraNoValidos(asignacionEstudianteCarrera);
 
-
+            System.out.println("**FOUND listadoPensumsNoAsignadosAEsutudianteCarrera: "+asignacionEstudianteCarrera.getIdAsignacionEstudianteCarrera());
             listadoPensumsNoAsignadosAEsutudianteCarrera =
                     this.servicioPensumEstudianteCarreraImpl.getPensumsNoAsignadosAEstudianteCarrera(asignacionEstudianteCarrera);
+            System.out.println("**FOUND CANTIDAD: "+listadoPensumsNoAsignadosAEsutudianteCarrera.size());
         }
 
 
@@ -78,10 +79,17 @@ public abstract class ControladorAbstractoPensumEstudianteCarrera {
 
         if (pensum != null) {
             modelo.addAttribute("pensum", pensum);
+        }else{
+            modelo.addAttribute("pensum", new Pensum());
         }
         if (pensumEstudianteCarrera != null) {
             modelo.addAttribute("pensumEstudianteCarrera", pensumEstudianteCarrera);
+            
         }
+        else{
+            modelo.addAttribute("pensumEstudianteCarrera", new PensumEstudianteCarrera());
+        }
+        System.out.println("***MC pensumEstudianteCarrera:"+pensumEstudianteCarrera);
         modelo.addAttribute("listadoPensumEstudianteCarreraNoValidos", listadoPensumEstudianteCarreraNoValidos);
         modelo.addAttribute("listadoPensumsNoAsignadosAEsutudianteCarrera", listadoPensumsNoAsignadosAEsutudianteCarrera);
         modelo.addAttribute("autoOpenDialog", autoOpenDialogAsignar);
