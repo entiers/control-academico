@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="600" pageHeight="842" columnWidth="560" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="446544eb-17e8-46be-8251-733279340373">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="600" pageHeight="842" columnWidth="560" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="39a4b624-e2e0-4d76-a14a-3066bce84dcc">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="174"/>
 	<parameter name="carne" class="java.lang.String"/>
 	<parameter name="id_carrera" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="fechahoy" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select e.carne, e.nombre as estudiante, cur.codigo, cur.nombre as curso, 
     cuap.laboratorio, cuap.zona + cuap.examen_final as nota, 
@@ -38,90 +39,30 @@ order by cur.codigo, cuap.fecha_aprobacion;]]>
 	<variable name="nota_1" class="java.lang.Double" calculation="Average">
 		<variableExpression><![CDATA[$F{nota}]]></variableExpression>
 	</variable>
+	<variable name="texto" class="java.lang.String"/>
+	<variable name="textopie" class="java.lang.String"/>
+	<variable name="sum_creditos" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{creditos}]]></variableExpression>
+	</variable>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="122" splitType="Stretch">
-			<staticText>
-				<reportElement uuid="937c154c-aa0b-43f2-9f8b-3441e480bad4" x="0" y="83" width="89" height="17" forecolor="#010101"/>
-				<textElement>
-					<font size="10" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Estudiante:]]></text>
-			</staticText>
+		<band height="177" splitType="Stretch">
 			<textField>
-				<reportElement uuid="e7fa3c8d-bedc-4063-95ed-c975a4a2d0ec" x="89" y="83" width="455" height="17"/>
-				<textElement>
-					<font size="10"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{estudiante}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement uuid="25c8e71c-c314-4be9-8c0a-407d798a8d8f" x="89" y="66" width="127" height="17"/>
-				<textElement>
-					<font size="10"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{carne}]]></textFieldExpression>
-			</textField>
-			<frame>
-				<reportElement uuid="e9b524be-68ad-49e4-9e5f-9d3b913be514" mode="Opaque" x="0" y="0" width="560" height="66" backcolor="#006699"/>
-				<staticText>
-					<reportElement uuid="75d67753-742b-4974-b5da-bab2b14f4267" x="0" y="3" width="400" height="20" forecolor="#FFFFFF"/>
-					<textElement>
-						<font size="14" isBold="true"/>
-					</textElement>
-					<text><![CDATA[UNIVERSIDAD DE SAN CARLOS DE GUATEMALA]]></text>
-				</staticText>
-				<staticText>
-					<reportElement uuid="09b7345d-e9c7-4446-a9fb-2d336c545ddb" x="0" y="23" width="378" height="18" forecolor="#FFFFFF"/>
-					<textElement>
-						<font size="14" isBold="true"/>
-					</textElement>
-					<text><![CDATA[ESCUELA DE TRABAJO SOCIAL]]></text>
-				</staticText>
-				<staticText>
-					<reportElement uuid="a3d43aaf-0324-465f-b6e5-96af2d73b760" x="0" y="41" width="378" height="25" forecolor="#FFFFFF"/>
-					<textElement>
-						<font size="14" isBold="true"/>
-					</textElement>
-					<text><![CDATA[CERTIFICACIÓN DE CURSOS]]></text>
-				</staticText>
-			</frame>
-			<staticText>
-				<reportElement uuid="b2b6ec28-5b8c-48ea-ab41-ce749ef2e1c6" x="0" y="66" width="89" height="17" forecolor="#010101"/>
-				<textElement>
-					<font size="10" isBold="true"/>
-				</textElement>
-				<text><![CDATA[No. carné:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="02af4c2a-f262-4431-9b0a-d14bdb2fc7fa" x="0" y="100" width="89" height="17" forecolor="#010101"/>
-				<textElement>
-					<font size="10" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Carrera:]]></text>
-			</staticText>
-			<textField>
-				<reportElement uuid="27931c5e-3345-4ed0-a838-28192613058d" x="89" y="100" width="455" height="17"/>
-				<textElement>
-					<font size="10"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{carrera}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement uuid="886df3bb-c45a-4e9e-843a-7fe2c8b61e63" x="417" y="66" width="127" height="17"/>
-				<textElement textAlignment="Right">
-					<font size="10" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA["Fecha: " + $F{fechahoy}]]></textFieldExpression>
+				<reportElement uuid="e635f9a0-2dc2-4601-bc45-7933a717a5c8" x="17" y="92" width="505" height="85"/>
+				<textElement textAlignment="Justified"/>
+				<textFieldExpression><![CDATA["La infrascrita Encargada del Departamento del Control Académico de la ESCUELA DE TRABAJO SOCIAL de la "+
+"Universidad de San Carlos de Guatemala, CERTIFICA: "+"Que ha tenido a la vista las Actas de Examenes "+"correspondientes a la carrera de  "+
+$F{carrera}+" en donde consta que el (la) estudiante "+$F{estudiante}.toUpperCase()+" con carnet No. "+$F{carne} + " cursó y aprobó sobre la base "+
+"de 0 a 100 puntos, lo siguiente:"]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
 	<columnHeader>
-		<band height="32" splitType="Stretch">
+		<band height="20" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="f4ee0a9b-3e01-4011-b37b-cfae6001c36b" x="48" y="0" width="231" height="31"/>
+				<reportElement uuid="048d78ff-9d6b-4403-b0e5-ebd206cef470" x="48" y="0" width="314" height="19"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Double"/>
 					<bottomPen lineWidth="1.0" lineStyle="Double"/>
@@ -129,10 +70,10 @@ order by cur.codigo, cuap.fecha_aprobacion;]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[	NOMBRE CURSO]]></text>
+				<text><![CDATA[MATERIA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="8e86e6aa-c4cf-4da6-af9b-851d59494f93" x="0" y="0" width="48" height="31"/>
+				<reportElement uuid="daee2259-5dbc-49c9-8864-e760eba4a01d" x="0" y="0" width="48" height="19"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Double"/>
 					<bottomPen lineWidth="1.0" lineStyle="Double"/>
@@ -140,11 +81,10 @@ order by cur.codigo, cuap.fecha_aprobacion;]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[CODIGO
-CURSO]]></text>
+				<text><![CDATA[CODIGO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="d1a4eb04-54f1-4f7c-b3cb-f106118dec7e" x="362" y="0" width="54" height="31"/>
+				<reportElement uuid="fceb865f-bc40-44e6-9c53-f10b0340df1f" x="362" y="0" width="54" height="19"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Double"/>
 					<bottomPen lineWidth="1.0" lineStyle="Double"/>
@@ -155,19 +95,19 @@ CURSO]]></text>
 				<text><![CDATA[NOTA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="38b6f638-f092-4afe-b66f-4775dd652ef4" x="478" y="0" width="82" height="31"/>
+				<reportElement uuid="c55a5fc3-ed8e-4f55-9afd-4e73aca0274a" x="478" y="0" width="82" height="19"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Double"/>
 					<bottomPen lineWidth="1.0" lineStyle="Double"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font size="6" isBold="true"/>
 				</textElement>
 				<text><![CDATA[FECHA
 APROBACIÓN]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="351b7cc3-3711-4fab-a063-366e5886007f" x="416" y="0" width="62" height="31"/>
+				<reportElement uuid="fceb865f-bc40-44e6-9c53-f10b0340df1f" x="416" y="0" width="62" height="19"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Double"/>
 					<bottomPen lineWidth="1.0" lineStyle="Double"/>
@@ -175,88 +115,103 @@ APROBACIÓN]]></text>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[CRÉDITOS]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="d1a4eb04-54f1-4f7c-b3cb-f106118dec7e" x="279" y="0" width="83" height="31"/>
-				<box>
-					<topPen lineWidth="1.0" lineStyle="Double"/>
-					<bottomPen lineWidth="1.0" lineStyle="Double"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[]]></text>
+				<text><![CDATA[CREDITOS]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="16" splitType="Stretch">
+		<band height="16" splitType="Immediate">
 			<textField>
-				<reportElement uuid="e6f70c84-8f3c-4234-a762-080f8fbe7d66" x="0" y="0" width="48" height="16"/>
+				<reportElement uuid="f9313f42-79de-4113-a020-799334e9fcb3" x="0" y="0" width="48" height="16"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{codigo}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="b115f143-1049-41ff-a209-81ce96ce35b6" x="48" y="0" width="231" height="16"/>
+				<reportElement uuid="15e8cd33-7481-4d33-aec0-ae3426a8fab0" x="48" y="0" width="231" height="16"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{curso}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="ff539821-0697-4c65-bcb3-7f1faae478c1" x="362" y="0" width="54" height="16"/>
+				<reportElement uuid="b9d75138-a1e2-453a-86ab-18a53b5234be" x="362" y="0" width="54" height="16"/>
 				<box rightPadding="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{nota}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement uuid="d9c6f745-5552-464d-a556-c215014568f0" x="416" y="0" width="62" height="16"/>
-				<box rightPadding="15"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{creditos}]]></textFieldExpression>
-			</textField>
 			<textField pattern="">
-				<reportElement uuid="e075399a-3e35-47c0-92ee-fe903c149e8c" x="478" y="0" width="82" height="16"/>
+				<reportElement uuid="6c118af8-047a-435f-a880-79a2857d1a62" x="478" y="0" width="82" height="16"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{fecha_aprobacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d38b1aee-ee96-4aee-a9c4-a28de0493300" x="416" y="0" width="62" height="16"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{creditos}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
 	<summary>
-		<band height="47" splitType="Stretch">
+		<band height="170">
 			<staticText>
-				<reportElement uuid="45013214-101b-45f6-9c2a-184e67fb92ed" x="0" y="7" width="118" height="17" forecolor="#010101"/>
-				<textElement verticalAlignment="Middle">
-					<font size="10" isBold="true"/>
-				</textElement>
-				<text><![CDATA[CURSOS APROBADOS:]]></text>
-			</staticText>
-			<line>
-				<reportElement uuid="48e01938-277a-4c2c-9e36-bc6fb9af69ff" x="0" y="0" width="560" height="1"/>
-			</line>
-			<textField>
-				<reportElement uuid="82fba904-1795-4dbd-a70f-b33972a1423d" x="118" y="7" width="38" height="17"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement uuid="9453ee8c-85ff-4e76-ace6-a620c8700e89" x="0" y="24" width="118" height="17" forecolor="#010101"/>
+				<reportElement uuid="f172ff76-19ad-4725-879e-a8dd8ebd6cf2" x="0" y="17" width="118" height="17" forecolor="#010101"/>
 				<textElement verticalAlignment="Middle">
 					<font size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[PROMEDIO:]]></text>
 			</staticText>
 			<textField pattern="#,##0">
-				<reportElement uuid="e85eee05-5384-4f21-9213-5d5712b2f4ef" x="118" y="24" width="38" height="17"/>
+				<reportElement uuid="89e7db2b-aaea-4459-a9ed-bced1cdaf372" x="118" y="17" width="38" height="17"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{nota_1}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement uuid="a5a89085-b4e5-4c39-a7ea-374032a4b7b2" x="0" y="34" width="537" height="27"/>
+				<textElement textAlignment="Justified"/>
+				<text><![CDATA[De conformidad con el Reglamento de Evaluación de la Escuela Aprobado a partir del 01-07-2005, las materias se aprueban con SESENTA Y UN (61) PUNTOS, y el máximo que puede obtenerse son CIEN (100) PUNTOS.]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="7346dd42-4f28-46a7-82ed-736888af2817" x="0" y="61" width="537" height="38"/>
+				<textElement textAlignment="Justified"/>
+				<textFieldExpression><![CDATA["A solicitud de parte interesada y para los usos legales que convenga, "+
+" se extiende, sella y firma la presente CERTIFICACIÓN, en la Ciudad de Guatemala, "+
+" a los "+$P{fechahoy}+"."]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="a9e65544-0f69-4a53-8d3e-d309111089f7" x="251" y="99" width="131" height="20"/>
+				<textElement/>
+				<text><![CDATA[ID Y ENSEÑAD A TODOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f454c932-0b95-4a81-bef2-3d09f567d0fc" x="118" y="152" width="71" height="12"/>
+				<textElement/>
+				<text><![CDATA[DIRECTOR]]></text>
+			</staticText>
 			<line>
-				<reportElement uuid="33b2b038-8197-4bfe-8bf3-c945389c5197" x="0" y="46" width="560" height="1"/>
+				<reportElement uuid="2d6ee216-048a-4446-8666-86d40881203f" x="72" y="151" width="150" height="1"/>
 			</line>
+			<staticText>
+				<reportElement uuid="544def1c-7ac0-4f4c-8427-60a107b3bee5" x="382" y="152" width="133" height="14"/>
+				<textElement/>
+				<text><![CDATA[CONTROL ACADEMICO]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="f8c1e706-db64-4694-a6e2-7cd63cfa4987" x="371" y="151" width="144" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="f172ff76-19ad-4725-879e-a8dd8ebd6cf2" x="0" y="0" width="118" height="17" forecolor="#010101"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CREDITOS:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="8c96bbe7-55b9-4413-ac9d-ba4ac2c2f9e7" x="118" y="0" width="38" height="17"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{sum_creditos}]]></textFieldExpression>
+			</textField>
 		</band>
 	</summary>
 </jasperReport>

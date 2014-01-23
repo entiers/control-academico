@@ -111,7 +111,7 @@ public class ControladorAgregarAsignacionCatedraticoHorario extends ControladorA
             AsignacionCatedraticoHorario aCH = new AsignacionCatedraticoHorario();
             aCH.setCatedratico(this.catedratico);
             aCH.setHorario(datosIngresoNota.getHorario());
-            super.servicioGeneralImpl.agregar(aCH);
+            super.servicioGeneralImpl.persistir(aCH); // MCNOV
             this.crearModelo(modelo);
             RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "asignacionHorarioCatedratico.exitosa", true);
             RequestUtil.agregarRedirect(request, "buscarCatedratico.htm");

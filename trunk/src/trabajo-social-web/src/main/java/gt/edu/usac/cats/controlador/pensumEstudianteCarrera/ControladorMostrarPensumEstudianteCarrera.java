@@ -102,7 +102,7 @@ public class ControladorMostrarPensumEstudianteCarrera extends ControladorAbstra
             return "redirect:buscarEstudiante.htm";
         }
 
-        System.out.println("**** obtiene pensum estudiante carrera "+this.asignacionEstudianteCarrera.getIdAsignacionEstudianteCarrera());
+        System.out.println("**** obtiene asignacion estudiante carrera "+this.asignacionEstudianteCarrera.getIdAsignacionEstudianteCarrera());
         PensumEstudianteCarrera pensumEstudianteCarreraValido = this.servicioPensumEstudianteCarreraImpl.
                 getPensumEstudianteCarreraValido(this.asignacionEstudianteCarrera);
 
