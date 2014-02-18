@@ -162,6 +162,7 @@ public class ControladorAsignacionSemestre extends ControladorAbstractoAsignacio
 
             //Validando traslape de cursos
             if (servicioHorarioImpl.existeTraslape(listaHorarioAsignacion)) {
+                System.out.println("Existe traslape");
                 RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.existeTraslape", false);
                 return "asignacion/asignacionSemestre";
             }
@@ -178,15 +179,17 @@ public class ControladorAsignacionSemestre extends ControladorAbstractoAsignacio
                     List<Curso> prerrequisitos = servicioCursoAprobadoImpl.getCursoPrerrequisitoPendiente(asignacionEstudianteCarrera, horario.getAsignacionCursoPensum());
 //                    System.out.println("prerrequisitos: "+prerrequisitos.size());
                     int creditosAprob = servicioCursoAprobadoImpl.getCreditosAprobados(asignacionEstudianteCarrera);
-//                    System.out.println("Creditos Aprobados: "+creditosAprob);
-//                    System.out.println("Creditos prerrequisito: "+acp.getCreditosPrerrequisito());
+                    System.out.println("Creditos Aprobados: "+creditosAprob);
+                    System.out.println("Creditos prerrequisito: "+acp.getCreditosPrerrequisito());
+                    System.out.println(" prerrequisitos: "+prerrequisitos.isEmpty());
+                    
                     
 //MC VALIDACION PRERREQUISITO                    
-//                    if (!prerrequisitos.isEmpty()
-//                            | creditosAprob < acp.getCreditosPrerrequisito()) {
-//                        RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.prerrequisitoPendiente", false);
-//                        return "asignacion/asignacionSemestre";
-//                    }
+                    if (!prerrequisitos.isEmpty()
+                            | creditosAprob < acp.getCreditosPrerrequisito()) {
+                        RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.prerrequisitoPendiente", false);
+                        return "asignacion/asignacionSemestre";
+                    }
 
                     //Validando asignaciones en semestre actual
                     if (!servicioDetalleAsignacionImpl.getListadoDetalleAsignacion(horario.getAsignacionCursoPensum(), semestre, asignacionEstudianteCarrera,TipoAsignacion.ASIGNACION_CURSOS_SEMESTRE).isEmpty()) {

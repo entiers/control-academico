@@ -11,11 +11,11 @@ import gt.edu.usac.cats.util.RequestUtil;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -80,15 +80,27 @@ public class ControladorRealizarETL implements Serializable {
         properties.load(inputStream);
         String pathArchivo = properties.getProperty(key);
         System.out.println(pathArchivo);
-        byte[] bytes = file.getBytes();
-
-        OutputStream outputStream = new FileOutputStream(
+        //mc
+        BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()));
+        String linea = reader.readLine();
+        // salida
+        PrintWriter writer = new PrintWriter(new File(pathArchivo));
+        while (linea != null){
+            linea = linea.replace('-', '/');
+            writer.println(linea);
+            linea = reader.readLine();
+        }
+        writer.close();
+                // fin mc
+                
+        //byte[] bytes = file.getBytes();
+/*        OutputStream outputStream = new FileOutputStream(
                 new File(pathArchivo));
 
         outputStream.write(bytes);
 
         outputStream.close();
-
+*/
     }
 //______________________________________________________________________________
 
@@ -147,7 +159,16 @@ public class ControladorRealizarETL implements Serializable {
     private boolean realizarETL(FabricaManejadorETL tipo) throws IOException, Exception {
         try {
             ManejadorETL manejadorETL = tipo.crear();
-            int ret = manejadorETL.realizar().length;
+            
+            
+            String[][] resultado = manejadorETL.realizar();
+            int ret = resultado.length;
+/*            for (int i=0; i<ret; i++){
+                for (int j =0; j< resultado[i].length; j++){
+                    System.out.println("MC - "+resultado[i][j]);
+                }
+            }
+  */          
             return ret == 1;
         } catch (Exception e) {
             throw e;
