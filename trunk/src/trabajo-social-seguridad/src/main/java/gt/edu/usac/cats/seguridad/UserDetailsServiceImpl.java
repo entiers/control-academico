@@ -7,6 +7,8 @@
 package gt.edu.usac.cats.seguridad;
 
 import gt.edu.usac.cats.dao.DaoGeneral;
+import gt.edu.usac.cats.dominio.Catedratico;
+import gt.edu.usac.cats.dominio.Estudiante;
 import gt.edu.usac.cats.dominio.Rol;
 import gt.edu.usac.cats.dominio.Usuario;
 import java.util.ArrayList;
@@ -57,6 +59,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String nombreUsuario) throws UsernameNotFoundException, DataAccessException {
         // se busca el usuario por su nombre
         Usuario usuario = this.getUsuarioPorNombreUsuario(nombreUsuario);
+        
 
         // el usuario no existe
         if(usuario == null)
@@ -69,7 +72,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         ArrayList<GrantedAuthority> authorities = this.getAuthorities(roles);
 
         // se retornan las credenciales y roles del usuario
-        return new UserDetailsImpl(usuario, authorities);
+        
+        UserDetailsImpl udi = new UserDetailsImpl(usuario, authorities);
+        udi = this.asignarNombreIdUsuario(udi);
+        return udi;
     }
 //______________________________________________________________________________
     /**
@@ -89,6 +95,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         // se trata de obtener el usuario, si el usuario no existe
         // se retorna null
+        
         return this.daoGeneralImpl.uniqueResult(criteria);
     }
 //______________________________________________________________________________
@@ -133,5 +140,32 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         }
 
         return authorities;
+    }
+    
+    // obtener el nombre del usuario e identificacion, dependiendo si es persona, estudiante o catedratico
+        private UserDetailsImpl asignarNombreIdUsuario(UserDetailsImpl usr) throws DataAccessException {
+        // verifica si es Persona
+        if (usr.getUsuario().getPersona() == null){
+            DetachedCriteria criteria = DetachedCriteria.forClass(Estudiante.class);
+            criteria.add(Restrictions.eq("carne", usr.getUsername()));
+            Estudiante est = (Estudiante)this.daoGeneralImpl.uniqueResult(criteria);  
+            usr.setNombreCompleto(est.getNombre());
+            usr.setIdentificacion(est.getCarne());
+            if (est == null){ // no es estudiante, debe ser catedratico
+                criteria = DetachedCriteria.forClass(Catedratico.class);
+                criteria.add(Restrictions.eq("codigo", usr.getUsername()));
+                Catedratico cat = (Catedratico)this.daoGeneralImpl.uniqueResult(criteria);  
+                usr.setNombreCompleto(cat.getNombre()+" "+cat.getApellido());
+                usr.setIdentificacion(cat.getCodigo());
+            }
+           
+        }else{
+            usr.setNombreCompleto(usr.getUsuario().getPersona().getNombre());
+            usr.setIdentificacion(usr.getUsuario().getNombreUsuario());
+        }
+            
+
+        // se devuelve el objeto con la informacion adicional
+         return usr;
     }
 }
