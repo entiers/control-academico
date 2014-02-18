@@ -127,6 +127,6 @@
             <p class="art-page-footer">&nbsp;</p>
         </div>
                                             
-                                            pruebita
+                                            
     </body>
 </html>
