@@ -364,4 +364,16 @@
             </li>
         </sec:authorize>
     </ul>
+        <sec:authorize access="isAuthenticated()">
+        <ul class="art-menu">
+         
+                <li>
+                    Usuario: <sec:authentication property="principal.nombreCompleto"/>-
+                <sec:authentication property="principal.identificacion"/>
+                </li>   
+
+        </ul>
+                </sec:authorize>            
+        
+        
 </div>
