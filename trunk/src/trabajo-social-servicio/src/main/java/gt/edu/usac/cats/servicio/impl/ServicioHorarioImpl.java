@@ -7,6 +7,7 @@
 package gt.edu.usac.cats.servicio.impl;
 
 import gt.edu.usac.cats.dominio.AsignacionCursoPensum;
+import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
 import gt.edu.usac.cats.dominio.Catedratico;
 import gt.edu.usac.cats.dominio.Horario;
 import gt.edu.usac.cats.dominio.HorarioDia;
@@ -145,8 +146,10 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
         criteria.add(Restrictions.and(
                 Restrictions.eq("asignacionCursoPensum", asignacionCursoPensum),
                 Restrictions.and(Restrictions.eq("semestre", semestre),
-                                 Restrictions.eq("seccion",seccion)))
+                Restrictions.and(Restrictions.eq("habilitado", true),
+                                 Restrictions.eq("seccion",seccion))))
                 );
+       
 
         return this.daoGeneralImpl.find(criteria);
     }
@@ -173,6 +176,7 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
         builder.append(" select horario from Horario as horario ")
                .append(" where horario.idHorario <> :idHorario" )
                .append(" and horario.asignacionCursoPensum = :asignacionCursoPensum ")
+               .append(" and horario.habilitado = true")
                .append(" and horario.semestre = :semestre ");
            
         Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
@@ -199,7 +203,7 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
 
     @Override
     public boolean existeTraslape(List<Horario> listadoHorario) throws DataAccessException {
-
+        System.out.println("ServicioHorario.existeTraslape.listadoHorario "+listadoHorario.size());
         //Validando que traslape de horario
         for(Horario h1 : listadoHorario){
             for(Horario h2 : listadoHorario){
@@ -310,7 +314,7 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
                .append("    select count(*) from DetalleAsignacion det")
                .append("    where det.horario = horario")
                .append(" ) order by horario.asignacionCursoPensum.curso.nombre");
-
+        System.out.println("*MC* query:"+builder.toString());
         Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
         query.setParameter("asignacionCursoPensum", asignacionCursoPensum);
         query.setParameter("semestre", semestre);
@@ -326,7 +330,9 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
         builder.append(" select horario from Horario as horario")
                .append(" inner join horario.asignacionCatedraticoHorarios aCH")
                .append(" where horario.semestre = :semestre")
+               .append(" and horario.habilitado = true")
                .append(" and horario.tipo =:tipoHorario");
+        
             if (maestro){
                builder.append(" and horario.maestro = true ");
            }
@@ -348,7 +354,8 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
          System.out.println("&&& tipoHorario: "+tipoHorario.getId());
         builder.append(" select horario from Horario as horario")
                .append(" where horario.semestre = :semestre")
-               .append(" and horario.tipo =:tipoHorario ");
+               .append(" and horario.tipo =:tipoHorario ")
+               .append(" and horario.habilitado = true ");
         if (maestro){
             builder.append(" and horario.maestro = true");
         }
@@ -363,33 +370,23 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
     }
     @Override
     public List<Horario> getHorarioConNotas(Semestre semestre, TipoHorario tipoHorario) throws DataAccessException {
-        StringBuilder builder = new StringBuilder();
-         System.out.println("&&& semestre: "+semestre.getIdSemestre());
-         System.out.println("&&& tipoHorario: "+tipoHorario.getId());
-        builder.append(" select horario from Horario as horario")
-               .append(" where horario.semestre = :semestre")
-               .append(" and horario.tipo =:tipoHorario ")
-               .append(" and exists (from DetalleAsignacion da where da.horario.idHorario = horario.idHorario)")
-               .append(" order by horario.asignacionCursoPensum.curso.idCurso, horario.seccion");
-        
-        Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
-        query.setParameter("semestre", semestre);
-        query.setParameter("tipoHorario", tipoHorario);
-
-        return query.list();
+         return this.getHorarioConNotas(semestre, tipoHorario, false);
     }
 
+    // se usa en la asignacion cursos
     @Override
     public List<Horario> getSeccionesHorario(AsignacionCursoPensum asignacionCursoPensum, Semestre semestre, TipoHorario tipoHorario) throws DataAccessException {
         DetachedCriteria criteria = DetachedCriteria.forClass(Horario.class);
         criteria.add(Restrictions.eq("semestre", semestre));
         criteria.add(Restrictions.eq("tipo", tipoHorario));
+        criteria.add(Restrictions.eq("habilitado",true));
         criteria.add(Restrictions.eq("asignacionCursoPensum", asignacionCursoPensum));
         //criteria.setProjection(Projections.groupProperty("seccion"));
         
         return this.daoGeneralImpl.find(criteria);
     }
 
+    // se usa en la asignacion semestre
     @Override
     public List<Horario> getHorariosPorSecciones(String seccion, 
     AsignacionCursoPensum asignacionCursoPensum, 
@@ -398,10 +395,49 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
         criteria.add(Restrictions.eq("seccion", seccion));
         criteria.add(Restrictions.eq("semestre", semestre));
         criteria.add(Restrictions.eq("tipo", tipoHorario));
+        criteria.add(Restrictions.eq("habilitado", true));
         criteria.add(Restrictions.eq("asignacionCursoPensum", asignacionCursoPensum));
         
         
         return this.daoGeneralImpl.find(criteria);
+    }
+
+    @Override
+    public List<Horario> getHorariosAsignados(AsignacionEstudianteCarrera aec, Semestre semestre, 
+    TipoHorario tipoHorario) throws DataAccessException {
+      StringBuilder builder = new StringBuilder();
+        builder.append(" select horario from DetalleAsignacion as da")
+                .append(" where da.horario.semestre = :semestre")
+                .append(" and da.horario.tipo = :tipoHorario")
+                .append(" and da.asignacion in (")
+               .append(" from Asignacion as a  ")
+               .append(" where a.asignacionEstudianteCarrera = :asignacionEstudianteCarrera) ");
+
+        Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
+        query.setParameter("semestre", semestre);
+            query.setParameter("tipoHorario", tipoHorario);
+         query.setParameter("asignacionEstudianteCarrera", aec);
+         
+        return query.list();
+    }
+
+    @Override
+    public List<Horario> getHorarioConNotas(Semestre semestre, TipoHorario tipoHorario, boolean maestro) throws DataAccessException {
+        StringBuilder builder = new StringBuilder();
+         System.out.println("&&& semestre: "+semestre.getIdSemestre());
+         System.out.println("&&& tipoHorario: "+tipoHorario.getId());
+        builder.append(" select horario from Horario as horario")
+               .append(" where horario.semestre = :semestre")
+               .append(" and horario.tipo =:tipoHorario ")
+               .append(" and horario.maestro = ").append(maestro)
+               .append(" and exists (from DetalleAsignacion da where da.horario.idHorario = horario.idHorario)")
+               .append(" order by horario.asignacionCursoPensum.curso.idCurso, horario.seccion");
+        
+        Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
+        query.setParameter("semestre", semestre);
+        query.setParameter("tipoHorario", tipoHorario);
+
+        return query.list();
     }
 
    

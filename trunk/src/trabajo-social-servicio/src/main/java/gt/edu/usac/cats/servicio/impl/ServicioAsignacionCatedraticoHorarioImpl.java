@@ -61,6 +61,7 @@ public class ServicioAsignacionCatedraticoHorarioImpl extends ServicioGeneralImp
      * @param tipoHorario pojo del tipo {@link TipoHorario}
      * @return List Listado de horarios
      * @throws DataAccessException
+     * Usado en el compo de la AsignacionCatedraticoHorario
      */    
     @Override
     public List<Horario> getHorarioDiponibleCatedratico(Semestre semestre, TipoHorario tipoHorario) throws DataAccessException {
@@ -69,6 +70,8 @@ public class ServicioAsignacionCatedraticoHorarioImpl extends ServicioGeneralImp
         builder.append(" select horario from Horario as horario")
                .append(" where horario.semestre = :semestre")
                .append(" and horario.tipo =:tipoHorario ")
+               .append(" and horario.habilitado = true ")
+               .append(" and horario.maestro = true ")
                .append(" and not exists elements (horario.asignacionCatedraticoHorarios) ")
                .append(" order by horario.asignacionCursoPensum.curso.nombre");
         

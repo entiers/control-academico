@@ -9,9 +9,11 @@ import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
 import gt.edu.usac.cats.dominio.Carrera;
 import gt.edu.usac.cats.dominio.Estudiante;
 import gt.edu.usac.cats.dominio.HistorialAsignacionEstudianteCarrera;
+import gt.edu.usac.cats.dominio.PensumEstudianteCarrera;
 import gt.edu.usac.cats.servicio.ServicioAsignacionEstudianteCarrera;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Set;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.criterion.DetachedCriteria;
@@ -144,7 +146,12 @@ public class ServicioAsignacionEstudianteCarreraImpl extends ServicioGeneralImpl
             , HistorialAsignacionEstudianteCarrera historialAsignacionEstudianteCarrera)
         throws DataIntegrityViolationException, DataAccessException {
       
-      
+        System.out.println("MC test:===========");
+        Set<PensumEstudianteCarrera> carreras = asignacionEstudianteCarrera.getPensumEstudianteCarreras();
+        for (PensumEstudianteCarrera c:carreras){
+            System.out.println(">>>> == "+c.isValido());
+        }
+        
         this.daoGeneralImpl.save(asignacionEstudianteCarrera);
 
         historialAsignacionEstudianteCarrera.setAsignacionEstudianteCarrera(asignacionEstudianteCarrera);
