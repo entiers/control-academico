@@ -23,7 +23,7 @@ import org.hibernate.validator.constraints.NotEmpty;
  */
 public class WrapperSalon implements Serializable{
 //______________________________________________________________________________
-    @Max(value = 50, message="{validacion.maximo}")
+    @Max(value = 300, message="{validacion.maximo}")
     @Min(value = 1, message="{validacion.minimo}")
     private short capacidad;
 //______________________________________________________________________________
@@ -31,7 +31,7 @@ public class WrapperSalon implements Serializable{
     @Size(  max = 3, message = "{validacion.caracteresMaximos}")
     private String edificio;
 //______________________________________________________________________________
-    @Max(value = 50, message="{validacion.maximo}")
+    @Max(value = 300, message="{validacion.maximo}")
     @Min(value = 1, message="{validacion.minimo}")
     private short numero;
 //______________________________________________________________________________

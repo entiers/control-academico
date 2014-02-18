@@ -22,6 +22,8 @@ public class WrapperIngresoNota implements Serializable {
     private List listLaboratorio;
 //______________________________________________________________________________
     private List listFinal;
+    
+    private List notaFinal; //nota final zona mas final
 //______________________________________________________________________________
     private Boolean oficializar;
     
@@ -38,6 +40,7 @@ public class WrapperIngresoNota implements Serializable {
         this.listLaboratorio = new ArrayList();
         this.listZona = new ArrayList();
         listExcusa = new ArrayList();
+        this.notaFinal  = new ArrayList();
         
         //initListExcusa();
         linkValue="";
@@ -130,5 +133,19 @@ public class WrapperIngresoNota implements Serializable {
      */
     public void setPagina(Integer pagina) {
         this.pagina = pagina;
+    }
+
+    /**
+     * @return the listNota
+     */
+    public List getNotaFinal() {
+        return notaFinal;
+    }
+
+    /**
+     * @param listNota the listNota to set
+     */
+    public void setNotaFinal(List listNota) {
+        this.notaFinal = listNota;
     }
 }

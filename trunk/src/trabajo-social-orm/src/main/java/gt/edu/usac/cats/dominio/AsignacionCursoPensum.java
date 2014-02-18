@@ -62,6 +62,7 @@ public class AsignacionCursoPensum implements java.io.Serializable {
 
     public AsignacionCursoPensum() {
         this.idAsignacionCursoPensum = 0;
+        this.notaAprobacion = 0;
     }
 
     @Id
@@ -87,7 +88,7 @@ public class AsignacionCursoPensum implements java.io.Serializable {
         this.curso = curso;
     }
 
-    @ManyToOne(cascade= CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "id_pensum", nullable = false)
     @JsonIgnore
     public Pensum getPensum() {
@@ -271,14 +272,14 @@ public class AsignacionCursoPensum implements java.io.Serializable {
         return builder.toString();
     }
     
-//    @Column(name = "nota_aprobacion", nullable = false)
-//    public short getNotaAprobacion() {
-//        return this.notaAprobacion;
-//    }
-//
-//    public void setNotaAprobacion(short notaAprobacion) {
-//        this.zona = notaAprobacion;
-//    }
+    @Column(name = "nota_aprobacion", nullable = false)
+    public short getNotaAprobacion() {
+        return this.notaAprobacion;
+    }
+
+    public void setNotaAprobacion(short notaAprobacion) {
+        this.zona = notaAprobacion;
+    }
 }
 
 

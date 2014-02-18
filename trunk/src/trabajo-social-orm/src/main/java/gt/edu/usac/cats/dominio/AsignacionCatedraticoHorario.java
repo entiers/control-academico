@@ -49,7 +49,8 @@ public class AsignacionCatedraticoHorario implements java.io.Serializable {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) 
+    //@GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(
         name = "id_asignacion_catedratico_horario",
         unique = true,
