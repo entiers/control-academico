@@ -20,6 +20,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class UserDetailsImpl implements Serializable, UserDetails {
     /** Mantiene toda la informacion del usuario */
     private Usuario usuario;
+    private String nombreCompleto;
+    private String identificacion;
 
     /** Contiene los roles asignados al usuario */
     private Collection<GrantedAuthority> authorities;
@@ -116,6 +118,34 @@ public class UserDetailsImpl implements Serializable, UserDetails {
      */
     public Usuario getUsuario() {
         return this.usuario;
+    }
+
+    /**
+     * @return the nombreCompleto
+     */
+    public String getNombreCompleto() {
+        return nombreCompleto;
+    }
+
+    /**
+     * @param nombreCompleto the nombreCompleto to set
+     */
+    public void setNombreCompleto(String nombreCompleto) {
+        this.nombreCompleto = nombreCompleto;
+    }
+
+    /**
+     * @return the identificacion
+     */
+    public String getIdentificacion() {
+        return identificacion;
+    }
+
+    /**
+     * @param identificacion the identificacion to set
+     */
+    public void setIdentificacion(String identificacion) {
+        this.identificacion = identificacion;
     }
 
 }
