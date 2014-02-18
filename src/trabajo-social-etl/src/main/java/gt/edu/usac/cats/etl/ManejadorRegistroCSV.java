@@ -43,9 +43,9 @@ public class ManejadorRegistroCSV extends ManejadorETL {
         try{
             this.enviarEmails();
         }catch(FileNotFoundException e){
-
+            e.printStackTrace();
         }catch(IOException e){
-
+            e.printStackTrace();
         }
         return ret;
     }
@@ -73,6 +73,8 @@ public class ManejadorRegistroCSV extends ManejadorETL {
             String nombre = reader.get("nombre");
             String email = reader.get("email");
             String password = reader.get("password");
+            
+          
 
             StringBuilder builder = new StringBuilder();
 
