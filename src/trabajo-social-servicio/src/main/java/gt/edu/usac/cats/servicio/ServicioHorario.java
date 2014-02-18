@@ -6,6 +6,7 @@
 package gt.edu.usac.cats.servicio;
 
 import gt.edu.usac.cats.dominio.AsignacionCursoPensum;
+import gt.edu.usac.cats.dominio.AsignacionEstudianteCarrera;
 import gt.edu.usac.cats.dominio.Catedratico;
 import gt.edu.usac.cats.dominio.Curso;
 import gt.edu.usac.cats.dominio.Horario;
@@ -13,6 +14,7 @@ import gt.edu.usac.cats.dominio.Salon;
 import gt.edu.usac.cats.dominio.Semestre;
 import gt.edu.usac.cats.enums.TipoHorario;
 import java.util.List;
+import org.hibernate.HibernateException;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 
@@ -220,7 +222,13 @@ public interface ServicioHorario extends ServicioGeneral {
 
      public List<Horario> getHorarioConNotas(Semestre semestre, TipoHorario tipoHorario) 
              throws DataAccessException;
+          public List<Horario> getHorarioConNotas(Semestre semestre, TipoHorario tipoHorario, boolean maestro) 
+             throws DataAccessException;
      
       public List<Horario> getHorario(AsignacionCursoPensum asignacionCursoPensum, Semestre semestre, String seccion)
+            throws DataAccessException;
+      //**Obtiene los horarios asignados al estudiantes en un semestre especifico basado en un curso pensum*/
+      public List<Horario> getHorariosAsignados(AsignacionEstudianteCarrera asignacionEstudianteCarrera, Semestre semestre,
+              TipoHorario tipo)
             throws DataAccessException;
 }

@@ -58,6 +58,7 @@ public class EmailSender {
         javaMailSender.setUsername(properties.getProperty("mail.smtp.user"));
         javaMailSender.setJavaMailProperties(properties);
 
+        System.out.println("MC *** "+properties.getProperty("mail.smtp.user"));
         // se crea el mensaje de correo electronico
         MimeMessage loMimeMsg = javaMailSender.createMimeMessage();
 

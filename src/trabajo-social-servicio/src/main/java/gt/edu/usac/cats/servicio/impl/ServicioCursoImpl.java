@@ -98,6 +98,10 @@ public class ServicioCursoImpl extends ServicioGeneralImpl implements ServicioCu
                .append(" where det.horario = horario")
                .append(")");
 
+        System.out.println("Query");
+        System.out.println("Semestre: "+semestre.getIdSemestre());
+        System.out.println("Tipo Horario: "+tipoHorario.getId());
+        System.out.println("Pensum: "+pensum.getIdPensum());
         Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
         query.setParameter("pensum", pensum);
         query.setParameter("tipoHorario", tipoHorario);
