@@ -200,6 +200,7 @@ public class ControladorAgregarEstudiante extends ControladorEstudianteAbstracto
         try {
             this.emailSenderVelocity.enviarCorreo("Informe de registo de estudiante",
                     estudiante.getEmail(), FabricaTemplateVelocity.NUEVO_USUARIO, nuevoUsuario);
+            System.out.println("envia correo : "+estudiante.getEmail());
         } catch (IOException ex) {
             log.error(Mensajes.IO_EXCEPTION, ex);
         } catch (MessagingException ex) {

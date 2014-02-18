@@ -196,7 +196,7 @@ public class ControladorAsignacionExtemporanea extends ControladorAbstractoAsign
         this.listaAsignacionCursoPensum = this.servicioCursoImpl.getCursoAsignacion(pensumEstudianteCarrera.getPensum(),
                 this.semestre, datosAsignacion.getTipoHorario());
 
-        System.out.println("**** listaAsignacionCursoPensum.size"+this.listaAsignacionCursoPensum.size());
+        System.out.println("**** listaAsignacionCursoPensum.size: "+this.listaAsignacionCursoPensum.size());
         if (this.listaAsignacionCursoPensum.isEmpty()) {
             modelo.addAttribute("wrapperAsignacionCursosExtemporaneas", wrapperAsignacionCursosExtemporaneas);
             modelo.addAttribute("listaTipoHorario", TipoHorario.values());
@@ -317,12 +317,13 @@ public class ControladorAsignacionExtemporanea extends ControladorAbstractoAsign
 
               
             //Validando traslape de cursos recien agregados
+            System.out.println("1.Size de listaHorarioAsignacion :"+listaHorarioAsignacion.size());
             if (servicioHorarioImpl.existeTraslape(listaHorarioAsignacion)
                     & (datosAsignacion.getTipoHorario() == TipoHorario.SEMESTRE | datosAsignacion.getTipoHorario() == TipoHorario.VACACIONES)) {
                 RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.existeTraslape", false);
                 return "asignacion/realizarAsignacionExtemporanea";
             }
-
+            System.out.println("2.No hay traslape :");
             asignacionEstudianteCarrera = servicioGeneralImpl.cargarEntidadPorID(AsignacionEstudianteCarrera.class, datosAsignacion.getIdAsignacionEstudianteCarrera());
            // validando traslape con cursos asignados en el mismo semestre pero en diferente transaccion
             List<Horario> listaHorariosOtrasTrx = servicioHorarioImpl.getHorariosAsignados(asignacionEstudianteCarrera, semestre, datosAsignacion.getTipoHorario());
@@ -355,11 +356,11 @@ public class ControladorAsignacionExtemporanea extends ControladorAbstractoAsign
                     //Validando prerrequisitos por curso
                     acp = (AsignacionCursoPensum) servicioAsignacionCursoPensumImpl.getListadoAsignacionCursoPensum(horario.getAsignacionCursoPensum(), pensum).get(0);
 //MC VALIDA PRERREQUISITO
-//                    if (!servicioCursoAprobadoImpl.getCursoPrerrequisitoPendiente(asignacionEstudianteCarrera, horario.getAsignacionCursoPensum()).isEmpty()
-//                           | servicioCursoAprobadoImpl.getCreditosAprobados(asignacionEstudianteCarrera) < acp.getCreditosPrerrequisito()) {
-//                        RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.prerrequisitoPendiente", false);
-//                        return "asignacion/realizarAsignacionExtemporanea";
-//                    }
+                    if (!servicioCursoAprobadoImpl.getCursoPrerrequisitoPendiente(asignacionEstudianteCarrera, horario.getAsignacionCursoPensum()).isEmpty()
+                           | servicioCursoAprobadoImpl.getCreditosAprobados(asignacionEstudianteCarrera) < acp.getCreditosPrerrequisito()) {
+                        RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.prerrequisitoPendiente", false);
+                        return "asignacion/realizarAsignacionExtemporanea";
+                    }
 
                     //Validando asignaciones en semestre actual
                     if (!servicioDetalleAsignacionImpl.getListadoDetalleAsignacion(horario.getAsignacionCursoPensum(), semestre, asignacionEstudianteCarrera, datosAsignacion.getTipoAsignacion()).isEmpty()) {

@@ -163,8 +163,9 @@ public class ControladorReporteAsignacionesYNotasCurso implements Serializable {
                     getHorario(this.semestre, this.catedratico, TipoHorario.SEMESTRE, true));
             }
             else {
+               
                 modelo.addAttribute("listadoHorario", servicioHorarioImpl.
-                    getHorarioConNotas(this.semestre, TipoHorario.SEMESTRE));
+                    getHorarioConNotas(this.semestre, TipoHorario.SEMESTRE, true));
             }
         }
         catch(Exception ex){
