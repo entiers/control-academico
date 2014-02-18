@@ -213,6 +213,7 @@
             <artifactId>jackson-mapper-asl</artifactId>
             <version>1.9.12</version>
         </dependency>
+
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
@@ -494,7 +495,7 @@
             <version>1.6.11</version>
         </dependency>
         
-        <!-- ······�······ dependencias necesarias para JUNIT ·············· -->
+        <!-- ······�······ dependencias necesarias para JUNIT ·············· -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
