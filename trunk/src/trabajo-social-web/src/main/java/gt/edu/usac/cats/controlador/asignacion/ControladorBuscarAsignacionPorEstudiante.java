@@ -71,7 +71,7 @@ public class ControladorBuscarAsignacionPorEstudiante implements Serializable{
 //  _____________________________________________________________________________
     @Resource
     private ServicioAsignacion servicioAsignacionImpl;
-//  _____________________________________________________________________________
+//  muestra el formulario para realizar la busqueda por estudiante. mc.
     @RequestMapping(
         value  = "buscarAsignacionPorEstudiante.htm",
         method = RequestMethod.GET
@@ -102,7 +102,7 @@ public class ControladorBuscarAsignacionPorEstudiante implements Serializable{
         return "asignacion/buscarAsignacionPorEstudiante";
     }
 
-    //  _____________________________________________________________________________
+    //  realiza la accion de buscar la asignacion por estudiante. mc.
     @RequestMapping(
         value  = "buscarAsignacionPorEstudiante.htm",
         method = RequestMethod.POST

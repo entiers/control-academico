@@ -161,8 +161,19 @@ public class ControladorAsignacionSemestre extends ControladorAbstractoAsignacio
         try {
 
             //Validando traslape de cursos
+            
             if (servicioHorarioImpl.existeTraslape(listaHorarioAsignacion)) {
                 System.out.println("Existe traslape");
+                RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.existeTraslape", false);
+                return "asignacion/asignacionSemestre";
+            }
+             asignacionEstudianteCarrera = servicioGeneralImpl.cargarEntidadPorID(AsignacionEstudianteCarrera.class, datosAsignacion.getIdAsignacionEstudianteCarrera());
+             
+           // validando traslape con cursos asignados en el mismo semestre pero en diferente transaccion
+            List<Horario> listaHorariosOtrasTrx = servicioHorarioImpl.getHorariosAsignados(asignacionEstudianteCarrera, semestre, datosAsignacion.getTipoHorario());
+            listaHorariosOtrasTrx.addAll(listaHorarioAsignacion);
+            if (servicioHorarioImpl.existeTraslape(listaHorariosOtrasTrx)
+                    & (datosAsignacion.getTipoHorario() == TipoHorario.SEMESTRE | datosAsignacion.getTipoHorario() == TipoHorario.VACACIONES)) {
                 RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.existeTraslape", false);
                 return "asignacion/asignacionSemestre";
             }
