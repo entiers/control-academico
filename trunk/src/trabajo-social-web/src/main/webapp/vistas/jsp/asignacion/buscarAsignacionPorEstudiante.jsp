@@ -49,16 +49,19 @@
                             <table align="center">
                                 <thead>
                                     <tr>
-                                        <th><fmt:message key="asignacion.transaccion"/></th>
-                                        <th><fmt:message key="asignacion.fecha"/></th>
-                                        <th><fmt:message key="asignacion.detalle"/></th>
-                                        <th><fmt:message key="asignacion.detalle"/></th>
+                                        <th>Codigo</th>
+                                        <th>Nombre Curso</th>
+                                        <th>Fecha de Asignacion</th>
+                                        <th>Detalle</th>
+                                        <th>Boleta</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <c:forEach items="${listadoAsignacion}" var="asignacion">
+                                        <c:forEach items="${asignacion.detalleAsignacions}" var="detalle">
                                         <tr>
-                                            <td>${asignacion.transaccion}</td>
+                                            <td>${detalle.horario.asignacionCursoPensum.curso.codigo}</td>
+                                            <td>${detalle.horario.asignacionCursoPensum.curso.nombre}</td>
                                             <td>${asignacion.fecha}</td>
                                             <td align="center">
                                                 <a href="verDetalleAsignacion.htm?idAsignacion=${asignacion.idAsignacion}"><fmt:message key="asignacion.verDetalle"/></a>
@@ -75,6 +78,7 @@
                                                 </form:form>
                                             </td>
                                         </tr>
+                                        </c:forEach>
                                     </c:forEach>
                                 </tbody>
                             </table>

@@ -138,7 +138,8 @@
                                     <td><fmt:formatDate pattern="HH:mm" value="${detalleAsignacion.horario.horaInicio}" /></td>
                                     <td><fmt:formatDate pattern="HH:mm" value="${detalleAsignacion.horario.horaFin}" /></td>
                                     <td>${detalleAsignacion.horario.horarioDiasAsString}</td>
-                                    <c:choose>
+                                    
+                      <!--               <c:choose>
                                         <c:when test="${periodoAsignacion}">
                                             <td>
                                                 <div id="divQuitarPopup${detalleAsignacion.idDetalleAsignacion}" 
@@ -156,6 +157,7 @@
                                             </td>
                                         </c:when>
                                     </c:choose>
+                                -->
                                 </tr>
                             </c:forEach>
                         </tbody>
