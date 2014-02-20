@@ -53,20 +53,20 @@ public class ServicioAsignacionImpl extends ServicioGeneralImpl implements Servi
     }
 
     @Override
-    public List<Asignacion> buscarAsignacionPorEstudiante(Estudiante estudiante,
+    public List<DetalleAsignacion> buscarAsignacionPorEstudiante(Estudiante estudiante,
                                                           TipoAsignacion tipoAsignacion,
                                                           Integer anio) throws DataAccessException {
         StringBuilder sql = new StringBuilder();
         sql.append("select asig from Asignacion as asig ")
            .append("where asig.asignacionEstudianteCarrera.estudiante = :estudiante ")
            .append("and asig.tipoAsignacion = :tipoAsignacion ")
-           .append("and year(asig.fecha)=:anio");
+           .append("and year(asig.fecha)=:anio order by asig");
 
         Query query = this.daoGeneralImpl.getSesion().createQuery(sql.toString());
         query.setParameter("estudiante", estudiante);
         query.setParameter("tipoAsignacion",tipoAsignacion);
         query.setParameter("anio", anio);
-
+        
         return query.list();
     }
 

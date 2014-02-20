@@ -207,6 +207,9 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
         //Validando que traslape de horario
         for(Horario h1 : listadoHorario){
             for(Horario h2 : listadoHorario){
+                System.out.println(h1.getHoraInicio()+" - "+h1.getHoraFin());
+                System.out.println(h2.getHoraInicio()+" - "+h2.getHoraFin());
+                System.out.println();
                 if(h1.getIdHorario()!=h2.getIdHorario()){
                     if((h2.getHoraFin().compareTo(h1.getHoraInicio()) > 0 & h2.getHoraFin().compareTo(h1.getHoraFin()) <= 0)
                         | (h2.getHoraInicio().compareTo(h1.getHoraFin()) < 0 & h2.getHoraInicio().compareTo(h1.getHoraInicio()) >= 0)
