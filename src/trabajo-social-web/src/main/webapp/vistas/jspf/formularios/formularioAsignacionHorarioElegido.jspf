@@ -29,6 +29,7 @@
                     <fmt:formatDate pattern="HH:mm" value="${horario.horaFin}" />
                 </td>
                 <td><c:out value="${horario.horarioDiasAsString}" /></td>
+               
             </tr>
         </c:forEach>
     </tbody>

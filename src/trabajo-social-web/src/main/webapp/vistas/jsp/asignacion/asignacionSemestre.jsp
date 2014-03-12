@@ -16,6 +16,60 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
         <title><fmt:message key="miscursos.asignacionCursos.titulo"/></title>
+         <script type="text/javascript">
+            $(function (){
+                $('div[name="divQuitarPopup"]').dialog({
+                    autoOpen: false,
+                    modal: true,
+                    width: 550,
+                    buttons: {
+                        "<fmt:message key="btnSalir" />" : function() {                    
+                            $(this).dialog('close');
+                        },
+                        "<fmt:message key="btnAceptar" />" : function() {
+                            $(this).children("form").submit();
+                            $(this).dialog('close');
+                        }
+                    },
+                    close : function(){
+                        $(this).dialog('close');
+                    }
+                });
+                
+                $('#divConfirmPopup').dialog({
+                    autoOpen: false,
+                    modal: true,
+                    width: 550,
+                    buttons: {
+                        "<fmt:message key="btnSalir" />" : function() {                    
+                            $(this).dialog('close');
+                        },
+                        "<fmt:message key="btnAceptar" />" : function() {
+                            $("#frmEliminarDetalleAsignacion").submit();
+                            $(this).dialog('close');
+                        }
+                    },
+                    close : function(){
+                        $(this).dialog('close');
+                    }
+                });
+                
+                $('#divOperacionExitosa').dialog({
+                    autoOpen: true,
+                    modal: true,
+                    width: 550,
+                    buttons: {
+                        "<fmt:message key="btnAceptar" />" : function() {                            
+                            $(this).dialog('close');
+                        }
+                    },
+                    close : function(){
+                        window.location.href="buscarAsignacionPorEstudiante.htm";
+                        $(this).dialog('close');
+                    }
+                });
+            });
+        </script>
         <script type="text/javascript">
             $(function() {
                 // se crea y configura el panel popup que muestra los

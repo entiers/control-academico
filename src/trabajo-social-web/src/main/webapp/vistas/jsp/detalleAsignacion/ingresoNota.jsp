@@ -20,6 +20,12 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script type="text/javascript">
             $(document).ready(function() {
+              $("#fechaNotas").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd-mm-yy'
+                });    
+            
                 //Cambio combo curso
                 $('#slcTipoHorario').change(function() {
                     getHorarios($(this).val());
@@ -70,7 +76,7 @@
                 var isOk = true;
                 $("#hdOficializar").val(value);
                 $('#frmGuardar input:text').each(function(index,item){                    
-                    if(isNaN(item.value)){
+                    if(index!==0 && isNaN(item.value)){
                         alert('<fmt:message key="ingresoNota.validaciones.notasNumericas"/>');
                         item.focus();
                         isOk = false;
@@ -155,6 +161,11 @@
         
         <c:if test="${mostrarEstudiantes}">
             <form:form action="guardarOficializar.htm" id="frmGuardar" method="POST" modelAttribute="wrapperIngresoNota" >
+               <div id="divCampos">
+                    <form:label for="fechaNotas" path="fechaNotas">Fecha Acta*:</form:label>
+                    <form:input path="fechaNotas" cssStyle="width:250px;" />
+                    <form:errors path="fechaNotas" cssClass="claseError" />
+                </div>
                 <%@include file="../../jspf/formularios/formularioIngresoNotas.jspf" %>
             </form:form>
         </c:if>

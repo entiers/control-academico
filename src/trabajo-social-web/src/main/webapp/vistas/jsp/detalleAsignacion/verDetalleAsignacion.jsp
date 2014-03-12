@@ -139,7 +139,7 @@
                                     <td><fmt:formatDate pattern="HH:mm" value="${detalleAsignacion.horario.horaFin}" /></td>
                                     <td>${detalleAsignacion.horario.horarioDiasAsString}</td>
                                     
-                      <!--               <c:choose>
+                                   <c:choose>
                                         <c:when test="${periodoAsignacion}">
                                             <td>
                                                 <div id="divQuitarPopup${detalleAsignacion.idDetalleAsignacion}" 
@@ -157,7 +157,7 @@
                                             </td>
                                         </c:when>
                                     </c:choose>
-                                -->
+                           
                                 </tr>
                             </c:forEach>
                         </tbody>
@@ -172,9 +172,14 @@
                     </form:form>
                 </div>
                 <a href="buscarAsignacionPorEstudiante.htm"><fmt:message key="link.regresar"/></a> 
-                <input type="button" 
-                   value="<fmt:message key='ingresoNota.btnGuardar'/>"
-                   onclick="$('#divConfirmPopup').dialog('open')"/>
+                 <c:choose>
+                     <c:when test="${periodoAsignacion}">
+                        <input type="button" 
+                           value="<fmt:message key='ingresoNota.btnGuardar'/>"
+                           onclick="$('#divConfirmPopup').dialog('open')"/>                         
+                     </c:when>
+                 </c:choose>
+
                 <c:choose>
                     <c:when test="${operacionExitosa}">                    
                         <div id="divOperacionExitosa"

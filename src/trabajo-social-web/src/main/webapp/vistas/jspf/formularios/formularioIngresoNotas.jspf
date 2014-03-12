@@ -31,6 +31,8 @@
                 }
             }
         </script>
+        
+     
 <c:choose>
     <c:when test="${not empty listadoDetalleAsignacion}">
         <fieldset>
