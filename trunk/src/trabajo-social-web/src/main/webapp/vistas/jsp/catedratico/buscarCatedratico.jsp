@@ -64,7 +64,7 @@
         <form method="post" name="formularioTabla" action="">
             <fieldset>
                 <legend><fmt:message key="buscarCatedratico.tituloListado"/></legend>
-                <table id="tablaCatedraticos" class="ui-widget ui-widget-content">
+                <table id="tablaCatedraticos" class="ui-widget ui-widget-content" style="font-size: small">
                     <thead>
                         <tr class="ui-widget-header ">
                             <th><fmt:message key="agregarCatedratico.codigo"/></th>

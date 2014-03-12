@@ -52,6 +52,7 @@
                                         <th>Codigo</th>
                                         <th>Nombre Curso</th>
                                         <th>Fecha de Asignacion</th>
+                                        <th>Secci&oacute;n</th>
                                         <th>Detalle</th>
                                         <th>Boleta</th>
                                     </tr>
@@ -63,6 +64,7 @@
                                             <td>${detalle.horario.asignacionCursoPensum.curso.codigo}</td>
                                             <td>${detalle.horario.asignacionCursoPensum.curso.nombre}</td>
                                             <td>${asignacion.fecha}</td>
+                                            <td>${detalle.horario.seccion}</td>
                                             <td align="center">
                                                 <a href="verDetalleAsignacion.htm?idAsignacion=${asignacion.idAsignacion}"><fmt:message key="asignacion.verDetalle"/></a>
                                             </td>
