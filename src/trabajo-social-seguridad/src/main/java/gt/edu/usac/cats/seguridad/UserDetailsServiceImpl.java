@@ -72,7 +72,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         ArrayList<GrantedAuthority> authorities = this.getAuthorities(roles);
 
         // se retornan las credenciales y roles del usuario
-        
+
         UserDetailsImpl udi = new UserDetailsImpl(usuario, authorities);
         udi = this.asignarNombreIdUsuario(udi);
         return udi;
@@ -149,14 +149,20 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             DetachedCriteria criteria = DetachedCriteria.forClass(Estudiante.class);
             criteria.add(Restrictions.eq("carne", usr.getUsername()));
             Estudiante est = (Estudiante)this.daoGeneralImpl.uniqueResult(criteria);  
-            usr.setNombreCompleto(est.getNombre());
-            usr.setIdentificacion(est.getCarne());
+            //System.out.println(" estudiante"+est);
             if (est == null){ // no es estudiante, debe ser catedratico
                 criteria = DetachedCriteria.forClass(Catedratico.class);
+                //System.out.println("Codigo = "+usr.getUsername());
                 criteria.add(Restrictions.eq("codigo", usr.getUsername()));
                 Catedratico cat = (Catedratico)this.daoGeneralImpl.uniqueResult(criteria);  
-                usr.setNombreCompleto(cat.getNombre()+" "+cat.getApellido());
-                usr.setIdentificacion(cat.getCodigo());
+                if (cat != null){
+                    //System.out.println("Catedratico "+cat);      
+                    usr.setNombreCompleto(cat.getNombre()+" "+cat.getApellido());
+                    usr.setIdentificacion(cat.getCodigo());
+                }
+            }else{
+                 usr.setNombreCompleto(est.getNombre());
+                usr.setIdentificacion(est.getCarne()); 
             }
            
         }else{
