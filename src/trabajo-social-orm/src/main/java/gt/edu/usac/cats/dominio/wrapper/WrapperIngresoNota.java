@@ -8,7 +8,10 @@ package gt.edu.usac.cats.dominio.wrapper;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import javax.validation.constraints.NotNull;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -33,6 +36,10 @@ public class WrapperIngresoNota implements Serializable {
     
     
     private List listExcusa;
+    
+    @NotNull(message = "{validacion.campoObligatorio}")
+    @DateTimeFormat(pattern = "dd-MM-yyyy")    
+    private Date fechaNotas;
 //______________________________________________________________________________
     public WrapperIngresoNota() {
         oficializar = false;
@@ -44,6 +51,8 @@ public class WrapperIngresoNota implements Serializable {
         
         //initListExcusa();
         linkValue="";
+        // fecha de ingreso de notas
+        fechaNotas = new Date();
     }
     
 ////    private void initListExcusa(){
@@ -147,5 +156,19 @@ public class WrapperIngresoNota implements Serializable {
      */
     public void setNotaFinal(List listNota) {
         this.notaFinal = listNota;
+    }
+
+    /**
+     * @return the fechaNotas
+     */
+    public Date getFechaNotas() {
+        return fechaNotas;
+    }
+
+    /**
+     * @param fechaNotas the fechaNotas to set
+     */
+    public void setFechaNotas(Date fechaNotas) {
+        this.fechaNotas = fechaNotas;
     }
 }
