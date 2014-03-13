@@ -88,6 +88,29 @@ public class ServicioDetalleAsignacionImpl extends ServicioGeneralImpl implement
 
         return query.list();
     }
+    
+    @Override
+    public List<DetalleAsignacion> getListadoDetalleAsignacion(AsignacionCursoPensum asignacionCursoPensum, 
+    Semestre semestre, AsignacionEstudianteCarrera asignacionEstudianteCarrera, 
+    TipoAsignacion tipoAsignacion, String seccion) throws HibernateException {
+        StringBuilder builder = new StringBuilder();
+        builder.append("select det from DetalleAsignacion det ")
+               .append("where det.horario.asignacionCursoPensum = :asignacionCursoPensum ")
+               .append("and det.horario.semestre= :semestre ")
+               .append("and det.asignacion.asignacionEstudianteCarrera = :asignacionEstudianteCarrera ")
+               .append("and det.asignacion.tipoAsignacion = :tipoAsignacion ")
+               .append("and det.horario.seccion = :seccion ") 
+               .append("and not exists (select 'x' from Desasignacion des where des.detalleAsignacion=det)");
+
+        Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
+        query.setParameter("asignacionCursoPensum", asignacionCursoPensum);
+        query.setParameter("semestre", semestre);
+        query.setParameter("asignacionEstudianteCarrera", asignacionEstudianteCarrera);
+        query.setParameter("tipoAsignacion", tipoAsignacion);
+        query.setParameter("seccion", seccion);
+
+        return query.list();
+    }    
 //______________________________________________________________________________
     @Override
     public int getTotalAsignaciones(AsignacionCursoPensum asignacionCursoPensum, AsignacionEstudianteCarrera asignacionEstudianteCarrera, TipoAsignacion tipoAsignacion) throws HibernateException {
@@ -241,8 +264,20 @@ public class ServicioDetalleAsignacionImpl extends ServicioGeneralImpl implement
     public void eliminarDetalleAsignacion(List<DetalleAsignacion> listadoEliminacion) throws HibernateException {        
         if(!listadoEliminacion.isEmpty()){            
             Asignacion asignacion = this.cargarEntidadPorID(Asignacion.class, listadoEliminacion.get(0).getAsignacion().getIdAsignacion());
+            
             for(DetalleAsignacion detalleAsignacion : listadoEliminacion){
-                this.daoGeneralImpl.delete(detalleAsignacion);
+                
+                //AsignacionCursoPensum asignacionCursoPensum, 
+                //Semestre semestre, AsignacionEstudianteCarrera asignacionEstudianteCarrera, 
+                //TipoAsignacion tipoAsignacion, String seccion
+                List<DetalleAsignacion> detalles = this.getListadoDetalleAsignacion(detalleAsignacion.getHorario().getAsignacionCursoPensum(),
+                        detalleAsignacion.getHorario().getSemestre(), detalleAsignacion.getAsignacion().getAsignacionEstudianteCarrera(),
+                        detalleAsignacion.getAsignacion().getTipoAsignacion(),
+                        detalleAsignacion.getHorario().getSeccion());
+                for (DetalleAsignacion det2:detalles){
+                    this.daoGeneralImpl.delete(det2);
+                }
+                //this.daoGeneralImpl.delete(detalleAsignacion);
             }
             if(this.getListadoDetalleAsignacion(asignacion).isEmpty()){
                 this.daoGeneralImpl.delete(asignacion);

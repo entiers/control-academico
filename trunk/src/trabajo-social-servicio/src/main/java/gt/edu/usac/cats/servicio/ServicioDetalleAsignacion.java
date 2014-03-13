@@ -156,4 +156,9 @@ public interface ServicioDetalleAsignacion extends ServicioGeneral{
       */
      void eliminarDetalleAsignacion(List<DetalleAsignacion> listadoEliminacion) throws HibernateException;
 
+     /**Metodo que permite obtener todos los detalles de asignacion para un curso
+      asignado*/
+     public List<DetalleAsignacion> getListadoDetalleAsignacion(AsignacionCursoPensum asignacionCursoPensum, 
+    Semestre semestre, AsignacionEstudianteCarrera asignacionEstudianteCarrera, 
+    TipoAsignacion tipoAsignacion, String seccion) throws HibernateException;
 }

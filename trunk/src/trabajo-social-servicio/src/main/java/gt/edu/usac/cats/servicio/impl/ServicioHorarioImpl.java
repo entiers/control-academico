@@ -376,16 +376,17 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
          return this.getHorarioConNotas(semestre, tipoHorario, false);
     }
 
-    // se usa en la asignacion cursos
+    // se usa en el combo de la asignacion cursos
     @Override
     public List<Horario> getSeccionesHorario(AsignacionCursoPensum asignacionCursoPensum, Semestre semestre, TipoHorario tipoHorario) throws DataAccessException {
         DetachedCriteria criteria = DetachedCriteria.forClass(Horario.class);
+
         criteria.add(Restrictions.eq("semestre", semestre));
         criteria.add(Restrictions.eq("tipo", tipoHorario));
         criteria.add(Restrictions.eq("habilitado",true));
+        criteria.add(Restrictions.eq("maestro",true));
         criteria.add(Restrictions.eq("asignacionCursoPensum", asignacionCursoPensum));
         //criteria.setProjection(Projections.groupProperty("seccion"));
-        
         return this.daoGeneralImpl.find(criteria);
     }
 
