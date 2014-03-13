@@ -49,7 +49,7 @@ public class EmailSenderVelocityTest extends TestCase {
     public void testApp()   {
         EmailSender emailSender = new EmailSender();
         try {
-          emailSender.enviarCorreo("Preuba", "shaka.mca2407@gmail.com", "writer.toString()");
+          emailSender.enviarCorreo("Prueba", "mariacastillo@open-training.com", "writer.toString()");
         } catch (IOException ex) {
             Logger.getLogger(EmailSenderVelocityTest.class.getName()).log(Level.SEVERE, null, ex);
             
@@ -64,11 +64,11 @@ public class EmailSenderVelocityTest extends TestCase {
 
     public Serializable getDataNuevoUsuario() {
         NuevoUsuario emailNuevoUsuario = new NuevoUsuario();
-        emailNuevoUsuario.setNombre("Mario Batres");
-        emailNuevoUsuario.setNombreUsuario("shakamca");
-        emailNuevoUsuario.setPassword("felicia");
+        emailNuevoUsuario.setNombre("Maria del Carmen");
+        emailNuevoUsuario.setNombreUsuario("maria");
+        emailNuevoUsuario.setPassword("maria");
         //emailNuevoUsuario.setCarnet(null);
-        emailNuevoUsuario.setCarnet("200313171");
+        emailNuevoUsuario.setCarnet("20140101");
 
         return emailNuevoUsuario;
     }
@@ -86,7 +86,7 @@ public class EmailSenderVelocityTest extends TestCase {
     }
 
     public Serializable getDataDesasignacionEstudianteCurso() {
-        DesasignacionEstudianteCurso edc = new DesasignacionEstudianteCurso("2003131171", "Mario Batres");
+        DesasignacionEstudianteCurso edc = new DesasignacionEstudianteCurso("20140101", "Maria del Carmen");
 
 
         List<HorarioCurso> listadoHorarioCursos = new ArrayList();
@@ -101,11 +101,11 @@ public class EmailSenderVelocityTest extends TestCase {
     }
 
     public Serializable getDataRecordatorioUsuario() {
-        return "shakamca";
+        return "maria";
     }
 
     public Serializable getDataInformacionAsignacionEstudiante() {
-        return new InformacionAsignacionEstudiante("200313171", "Mario Batres", new Date(), "123-456-789-01234");
+        return new InformacionAsignacionEstudiante("20140101", "Maria del Carmen", new Date(), "123-456-789-01234");
     }
 
     public Serializable getDataRecordatorioContrasenya() {

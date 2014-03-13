@@ -39,7 +39,7 @@ public interface ServicioAsignacion extends ServicioGeneral {
      *
      * @throws DataAccessException Si ocurrio un error de acceso a datos
      */
-    List <DetalleAsignacion> buscarAsignacionPorEstudiante(Estudiante estudiante,
+    List <Asignacion> buscarAsignacionPorEstudiante(Estudiante estudiante,
                                                     TipoAsignacion tipoAsignacion,
                                                     Integer anio)
             throws DataAccessException;

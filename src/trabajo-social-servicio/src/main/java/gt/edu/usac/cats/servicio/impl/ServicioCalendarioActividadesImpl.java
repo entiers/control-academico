@@ -111,7 +111,8 @@ public class ServicioCalendarioActividadesImpl extends ServicioGeneralImpl imple
      */
     @Override
     public boolean esFechaActividadValida(TipoActividad tipoActividad, Semestre semestre, Date fecha) throws DataAccessException {
-
+        System.out.println("**ServicioCalendarioActividadesImpl - "+fecha);
+        System.out.println("**ServicioCalendarioActividadesImpl - semestre: "+semestre.getAnio());
         DetachedCriteria criteria = DetachedCriteria.forClass(CalendarioActividades.class);
 
         criteria.add(
@@ -131,7 +132,7 @@ public class ServicioCalendarioActividadesImpl extends ServicioGeneralImpl imple
         criteria.setProjection(Projections.rowCount());
 
         Long count = (Long) this.daoGeneralImpl.uniqueResult(criteria);
-
+        System.out.println("**ServicioCalendarioActividadesImpl count: "+count);
         if(count.longValue() >= 1){
             return true;
         }

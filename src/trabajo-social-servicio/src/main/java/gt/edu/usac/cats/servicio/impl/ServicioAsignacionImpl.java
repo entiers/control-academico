@@ -53,7 +53,7 @@ public class ServicioAsignacionImpl extends ServicioGeneralImpl implements Servi
     }
 
     @Override
-    public List<DetalleAsignacion> buscarAsignacionPorEstudiante(Estudiante estudiante,
+    public List<Asignacion> buscarAsignacionPorEstudiante(Estudiante estudiante,
                                                           TipoAsignacion tipoAsignacion,
                                                           Integer anio) throws DataAccessException {
         StringBuilder sql = new StringBuilder();
@@ -66,7 +66,7 @@ public class ServicioAsignacionImpl extends ServicioGeneralImpl implements Servi
         query.setParameter("estudiante", estudiante);
         query.setParameter("tipoAsignacion",tipoAsignacion);
         query.setParameter("anio", anio);
-        
+      
         return query.list();
     }
 
