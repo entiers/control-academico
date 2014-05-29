@@ -3,6 +3,8 @@
     Document   : ingresoNota
     Created on : 17/05/2011, 05:37:10 PM
     Author     : Carlos Solorzano
+    Modificado : Maria Castillo
+
 --%>
 
 <%@page contentType="text/html" pageEncoding="ISO-8859-1"%>
@@ -24,8 +26,11 @@
                 changeMonth: true,
                 changeYear: true,
                 dateFormat: 'dd-mm-yy'
-                });    
+                }).datepicker('setDate','${fechaNotas}');    
             
+                
+
+                    
                 //Cambio combo curso
                 $('#slcTipoHorario').change(function() {
                     getHorarios($(this).val());
@@ -45,6 +50,8 @@
                     $.get("getHorarioCatedratico.htm", { idTipoHorario: valueTipoHorario}, function(options, result, reqobj) {
                        $('#slcHorario').html(options);
                     });
+                   
+
                 }else{
                     $('#slcHorario').html("");
                 }
