@@ -4,6 +4,7 @@
                 //Cambio combo curso
               
                     getHorarios($('#slcTipoHorario').val());
+                    calculaNotaFinal();
 
             });
             
@@ -32,7 +33,7 @@
             }
         </script>
         
-     
+        
 <c:choose>
     <c:when test="${not empty listadoDetalleAsignacion}">
         <fieldset>
