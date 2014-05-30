@@ -69,7 +69,7 @@ public class ControladorVerDetalleAsignacion extends ControladorAbstractoAsignac
      * <p>Metodo que intercepta la peticion GET de la pagina
      * verDetalleAsignacion.htm. Se encarga de validar: <li>Periodo valido de
      * asignacion de cursos</li> <li>Mostrar el listado de cursos a los que el
-     * estudiante se encuentra asignado </li> </p>
+     * estudiante se encuentra asignado </li> </p>periodoAsignacion
      */
     @RequestMapping(value = "verDetalleAsignacion.htm", method = RequestMethod.GET)
     public String verDetalleAsignacion(Model modelo, HttpServletRequest request, int idAsignacion) {
@@ -98,32 +98,34 @@ public class ControladorVerDetalleAsignacion extends ControladorAbstractoAsignac
             Semestre semestreAsignacion = this.asignacion.getDetalleAsignacions().iterator().next().getHorario().getSemestre();
             
             this.periodoAsignacion = semestreAsignacion.equals(this.semestre);
+            System.out.println("**ControladorVerDetalleAsignacion - periodoAsignacion: "+this.periodoAsignacion);
         } else {
             modelo.addAttribute("errorAsignacionSinDetalle", true);
             return "detalleAsignacion/verDetalleAsignacion";
         }
 
         if (this.periodoAsignacion) {
-            if (asignacion.getTipoAsignacion().equals(TipoAsignacion.ASIGNACION_CURSOS_SEMESTRE)
-                    && this.servicioCalendarioActividadesImpl.esFechaActividadValida(TipoActividad.ASIGNACION_SEMESTRE,
-                    this.semestre,
-                    new java.util.Date())) {
-                this.periodoAsignacion = true;
+           
+            if (asignacion.getTipoAsignacion().equals(TipoAsignacion.ASIGNACION_CURSOS_SEMESTRE)) {
+                //this.periodoAsignacion = true;
+                this.periodoAsignacion = this.servicioCalendarioActividadesImpl.esFechaActividadValida(TipoActividad.ASIGNACION_SEMESTRE,
+                    this.semestre, new java.util.Date());
+                System.out.println("ControladorVerDetalleAsig.. periodo SEMESTRE: "+this.periodoAsignacion);
             } else if (asignacion.getTipoAsignacion().equals(TipoAsignacion.ASIGNACION_CURSOS_VACACIONES)
-                    && this.servicioCalendarioActividadesImpl.esFechaActividadValida(TipoActividad.ASIGNACION_VACACIONES,
+                    ) {
+                this.periodoAsignacion = this.servicioCalendarioActividadesImpl.esFechaActividadValida(TipoActividad.ASIGNACION_VACACIONES,
                     this.semestre,
-                    new java.util.Date())) {
-                this.periodoAsignacion = true;
+                    new java.util.Date());
             } else if (asignacion.getTipoAsignacion().equals(TipoAsignacion.ASIGNACION_PRIMERA_RETRASADA)
-                    && this.servicioCalendarioActividadesImpl.esFechaActividadValida(TipoActividad.ASIGNACION_PRIMERA_RESTRASADA,
+                    ) {
+                this.periodoAsignacion = this.servicioCalendarioActividadesImpl.esFechaActividadValida(TipoActividad.ASIGNACION_PRIMERA_RESTRASADA,
                     this.semestre,
-                    new java.util.Date())) {
-                this.periodoAsignacion = true;
+                    new java.util.Date());
             } else if (asignacion.getTipoAsignacion().equals(TipoAsignacion.ASIGNACION_SEGUNDA_RETRASADA)
-                    && this.servicioCalendarioActividadesImpl.esFechaActividadValida(TipoActividad.ASIGNACION_SEGUNDA_RETRASADA,
+                    ) {
+                this.periodoAsignacion = this.servicioCalendarioActividadesImpl.esFechaActividadValida(TipoActividad.ASIGNACION_SEGUNDA_RETRASADA,
                     this.semestre,
-                    new java.util.Date())) {
-                this.periodoAsignacion = true;
+                    new java.util.Date());
             }
         }
 
@@ -148,6 +150,14 @@ public class ControladorVerDetalleAsignacion extends ControladorAbstractoAsignac
         for (DetalleAsignacion detalleAsignacion : this.listaDetalleAsignacion) {
             if (detalleAsignacion.getIdDetalleAsignacion() == detail) {
                 listaDA.add(detalleAsignacion);
+                for (DetalleAsignacion otrosdet: this.listaDetalleAsignacion){
+                    if (detalleAsignacion.getHorario().getAsignacionCursoPensum().getIdAsignacionCursoPensum() ==
+                            otrosdet.getHorario().getAsignacionCursoPensum().getIdAsignacionCursoPensum() &&
+                            detalleAsignacion.getHorario().getSeccion().equals(otrosdet.getHorario().getSeccion())){
+                        listaDA.add(otrosdet);
+                        
+                    }
+                }
                 break;
             }
         }

@@ -11,10 +11,12 @@ import gt.edu.usac.cats.util.RequestUtil;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -76,31 +78,33 @@ public class ControladorRealizarETL implements Serializable {
 
         InputStream inputStream = ControladorRealizarETL.class.getClassLoader().getResourceAsStream(
                 pathArchivoPropiedades);
-
+        
+        System.out.println("**pathArchivoPropiedades: "+pathArchivoPropiedades);
         properties.load(inputStream);
+        
         String pathArchivo = properties.getProperty(key);
         System.out.println(pathArchivo);
         //mc
-        BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()));
-        String linea = reader.readLine();
-        // salida
-        PrintWriter writer = new PrintWriter(new File(pathArchivo));
-        while (linea != null){
-            linea = linea.replace('-', '/');
-            writer.println(linea);
-            linea = reader.readLine();
-        }
-        writer.close();
+//        BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()));
+//        String linea = reader.readLine();
+//        // salida
+//        PrintWriter writer = new PrintWriter(new File(pathArchivo));
+//        while (linea != null){
+//            linea = linea.replace('-', '/');
+//            writer.println(linea);
+//            linea = reader.readLine();
+//        }
+//        writer.close();
                 // fin mc
                 
-        //byte[] bytes = file.getBytes();
-/*        OutputStream outputStream = new FileOutputStream(
+       byte[] bytes = file.getBytes();
+       OutputStream outputStream = new FileOutputStream(
                 new File(pathArchivo));
 
         outputStream.write(bytes);
 
         outputStream.close();
-*/
+
     }
 //______________________________________________________________________________
 
@@ -118,7 +122,7 @@ public class ControladorRealizarETL implements Serializable {
         
         BufferedReader bufferedReader = new BufferedReader(new FileReader(filePathArchivo));
         String line;
-
+///home/maria/tools/JETLXCmmty-r78327-V5.0.2/plugins/ETLRegistroCSV-0.1.jar
         List<String> errors = new ArrayList<String>();
 
         while ((line = bufferedReader.readLine()) != null) {
@@ -213,12 +217,13 @@ public class ControladorRealizarETL implements Serializable {
         try {
             if (!archivoCSV.isEmpty()) {
                 System.out.println(archivoCSV.getContentType());
+                System.out.println("nombre archivoCSV: "+archivoCSV.getOriginalFilename());
                 //if(archivoCSV.getContentType().equalsIgnoreCase("text/csv")){
 
                 this.guardarArchivoEnDisco(archivoCSV, "ArchivoCSV_File", CONTEXT_REGISTRO_CSV);
 
                 boolean exito = this.realizarETL(FabricaManejadorETL.REGISTRO_CSV);
-
+                System.out.println("Exito: "+exito);
                 if (exito) {
                     RequestUtil.crearMensajeRespuesta(request, "etl.ingresarRegistroCSV.titulo",
                             "etl.ingresarRegistroCSV.exito", true);
@@ -249,9 +254,11 @@ public class ControladorRealizarETL implements Serializable {
         } catch (IOException e) {
             RequestUtil.crearMensajeRespuesta(request, "etl.ingresarRegistroCSV.titulo", "etl.ioException", false);
             log.error("Ocurrio un problema en la lectura/escritura de un archivo", e);
+            e.printStackTrace();
         } catch (Exception e) {
             RequestUtil.crearMensajeRespuesta(request, "etl.ingresarRegistroCSV.titulo", "etl.exception", false);
             log.error("Error no identificado", e);
+            e.printStackTrace();
         }
 
         return "etl/ingresarRegistroCSV";

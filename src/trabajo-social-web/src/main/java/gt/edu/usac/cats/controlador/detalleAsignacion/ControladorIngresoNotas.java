@@ -5,6 +5,7 @@
  */
 package gt.edu.usac.cats.controlador.detalleAsignacion;
 
+import static gt.edu.usac.cats.controlador.detalleAsignacion.ControladorAbstractoIngresoNota.TITULO_MENSAJE;
 import gt.edu.usac.cats.dominio.Catedratico;
 import gt.edu.usac.cats.dominio.CursoAprobado;
 import gt.edu.usac.cats.dominio.DetalleAsignacion;
@@ -23,8 +24,11 @@ import gt.edu.usac.cats.servicio.ServicioSemestre;
 import gt.edu.usac.cats.util.Mensajes;
 import gt.edu.usac.cats.util.RequestUtil;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import javax.annotation.Resource;
@@ -51,7 +55,7 @@ import org.springframework.web.context.WebApplicationContext;
  */
 @Controller
 @Scope(value = WebApplicationContext.SCOPE_SESSION)
-@SessionAttributes(value = {"catedratico", "semestre", "listadoHorario", "esAdministrativo", "listadoDetalleAsignacion", "usuario", "horarioActual", "excusasMap", "lastPage"})
+@SessionAttributes(value = {"catedratico", "semestre", "listadoHorario", "esAdministrativo", "listadoDetalleAsignacion", "usuario", "horarioActual", "excusasMap", "lastPage", "fechaNotas"})
 public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota implements Serializable {
 //______________________________________________________________________________
 
@@ -89,6 +93,7 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota imp
     private static int PAGINEO = 10;
     private boolean lastPage = false;
 
+
     /**
      * <p>Metodo que intercepta la peticion GET de la pagina ingresoNota.htm. Se
      * encarga de validar: <li>Usuario logueado sea un catedratico</li>
@@ -103,10 +108,14 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota imp
         this.esAdministrativo = false;
         try {
             this.semestre = this.servicioSemestreImpl.getSemestreActivo();
+            System.out.println("MC: Semestre: "+this.semestre);
 
             //Buscando usuario logueado por nombre
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             this.usuario = super.servicioUsuarioImpl.cargarUsuarioPorNombre(auth.getName().toString());
+            System.out.println("MC: Usuario: "+this.usuario);
+            System.out.println("MC: Usuario.catedraticos: "+this.usuario.getCatedraticos());
+            
 
             //Validando que el usuario se haya encontrado y sea un catedratico
             if (this.usuario != null & this.usuario.getCatedraticos().toArray().length == 0) {
@@ -116,6 +125,7 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota imp
             }
 
             this.catedratico = (Catedratico) this.usuario.getCatedraticos().toArray()[0];
+            
 
             //Validar periodo de ingreso de notas
             if (!this.servicioCalendarioActividadesImpl.esFechaActividadValida(TipoActividad.INGRESO_NOTAS,
@@ -163,11 +173,11 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota imp
      */
     @RequestMapping(value = "ingresoNotaAdmin.htm", method = RequestMethod.GET)
     public String getIngresoNotaAdmin(Model modelo, HttpServletRequest request) {
-        System.out.println("Entra aca....... MCNOV%");
+        //System.out.println("Entra aca....... MCNOV%");
         this.esAdministrativo = true;
         try {
             this.semestre = this.servicioSemestreImpl.getSemestreActivo();
-            System.out.println("&& semestre: " + this.semestre.getIdSemestre());
+          //  System.out.println("&& semestre: " + this.semestre.getIdSemestre());
 
             this.listadoHorario = this.servicioHorarioImpl.getHorario(this.semestre, TipoHorario.values()[0], true);
             
@@ -190,12 +200,17 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota imp
     public String crearFormulario(@Valid DatosIngresoNota datosIngresoNota, BindingResult bindingResult,
             Model modelo, HttpServletRequest request) {
 
+        System.out.println("MC- POST(IngresoNota.htm) datosIngresoNota: "+datosIngresoNota);
+        
         try {
             datosIngresoNota.setHorario(this.servicioHorarioImpl.cargarEntidadPorID(Horario.class, datosIngresoNota.getHorario().getIdHorario()));
+            System.out.println("MC- POST(IngresoNota.htm) datosIngresoNota: "+datosIngresoNota.getHorario());
             this.listadoDetalleAsignacion = this.servicioDetalleAsignacionImpl.
                     getListadoDetalleAsignacion(datosIngresoNota.getHorario().getIdHorario());
+            System.out.println("MC- POST(IngresoNota.htm) listadoDetalleAsignacion: "+this.listadoDetalleAsignacion);
 
             this.horarioActual = datosIngresoNota.getHorario();
+           
         } catch (Exception ex) {
             // error de acceso a datos
             RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "dataAccessException", false);
@@ -206,14 +221,16 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota imp
         for (int i = 0; i < PAGINEO; i++) {
             win.getListExcusa().add("XXX");
         }
-        modelo.addAttribute("wrapperIngresoNota", new WrapperIngresoNota());
+        //modelo.addAttribute("wrapperIngresoNota", new WrapperIngresoNota());
+        modelo.addAttribute("wrapperIngresoNota", win);
 
 
         if (listadoDetalleAsignacion != null && !this.listadoDetalleAsignacion.isEmpty()) {
-            System.out.println("haoy alumnos MCNOV% metodo crearFormulario");
+           // System.out.println("haoy alumnos MCNOV% metodo crearFormulario");
             modelo.addAttribute("nombreCurso", this.listadoDetalleAsignacion.get(0).getHorario().getAsignacionCursoPensum().getCurso().getNombre());
             modelo.addAttribute("numeroSeccion", this.listadoDetalleAsignacion.get(0).getHorario().getSeccion());
             modelo.addAttribute("ultimaPag", false);
+            modelo.addAttribute("soloUna", listadoDetalleAsignacion.size()<=PAGINEO);
         }
         this.setModelo(modelo, true, datosIngresoNota);
 
@@ -287,7 +304,7 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota imp
                     detAsign.setExamenFinal(examenFinal);
                     detAsign.setOficializado(wrapperIngresoNota.getOficializar());
                     detAsign.setExcusa(wrapperIngresoNota.getListExcusa().get(i).toString());
-
+                    detAsign.setFechaActa(wrapperIngresoNota.getFechaNotas());
                     super.servicioDetalleAsignacionImpl.actualizar(detAsign);
 
                    
@@ -295,19 +312,18 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota imp
                 }
             } else {
                 for (DetalleAsignacion detAsign : this.listadoDetalleAsignacion) {
+                    System.out.println("fechaActa: "+detAsign.getFechaActa());
+                    if (detAsign.getFechaActa() == null){
+                        RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "No se han guardado notas", false);
+                        break;
+                    }
                     notaFinal = (short) (detAsign.getZona() + detAsign.getExamenFinal());
                     detAsign.setOficializado(wrapperIngresoNota.getOficializar());
-
+                    detAsign.setFechaActa(wrapperIngresoNota.getFechaNotas()); // actualiza fecha
+                    
                     super.servicioDetalleAsignacionImpl.actualizar(detAsign);
 
                     if (wrapperIngresoNota.getOficializar()) {
-                        System.out.println("** notaFinal: "+notaFinal);
-                        System.out.println("** notaAprobacion horario: "+detAsign.getHorario());
-                        System.out.println("** notaAprobacion acp: "+detAsign.getHorario().getAsignacionCursoPensum());
-                        System.out.println("** notaAprobacion pensum: "+detAsign.getHorario().getAsignacionCursoPensum().getPensum());
-                        System.out.println("** notaAprobacion nota: "+detAsign.getHorario().getAsignacionCursoPensum().getPensum().getNotaAprobacion());
-                        System.out.println("** ya esta aprobado: "+this.servicioCursoAprobadoImpl.getCursoAprobado(detAsign.getAsignacion(),
-                                detAsign.getHorario().getAsignacionCursoPensum()));
                         if (notaFinal >= detAsign.getHorario().getAsignacionCursoPensum().getPensum().getNotaAprobacion()
                                 && this.servicioCursoAprobadoImpl.getCursoAprobado(detAsign.getAsignacion(),
                                 detAsign.getHorario().getAsignacionCursoPensum()) == null) {
@@ -315,7 +331,9 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota imp
                             cursoAprobado.setAsignacion(detAsign.getAsignacion());
                             cursoAprobado.setAsignacionCursoPensum(detAsign.getHorario().getAsignacionCursoPensum());
                             cursoAprobado.setExamenFinal(detAsign.getExamenFinal());
-                            cursoAprobado.setFechaAprobacion(new Date());
+                            // se cambia por la fecha de acta - mc
+                            cursoAprobado.setFechaAprobacion(wrapperIngresoNota.getFechaNotas());
+                            System.out.println("**** fechaNotas: "+wrapperIngresoNota.getFechaNotas());
                             cursoAprobado.setLaboratorio((short) 0);
                             cursoAprobado.setZona(detAsign.getZona());
                             super.servicioUsuarioImpl.agregar(cursoAprobado);
@@ -331,6 +349,7 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota imp
 
         } catch (Exception ex) {
             // error de acceso a datos
+            ex.printStackTrace();
             RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "dataAccessException", false);
             log.error(Mensajes.DATA_ACCESS_EXCEPTION, ex);
         }
@@ -431,34 +450,67 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota imp
         modelo.addAttribute("mostrarEstudiantes", mostrarAsignaciones);
         modelo.addAttribute("validacionesOK", true);
         modelo.addAttribute("esAdministrativo", this.esAdministrativo);
-
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        String fechaActaActual = sdf.format(Calendar.getInstance().getTime());
         if (mostrarAsignaciones) {
             modelo.addAttribute("limiteZona", datosIngresoNota.getHorario().getAsignacionCursoPensum().getZona());
             modelo.addAttribute("limiteExamenFinal", datosIngresoNota.getHorario().getAsignacionCursoPensum().getExamenFinal());
+            if (this.listadoDetalleAsignacion.size() >0 &&
+                    this.listadoDetalleAsignacion.get(0).getFechaActa() != null){
+              fechaActaActual = sdf.format(this.listadoDetalleAsignacion.get(0).getFechaActa());
+            }
         } else {
             modelo.addAttribute("limiteZona", 0);
             modelo.addAttribute("limiteExamenFinal", 0);
         }
-
+        modelo.addAttribute("fechaNotas", fechaActaActual );
     }
 
     @RequestMapping(value = "paginarNotasPag.htm", method = RequestMethod.GET)
     public String paginarNotasPag(Model modelo, DatosIngresoNota datosIngresoNota,
             HttpServletRequest request) {
+        // obtiene del request la pagina actual
+       Enumeration keys = request.getParameterNames();
+       String pagkey = null;
+       while (keys.hasMoreElements()){
+           String k = (String)keys.nextElement();
+           System.out.println(">>>> key:"+k);
+           if (k.endsWith("-p")){
+               pagkey = k;
+               break;
+           }
+       }
+       int pagina = -1;
+       // paginaron con guardar y seguir
+       if (pagkey == null){
+           pagkey = "linkValue";
+           pagina = getPageNumber(request.getParameter(pagkey));
+       }else{
+           pagina = Integer.parseInt(request.getParameter(pagkey));
+       }
+       
+        // fin de la obtencion de la pagina actual
         modelo.addAttribute("pageSize", 10);
         modelo.addAttribute("listaTipoHorario", TipoHorario.values());
         modelo.addAttribute("listaHorario", this.listadoHorario);
         this.listadoDetalleAsignacion = this.servicioDetalleAsignacionImpl.
                 getListadoDetalleAsignacion(datosIngresoNota.getHorario().getIdHorario());
+        
         if (this.listadoDetalleAsignacion != null) {
-            modelo.addAttribute("listadoDetalleAsignacion", this.listadoDetalleAsignacion);        if (listadoDetalleAsignacion != null && !this.listadoDetalleAsignacion.isEmpty()) {
+            modelo.addAttribute("listadoDetalleAsignacion", this.listadoDetalleAsignacion); 
+            if (listadoDetalleAsignacion != null && !this.listadoDetalleAsignacion.isEmpty()) {
             modelo.addAttribute("nombreCurso", this.listadoDetalleAsignacion.get(0).getHorario().getAsignacionCursoPensum().getCurso().getNombre());
             modelo.addAttribute("numeroSeccion", this.listadoDetalleAsignacion.get(0).getHorario().getSeccion());
-            
         }
 
-            
+//            for(DetalleAsignacion det: this.listadoDetalleAsignacion){
+//                System.out.println("****"+det.getZona());
+//                System.out.println("****"+det.getExamenFinal());
+//                System.out.println("****"+det.isOficializado());
+//                System.out.println("****"+det.getExcusa());
+//            }
         }
+        
         modelo.addAttribute("mostrarEstudiantes", true);
         modelo.addAttribute("validacionesOK", false);
         modelo.addAttribute("esAdministrativo", this.esAdministrativo);
@@ -471,7 +523,11 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota imp
         modelo.addAttribute("wrapperIngresoNota", win);
         modelo.addAttribute("limiteZona", horarioActual.getAsignacionCursoPensum().getZona());
         modelo.addAttribute("limiteExamenFinal", horarioActual.getAsignacionCursoPensum().getExamenFinal());
-
+        System.out.println("** MC FECHANOTAS PAG: "+this.listadoDetalleAsignacion.get(0).getFechaActa());
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+//        modelo.addAttribute("fechaNotas", sdf.format(this.listadoDetalleAsignacion.get(0).getFechaActa()));
+         modelo.addAttribute("fechaNotas", sdf.format(Calendar.getInstance().getTime()));
+         
         if (excusasMap == null) {
             excusasMap = new HashMap();
             ArrayList excusas = new ArrayList();
@@ -482,8 +538,9 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota imp
             excusas.add("AC");
             excusasMap.put("listaEx", excusas);
         }
+        System.out.println("Pagina paginada: "+pagina);
         modelo.addAttribute("excusasList", excusasMap.get("listaEx"));
-
+        modelo.addAttribute("soloUna", listadoDetalleAsignacion.size()<=(PAGINEO*pagina));
         RequestUtil.agregarRedirect(request, request.getParameter("linkValue"));
         return "detalleAsignacion/ingresoNota";
     }
@@ -544,4 +601,6 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota imp
     public void setLastPage(boolean lastPage) {
         this.lastPage = lastPage;
     }
+
+
 }
