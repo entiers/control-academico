@@ -298,7 +298,7 @@ public class ControladorAsignacionCursos extends ControladorAbstractoAsignacion 
         TipoHorario tipoHorario = TipoHorario.valueOf(idTipoHorario);
 
         List secciones = servicioHorarioImpl.getSeccionesHorario(asignacionCursoPensum, semestre, tipoHorario);
-
+        
         return secciones;//servicioHorarioImpl.getHorario(asignacionCursoPensum, semestre, tipoHorario);
     }
 }

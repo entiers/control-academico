@@ -135,7 +135,7 @@ public class ControladorModificarDatosPersonales implements Serializable {
             modelo.addAttribute("catedratico", this.catedratico);
         }
         if (bindingResult.hasErrors()) {
-            return "usuario/modificarDatosPersonales";
+            return "usuario/modificarDatosPersonales";  
         }
 
         try {

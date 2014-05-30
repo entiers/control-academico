@@ -209,7 +209,7 @@ public class ControladorEditarCatedratico implements Serializable{
         try {
             
             //Validando correo unico por usuario
-            if(!this.catedratico.getEmail().equals(wrapperCatedratico.getEmail())){
+            if(this.catedratico.getEmail()== null || !this.catedratico.getEmail().equals(wrapperCatedratico.getEmail())){
                 if(this.servicioUsuarioImpl.getUsuarioPorEmail(wrapperCatedratico.getEmail())!=null){
                     RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "usuario.correoYaExiste", false);
                     return "catedratico/editarCatedratico";

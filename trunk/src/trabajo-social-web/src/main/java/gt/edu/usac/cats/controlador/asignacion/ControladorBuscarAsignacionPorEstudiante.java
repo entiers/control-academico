@@ -1,13 +1,14 @@
 
 /*
-* Sistema de Control Academico
-* Escuela de Trabajo Social
-* Universidad de San Carlos de Guatemala
+ * Sistema de Control Academico
+ * Escuela de Trabajo Social
+ * Universidad de San Carlos de Guatemala
  */
 package gt.edu.usac.cats.controlador.asignacion;
 
 //~--- non-JDK imports --------------------------------------------------------
-
+import gt.edu.usac.cats.dominio.Asignacion;
+import gt.edu.usac.cats.dominio.DetalleAsignacion;
 import gt.edu.usac.cats.dominio.Estudiante;
 import gt.edu.usac.cats.dominio.Usuario;
 import gt.edu.usac.cats.dominio.busqueda.DatosBusquedaAsignacion;
@@ -21,6 +22,7 @@ import gt.edu.usac.cats.util.RequestUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashSet;
 
 import org.apache.log4j.Logger;
 
@@ -44,15 +46,15 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.context.WebApplicationContext;
 
 /**
- * Esta clase es el controlador que se encarga de la llamada a la consulta de cursos
- * asignados por estudiante en un anio y numero determinado
+ * Esta clase es el controlador que se encarga de la llamada a la consulta de
+ * cursos asignados por estudiante en un anio y numero determinado
  *
  * @author Carlos Solorzano
  */
 @Controller
 @Scope(value = WebApplicationContext.SCOPE_SESSION)
-@SessionAttributes(value={"estudiante", "usuario"}) 
-public class ControladorBuscarAsignacionPorEstudiante implements Serializable{
+@SessionAttributes(value = {"estudiante", "usuario"})
+public class ControladorBuscarAsignacionPorEstudiante implements Serializable {
 
 //  _____________________________________________________________________________
     private static final String TITULO_MENSAJE = "miscursos.asignados";
@@ -72,10 +74,10 @@ public class ControladorBuscarAsignacionPorEstudiante implements Serializable{
     @Resource
     private ServicioAsignacion servicioAsignacionImpl;
 //  muestra el formulario para realizar la busqueda por estudiante. mc.
+
     @RequestMapping(
-        value  = "buscarAsignacionPorEstudiante.htm",
-        method = RequestMethod.GET
-    )
+            value = "buscarAsignacionPorEstudiante.htm",
+            method = RequestMethod.GET)
     public String asignacionPorEstudiante(Model modelo, HttpServletRequest request) {
         // Buscar usuario para determinar si es estudiante o no
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -97,48 +99,65 @@ public class ControladorBuscarAsignacionPorEstudiante implements Serializable{
         }
 
         modelo.addAttribute("datosBusquedaAsignacion", new DatosBusquedaAsignacion());
-        this.setModelo(modelo,false);
-        
+        this.setModelo(modelo, false);
+
         return "asignacion/buscarAsignacionPorEstudiante";
     }
 
     //  realiza la accion de buscar la asignacion por estudiante. mc.
     @RequestMapping(
-        value  = "buscarAsignacionPorEstudiante.htm",
-        method = RequestMethod.POST
-    )
+            value = "buscarAsignacionPorEstudiante.htm",
+            method = RequestMethod.POST)
     public String buscarAsignacionPorEstudiante(@Valid DatosBusquedaAsignacion datosBusquedaAsignacion, BindingResult bindingResult,
-                                Model modelo, HttpServletRequest request) {
-        this.setModelo(modelo,true);
-        try{
-            modelo.addAttribute("nombreControlReporte",ControlReporte.DETALLE_ASIGNACION);
-            modelo.addAttribute("listadoAsignacion",
-                                this.servicioAsignacionImpl.buscarAsignacionPorEstudiante(this.estudiante,
-                                                                                        datosBusquedaAsignacion.getTipoAsignacion(),
-                                                                                        datosBusquedaAsignacion.getAnio()));
-        }
-        catch (DataAccessException e) {
+            Model modelo, HttpServletRequest request) {
+        this.setModelo(modelo, true);
+        try {
+            modelo.addAttribute("nombreControlReporte", ControlReporte.DETALLE_ASIGNACION);
+            // busca el detalle de asignacion por estudiante
+            List<Asignacion> listAsignacion = this.servicioAsignacionImpl.buscarAsignacionPorEstudiante(this.estudiante,
+                    datosBusquedaAsignacion.getTipoAsignacion(),
+                    datosBusquedaAsignacion.getAnio());
+            // se depura que solo vayan los horarios distintos
+            listAsignacion = depurarAsignacion(listAsignacion);
+            modelo.addAttribute("listadoAsignacion", listAsignacion);
+        } catch (DataAccessException e) {
             // error de acceso a datos
             RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "dataAccessException", false);
             log.error(Mensajes.DATA_ACCESS_EXCEPTION, e);
         }
         //buscar Asignacion
-        
+
         return "asignacion/buscarAsignacionPorEstudiante";
     }
 
+   
 
-    private void setModelo(Model modelo,boolean post) {
+    private void setModelo(Model modelo, boolean post) {
         Calendar fecha = Calendar.getInstance();
         int anio = fecha.get(Calendar.YEAR);
         List listadoAnio = new ArrayList();
-        for(int i=anio;i>anio-3;i--){
+        for (int i = anio; i > anio - 3; i--) {
             listadoAnio.add(i);
         }
         modelo.addAttribute("post", post);
-        modelo.addAttribute("error",false);
-        modelo.addAttribute("lstAnio",listadoAnio);
+        modelo.addAttribute("error", false);
+        modelo.addAttribute("lstAnio", listadoAnio);
         modelo.addAttribute("listadoTipoAsignacion",
-                            TipoAsignacion.values());
+                TipoAsignacion.values());
+    }
+
+    private List<Asignacion> depurarAsignacion(List<Asignacion> listAsignacion) {
+        ArrayList<Asignacion> depurada = new ArrayList();
+        for (Asignacion asig: listAsignacion){
+            HashSet<DetalleAsignacion> detalles = new HashSet();
+            for (DetalleAsignacion det: asig.getDetalleAsignacions()){
+                if (det.getHorario().isMaestro() == true){
+                   detalles.add(det);
+                }
+            }
+            asig.setDetalleAsignacions(detalles);
+            depurada.add(asig);
+        }
+        return depurada;
     }
 }
