@@ -134,7 +134,11 @@
                                         disabled="${detAsigna.oficializado}"
                                         />
                         </display:column> 
-
+                        <display:column title="Nota Final">                            
+                            <form:input path="notaFinal" 
+                                        cssStyle="width:50px;"
+                                        />
+                        </display:column>  
 
                         <display:column titleKey="agregarEstudiante.estadistica"  >
                             <form:select path="listExcusa">
@@ -163,8 +167,12 @@ o
             <form:hidden path="oficializar" id="hdOficializar" />
             <form:hidden path="linkValue" id="linkValue" />
 
-            <input type="button" value='<fmt:message key="ingresoNota.btnGuardar"/>' onclick="javascript:guardar(false, '', -1);" />
-            <input type="button" value='<fmt:message key="ingresoNota.btnOficializar"/>' onclick="javascript:guardar(true);" /> 
+            <!--input type="button" value='<fmt:message key="ingresoNota.btnGuardar"/>' onclick="javascript:guardar(false, '', -1);" /-->
+            <c:if test="${soloUna}">
+                <input type="button" value='<fmt:message key="ingresoNota.btnGuardar"/>' onclick="javascript:guardar(false, '', -1);" />
+            </c:if>
+            
+            <input type="button" value='<fmt:message key="ingresoNota.btnOficializar"/>' onclick="javascript:guardar(true,'',-1);" /> 
             <input type="button" value='Calcular Nota' onclick="javascript:calculaNotaFinal();" /> 
                
         </fieldset>
