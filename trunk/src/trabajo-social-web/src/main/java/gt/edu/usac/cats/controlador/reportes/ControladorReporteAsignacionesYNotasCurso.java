@@ -174,6 +174,16 @@ public class ControladorReporteAsignacionesYNotasCurso implements Serializable {
         }
     }
    
+    
+    /**Listado de estudiantes con notas desde el usuario del docente*/
+    
+    @RequestMapping(value  = "rptListadoEstudiantesConNota.htm",method = RequestMethod.GET)
+    public String getRptListadoEstudiantesConNotas(Model modelo, HttpServletRequest request) {        
 
+        this.semestre = this.servicioSemestreImpl.getSemestreActivo();
+        modelo.addAttribute("nombreControlReporte",ControlReporte.LISTADO_ESTUDIANTE_CON_NOTAS);
+        this.crearModelo(modelo, request);
+        return "reportes/rptListadoEstudiantesConNotas";       
+    }
 
 }

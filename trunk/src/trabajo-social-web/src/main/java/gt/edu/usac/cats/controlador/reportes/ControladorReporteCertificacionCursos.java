@@ -56,4 +56,7 @@ public class ControladorReporteCertificacionCursos implements Serializable{
         return "reportes/rptNotasCursosAsignados";
     }
 
+    
+    /**Listado de estudiantes con notas a partir del portal del docente*/
+
 }
