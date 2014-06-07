@@ -90,7 +90,7 @@ public class ControladorReporte implements Serializable{
                 }
             }
         }
-        
+        System.out.println("Nombre Reporte: "+nombreControlReporte);
         ControlReporte controlReporte = ControlReporte.valueOf(nombreControlReporte);
         System.out.println("&&&&&& controlReporte: "+parametros);
         

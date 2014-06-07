@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="38e0380e-9cec-4ba6-b427-1f01bc515c9b">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="105"/>
+	<property name="ireport.y" value="217"/>
+	<parameter name="id_horario" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select * from reporte.detalle_asignacion_vw
+where id_horario = $P{id_horario}]]>
+	</queryString>
+	<field name="codcatedratico" class="java.lang.String"/>
+	<field name="nombrecatedratico" class="java.lang.String"/>
+	<field name="apellidocatedratico" class="java.lang.String"/>
+	<field name="carne" class="java.lang.String"/>
+	<field name="estudiante" class="java.lang.String"/>
+	<field name="curso" class="java.lang.String"/>
+	<field name="codigo" class="java.lang.String"/>
+	<field name="seccion" class="java.lang.String"/>
+	<field name="semestre" class="java.lang.String"/>
+	<field name="anio" class="java.lang.Integer"/>
+	<field name="numero" class="java.lang.String"/>
+	<field name="zona" class="java.lang.Integer"/>
+	<field name="laboratorio" class="java.lang.Integer"/>
+	<field name="examen_final" class="java.lang.Integer"/>
+	<field name="oficializado" class="java.lang.Boolean"/>
+	<field name="id_horario" class="java.lang.Integer"/>
+	<field name="excusa" class="java.lang.String"/>
+	<field name="aprobado" class="java.lang.Integer"/>
+	<field name="nsp" class="java.lang.Integer"/>
+	<field name="sde" class="java.lang.Integer"/>
+	<field name="szm" class="java.lang.Integer"/>
+	<field name="ac" class="java.lang.Integer"/>
+	<field name="nsemestre" class="java.lang.String"/>
+	<field name="htipo" class="java.lang.Integer"/>
+	<variable name="carne_1" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$F{carne}]]></variableExpression>
+	</variable>
+	<variable name="notafinal" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="170" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="1" width="555" height="66" backcolor="#006699" uuid="0e171be3-19dd-45f2-ba9e-d27dda40905d"/>
+				<staticText>
+					<reportElement x="15" y="5" width="400" height="20" forecolor="#FFFFFF" uuid="ab491309-fb38-48b8-bc44-b1a401e2a827"/>
+					<textElement>
+						<font size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[UNIVERSIDAD DE SAN CARLOS DE GUATEMALA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="15" y="25" width="378" height="17" forecolor="#FFFFFF" uuid="c985cf41-e7e4-4ee6-a62e-e40ade18923a"/>
+					<textElement>
+						<font size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[ESCUELA DE TRABAJO SOCIAL]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="15" y="43" width="431" height="17" forecolor="#FFFFFF" uuid="9797f473-f38e-4283-8892-8a63422055a7"/>
+					<textElement>
+						<font size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[LISTADO DE ESTUDIANTES - NOTAS ACUMULADAS]]></text>
+				</staticText>
+			</frame>
+			<staticText>
+				<reportElement x="15" y="111" width="56" height="17" forecolor="#010101" uuid="ca90d758-d013-44b9-bf22-95d1bbf20e11"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Curso: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="105" y="111" width="100" height="17" forecolor="#010101" uuid="b8be0687-538f-4c4b-a2c8-fb9ad0dc7183"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{curso}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="15" y="128" width="74" height="17" forecolor="#010101" uuid="f848946f-bab4-4c70-bc15-6779f6d5c4a5"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sección: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="104" y="128" width="100" height="17" forecolor="#010101" uuid="351252ab-ee7b-48d2-8fbe-184972fda955"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{seccion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="16" y="145" width="74" height="17" forecolor="#010101" uuid="137817d8-4ce5-47e4-97ff-06c09ec54896"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Semestre: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="105" y="145" width="113" height="17" uuid="24b88119-ca14-458e-8a08-60d4944f9d83"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{anio} + "-" + $F{numero}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="16" y="94" width="74" height="17" forecolor="#010101" uuid="84a8acec-14cd-4786-afdb-80a416abcbf1"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Catedrático:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="16" y="77" width="89" height="17" forecolor="#010101" uuid="2cc504ee-08b9-4d29-9afa-99c0a7d6720f"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cod. Catedrático:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="105" y="77" width="100" height="17" uuid="3b14e51b-c9d1-417a-a968-39b5cfe85b7d"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{codcatedratico}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="105" y="94" width="100" height="17" uuid="172d089c-2f77-44ff-8758-963e88b86b5c"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombrecatedratico} + " " + $F{apellidocatedratico}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="32" splitType="Stretch">
+			<staticText>
+				<reportElement x="15" y="0" width="101" height="31" uuid="9345b84e-b944-4525-aa6f-71fb9401c8e3"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Double"/>
+					<bottomPen lineWidth="1.0" lineStyle="Double"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Carné]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="116" y="0" width="190" height="31" uuid="f668f921-b93e-4e84-b370-e700471acd61"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Double"/>
+					<bottomPen lineWidth="1.0" lineStyle="Double"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="306" y="0" width="44" height="31" uuid="aafabbf6-811a-4e40-89a6-018b68bf2a17"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Double"/>
+					<bottomPen lineWidth="1.0" lineStyle="Double"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Zona]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="350" y="0" width="49" height="31" uuid="e759a109-e3d3-499a-bedc-1ea5c9e687e2"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Double"/>
+					<bottomPen lineWidth="1.0" lineStyle="Double"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Examen Final]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="399" y="0" width="46" height="31" uuid="b6b80039-2934-4ac6-9555-4cf5556b804c"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Double"/>
+					<bottomPen lineWidth="1.0" lineStyle="Double"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nota Final]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="445" y="0" width="110" height="31" uuid="93ef2245-1c3e-4259-81ac-cfb00185d889"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Double"/>
+					<bottomPen lineWidth="1.0" lineStyle="Double"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Observaciones]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement x="116" y="1" width="190" height="20" uuid="4564b038-bc18-4c89-88b6-af0b74d5b860"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{estudiante}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="15" y="1" width="100" height="20" uuid="4ecb2402-21ad-4c77-8348-ab29ad5aa0d6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{carne}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="15" y="21" width="540" height="1" uuid="d8adc811-267a-44ed-90ef-4794c85ec002"/>
+			</line>
+			<textField>
+				<reportElement x="306" y="0" width="39" height="20" uuid="7da7ca76-ff9e-42a2-b2ac-ce7b2e493e75"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{zona}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="347" y="1" width="46" height="19" uuid="976cb455-2bd9-4391-83f5-354caa058ef2"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{examen_final}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="394" y="1" width="43" height="20" uuid="2f70b8cd-190a-421e-ae56-2710defac9ff"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{zona}+$F{examen_final}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="446" y="2" width="109" height="20" uuid="6d0a424c-b397-4ec6-8390-7f212543572e"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{excusa}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="22">
+			<textField>
+				<reportElement x="393" y="1" width="80" height="20" uuid="3e6bf13a-c5f9-45e4-934a-8ef341962eb6"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Pag "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="473" y="0" width="82" height="20" uuid="21005861-4a5c-46ca-bdcb-1dbb63a514fd"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="23" splitType="Stretch">
+			<staticText>
+				<reportElement x="371" y="5" width="152" height="17" forecolor="#010101" uuid="d3755a08-98dd-4306-a90a-b9e77fc48f79"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total estudiantes asignados:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="525" y="5" width="30" height="16" uuid="4ed133ee-9119-433c-bd12-b6e6376eff41"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{carne_1}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>
