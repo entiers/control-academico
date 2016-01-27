@@ -116,7 +116,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         criteria4.add(Restrictions.eq("usuario", usuario));
 
         // retorna todo los roles, si no encuentra roles retorna la lista vacia
-        return this.daoGeneralImpl.find(criteria1);
+        List<Rol> roles = this.daoGeneralImpl.find(criteria1);
+        for(Rol rol:roles){
+            System.out.println("__rol__: "+rol.getNombre());
+        }
+        return roles;
+        
     }
 //______________________________________________________________________________
     /**
