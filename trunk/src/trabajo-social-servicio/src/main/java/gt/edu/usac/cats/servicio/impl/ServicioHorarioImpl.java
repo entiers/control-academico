@@ -253,10 +253,11 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
     public void actualizarHorario(Horario horario, String[] horarioDiasWrapper) throws DataIntegrityViolationException,  DataAccessException{
         Session sesion = this.daoGeneralImpl.getSesion();
 
-
+        System.out.println("***** Horario Impl (atualizarHorario): "+horario.getIdHorario());
         horario.setHorarioDias(null);
-        this.actualizar(horario);
-
+        this.daoGeneralImpl.getSesion().merge(horario);
+        
+        
         Query query = sesion.createQuery("delete from HorarioDia where horario = :horario");
         query.setParameter("horario", horario);
         query.executeUpdate();
@@ -444,7 +445,18 @@ public class ServicioHorarioImpl extends ServicioGeneralImpl implements Servicio
         return query.list();
     }
 
-   
- 
+//   /**Listado de cursos que pueen ser asignados segun el semestre actual*/
+//     public <T> List<T> listarCursosSemestrePensum(Class<T> claseEntidad, boolean ordenAscendente, String columna) 
+//            throws DataAccessException {
+//        
+//        DetachedCriteria criteria = DetachedCriteria.forClass(claseEntidad);
+//        criteria.add(Restrictions.eq("",true));
+//        if(ordenAscendente)
+//            criteria.addOrder(Order.asc(columna));
+//        else
+//            criteria.addOrder(Order.desc(columna));
+//
+//        return this.daoGeneralImpl.find(criteria);
+//    }
 
 }

@@ -88,4 +88,6 @@ public interface ServicioCursoAprobado extends ServicioGeneral{
      */
     List<CursoAprobado> listaCursoAprobadoModificable(AsignacionEstudianteCarrera asignacionEstudianteCarrera)
             throws DataAccessException;
+    
+    //CursoAprobado obtenerCursoAprobado(Asignacion asignacion);
 }
