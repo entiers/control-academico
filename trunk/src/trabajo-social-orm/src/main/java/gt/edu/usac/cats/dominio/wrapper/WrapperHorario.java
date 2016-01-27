@@ -56,6 +56,7 @@ public class WrapperHorario implements Serializable {
     private TipoHorario tipoHorario;
     
     private Short idSalon;
+    private boolean maestro;
 
     /**
      * Constructor del wrapper, se inicializan los atributos a mostrar en las
@@ -90,6 +91,7 @@ public class WrapperHorario implements Serializable {
         this.horarioDiasWrapper = horario.getHorarioDiasNumeroAsArrayString();
         this.setTipoHorario(horario.getTipo());
         this.idSalon = horario.getSalon().getIdSalon();
+        this.maestro = horario.isMaestro();
     }
 //______________________________________________________________________________
 
@@ -111,6 +113,7 @@ public class WrapperHorario implements Serializable {
         if(horario.getSalon().getIdSalon() == 0){
             horario.getSalon().setIdSalon(idSalon);
         }
+        horario.setMaestro(this.maestro);
     }
 //______________________________________________________________________________
 
@@ -253,6 +256,20 @@ public class WrapperHorario implements Serializable {
     public void setIdSalon(Short idSalon) {
         this.idSalon = idSalon;
         this.salon.setIdSalon(idSalon);
+    }
+
+    /**
+     * @return the maestro
+     */
+    public boolean isMaestro() {
+        return maestro;
+    }
+
+    /**
+     * @param maestro the maestro to set
+     */
+    public void setMaestro(boolean maestro) {
+        this.maestro = maestro;
     }
 
 }
