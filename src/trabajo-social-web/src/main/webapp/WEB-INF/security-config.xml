@@ -138,6 +138,9 @@
         <intercept-url pattern="/modificarCursoAprobadoLista.htm" access="hasRole('ROLE_AGREGAR_CURSO_APROBADO')" />
         
         <intercept-url pattern="/cambioContrasenia.htm" access="hasRole('ROLE_CAMBIO_CONTRASENIA')" />
+        <intercept-url pattern="/generarCursosGanadosEstudiante.htm" access="hasRole('ROLE_MOSTRAR_CURSOS_ASIGNADOS')" />        
+        
+        
         <!-- se especifica que pagina contiene el formulario de login -->
         <form-login login-page='/login.htm' default-target-url='/index.htm' always-use-default-target='true'/>
         

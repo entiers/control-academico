@@ -42,7 +42,7 @@ import org.springframework.web.context.WebApplicationContext;
     "wrapperEquivalenciaPorPensum"})
 public class ControladorMostrarPensumEstudianteCarrera extends ControladorAbstractoPensumEstudianteCarrera implements Serializable{
 //______________________________________________________________________________
-    /**
+    /** 
      * Objeto de tipo {@link AsignacionEstudianteCarrera} que ha sido seleccionado
      */
     private AsignacionEstudianteCarrera asignacionEstudianteCarrera;

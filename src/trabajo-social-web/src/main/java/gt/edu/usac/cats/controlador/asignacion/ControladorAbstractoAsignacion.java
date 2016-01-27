@@ -34,10 +34,12 @@ import gt.edu.usac.cats.util.Mensajes;
 import gt.edu.usac.cats.velocity.FabricaTemplateVelocity;
 import gt.edu.usac.cats.velocity.contexto.InformacionAsignacionEstudiante;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.mail.MessagingException;
 import org.apache.log4j.Logger;
+import org.springframework.ui.Model;
 
 
 /**
@@ -45,7 +47,7 @@ import org.apache.log4j.Logger;
  * @author Carlos Solorzano
  * @version 1.0
  */
-public abstract class ControladorAbstractoAsignacion {
+public abstract class ControladorAbstractoAsignacion implements Serializable{
 //______________________________________________________________________________
     private static Logger log = Logger.getLogger(ControladorAbstractoAsignacion.class);
 //_____________________________________________________________________________
@@ -144,4 +146,14 @@ public abstract class ControladorAbstractoAsignacion {
             log.error(Mensajes.MAIL_EXCEPTION, ex);
         }
     }
+    
+//    protected void setModelo(Model modelo){
+//        modelo.addAttribute("errorEntidad", false);
+//        modelo.addAttribute("estudianteNoInscrito", false);
+//        modelo.addAttribute("periodoInvalido",false);
+//        modelo.addAttribute("cursoComputacion", false);
+//        modelo.addAttribute("noExisteHorario", false);
+//        modelo.addAttribute("noPensumValido", false);
+//        
+//    }
 }

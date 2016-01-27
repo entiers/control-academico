@@ -118,14 +118,10 @@ public class ControladorAgregarHorario extends ControladorAbstractoHorario {
         if (!bindingResult.hasErrors()) {
             try {
                 Horario horario = new Horario();
-                System.out.println("Hannah is here:  " + wrapperHorario.getIdSalon()+ wrapperHorario.getSeccion());
+                //System.out.println("Hannah is here:  " + wrapperHorario.getIdSalon()+ wrapperHorario.getSeccion());
                 
                 wrapperHorario.quitarWrapper(horario);
-                System.out.println("**semestre: "+horario.getSemestre().getIdSemestre());
-                System.out.println("**seccion: "+horario.getSeccion());
-//                System.out.println("**curso: "+horario.getAsignacionCursoPensum().getCurso().getIdCurso());
-//                System.out.println("**pensum: "+horario.getAsignacionCursoPensum().getPensum().getIdPensum());
-                System.out.println("**idAsignacionCursoPensum: "+horario.getAsignacionCursoPensum().getIdAsignacionCursoPensum());
+               
                 List<Horario> otros = this.servicioHorarioImpl.getHorario(horario.getAsignacionCursoPensum(), 
                         horario.getSemestre(), horario.getTipo(), horario.getSeccion());
                 System.out.println("Existen otros: "+otros.size());

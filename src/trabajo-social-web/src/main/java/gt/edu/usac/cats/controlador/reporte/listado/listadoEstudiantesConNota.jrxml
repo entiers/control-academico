@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="38e0380e-9cec-4ba6-b427-1f01bc515c9b">
-	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="105"/>
-	<property name="ireport.y" value="217"/>
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="39"/>
+	<property name="ireport.y" value="97"/>
 	<parameter name="id_horario" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[select * from reporte.detalle_asignacion_vw
-where id_horario = $P{id_horario}]]>
+where id_horario = $P{id_horario}
+order by carne]]>
 	</queryString>
 	<field name="codcatedratico" class="java.lang.String"/>
 	<field name="nombrecatedratico" class="java.lang.String"/>
@@ -64,7 +65,7 @@ where id_horario = $P{id_horario}]]>
 					<textElement>
 						<font size="14" isBold="true"/>
 					</textElement>
-					<text><![CDATA[LISTADO DE ESTUDIANTES - NOTAS ACUMULADAS]]></text>
+					<text><![CDATA[LISTADO DE NOTAS DE ESTUDIANTES]]></text>
 				</staticText>
 			</frame>
 			<staticText>
@@ -210,37 +211,39 @@ where id_horario = $P{id_horario}]]>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="22" splitType="Stretch">
+		<band height="17" splitType="Stretch">
 			<textField>
-				<reportElement x="116" y="1" width="190" height="20" uuid="4564b038-bc18-4c89-88b6-af0b74d5b860"/>
-				<textElement verticalAlignment="Middle"/>
+				<reportElement x="116" y="1" width="190" height="15" uuid="4564b038-bc18-4c89-88b6-af0b74d5b860"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{estudiante}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="15" y="1" width="100" height="20" uuid="4ecb2402-21ad-4c77-8348-ab29ad5aa0d6"/>
+				<reportElement x="15" y="1" width="100" height="15" uuid="4ecb2402-21ad-4c77-8348-ab29ad5aa0d6"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{carne}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="15" y="21" width="540" height="1" uuid="d8adc811-267a-44ed-90ef-4794c85ec002"/>
+				<reportElement x="15" y="15" width="540" height="1" uuid="d8adc811-267a-44ed-90ef-4794c85ec002"/>
 			</line>
 			<textField>
-				<reportElement x="306" y="0" width="39" height="20" uuid="7da7ca76-ff9e-42a2-b2ac-ce7b2e493e75"/>
+				<reportElement x="306" y="0" width="39" height="15" uuid="7da7ca76-ff9e-42a2-b2ac-ce7b2e493e75"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{zona}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="347" y="1" width="46" height="19" uuid="976cb455-2bd9-4391-83f5-354caa058ef2"/>
+				<reportElement x="347" y="1" width="46" height="15" uuid="976cb455-2bd9-4391-83f5-354caa058ef2"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{examen_final}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="394" y="1" width="43" height="20" uuid="2f70b8cd-190a-421e-ae56-2710defac9ff"/>
+				<reportElement x="394" y="1" width="43" height="15" uuid="2f70b8cd-190a-421e-ae56-2710defac9ff"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{zona}+$F{examen_final}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="446" y="2" width="109" height="20" uuid="6d0a424c-b397-4ec6-8390-7f212543572e"/>
+				<reportElement x="446" y="2" width="109" height="15" uuid="6d0a424c-b397-4ec6-8390-7f212543572e"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{excusa}]]></textFieldExpression>
 			</textField>

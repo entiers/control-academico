@@ -108,6 +108,9 @@ public class ControladorReiniciarContrasenia implements Serializable{
         try{
             //Haciendo el cambio de contrase;a y reiniciando el codigo de validacion
             this.usuario.setPassword(wrapperContrasenia.getContrasenia1());
+            System.out.println("usuaroi: "+usuario.getNombreUsuario());
+            System.out.println("usuaroi id: "+usuario.getIdUsuario());
+            System.out.println("pass:"+wrapperContrasenia.getContrasenia1());
             this.usuario.setCodigoValidacion("");
             this.servicioUsuarioImpl.actualizar(this.usuario);
 

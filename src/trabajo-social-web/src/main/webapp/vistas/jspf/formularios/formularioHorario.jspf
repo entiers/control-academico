@@ -48,7 +48,7 @@
     <form:select path="asignacionCursoPensum.idAsignacionCursoPensum" cssStyle="width: 250px;">
         <form:option value="" label="Seleccionar un valor" />
         <c:forEach items="${listadoCursos}" var="aCP">
-            <form:option value="${aCP.idAsignacionCursoPensum}">${aCP.pensum.codigo} - ${aCP.curso.nombre}</form:option>>
+            <form:option value="${aCP.idAsignacionCursoPensum}">[${aCP.pensum.codigo}] ${aCP.curso.codigo} -${aCP.curso.nombre} (${aCP.numeroSemestre})</form:option>>
         </c:forEach>
     </form:select>
     <form:errors path="asignacionCursoPensum.idAsignacionCursoPensum" cssClass="claseError" />

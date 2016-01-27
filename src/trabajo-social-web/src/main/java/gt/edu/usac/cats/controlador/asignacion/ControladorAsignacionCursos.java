@@ -91,13 +91,13 @@ public class ControladorAsignacionCursos extends ControladorAbstractoAsignacion 
      *
      * @param modelo Objeto {@link Model} que contiene todos los objetos que
      * seran usados en la pagina
+     * @param request
      * @return String Contiene el nombre de la vista a mostrar
      */
     @RequestMapping(value = "asignacionCursos.htm", method = RequestMethod.GET)
     public String asignacionCursos(Model modelo, HttpServletRequest request) {
         try {
             DatosAsignacion datosAsignacion = new DatosAsignacion();
-
             //Obteniendo curso de computacion
             //this.cursoComputacion = this.servicioGeneralImpl.cargarEntidadPorID(Curso.class, 38);
 
@@ -301,4 +301,7 @@ public class ControladorAsignacionCursos extends ControladorAbstractoAsignacion 
         
         return secciones;//servicioHorarioImpl.getHorario(asignacionCursoPensum, semestre, tipoHorario);
     }
+    
+    
+    
 }

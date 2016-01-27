@@ -36,12 +36,24 @@
         
 <c:choose>
     <c:when test="${not empty listadoDetalleAsignacion}">
+        <div id="divCampos">
+            <fieldset>
+                <legend>Oficializar Notas</legend>
+                    <form:label for="fechaNotas" path="fechaNotas">Fecha Acta*:</form:label>
+                    <form:input path="fechaNotas" cssStyle="width:250px;" />
+                    <br/>
+                    <input type="button" value='<fmt:message key="ingresoNota.btnOficializar"/>' onclick="javascript:guardar(true,'',-1);" />             
+                                        <form:errors path="fechaNotas" cssClass="claseError" />
+            </fieldset>
+        </div>    
+
         <fieldset>
             <legend><fmt:message key="ingresoNota.asignaciones"/></legend>
             <h3><fmt:message key="curso.menu"/>: ${nombreCurso} Secci&oacute;n ${numeroSeccion}</h3>
             <display:table  class="ui-widget ui-widget-content" name="listadoDetalleAsignacion"
                             id="detAsigna" requestURI="paginarNotasPag.htm" pagesize="${pageSize}">
 
+                <display:setProperty name="paging.banner.placement">both</display:setProperty>
                 <display:setProperty name="paging.banner.full">
                     <span class="pagelinks">
                         [<a href="{1}">Primera</a>/<a href="{2}">Atras</a>]
@@ -137,11 +149,12 @@
                         <display:column title="Nota Final">                            
                             <form:input path="notaFinal" 
                                         cssStyle="width:50px;"
+                                        disabled="${detAsigna.oficializado}"
                                         />
                         </display:column>  
 
                         <display:column titleKey="agregarEstudiante.estadistica"  >
-                            <form:select path="listExcusa">
+                            <form:select path="listExcusa" disabled="${detAsigna.oficializado}">
                                 <c:forEach var="item" items="${excusasList}">
                                     <c:choose>
                                         <c:when test="${detAsigna.excusa==item}">
@@ -160,7 +173,7 @@
                         </display:column>                                 
                     </c:otherwise>
                 </c:choose>                            
-o
+<!-- footer -->
 
             </display:table>    
             <br/>
@@ -172,7 +185,6 @@ o
                 <input type="button" value='<fmt:message key="ingresoNota.btnGuardar"/>' onclick="javascript:guardar(false, '', -1);" />
             </c:if>
             
-            <input type="button" value='<fmt:message key="ingresoNota.btnOficializar"/>' onclick="javascript:guardar(true,'',-1);" /> 
             <input type="button" value='Calcular Nota' onclick="javascript:calculaNotaFinal();" /> 
                
         </fieldset>

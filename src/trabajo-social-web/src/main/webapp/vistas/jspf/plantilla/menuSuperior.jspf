@@ -315,7 +315,9 @@
                     <%--Acta de Notas--%>
                     <sec:authorize access="hasRole('ROLE_REPORTE_ACTA_CURSOS')">
                         <li><a href="rptActaCursos.htm"><fmt:message key="rptActaCursos.titulo"/></a></li>
+                         <li><a href="rptActaPreliminarNotas.htm">ACTA PRELIMINAR NOTAS</a></li>
                     </sec:authorize>
+
                 </ul>
             </li>
         </sec:authorize>
@@ -332,6 +334,16 @@
                     <sec:authorize access="hasRole('ROLE_MOSTRAR_CURSOS_ASIGNADOS')">
                         <li><a href="buscarAsignacionPorEstudiante.htm"><fmt:message key="miscursos.asignados"/></a></li>
                     </sec:authorize>
+                <%--Consulta de cursos aprobados--%>
+                    
+                    <sec:authorize access="hasRole('ROLE_MOSTRAR_CURSOS_ASIGNADOS')">
+                        <li><a href="generarCursosGanadosEstudiante.htm">Reporte de Cursos Aprobados</a></li>
+                    </sec:authorize>
+                    <sec:authorize access="hasRole('ROLE_MOSTRAR_CURSOS_ASIGNADOS')">
+                        <li><a href="generarHistorialCursosAsignadosEstudiante.htm">Reporte de Historial de Cursos Asignados</a></li>
+                    </sec:authorize>
+                
+
                     <%--Asignacion de cursos--%>
                     <sec:authorize access="hasRole('ROLE_ASIGNACION_CURSOS')">
                         <li><a href="asignacionCursos.htm"><fmt:message key="miscursos.asignacionCursos.titulo"/></a></li>

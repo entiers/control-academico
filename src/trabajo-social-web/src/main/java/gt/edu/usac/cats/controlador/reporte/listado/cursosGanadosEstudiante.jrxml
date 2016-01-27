@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="612" pageHeight="792" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryWithPageHeaderAndFooter="true" uuid="39a4b624-e2e0-4d76-a14a-3066bce84dcc">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="612" pageHeight="792" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="39a4b624-e2e0-4d76-a14a-3066bce84dcc">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="680"/>
+	<property name="ireport.y" value="8"/>
 	<parameter name="carne" class="java.lang.String"/>
 	<parameter name="id_carrera" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -10,12 +10,11 @@
 	<parameter name="fechahoy" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select to_number(cur.codigo, '999999999999') as intcodcurso,e.carne, e.nombre as estudiante, cur.codigo, cur.nombre as curso, 
+    cuap.laboratorio, cuap.zona + cuap.examen_final as nota, 
     acp.creditos_practicos + acp.creditos_teoricos as creditos,
     car.nombre as carrera, 
     to_char(current_date,'DD/MM/YYYY') as fechahoy,
-    to_char(cuap.fecha_aprobacion,'DD/MM/YYYY') as fecha_aprobacion,
-case when cuap.equivalencia = true then 'EQ' else to_char(cuap.zona + cuap.examen_final, '999') end as nota_eq,
-cuap.zona + cuap.examen_final as nota
+    to_char(cuap.fecha_aprobacion,'DD/MM/YYYY') as fecha_aprobacion
 from control.estudiante e 
     inner join control.asignacion_estudiante_carrera aec on e.id_estudiante = aec.id_estudiante
     inner join control.asignacion asig on aec.id_asignacion_estudiante_carrera = asig.id_asignacion_estudiante_carrera
@@ -27,17 +26,16 @@ where e.carne = $P{carne}
 and car.id_carrera = $P{id_carrera}
 order by 1, cuap.fecha_aprobacion;]]>
 	</queryString>
-	<field name="intcodcurso" class="java.math.BigDecimal"/>
 	<field name="carne" class="java.lang.String"/>
 	<field name="estudiante" class="java.lang.String"/>
 	<field name="codigo" class="java.lang.String"/>
 	<field name="curso" class="java.lang.String"/>
+	<field name="laboratorio" class="java.lang.Integer"/>
+	<field name="nota" class="java.lang.Integer"/>
 	<field name="creditos" class="java.lang.Integer"/>
 	<field name="carrera" class="java.lang.String"/>
 	<field name="fechahoy" class="java.lang.String"/>
 	<field name="fecha_aprobacion" class="java.lang.String"/>
-	<field name="nota_eq" class="java.lang.String"/>
-	<field name="nota" class="java.lang.Integer"/>
 	<variable name="nota_1" class="java.lang.Double" calculation="Average">
 		<variableExpression><![CDATA[$F{nota}]]></variableExpression>
 	</variable>
@@ -50,17 +48,9 @@ order by 1, cuap.fecha_aprobacion;]]>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="223" splitType="Stretch">
-			<textField>
-				<reportElement x="17" y="112" width="505" height="85" uuid="e635f9a0-2dc2-4601-bc45-7933a717a5c8"/>
-				<textElement textAlignment="Justified"/>
-				<textFieldExpression><![CDATA["La infrascrita Encargada del Departamento del Control Académico de la ESCUELA DE TRABAJO SOCIAL de la "+
-"Universidad de San Carlos de Guatemala, CERTIFICA: "+"Que ha tenido a la vista las Actas de Examenes "+"correspondientes a la carrera de  "+
-$F{carrera}+" en donde consta que el (la) estudiante "+$F{estudiante}.toUpperCase()+" con carnet No. "+$F{carne} + " cursó y aprobó sobre la base "+
-"de 0 a 100 puntos, lo siguiente:"]]></textFieldExpression>
-			</textField>
+		<band height="121" splitType="Stretch">
 			<staticText>
-				<reportElement mode="Transparent" x="0" y="203" width="48" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="77197c37-086a-4ef1-9515-db2ca05bdd47"/>
+				<reportElement mode="Transparent" x="9" y="89" width="48" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="77197c37-086a-4ef1-9515-db2ca05bdd47"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<bottomPen lineWidth="0.75"/>
@@ -72,7 +62,7 @@ $F{carrera}+" en donde consta que el (la) estudiante "+$F{estudiante}.toUpperCas
 				<text><![CDATA[CODIGO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Transparent" x="48" y="203" width="314" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="59bc93e4-5c90-4633-b47c-e88731f6dce8"/>
+				<reportElement mode="Transparent" x="57" y="89" width="314" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="59bc93e4-5c90-4633-b47c-e88731f6dce8"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
@@ -84,7 +74,7 @@ $F{carrera}+" en donde consta que el (la) estudiante "+$F{estudiante}.toUpperCas
 				<text><![CDATA[MATERIA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Transparent" x="362" y="203" width="54" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="0b8548ca-c431-4396-810d-b575ea3564f3"/>
+				<reportElement mode="Transparent" x="371" y="89" width="54" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="0b8548ca-c431-4396-810d-b575ea3564f3"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
@@ -96,13 +86,10 @@ $F{carrera}+" en donde consta que el (la) estudiante "+$F{estudiante}.toUpperCas
 				<text><![CDATA[NOTA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Transparent" x="416" y="203" width="62" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="b2a8ec2a-dc47-4d83-a0bb-c4373b363bb1"/>
-				<box>
-					<pen lineWidth="1.0"/>
+				<reportElement mode="Transparent" x="425" y="89" width="62" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="b2a8ec2a-dc47-4d83-a0bb-c4373b363bb1"/>
+				<box topPadding="1" leftPadding="1">
 					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="0.0"/>
 					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
 					<font fontName="SansSerif" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
@@ -111,24 +98,54 @@ $F{carrera}+" en donde consta que el (la) estudiante "+$F{estudiante}.toUpperCas
 				<text><![CDATA[CREDITOS]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Transparent" x="478" y="203" width="94" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="4bf7d36c-73ff-4426-948b-358bb01a2912"/>
+				<reportElement mode="Transparent" x="487" y="89" width="82" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="4bf7d36c-73ff-4426-948b-358bb01a2912"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
-					<font fontName="SansSerif" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<font fontName="SansSerif" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<text><![CDATA[FECHA APROBACIÓN]]></text>
+				<text><![CDATA[FECHA APROBACIÒN]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="136" y="29" width="330" height="20" uuid="86493cf6-1c96-4cf1-8fbb-ab5fa48d5472"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CURSOS GANADOS POR EL ESTUDIANTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="57" y="58" width="61" height="20" uuid="f10be839-b98c-4fa5-b4f5-8576be550f84"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="118" y="58" width="298" height="20" uuid="727b0328-3321-4bd2-ba77-2c4256e3a0d8"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{estudiante}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="416" y="58" width="39" height="20" uuid="8f5496f8-671e-437b-8208-cbd7f785b95d"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Carné:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="456" y="58" width="100" height="20" uuid="67de4341-1365-4949-a06b-ebb8f45e9efb"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{carne}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
-	<pageHeader>
-		<band height="109" splitType="Prevent">
-			<printWhenExpression><![CDATA[$V{PAGE_NUMBER} >1]]></printWhenExpression>
-		</band>
-	</pageHeader>
 	<columnHeader>
 		<band height="135" splitType="Stretch">
 			<printWhenExpression><![CDATA[$V{PAGE_NUMBER} != 1]]></printWhenExpression>
@@ -166,15 +183,16 @@ $F{carrera}+" en donde consta que el (la) estudiante "+$F{estudiante}.toUpperCas
 				<text><![CDATA[NOTA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="478" y="113" width="94" height="19" uuid="c55a5fc3-ed8e-4f55-9afd-4e73aca0274a"/>
+				<reportElement x="478" y="113" width="82" height="19" uuid="c55a5fc3-ed8e-4f55-9afd-4e73aca0274a"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Double"/>
 					<bottomPen lineWidth="1.0" lineStyle="Double"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="7" isBold="true"/>
+					<font size="6" isBold="true"/>
 				</textElement>
-				<text><![CDATA[FECHA APROBACIÓN]]></text>
+				<text><![CDATA[FECHA
+APROBACIÓN]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="416" y="113" width="62" height="19" uuid="fceb865f-bc40-44e6-9c53-f10b0340df1f"/>
@@ -201,6 +219,12 @@ $F{carrera}+" en donde consta que el (la) estudiante "+$F{estudiante}.toUpperCas
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{curso}]]></textFieldExpression>
 			</textField>
+			<textField>
+				<reportElement x="362" y="0" width="54" height="16" uuid="b9d75138-a1e2-453a-86ab-18a53b5234be"/>
+				<box rightPadding="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nota}]]></textFieldExpression>
+			</textField>
 			<textField pattern="">
 				<reportElement x="478" y="0" width="82" height="16" uuid="6c118af8-047a-435f-a880-79a2857d1a62"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
@@ -210,10 +234,6 @@ $F{carrera}+" en donde consta que el (la) estudiante "+$F{estudiante}.toUpperCas
 				<reportElement x="416" y="0" width="62" height="16" uuid="d38b1aee-ee96-4aee-a9c4-a28de0493300"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{creditos}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="364" y="0" width="52" height="16" uuid="7c523295-a71e-47c4-8263-c5c51c354397"/>
-				<textFieldExpression><![CDATA[$F{nota_eq}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -233,36 +253,18 @@ $F{carrera}+" en donde consta que el (la) estudiante "+$F{estudiante}.toUpperCas
 				</textElement>
 				<textFieldExpression><![CDATA[$V{nota_1}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="0" y="34" width="537" height="27" uuid="a5a89085-b4e5-4c39-a7ea-374032a4b7b2"/>
-				<textElement textAlignment="Justified"/>
-				<text><![CDATA[De conformidad con el Reglamento de Evaluación de la Escuela Aprobado a partir del 01-07-2005, las materias se aprueban con SESENTA Y UN (61) PUNTOS, y el máximo que puede obtenerse son CIEN (100) PUNTOS.]]></text>
-			</staticText>
 			<textField>
-				<reportElement x="0" y="61" width="537" height="38" uuid="7346dd42-4f28-46a7-82ed-736888af2817"/>
+				<reportElement x="0" y="61" width="537" height="16" uuid="7346dd42-4f28-46a7-82ed-736888af2817"/>
 				<textElement textAlignment="Justified"/>
-				<textFieldExpression><![CDATA["A solicitud de parte interesada y para los usos legales que convenga, "+
-" se extiende, sella y firma la presente CERTIFICACIÓN, en la Ciudad de Guatemala, "+
-" a los "+$P{fechahoy}+"."]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Fecha de Impresion:"+$P{fechahoy}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="251" y="99" width="131" height="20" uuid="a9e65544-0f69-4a53-8d3e-d309111089f7"/>
+				<textElement>
+					<font isItalic="true"/>
+				</textElement>
 				<text><![CDATA[ID Y ENSEÑAD A TODOS]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="118" y="152" width="71" height="12" uuid="f454c932-0b95-4a81-bef2-3d09f567d0fc"/>
-				<text><![CDATA[DIRECTOR]]></text>
-			</staticText>
-			<line>
-				<reportElement x="72" y="151" width="150" height="1" uuid="2d6ee216-048a-4446-8666-86d40881203f"/>
-			</line>
-			<staticText>
-				<reportElement x="382" y="152" width="133" height="14" uuid="544def1c-7ac0-4f4c-8427-60a107b3bee5"/>
-				<text><![CDATA[CONTROL ACADEMICO]]></text>
-			</staticText>
-			<line>
-				<reportElement x="371" y="151" width="144" height="1" uuid="f8c1e706-db64-4694-a6e2-7cd63cfa4987"/>
-			</line>
 			<staticText>
 				<reportElement x="0" y="0" width="118" height="17" forecolor="#010101" uuid="f172ff76-19ad-4725-879e-a8dd8ebd6cf2"/>
 				<textElement verticalAlignment="Middle">

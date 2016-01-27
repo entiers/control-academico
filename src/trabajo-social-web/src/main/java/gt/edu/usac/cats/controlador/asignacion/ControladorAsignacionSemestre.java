@@ -104,7 +104,7 @@ public class ControladorAsignacionSemestre extends ControladorAbstractoAsignacio
                         .cargarEntidadPorID(Horario.class, datosAsignacion.getIdHorario());
                 */
                 
-                System.out.println(datosAsignacion.getSeccion());
+                //System.out.println(datosAsignacion.getSeccion());
                 listaHorarioAsignacion.addAll(this.servicioHorarioImpl.getHorariosPorSecciones(datosAsignacion.getSeccion(), 
                         asignacionCursoPensum, 
                         semestre, 
@@ -210,7 +210,7 @@ public class ControladorAsignacionSemestre extends ControladorAbstractoAsignacio
 
                     //Validando total de asignaciones por curso
                     if(servicioDetalleAsignacionImpl.getTotalAsignaciones(horario.getAsignacionCursoPensum(),
-                               asignacionEstudianteCarrera, TipoAsignacion.ASIGNACION_CURSOS_SEMESTRE)>=3){
+                               asignacionEstudianteCarrera, TipoAsignacion.ASIGNACION_CURSOS_SEMESTRE)>3){
                         RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.totalAsignacionesExcedidas", false);
                         return "asignacion/asignacionSemestre";
                     }

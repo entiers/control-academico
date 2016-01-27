@@ -71,6 +71,10 @@
         </script>
     </head>
     <body>
+        ${errorEntidad} <br/>
+        ${errorEstudianteAsignacion} <br/>
+        ${errorAsignacionSinDetalle}
+        
         <h1><fmt:message key="detalleAsignacion.titulo"/></h1>
         <c:choose>
             <c:when test="${errorEntidad}">
