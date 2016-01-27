@@ -99,10 +99,11 @@ public class ControladorDesAsignacionCursos implements Serializable{
     public String getDesAsignacionCursos(Model modelo,
                                         HttpServletRequest request){
 
+        System.out.println("**** constructor DesAsignacionCursos");
         try{
             //Cargar semestre activo
             this.semestre = this.servicioSemestreImpl.getSemestreActivo();
-
+            System.out.println("Semestre: "+semestre);
             //Validar periodo de des asignacion de cursos
             if (!this.servicioCalendarioActividadesImpl.esFechaActividadValida(TipoActividad.DESASIGNACION_CURSOS,
                                                                     this.semestre,
@@ -114,7 +115,7 @@ public class ControladorDesAsignacionCursos implements Serializable{
             //Buscando usuario logueado por nombre
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             Usuario usuario = this.servicioUsuarioImpl.cargarUsuarioPorNombre(auth.getName().toString());
-
+            
             //Validando que el usuario se haya encontrado y sea un estudiante
             if (usuario != null & usuario.getEstudiantes().toArray().length > 0) {
                 this.estudiante = (Estudiante) usuario.getEstudiantes().toArray()[0];
@@ -125,7 +126,9 @@ public class ControladorDesAsignacionCursos implements Serializable{
 
             //Cargar listado de asignaciones en semestre actual
             this.setModelo(modelo);
+            
             modelo.addAttribute("datosAsignacion", new DatosAsignacion());
+            
             
         }
         catch (Exception e) {
@@ -195,6 +198,7 @@ public class ControladorDesAsignacionCursos implements Serializable{
                                         .getListadoDetalleAsignacion(this.semestre,this.estudiante,
                                             TipoAsignacion.ASIGNACION_CURSOS_SEMESTRE
                                         );
+        System.out.println("DesAsignacion.modelo "+listaDetalleAsignacion.size());
         //Agregando objetos al modelo
         modelo.addAttribute("totalAsignaciones", listaDetalleAsignacion.size());
         modelo.addAttribute("listadoDetalleAsignacion", listaDetalleAsignacion);

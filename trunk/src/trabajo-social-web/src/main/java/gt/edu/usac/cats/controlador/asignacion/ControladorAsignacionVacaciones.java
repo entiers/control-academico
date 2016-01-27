@@ -189,7 +189,7 @@ public class ControladorAsignacionVacaciones extends ControladorAbstractoAsignac
 
                     //Validando total de asignaciones por curso
                     if(servicioDetalleAsignacionImpl.getTotalAsignaciones(horario.getAsignacionCursoPensum(),
-                               asignacionEstudianteCarrera, TipoAsignacion.ASIGNACION_CURSOS_VACACIONES)>=3){
+                               asignacionEstudianteCarrera, TipoAsignacion.ASIGNACION_CURSOS_VACACIONES)>3){
                         RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.totalAsignacionesExcedidas", false);
                         return "asignacion/asignacionVacaciones";
                     }

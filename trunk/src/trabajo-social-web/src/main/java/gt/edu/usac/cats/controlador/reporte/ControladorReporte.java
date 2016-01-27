@@ -4,19 +4,29 @@
  */
 package gt.edu.usac.cats.controlador.reporte;
 
+import gt.edu.usac.cats.dominio.Carrera;
+import gt.edu.usac.cats.dominio.Estudiante;
+import gt.edu.usac.cats.dominio.Usuario;
+import gt.edu.usac.cats.dominio.busqueda.DatosBusquedaAsignacion;
 import gt.edu.usac.cats.dominio.conf.Reporte;
 import gt.edu.usac.cats.enums.ControlReporte;
+import gt.edu.usac.cats.enums.TipoAsignacion;
 import gt.edu.usac.cats.servicio.ServicioGeneral;
+import gt.edu.usac.cats.servicio.ServicioUsuario;
+import gt.edu.usac.cats.util.RequestUtil;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.URISyntaxException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.Locale;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -26,7 +36,10 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.ContextLoader;
@@ -78,7 +91,11 @@ public class ControladorReporte implements Serializable{
         Map parametros = this.obtenerParametrosPorDefault();
 
         if (nombreParametro != null) {
+                System.out.println("param.nombre: "+nombreParametro.length);
+                System.out.println("param.tipo: "+valorParametro.length);
+                System.out.println("param.valor: "+tipoParametro.length);
             for (int i = 0; i < nombreParametro.length; i++) {
+
                 if (tipoParametro[i].equalsIgnoreCase("integer")) {
                     parametros.put(nombreParametro[i], new Integer(Integer.parseInt(valorParametro[i].toString())));
                 } else {
@@ -94,9 +111,11 @@ public class ControladorReporte implements Serializable{
         ControlReporte controlReporte = ControlReporte.valueOf(nombreControlReporte);
         System.out.println("&&&&&& controlReporte: "+parametros);
         
-        if (controlReporte.equals(ControlReporte.CERTIFICACION_CURSOS)){
+        if (controlReporte.equals(ControlReporte.CERTIFICACION_CURSOS) ||
+                controlReporte.equals(ControlReporte.CURSOS_GANADOS_ESTUDIANTE)){
             parametros.put("fechahoy", generarFechaLetras());
         }
+        
         this.crearReporte(controlReporte, parametros, response);
     }
 
@@ -161,4 +180,5 @@ public class ControladorReporte implements Serializable{
             
         return new HashMap();
     }
+        
 }

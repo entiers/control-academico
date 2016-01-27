@@ -82,6 +82,13 @@
                 var examenFinal = ${limiteExamenFinal}; 
                 var isOk = true;
                 $("#hdOficializar").val(value);
+                if (value){
+                    var siHace = confirm('Al realizar esta acción, se OFICIALIZARAN los datos del Acta de Notas y no podrán ser modificados. ¿Desea continuar?');
+                    if (siHace == false){
+                        return false;
+                    }
+                }
+                    
                 $('#frmGuardar input:text').each(function(index,item){                    
                     if(index!==0 && isNaN(item.value)){
                         alert('<fmt:message key="ingresoNota.validaciones.notasNumericas"/>');
@@ -168,11 +175,7 @@
         
         <c:if test="${mostrarEstudiantes}">
             <form:form action="guardarOficializar.htm" id="frmGuardar" method="POST" modelAttribute="wrapperIngresoNota" >
-               <div id="divCampos">
-                    <form:label for="fechaNotas" path="fechaNotas">Fecha Acta*:</form:label>
-                    <form:input path="fechaNotas" cssStyle="width:250px;" />
-                    <form:errors path="fechaNotas" cssClass="claseError" />
-                </div>
+              
                 <%@include file="../../jspf/formularios/formularioIngresoNotas.jspf" %>
             </form:form>
         </c:if>

@@ -63,6 +63,7 @@ public class ControladorAsignacionCursoPensum extends ControladorAbstractoPensum
      * que se encontro en la busqueda.</p>
      */
     private AsignacionCursoPensum asignacionCursoPensum;
+    
 //______________________________________________________________________________
     /**
      * <p>Matiene una bitaacutecora de lo realizado por esta clase.</p>
@@ -158,10 +159,13 @@ public class ControladorAsignacionCursoPensum extends ControladorAbstractoPensum
             try {
                 this.asignacionCursoPensum = new AsignacionCursoPensum();
                 wrapperAsignacionCursoPensum.setPensum(this.pensum);
-
+                System.out.println(">>> pensum:"+this.pensum);
+                System.out.println(">>modelo: "+modelo);
+                
                 wrapperAsignacionCursoPensum.quitarWrapper(asignacionCursoPensum, true);
-
+                
                 this.servicioPensumImpl.agregar(asignacionCursoPensum);
+               
 
 
                 wrapperAsignacionCursoPensum = new WrapperAsignacionCursoPensum();

@@ -185,5 +185,15 @@ public class ControladorReporteAsignacionesYNotasCurso implements Serializable {
         this.crearModelo(modelo, request);
         return "reportes/rptListadoEstudiantesConNotas";       
     }
+    
+        @RequestMapping(value  = "rptActaPreliminarNotas.htm",method = RequestMethod.GET)
+    public String getRptActaPreliminarNotas(Model modelo, HttpServletRequest request) {        
+
+        this.semestre = this.servicioSemestreImpl.getSemestreActivo();
+            System.out.println(">>>>>>>>>>> "+ControlReporte.ACTA_PRELIMINAR_NOTAS);
+        modelo.addAttribute("nombreControlReporte",ControlReporte.ACTA_PRELIMINAR_NOTAS);
+        this.crearModelo(modelo, request);
+        return "reportes/rptActaPreliminarNotas";       
+    }
 
 }

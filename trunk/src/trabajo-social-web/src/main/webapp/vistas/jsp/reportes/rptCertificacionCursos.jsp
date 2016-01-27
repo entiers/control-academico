@@ -36,8 +36,16 @@
                     
                 <div id="divCampos">
                     <input type="hidden" name="nombreParametro" value="carne" />
+                    <c:choose>      
+                    <c:when test="${empty mostrarCarne}">      
                     <label><fmt:message key="agregarEstudiante.carne"/></label>
                     <input name="valorParametro" id="valorParametro" />                    
+                    </c:when>
+                    <c:otherwise>
+                        <input type="hidden" name="valorParametro" 
+                               id="valorParametro" value="${carne}" />                    
+                    </c:otherwise>
+                    </c:choose>
                     <input type="hidden" name="tipoParametro" value="string" />
                 </div>
                 <input id="btnBuscar" type="submit" value='<fmt:message key="reportes.generar"/>' />

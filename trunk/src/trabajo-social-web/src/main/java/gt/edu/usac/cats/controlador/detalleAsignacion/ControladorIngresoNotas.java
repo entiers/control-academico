@@ -169,6 +169,7 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota imp
      * cursos a los que el catedratico se encuentra asignado en el semestre
      * actual</li> </p>
      * Se ejecuta la prmera vez que se muestra la pagina, cuando es root
+     * extraordinario
      */
     @RequestMapping(value = "ingresoNotaAdmin.htm", method = RequestMethod.GET)
     public String getIngresoNotaAdmin(Model modelo, HttpServletRequest request) {
@@ -202,8 +203,11 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota imp
 
         System.out.println("MC- POST(IngresoNota.htm) datosIngresoNota: " + datosIngresoNota);
 
+
         try {
             datosIngresoNota.setHorario(this.servicioHorarioImpl.cargarEntidadPorID(Horario.class, datosIngresoNota.getHorario().getIdHorario()));
+            System.out.println("MC- POST(IngresoNota.htm) datosIngresoNota. horario: " + datosIngresoNota.getHorario().getIdHorario());
+
             System.out.println("MC- POST(IngresoNota.htm) datosIngresoNota: " + datosIngresoNota.getHorario());
             this.listadoDetalleAsignacion = this.servicioDetalleAsignacionImpl.
                     getListadoDetalleAsignacion(datosIngresoNota.getHorario().getIdHorario());
@@ -331,19 +335,59 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota imp
                         super.servicioDetalleAsignacionImpl.actualizar(detAsign);
 
                         if (wrapperIngresoNota.getOficializar()) {
-                            if (notaFinal >= detAsign.getHorario().getAsignacionCursoPensum().getPensum().getNotaAprobacion()
-                                    && this.servicioCursoAprobadoImpl.getCursoAprobado(detAsign.getAsignacion(),
-                                            detAsign.getHorario().getAsignacionCursoPensum()) == null) {
-                                CursoAprobado cursoAprobado = new CursoAprobado();
-                                cursoAprobado.setAsignacion(detAsign.getAsignacion());
-                                cursoAprobado.setAsignacionCursoPensum(detAsign.getHorario().getAsignacionCursoPensum());
-                                cursoAprobado.setExamenFinal(detAsign.getExamenFinal());
-                                // se cambia por la fecha de acta - mc
-                                cursoAprobado.setFechaAprobacion(wrapperIngresoNota.getFechaNotas());
-                                System.out.println("**** fechaNotas: " + wrapperIngresoNota.getFechaNotas());
-                                cursoAprobado.setLaboratorio((short) 0);
-                                cursoAprobado.setZona(detAsign.getZona());
-                                super.servicioUsuarioImpl.agregar(cursoAprobado);
+
+                            if (this.esAdministrativo) {
+                                // Admin.:no valida que no exista el curso como curso aprobado
+                                
+                                 CursoAprobado ca = this.servicioCursoAprobadoImpl.getCursoAprobado(detAsign.getAsignacion(), 
+                                                            detAsign.getHorario().getAsignacionCursoPensum());
+                                 
+                                if (notaFinal >= detAsign.getHorario().getAsignacionCursoPensum().getPensum().getNotaAprobacion()) {
+                                    System.out.println("Esta aprobado "+detAsign.getAsignacion());
+                                    CursoAprobado cursoAprobado = new CursoAprobado();
+                                    cursoAprobado.setAsignacion(detAsign.getAsignacion());
+                                    cursoAprobado.setAsignacionCursoPensum(detAsign.getHorario().getAsignacionCursoPensum());
+                                    cursoAprobado.setExamenFinal(detAsign.getExamenFinal());
+                                    // se cambia por la fecha de acta - mc
+                                    cursoAprobado.setFechaAprobacion(wrapperIngresoNota.getFechaNotas());
+                                    System.out.println("**** fechaNotas: " + wrapperIngresoNota.getFechaNotas());
+                                    cursoAprobado.setLaboratorio((short) 0);
+                                    cursoAprobado.setZona(detAsign.getZona());
+                                    
+                                   
+                                    
+                                    if (ca !=null){
+                                        ca.setExamenFinal(detAsign.getExamenFinal());
+                                        // se cambia por la fecha de acta - mc
+                                        ca.setFechaAprobacion(wrapperIngresoNota.getFechaNotas());
+
+                                        ca.setLaboratorio((short) 0);
+                                        ca.setZona(detAsign.getZona());
+                                        super.servicioUsuarioImpl.agregarActualizar(ca);
+                                    }else{
+                                        super.servicioUsuarioImpl.agregarActualizar(cursoAprobado);
+                                    }
+                                } else{// si no esta aprobado
+                                    if (ca != null){
+                                        super.servicioUsuarioImpl.borrar(ca);
+                                    }
+                                }   
+                            } else {
+                                // Docente. valida que no exista como curso aprobado
+                                if (notaFinal >= detAsign.getHorario().getAsignacionCursoPensum().getPensum().getNotaAprobacion()
+                                        && this.servicioCursoAprobadoImpl.getCursoAprobado(detAsign.getAsignacion(),
+                                                detAsign.getHorario().getAsignacionCursoPensum()) == null) {
+                                    CursoAprobado cursoAprobado = new CursoAprobado();
+                                    cursoAprobado.setAsignacion(detAsign.getAsignacion());
+                                    cursoAprobado.setAsignacionCursoPensum(detAsign.getHorario().getAsignacionCursoPensum());
+                                    cursoAprobado.setExamenFinal(detAsign.getExamenFinal());
+                                    // se cambia por la fecha de acta - mc
+                                    cursoAprobado.setFechaAprobacion(wrapperIngresoNota.getFechaNotas());
+                                    System.out.println("**** fechaNotas: " + wrapperIngresoNota.getFechaNotas());
+                                    cursoAprobado.setLaboratorio((short) 0);
+                                    cursoAprobado.setZona(detAsign.getZona());
+                                    super.servicioUsuarioImpl.agregar(cursoAprobado);
+                                }
                             }
                         }
                     }

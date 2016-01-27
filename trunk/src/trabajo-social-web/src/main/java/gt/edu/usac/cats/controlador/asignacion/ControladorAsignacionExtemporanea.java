@@ -370,7 +370,7 @@ public class ControladorAsignacionExtemporanea extends ControladorAbstractoAsign
 
                     //Validando total de asignaciones por curso
                     if (servicioDetalleAsignacionImpl.getTotalAsignaciones(horario.getAsignacionCursoPensum(),
-                            asignacionEstudianteCarrera, datosAsignacion.getTipoAsignacion()) >= 3) {
+                            asignacionEstudianteCarrera, datosAsignacion.getTipoAsignacion()) > 3) {
                         RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.totalAsignacionesExcedidas", false);
                         return "asignacion/realizarAsignacionExtemporanea";
                     }
