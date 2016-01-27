@@ -76,7 +76,7 @@
       <groupId>gt.edu.usac.cats.etl</groupId>
       <artifactId>registro-csv</artifactId>
       <version>2.5</version>
-      <scope>compile</scope>
+      <type>jar</type>
     </dependency>
     
     <dependency>

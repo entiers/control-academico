@@ -5,13 +5,15 @@
 
 package gt.edu.usac.cats.etl;
 
+//import cats.etlregistrocsv_0_1.ETLRegistroCSV;
+import cats.etlregistrocsv_0_1.ETLRegistroCSV;
 import com.csvreader.CsvReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.Properties;
-import registrocsv.etlregistrocsv_0_1.ETLRegistroCSV;
+//import registrocsv.etlregistrocsv_0_1.ETLRegistroCSV;
 
 /**
  * Clase que hereda el comportamiento de {@link ManejadorETL}, esta clase lleva
