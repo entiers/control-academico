@@ -91,8 +91,10 @@ public class WrapperAsignacionCursoPensum implements Serializable{
         asignacionCursoPensum.setZona(this.zona);
         asignacionCursoPensum.setLaboratorio(this.laboratorio);
         asignacionCursoPensum.setExamenFinal(this.examenFinal);
+        
 
         if (quitar) {
+
             asignacionCursoPensum.setCurso(this.getCurso());
             asignacionCursoPensum.setPensum(this.getPensum());
         }

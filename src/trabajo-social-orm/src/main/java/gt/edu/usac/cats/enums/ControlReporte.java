@@ -23,7 +23,10 @@ public enum ControlReporte {
     LISTADO_ASIGNACION_POR_CURSO(9),
     ACTA_NOTAS(10),
     CERTIFICACION_CURSOS(11),
-    NOTAS_CURSOS_ASIGNADOS(12);
+    NOTAS_CURSOS_ASIGNADOS(12),
+    LISTADO_ESTUDIANTE_CON_NOTAS(13),
+    ACTA_PRELIMINAR_NOTAS(14),
+    CURSOS_GANADOS_ESTUDIANTE(15); // reporte igual al certificado, pero aparece en el perfil del estudiante
 
     private int id;
 
@@ -50,8 +53,9 @@ public enum ControlReporte {
      */
     public static ControlReporte fromInt(int id){
         ControlReporte [] controlReportes = ControlReporte.values();
-
+        
         for(ControlReporte controlReporte : controlReportes){
+            System.out.println("Control: "+controlReporte.name());
             if(controlReporte.toInt() == id){
                 return controlReporte;
             }
