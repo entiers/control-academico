@@ -149,4 +149,13 @@ public class ServicioCursoAprobadoImpl extends ServicioGeneralImpl implements Se
         
         return this.daoGeneralImpl.find(cursoAprobado);
     }
+
+//    @Override
+//    public CursoAprobado obtenerCursoAprobado(Asignacion asignacion) {
+//        DetachedCriteria cursoAprobado = DetachedCriteria.forClass(CursoAprobado.class);
+//        cursoAprobado.add(Restrictions.eq("asignacion", asignacion));
+//        
+//        return this.daoGeneralImpl.uniqueResult(cursoAprobado);
+//        
+//    }
 }

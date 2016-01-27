@@ -96,9 +96,9 @@ public class ServicioGeneralImpl implements ServicioGeneral {
     @Override
     public void actualizar(Object entidad) 
             throws DataIntegrityViolationException, DataAccessException {
-
         this.daoGeneralImpl.update(entidad);
     }
+    
 //______________________________________________________________________________
     /**
      * <p>Se encarga de agregar o actualizar la informacion de una entidad.</p>
