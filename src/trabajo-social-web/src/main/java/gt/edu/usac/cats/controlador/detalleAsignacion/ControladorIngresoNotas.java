@@ -568,8 +568,11 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota imp
         System.out.println("** MC FECHANOTAS PAG: " + this.listadoDetalleAsignacion.get(0).getFechaActa());
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 //        modelo.addAttribute("fechaNotas", sdf.format(this.listadoDetalleAsignacion.get(0).getFechaActa()));
-        modelo.addAttribute("fechaNotas", sdf.format(Calendar.getInstance().getTime()));
-
+        if (this.listadoDetalleAsignacion.get(0).getFechaActa() != null){
+                modelo.addAttribute("fe chaNotas", sdf.format(this.listadoDetalleAsignacion.get(0).getFechaActa()));
+        }else{
+            modelo.addAttribute("fechaNotas", sdf.format(Calendar.getInstance().getTime()));
+        }
         if (excusasMap == null) {
             excusasMap = new HashMap();
             ArrayList excusas = new ArrayList();
