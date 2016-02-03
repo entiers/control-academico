@@ -206,9 +206,9 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota imp
 
         try {
             datosIngresoNota.setHorario(this.servicioHorarioImpl.cargarEntidadPorID(Horario.class, datosIngresoNota.getHorario().getIdHorario()));
-            System.out.println("MC- POST(IngresoNota.htm) datosIngresoNota. horario: " + datosIngresoNota.getHorario().getIdHorario());
+    //        System.out.println("MC- POST(IngresoNota.htm) datosIngresoNota. horario: " + datosIngresoNota.getHorario().getIdHorario());
 
-            System.out.println("MC- POST(IngresoNota.htm) datosIngresoNota: " + datosIngresoNota.getHorario());
+    //        System.out.println("MC- POST(IngresoNota.htm) datosIngresoNota: " + datosIngresoNota.getHorario());
             this.listadoDetalleAsignacion = this.servicioDetalleAsignacionImpl.
                     getListadoDetalleAsignacion(datosIngresoNota.getHorario().getIdHorario());
             System.out.println("MC- POST(IngresoNota.htm) listadoDetalleAsignacion: " + this.listadoDetalleAsignacion);
