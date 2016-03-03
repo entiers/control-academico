@@ -72,6 +72,8 @@
       <scope>compile</scope>
     </dependency>
 
+
+
     <dependency>
       <groupId>gt.edu.usac.cats.etl</groupId>
       <artifactId>registro-csv</artifactId>
