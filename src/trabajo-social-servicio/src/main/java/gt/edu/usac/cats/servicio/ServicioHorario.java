@@ -97,7 +97,7 @@ public interface ServicioHorario extends ServicioGeneral {
 
    /**Obtiene los horarios que corresponden al mismo curso, pensum, semestre, tipo horario y seccion*/
    List<Horario> getHorario(AsignacionCursoPensum asignacionCursoPensum, Semestre semestre, TipoHorario tipoHorario,
-           String seccion)
+           String seccion, boolean habilitado)
             throws DataAccessException;
 
 //______________________________________________________________________________

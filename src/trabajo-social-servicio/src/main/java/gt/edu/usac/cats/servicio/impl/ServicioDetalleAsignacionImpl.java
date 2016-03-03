@@ -120,6 +120,7 @@ public class ServicioDetalleAsignacionImpl extends ServicioGeneralImpl implement
                .append("where det.horario.asignacionCursoPensum = :asignacionCursoPensum ")
                .append("and det.asignacion.asignacionEstudianteCarrera = :aec ")
                .append("and det.asignacion.tipoAsignacion = :tipoAsignacion ")
+               .append("and det.horario.maestro = true ") 
                .append("and not exists (select 'x' from Desasignacion des where des.detalleAsignacion=det)");
 
         Query query = this.daoGeneralImpl.getSesion().createQuery(builder.toString());
