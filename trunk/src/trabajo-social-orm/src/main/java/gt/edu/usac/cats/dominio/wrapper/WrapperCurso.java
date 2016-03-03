@@ -21,7 +21,7 @@ public class WrapperCurso implements Serializable {
     private String codigo;
 //______________________________________________________________________________
     @NotEmpty(message = "{validacion.campoObligatorio}")
-    @Size(max = 50, message = "{validacion.caracteresMaximos}")
+    @Size(max = 100, message = "{validacion.caracteresMaximos}")
     private String nombre;
 //______________________________________________________________________________
     /**

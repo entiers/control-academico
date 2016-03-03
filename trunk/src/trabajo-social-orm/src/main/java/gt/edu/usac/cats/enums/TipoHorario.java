@@ -20,6 +20,7 @@ package gt.edu.usac.cats.enums;
  * @author Carlos Solorzano
  * @version 1.0
  */
+
 public enum TipoHorario {
     SEMESTRE(1,"Semestre"),
     VACACIONES(2,"Vacaciones"),

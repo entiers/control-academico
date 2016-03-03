@@ -70,7 +70,7 @@ public class Curso implements java.io.Serializable {
         this.codigo = codigo;
     }
 
-    @Column(name="nombre", nullable=false, length=50)
+    @Column(name="nombre", nullable=false, length=100)
     public String getNombre() {
         return this.nombre;
     }
