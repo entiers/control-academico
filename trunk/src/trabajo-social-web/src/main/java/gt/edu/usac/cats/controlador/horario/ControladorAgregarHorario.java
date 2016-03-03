@@ -123,7 +123,7 @@ public class ControladorAgregarHorario extends ControladorAbstractoHorario {
                 wrapperHorario.quitarWrapper(horario);
                
                 List<Horario> otros = this.servicioHorarioImpl.getHorario(horario.getAsignacionCursoPensum(), 
-                        horario.getSemestre(), horario.getTipo(), horario.getSeccion());
+                        horario.getSemestre(), horario.getTipo(), horario.getSeccion(), true);
                 System.out.println("Existen otros: "+otros.size());
                 if (otros.isEmpty() == true){ // es primer horario para ese mismo curso, semestre y seccion
                     // agrega banderita

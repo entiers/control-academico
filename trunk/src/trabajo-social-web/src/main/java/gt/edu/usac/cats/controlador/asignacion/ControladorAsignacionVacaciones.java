@@ -87,13 +87,16 @@ public class ControladorAsignacionVacaciones extends ControladorAbstractoAsignac
             pensumEstudianteCarrera = servicioPensumEstudianteCarrera.getPensumEstudianteCarreraValido(asignacionEstudianteCarrera);
 
             //Validar que sea el primer curso a asignar
+            System.out.println("TOTALCURSOS //// "+datosAsignacion.getTotalCursos());
             if(datosAsignacion.getTotalCursos()==0){
                 this.listaHorarioAsignacion =  new ArrayList<Horario>();
                 listaHorario = new ArrayList<Horario>();
                 listaAsignacionCursoPensum = servicioCursoImpl.getCursoAsignacion(pensumEstudianteCarrera.getPensum(),
                                                                     semestre,TipoHorario.VACACIONES);
+                
             }
-
+            
+            System.out.println("LISTAASIGNACONCURSOPENSUM//// "+listaAsignacionCursoPensum);
             //Validar que el estudiante no se asigne mas de dos cursos en vacaciones
             if(listaHorarioAsignacion.size()==2){
                 RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "miscursos.asignacionCursos.vacaciones.limiteCursos", false);
@@ -105,8 +108,13 @@ public class ControladorAsignacionVacaciones extends ControladorAbstractoAsignac
                 if (!listaAsignacionCursoPensum.isEmpty()) {
                     AsignacionCursoPensum asignacionCursoPensum = servicioGeneralImpl.
                             cargarEntidadPorID(AsignacionCursoPensum.class, Short.parseShort(String.valueOf(datosAsignacion.getIdAsignacionCursoPensum())));
-                    Horario horario = servicioGeneralImpl.cargarEntidadPorID(Horario.class, datosAsignacion.getIdHorario());
-                    listaHorarioAsignacion.add(horario);
+                    System.out.println("HORARIO//// IDHORARIO SECCION "+datosAsignacion.getSeccion());
+                    //Horario horario = servicioGeneralImpl.cargarEntidadPorID(Horario.class, datosAsignacion.getIdHorario());
+                     List<Horario> horarios = servicioHorarioImpl.getHorario(asignacionCursoPensum, 
+                        semestre,
+                       TipoHorario.VACACIONES,
+                       datosAsignacion.getSeccion(), true);
+                    listaHorarioAsignacion.addAll(horarios);
                     datosAsignacion.incrementarTotalCursos();
                     for (int i = 0; i < listaAsignacionCursoPensum.size(); i++) {
                         if (listaAsignacionCursoPensum.get(i).getIdAsignacionCursoPensum()==asignacionCursoPensum.getIdAsignacionCursoPensum()) {

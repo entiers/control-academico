@@ -131,17 +131,24 @@ public class ControladorEditarHorario extends ControladorAbstractoHorario {
         if (!bindingResult.hasErrors()) {
             try {
                 wrapperHorario.quitarWrapper(this.horario);
+                
+                this.servicioHorarioImpl.actualizarHorario(horario, wrapperHorario.getHorarioDiasWrapper());
                 List<Horario> otros = this.servicioHorarioImpl.getHorario(horario.getAsignacionCursoPensum(), 
-                        horario.getSemestre(), horario.getTipo(), horario.getSeccion());
+                        horario.getSemestre(), horario.getTipo(), horario.getSeccion(),true);
                 System.out.println("Existen otros (update) : "+otros.size());
-                if (otros.isEmpty() == true){ // es primer horario para ese mismo curso, semestre y seccion
+                boolean tieneMaestro = false;
+                for (Horario h: otros){
+                    if (h.isMaestro()) {
+                        tieneMaestro = true;
+                        break;
+                    }
+                }
+                 // el que se actualizo era el maestro y se deshabilito
+                if (tieneMaestro == false){
                     // agrega banderita
-                    horario.setMaestro(true);
-                                    this.servicioHorarioImpl.actualizarHorario(horario, wrapperHorario.getHorarioDiasWrapper());
-                }else{// ya existen otros horarios para ese mismo curso en ese semestre y seccion
-                    //quite... la bandera maestro false... probar  
-                    System.out.println("Horario (atualizarHorario): "+horario.getIdHorario());
-                    this.servicioHorarioImpl.actualizarHorario(horario, wrapperHorario.getHorarioDiasWrapper());
+                   otros.get(0).setMaestro(true);
+                   this.servicioHorarioImpl.actualizar(otros.get(0));
+                                    
                 }
                 
 

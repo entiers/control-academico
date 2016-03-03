@@ -248,6 +248,7 @@ public class ControladorAsignacionExtemporanea extends ControladorAbstractoAsign
             if (datosAsignacion.getTotalCursos() == 0) {
                 this.listaHorarioAsignacion = new ArrayList<Horario>();
                 listaHorario = new ArrayList<Horario>();
+                
                 listaAsignacionCursoPensum = servicioCursoImpl.getCursoAsignacion(pensumEstudianteCarrera.getPensum(),
                         semestre, TipoHorario.SEMESTRE);
             }
@@ -265,8 +266,12 @@ public class ControladorAsignacionExtemporanea extends ControladorAbstractoAsign
                         servicioGeneralImpl.cargarEntidadPorID(AsignacionCursoPensum.class, Short.parseShort(String.valueOf(datosAsignacion.getIdAsignacionCursoPensum())));
                 
                 //Horario horario = servicioGeneralImpl.cargarEntidadPorID(Horario.class, datosAsignacion.getIdHorario());
-                List<Horario> horarios = servicioHorarioImpl.getHorario(asignacionCursoPensum, semestre,datosAsignacion.getSeccion());  //mc
-                
+                //List<Horario> horarios = servicioHorarioImpl.getHorario(asignacionCursoPensum, semestre,datosAsignacion.getSeccion());  //mc
+                //MAKTUB
+                List<Horario> horarios = servicioHorarioImpl.getHorario(asignacionCursoPensum, 
+                        semestre,
+                       datosAsignacion.getTipoHorario(),
+                       datosAsignacion.getSeccion(), true);  //mc
                 //listaHorarioAsignacion.add(horarios);
                 listaHorarioAsignacion.addAll(horarios); //mc
                 

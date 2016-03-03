@@ -6,6 +6,7 @@ package gt.edu.usac.cats.controlador.asignacionCursoPensum;
 
 import gt.edu.usac.cats.controlador.pensum.ControladorAbstractoPensum;
 import gt.edu.usac.cats.dominio.AsignacionCursoPensum;
+import gt.edu.usac.cats.dominio.Curso;
 import gt.edu.usac.cats.dominio.Pensum;
 import gt.edu.usac.cats.dominio.wrapper.WrapperAsignacionCursoPensum;
 import gt.edu.usac.cats.util.Mensajes;
@@ -163,7 +164,8 @@ public class ControladorAsignacionCursoPensum extends ControladorAbstractoPensum
                 System.out.println(">>modelo: "+modelo);
                 
                 wrapperAsignacionCursoPensum.quitarWrapper(asignacionCursoPensum, true);
-                
+                Curso c = this.servicioPensumImpl.cargarEntidadPorID(Curso.class, asignacionCursoPensum.getCurso().getIdCurso());
+                asignacionCursoPensum.setCurso(c);
                 this.servicioPensumImpl.agregar(asignacionCursoPensum);
                
 
