@@ -122,7 +122,7 @@ public class ControladorCambioCierreSeccion implements Serializable {
     private void setModelo(Model modelo,boolean post){
         modelo.addAttribute("post", post);
         modelo.addAttribute("listadoCursos",
-                        this.servicioHorarioImpl.listarEntidad(AsignacionCursoPensum.class));
+                        this.servicioHorarioImpl.listarEntidad(AsignacionCursoPensum.class,true, "curso.idCurso"));
         modelo.addAttribute("listadoSemestres",
                         this.servicioGeneralImpl.listarEntidad(Semestre.class));
     }

@@ -112,7 +112,7 @@ public class ControladorAsignacionSemestre extends ControladorAbstractoAsignacio
                 
                 datosAsignacion.incrementarTotalCursos();
                 for (int i = 0; i < listaAsignacionCursoPensum.size(); i++) {
-                    if (listaAsignacionCursoPensum.get(i).getIdAsignacionCursoPensum()==asignacionCursoPensum.getIdAsignacionCursoPensum()) {
+                    if (listaAsignacionCursoPensum.get(i).getIdAsignacionCursoPensum().equals(asignacionCursoPensum.getIdAsignacionCursoPensum())) {
                         listaAsignacionCursoPensum.remove(i);
                     }
                 }

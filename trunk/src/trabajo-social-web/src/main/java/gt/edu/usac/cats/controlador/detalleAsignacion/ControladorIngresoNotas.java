@@ -227,6 +227,8 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota imp
         }
         //modelo.addAttribute("wrapperIngresoNota", new WrapperIngresoNota());
         modelo.addAttribute("wrapperIngresoNota", win);
+        System.out.println("*/*/*/*==> wrapperIngresoNota size: "+win.getListZona().size());
+        System.out.println("/**/*/*===> detalleAsignacion "+listadoDetalleAsignacion.size());
 
         if (listadoDetalleAsignacion != null && !this.listadoDetalleAsignacion.isEmpty()) {
             // System.out.println("haoy alumnos MCNOV% metodo crearFormulario");

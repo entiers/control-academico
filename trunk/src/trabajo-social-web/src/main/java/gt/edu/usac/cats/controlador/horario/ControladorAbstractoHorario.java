@@ -44,7 +44,7 @@ public abstract class ControladorAbstractoHorario implements Serializable {
             List<Semestre> listadoSemestres,
             WrapperHorario wrapperHorario) {
         modelo.addAttribute("wrapperHorario", wrapperHorario);
-        listadoCursos = this.servicioHorarioImpl.listarEntidad(AsignacionCursoPensum.class, true, "pensum");
+        listadoCursos = this.servicioHorarioImpl.listarEntidad(AsignacionCursoPensum.class, true, "curso.idCurso");
         modelo.addAttribute("listadoCursos", listadoCursos);
         modelo.addAttribute("listadoDias", Dia.values());
         modelo.addAttribute("listaTipoHorario", TipoHorario.values());

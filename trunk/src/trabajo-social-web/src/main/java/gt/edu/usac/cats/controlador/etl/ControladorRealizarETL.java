@@ -20,6 +20,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Properties;
 import javax.servlet.http.HttpServletRequest;
@@ -81,6 +82,11 @@ public class ControladorRealizarETL implements Serializable {
         
         System.out.println("**pathArchivoPropiedades: "+pathArchivoPropiedades);
         properties.load(inputStream);
+        Enumeration enum1 = properties.propertyNames();
+        while (enum1.hasMoreElements()){
+            String keyy = enum1.nextElement().toString();
+            System.out.println(keyy+" ["+properties.getProperty(keyy)+"]");
+        }
         
         String pathArchivo = properties.getProperty(key);
         System.out.println(pathArchivo);
@@ -120,6 +126,9 @@ public class ControladorRealizarETL implements Serializable {
         
         File filePathArchivo = new File(pathArchivo);
         
+        if (!filePathArchivo.exists()){
+            return null;
+        }
         BufferedReader bufferedReader = new BufferedReader(new FileReader(filePathArchivo));
         String line;
 ///home/maria/tools/JETLXCmmty-r78327-V5.0.2/plugins/ETLRegistroCSV-0.1.jar
@@ -142,7 +151,7 @@ public class ControladorRealizarETL implements Serializable {
         bufferedReader.close();
         inputStream.close();
         
-        filePathArchivo.delete();
+        //filePathArchivo.delete();
         
         return buffer;
     }
@@ -166,13 +175,14 @@ public class ControladorRealizarETL implements Serializable {
             
             
             String[][] resultado = manejadorETL.realizar();
+           
             int ret = resultado.length;
-/*            for (int i=0; i<ret; i++){
+            for (int i=0; i<ret; i++){
                 for (int j =0; j< resultado[i].length; j++){
                     System.out.println("MC - "+resultado[i][j]);
                 }
             }
-  */          
+            
             return ret == 1;
         } catch (Exception e) {
             throw e;
@@ -248,9 +258,9 @@ public class ControladorRealizarETL implements Serializable {
                 log.error("No se cargo ningun archivo CSV");
             }
             
-            String errores = this.leerArchivoErrores().toString();
-            request.setAttribute("errores", errores);
-
+            StringBuffer errores = this.leerArchivoErrores();
+            if (errores != null)
+            request.setAttribute("errores",errores.toString());
         } catch (IOException e) {
             RequestUtil.crearMensajeRespuesta(request, "etl.ingresarRegistroCSV.titulo", "etl.ioException", false);
             log.error("Ocurrio un problema en la lectura/escritura de un archivo", e);
