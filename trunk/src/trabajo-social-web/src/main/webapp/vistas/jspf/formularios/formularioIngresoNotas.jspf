@@ -70,6 +70,7 @@
                 </display:setProperty>                
                 <display:column property="asignacion.asignacionEstudianteCarrera.estudiante.carne" titleKey="agregarEstudiante.carne"  />
                 <display:column property="asignacion.asignacionEstudianteCarrera.estudiante.nombre" titleKey="agregarEstudiante.nombre"  />
+                <display:column value="${detAsigna.oficializado}"/>
                 <c:choose>
                     <c:when test="${esAdministrativo}">
                         <display:column  titleKey="ingresoNota.zona">                            
