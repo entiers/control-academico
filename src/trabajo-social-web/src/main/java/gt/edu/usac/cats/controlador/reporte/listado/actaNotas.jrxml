@@ -155,7 +155,7 @@ order by 1]]>
 				<text><![CDATA[INFORME FINAL DEL CURSO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="321" y="104" width="73" height="14" uuid="bf0c1e46-879c-496a-a260-78b7dd57bb1f"/>
+				<reportElement x="327" y="104" width="67" height="14" uuid="bf0c1e46-879c-496a-a260-78b7dd57bb1f"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Double"/>
 					<bottomPen lineWidth="0.0" lineStyle="Double"/>
@@ -163,7 +163,7 @@ order by 1]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[ACTA NO.]]></text>
+				<text><![CDATA[ACTA No.]]></text>
 			</staticText>
 			<textField evaluationTime="Report">
 				<reportElement x="394" y="104" width="166" height="14" uuid="88294191-3163-4e69-a8a9-d5aa97656762"/>
