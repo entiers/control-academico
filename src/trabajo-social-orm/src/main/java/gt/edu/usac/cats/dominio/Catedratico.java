@@ -55,6 +55,7 @@ public class Catedratico implements java.io.Serializable {
     private String telefono;
     private Usuario usuario;
     private String password;
+    private Long cui;
 //______________________________________________________________________________
     public Catedratico() {
         this.idCatedratico = 0;
@@ -249,6 +250,21 @@ public class Catedratico implements java.io.Serializable {
 //______________________________________________________________________________
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    /**
+     * @return the cui
+     */
+    @Column(name="cui", unique=true, nullable=true)
+    public Long getCui() {
+        return cui;
+    }
+
+    /**
+     * @param cui the cui to set
+     */
+    public void setCui(Long cui) {
+        this.cui = cui;
     }
 }
 

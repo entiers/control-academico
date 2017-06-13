@@ -28,6 +28,9 @@ public class DatosBusquedaCatedratico implements Serializable{
 
     @Size(max = 50, message = "{validacion.caracteresMaximos}")
     private String apellidoBusqueda;
+    
+    @Size(max = 13, message = "{validacion.caracteresMaximos}")
+    private String cuiBusqueda;
 
     /**
      * <p>Indica si el resultado se debe de ordenar de forma ascendente (true) o
@@ -51,6 +54,7 @@ public class DatosBusquedaCatedratico implements Serializable{
         this.codigoBusqueda = "";
         this.nombreBusqueda = "";
         this.apellidoBusqueda = "";
+        this.cuiBusqueda="";
         this.ordenAscendente = true;
         this.columnaOrden = "codigo";
         this.primerRegistro = 0;
@@ -117,5 +121,19 @@ public class DatosBusquedaCatedratico implements Serializable{
 //______________________________________________________________________________
     public void inicializarPrimerRegistro() {
         this.primerRegistro = 0;
+    }
+
+    /**
+     * @return the cuiBusqueda
+     */
+    public String getCuiBusqueda() {
+        return cuiBusqueda;
+    }
+
+    /**
+     * @param cuiBusqueda the cuiBusqueda to set
+     */
+    public void setCuiBusqueda(String cuiBusqueda) {
+        this.cuiBusqueda = cuiBusqueda;
     }
 }

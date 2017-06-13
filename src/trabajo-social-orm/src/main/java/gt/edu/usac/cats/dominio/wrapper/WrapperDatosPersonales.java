@@ -30,6 +30,13 @@ public class WrapperDatosPersonales implements Serializable{
 //______________________________________________________________________________
     @Pattern(regexp = "|[0-9]{8}", message = "{validacion.telefonoInvalido}")
     private String celular;
+    
+    
+    @NotEmpty(message = "{validacion.campoObligatorio}")
+    @Pattern(regexp = "|[0-9]{13}", message = "{validacion.telefonoInvalido}")
+    private String cui;    
+
+
 //______________________________________________________________________________
     @NotEmpty(message = "{validacion.campoObligatorio}")
     @Size(max = 100, message = "{validacion.caracteresMaximos}")
@@ -45,6 +52,7 @@ public class WrapperDatosPersonales implements Serializable{
         this.celular="";
         this.email="";
         this.profesion="";
+        this.cui="";
     }
 
     public void agregarWrapper(Estudiante estudiante){
@@ -52,6 +60,8 @@ public class WrapperDatosPersonales implements Serializable{
         this.setTelefono(estudiante.getTelefono());
         this.setCelular(estudiante.getCelular());
         this.setEmail(estudiante.getEmail());
+   //     this.setCui(String.valueOf(estudiante.getCui()));
+        
     }
 
     public void agregarWrapper(Catedratico catedratico){
@@ -60,6 +70,7 @@ public class WrapperDatosPersonales implements Serializable{
         this.setCelular(catedratico.getCelular());
         this.setEmail(catedratico.getEmail());
         this.setProfesion(catedratico.getProfesion());
+        this.setCui(String.valueOf(catedratico.getCui()));
     }
 
     public void agregarWrapper(Persona persona){
@@ -67,6 +78,7 @@ public class WrapperDatosPersonales implements Serializable{
         this.setTelefono(persona.getTelefono());
         this.setCelular(persona.getCelular());
         this.setEmail(persona.getEmail());
+        this.setCui(String.valueOf(persona.getCui()));
     }
 
     public void quitarWrapper(Estudiante estudiante){
@@ -74,6 +86,7 @@ public class WrapperDatosPersonales implements Serializable{
         estudiante.setTelefono(this.getTelefono());
         estudiante.setCelular(this.getCelular());
         estudiante.setEmail(this.getEmail());
+     //   estudiante.setCui(Long.parseLong(this.getCui()));
     }
 
     public void quitarWrapper(Catedratico catedratico){
@@ -82,6 +95,7 @@ public class WrapperDatosPersonales implements Serializable{
         catedratico.setCelular(this.getCelular());
         catedratico.setEmail(this.getEmail());
         catedratico.setProfesion(this.getProfesion());
+        catedratico.setCui(Long.parseLong(this.getCui()));
     }
 
     public void quitarWrapper(Persona persona){
@@ -89,6 +103,7 @@ public class WrapperDatosPersonales implements Serializable{
         persona.setTelefono(this.getTelefono());
         persona.setCelular(this.getCelular());
         persona.setEmail(this.getEmail());
+        persona.setCui(Long.parseLong(this.getCui()));
     }
 
     public String getCelular() {
@@ -130,4 +145,11 @@ public class WrapperDatosPersonales implements Serializable{
     public void setProfesion(String profesion) {
         this.profesion = profesion;
     }
+    public String getCui() {
+        return cui;
+    }
+
+    public void setCui(String cui) {
+        this.cui = cui;
+    }    
 }
