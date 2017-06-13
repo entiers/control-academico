@@ -44,10 +44,11 @@ public abstract class ManejadorETL {
      */
     public String [][] realizar() throws IOException{
         ServerSocket serverSocket = null;
-        String [][] ret = new String [0][0];
+        String [][] ret;
         try{
             serverSocket = new ServerSocket(3334);
             ret = this.realizarETL();
+            
         }catch(IOException e){
             throw e;
         }finally{
