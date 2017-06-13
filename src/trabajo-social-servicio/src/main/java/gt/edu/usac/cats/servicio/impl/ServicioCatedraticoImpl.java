@@ -274,20 +274,28 @@ public class ServicioCatedraticoImpl extends ServicioGeneralImpl implements Serv
         Criterion eqNombre = Restrictions.ilike("nombre", datos.getNombreBusqueda(), MatchMode.ANYWHERE);
         Criterion eqApellido = Restrictions.ilike("apellido", datos.getApellidoBusqueda(), MatchMode.ANYWHERE);
 
+
         // si no se envia el codigo se crea un filtro or con nombre y apellido
+        boolean tieneFiltro = false;
         if(datos.getCodigoBusqueda().isEmpty()) {
             if(!datos.getNombreBusqueda().isEmpty() && !datos.getApellidoBusqueda().isEmpty()) {
                 LogicalExpression orExp = Restrictions.or(eqNombre, eqApellido);
                 criteria.add(orExp);
+                tieneFiltro = true;
 
-            } else if(!datos.getNombreBusqueda().isEmpty() && datos.getApellidoBusqueda().isEmpty())
+            } else if(!datos.getNombreBusqueda().isEmpty() && datos.getApellidoBusqueda().isEmpty()){
                 criteria.add(eqNombre);
-
-            else if(!datos.getApellidoBusqueda().isEmpty() && datos.getNombreBusqueda().isEmpty())
+                tieneFiltro = true;
+            }
+            else if(!datos.getApellidoBusqueda().isEmpty() && datos.getNombreBusqueda().isEmpty()){
                 criteria.add(eqApellido);
+                tieneFiltro = true;
+            }
 
-        } else
+
+        } else{
             criteria.add(eqCodigo);
+        }
 
         return criteria;
     }
