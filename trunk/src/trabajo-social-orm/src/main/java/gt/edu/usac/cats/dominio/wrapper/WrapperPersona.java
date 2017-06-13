@@ -30,6 +30,9 @@ public class WrapperPersona implements Serializable{
     @Size(max = 15, message = "{validacion.caracteresMaximos}")
      private String registroPersonal;
     
+        @Size(max = 13, message = "{validacion.caracteresMaximos}")
+     private String cui;
+    
     @NotEmpty(message="{validacion.campoObligatorio}")
     @Size(max = 200, message = "{validacion.caracteresMaximos}")
      private String direccion;
@@ -64,6 +67,15 @@ public class WrapperPersona implements Serializable{
         this.sexo = 'M';
         this.nombreUsuario = "";
         this.habilitado = true;
+        this.cui="";
+    }
+
+    public String getCui() {
+        return cui;
+    }
+
+    public void setCui(long cui) {
+        this.cui = String.valueOf(cui);
     }
 
 
@@ -84,6 +96,8 @@ public class WrapperPersona implements Serializable{
         this.setSexo(persona.getSexo());
         this.setNombreUsuario(persona.getUsuario().getNombreUsuario());
         this.setHabilitado(persona.isHabilitado());
+        this.setCui(persona.getCui());
+        
     }
 
 //______________________________________________________________________________
@@ -101,6 +115,7 @@ public class WrapperPersona implements Serializable{
         persona.setEmail(this.getEmail());
         persona.setSexo(this.getSexo());
         persona.setHabilitado(this.isHabilitado());
+        persona.setCui(Long.parseLong(this.getCui()));
         if(persona.getUsuario() == null){
             Usuario usuario = new Usuario();
             usuario.setNombreUsuario(this.getNombreUsuario());

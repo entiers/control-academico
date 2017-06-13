@@ -9,6 +9,7 @@ package gt.edu.usac.cats.dominio.wrapper;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -43,11 +44,11 @@ public class WrapperIngresoNota implements Serializable {
 //______________________________________________________________________________
     public WrapperIngresoNota() {
         oficializar = false;
-        this.listFinal = new ArrayList();
-        this.listLaboratorio = new ArrayList();
-        this.listZona = new ArrayList();
-        listExcusa = new ArrayList();
-        this.notaFinal  = new ArrayList();
+        this.listFinal = new LinkedList();
+        this.listLaboratorio = new LinkedList();
+        this.listZona = new LinkedList();
+        listExcusa = new LinkedList();
+        this.notaFinal  = new LinkedList();
         
         //initListExcusa();
         linkValue="";

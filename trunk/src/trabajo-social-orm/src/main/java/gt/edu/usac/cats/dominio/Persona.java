@@ -35,6 +35,9 @@ public class Persona  implements java.io.Serializable {
      private String email;
      private char sexo;
      private boolean habilitado;
+     private long cui;
+
+
 
     public Persona() {
         this.idPersona = 0;
@@ -135,6 +138,14 @@ public class Persona  implements java.io.Serializable {
         this.habilitado = habilitado;
     }
 
+    @Column(name="cui")
+    public long getCui() {
+        return cui;
+    }
+
+    public void setCui(long cui) {
+        this.cui = cui;
+    }
 
 
 

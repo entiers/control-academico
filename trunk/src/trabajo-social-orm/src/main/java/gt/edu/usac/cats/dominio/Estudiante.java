@@ -60,7 +60,8 @@ public class Estudiante implements java.io.Serializable {
      private Boolean requisitos;
      private String carneModificado;
      private String nov;
-     private char sexo;     
+     private char sexo; 
+     private Long cui;
      private Set<CuentaCorriente> cuentaCorrientes = new HashSet<CuentaCorriente>(0);
      private Set<AsignacionDocumento> asignacionDocumentos = new HashSet<AsignacionDocumento>(0);
      private Set<DetalleAsignacionPrimerIngreso> detalleAsignacionPrimerIngresos = new HashSet<DetalleAsignacionPrimerIngreso>(0);
@@ -282,6 +283,21 @@ public class Estudiante implements java.io.Serializable {
         builder.append(", sexo = ").append(this.sexo).append(")");
 
         return builder.toString();
+    }
+
+    /**
+     * @return the cui
+     */
+    @Column(name="cui", unique=true, nullable=true)
+    public Long getCui() {
+        return cui;
+    }
+
+    /**
+     * @param cui the cui to set
+     */
+    public void setCui(Long cui) {
+        this.cui = cui;
     }
 
 }
