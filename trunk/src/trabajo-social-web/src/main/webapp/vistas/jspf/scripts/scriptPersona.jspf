@@ -26,6 +26,7 @@
                             $("#telefono").val("${wrapperPersona.telefono}");
                             $("#celular").val("${wrapperPersona.celular}");
                             $("#email").val("${wrapperPersona.email}");
+                            $("#cui").val("${wrapperPersona.email}");
                             $("#usuario.nombreUsuario").val("${wrapperPersona.nombreUsuario}");                            
                         }
 

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="detalleAsignacion" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="detalleAsignacion" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d1fb0cd4-d476-44ea-a7dd-2089b39d38d8">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.x" value="19"/>
+	<property name="ireport.y" value="48"/>
 	<parameter name="idAsignacion" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select est.carne, est.nombre as nombreEstudiante, asign.transaccion, asign.fecha,
+		<![CDATA[select est.carne, est.cui, est.nombre as nombreEstudiante, asign.transaccion, asign.fecha,
 cur.nombre as nombreCurso, cur.codigo, hor.seccion, hor.hora_inicio, hor.hora_fin,
 sem.anio, sem.numero as numSemestre, sal.*
 from control.estudiante est
@@ -23,6 +23,7 @@ inner join control.salon sal on sal.id_salon = hor.id_salon
 order by cur.codigo]]>
 	</queryString>
 	<field name="carne" class="java.lang.String"/>
+	<field name="cui" class="java.lang.Long"/>
 	<field name="nombreestudiante" class="java.lang.String"/>
 	<field name="transaccion" class="java.lang.String"/>
 	<field name="fecha" class="java.sql.Timestamp"/>
@@ -43,16 +44,16 @@ order by cur.codigo]]>
 	<title>
 		<band height="43">
 			<frame>
-				<reportElement mode="Opaque" x="-20" y="-19" width="595" height="61" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="-20" y="-19" width="595" height="61" backcolor="#006699" uuid="e52cfef5-7dcc-42d5-ad14-77483e026802"/>
 				<staticText>
-					<reportElement x="20" y="8" width="318" height="20" forecolor="#FFFFFF"/>
+					<reportElement x="20" y="8" width="318" height="20" forecolor="#FFFFFF" uuid="d84b90da-62a3-40d8-87fd-c50d6e1e0b0e"/>
 					<textElement>
 						<font size="14" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Universidad de San Carlos de Guatemala]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="20" y="25" width="210" height="36" forecolor="#FFFFFF"/>
+					<reportElement x="20" y="25" width="210" height="36" forecolor="#FFFFFF" uuid="7c0e32e9-e6c5-4169-b8cd-506a53e624da"/>
 					<textElement>
 						<font size="14" isBold="true"/>
 					</textElement>
@@ -65,130 +66,135 @@ Boleta de Asignación]]></text>
 	<pageHeader>
 		<band height="131">
 			<textField>
-				<reportElement x="105" y="46" width="409" height="20"/>
-				<textElement/>
+				<reportElement x="105" y="46" width="409" height="20" uuid="ad54f791-de7c-450f-8c7a-5f605c75e28f"/>
 				<textFieldExpression><![CDATA[$F{transaccion}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="46" width="103" height="20"/>
+				<reportElement x="0" y="46" width="103" height="20" uuid="cf3a7eea-478b-4a55-9938-164d1ee26896"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[No. de asignación:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="6" width="104" height="20"/>
+				<reportElement x="0" y="6" width="104" height="20" uuid="bb3b756a-b8e2-473e-a0f5-46a8a57656ed"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Carné:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="26" width="104" height="20"/>
+				<reportElement x="0" y="26" width="104" height="20" uuid="b8708fe0-e09c-4768-a50f-7e9145b97d63"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Nombre:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="105" y="105" width="409" height="20"/>
-				<textElement/>
+				<reportElement x="105" y="105" width="122" height="20" uuid="33b7a55f-52d2-482d-a0a3-6a0c067f08b6"/>
 				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="66" width="103" height="20"/>
+				<reportElement x="0" y="66" width="103" height="20" uuid="a5701a29-3540-43a6-87d6-4fa12c0a2441"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Año:]]></text>
 			</staticText>
 			<line>
-				<reportElement x="1" y="127" width="554" height="1"/>
+				<reportElement x="1" y="127" width="554" height="1" uuid="3899a72d-059b-4f96-a1a2-d550fb959662"/>
 			</line>
 			<line>
-				<reportElement x="1" y="130" width="554" height="1"/>
+				<reportElement x="1" y="130" width="554" height="1" uuid="4938b3ec-7456-4d58-9d0d-fcce32bac703"/>
 			</line>
 			<textField>
-				<reportElement x="104" y="6" width="410" height="20"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[$F{carne}]]></textFieldExpression>
+				<reportElement x="104" y="6" width="214" height="20" uuid="60c00f26-a9d7-4b1f-93be-683184cdc10f"/>
+				<textFieldExpression><![CDATA[$F{cui}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="105" y="26" width="409" height="20"/>
-				<textElement/>
+				<reportElement x="105" y="26" width="409" height="20" uuid="575d6676-587a-48e1-b29d-18686d0e4547"/>
 				<textFieldExpression><![CDATA[$F{nombreestudiante}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="86" width="103" height="20"/>
+				<reportElement x="0" y="86" width="103" height="20" uuid="fac62a15-6e1d-43c8-809e-fda66b78e5fb"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Semestre:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="105" width="103" height="20"/>
+				<reportElement x="0" y="105" width="103" height="20" uuid="a9c494b2-3884-46d7-9519-c8e65f62a537"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Fecha asignación:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="105" y="66" width="100" height="20"/>
-				<textElement/>
+				<reportElement x="105" y="66" width="100" height="20" uuid="c1b7baae-6364-4074-beca-64f68f650d8f"/>
 				<textFieldExpression><![CDATA[$F{anio}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="105" y="86" width="100" height="20"/>
-				<textElement/>
+				<reportElement x="105" y="86" width="100" height="20" uuid="0378a933-ef0c-4f2d-807a-d1e6b263cd25"/>
 				<textFieldExpression><![CDATA[$F{numsemestre}]]></textFieldExpression>
 			</textField>
+			<textField>
+				<reportElement x="477" y="105" width="66" height="20" uuid="5b10bdd5-848b-4d49-a33d-db69349f37d2"/>
+				<textFieldExpression><![CDATA[$F{carne}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="373" y="105" width="104" height="20" uuid="a66ab966-62ed-468b-94f3-eaadde4d835e"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Registro Académico:]]></text>
+			</staticText>
 		</band>
 	</pageHeader>
 	<columnHeader>
 		<band height="31">
 			<staticText>
-				<reportElement x="1" y="2" width="50" height="20"/>
+				<reportElement x="1" y="2" width="50" height="20" uuid="b3c5a535-32f0-4e06-a403-fc81ec4881e3"/>
 				<textElement textAlignment="Center">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Código]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="55" y="2" width="114" height="20"/>
+				<reportElement x="55" y="2" width="114" height="20" uuid="3915690b-8362-44dd-8eff-b769e32f4311"/>
 				<textElement textAlignment="Center">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Curso]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="174" y="2" width="53" height="20"/>
+				<reportElement x="174" y="2" width="53" height="20" uuid="32873362-3418-41cd-a208-f597e816b2b1"/>
 				<textElement textAlignment="Center">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Sección]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="397" y="2" width="67" height="20"/>
+				<reportElement x="397" y="2" width="67" height="20" uuid="6c168bf4-a21b-4f2b-95ec-4396c47a1718"/>
 				<textElement textAlignment="Center">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Hora fin]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="336" y="2" width="56" height="20"/>
+				<reportElement x="336" y="2" width="56" height="20" uuid="a3ed85e1-e1c2-4f4f-ba93-11331f742acd"/>
 				<textElement textAlignment="Center">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Hora Inicio]]></text>
 			</staticText>
 			<line>
-				<reportElement x="1" y="26" width="554" height="1"/>
+				<reportElement x="1" y="26" width="554" height="1" uuid="b45fa2f9-2da8-4b4b-b024-7d9423ea6f21"/>
 			</line>
 			<line>
-				<reportElement x="1" y="29" width="554" height="1"/>
+				<reportElement x="1" y="29" width="554" height="1" uuid="9fed40a2-05d1-4802-9cb9-20ceba2a7759"/>
 			</line>
 			<staticText>
-				<reportElement x="238" y="2" width="98" height="20"/>
+				<reportElement x="238" y="2" width="98" height="20" uuid="fa42a096-c84a-4cdd-819f-1bf9441fb65b"/>
 				<textElement textAlignment="Center">
 					<font isBold="true"/>
 				</textElement>
@@ -199,40 +205,40 @@ Boleta de Asignación]]></text>
 	<detail>
 		<band height="22">
 			<line>
-				<reportElement positionType="FixRelativeToBottom" x="0" y="21" width="555" height="1"/>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="21" width="555" height="1" uuid="7f30cb3b-6251-4f10-89cd-4a74c9353733"/>
 			</line>
 			<textField>
-				<reportElement x="0" y="0" width="51" height="20"/>
+				<reportElement x="0" y="0" width="51" height="20" uuid="a6d2bf31-52d5-439c-a2c1-a3dbbda5a436"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{codigo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="55" y="0" width="114" height="20"/>
+				<reportElement x="55" y="0" width="114" height="20" uuid="c8104da9-1ff2-49a0-b74b-7293322cfbe6"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{nombrecurso}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="174" y="0" width="53" height="20"/>
+				<reportElement x="174" y="0" width="53" height="20" uuid="96f32d96-8051-44ef-b32f-d63bbc4c69ea"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{seccion}]]></textFieldExpression>
 			</textField>
 			<textField pattern="HH.mm">
-				<reportElement x="339" y="0" width="53" height="20"/>
+				<reportElement x="339" y="0" width="53" height="20" uuid="e0aa527b-c9e8-42ac-8ac8-b6c5f18d97e0"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{hora_inicio}]]></textFieldExpression>
 			</textField>
 			<textField pattern="HH.mm">
-				<reportElement x="397" y="0" width="67" height="20"/>
+				<reportElement x="397" y="0" width="67" height="20" uuid="bfd10c47-d1f8-4b17-b627-5fd24c7d84d3"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{hora_fin}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="273" y="0" width="64" height="20"/>
+				<reportElement x="273" y="0" width="64" height="20" uuid="f2b1335c-82a0-41c7-98d4-3bef677a8ed6"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{edificio}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="238" y="0" width="34" height="20"/>
+				<reportElement x="238" y="0" width="34" height="20" uuid="69a17970-83c4-468c-b166-38093f63f675"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{numero}]]></textFieldExpression>
 			</textField>

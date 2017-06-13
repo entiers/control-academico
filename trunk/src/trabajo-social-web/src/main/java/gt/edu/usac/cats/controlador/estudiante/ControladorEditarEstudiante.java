@@ -137,6 +137,7 @@ public class ControladorEditarEstudiante extends ControladorEstudianteAbstracto 
     public String buscarEstudiante(@Valid DatosBusquedaEstudiante datosBusquedaEstudiante,
             BindingResult bindingResult, Model modelo, HttpServletRequest request) {
 
+    
         this.agregarAlModeloListadoEntidades(modelo);
         
         // se crea el envoltorio para el estudiante
@@ -191,7 +192,7 @@ public class ControladorEditarEstudiante extends ControladorEstudianteAbstracto 
     @RequestMapping(value = "editarEstudiante.htm", method = RequestMethod.POST)
     public String editarEstudiante(@Valid WrapperEstudiante wrapperEstudiante, BindingResult bindingResult,
             Model modelo, HttpServletRequest request) {
-
+        System.out.println(">>>>>>>> "+wrapperEstudiante);
         modelo.addAttribute("datosBusquedaEstudiante", new DatosBusquedaEstudiante());        
         // se validan los campos ingresados en el formulario, si existen errores
         // se regresa al formulario para que se muestren los mensajes correspondientes
@@ -200,14 +201,18 @@ public class ControladorEditarEstudiante extends ControladorEstudianteAbstracto 
         // asignacion de carne, por lo tanto no se utiliza el campo carne ni el
         // campo idCarrera y como estos tiene asociado un validador entonces
         // siempre daran error
+        System.out.println("bindingerrors :"+bindingResult.getErrorCount());
         if(bindingResult.hasErrors() && bindingResult.getErrorCount() > 2) {
             return "estudiante/editarEstudiante";
         }
         
         try {
+           
             //Validando correo unico por usuario
             if(!this.estudiante.getEmail().equals(wrapperEstudiante.getEmail())){
+                System.out.println("valida email");
                 if(this.servicioUsuarioImpl.getUsuarioPorEmail(wrapperEstudiante.getEmail())!=null){
+                    System.out.println("correo ya existe");
                     RequestUtil.crearMensajeRespuesta(request, TITULO_MENSAJE, "usuario.correoYaExiste", false);
                     return "estudiante/editarEstudiante";
                 }
@@ -215,6 +220,7 @@ public class ControladorEditarEstudiante extends ControladorEstudianteAbstracto 
             
             // se quita el envoltorio y se trata de actualizar al estudiante
             wrapperEstudiante.quitarWrapper(this.estudiante);
+            System.out.println("actualizar: "+this.estudiante);
             this.servicioEstudianteImpl.actualizar(this.estudiante);
 
             // se registra el evento

@@ -82,7 +82,8 @@ public class ControladorAgregarCursoAprobado implements Serializable{
         this.estudiante = this.servicioAsignacionEstudianteCarreraImpl.cargarEntidadPorID(Estudiante.class, 
                 idEstudiante);
         if(this.estudiante != null){
-            this.listaAEC = this.servicioAsignacionEstudianteCarreraImpl.getAsignacionEstudianteCarrera(estudiante, true);
+            this.listaAEC = this.servicioAsignacionEstudianteCarreraImpl.
+                    getAsignacionEstudianteCarrera(estudiante, true);
             if(!this.listaAEC.isEmpty()){
                 System.out.println("&&& asignacionEstudianteCarrera "+listaAEC.get(0));
                 this.listaACP = this.servicioAsignacionCursoPensumImpl.cursosSinAprobarValidos(listaAEC.get(0));

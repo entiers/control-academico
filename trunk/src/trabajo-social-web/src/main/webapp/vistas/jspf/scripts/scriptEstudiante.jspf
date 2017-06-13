@@ -61,6 +61,7 @@
                             "checked": true
                         });
                         $("#carne").val("");
+                        $("#cui").val("");
                         $("#nombre").val("");
                         $("#apellido").val("");
                         $("#direccion").val("");

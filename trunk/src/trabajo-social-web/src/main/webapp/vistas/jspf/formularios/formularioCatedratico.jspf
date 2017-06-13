@@ -1,6 +1,12 @@
 <%@ page pageEncoding="UTF-8" %>
 
 <div id="divCampos">
+    <form:label for="cui" path="nombre"><fmt:message key="catedratico.cui"/>: *</form:label>
+    <form:input path="cui" cssStyle="width: 250px;" />
+    <form:errors path="cui" cssClass="claseError" />
+</div>
+
+<div id="divCampos">
     <form:label for="nombre" path="nombre"><fmt:message key="agregarCatedratico.nombre"/>: *</form:label>
     <form:input path="nombre" cssStyle="width: 250px;" />
     <form:errors path="nombre" cssClass="claseError" />

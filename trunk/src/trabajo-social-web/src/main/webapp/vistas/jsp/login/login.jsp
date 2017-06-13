@@ -43,6 +43,7 @@
                                 <span class="loginError"><fmt:message key="login.loginIncorrecto"/></span>
                             <%
                             } else if(excepcion instanceof AuthenticationException) {
+                                ((AuthenticationException)excepcion).printStackTrace();
                                 session.removeAttribute("SPRING_SECURITY_LAST_EXCEPTION");
                             %>
                                 <span class="loginError"><fmt:message key="login.loginExcepcion"/></span>

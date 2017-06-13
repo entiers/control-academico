@@ -44,8 +44,13 @@
                                     <td><fmt:message key="agregarPersona.registroPersonal"/></td>
                                     <td><c:out value="${persona.registroPersonal}" /></td>
                                 </tr>
+                              
                             </c:when>
                             <c:when test="${tipoEntidad=='estudiante'}">
+                                <tr>
+                                    <td><fmt:message key="agregarPersona.cui"/></td>
+                                    <td><c:out value="${persona.cui}" /></td>
+                                </tr>  
                                 <tr>
                                     <td><fmt:message key="agregarEstudiante.carne"/></td>
                                     <td><c:out value="${estudiante.carne}" /></td>
@@ -103,6 +108,11 @@
                             <form:label for="email" path="email"><fmt:message key="agregarEstudiante.email"/>:</form:label>
                             <form:input path="email" cssStyle="width: 250px;" />
                             <form:errors path="email" cssClass="claseError" />
+                        </div>
+                        <div id="divCampos">
+                            <form:label for="cui" path="cui"><fmt:message key="agregarEstudiante.cui"/>:</form:label>
+                            <form:input path="cui" cssStyle="width: 250px;" />
+                            <form:errors path="cui" cssClass="claseError" />
                         </div>
                         <c:if test="${tipoEntidad=='catedratico'}">
                             <div id="divCampos">

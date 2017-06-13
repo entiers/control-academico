@@ -2,14 +2,14 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="612" pageHeight="792" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryWithPageHeaderAndFooter="true" uuid="39a4b624-e2e0-4d76-a14a-3066bce84dcc">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="680"/>
+	<property name="ireport.y" value="702"/>
 	<parameter name="carne" class="java.lang.String"/>
 	<parameter name="id_carrera" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="fechahoy" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select to_number(cur.codigo, '999999999999') as intcodcurso,e.carne, e.nombre as estudiante, cur.codigo, cur.nombre as curso, 
+		<![CDATA[select to_number(cur.codigo, '999999999999') as intcodcurso,e.carne, e.cui, e.nombre as estudiante, cur.codigo, cur.nombre as curso, 
     acp.creditos_practicos + acp.creditos_teoricos as creditos,
     car.nombre as carrera, 
     to_char(current_date,'DD/MM/YYYY') as fechahoy,
@@ -29,6 +29,7 @@ order by 1, cuap.fecha_aprobacion;]]>
 	</queryString>
 	<field name="intcodcurso" class="java.math.BigDecimal"/>
 	<field name="carne" class="java.lang.String"/>
+	<field name="cui" class="java.lang.Long"/>
 	<field name="estudiante" class="java.lang.String"/>
 	<field name="codigo" class="java.lang.String"/>
 	<field name="curso" class="java.lang.String"/>
@@ -56,7 +57,7 @@ order by 1, cuap.fecha_aprobacion;]]>
 				<textElement textAlignment="Justified"/>
 				<textFieldExpression><![CDATA["La infrascrita Encargada del Departamento del Control Académico de la ESCUELA DE TRABAJO SOCIAL de la "+
 "Universidad de San Carlos de Guatemala, CERTIFICA: "+"Que ha tenido a la vista las Actas de Examenes "+"correspondientes a la carrera de  "+
-$F{carrera}+" en donde consta que el (la) estudiante "+$F{estudiante}.toUpperCase()+" con carnet No. "+$F{carne} + " cursó y aprobó sobre la base "+
+$F{carrera}+" en donde consta que el (la) estudiante "+$F{estudiante}.toUpperCase()+" con carnet No. "+$F{cui} + " cursó y aprobó sobre la base "+
 "de 0 a 100 puntos, lo siguiente:"]]></textFieldExpression>
 			</textField>
 			<staticText>
@@ -276,6 +277,10 @@ $F{carrera}+" en donde consta que el (la) estudiante "+$F{estudiante}.toUpperCas
 					<font isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{sum_creditos}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="99" width="175" height="20" uuid="59ddf47d-012c-473d-aa6a-de269cfd0424"/>
+				<textFieldExpression><![CDATA["Ref."+$F{carne}]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>

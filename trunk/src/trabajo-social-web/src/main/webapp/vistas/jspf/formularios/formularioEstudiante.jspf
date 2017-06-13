@@ -3,6 +3,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
+<div id="divCampos">
+    <form:label for="cui" path="cui"><fmt:message key="estudiante.cui"/>: *</form:label>
+    <form:input path="cui" cssStyle="width: 250px;" />
+    <form:errors path="cui" cssClass="claseError" />
+</div>
 
 <div id="divCampos">
     <form:label for="nombre" path="nombre"><fmt:message key="agregarEstudiante.nombre"/>: *</form:label>
