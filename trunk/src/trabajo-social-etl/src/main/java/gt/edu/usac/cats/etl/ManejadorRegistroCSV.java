@@ -6,15 +6,18 @@
 package gt.edu.usac.cats.etl;
 
 //import cats.etlregistrocsv_0_1.ETLRegistroCSV;
-import cats.etlregistrocsv_0_1.ETLRegistroCSV;
+//import cats.etlregistrocsv_0_1.ETLRegistroCSV;
+//import cats.etlregistrocsv_0_1.ETLRegistroCSV.ContextProperties;
 
+import cats.etlregistrocsv_0_1.ETLRegistroCSV;
+import cats.etlregistrocsv_0_1.ETLRegistroCSV.ContextProperties;
 import com.csvreader.CsvReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.Properties;
-//import registrocsv.etlregistrocsv_0_1.ETLRegistroCSV;
+
 
 /**
  * Clase que hereda el comportamiento de {@link ManejadorETL}, esta clase lleva
@@ -39,10 +42,18 @@ public class ManejadorRegistroCSV extends ManejadorETL {
      */
     @Override
     protected String[][] realizarETL() {
+        System.out.println("realizarETL 06032017 ...");
         ETLRegistroCSV etl = new ETLRegistroCSV();
+        ContextProperties context = etl.getContext();
+        context.setProperty("ConexionPostgres_Password", "c0ntr0l@c@d3m1c0");
+        
         String [] args1 = {""};
+        
         String [][] ret = etl.runJob(args1);
-
+      
+        System.out.println("*** login:"+context.ConexionPostgres_Login);
+        System.out.println("*** password: "+   context.getProperty("ConexionPostgres_Password"));
+     
         try{
             this.enviarEmails();
         }catch(FileNotFoundException e){
