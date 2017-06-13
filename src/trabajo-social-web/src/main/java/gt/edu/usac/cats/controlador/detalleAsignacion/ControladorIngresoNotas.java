@@ -496,6 +496,7 @@ public class ControladorIngresoNotas extends ControladorAbstractoIngresoNota imp
         modelo.addAttribute("esAdministrativo", this.esAdministrativo);
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         String fechaActaActual = sdf.format(Calendar.getInstance().getTime());
+        System.out.println(">>>>>>>>>>>>>>>>>>>>> mostrarAsignaciones: "+mostrarAsignaciones);
         if (mostrarAsignaciones) {
             modelo.addAttribute("limiteZona", datosIngresoNota.getHorario().getAsignacionCursoPensum().getZona());
             modelo.addAttribute("limiteExamenFinal", datosIngresoNota.getHorario().getAsignacionCursoPensum().getExamenFinal());

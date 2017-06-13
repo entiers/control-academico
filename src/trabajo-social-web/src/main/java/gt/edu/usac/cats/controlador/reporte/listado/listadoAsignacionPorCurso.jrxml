@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8dcebf3d-2da0-4ffb-964c-06c5d83e5d9c">
-	<property name="ireport.zoom" value="4.0"/>
+	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="846"/>
+	<property name="ireport.y" value="97"/>
 	<parameter name="id_horario" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -11,6 +11,7 @@
 where id_horario = $P{id_horario}
 order by 1]]>
 	</queryString>
+	<field name="to_number" class="java.math.BigDecimal"/>
 	<field name="codcatedratico" class="java.lang.String"/>
 	<field name="nombrecatedratico" class="java.lang.String"/>
 	<field name="apellidocatedratico" class="java.lang.String"/>
@@ -27,6 +28,15 @@ order by 1]]>
 	<field name="examen_final" class="java.lang.Integer"/>
 	<field name="oficializado" class="java.lang.Boolean"/>
 	<field name="id_horario" class="java.lang.Integer"/>
+	<field name="excusa" class="java.lang.String"/>
+	<field name="aprobado" class="java.lang.Integer"/>
+	<field name="nsp" class="java.lang.Integer"/>
+	<field name="sde" class="java.lang.Integer"/>
+	<field name="szm" class="java.lang.Integer"/>
+	<field name="ac" class="java.lang.Integer"/>
+	<field name="nsemestre" class="java.lang.String"/>
+	<field name="htipo" class="java.lang.Integer"/>
+	<field name="cui" class="java.lang.Long"/>
 	<variable name="carne_1" class="java.lang.Integer" calculation="Count">
 		<variableExpression><![CDATA[$F{carne}]]></variableExpression>
 	</variable>
@@ -172,14 +182,14 @@ order by 1]]>
 	<detail>
 		<band height="22" splitType="Stretch">
 			<textField>
-				<reportElement x="116" y="1" width="439" height="20" uuid="06ecfeb1-8c5a-4766-9355-30c21cc3eaaf"/>
+				<reportElement x="232" y="1" width="323" height="20" uuid="06ecfeb1-8c5a-4766-9355-30c21cc3eaaf"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{estudiante}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="28" y="1" width="87" height="20" uuid="fd3427e7-33fb-4da8-bb36-4b6ba086313e"/>
+				<reportElement x="28" y="1" width="194" height="20" uuid="fd3427e7-33fb-4da8-bb36-4b6ba086313e"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{carne}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cui}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="0" y="21" width="555" height="1" uuid="4bc898a2-7999-4e11-87c4-428c8500cbac"/>

@@ -1,4 +1,4 @@
-/*
+    /*
  * Sistema de Control Academico
  * Escuela de Trabajo Social
  * Universidad de San Carlos de Guatemala

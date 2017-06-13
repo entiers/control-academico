@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="actaNotas" pageWidth="600" pageHeight="842" columnWidth="560" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryWithPageHeaderAndFooter="true" uuid="dc1fa8c0-76b5-44a6-b8b4-801a0417dbe4">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="89"/>
+	<property name="ireport.y" value="144"/>
 	<parameter name="id_horario" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -13,6 +13,7 @@ where id_horario = $P{id_horario}
 and oficializado = true
 order by 1]]>
 	</queryString>
+	<field name="to_number" class="java.math.BigDecimal"/>
 	<field name="codcatedratico" class="java.lang.String"/>
 	<field name="nombrecatedratico" class="java.lang.String"/>
 	<field name="apellidocatedratico" class="java.lang.String"/>
@@ -37,6 +38,7 @@ order by 1]]>
 	<field name="ac" class="java.lang.Integer"/>
 	<field name="nsemestre" class="java.lang.String"/>
 	<field name="htipo" class="java.lang.Integer"/>
+	<field name="cui" class="java.lang.Long"/>
 	<variable name="pagineo" class="java.lang.String"/>
 	<variable name="ultima" class="java.lang.String"/>
 	<variable name="ncompleto" class="java.lang.String"/>
@@ -252,11 +254,6 @@ order by 1]]>
 				<textFieldExpression><![CDATA[$F{estudiante}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="39" y="0" width="102" height="20" uuid="1cf59d43-ab62-4eea-9fe0-237c1bf935e3"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{carne}]]></textFieldExpression>
-			</textField>
-			<textField>
 				<reportElement x="429" y="1" width="33" height="20" uuid="f325d75d-4777-42f0-a5fd-2685226ce129"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{zona}]]></textFieldExpression>
@@ -277,6 +274,10 @@ order by 1]]>
 				<reportElement x="512" y="1" width="48" height="20" uuid="ae001756-c5a1-4132-b3ee-c4c9fad40b51"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$V{notafinal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="52" y="1" width="77" height="20" uuid="f9ce5717-0d6a-43b8-8a8e-657458eed235"/>
+				<textFieldExpression><![CDATA[$F{cui}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

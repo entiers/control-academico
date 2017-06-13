@@ -53,9 +53,9 @@
                 <%-- boton para editar --%>
                 <input id="btnEditar" type="button" value='<fmt:message key="btnEditar"/>'
                        onclick="document.forms[1].action = 'editarEstudiante.htm'; document.forms[1].submit();"/>
-                <%--
-                <input id="btnEditar" type="submit" value='<fmt:message key="btnEditar"/>' />
-                --%>
+                
+                
+                    
 
                 <c:if test='<%= RequestUtil.getValorBoolean(request, "funcionDeshabilitar") %>'>
                     <c:if test='<%= RequestUtil.getValorBoolean(request, "estaHabilitado") %>'>
@@ -69,7 +69,7 @@
                                onclick="$('#popupHabilitar').dialog('open')"/>
                     </c:if>
                 </c:if>
-                
+               
             </fieldset>
         </form:form>
 

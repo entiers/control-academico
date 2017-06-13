@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8476373f-816c-4d38-a828-cb0f2d9395fc">
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="175"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -35,7 +35,8 @@
 		<![CDATA[select c.codigo,c.nombre as nombre_carrera, laec.carne,laec.nombre,laec.sexo,
 to_char(laec.fecha_cierre,'dd/MM/yyyy') as fecha_cierre,
 to_char(laec.ultima_fecha_inscripcion,'dd/MM/yyyy') as ultima_fecha_inscripcion,
-to_char(current_date,'dd/MM/yyyy') as fechahoy
+to_char(current_date,'dd/MM/yyyy') as fechahoy,
+laec.cui
 from control.carrera c inner join reporte.listado_asignacion_estudiante_carrera laec
 on c.id_carrera = laec.id_carrera
 where c.id_carrera = $P{ID_CARRERA}
@@ -49,26 +50,27 @@ order by laec.carne;]]>
 	<field name="fecha_cierre" class="java.lang.String"/>
 	<field name="ultima_fecha_inscripcion" class="java.lang.String"/>
 	<field name="fechahoy" class="java.lang.String"/>
+	<field name="cui" class="java.lang.Long"/>
 	<title>
 		<band height="93" splitType="Stretch">
 			<frame>
-				<reportElement mode="Opaque" x="0" y="0" width="555" height="91" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="91" backcolor="#006699" uuid="58558d07-2b0b-4c6d-aa77-669d2a9342e4"/>
 				<staticText>
-					<reportElement x="24" y="18" width="400" height="20" forecolor="#FFFFFF"/>
+					<reportElement x="24" y="18" width="400" height="20" forecolor="#FFFFFF" uuid="cc842c59-5a5b-4635-92fb-9a3ae82dedfa"/>
 					<textElement>
 						<font size="14" isBold="true"/>
 					</textElement>
 					<text><![CDATA[UNIVERSIDAD DE SAN CARLOS DE GUATEMALA]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="24" y="38" width="378" height="17" forecolor="#FFFFFF"/>
+					<reportElement x="24" y="38" width="378" height="17" forecolor="#FFFFFF" uuid="460a3cf4-cd9d-407c-a11f-f394c1b0802e"/>
 					<textElement>
 						<font size="14" isBold="true"/>
 					</textElement>
 					<text><![CDATA[ESCUELA DE TRABAJO SOCIAL]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="24" y="56" width="478" height="17" forecolor="#FFFFFF"/>
+					<reportElement x="24" y="56" width="478" height="17" forecolor="#FFFFFF" uuid="2026db55-aa02-4b90-8aad-0746d6c0e5c7"/>
 					<textElement>
 						<font size="14" isBold="true"/>
 					</textElement>
@@ -80,7 +82,7 @@ order by laec.carne;]]>
 	<pageHeader>
 		<band height="70" splitType="Stretch">
 			<textField isStretchWithOverflow="true">
-				<reportElement style="Heading 1" x="0" y="0" width="555" height="28"/>
+				<reportElement style="Heading 1" x="0" y="0" width="555" height="28" uuid="c6c57d64-29a7-41d8-bec6-6dfd7d8e7bc7"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Double"/>
 					<bottomPen lineWidth="1.0" lineStyle="Double"/>
@@ -91,68 +93,68 @@ order by laec.carne;]]>
 				<textFieldExpression><![CDATA[$F{codigo} + " - " + $F{nombre_carrera}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="39" width="90" height="30" backcolor="#FFFFFF"/>
+				<reportElement x="0" y="39" width="90" height="30" backcolor="#FFFFFF" uuid="ce0782e4-173f-433b-944f-cab079fe955b"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Carne]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="90" y="39" width="238" height="30"/>
+				<reportElement x="90" y="39" width="238" height="30" uuid="d2e985bd-cca0-4ae9-a895-47310ac4360d"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Nombre]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="328" y="39" width="89" height="30"/>
+				<reportElement x="328" y="39" width="89" height="30" uuid="f2e75acd-4b02-4112-b30d-a473934680be"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Ultima fecha de inscripción]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="417" y="39" width="44" height="30"/>
+				<reportElement x="417" y="39" width="44" height="30" uuid="3428be65-932b-4d9c-96c8-ba348ad26bed"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Sexo]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="461" y="39" width="90" height="30"/>
+				<reportElement x="461" y="39" width="90" height="30" uuid="b324f35f-5886-41f8-b824-d1287337fc92"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Fecha de cierre]]></text>
 			</staticText>
 			<line>
-				<reportElement x="0" y="38" width="551" height="1"/>
+				<reportElement x="0" y="38" width="551" height="1" uuid="0dd3aa35-78ac-4060-badd-e8ceebac76b3"/>
 			</line>
 			<line>
-				<reportElement x="0" y="68" width="551" height="1"/>
+				<reportElement x="0" y="68" width="551" height="1" uuid="81f8c57c-a571-40a5-9de3-2527d98aed56"/>
 			</line>
 		</band>
 	</pageHeader>
 	<detail>
 		<band height="21" splitType="Stretch">
 			<textField isBlankWhenNull="true">
-				<reportElement x="0" y="0" width="90" height="20"/>
+				<reportElement x="0" y="0" width="110" height="20" uuid="013cc771-a9d8-47df-aa08-38645b07723e"/>
 				<box topPadding="0" leftPadding="5" rightPadding="5"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8"/>
+					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{carne}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cui}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="90" y="0" width="238" height="20"/>
+				<reportElement x="110" y="0" width="218" height="20" uuid="dca2e957-e4d1-4337-a500-eafb93508f0a"/>
 				<box topPadding="0" leftPadding="5" rightPadding="5"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font size="8"/>
+					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="417" y="0" width="44" height="20"/>
+				<reportElement x="417" y="0" width="44" height="20" uuid="77849a3e-c078-44a1-9d32-b9cb6da36394"/>
 				<box topPadding="0" leftPadding="5" rightPadding="5"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8"/>
@@ -160,14 +162,14 @@ order by laec.carne;]]>
 				<textFieldExpression><![CDATA[$F{sexo}]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement x="328" y="0" width="89" height="20"/>
+				<reportElement x="328" y="0" width="89" height="20" uuid="e28dace6-cfad-477d-b5ac-490a7ccedf99"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{ultima_fecha_inscripcion}.toString()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="461" y="0" width="90" height="20"/>
+				<reportElement x="461" y="0" width="90" height="20" uuid="542fa933-a015-4fe1-b824-10954d8204bf"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
@@ -178,24 +180,24 @@ order by laec.carne;]]>
 	<pageFooter>
 		<band height="27" splitType="Stretch">
 			<textField>
-				<reportElement x="435" y="5" width="80" height="20"/>
+				<reportElement x="435" y="5" width="80" height="20" uuid="e916b18a-e5f5-4d9f-88b0-89747d65ef0e"/>
 				<textElement textAlignment="Right">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement x="515" y="5" width="40" height="20"/>
+				<reportElement x="515" y="5" width="40" height="20" uuid="183f7f74-38f6-4265-ad75-b035872c192e"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="0" y="0" width="551" height="1"/>
+				<reportElement x="0" y="0" width="551" height="1" uuid="bf8377a1-b0b4-440c-aac8-1f9709b51e37"/>
 			</line>
 			<textField>
-				<reportElement x="0" y="5" width="328" height="20"/>
+				<reportElement x="0" y="5" width="328" height="20" uuid="7e9565db-a3b6-4bb2-ac49-681366f874d0"/>
 				<box topPadding="0" leftPadding="5" rightPadding="5"/>
 				<textElement verticalAlignment="Top">
 					<font size="9"/>

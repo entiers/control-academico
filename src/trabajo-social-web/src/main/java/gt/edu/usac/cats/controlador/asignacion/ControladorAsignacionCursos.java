@@ -134,6 +134,7 @@ public class ControladorAsignacionCursos extends ControladorAbstractoAsignacion 
             if (this.servicioCalendarioActividadesImpl.esFechaActividadValida(TipoActividad.ASIGNACION_SEMESTRE,
                     this.semestre,
                     new java.util.Date())) {
+                
                 datosAsignacion.setTipoAsignacion(TipoAsignacion.ASIGNACION_CURSOS_SEMESTRE);
                 datosAsignacion.setTipoHorario(TipoHorario.SEMESTRE);
             } //Validar periodo de asignacion de cursos de vacaciones
@@ -191,6 +192,7 @@ public class ControladorAsignacionCursos extends ControladorAbstractoAsignacion 
             BindingResult bindingResult,
             Model modelo,
             HttpServletRequest request) {
+        System.out.println("Entra aca");
         String retorno = "redirect:index.htm";
         try {
             this.asignacionEstudianteCarrera = this.servicioAsignacionEstudianteCarreraImpl.cargarEntidadPorID(AsignacionEstudianteCarrera.class, datosAsignacion.getIdAsignacionEstudianteCarrera());
@@ -201,9 +203,12 @@ public class ControladorAsignacionCursos extends ControladorAbstractoAsignacion 
                 return "asignacion/asignacionCursos";
             }
 
+            System.out.println("SEMESTREMC: "+this.semestre.getIdSemestre());
             this.listaAsignacionCursoPensum = this.servicioCursoImpl.getCursoAsignacion(pensumEstudianteCarrera.getPensum(),
                     this.semestre, datosAsignacion.getTipoHorario());
 
+            System.out.println("************** listaAsignacionCursoPensum "+this.listaAsignacionCursoPensum);
+            
             if (this.listaAsignacionCursoPensum.isEmpty() && (datosAsignacion.getTipoAsignacion() != TipoAsignacion.ASIGNACION_PRIMERA_RETRASADA
                     || datosAsignacion.getTipoAsignacion() != TipoAsignacion.ASIGNACION_SEGUNDA_RETRASADA)) {
                 modelo.addAttribute("noExisteHorario", true);

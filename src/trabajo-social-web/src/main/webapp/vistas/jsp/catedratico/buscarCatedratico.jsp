@@ -52,6 +52,11 @@
                     <form:input path="apellidoBusqueda" cssStyle="width: 250px;" />
                     <form:errors path="apellidoBusqueda" cssClass="claseError" />
                 </div>
+                 <div id="divCampos">
+                    <form:label for="cuiBusqueda" path="cuiBusqueda"><fmt:message key="catedratico.cui"/>:</form:label>
+                    <form:input path="cuiBusqueda" cssStyle="width: 250px;" />
+                    <form:errors path="cuiBusqueda" cssClass="claseError" />
+                </div>               
                 <br/>
 
                 <%-- boton --%>
@@ -75,6 +80,7 @@
                             <th><fmt:message key="agregarCatedratico.telefono"/></th>
                             <th><fmt:message key="agregarCatedratico.celular"/></th>
                             <th><fmt:message key="agregarCatedratico.email"/></th>
+                            <th><fmt:message key="catedratico.cui"/></th>
                             <sec:authorize access="hasRole('ROLE_ASIGNACION_HORARIO_CATEDRATICO')">
                                   <th><fmt:message key="admin.asignacionHorarioCatedratico.titulo"/></th>
                             </sec:authorize>
@@ -91,6 +97,7 @@
                                 <td><c:out value="${catedratico.telefono}" /></td>
                                 <td><c:out value="${catedratico.celular}" /></td>
                                 <td><c:out value="${catedratico.email}" /></td>
+                                <td><c:out value="${catedratico.cui}" /></td>
                                 <%--Operacion asignacion de cursos de administracion--%>
                                 <sec:authorize access="hasRole('ROLE_ASIGNACION_HORARIO_CATEDRATICO')">
                                     <td>

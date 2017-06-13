@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="38e0380e-9cec-4ba6-b427-1f01bc515c9b">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="39"/>
-	<property name="ireport.y" value="97"/>
+	<property name="ireport.x" value="19"/>
+	<property name="ireport.y" value="120"/>
 	<parameter name="id_horario" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -35,6 +35,7 @@ order by carne]]>
 	<field name="ac" class="java.lang.Integer"/>
 	<field name="nsemestre" class="java.lang.String"/>
 	<field name="htipo" class="java.lang.Integer"/>
+	<field name="cui" class="java.lang.Long"/>
 	<variable name="carne_1" class="java.lang.Integer" calculation="Count">
 		<variableExpression><![CDATA[$F{carne}]]></variableExpression>
 	</variable>
@@ -132,7 +133,7 @@ order by carne]]>
 				<textFieldExpression><![CDATA[$F{codcatedratico}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="105" y="94" width="100" height="17" uuid="172d089c-2f77-44ff-8758-963e88b86b5c"/>
+				<reportElement x="105" y="94" width="356" height="17" uuid="172d089c-2f77-44ff-8758-963e88b86b5c"/>
 				<textElement>
 					<font size="10"/>
 				</textElement>
@@ -222,7 +223,7 @@ order by carne]]>
 			<textField>
 				<reportElement x="15" y="1" width="100" height="15" uuid="4ecb2402-21ad-4c77-8348-ab29ad5aa0d6"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{carne}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cui}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="15" y="15" width="540" height="1" uuid="d8adc811-267a-44ed-90ef-4794c85ec002"/>

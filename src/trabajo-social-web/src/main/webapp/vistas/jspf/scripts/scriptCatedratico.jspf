@@ -51,6 +51,7 @@
                         $("#telefono").val("");
                         $("#celular").val("");
                         $("#email").val("");
+                        $("#cui").val("");
                     }
 
                     $(this).dialog('close');

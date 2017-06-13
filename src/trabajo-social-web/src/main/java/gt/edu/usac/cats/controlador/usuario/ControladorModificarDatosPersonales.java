@@ -184,7 +184,7 @@ public class ControladorModificarDatosPersonales implements Serializable {
             if (this.servicioUsuarioImpl.getUsuarioPorEmail(correoNuevo) != null) {
                 return false;
             }
-        }
+        }   
         return true;
     }
 }
